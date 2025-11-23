@@ -1,0 +1,7 @@
+Follow-ups:
+- Add handling for current in-progress drives so live games reflect latest plays.
+- Capture turnovers on downs explicitly from drive/play results.
+Follow-ups:
+- Add handling for current in-progress drives so live games reflect latest plays.
+- Capture turnovers on downs explicitly from drive/play results.
+- Pull win-probability values from the v2 plays feed (dereference probability $ref) and show them in expanded output.

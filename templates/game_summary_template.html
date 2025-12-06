@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Analysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Custom tweaks for the bar animations */
+        .stat-bar { transition: width 0.5s ease-in-out; }
+        .clickable-row:hover { background-color: #f3f4f6; cursor: pointer; }
+        .clickable-row:hover .click-arrow { transform: translateX(3px); }
+        .selected-row { background-color: #eff6ff; border-left: 4px solid #3b82f6; }
+        .selected-row .click-arrow { color: #3b82f6; }
+
+        /* Subtle pulse animation for click arrows */
+        .click-arrow {
+            transition: transform 0.2s ease, color 0.2s ease;
+            animation: subtle-pulse 2s ease-in-out infinite;
+        }
+        @keyframes subtle-pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-slate-800 font-sans p-4 md:p-8">
+
+    <div class="max-w-5xl mx-auto space-y-6">
+
+        <div class="bg-white rounded-xl shadow-sm p-6 flex flex-col md:flex-row justify-between items-center" id="scoreboard">
+            </div>
+
+        <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-indigo-500">
+            <div class="flex items-center gap-2 mb-3">
+                <i data-lucide="sparkles" class="text-indigo-500 w-5 h-5"></i>
+                <h2 class="text-lg font-bold text-slate-900">AI Game Analysis</h2>
+            </div>
+            <p class="text-slate-600 leading-relaxed" id="analysis-text"></p>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm p-6">
+            <div class="flex items-center gap-2 mb-4 border-b pb-2">
+                <i data-lucide="bar-chart-3" class="text-emerald-500 w-5 h-5"></i>
+                <h2 class="text-lg font-bold">Summary Stats</h2>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse" id="summary-table">
+                    <thead>
+                        <tr class="text-xs font-semibold tracking-wide text-gray-500 uppercase border-b bg-gray-50">
+                            <th class="px-4 py-3">Stat</th>
+                            <th class="px-4 py-3 text-center" id="sum-header-away">SEA</th>
+                            <th class="px-4 py-3 text-center" id="sum-header-home">TEN</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100" id="summary-body">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm p-6">
+            <div class="flex justify-between items-end mb-4 border-b pb-2">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="trending-up" class="text-emerald-500 w-5 h-5"></i>
+                    <h2 class="text-lg font-bold">Advanced Stats</h2>
+                </div>
+                <span class="text-xs text-gray-400">Click rows to filter plays below</span>
+            </div>
+            
+            <div class="grid grid-cols-12 gap-4 mb-2 text-xs font-semibold text-gray-500 uppercase">
+                <div class="col-span-2 text-left" id="adv-header-away-img">SEA</div> <div class="col-span-8 text-center">Comparison</div>
+                <div class="col-span-2 text-right" id="adv-header-home-img">TEN</div> </div>
+
+            <div class="space-y-4" id="advanced-stats-container">
+                </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm p-6">
+            <div class="flex justify-between items-center mb-6">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="filter" class="text-blue-500 w-5 h-5"></i>
+                    <h2 class="text-lg font-bold">Play Summary</h2>
+                </div>
+                
+                <div class="relative">
+                    <select id="play-filter" class="block appearance-none w-full bg-gray-50 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" onchange="manualFilterChange(this.value)">
+                        <option value="Explosive Plays">Explosive Plays</option>
+                        <option value="Turnovers">Turnovers</option>
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                    </div>
+                </div>
+            </div>
+
+            <div id="plays-container" class="space-y-3">
+                </div>
+        </div>
+
+    </div>
+
+    <script>
+        const gameData = __GAME_DATA_JSON__;
+
+        // --- CONFIG & UTILS ---
+        const TEAMS = {
+            away: gameData.team_meta.find(t => t.homeAway === 'away'),
+            home: gameData.team_meta.find(t => t.homeAway === 'home')
+        };
+        
+        // Colors for bars (Hardcoded for demo visual appeal, typically would come from meta)
+        const COLORS = {
+            SEA: '#002244',
+            TEN: '#4B92DB',
+            neutral: '#e5e7eb'
+        };
+
+        // Current filter state
+        let currentCategory = 'Explosive Plays';
+
+        // --- RENDER FUNCTIONS ---
+
+        function renderPageMeta() {
+            const hasTeams = TEAMS.away && TEAMS.home;
+            const matchup = hasTeams ? `${TEAMS.away.abbr} at ${TEAMS.home.abbr}` : "Game Analysis";
+            document.title = `Game Analysis: ${matchup}`;
+
+            const analysisEl = document.getElementById('analysis-text');
+            if (analysisEl) {
+                const text = gameData.analysis || `Breakdown for ${matchup}.`;
+                analysisEl.textContent = text;
+            }
+        }
+
+        function renderHeader() {
+            const awayStats = gameData.summary_table.find(t => t.Team === TEAMS.away.abbr);
+            const homeStats = gameData.summary_table.find(t => t.Team === TEAMS.home.abbr);
+
+            const awayLeading = awayStats.Score > homeStats.Score;
+            const homeLeading = homeStats.Score > awayStats.Score;
+
+            const html = `
+                <div class="flex-1 flex flex-col items-center border-r border-gray-100 pr-4">
+                    <div class="w-16 h-12 bg-gray-200 rounded mb-2 flex items-center justify-center text-xs text-gray-500 font-bold">LOGO</div>
+                    <h2 class="text-xl font-bold text-gray-800">${TEAMS.away.name}</h2>
+                    <div class="text-5xl font-extrabold text-slate-900 mt-2">${awayStats.Score}</div>
+                    ${awayLeading ? '<span class="mt-2 px-3 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full">Leading</span>' : ''}
+                </div>
+                
+                <div class="px-8 py-4 text-gray-300 font-bold text-xl">VS</div>
+
+                <div class="flex-1 flex flex-col items-center border-l border-gray-100 pl-4">
+                    <div class="w-16 h-12 bg-gray-200 rounded mb-2 flex items-center justify-center text-xs text-gray-500 font-bold">LOGO</div>
+                    <h2 class="text-xl font-bold text-gray-800">${TEAMS.home.name}</h2>
+                    <div class="text-5xl font-extrabold text-slate-900 mt-2">${homeStats.Score}</div>
+                    ${homeLeading ? '<span class="mt-2 px-3 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full">Leading</span>' : ''}
+                </div>
+            `;
+            document.getElementById('scoreboard').innerHTML = html;
+        }
+
+        function renderSummaryTable() {
+            document.getElementById('sum-header-away').innerText = TEAMS.away.abbr;
+            document.getElementById('sum-header-home').innerText = TEAMS.home.abbr;
+
+            const keys = ["Total Yards", "Drives"]; // Extract from data
+            const awayData = gameData.summary_table.find(t => t.Team === TEAMS.away.abbr);
+            const homeData = gameData.summary_table.find(t => t.Team === TEAMS.home.abbr);
+
+            let html = '';
+            keys.forEach(key => {
+                html += `
+                    <tr>
+                        <td class="px-4 py-3 font-medium text-gray-700 border-r">${key}</td>
+                        <td class="px-4 py-3 text-center text-gray-900 font-bold border-r">${awayData[key]}</td>
+                        <td class="px-4 py-3 text-center text-gray-900 font-bold">${homeData[key]}</td>
+                    </tr>
+                `;
+            });
+            document.getElementById('summary-body').innerHTML = html;
+        }
+
+        function parseStatValue(val) {
+            if (typeof val === 'string' && val.includes('Own')) {
+                return parseInt(val.replace('Own', '').trim());
+            }
+            return parseFloat(val);
+        }
+
+        function renderAdvancedStats() {
+            document.getElementById('adv-header-away-img').innerText = TEAMS.away.abbr;
+            document.getElementById('adv-header-home-img').innerText = TEAMS.home.abbr;
+
+            const awayData = gameData.advanced_table.find(t => t.Team === TEAMS.away.abbr);
+            const homeData = gameData.advanced_table.find(t => t.Team === TEAMS.home.abbr);
+
+            const statsToRender = [
+                "Turnovers", "Yards Per Play", "Success Rate", "Explosive Plays", 
+                "Explosive Play Rate", "Points Per Trip (Inside 40)", "Ave Start Field Pos"
+            ];
+
+            let html = '';
+
+            statsToRender.forEach(stat => {
+                const valAway = awayData[stat];
+                const valHome = homeData[stat];
+
+                // Numeric conversion for bar calculation
+                const numAway = parseStatValue(valAway);
+                const numHome = parseStatValue(valHome);
+                const total = numAway + numHome;
+
+                // Proportional bar widths - each side fills its share of the total
+                // If both are 0, show 50/50
+                const pctAway = total > 0 ? (numAway / total) * 100 : 50;
+                const pctHome = total > 0 ? (numHome / total) * 100 : 50;
+
+                // Interaction Logic for categories that have drill-down
+                let rowClass = "grid grid-cols-12 gap-4 items-center py-3 border-b border-gray-50 last:border-0";
+                let onClick = "";
+                let isClickable = false;
+
+                if (stat === "Explosive Plays" || stat === "Turnovers") {
+                    rowClass += " clickable-row transition-colors duration-150";
+                    isClickable = true;
+                    // Note: stat matches the key in 'expanded_details' map logic mostly
+                    onClick = `onclick="handleStatClick('${stat}')"`;
+                }
+
+                // Bar Color Logic (Green for better, Gray for worse/neutral)
+                // Note: For Turnovers, Lower is better. For others, Higher is better.
+                const isTurnover = stat === "Turnovers";
+                const awayIsBetter = isTurnover ? numAway < numHome : numAway > numHome;
+                const homeIsBetter = isTurnover ? numHome < numAway : numHome > numAway;
+                const isTied = numAway === numHome;
+
+                // Set bar colors (Using specific Tailwind classes based on team identity + win state)
+                const barClassAway = isTied ? "bg-slate-400" : (awayIsBetter ? "bg-emerald-500" : "bg-slate-300");
+                const barClassHome = isTied ? "bg-slate-400" : (homeIsBetter ? "bg-emerald-500" : "bg-slate-300");
+
+                // Arrow indicator for clickable rows
+                const arrowIndicator = isClickable
+                    ? `<i data-lucide="chevron-right" class="click-arrow w-4 h-4 text-gray-400 ml-1"></i>`
+                    : '';
+
+                html += `
+                    <div class="${rowClass}" ${onClick} id="row-${stat.replace(/\s/g, '')}">
+                        <div class="col-span-2 text-left font-bold text-slate-800 text-sm pl-2">
+                            ${valAway}
+                        </div>
+
+                        <div class="col-span-8 flex flex-col justify-center">
+                            <div class="text-center text-[10px] uppercase text-gray-400 font-bold mb-1 tracking-wider">${stat}</div>
+                            <div class="relative">
+                                <!-- Center marker -->
+                                <div class="absolute left-1/2 -translate-x-1/2 -top-1 w-0 h-0 border-l-[4px] border-r-[4px] border-t-[5px] border-l-transparent border-r-transparent border-t-gray-400"></div>
+                                <div class="flex items-center h-2 rounded overflow-hidden">
+                                    <div class="h-2 ${barClassAway} stat-bar" style="width: ${pctAway}%"></div>
+                                    <div class="h-2 ${barClassHome} stat-bar" style="width: ${pctHome}%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-span-2 text-right font-bold text-slate-800 text-sm pr-2 flex items-center justify-end">
+                            ${valHome}${arrowIndicator}
+                        </div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('advanced-stats-container').innerHTML = html;
+        }
+
+        function renderPlays(category) {
+            const container = document.getElementById('plays-container');
+            const awayRaw = (gameData.expanded_details[TEAMS.away.id] || {})[category] || [];
+            const homeRaw = (gameData.expanded_details[TEAMS.home.id] || {})[category] || [];
+
+            const parseClockSec = (t) => {
+                if(!t) return 0;
+                const parts = t.split(':');
+                return parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
+            };
+
+            const buildProbabilityLine = (prob, teamAbbr) => {
+                if (!prob) return '';
+                const homeRaw = prob.homeWinPercentage ?? prob.homeWinProb ?? prob.home ?? null;
+                const awayRaw = prob.awayWinPercentage ?? prob.awayWinProb ?? prob.away ?? null;
+                const tieRaw = prob.tiePercentage ?? prob.tie ?? null;
+                const homeDeltaRaw = prob.homeDelta ?? null;
+                const awayDeltaRaw = prob.awayDelta ?? null;
+                const fmt = (v) => typeof v === 'number' ? Math.round(v * 1000) / 10 : null;
+                const fmtDelta = (v) => {
+                    if (typeof v !== 'number') return null;
+                    const d = Math.round(v * 1000) / 10;
+                    if (Math.abs(d) < 0.05) return '0.0';
+                    return d > 0 ? `+${d.toFixed(1)}` : d.toFixed(1);
+                };
+                const deltaClass = (v) => {
+                    if (typeof v !== 'number') return '';
+                    const d = Math.round(v * 1000) / 10;
+                    if (d > 0.05) return 'bg-emerald-100 text-emerald-800';
+                    if (d < -0.05) return 'bg-red-100 text-red-800';
+                    return 'bg-gray-100 text-gray-600';
+                };
+                let homePct = fmt(homeRaw);
+                let awayPct = fmt(awayRaw);
+                const tiePct = fmt(tieRaw);
+                if (homePct === null && awayPct !== null && tiePct !== null) homePct = Math.max(0, 100 - awayPct - tiePct);
+                if (awayPct === null && homePct !== null && tiePct !== null) awayPct = Math.max(0, 100 - homePct - tiePct);
+                if (awayPct === null && homePct !== null && tiePct === null) awayPct = Math.max(0, 100 - homePct);
+                const pieces = [];
+                if (awayPct !== null) pieces.push(`${TEAMS.away.abbr} ${awayPct}%`);
+                if (homePct !== null) pieces.push(`${TEAMS.home.abbr} ${homePct}%`);
+                if (tiePct !== null) pieces.push(`Tie ${tiePct}%`);
+                if (!pieces.length) return '';
+                // Build delta badge - show delta from perspective of the team whose plays we're showing
+                let deltaBadge = '';
+                const isHomeTeam = teamAbbr === TEAMS.home.abbr;
+                const relevantDeltaRaw = isHomeTeam ? homeDeltaRaw : awayDeltaRaw;
+                const relevantDelta = fmtDelta(relevantDeltaRaw);
+                if (relevantDelta !== null) {
+                    const deltaClassStr = deltaClass(relevantDeltaRaw);
+                    deltaBadge = `<span class="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${deltaClassStr}">${relevantDelta}% WP</span>`;
+                }
+                return `<div class="text-[11px] text-gray-500 mt-1">Win Probability: ${pieces.join(' • ')}${deltaBadge}</div>`;
+            };
+
+            const sortPlays = (list) => [...list].sort((a, b) => {
+                if (a.quarter !== b.quarter) return a.quarter - b.quarter; // older quarter first
+                return parseClockSec(b.clock) - parseClockSec(a.clock); // higher clock = earlier
+            });
+
+            const renderColumn = (plays, team, teamName) => {
+                if (!plays.length) {
+                    return `<div class="text-center text-gray-400 py-6 border border-dashed border-gray-200 rounded-lg">No plays for ${category}.</div>`;
+                }
+                return plays.map(p => {
+                    // Only show yards for non-turnover categories, use grey styling
+                    const showYards = category !== 'Turnovers' && p.yards;
+                    const yardBadge = showYards ? `<span class="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-200 text-gray-700">+${p.yards} yds</span>` : '';
+                    const probLine = buildProbabilityLine(p.probability, team);
+                    return `
+                        <div class="bg-gray-50 rounded-lg p-4 border border-gray-100 flex gap-4 hover:bg-white hover:shadow-md transition-all duration-200">
+                            <div class="flex-shrink-0 mt-1">
+                                <span class="inline-flex items-center justify-center h-8 w-8 rounded-full bg-blue-100 text-blue-800 font-bold text-xs">
+                                    ${team}
+                                </span>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center justify-between mb-1">
+                                    <div class="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                                        Q${p.quarter} • ${p.clock} • ${p.down_dist || p.start_pos}
+                                    </div>
+                                    <div class="text-xs font-bold text-gray-400 uppercase">${p.type || ''}</div>
+                                </div>
+                                <p class="text-gray-900 text-sm leading-snug">
+                                    ${p.text || ''}
+                                    ${yardBadge}
+                                </p>
+                                ${probLine}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            };
+
+            const awayPlays = sortPlays(awayRaw);
+            const homePlays = sortPlays(homeRaw);
+
+            container.innerHTML = `
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="text-sm font-bold text-slate-800">${TEAMS.away.name || TEAMS.away.abbr}</div>
+                            <span class="text-xs uppercase tracking-wide text-gray-400">${category}</span>
+                        </div>
+                        <div class="space-y-3">
+                            ${renderColumn(awayPlays, TEAMS.away.abbr, TEAMS.away.name)}
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="text-sm font-bold text-slate-800">${TEAMS.home.name || TEAMS.home.abbr}</div>
+                            <span class="text-xs uppercase tracking-wide text-gray-400">${category}</span>
+                        </div>
+                        <div class="space-y-3">
+                            ${renderColumn(homePlays, TEAMS.home.abbr, TEAMS.home.name)}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- INTERACTION ---
+        
+        function handleStatClick(statName) {
+            // Update Dropdown
+            const select = document.getElementById('play-filter');
+            select.value = statName;
+            
+            // Trigger Change
+            manualFilterChange(statName);
+
+            // Visual Selection Logic
+            document.querySelectorAll('.clickable-row').forEach(el => {
+                el.classList.remove('selected-row');
+            });
+            const row = document.getElementById(`row-${statName.replace(/\s/g, '')}`);
+            if(row) row.classList.add('selected-row');
+        }
+
+        function manualFilterChange(val) {
+            currentCategory = val;
+            renderPlays(val);
+        }
+
+        // --- INIT ---
+        window.onload = function() {
+            renderPageMeta();
+            renderHeader();
+            renderSummaryTable();
+            renderAdvancedStats();
+            renderPlays(currentCategory);
+            
+            // Initialize Icons
+            lucide.createIcons();
+
+            // Highlight default filter row
+            handleStatClick(currentCategory);
+        };
+
+    </script>
+</body>
+</html>

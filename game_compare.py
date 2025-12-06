@@ -4,6 +4,15 @@ import requests
 import pandas as pd
 import json
 
+SUMMARY_COLS = ['Team', 'Score', 'Total Yards', 'Drives']
+ADVANCED_COLS = [
+    'Team', 'Score', 'Turnovers', 'Total Yards', 'Yards Per Play',
+    'Success Rate', 'Explosive Plays', 'Explosive Play Rate',
+    'Points Per Trip (Inside 40)', 'Ave Start Field Pos',
+    'Penalty Yards', 'Non-Offensive Points'
+]
+EXPANDED_CATEGORIES = ['Turnovers', 'Explosive Plays', 'Non-Offensive Scores']
+
 
 def yardline_to_coord(pos_text, team_abbr):
     """
@@ -198,6 +207,16 @@ def process_game_stats(game_data, expanded=False, probability_map=None):
     teams_info = boxscore.get('teams', [])
     id_to_abbr = {}
     probability_map = probability_map or {}
+    drives = game_data.get('drives', {}).get('previous', [])
+
+    # Map play_id -> drive offensive team for later attribution (e.g., non-offensive scores)
+    play_to_drive_team = {}
+    for drive in drives:
+        drive_team_id = drive.get('team', {}).get('id')
+        for play in drive.get('plays', []):
+            play_id = play.get('id')
+            if play_id:
+                play_to_drive_team[str(play_id)] = drive_team_id
 
     # Track previous WP for delta calculation
     prev_home_wp = 0.5
@@ -293,7 +312,10 @@ def process_game_stats(game_data, expanded=False, probability_map=None):
             'Punt Plays': 0,
             'Kick Net Sum': 0,
             'Kick Plays': 0,
-            'ST Penalties': 0
+            'ST Penalties': 0,
+            'Penalty Yards': 0,
+            'Penalty Count': 0,
+            'Non-Offensive Points': 0
         }
         if expanded:
             details[t_id] = {
@@ -302,7 +324,8 @@ def process_game_stats(game_data, expanded=False, probability_map=None):
                 'Net Punting': [],
                 'Net Kickoff': [],
                 'Hidden Yards': [],
-                'ST Penalties': []
+                'ST Penalties': [],
+                'Non-Offensive Scores': []
             }
 
     # --- 1. Get High Level Score/Turnovers ---
@@ -313,9 +336,62 @@ def process_game_stats(game_data, expanded=False, probability_map=None):
             t_id = competitor['id']
             if t_id in stats:
                 stats[t_id]['Score'] = int(competitor.get('score', 0))
-    
+
+    # --- Penalty totals from boxscore (COUNT-YARDS) ---
+    for t in teams_info:
+        t_id = t.get('team', {}).get('id')
+        if not t_id or t_id not in stats:
+            continue
+        team_stats = t.get('statistics', [])
+        for stat in team_stats:
+            stat_name = stat.get('name', '')
+            # Look specifically for totalPenaltiesYards (format: "COUNT-YARDS")
+            if stat_name == 'totalPenaltiesYards':
+                display_val = stat.get('displayValue', '')
+                if isinstance(display_val, str) and '-' in display_val:
+                    parts = display_val.split('-')
+                    if len(parts) == 2:
+                        try:
+                            count = int(parts[0])
+                            yards = int(parts[1])
+                            stats[t_id]['Penalty Count'] = count
+                            stats[t_id]['Penalty Yards'] = yards
+                        except ValueError:
+                            pass
+                break
+
+    # --- Non-Offensive Points (defense/special teams/safeties) ---
+    for sp in scoring_plays:
+        play_id = sp.get('id')
+        scoring_team_id = sp.get('team', {}).get('id')
+        drive_offense_id = play_to_drive_team.get(str(play_id))
+        play_text = str(sp.get('text', '')).lower()
+        play_type = str(sp.get('type', {}).get('text', '')).lower()
+        scoring_type = str(sp.get('scoringType', {}).get('name', '')).lower()
+
+        points = scoring_map.get(play_id, {}).get('points', 0)
+        is_safety = 'safety' in play_type or 'safety' in scoring_type or 'safety' in play_text
+        is_non_offensive = False
+
+        if is_safety:
+            is_non_offensive = True
+            points = 2  # Safeties are always 2 points
+        elif drive_offense_id and scoring_team_id and drive_offense_id != scoring_team_id:
+            is_non_offensive = True
+
+        if is_non_offensive and scoring_team_id in stats:
+            stats[scoring_team_id]['Non-Offensive Points'] += points
+            if expanded:
+                details[scoring_team_id]['Non-Offensive Scores'].append({
+                    'type': sp.get('type', {}).get('text', ''),
+                    'text': sp.get('text', ''),
+                    'points': points,
+                    'quarter': sp.get('period', {}).get('number'),
+                    'clock': sp.get('clock', {}).get('displayValue'),
+                })
+
     # --- 2. Process Drives and Plays (The "How") ---
-    drives = game_data.get('drives', {}).get('previous', [])
+    drives = drives or []
     
     for drive in drives:
         team_id = drive.get('team', {}).get('id')
@@ -690,7 +766,9 @@ def process_game_stats(game_data, expanded=False, probability_map=None):
             'Hidden Yards (Diff)': round(fp_diff[t_id], 1),
             'Net Punting': round(punt_net_avg[t_id], 1),
             'Net Kickoff': round(kick_net_avg[t_id], 1),
-            'ST Penalties': round(stats[t_id]['ST Penalties'], 1)
+            'ST Penalties': round(stats[t_id]['ST Penalties'], 1),
+            'Penalty Yards': d.get('Penalty Yards', 0),
+            'Non-Offensive Points': d.get('Non-Offensive Points', 0)
         }
         final_rows.append(row)
 
@@ -795,14 +873,8 @@ def main():
             print(f"\n{last_play_line}")
 
         # Build Summary and Advanced tables (teams as columns)
-        summary_cols = ['Team', 'Score', 'Total Yards', 'Drives']
-        advanced_cols = [
-            'Team', 'Score', 'Turnovers', 'Total Yards', 'Yards Per Play',
-            'Success Rate', 'Explosive Plays', 'Explosive Play Rate',
-            'Points Per Trip (Inside 40)', 'Ave Start Field Pos'
-        ]
-        df_summary_display = df[summary_cols].set_index('Team').T
-        df_advanced_display = df[advanced_cols].set_index('Team').T
+        df_summary_display = df[SUMMARY_COLS].set_index('Team').T
+        df_advanced_display = df[ADVANCED_COLS].set_index('Team').T
 
         print("\n--- SUMMARY STATS ---")
         print(df_summary_display)
@@ -855,21 +927,20 @@ def main():
         json_path = os.path.join(output_dir, f"{fname_base}_expanded.json")
         html_path = os.path.join(output_dir, f"{fname_base}.html")
 
-        df[advanced_cols].to_csv(csv_path, index=False)
+        df[ADVANCED_COLS].to_csv(csv_path, index=False)
 
         # Build JSON payload with summary, advanced, and expanded details
-        expanded_categories = ['Turnovers', 'Explosive Plays']
         filtered_details = {}
         for t_id, team_detail in details.items():
             filtered_details[t_id] = {
-                cat: team_detail.get(cat, []) for cat in expanded_categories
+                cat: team_detail.get(cat, []) for cat in EXPANDED_CATEGORIES
             }
 
         payload = {
             "gameId": game_id,
             "label": fname_base,
-            "summary_table": df[summary_cols].to_dict(orient="records"),
-            "advanced_table": df[advanced_cols].to_dict(orient="records"),
+            "summary_table": df[SUMMARY_COLS].to_dict(orient="records"),
+            "advanced_table": df[ADVANCED_COLS].to_dict(orient="records"),
             "expanded_details": filtered_details,
             "team_meta": team_meta,
             "last_play": last_play_line
@@ -894,7 +965,7 @@ def main():
 
         if args.expanded and details:
             print("\n--- EXPANDED PLAYS ---")
-            categories = ['Turnovers', 'Explosive Plays']
+            categories = EXPANDED_CATEGORIES
             team_id_to_abbr = {}
             for t in raw_data.get('boxscore', {}).get('teams', []):
                 tid = t.get('team', {}).get('id')

@@ -1,0 +1,67 @@
+Why Turnover on Downs is NOT included in Turnovers
+Q: Should turnover on downs be counted as a turnover?
+A: No. Turnover on downs is categorically different from interceptions and fumbles. The key distinction is whether the opponent gains an EXTRA possession:
+
+Interception: Opponent gets an extra drive (you had 12 drives, they get 13)
+Fumble lost: Same—extra possession created
+Turnover on downs: No extra possession. Your drive was ending anyway; you just chose to end it at the line of scrimmage instead of 40 yards downfield via punt.
+
+Turnover on downs is already captured by Field Position (opponent starts at the failed 4th down spot) and Finishing Drives (if inside the 40, you got 0 points for that trip). Adding it to Turnovers would double-count the field position impact while falsely implying a possession swing that didn't happen.
+Turnovers should be thought of as "extra possessions lost"—which TOD doesn't trigger.
+
+Why 8 Factors Instead of the Original 5
+Q: Bill Connelly's Five Factors are widely used. Why add three more?
+A: The original Five Factors (Efficiency, Explosiveness, Finishing Drives, Field Position, Turnovers) explain approximately 71-90% of variance in game outcomes. However, for a purely DESCRIPTIVE tool that explains "why did this team win THIS game," three gaps emerge:
+
+Penalties: A team can "win" efficiency and explosiveness but have two TD-negating holding calls and a drive-extending DPI. Penalties are invisible in the original framework.
+Non-Offensive Points: A pick-6 only shows as +1 in turnover margin, but it's actually worth ~10+ points of swing (7 scored + the lost possession). Defensive/ST touchdowns and safeties are under-counted.
+Possessions: Two teams can have identical efficiency, but if one ran 80 plays and the other ran 55, volume explains the outcome. Possession count captures this.
+
+Why Hidden Yards (Return Yards) Is NOT a Separate Factor
+Q: Kickoff return yards and interception return yards seem important. Why aren't they tracked separately?
+A: Hidden yards are already captured through their outcomes:
+
+Return yards that result in a score → captured by Non-Offensive Points
+Return yards that set up great field position → captured by Field Position
+The only gap is "return yards that set up medium field position"—which is low-impact enough to ignore
+
+Adding hidden yards as a separate factor would create overlap with Field Position and add noise without explanatory value.
+
+Why "Non-Offensive Points" Instead of "Defensive/ST Touchdowns"
+Q: Why use the broader term?
+A: "Non-Offensive Points" captures all scoring events outside normal offensive flow:
+
+Pick-6 (7 points)
+Fumble return TD (7 points)
+Punt return TD (7 points)
+Kick return TD (7 points)
+Blocked kick returned for TD (7 points)
+Safety (2 points + possession change)
+
+Calling it just "Defensive TDs" or "ST TDs" would miss safeties, which are high-impact, low-frequency events.
+
+Why Certain Stats Are NOT Separate Factors
+Q: Why not include third-down conversion rate, red zone TD percentage, or sacks?
+A: These are already captured by existing factors:
+
+Third-down rate: Largely captured by Efficiency (Success Rate)—a team with high success rate is converting third downs
+Red zone TD%: Captured by Finishing Drives (Points Per Trip inside 40)
+Sacks: Affect both Efficiency and Explosiveness numbers
+
+Adding them separately would create redundancy without improving explanatory power.
+
+Why Turnovers Are Weighted Despite Being "Random"
+Q: Research shows turnovers are 55/45 skill vs luck. Why include them?
+A: For PREDICTIVE purposes, turnovers are problematic—year-to-year correlation explains only 2.6% of variance. But this is a DESCRIPTIVE tool. In any single game, turnovers absolutely explain the outcome. A team that wins the turnover battle wins ~73% of games. We're not predicting future performance; we're explaining what happened.
+
+Strength Encoding Thresholds
+Q: How are "dominant," "strong," "slight," and "minimal" advantages calculated?
+A: The percentage difference between the two teams' values:
+
+Dominant: Greater than 30% difference
+Strong: 15-30% difference
+Slight: 5-15% difference
+Minimal: Less than 5% difference
+
+The calculation: |home - away| / ((|home| + |away|) / 2)
+These thresholds were chosen to create meaningful visual distinction while avoiding over-sensitivity to small differences.

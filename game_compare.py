@@ -343,8 +343,15 @@ def process_game_stats(game_data, expanded=False, probability_map=None):
             text = play.get('text', '')
             text_lower = text.lower()
             play_type = play.get('type', {}).get('text', 'Unknown')
-            team_abbrev = play.get('team', {}).get('abbreviation', '').lower()
             play_type_lower = play_type.lower()
+            start_team_id = play.get('start', {}).get('team', {}).get('id') or team_id
+            end_team_id = play.get('end', {}).get('team', {}).get('id')
+            team_abbrev = play.get('team', {}).get('abbreviation', '').lower()
+            # Fallback to drive team abbreviation when play-level team is missing.
+            offense_abbrev = team_abbrev or id_to_abbr.get(team_id, '').lower()
+            opponent_id = None
+            if len(id_to_abbr) == 2 and start_team_id in id_to_abbr:
+                opponent_id = next((tid for tid in id_to_abbr if tid != start_team_id), None)
             
             # Filter out non-plays, nullified, timeouts/end-of-period
             if 'timeout' in play_type_lower or 'end of' in play_type_lower:
@@ -354,33 +361,94 @@ def process_game_stats(game_data, expanded=False, probability_map=None):
             
             # Turnovers
             muffed_punt = 'muffed punt' in text_lower or 'muff' in play_type_lower
+            muffed_kick = muffed_punt or ('muffed kick' in text_lower) or ('muffed kickoff' in text_lower) or ('muff' in text_lower and 'kickoff' in text_lower)
             # Broaden interception/fumble detection beyond "Fumble Lost" phrasing.
             interception = 'interception' in play_type_lower or 'intercept' in text_lower
             fumble_phrase = 'fumble' in text_lower
-            recovered_by_def = False
-            if fumble_phrase and 'recovered by' in text_lower:
-                # Treat as turnover if the recovery text does not belong to the offense.
-                if team_abbrev:
-                    recovered_by_def = f"recovered by {team_abbrev}" not in text_lower
-                else:
-                    recovered_by_def = True
-            fumble_turnover = fumble_phrase and recovered_by_def
             overturned = 'reversed' in text_lower or 'overturned' in text_lower
-            
-            turnover_on_play = (interception or fumble_turnover or muffed_punt) and not overturned
+
+            # Track turnover events (multiple possible, e.g., INT then fumble back).
+            turnover_events = []
+
+            # Possession tracking for attribution.
+            current_possessor = start_team_id
+            current_off_abbr = offense_abbrev
+
+            # For muffed punts, possession lies with the receiving team.
+            if muffed_kick and opponent_id:
+                current_possessor = opponent_id
+                current_off_abbr = id_to_abbr.get(opponent_id, '').lower()
+
+            # Interception flips possession once.
+            if interception and not overturned:
+                turnover_events.append((current_possessor, 'interception'))
+                if opponent_id:
+                    current_possessor = opponent_id
+                    current_off_abbr = id_to_abbr.get(opponent_id, '').lower()
+
+            # Fumble logic with recovery/possession change detection.
+            recovered_by_def = False
+            recovered_team_id = None
+            if fumble_phrase:
+                if 'recovered by' in text_lower:
+                    if current_off_abbr:
+                        recovered_by_def = f"recovered by {current_off_abbr}" not in text_lower
+                    elif 'fumble recovery (own)' in play_type_lower:
+                        recovered_by_def = False
+                    else:
+                        recovered_by_def = True
+                elif 'fumble recovery (own)' in play_type_lower:
+                    recovered_by_def = False
+                # Possession change fallback when recovery text is missing/ambiguous.
+                if start_team_id and end_team_id and start_team_id != end_team_id:
+                    recovered_by_def = current_possessor != end_team_id
+                    recovered_team_id = end_team_id
+                elif end_team_id:
+                    recovered_team_id = end_team_id
+
+            fumble_turnover = fumble_phrase and recovered_by_def and not overturned
+            if fumble_turnover and not muffed_kick:
+                turnover_events.append((current_possessor, 'fumble'))
+                if recovered_team_id:
+                    current_possessor = recovered_team_id
+                    current_off_abbr = id_to_abbr.get(current_possessor, '').lower()
+
+            # Muffed punts/kickoffs are turnovers on the receiving team.
+            if muffed_kick and not overturned:
+                turnover_events.append((current_possessor, 'muffed_kick'))
+                if end_team_id:
+                    current_possessor = end_team_id
+
+            # Onside kick recovered by kicking team -> turnover on receiving team.
+            if not overturned and 'onside' in text_lower and 'kick' in text_lower and opponent_id:
+                if end_team_id == start_team_id:
+                    turnover_events.append((opponent_id, 'onside_recovery'))
+                    current_possessor = start_team_id
+
+            # Blocked kicks/punts recovered by defense.
+            if not overturned and 'blocked' in text_lower and ('punt' in play_type_lower or 'field goal' in play_type_lower or 'fg' in play_type_lower):
+                if start_team_id and end_team_id and start_team_id != end_team_id:
+                    turnover_events.append((start_team_id, 'blocked_kick'))
+                    current_possessor = end_team_id
+
+            turnover_on_play = bool(turnover_events)
             if turnover_on_play:
-                stats[team_id]['Turnovers'] += 1
-                if expanded:
-                    details[team_id]['Turnovers'].append({
-                        'type': play_type,
-                        'text': text,
-                        'yards': play.get('statYardage', 0),
-                        'quarter': play.get('period', {}).get('number'),
-                        'clock': play.get('clock', {}).get('displayValue'),
-                        'start_pos': play.get('start', {}).get('possessionText'),
-                        'down_dist': play.get('start', {}).get('downDistanceText') or play.get('start', {}).get('shortDownDistanceText'),
-                        'probability': lookup_probability_with_delta(play)
-                    })
+                for t_event, reason in turnover_events:
+                    if t_event not in stats:
+                        continue
+                    stats[t_event]['Turnovers'] += 1
+                    if expanded:
+                        details[t_event]['Turnovers'].append({
+                            'type': play_type,
+                            'text': text,
+                            'yards': play.get('statYardage', 0),
+                            'quarter': play.get('period', {}).get('number'),
+                            'clock': play.get('clock', {}).get('displayValue'),
+                            'start_pos': play.get('start', {}).get('possessionText'),
+                            'down_dist': play.get('start', {}).get('downDistanceText') or play.get('start', {}).get('shortDownDistanceText'),
+                            'probability': lookup_probability_with_delta(play),
+                            'reason': reason
+                        })
             
             # Track scoring tied to the offense on the drive via scoringPlays map
             play_id = play.get('id')

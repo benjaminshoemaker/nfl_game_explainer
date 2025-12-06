@@ -1,0 +1,167 @@
+GAME ANALYSIS DASHBOARD - STAT DOCUMENTATION
+============================================
+
+This dashboard uses 8 factors to explain why one team won a football game.
+Together, these factors account for approximately 95%+ of game outcomes.
+
+
+CORE FIVE FACTORS (from Bill Connelly's framework)
+--------------------------------------------------
+
+1. TURNOVERS (Margin)
+   
+   What it measures: The difference in giveaways (interceptions + fumbles lost)
+   between the two teams.
+   
+   How to read it: Positive = fewer giveaways than opponent. A team with "+2"
+   forced two more turnovers than they committed.
+   
+   Why it matters: Turnovers create possession asymmetry. If you turn it over
+   twice and force none, your opponent gets 2 extra drives. Teams winning the
+   turnover battle win approximately 73% of games.
+   
+   Note: Turnover on downs is NOT included here—see FAQ for rationale.
+
+
+2. YARDS PER PLAY (Efficiency)
+   
+   What it measures: Total yards divided by total plays. A raw efficiency metric.
+   
+   How to read it: Higher is better. NFL average is approximately 5.0-5.5 yards
+   per play.
+   
+   Why it matters: Captures overall offensive firepower in a single number.
+   However, this can be skewed by a few explosive plays, so it's complemented
+   by Success Rate.
+
+
+3. SUCCESS RATE (Play Success %)
+   
+   What it measures: The percentage of plays that gain "enough" yards, defined as:
+   - 1st down: 50% of yards needed (5+ yards for 1st & 10)
+   - 2nd down: 70% of yards needed
+   - 3rd/4th down: 100% of yards needed (convert or gain first down)
+   
+   How to read it: Higher is better. Elite offenses exceed 45%; struggling
+   offenses fall below 35%.
+   
+   Why it matters: This is the single most predictive stat in football analytics.
+   Unlike yards per play, it's not skewed by explosives—it measures whether a
+   team consistently moves the chains. A team can have modest YPP but high
+   Success Rate by avoiding negative plays.
+
+
+4. EXPLOSIVE PLAYS (10+ Yard Gains)
+   
+   What it measures: Raw count of plays gaining 10+ yards (some definitions use
+   12+ for runs, 16+ for passes).
+   
+   How to read it: Higher is better. This is a volume metric.
+   
+   Why it matters: Big plays create scoring opportunities and swing momentum.
+   However, explosive plays are less predictable game-to-game than efficiency.
+
+
+5. EXPLOSIVE PLAY RATE (Explosiveness)
+   
+   What it measures: Percentage of plays that go for 10+ yards.
+   
+   How to read it: Higher is better. Typically ranges from 8-15% for NFL teams.
+   
+   Why it matters: Normalizes explosive plays for pace. A team running 80 plays
+   might have more explosives than a team running 55, but the rate tells you
+   which team is more dangerous per snap.
+
+
+6. POINTS PER TRIP INSIDE 40 (Finishing Drives)
+   
+   What it measures: Average points scored when a team's drive reaches the
+   opponent's 40-yard line.
+   
+   How to read it: Higher is better. Maximum theoretical is 7.0 (TD every trip).
+   Good teams score 4.5-5.5; poor finishers fall below 3.5.
+   
+   Why it matters: Getting into scoring position means nothing if you settle for
+   field goals or turn it over. This captures red zone efficiency plus the
+   ability to convert good field position into points.
+
+
+7. AVERAGE STARTING FIELD POSITION (Field Position)
+   
+   What it measures: The average yard line where a team begins its offensive
+   drives. Expressed as "Own XX" (e.g., "Own 28").
+   
+   How to read it: Higher number is better. "Own 35" means starting at your 35,
+   which is better than "Own 22."
+   
+   Why it matters: Field position compounds over a game. Starting at your 35 vs
+   your 20 on every drive is a 15-yard advantage per possession. Over 12 drives,
+   that's 180 hidden yards. This captures punt/kick return effectiveness,
+   turnover locations, and opponent punt distance.
+
+
+ADDITIONAL FACTORS (addressing gaps in original framework)
+----------------------------------------------------------
+
+8. PENALTIES (Yards)
+   
+   What it measures: Total penalty yards assessed against each team.
+   
+   How to read it: Lower is better. This is inverted from most stats.
+   
+   Why it matters: Penalties are invisible in efficiency stats but can be
+   game-deciding. A 15-yard personal foul that extends a drive, or a holding
+   call that negates a touchdown, directly impacts scoring in ways no other
+   stat captures.
+
+
+9. NON-OFFENSIVE POINTS (Def/ST Scores)
+   
+   What it measures: Points scored by defense or special teams, including:
+   - Pick-sixes
+   - Fumble return touchdowns
+   - Punt/kick return touchdowns
+   - Blocked kick return touchdowns
+   - Safeties
+   
+   How to read it: Higher is better. Most games this is 0-0. When it's not,
+   it's often decisive.
+   
+   Why it matters: A pick-6 is worth ~10+ points of swing (7 points scored plus
+   the possession the opponent lost). In the base Turnovers stat, it only shows
+   as +1. Non-offensive scores are discrete, high-impact events that need
+   separate tracking.
+
+
+10. POSSESSIONS (Drive Count)
+    
+    What it measures: Total number of offensive drives for each team.
+    
+    How to read it: Context-dependent. More possessions means more opportunities,
+    but can also indicate quick drives (good if scoring, bad if punting).
+    
+    Why it matters: Two teams can have identical efficiency, but if one team had
+    12 possessions and the other had 9, volume explains the scoring gap. Possession
+    count also captures pace of play and time of possession indirectly.
+
+
+INTERPRETING THE DASHBOARD
+--------------------------
+
+Factor Count: The summary shows how many factors each team "won." Winning 5+ of 8
+factors almost always correlates with winning the game.
+
+Strength Indicators: The diamond symbols show magnitude of advantage:
+- ◆◆◆ Dominant (>30% difference)
+- ◆◆ Strong (15-30% difference)
+- ◆ Slight (5-15% difference)
+- · Minimal (<5% difference)
+
+A team can win fewer factors but still win the game if they dominated the factors
+they won (e.g., winning Turnovers +3 matters more than losing Explosiveness by 1%).
+
+When Factors Conflict: If the stats suggest Team A should have won but Team B
+actually won, look for:
+- Non-offensive points (a pick-6 can overcome losing most factors)
+- Finishing drives (getting to the 40 means nothing without points)
+- Turnovers in critical field position (not all turnovers are equal)

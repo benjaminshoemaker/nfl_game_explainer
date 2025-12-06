@@ -49,6 +49,49 @@ def get_game_data(game_id):
     data = response.json()
     return data.get('gamepackageJSON', {})
 
+def get_play_probabilities(game_id):
+    """
+    Pull the v2 probabilities feed and map play_id -> probability payload.
+    Returns a dict mapping play_id -> probability payload.
+    """
+    headers = {'User-Agent': 'Mozilla/5.0'}
+    base = f"https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/{game_id}/competitions/{game_id}/probabilities"
+    prob_map = {}
+
+    def extract_play_id(play_ref):
+        if not play_ref:
+            return None
+        from urllib.parse import urlparse
+        path = urlparse(play_ref).path
+        if not path:
+            return None
+        return path.rstrip('/').split('/')[-1]
+
+    page = 1
+    page_count = 1
+    while page <= page_count:
+        try:
+            resp = requests.get(f"{base}?page={page}", headers=headers, timeout=15)
+            resp.raise_for_status()
+            data = resp.json()
+        except Exception:
+            break
+
+        items = data.get('items') or []
+        for item in items:
+            pid = extract_play_id(item.get('play', {}).get('$ref')) or item.get('id')
+            if pid is None:
+                continue
+            prob_map[str(pid)] = {
+                "homeWinPercentage": item.get("homeWinPercentage"),
+                "awayWinPercentage": item.get("awayWinPercentage"),
+                "tiePercentage": item.get("tiePercentage")
+            }
+        page_count = data.get('pageCount') or page_count
+        page += 1
+
+    return prob_map
+
 
 def latest_play_from_core(game_data):
     """Return (period, clock_seconds) of the last play in drives.previous."""
@@ -150,10 +193,51 @@ def classify_offense_play(play):
 
     return True, rush_hint, pass_hint
 
-def process_game_stats(game_data, expanded=False):
+def process_game_stats(game_data, expanded=False, probability_map=None):
     boxscore = game_data.get('boxscore', {})
     teams_info = boxscore.get('teams', [])
     id_to_abbr = {}
+    probability_map = probability_map or {}
+
+    # Track previous WP for delta calculation
+    prev_home_wp = 0.5
+    prev_away_wp = 0.5
+
+    def lookup_probability_with_delta(play):
+        """Compute WP and delta from previous play. Does NOT update prev."""
+        pid = play.get('id')
+        if pid is None:
+            return None
+        prob = probability_map.get(str(pid))
+        if not prob:
+            return None
+
+        home_wp = prob.get('homeWinPercentage', 0.5)
+        away_wp = prob.get('awayWinPercentage', 0.5)
+
+        # Compute delta (positive = good for that team)
+        home_delta = home_wp - prev_home_wp
+        away_delta = away_wp - prev_away_wp
+
+        return {
+            'homeWinPercentage': home_wp,
+            'awayWinPercentage': away_wp,
+            'tiePercentage': prob.get('tiePercentage', 0),
+            'homeDelta': home_delta,
+            'awayDelta': away_delta
+        }
+
+    def update_prev_wp(play):
+        """Update prev WP tracking. Call at end of every play."""
+        nonlocal prev_home_wp, prev_away_wp
+        pid = play.get('id')
+        if pid is None:
+            return
+        prob = probability_map.get(str(pid))
+        if prob:
+            prev_home_wp = prob.get('homeWinPercentage', prev_home_wp)
+            prev_away_wp = prob.get('awayWinPercentage', prev_away_wp)
+
     for t in teams_info:
         tid = t.get('team', {}).get('id')
         abbr = t.get('team', {}).get('abbreviation')
@@ -294,7 +378,8 @@ def process_game_stats(game_data, expanded=False):
                         'quarter': play.get('period', {}).get('number'),
                         'clock': play.get('clock', {}).get('displayValue'),
                         'start_pos': play.get('start', {}).get('possessionText'),
-                        'down_dist': play.get('start', {}).get('downDistanceText') or play.get('start', {}).get('shortDownDistanceText')
+                        'down_dist': play.get('start', {}).get('downDistanceText') or play.get('start', {}).get('shortDownDistanceText'),
+                        'probability': lookup_probability_with_delta(play)
                     })
             
             # Track scoring tied to the offense on the drive via scoringPlays map
@@ -338,7 +423,7 @@ def process_game_stats(game_data, expanded=False):
                             'clock': play.get('clock', {}).get('displayValue'),
                             'start_pos': play.get('start', {}).get('possessionText'),
                             'down_dist': play.get('start', {}).get('downDistanceText') or play.get('start', {}).get('shortDownDistanceText'),
-                            'probability': play.get('probability')
+                            'probability': lookup_probability_with_delta(play)
                         })
                 # ST penalties on punts
                 pen = play.get('penalty')
@@ -360,7 +445,7 @@ def process_game_stats(game_data, expanded=False):
                             'clock': play.get('clock', {}).get('displayValue'),
                             'start_pos': play.get('start', {}).get('possessionText'),
                             'down_dist': play.get('start', {}).get('downDistanceText') or play.get('start', {}).get('shortDownDistanceText'),
-                            'probability': play.get('probability')
+                            'probability': lookup_probability_with_delta(play)
                         })
             if 'kickoff' in play_type_lower:
                 net_yards = play.get('statYardage', 0)
@@ -376,7 +461,7 @@ def process_game_stats(game_data, expanded=False):
                             'clock': play.get('clock', {}).get('displayValue'),
                             'start_pos': play.get('start', {}).get('possessionText'),
                             'down_dist': play.get('start', {}).get('downDistanceText') or play.get('start', {}).get('shortDownDistanceText'),
-                            'probability': play.get('probability')
+                            'probability': lookup_probability_with_delta(play)
                         })
                 # ST penalties on kickoffs
                 pen = play.get('penalty')
@@ -398,7 +483,7 @@ def process_game_stats(game_data, expanded=False):
                             'clock': play.get('clock', {}).get('displayValue'),
                             'start_pos': play.get('start', {}).get('possessionText'),
                             'down_dist': play.get('start', {}).get('downDistanceText') or play.get('start', {}).get('shortDownDistanceText'),
-                            'probability': play.get('probability')
+                            'probability': lookup_probability_with_delta(play)
                         })
 
             is_offense, is_run, is_pass = classify_offense_play(play)
@@ -439,8 +524,11 @@ def process_game_stats(game_data, expanded=False):
                             'clock': play.get('clock', {}).get('displayValue'),
                             'start_pos': play.get('start', {}).get('possessionText'),
                             'down_dist': play.get('start', {}).get('downDistanceText') or play.get('start', {}).get('shortDownDistanceText'),
-                            'probability': play.get('probability')
+                            'probability': lookup_probability_with_delta(play)
                         })
+
+            # Always update prev WP at end of every play for accurate delta tracking
+            update_prev_wp(play)
 
         # Determine if the drive reached opponent 40 and assign points to that trip
         # If start inside 40 OR (start position + yards gained) crosses the 40
@@ -543,6 +631,57 @@ def process_game_stats(game_data, expanded=False):
         return df, details
     return df
 
+def build_analysis_text(payload):
+    """Create a short plain-text summary for the HTML template."""
+    team_meta = payload.get("team_meta", [])
+    summary_map = {row.get("Team"): row for row in payload.get("summary_table", [])}
+    advanced_map = {row.get("Team"): row for row in payload.get("advanced_table", [])}
+
+    away = next((t for t in team_meta if t.get("homeAway") == "away"), {})
+    home = next((t for t in team_meta if t.get("homeAway") == "home"), {})
+
+    away_abbr = away.get("abbr", "Away")
+    home_abbr = home.get("abbr", "Home")
+
+    away_summary = summary_map.get(away_abbr, {})
+    home_summary = summary_map.get(home_abbr, {})
+    away_score = away_summary.get("Score")
+    home_score = home_summary.get("Score")
+
+    parts = []
+    if isinstance(away_score, (int, float)) and isinstance(home_score, (int, float)):
+        if away_score > home_score:
+            parts.append(f"{away_abbr} lead {home_abbr} {away_score}-{home_score}.")
+        elif home_score > away_score:
+            parts.append(f"{home_abbr} lead {away_abbr} {home_score}-{away_score}.")
+        else:
+            parts.append(f"All square at {away_score}-{home_score}.")
+    else:
+        parts.append(f"{away_abbr} vs {home_abbr}.")
+
+    away_adv = advanced_map.get(away_abbr, {})
+    home_adv = advanced_map.get(home_abbr, {})
+
+    def add_stat_line(label, key, suffix=""):
+        a_val = away_adv.get(key)
+        h_val = home_adv.get(key)
+        if a_val is None or h_val is None:
+            return
+        if isinstance(a_val, float):
+            a_display = round(a_val, 2)
+        else:
+            a_display = a_val
+        if isinstance(h_val, float):
+            h_display = round(h_val, 2)
+        else:
+            h_display = h_val
+        parts.append(f"{label}: {away_abbr} {a_display}{suffix} vs {home_abbr} {h_display}{suffix}.")
+
+    add_stat_line("Explosive plays", "Explosive Plays")
+    add_stat_line("Yards per play", "Yards Per Play")
+
+    return " ".join(parts)
+
 def main():
     parser = argparse.ArgumentParser(description="NFL game advanced stats")
     parser.add_argument("game_id", help="ESPN gameId to fetch (from game URL)")
@@ -552,6 +691,11 @@ def main():
     try:
         print(f"Fetching data for Game ID: {args.game_id}...")
         raw_data = get_game_data(args.game_id)
+        prob_map = {}
+        try:
+            prob_map = get_play_probabilities(args.game_id)
+        except Exception:
+            prob_map = {}
         # Last play timestamp/lag (core feed) shown at the top
         last_core_play = None
         drives_prev = raw_data.get('drives', {}).get('previous', [])
@@ -577,7 +721,7 @@ def main():
             last_play_line = f"Last play recorded (core feed) at {modified_raw}{lag_str}"
 
         # Always compute expanded data to support downloadable summary file
-        df, details = process_game_stats(raw_data, expanded=True)
+        df, details = process_game_stats(raw_data, expanded=True, probability_map=prob_map)
 
         if last_play_line:
             print(f"\n{last_play_line}")
@@ -638,8 +782,10 @@ def main():
         output_dir = os.path.join(os.getcwd(), "game_summaries")
         os.makedirs(output_dir, exist_ok=True)
 
+        template_path = os.path.join(os.path.dirname(__file__), "templates", "game_summary_template.html")
         csv_path = os.path.join(output_dir, f"{fname_base}_advanced.csv")
         json_path = os.path.join(output_dir, f"{fname_base}_expanded.json")
+        html_path = os.path.join(output_dir, f"{fname_base}.html")
 
         df[advanced_cols].to_csv(csv_path, index=False)
 
@@ -660,11 +806,23 @@ def main():
             "team_meta": team_meta,
             "last_play": last_play_line
         }
+        payload["analysis"] = build_analysis_text(payload)
         try:
             with open(json_path, "w") as f:
                 json.dump(payload, f, indent=2)
         except Exception as e:
             print(f"Warning: could not write JSON summary: {e}")
+
+        try:
+            with open(template_path, "r", encoding="utf-8") as f:
+                template_html = f.read()
+            rendered_html = template_html.replace("__GAME_DATA_JSON__", json.dumps(payload, indent=2))
+            with open(html_path, "w", encoding="utf-8") as f:
+                f.write(rendered_html)
+        except FileNotFoundError:
+            print(f"Warning: HTML template not found at {template_path}")
+        except Exception as e:
+            print(f"Warning: could not write HTML summary: {e}")
 
         if args.expanded and details:
             print("\n--- EXPANDED PLAYS ---")
@@ -675,6 +833,35 @@ def main():
                 abbr = t.get('team', {}).get('abbreviation')
                 if tid and abbr:
                     team_id_to_abbr[tid] = abbr
+
+            def format_wp(prob):
+                if not prob or not isinstance(prob, dict):
+                    return ""
+                def pct(val):
+                    if isinstance(val, (int, float)):
+                        return round(val * 100, 1)
+                    return None
+                def delta_str(val):
+                    if isinstance(val, (int, float)):
+                        d = round(val * 100, 1)
+                        if d == 0:
+                            return "0.0"
+                        return f"+{d}" if d > 0 else str(d)
+                    return None
+                home_pct = pct(prob.get('homeWinPercentage'))
+                away_pct = pct(prob.get('awayWinPercentage'))
+                home_delta = delta_str(prob.get('homeDelta'))
+                away_delta = delta_str(prob.get('awayDelta'))
+                parts = []
+                if away_pct is not None and away_abbr:
+                    delta_part = f" ({away_delta})" if away_delta else ""
+                    parts.append(f"{away_abbr} {away_pct}%{delta_part}")
+                if home_pct is not None and home_abbr:
+                    delta_part = f" ({home_delta})" if home_delta else ""
+                    parts.append(f"{home_abbr} {home_pct}%{delta_part}")
+                if not parts:
+                    return ""
+                return "WP " + " / ".join(parts)
 
             for t_id, team_detail in details.items():
                 team_label = team_id_to_abbr.get(t_id, t_id)
@@ -703,6 +890,9 @@ def main():
                             prefix_parts.append(p['start_pos'])
                         prefix = " | ".join(prefix_parts)
                         suffix_parts = []
+                        wp_text = format_wp(p.get('probability'))
+                        if wp_text:
+                            suffix_parts.append(wp_text)
                         suffix = " ".join(suffix_parts)
                         if prefix:
                             print(f"    {prefix} | {desc} {p.get('text','')} {suffix}".rstrip())

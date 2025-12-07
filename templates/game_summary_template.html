@@ -6,33 +6,36 @@
     <title>Game Analysis</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* ==================== CSS VARIABLES ==================== */
         :root {
-            /* Team Colors - dynamically set in JS but defaults for Seahawks */
             --home-primary: #002244;
             --home-secondary: #69BE28;
             --home-accent: #A5ACAF;
+            --home-text: #69BE28; /* Will be set by JS based on contrast */
             --away-primary: #4F2683;
             --away-secondary: #FFC62F;
             --away-accent: #FFC62F;
+            --away-text: #FFC62F; /* Will be set by JS based on contrast */
 
-            /* Base palette */
-            --bg-deep: #0a0f14;
-            --bg-card: #111820;
-            --bg-elevated: #1a232d;
-            --bg-hover: #232f3d;
+            --bg-deep: #0a0a0f;
+            --bg-card: #12121a;
+            --bg-elevated: #1a1a24;
+            --bg-hover: #24242f;
             --border-subtle: rgba(255,255,255,0.06);
             --border-medium: rgba(255,255,255,0.12);
 
             --text-primary: #f0f4f8;
-            --text-secondary: #8899a8;
-            --text-muted: #5a6a7a;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
 
             --positive: #10b981;
             --negative: #ef4444;
             --neutral: #6b7280;
+
+            --gold: #fbbf24;
+            --silver: #94a3b8;
         }
 
         /* ==================== RESET & BASE ==================== */
@@ -45,111 +48,119 @@
         }
 
         body {
-            font-family: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Barlow', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--bg-deep);
             color: var(--text-primary);
             line-height: 1.5;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* Noise texture overlay */
+        /* Subtle grid pattern */
         body::before {
             content: '';
             position: fixed;
             inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-            opacity: 0.03;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
             pointer-events: none;
             z-index: 0;
         }
 
         /* ==================== TYPOGRAPHY ==================== */
-        .font-display { font-family: 'Oswald', sans-serif; }
-        .font-body { font-family: 'Source Sans 3', sans-serif; }
-
-        .text-score {
-            font-family: 'Oswald', sans-serif;
-            font-weight: 700;
-            font-size: clamp(4rem, 12vw, 7rem);
-            line-height: 1;
-            letter-spacing: -0.02em;
-        }
-
-        .text-team-name {
-            font-family: 'Oswald', sans-serif;
-            font-weight: 600;
-            font-size: clamp(1.25rem, 3vw, 1.75rem);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .text-stat-value {
-            font-family: 'Oswald', sans-serif;
-            font-weight: 600;
-            font-size: 1.5rem;
-            letter-spacing: -0.01em;
-        }
-
-        .text-stat-label {
-            font-family: 'Oswald', sans-serif;
-            font-weight: 500;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            color: var(--text-muted);
-        }
+        .font-display { font-family: 'Bebas Neue', sans-serif; }
+        .font-condensed { font-family: 'Barlow Condensed', sans-serif; }
+        .font-body { font-family: 'Barlow', sans-serif; }
 
         /* ==================== LAYOUT ==================== */
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 1rem;
+            padding: 0 1.5rem;
             position: relative;
             z-index: 1;
         }
 
-        /* ==================== SCOREBOARD HERO ==================== */
-        .scoreboard {
+        /* ==================== HERO SCOREBOARD ==================== */
+        .hero {
             position: relative;
-            padding: 3rem 0 4rem;
-            margin-bottom: 2rem;
+            min-height: 320px;
+            display: flex;
+            flex-direction: column;
             overflow: hidden;
         }
 
-        .scoreboard::before {
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+
+        /* Diagonal split background */
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg,
+                var(--away-primary) 0%,
+                var(--away-primary) 50%,
+                var(--home-primary) 50%,
+                var(--home-primary) 100%
+            );
+        }
+
+        /* Gradient overlays for depth */
+        .hero-bg::after {
             content: '';
             position: absolute;
             inset: 0;
             background:
-                radial-gradient(ellipse 80% 50% at 80% 20%, var(--home-primary) 0%, transparent 50%),
-                radial-gradient(ellipse 60% 40% at 20% 80%, var(--away-primary) 0%, transparent 40%),
-                linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-card) 100%);
-            opacity: 0.8;
-            z-index: -1;
+                radial-gradient(ellipse 60% 80% at 20% 50%, rgba(0,0,0,0.3) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 80% at 80% 50%, rgba(0,0,0,0.3) 0%, transparent 60%),
+                linear-gradient(180deg, transparent 60%, var(--bg-deep) 100%);
         }
 
-        .scoreboard::after {
-            content: '';
+        /* Stadium lights effect */
+        .hero-lights {
             position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--home-secondary), var(--away-secondary), transparent);
-            opacity: 0.5;
+            top: -50%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200%;
+            height: 100%;
+            background: radial-gradient(ellipse 50% 30% at 50% 0%, rgba(255,255,255,0.08) 0%, transparent 60%);
+            pointer-events: none;
         }
 
-        .scoreboard-inner {
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Scoreboard container */
+        .scoreboard {
+            flex: 1;
             display: grid;
             grid-template-columns: 1fr auto 1fr;
             align-items: center;
-            gap: 2rem;
+            gap: 1rem;
+            padding: 2rem 0;
+            max-width: 1000px;
+            margin: 0 auto;
+            width: 100%;
         }
 
+        /* Team blocks */
         .team-block {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 1rem;
+            padding: 1.5rem;
         }
 
         .team-block.away {
@@ -162,51 +173,81 @@
             text-align: left;
         }
 
-        .team-abbr {
-            font-family: 'Oswald', sans-serif;
-            font-weight: 700;
-            font-size: clamp(3rem, 8vw, 5rem);
-            line-height: 1;
-            letter-spacing: 0.02em;
-            opacity: 0.15;
-            position: absolute;
-        }
-
-        .team-block.away .team-abbr { right: 5%; top: 20%; }
-        .team-block.home .team-abbr { left: 5%; top: 20%; }
-
-        .team-name-wrapper {
+        .team-logo-wrapper {
+            width: 100px;
+            height: 100px;
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            justify-content: center;
+            background: rgba(255,255,255,0.1);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.15);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .team-block.away .team-name-wrapper { flex-direction: row-reverse; }
-
-        .team-indicator {
-            width: 4px;
-            height: 2.5rem;
-            border-radius: 2px;
+        .team-logo-wrapper:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.4);
         }
 
-        .team-block.away .team-indicator { background: var(--away-secondary); }
-        .team-block.home .team-indicator { background: var(--home-secondary); }
+        .team-logo {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+        }
+
+        .team-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .team-name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(1.5rem, 4vw, 2.25rem);
+            letter-spacing: 0.05em;
+            color: var(--text-primary);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
 
         .team-record {
-            font-size: 0.875rem;
-            color: var(--text-muted);
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.9rem;
             font-weight: 500;
+            color: rgba(255,255,255,0.7);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
         }
 
+        /* Score center */
         .score-center {
             display: flex;
+            flex-direction: column;
             align-items: center;
             gap: 1.5rem;
-            padding: 0 1rem;
+            padding: 1rem 2rem;
+        }
+
+        .score-display {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
 
         .score-value {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(4rem, 12vw, 7rem);
+            line-height: 1;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+            text-shadow: 0 4px 20px rgba(0,0,0,0.5);
             position: relative;
+        }
+
+        .score-value.winner {
+            color: var(--gold);
         }
 
         .score-value.winner::after {
@@ -215,48 +256,123 @@
             bottom: -8px;
             left: 50%;
             transform: translateX(-50%);
-            width: 60%;
-            height: 3px;
+            width: 80%;
+            height: 4px;
+            background: var(--gold);
             border-radius: 2px;
+            box-shadow: 0 0 20px var(--gold);
         }
 
-        .score-value.away.winner::after { background: var(--away-secondary); }
-        .score-value.home.winner::after { background: var(--home-secondary); }
-
         .score-divider {
-            font-family: 'Oswald', sans-serif;
-            font-weight: 300;
+            font-family: 'Bebas Neue', sans-serif;
             font-size: 3rem;
-            color: var(--text-muted);
-            opacity: 0.5;
+            color: rgba(255,255,255,0.3);
         }
 
         .game-status {
-            text-align: center;
-            margin-top: 1.5rem;
-        }
-
-        .status-badge {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: var(--bg-elevated);
-            border: 1px solid var(--border-medium);
+            padding: 0.5rem 1.25rem;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.2);
             border-radius: 100px;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-primary);
+            backdrop-filter: blur(10px);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--positive);
+            box-shadow: 0 0 10px var(--positive);
+        }
+
+        .status-dot.final {
+            background: var(--silver);
+            box-shadow: none;
+        }
+
+        /* ==================== AI SUMMARY SECTION ==================== */
+        .ai-summary-section {
+            position: relative;
+            margin: -2rem 0 2rem;
+            z-index: 10;
+        }
+
+        .ai-summary-card {
+            background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-elevated) 100%);
+            border: 1px solid var(--border-medium);
+            border-radius: 16px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+
+        .ai-summary-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--away-secondary), var(--gold), var(--home-secondary));
+        }
+
+        .ai-summary-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .ai-summary-icon {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--gold) 0%, #f59e0b 100%);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
+        }
+
+        .ai-summary-icon svg {
+            width: 20px;
+            height: 20px;
+            color: var(--bg-deep);
+        }
+
+        .ai-summary-label {
+            font-family: 'Barlow Condensed', sans-serif;
             font-size: 0.75rem;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--text-secondary);
+            letter-spacing: 0.15em;
+            color: var(--gold);
         }
 
-        .status-badge.final {
-            background: linear-gradient(135deg, var(--home-primary), var(--bg-elevated));
-            border-color: var(--home-secondary);
-            color: var(--home-secondary);
+        .ai-summary-text {
+            font-family: 'Barlow', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 500;
+            line-height: 1.6;
+            color: var(--text-primary);
         }
 
+        .ai-summary-text .highlight {
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        /* ==================== VIEW TOGGLE ==================== */
         .view-toggle-bar {
             display: flex;
             align-items: center;
@@ -264,9 +380,9 @@
             gap: 1rem;
             background: var(--bg-card);
             border: 1px solid var(--border-subtle);
-            border-radius: 10px;
-            padding: 0.75rem 1rem;
-            margin-bottom: 1.25rem;
+            border-radius: 12px;
+            padding: 0.875rem 1.25rem;
+            margin-bottom: 1.5rem;
         }
 
         .view-note {
@@ -274,28 +390,64 @@
             align-items: center;
             gap: 0.5rem;
             color: var(--text-secondary);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
 
         .view-note-dot {
             width: 8px;
             height: 8px;
             border-radius: 999px;
-            background: var(--away-secondary);
-            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.04);
+            background: var(--positive);
+            box-shadow: 0 0 8px var(--positive);
         }
 
         .view-toggle-control {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
+        }
+
+        .view-toggle-label {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+        }
+
+        .filter-select {
+            appearance: none;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-medium);
+            border-radius: 8px;
+            padding: 0.6rem 2.5rem 0.6rem 1rem;
+            font-family: 'Barlow', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            cursor: pointer;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .filter-select:hover {
+            border-color: var(--home-secondary);
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--home-secondary);
+            box-shadow: 0 0 0 3px rgba(105, 190, 40, 0.15);
         }
 
         /* ==================== CARDS ==================== */
         .card {
             background: var(--bg-card);
             border: 1px solid var(--border-subtle);
-            border-radius: 12px;
+            border-radius: 16px;
             overflow: hidden;
         }
 
@@ -303,64 +455,37 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 1rem 1.25rem;
+            padding: 1.25rem 1.5rem;
             border-bottom: 1px solid var(--border-subtle);
             background: var(--bg-elevated);
         }
 
         .card-title {
-            font-family: 'Oswald', sans-serif;
-            font-weight: 600;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--text-primary);
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.1rem;
+            letter-spacing: 0.1em;
+            color: var(--text-primary);
         }
 
         .card-title svg {
-            width: 18px;
-            height: 18px;
-            opacity: 0.7;
-        }
-
-        .card-body { padding: 1.25rem; }
-
-        /* ==================== ANALYSIS CARD ==================== */
-        .analysis-card {
-            position: relative;
-            border-left: 3px solid var(--home-secondary);
-        }
-
-        .analysis-card .card-body {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .analysis-icon {
-            flex-shrink: 0;
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            background: linear-gradient(135deg, var(--home-secondary) 0%, var(--home-primary) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .analysis-icon svg {
             width: 20px;
             height: 20px;
-            color: white;
+            color: var(--text-muted);
         }
 
-        .analysis-text {
-            color: var(--text-secondary);
-            font-size: 1rem;
-            line-height: 1.6;
+        .card-subtitle {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
         }
+
+        .card-body { padding: 1.5rem; }
 
         /* ==================== SUMMARY TABLE ==================== */
         .summary-table {
@@ -370,16 +495,14 @@
 
         .summary-table th,
         .summary-table td {
-            padding: 0.875rem 1rem;
+            padding: 1rem 1.25rem;
             text-align: center;
         }
 
         .summary-table thead th {
-            font-family: 'Oswald', sans-serif;
-            font-weight: 600;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1rem;
+            letter-spacing: 0.1em;
             color: var(--text-muted);
             border-bottom: 1px solid var(--border-medium);
             background: var(--bg-elevated);
@@ -389,16 +512,16 @@
             text-align: left;
         }
 
-        .summary-table thead th.away {
-            color: var(--away-secondary);
-        }
-
-        .summary-table thead th.home {
-            color: var(--home-secondary);
-        }
+        .summary-table thead th.away { color: var(--away-text); }
+        .summary-table thead th.home { color: var(--home-text); }
 
         .summary-table tbody tr {
             border-bottom: 1px solid var(--border-subtle);
+            transition: background 0.2s;
+        }
+
+        .summary-table tbody tr:hover {
+            background: var(--bg-hover);
         }
 
         .summary-table tbody tr:last-child {
@@ -407,24 +530,20 @@
 
         .summary-table tbody td:first-child {
             text-align: left;
+            font-family: 'Barlow', sans-serif;
             font-weight: 600;
             color: var(--text-secondary);
-            font-size: 0.875rem;
+            font-size: 0.9rem;
         }
 
         .summary-table tbody td {
-            font-family: 'Oswald', sans-serif;
-            font-weight: 600;
-            font-size: 1.25rem;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: 0.02em;
         }
 
-        .summary-table tbody td.away {
-            color: var(--away-secondary);
-        }
-
-        .summary-table tbody td.home {
-            color: var(--home-secondary);
-        }
+        .summary-table tbody td.away { color: var(--away-text); }
+        .summary-table tbody td.home { color: var(--home-text); }
 
         /* ==================== ADVANCED STATS ==================== */
         .advanced-stats {
@@ -435,10 +554,10 @@
 
         .stat-row {
             display: grid;
-            grid-template-columns: 60px minmax(70px, auto) 1fr minmax(70px, auto) 60px;
-            align-items: center;
+            grid-template-columns: 70px minmax(80px, auto) 1fr minmax(80px, auto) 70px;
+            align-items: end;
             gap: 0.75rem;
-            padding: 1rem 0;
+            padding: 1.25rem 0;
             border-bottom: 1px solid var(--border-subtle);
             transition: background 0.2s ease;
             position: relative;
@@ -447,46 +566,11 @@
 
         .stat-row:last-child { border-bottom: none; }
 
-        /* Stat row watermark */
-        .stat-watermark {
-            position: absolute;
-            font-family: 'Oswald', sans-serif;
-            font-weight: 700;
-            font-size: clamp(2.5rem, 6vw, 4rem);
-            text-transform: uppercase;
-            letter-spacing: 0.02em;
-            opacity: 0.1;
-            pointer-events: none;
-            z-index: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            line-height: 1;
-        }
-
-        .stat-watermark.away {
-            left: 0;
-            color: var(--away-secondary);
-        }
-
-        .stat-watermark.home {
-            right: 0;
-            color: var(--home-secondary);
-        }
-
-        /* Adjust watermark position for clickable rows (which have padding) */
-        .stat-row.clickable .stat-watermark.away {
-            left: 1.25rem;
-        }
-
-        .stat-row.clickable .stat-watermark.home {
-            right: 1.25rem;
-        }
-
         .stat-row.clickable {
             cursor: pointer;
-            margin: 0 -1.25rem;
-            padding-left: 1.25rem;
-            padding-right: 1.25rem;
+            margin: 0 -1.5rem;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
             border-radius: 0;
         }
 
@@ -497,7 +581,40 @@
         .stat-row.selected {
             background: var(--bg-hover);
             border-left: 3px solid var(--home-secondary);
-            padding-left: calc(1.25rem - 3px);
+            padding-left: calc(1.5rem - 3px);
+        }
+
+        /* Stat row watermark */
+        .stat-watermark {
+            position: absolute;
+            font-family: 'Bebas Neue', sans-serif;
+            font-weight: 400;
+            font-size: clamp(3rem, 8vw, 5rem);
+            letter-spacing: 0.02em;
+            opacity: 0.04;
+            pointer-events: none;
+            z-index: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            line-height: 1;
+        }
+
+        .stat-watermark.away {
+            left: 70px;
+            color: var(--away-secondary);
+        }
+
+        .stat-watermark.home {
+            right: 70px;
+            color: var(--home-secondary);
+        }
+
+        .stat-row.clickable .stat-watermark.away {
+            left: calc(70px + 1.5rem);
+        }
+
+        .stat-row.clickable .stat-watermark.home {
+            right: calc(70px + 1.5rem);
         }
 
         .stat-value-cell {
@@ -510,19 +627,19 @@
         .stat-value-cell.home { text-align: left; }
 
         .stat-number {
-            font-family: 'Oswald', sans-serif;
-            font-weight: 600;
-            font-size: 1.25rem;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            letter-spacing: 0.02em;
+            line-height: 1;
         }
 
-        .stat-value-cell.away .stat-number { color: var(--away-secondary); }
-        .stat-value-cell.home .stat-number { color: var(--home-secondary); }
+        .stat-value-cell.away .stat-number { color: var(--away-text); }
+        .stat-value-cell.home .stat-number { color: var(--home-text); }
 
         .stat-bar-container {
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
-            padding-top: 0.25rem;
             position: relative;
             z-index: 1;
         }
@@ -533,14 +650,24 @@
         }
 
         .stat-label {
-            font-size: 0.65rem;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.75rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.1em;
             color: var(--text-muted);
             display: flex;
             align-items: center;
-            gap: 0.35rem;
+            gap: 0.5rem;
+        }
+
+        .stat-label .stat-name {
+            color: var(--text-primary);
+        }
+
+        .stat-label .stat-desc {
+            color: var(--text-muted);
+            font-weight: 400;
         }
 
         .stat-label .arrow {
@@ -559,42 +686,25 @@
 
         .stat-bar-track {
             display: flex;
-            height: 8px;
+            height: 10px;
             background: var(--bg-deep);
-            border-radius: 4px;
+            border-radius: 5px;
             overflow: visible;
             position: relative;
         }
 
-        /* Center ticker line */
         .stat-bar-track::before {
             content: '';
             position: absolute;
             left: 50%;
-            top: -4px;
-            bottom: -4px;
+            top: -6px;
+            bottom: -6px;
             width: 2px;
             background: var(--text-primary);
             transform: translateX(-50%);
-            opacity: 0.6;
+            opacity: 0.4;
             z-index: 3;
             border-radius: 1px;
-        }
-
-        /* Center ticker triangle indicator */
-        .stat-bar-track::after {
-            content: '';
-            position: absolute;
-            left: 50%;
-            top: -8px;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 5px solid transparent;
-            border-right: 5px solid transparent;
-            border-top: 6px solid var(--text-primary);
-            opacity: 0.6;
-            z-index: 3;
         }
 
         .stat-bar {
@@ -603,26 +713,52 @@
         }
 
         .stat-bar.away {
-            background: var(--away-secondary);
-            border-radius: 4px 0 0 4px;
-            transition: background 0.3s ease, opacity 0.3s ease;
+            background: linear-gradient(90deg, var(--away-primary), var(--away-secondary));
+            border-radius: 5px 0 0 5px;
         }
 
         .stat-bar.home {
-            background: var(--home-secondary);
-            border-radius: 0 4px 4px 0;
-            transition: background 0.3s ease, opacity 0.3s ease;
+            background: linear-gradient(90deg, var(--home-secondary), var(--home-primary));
+            border-radius: 0 5px 5px 0;
         }
 
-        /* Winner/Loser emphasis */
+        /* Losing team's bar is muted grey */
         .stat-row[data-winner="home"] .stat-bar.away {
-            background: rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.18);
         }
 
         .stat-row[data-winner="away"] .stat-bar.home {
-            background: rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.18);
         }
 
+        /* When tied, both bars are grey */
+        .stat-row[data-winner="even"] .stat-bar.away,
+        .stat-row[data-winner="even"] .stat-bar.home {
+            background: rgba(255,255,255,0.18);
+        }
+
+        /* Winning bar pulse on hover */
+        @keyframes barPulse {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.3); }
+        }
+
+        .stat-row:hover .stat-bar.away,
+        .stat-row:hover .stat-bar.home {
+            transition: filter 0.2s ease;
+        }
+
+        .stat-row[data-winner="away"]:hover .stat-bar.away {
+            animation: barPulse 1.2s ease-in-out infinite;
+            box-shadow: 0 0 12px var(--away-secondary);
+        }
+
+        .stat-row[data-winner="home"]:hover .stat-bar.home {
+            animation: barPulse 1.2s ease-in-out infinite;
+            box-shadow: 0 0 12px var(--home-secondary);
+        }
+
+        /* Losing team's number is muted */
         .stat-row[data-winner="home"] .stat-value-cell.away .stat-number {
             color: var(--text-muted);
         }
@@ -631,24 +767,9 @@
             color: var(--text-muted);
         }
 
-        .stat-row[data-winner="home"] .stat-value-cell.home .stat-number {
-            color: var(--text-primary);
-            text-shadow: 0 0 10px var(--home-secondary);
-        }
-
-        .stat-row[data-winner="away"] .stat-value-cell.away .stat-number {
-            color: var(--text-primary);
-            text-shadow: 0 0 10px var(--away-secondary);
-        }
-
-        .stat-row[data-winner="even"] .stat-value-cell .stat-number {
-            color: var(--text-secondary);
-        }
-
-        /* Stat advantage indicator */
+        /* Advantage indicators */
         .stat-advantage {
-            font-size: 0.75rem;
-            letter-spacing: 0.05em;
+            font-size: 0.8rem;
             display: flex;
             align-items: center;
             gap: 0.4rem;
@@ -657,67 +778,37 @@
         }
 
         .stat-advantage.away {
-            justify-content: flex-start;
-            flex-direction: row-reverse;
-        }
-
-        .stat-advantage.home {
             justify-content: flex-end;
         }
 
-        .stat-advantage.even {
-            justify-content: center;
+        .stat-advantage.home {
+            justify-content: flex-start;
         }
 
-        /* Empty placeholder for the opposite side */
         .stat-advantage-placeholder {
             min-width: 0;
         }
 
         .stat-advantage .diamonds {
-            font-size: 1.15rem;
-            letter-spacing: 0.15em;
-            text-shadow: 0 0 8px currentColor;
-            position: relative;
-            z-index: 2;
+            font-size: 1.25rem;
+            letter-spacing: 0.1em;
+            text-shadow: 0 0 10px currentColor;
+            line-height: 1;
         }
 
-        .stat-advantage.away .diamonds {
-            color: var(--away-secondary);
-        }
-
-        .stat-advantage.home .diamonds {
-            color: var(--home-secondary);
-        }
+        .stat-advantage.away .diamonds { color: var(--away-text); }
+        .stat-advantage.home .diamonds { color: var(--home-text); }
 
         .stat-advantage .team-abbr {
-            font-family: 'Oswald', sans-serif;
-            font-weight: 600;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            text-shadow: 0 0 6px currentColor;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
         }
 
-        .stat-advantage.away .team-abbr {
-            color: var(--away-secondary);
-        }
+        .stat-advantage.away .team-abbr { color: var(--away-text); }
+        .stat-advantage.home .team-abbr { color: var(--home-text); }
 
-        .stat-advantage.home .team-abbr {
-            color: var(--home-secondary);
-        }
-
-        .stat-advantage.even {
-            color: var(--text-muted);
-        }
-
-        .stat-advantage.even .diamonds,
-        .stat-advantage.even .team-abbr {
-            text-shadow: none;
-        }
-
-        /* Tooltip for diamonds */
         .stat-advantage[data-tooltip] {
-            position: relative;
             cursor: help;
         }
 
@@ -726,15 +817,15 @@
             position: absolute;
             bottom: 100%;
             right: 0;
-            margin-bottom: 6px;
-            padding: 0.4rem 0.6rem;
+            margin-bottom: 8px;
+            padding: 0.5rem 0.75rem;
             background: var(--bg-deep);
             color: var(--text-primary);
-            font-size: 0.65rem;
+            font-family: 'Barlow', sans-serif;
+            font-size: 0.7rem;
             font-weight: 400;
-            letter-spacing: 0.02em;
             white-space: nowrap;
-            border-radius: 4px;
+            border-radius: 6px;
             border: 1px solid var(--border-medium);
             opacity: 0;
             pointer-events: none;
@@ -746,27 +837,51 @@
             opacity: 1;
         }
 
-        /* Two-part header styling */
-        .stat-label .stat-name {
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-
-        .stat-label .stat-desc {
-            color: var(--text-muted);
-            font-weight: 400;
-            margin-left: 0.5rem;
-        }
-
-        /* Factor summary footer */
+        /* Factor summary */
         .factor-summary {
             display: flex;
             justify-content: center;
+            align-items: center;
             gap: 2rem;
             padding: 1.5rem;
             background: var(--bg-elevated);
-            border-radius: 8px;
-            margin-top: 1rem;
+            border-radius: 12px;
+            margin-top: 1.5rem;
+        }
+
+        .factor-pie-container {
+            width: 70px;
+            height: 70px;
+            flex-shrink: 0;
+        }
+
+        .factor-pie {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .factor-pie circle {
+            fill: none;
+            stroke-width: 8;
+            transition: stroke-dasharray 0.6s ease, stroke-dashoffset 0.6s ease;
+        }
+
+        .factor-pie .pie-away {
+            stroke: var(--away-text);
+        }
+
+        .factor-pie .pie-even {
+            stroke: var(--text-muted);
+        }
+
+        .factor-pie .pie-home {
+            stroke: var(--home-text);
+        }
+
+        .factor-counts-wrapper {
+            display: flex;
+            gap: 2rem;
         }
 
         .factor-count {
@@ -774,26 +889,19 @@
         }
 
         .factor-count .count-number {
-            font-family: 'Oswald', sans-serif;
-            font-size: 2rem;
-            font-weight: 700;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5rem;
             line-height: 1;
         }
 
-        .factor-count.away .count-number {
-            color: var(--away-secondary);
-        }
-
-        .factor-count.home .count-number {
-            color: var(--home-secondary);
-        }
-
-        .factor-count.even .count-number {
-            color: var(--text-muted);
-        }
+        .factor-count.away .count-number { color: var(--away-text); }
+        .factor-count.home .count-number { color: var(--home-text); }
+        .factor-count.even .count-number { color: var(--text-muted); }
 
         .factor-count .count-label {
-            font-size: 0.7rem;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.1em;
             color: var(--text-muted);
@@ -803,54 +911,21 @@
         .strength-legend {
             text-align: center;
             margin-top: 1rem;
-            font-size: 0.65rem;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 500;
             color: var(--text-muted);
             display: flex;
             justify-content: center;
-            gap: 1.5rem;
+            gap: 2rem;
+            letter-spacing: 0.05em;
         }
 
         /* ==================== PLAYS SECTION ==================== */
-        .plays-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .filter-select {
-            appearance: none;
-            background: var(--bg-elevated);
-            border: 1px solid var(--border-medium);
-            border-radius: 8px;
-            padding: 0.6rem 2.5rem 0.6rem 1rem;
-            font-family: 'Source Sans 3', sans-serif;
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            cursor: pointer;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238899a8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 0.75rem center;
-            transition: border-color 0.2s, box-shadow 0.2s;
-        }
-
-        .filter-select:hover {
-            border-color: var(--home-secondary);
-        }
-
-        .filter-select:focus {
-            outline: none;
-            border-color: var(--home-secondary);
-            box-shadow: 0 0 0 3px rgba(105, 190, 40, 0.15);
-        }
-
         .plays-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-            margin-top: 1.25rem;
+            gap: 2rem;
         }
 
         @media (max-width: 768px) {
@@ -862,20 +937,27 @@
             align-items: center;
             gap: 0.75rem;
             margin-bottom: 1rem;
-            padding-bottom: 0.75rem;
+            padding: 0.75rem;
+            padding-left: 0;
             border-bottom: 2px solid;
+            position: relative;
         }
 
         .plays-column.away .plays-column-header { border-color: var(--away-secondary); }
         .plays-column.home .plays-column-header { border-color: var(--home-secondary); }
 
+        .column-team-logo {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+
         .column-team-badge {
-            font-family: 'Oswald', sans-serif;
-            font-weight: 600;
-            font-size: 0.75rem;
-            padding: 0.35rem 0.75rem;
-            border-radius: 4px;
-            text-transform: uppercase;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 0.9rem;
+            padding: 0.4rem 0.85rem;
+            border-radius: 6px;
             letter-spacing: 0.05em;
         }
 
@@ -890,25 +972,35 @@
         }
 
         .column-team-name {
-            font-family: 'Oswald', sans-serif;
-            font-weight: 500;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 600;
             font-size: 0.9rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             color: var(--text-secondary);
         }
 
+        .column-play-count {
+            margin-left: auto;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
         .plays-list {
             display: flex;
             flex-direction: column;
-            gap: 0.75rem;
+            gap: 0.875rem;
         }
 
         .play-card {
             background: var(--bg-elevated);
             border: 1px solid var(--border-subtle);
-            border-radius: 10px;
-            padding: 1rem;
+            border-radius: 12px;
+            padding: 1.25rem;
             position: relative;
             overflow: hidden;
             transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
@@ -919,7 +1011,7 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 3px;
+            width: 4px;
             height: 100%;
         }
 
@@ -927,8 +1019,8 @@
         .plays-column.home .play-card::before { background: var(--home-secondary); }
 
         .play-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
         }
 
         .plays-column.away .play-card:hover { border-color: var(--away-secondary); }
@@ -945,7 +1037,8 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            font-size: 0.7rem;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.75rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.05em;
@@ -953,33 +1046,59 @@
         }
 
         .play-quarter {
-            padding: 0.2rem 0.5rem;
+            padding: 0.25rem 0.6rem;
             background: var(--bg-deep);
             border-radius: 4px;
+            color: var(--text-secondary);
         }
 
         .play-type-badge {
-            font-family: 'Oswald', sans-serif;
-            font-size: 0.65rem;
-            font-weight: 600;
-            padding: 0.25rem 0.5rem;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 0.7rem;
+            padding: 0.3rem 0.6rem;
             border-radius: 4px;
-            text-transform: uppercase;
             letter-spacing: 0.05em;
         }
 
-        .play-type-badge.pass,
-        .play-type-badge.run {
-            background: var(--bg-deep);
-            color: var(--text-secondary);
+        .play-type-badge.pass {
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
         }
-        .play-type-badge.turnover { background: #7f1d1d; color: #fca5a5; }
+
+        .play-type-badge.run {
+            background: rgba(251, 146, 60, 0.2);
+            color: #fb923c;
+        }
+
+        .play-type-badge.turnover {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--negative);
+        }
+
+        /* Play headline - extracted key action */
+        .play-headline {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: 0.02em;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        .plays-column.away .play-headline { color: var(--away-text); }
+        .plays-column.home .play-headline { color: var(--home-text); }
 
         .play-text {
-            font-size: 0.875rem;
+            font-size: 0.8rem;
             line-height: 1.5;
-            color: var(--text-secondary);
-            margin-bottom: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 0.875rem;
+            max-height: 4.5rem;
+            overflow: hidden;
+        }
+
+        .play-text.expanded {
+            max-height: none;
         }
 
         .play-footer {
@@ -991,53 +1110,110 @@
         }
 
         .play-yards {
-            font-family: 'Oswald', sans-serif;
-            font-weight: 600;
-            font-size: 0.9rem;
-            padding: 0.25rem 0.6rem;
-            border-radius: 4px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1rem;
+            padding: 0.3rem 0.75rem;
+            border-radius: 6px;
             background: var(--bg-deep);
+            letter-spacing: 0.02em;
         }
 
         .play-yards.positive { color: var(--positive); }
         .play-yards.negative { color: var(--negative); }
 
         .play-wp {
-            font-size: 0.7rem;
-            color: var(--text-muted);
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
 
         .wp-delta {
-            font-weight: 600;
-            padding: 0.15rem 0.4rem;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 0.8rem;
+            padding: 0.25rem 0.6rem;
             border-radius: 4px;
-            font-size: 0.65rem;
+            letter-spacing: 0.02em;
         }
 
-        .wp-delta.positive { background: rgba(16, 185, 129, 0.2); color: var(--positive); }
-        .wp-delta.negative { background: rgba(239, 68, 68, 0.2); color: var(--negative); }
-        .wp-delta.neutral { background: var(--bg-deep); color: var(--text-muted); }
-
-        .empty-state {
-            text-align: center;
-            padding: 3rem 1rem;
+        .wp-delta.positive {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--positive);
+        }
+        .wp-delta.negative {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--negative);
+        }
+        .wp-delta.neutral {
+            background: var(--bg-deep);
             color: var(--text-muted);
-            border: 1px dashed var(--border-medium);
-            border-radius: 10px;
         }
 
-        .empty-state svg {
-            width: 40px;
-            height: 40px;
-            margin-bottom: 0.75rem;
-            opacity: 0.4;
+        /* Enhanced WP delta for big swings */
+        .wp-delta.big-swing {
+            font-size: 1rem;
+            padding: 0.4rem 0.8rem;
+            animation: wpPulse 2s ease-in-out infinite;
         }
 
-        /* ==================== ANIMATIONS ==================== */
-        @keyframes fadeInUp {
+        .wp-delta.big-swing.positive {
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+        }
+
+        .wp-delta.big-swing.negative {
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+        }
+
+        @keyframes wpPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Big play card variant */
+        .play-card.big-play {
+            border-width: 2px;
+            background: linear-gradient(135deg, var(--bg-elevated) 0%, var(--bg-card) 100%);
+        }
+
+        .play-card.big-play::before {
+            width: 6px;
+        }
+
+        .play-card.big-play::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 32px 32px 0;
+            border-color: transparent var(--gold) transparent transparent;
+            opacity: 0.8;
+        }
+
+        .plays-column.away .play-card.big-play {
+            border-color: var(--away-secondary);
+        }
+
+        .plays-column.home .play-card.big-play {
+            border-color: var(--home-secondary);
+        }
+
+        .plays-column.away .play-card.big-play::after {
+            border-color: transparent var(--away-secondary) transparent transparent;
+        }
+
+        .plays-column.home .play-card.big-play::after {
+            border-color: transparent var(--home-secondary) transparent transparent;
+        }
+
+        /* Play card entry animation */
+        .play-card {
+            opacity: 0;
+            animation: playCardEnter 0.4s ease forwards;
+        }
+
+        @keyframes playCardEnter {
             from {
                 opacity: 0;
                 transform: translateY(20px);
@@ -1048,66 +1224,74 @@
             }
         }
 
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-muted);
+            border: 1px dashed var(--border-medium);
+            border-radius: 12px;
+        }
+
+        .empty-state svg {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 1rem;
+            opacity: 0.3;
+        }
+
+        /* ==================== ANIMATIONS ==================== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
 
         @keyframes scaleIn {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
         }
 
         @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+            from { opacity: 0; transform: translateX(-40px); }
+            to { opacity: 1; transform: translateX(0); }
         }
 
         @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+            from { opacity: 0; transform: translateX(40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes countUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .animate-fade-in-up {
-            animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            animation: fadeInUp 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
             opacity: 0;
         }
 
         .animate-fade-in {
-            animation: fadeIn 0.5s ease forwards;
+            animation: fadeIn 0.6s ease forwards;
             opacity: 0;
         }
 
         .animate-scale-in {
-            animation: scaleIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            animation: scaleIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
             opacity: 0;
         }
 
         .animate-slide-left {
-            animation: slideInLeft 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            animation: slideInLeft 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
             opacity: 0;
         }
 
         .animate-slide-right {
-            animation: slideInRight 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            animation: slideInRight 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
             opacity: 0;
         }
 
@@ -1120,14 +1304,14 @@
 
         /* ==================== SECTION SPACING ==================== */
         .section {
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         /* ==================== RESPONSIVE ==================== */
-        @media (max-width: 640px) {
-            .scoreboard-inner {
+        @media (max-width: 768px) {
+            .scoreboard {
                 grid-template-columns: 1fr;
-                gap: 1.5rem;
+                gap: 1rem;
                 text-align: center;
             }
 
@@ -1135,19 +1319,37 @@
             .team-block.home {
                 align-items: center;
                 text-align: center;
+                flex-direction: row;
+                gap: 1rem;
             }
-
-            .team-block.away .team-name-wrapper { flex-direction: row; }
 
             .score-center {
                 order: -1;
+                padding: 1rem;
             }
 
-            .team-abbr { display: none; }
+            .score-value {
+                font-size: 4rem;
+            }
+
+            .team-logo-wrapper {
+                width: 70px;
+                height: 70px;
+            }
+
+            .team-logo {
+                width: 50px;
+                height: 50px;
+            }
+
+            .ai-summary-text {
+                font-size: 1rem;
+            }
 
             .view-toggle-bar {
                 flex-direction: column;
                 align-items: flex-start;
+                gap: 0.75rem;
             }
 
             .view-toggle-control {
@@ -1156,86 +1358,113 @@
             }
 
             .stat-row {
-                grid-template-columns: 60px 1fr 60px;
+                grid-template-columns: 50px 1fr 50px;
                 gap: 0.5rem;
             }
 
-            .stat-number { font-size: 1rem; }
+            .stat-advantage { display: none; }
+
+            .factor-summary {
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                min-height: 280px;
+            }
+
+            .team-block {
+                padding: 1rem;
+            }
+
+            .score-value {
+                font-size: 3rem;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Scoreboard Hero -->
-    <section class="scoreboard" id="scoreboard">
-        <div class="container">
-            <div class="scoreboard-inner">
-                <!-- Away Team -->
-                <div class="team-block away animate-slide-left">
-                    <span class="team-abbr" id="away-abbr-bg"></span>
-                    <div class="team-name-wrapper">
-                        <div class="team-indicator"></div>
-                        <h2 class="text-team-name" id="away-team-name"></h2>
+    <!-- Hero Scoreboard -->
+    <section class="hero">
+        <div class="hero-bg">
+            <div class="hero-lights"></div>
+        </div>
+        <div class="hero-content">
+            <div class="container">
+                <div class="scoreboard">
+                    <!-- Away Team -->
+                    <div class="team-block away animate-slide-left">
+                        <div class="team-logo-wrapper">
+                            <img class="team-logo" id="away-logo" src="" alt="">
+                        </div>
+                        <div class="team-info">
+                            <h2 class="team-name" id="away-team-name"></h2>
+                            <span class="team-record" id="away-record"></span>
+                        </div>
+                    </div>
+
+                    <!-- Score Center -->
+                    <div class="score-center animate-scale-in delay-1">
+                        <div class="score-display">
+                            <span class="score-value" id="away-score"></span>
+                            <span class="score-divider">-</span>
+                            <span class="score-value" id="home-score"></span>
+                        </div>
+                        <div class="game-status" id="game-status">
+                            <span class="status-dot" id="status-dot"></span>
+                            <span id="status-text">FINAL</span>
+                        </div>
+                    </div>
+
+                    <!-- Home Team -->
+                    <div class="team-block home animate-slide-right">
+                        <div class="team-logo-wrapper">
+                            <img class="team-logo" id="home-logo" src="" alt="">
+                        </div>
+                        <div class="team-info">
+                            <h2 class="team-name" id="home-team-name"></h2>
+                            <span class="team-record" id="home-record"></span>
+                        </div>
                     </div>
                 </div>
-
-                <!-- Score Center -->
-                <div class="score-center animate-scale-in delay-1">
-                    <div class="score-value away" id="away-score">
-                        <span class="text-score"></span>
-                    </div>
-                    <span class="score-divider">-</span>
-                    <div class="score-value home" id="home-score">
-                        <span class="text-score"></span>
-                    </div>
-                </div>
-
-                <!-- Home Team -->
-                <div class="team-block home animate-slide-right">
-                    <span class="team-abbr" id="home-abbr-bg"></span>
-                    <div class="team-name-wrapper">
-                        <div class="team-indicator"></div>
-                        <h2 class="text-team-name" id="home-team-name"></h2>
-                    </div>
-                </div>
-            </div>
-
-            <div class="game-status animate-fade-in delay-3">
-                <span class="status-badge final" id="game-status">FINAL</span>
             </div>
         </div>
     </section>
 
     <div class="container">
-        <div class="view-toggle-bar animate-fade-in-up delay-2">
+        <!-- AI Summary Section -->
+        <section class="ai-summary-section animate-fade-in-up delay-2" id="ai-summary-section">
+            <div class="ai-summary-card">
+                <div class="ai-summary-header">
+                    <div class="ai-summary-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+                        </svg>
+                    </div>
+                    <span class="ai-summary-label">AI Game Summary</span>
+                </div>
+                <p class="ai-summary-text" id="ai-summary-text"></p>
+            </div>
+        </section>
+
+        <!-- View Toggle -->
+        <div class="view-toggle-bar animate-fade-in-up delay-3">
             <div class="view-note">
                 <span class="view-note-dot"></span>
                 <span id="wp-note">Stats reflect competitive plays only (WP < 97.5%)</span>
             </div>
             <div class="view-toggle-control">
-                <label for="view-toggle" style="color: var(--text-muted); font-size: 0.85rem;">View</label>
+                <span class="view-toggle-label">View</span>
                 <select id="view-toggle" class="filter-select" onchange="toggleGameView(this.value)">
                     <option value="competitive">Competitive</option>
                     <option value="full">Full Game</option>
                 </select>
             </div>
         </div>
-        <!-- Analysis Card -->
-        <section class="section animate-fade-in-up delay-2">
-            <div class="card analysis-card">
-                <div class="card-body">
-                    <div class="analysis-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
-                            <path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/>
-                        </svg>
-                    </div>
-                    <p class="analysis-text" id="analysis-text"></p>
-                </div>
-            </div>
-        </section>
 
         <!-- Summary Stats -->
-        <section class="section animate-fade-in-up delay-3">
+        <section class="section animate-fade-in-up delay-4">
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">
@@ -1261,7 +1490,7 @@
         </section>
 
         <!-- Advanced Stats -->
-        <section class="section animate-fade-in-up delay-4">
+        <section class="section animate-fade-in-up delay-5">
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">
@@ -1270,24 +1499,31 @@
                         </svg>
                         Advanced Analytics
                     </h3>
-                    <span style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">
-                        Click to explore plays
-                    </span>
+                    <span class="card-subtitle">Click to explore plays</span>
                 </div>
                 <div class="card-body">
                     <div class="advanced-stats" id="advanced-stats"></div>
                     <div class="factor-summary" id="factor-summary">
-                        <div class="factor-count away">
-                            <span class="count-number" id="away-factor-count">0</span>
-                            <div class="count-label"><span id="away-factor-label"></span> Factors</div>
+                        <div class="factor-pie-container">
+                            <svg class="factor-pie" viewBox="0 0 36 36" id="factor-pie">
+                                <circle class="pie-away" r="14" cx="18" cy="18" stroke-dasharray="0 100" />
+                                <circle class="pie-even" r="14" cx="18" cy="18" stroke-dasharray="0 100" />
+                                <circle class="pie-home" r="14" cx="18" cy="18" stroke-dasharray="0 100" />
+                            </svg>
                         </div>
-                        <div class="factor-count even">
-                            <span class="count-number" id="even-factor-count">0</span>
-                            <div class="count-label">Even</div>
-                        </div>
-                        <div class="factor-count home">
-                            <span class="count-number" id="home-factor-count">0</span>
-                            <div class="count-label"><span id="home-factor-label"></span> Factors</div>
+                        <div class="factor-counts-wrapper">
+                            <div class="factor-count away">
+                                <span class="count-number" id="away-factor-count">0</span>
+                                <div class="count-label"><span id="away-factor-label"></span> Factors</div>
+                            </div>
+                            <div class="factor-count even">
+                                <span class="count-number" id="even-factor-count">0</span>
+                                <div class="count-label">Even</div>
+                            </div>
+                            <div class="factor-count home">
+                                <span class="count-number" id="home-factor-count">0</span>
+                                <div class="count-label"><span id="home-factor-label"></span> Factors</div>
+                            </div>
                         </div>
                     </div>
                     <div class="strength-legend">
@@ -1301,9 +1537,9 @@
         </section>
 
         <!-- Play Details -->
-        <section class="section animate-fade-in-up delay-5">
+        <section class="section animate-fade-in-up delay-6" id="key-plays-section">
             <div class="card">
-                <div class="card-header plays-header">
+                <div class="card-header">
                     <h3 class="card-title">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
@@ -1313,6 +1549,9 @@
                     <select id="play-filter" class="filter-select" onchange="handleFilterChange(this.value)">
                         <option value="Explosive Plays">Explosive Plays</option>
                         <option value="Turnovers">Turnovers</option>
+                        <option value="Points Per Trip (Inside 40)">Points Per Trip</option>
+                        <option value="Penalty Yards">Penalty Plays</option>
+                        <option value="Non-Offensive Points">Non-Offensive Points</option>
                     </select>
                 </div>
                 <div class="card-body">
@@ -1325,36 +1564,43 @@
     <script>
         const gameData = __GAME_DATA_JSON__;
 
-        // Team colors database
-        // Secondary colors avoid green/red to not conflict with win probability indicators
-        const TEAM_COLORS = {
-            SEA: { primary: '#002244', secondary: '#4DC3FF', accent: '#A5ACAF' }, // Use light blue instead of action green
-            MIN: { primary: '#4F2683', secondary: '#FFC62F', accent: '#FFC62F' },
-            // Fallbacks for other teams
-            default: { primary: '#1a232d', secondary: '#60a5fa', accent: '#8899a8' }
+        // Team colors and logos database
+        const TEAM_DATA = {
+            ARI: { primary: '#97233F', secondary: '#FFB612', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/ari.png' },
+            ATL: { primary: '#A71930', secondary: '#A5ACAF', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/atl.png' },
+            BAL: { primary: '#241773', secondary: '#9E7C0C', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/bal.png' },
+            BUF: { primary: '#00338D', secondary: '#C60C30', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/buf.png' },
+            CAR: { primary: '#0085CA', secondary: '#BFC0BF', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/car.png' },
+            CHI: { primary: '#0B162A', secondary: '#C83803', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/chi.png' },
+            CIN: { primary: '#FB4F14', secondary: '#000000', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/cin.png' },
+            CLE: { primary: '#311D00', secondary: '#FF3C00', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/cle.png' },
+            DAL: { primary: '#003594', secondary: '#869397', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/dal.png' },
+            DEN: { primary: '#FB4F14', secondary: '#002244', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/den.png' },
+            DET: { primary: '#0076B6', secondary: '#B0B7BC', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/det.png' },
+            GB: { primary: '#203731', secondary: '#FFB612', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/gb.png' },
+            HOU: { primary: '#03202F', secondary: '#A71930', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/hou.png' },
+            IND: { primary: '#002C5F', secondary: '#A2AAAD', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/ind.png' },
+            JAX: { primary: '#006778', secondary: '#D7A22A', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/jax.png' },
+            KC: { primary: '#E31837', secondary: '#FFB81C', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/kc.png' },
+            LAC: { primary: '#0080C6', secondary: '#FFC20E', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/lac.png' },
+            LAR: { primary: '#003594', secondary: '#FFA300', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/lar.png' },
+            LV: { primary: '#000000', secondary: '#A5ACAF', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/lv.png' },
+            MIA: { primary: '#008E97', secondary: '#FC4C02', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/mia.png' },
+            MIN: { primary: '#4F2683', secondary: '#FFC62F', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/min.png' },
+            NE: { primary: '#002244', secondary: '#C60C30', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/ne.png' },
+            NO: { primary: '#D3BC8D', secondary: '#101820', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/no.png' },
+            NYG: { primary: '#0B2265', secondary: '#A71930', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/nyg.png' },
+            NYJ: { primary: '#125740', secondary: '#000000', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/nyj.png' },
+            PHI: { primary: '#004C54', secondary: '#A5ACAF', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/phi.png' },
+            PIT: { primary: '#FFB612', secondary: '#101820', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/pit.png' },
+            SEA: { primary: '#002244', secondary: '#4DC3FF', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/sea.png' },
+            SF: { primary: '#AA0000', secondary: '#B3995D', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/sf.png' },
+            TB: { primary: '#D50A0A', secondary: '#FF7900', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/tb.png' },
+            TEN: { primary: '#0C2340', secondary: '#4B92DB', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/ten.png' },
+            WAS: { primary: '#5A1414', secondary: '#FFB612', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/wsh.png' },
+            WSH: { primary: '#5A1414', secondary: '#FFB612', logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/wsh.png' },
+            default: { primary: '#1a232d', secondary: '#60a5fa', logo: '' }
         };
-
-        // Check if a color is too close to green or red
-        function isProblematicColor(hex) {
-            const r = parseInt(hex.slice(1, 3), 16);
-            const g = parseInt(hex.slice(3, 5), 16);
-            const b = parseInt(hex.slice(5, 7), 16);
-
-            // Check for green-ish (high green, low red/blue)
-            if (g > 150 && g > r * 1.3 && g > b * 1.3) return true;
-            // Check for red-ish (high red, low green/blue)
-            if (r > 180 && r > g * 1.5 && r > b * 1.5) return true;
-
-            return false;
-        }
-
-        // Get safe team color (falls back to blue if green/red)
-        function getSafeSecondary(colors) {
-            if (isProblematicColor(colors.secondary)) {
-                return '#60a5fa'; // Fallback to blue
-            }
-            return colors.secondary;
-        }
 
         const TEAMS = {
             away: gameData.team_meta.find(t => t.homeAway === 'away'),
@@ -1364,17 +1610,66 @@
         let currentCategory = 'Explosive Plays';
         let showFullGame = false;
 
+        // Check if color is too close to green/red
+        function isProblematicColor(hex) {
+            const r = parseInt(hex.slice(1, 3), 16);
+            const g = parseInt(hex.slice(3, 5), 16);
+            const b = parseInt(hex.slice(5, 7), 16);
+            if (g > 150 && g > r * 1.3 && g > b * 1.3) return true;
+            if (r > 180 && r > g * 1.5 && r > b * 1.5) return true;
+            return false;
+        }
+
+        function getSafeSecondary(teamData) {
+            if (isProblematicColor(teamData.secondary)) {
+                return '#60a5fa';
+            }
+            return teamData.secondary;
+        }
+
+        // Calculate relative luminance of a color (for WCAG contrast)
+        function getLuminance(hex) {
+            const r = parseInt(hex.slice(1, 3), 16) / 255;
+            const g = parseInt(hex.slice(3, 5), 16) / 255;
+            const b = parseInt(hex.slice(5, 7), 16) / 255;
+
+            const toLinear = (c) => c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+
+            return 0.2126 * toLinear(r) + 0.7152 * toLinear(g) + 0.0722 * toLinear(b);
+        }
+
+        // Calculate contrast ratio between two colors
+        function getContrastRatio(hex1, hex2) {
+            const lum1 = getLuminance(hex1);
+            const lum2 = getLuminance(hex2);
+            const lighter = Math.max(lum1, lum2);
+            const darker = Math.min(lum1, lum2);
+            return (lighter + 0.05) / (darker + 0.05);
+        }
+
+        // Choose the color with better contrast against dark background
+        function getTextColor(teamData, bgColor = '#12121a') {
+            const primaryContrast = getContrastRatio(teamData.primary, bgColor);
+
+            // For team brand colors, use a lower threshold (2.5:1) to preserve team identity
+            // Primary colors like reds are recognizable even at lower contrast
+            const minContrast = 2.5;
+
+            // Always prefer primary (team's main brand color) if it's reasonably visible
+            if (primaryContrast >= minContrast) {
+                return teamData.primary;
+            }
+            // Fall back to secondary only if primary has poor contrast
+            return teamData.secondary;
+        }
+
         function getActiveData() {
             const summaryFull = gameData.summary_table_full || gameData.summary_table;
             const advancedFull = gameData.advanced_table_full || gameData.advanced_table;
             const detailsFull = gameData.expanded_details_full || gameData.expanded_details;
 
             if (showFullGame) {
-                return {
-                    summary: summaryFull,
-                    advanced: advancedFull,
-                    details: detailsFull
-                };
+                return { summary: summaryFull, advanced: advancedFull, details: detailsFull };
             }
             return {
                 summary: gameData.summary_table,
@@ -1400,23 +1695,22 @@
                 noteEl.textContent = showFullGame ? 'Showing full-game totals (no WP filter).' : desc;
             }
             const selector = document.getElementById('view-toggle');
-            if (selector) {
-                selector.value = showFullGame ? 'full' : 'competitive';
-            }
+            if (selector) selector.value = showFullGame ? 'full' : 'competitive';
         }
 
-        // Apply team colors to CSS variables
         function applyTeamColors() {
             const root = document.documentElement;
-            const homeColors = TEAM_COLORS[TEAMS.home.abbr] || TEAM_COLORS.default;
-            const awayColors = TEAM_COLORS[TEAMS.away.abbr] || TEAM_COLORS.default;
+            const homeData = TEAM_DATA[TEAMS.home.abbr] || TEAM_DATA.default;
+            const awayData = TEAM_DATA[TEAMS.away.abbr] || TEAM_DATA.default;
 
-            root.style.setProperty('--home-primary', homeColors.primary);
-            root.style.setProperty('--home-secondary', getSafeSecondary(homeColors));
-            root.style.setProperty('--home-accent', homeColors.accent);
-            root.style.setProperty('--away-primary', awayColors.primary);
-            root.style.setProperty('--away-secondary', getSafeSecondary(awayColors));
-            root.style.setProperty('--away-accent', awayColors.accent);
+            root.style.setProperty('--home-primary', homeData.primary);
+            root.style.setProperty('--home-secondary', getSafeSecondary(homeData));
+            root.style.setProperty('--away-primary', awayData.primary);
+            root.style.setProperty('--away-secondary', getSafeSecondary(awayData));
+
+            // Set text colors with contrast checking
+            root.style.setProperty('--home-text', getTextColor(homeData));
+            root.style.setProperty('--away-text', getTextColor(awayData));
         }
 
         function renderScoreboard() {
@@ -1424,30 +1718,67 @@
             const awayStats = active.summary.find(t => t.Team === TEAMS.away.abbr);
             const homeStats = active.summary.find(t => t.Team === TEAMS.home.abbr);
 
-            document.getElementById('away-abbr-bg').textContent = TEAMS.away.abbr;
-            document.getElementById('home-abbr-bg').textContent = TEAMS.home.abbr;
+            // Team names
             document.getElementById('away-team-name').textContent = TEAMS.away.name;
             document.getElementById('home-team-name').textContent = TEAMS.home.name;
 
+            // Logos
+            const awayData = TEAM_DATA[TEAMS.away.abbr] || TEAM_DATA.default;
+            const homeData = TEAM_DATA[TEAMS.home.abbr] || TEAM_DATA.default;
+
+            const awayLogoEl = document.getElementById('away-logo');
+            const homeLogoEl = document.getElementById('home-logo');
+
+            if (awayData.logo) {
+                awayLogoEl.src = awayData.logo;
+                awayLogoEl.alt = TEAMS.away.abbr;
+            }
+            if (homeData.logo) {
+                homeLogoEl.src = homeData.logo;
+                homeLogoEl.alt = TEAMS.home.abbr;
+            }
+
+            // Scores
             const awayScoreEl = document.getElementById('away-score');
             const homeScoreEl = document.getElementById('home-score');
-            awayScoreEl.querySelector('.text-score').textContent = awayStats.Score;
-            homeScoreEl.querySelector('.text-score').textContent = homeStats.Score;
+            awayScoreEl.textContent = awayStats.Score;
+            homeScoreEl.textContent = homeStats.Score;
 
-            // Add winner indicator
+            // Winner styling
+            awayScoreEl.classList.remove('winner');
+            homeScoreEl.classList.remove('winner');
             if (awayStats.Score > homeStats.Score) {
                 awayScoreEl.classList.add('winner');
             } else if (homeStats.Score > awayStats.Score) {
                 homeScoreEl.classList.add('winner');
             }
 
-            // Update page title
+            // Game status
+            const statusDot = document.getElementById('status-dot');
+            const statusText = document.getElementById('status-text');
+            const isFinal = !!gameData.is_final;
+            if (isFinal) {
+                statusDot.classList.add('final');
+                statusText.textContent = 'Final';
+            } else {
+                statusDot.classList.remove('final');
+                statusText.textContent = 'Ongoing';
+            }
+
+            // Page title
             document.title = `${TEAMS.away.abbr} ${awayStats.Score} - ${homeStats.Score} ${TEAMS.home.abbr} | Game Analysis`;
         }
 
-        function renderAnalysis() {
-            const text = gameData.analysis || `${TEAMS.away.abbr} at ${TEAMS.home.abbr} game breakdown.`;
-            document.getElementById('analysis-text').textContent = text;
+        function renderAISummary() {
+            const summarySection = document.getElementById('ai-summary-section');
+            const summaryText = document.getElementById('ai-summary-text');
+
+            if (gameData.ai_summary && gameData.ai_summary.trim()) {
+                summaryText.textContent = gameData.ai_summary;
+                summarySection.style.display = 'block';
+            } else {
+                summarySection.style.display = 'none';
+            }
         }
 
         function renderSummaryStats() {
@@ -1455,29 +1786,22 @@
             const awayData = active.summary.find(t => t.Team === TEAMS.away.abbr);
             const homeData = active.summary.find(t => t.Team === TEAMS.home.abbr);
 
-            // Set table headers
             document.getElementById('summary-away-header').textContent = TEAMS.away.abbr;
             document.getElementById('summary-home-header').textContent = TEAMS.home.abbr;
 
             const stats = [
                 { key: 'Total Yards', label: 'Total Yards' },
-                { key: 'Drives', label: 'Drives' }
+                { key: 'Drives', label: 'Possessions' }
             ];
 
             const tbody = document.getElementById('summary-tbody');
-            let html = '';
-
-            stats.forEach(stat => {
-                html += `
-                    <tr>
-                        <td>${stat.label}</td>
-                        <td class="away">${awayData[stat.key]}</td>
-                        <td class="home">${homeData[stat.key]}</td>
-                    </tr>
-                `;
-            });
-
-            tbody.innerHTML = html;
+            tbody.innerHTML = stats.map(stat => `
+                <tr>
+                    <td>${stat.label}</td>
+                    <td class="away">${awayData[stat.key]}</td>
+                    <td class="home">${homeData[stat.key]}</td>
+                </tr>
+            `).join('');
         }
 
         function parseStatValue(val) {
@@ -1495,13 +1819,11 @@
         }
 
         function calculateStrength(numAway, numHome, invertBetter) {
-            // Handle edge cases
             if (numAway === numHome) return { winner: 'even', strength: 'minimal', pctDiff: 0 };
 
             const avg = (Math.abs(numAway) + Math.abs(numHome)) / 2;
             const pctDiff = avg > 0 ? Math.abs(numAway - numHome) / avg : 0;
 
-            // Determine winner based on invertBetter flag
             let winner;
             if (invertBetter) {
                 winner = numAway < numHome ? 'away' : 'home';
@@ -1509,7 +1831,6 @@
                 winner = numAway > numHome ? 'away' : 'home';
             }
 
-            // Assign strength level
             let strength;
             if (pctDiff > 0.3) strength = 'dominant';
             else if (pctDiff > 0.15) strength = 'strong';
@@ -1524,7 +1845,6 @@
                 case 'dominant': return '◆◆◆';
                 case 'strong': return '◆◆';
                 case 'slight': return '◆';
-                case 'minimal': return '·';
                 default: return '·';
             }
         }
@@ -1534,8 +1854,7 @@
                 case 'dominant': return 'Dominant advantage';
                 case 'strong': return 'Strong advantage';
                 case 'slight': return 'Slight advantage';
-                case 'minimal': return 'Minimal advantage';
-                default: return '';
+                default: return 'Minimal advantage';
             }
         }
 
@@ -1548,21 +1867,17 @@
                 { key: "Turnovers", description: "Margin", invertBetter: true, clickable: true },
                 { key: "Success Rate", description: "Play Success %", invertBetter: false, isPercentage: true },
                 { key: "Explosive Play Rate", description: "Explosiveness", invertBetter: false, isPercentage: true, clickable: true, dataCategory: "Explosive Plays" },
-                { key: "Points Per Trip (Inside 40)", description: "Finishing Drives", invertBetter: false },
+                { key: "Points Per Trip (Inside 40)", description: "Finishing Drives", invertBetter: false, clickable: true },
                 { key: "Ave Start Field Pos", description: "Field Position", invertBetter: false },
-                { key: "Penalty Yards", description: "Play Clean", invertBetter: true },
-                { key: "Non-Offensive Points", description: "D/ST Points", invertBetter: false }
+                { key: "Penalty Yards", description: "Play Clean", invertBetter: true, clickable: true },
+                { key: "Non-Offensive Points", description: "D/ST Points", invertBetter: false, clickable: true }
             ];
 
             const container = document.getElementById('advanced-stats');
             let html = '';
+            let awayCounts = 0, homeCounts = 0, evenCounts = 0;
 
-            // Track factor counts
-            let awayCounts = 0;
-            let homeCounts = 0;
-            let evenCounts = 0;
-
-            statsToRender.forEach((stat, index) => {
+            statsToRender.forEach(stat => {
                 const valAway = awayData[stat.key];
                 const valHome = homeData[stat.key];
                 const numAway = parseStatValue(valAway);
@@ -1575,10 +1890,8 @@
                 const displayAway = formatStatValue(valAway, stat.isPercentage);
                 const displayHome = formatStatValue(valHome, stat.isPercentage);
 
-                // Calculate strength and winner
                 const { winner, strength, pctDiff } = calculateStrength(numAway, numHome, stat.invertBetter);
 
-                // Update factor counts
                 if (winner === 'away') awayCounts++;
                 else if (winner === 'home') homeCounts++;
                 else evenCounts++;
@@ -1588,30 +1901,23 @@
                 const selectedClass = stat.clickable && categoryToUse === currentCategory ? 'selected' : '';
                 const onClick = stat.clickable ? `onclick="handleStatClick('${categoryToUse}')"` : '';
 
-                // Generate advantage indicator HTML for each side
                 let awayAdvantageHtml = '<div class="stat-advantage-placeholder"></div>';
                 let homeAdvantageHtml = '<div class="stat-advantage-placeholder"></div>';
 
                 if (winner === 'away') {
                     const diamonds = getStrengthDiamonds(strength);
-                    const strengthLabel = getStrengthLabel(strength);
-                    const pctDiffDisplay = (pctDiff * 100).toFixed(0);
-                    const tooltip = `${strengthLabel} · ${pctDiffDisplay}% difference`;
+                    const tooltip = `${TEAMS.away.abbr} · ${getStrengthLabel(strength)} · ${(pctDiff * 100).toFixed(0)}% difference`;
                     awayAdvantageHtml = `
                         <div class="stat-advantage away" data-tooltip="${tooltip}">
                             <span class="diamonds">${diamonds}</span>
-                            <span class="team-abbr">${TEAMS.away.abbr}</span>
                         </div>
                     `;
                 } else if (winner === 'home') {
                     const diamonds = getStrengthDiamonds(strength);
-                    const strengthLabel = getStrengthLabel(strength);
-                    const pctDiffDisplay = (pctDiff * 100).toFixed(0);
-                    const tooltip = `${strengthLabel} · ${pctDiffDisplay}% difference`;
+                    const tooltip = `${TEAMS.home.abbr} · ${getStrengthLabel(strength)} · ${(pctDiff * 100).toFixed(0)}% difference`;
                     homeAdvantageHtml = `
                         <div class="stat-advantage home" data-tooltip="${tooltip}">
                             <span class="diamonds">${diamonds}</span>
-                            <span class="team-abbr">${TEAMS.home.abbr}</span>
                         </div>
                     `;
                 }
@@ -1621,9 +1927,8 @@
                     ? `<span class="stat-watermark ${winner}">${winner === 'away' ? TEAMS.away.abbr : TEAMS.home.abbr}</span>`
                     : '';
 
-                const rowId = stat.clickable ? categoryToUse.replace(/\s/g, '') : stat.key.replace(/\s/g, '');
                 html += `
-                    <div class="stat-row ${clickableClass} ${selectedClass}" id="row-${rowId}" data-winner="${winner}" ${onClick}>
+                    <div class="stat-row ${clickableClass} ${selectedClass}" data-winner="${winner}" ${onClick}>
                         ${watermarkHtml}
                         <div class="stat-value-cell away">
                             <span class="stat-number">${displayAway}</span>
@@ -1652,12 +1957,45 @@
 
             container.innerHTML = html;
 
-            // Update factor summary counts
             document.getElementById('away-factor-count').textContent = awayCounts;
             document.getElementById('home-factor-count').textContent = homeCounts;
             document.getElementById('even-factor-count').textContent = evenCounts;
             document.getElementById('away-factor-label').textContent = TEAMS.away.abbr;
             document.getElementById('home-factor-label').textContent = TEAMS.home.abbr;
+
+            // Update pie chart
+            updateFactorPie(awayCounts, evenCounts, homeCounts);
+        }
+
+        function updateFactorPie(away, even, home) {
+            const total = away + even + home;
+            if (total === 0) return;
+
+            const circumference = 2 * Math.PI * 14; // r=14
+            const awayPct = (away / total) * 100;
+            const evenPct = (even / total) * 100;
+            const homePct = (home / total) * 100;
+
+            const pieAway = document.querySelector('.factor-pie .pie-away');
+            const pieEven = document.querySelector('.factor-pie .pie-even');
+            const pieHome = document.querySelector('.factor-pie .pie-home');
+
+            // Away starts at 0
+            const awayDash = (awayPct / 100) * circumference;
+            pieAway.style.strokeDasharray = `${awayDash} ${circumference}`;
+            pieAway.style.strokeDashoffset = '0';
+
+            // Even starts after away
+            const evenDash = (evenPct / 100) * circumference;
+            const evenOffset = -awayDash;
+            pieEven.style.strokeDasharray = `${evenDash} ${circumference}`;
+            pieEven.style.strokeDashoffset = `${evenOffset}`;
+
+            // Home starts after away + even
+            const homeDash = (homePct / 100) * circumference;
+            const homeOffset = -(awayDash + evenDash);
+            pieHome.style.strokeDasharray = `${homeDash} ${circumference}`;
+            pieHome.style.strokeDashoffset = `${homeOffset}`;
         }
 
         function renderPlays(category) {
@@ -1677,8 +2015,8 @@
                 return parseClockSec(b.clock) - parseClockSec(a.clock);
             });
 
-            const getPlayTypeClass = (type, category) => {
-                if (category === 'Turnovers') return 'turnover';
+            const getPlayTypeClass = (type, cat) => {
+                if (cat === 'Turnovers') return 'turnover';
                 const t = (type || '').toLowerCase();
                 if (t.includes('pass')) return 'pass';
                 if (t.includes('run') || t.includes('rush')) return 'run';
@@ -1688,33 +2026,184 @@
             const formatDelta = (delta) => {
                 if (typeof delta !== 'number') return null;
                 const d = Math.round(delta * 1000) / 10;
-                if (Math.abs(d) < 0.1) return { value: '0.0', class: 'neutral' };
+                if (Math.abs(d) < 0.1) return { value: '0.0', class: 'neutral', raw: 0 };
                 return {
                     value: d > 0 ? `+${d.toFixed(1)}` : d.toFixed(1),
-                    class: d > 0 ? 'positive' : 'negative'
+                    class: d > 0 ? 'positive' : 'negative',
+                    raw: Math.abs(d)
                 };
             };
 
-            const renderPlayCard = (play, teamAbbr, isHome) => {
+            // Extract a short headline from play text
+            const extractHeadline = (play, cat) => {
+                const yards = play.yards || 0;
+                const text = (play.text || '').toLowerCase();
+                const rawText = play.text || '';
+
+                // Turnovers category
+                if (cat === 'Turnovers') {
+                    if (text.includes('intercepted') && text.includes('touchdown')) {
+                        return `${yards}-YD INT RETURN TD`;
+                    } else if (text.includes('intercepted')) {
+                        return 'INTERCEPTION';
+                    } else if (text.includes('fumble') && text.includes('touchdown')) {
+                        return `${yards}-YD FUMBLE RETURN TD`;
+                    } else if (text.includes('fumble')) {
+                        return 'FUMBLE LOST';
+                    }
+                    return 'TURNOVER';
+                }
+
+                // Field Goals
+                const fgMatch = rawText.match(/(\d+)\s*yard\s*field\s*goal\s*(is\s*)?(good|no good|missed|blocked)/i);
+                if (fgMatch) {
+                    const fgYards = fgMatch[1];
+                    const result = fgMatch[3].toLowerCase();
+                    if (result === 'good') return `${fgYards}-YD FG GOOD`;
+                    if (result === 'no good' || result === 'missed') return `${fgYards}-YD FG MISSED`;
+                    if (result === 'blocked') return `${fgYards}-YD FG BLOCKED`;
+                    return `${fgYards}-YD FG`;
+                }
+
+                // Punts - extract punt yardage from text
+                const puntMatch = rawText.match(/punts?\s*(\d+)\s*yards?/i);
+                if (puntMatch) {
+                    const puntYards = puntMatch[1];
+                    if (text.includes('touchback')) return `${puntYards}-YD PUNT (TOUCHBACK)`;
+                    if (text.includes('blocked')) return 'BLOCKED PUNT';
+                    if (text.includes('fair catch')) return `${puntYards}-YD PUNT (FAIR CATCH)`;
+                    return `${puntYards}-YD PUNT`;
+                }
+
+                // Extra Points
+                if (text.includes('extra point')) {
+                    if (text.includes('good')) return 'XP GOOD';
+                    if (text.includes('no good') || text.includes('missed')) return 'XP MISSED';
+                    if (text.includes('blocked')) return 'XP BLOCKED';
+                }
+
+                // Two-point conversions
+                if (text.includes('two-point') || text.includes('2-point')) {
+                    if (text.includes('good') || text.includes('succeeded')) return '2PT CONVERSION GOOD';
+                    return '2PT ATTEMPT FAILED';
+                }
+
+                // Safeties
+                if (text.includes('safety')) {
+                    return 'SAFETY';
+                }
+
+                // Kickoffs
+                const kickoffMatch = rawText.match(/kicks?\s*(\d+)\s*yards?/i);
+                if (kickoffMatch && text.includes('kickoff')) {
+                    const koYards = kickoffMatch[1];
+                    if (text.includes('touchback')) return `${koYards}-YD KICKOFF (TOUCHBACK)`;
+                    return `${koYards}-YD KICKOFF`;
+                }
+
+                // Official timeouts
+                if (text.includes('official timeout') || text.includes('timeout')) {
+                    return 'TIMEOUT';
+                }
+
+                // End of quarter/half
+                if (text.includes('end quarter') || text.includes('end of half')) {
+                    return 'END OF PERIOD';
+                }
+
+                // Touchdowns
+                if (text.includes('touchdown')) {
+                    if (text.includes('pass')) return `${yards}-YD TD PASS`;
+                    if (text.includes('run') || text.includes('left') || text.includes('right') || text.includes('middle')) return `${yards}-YD TD RUN`;
+                    return `${yards}-YD TOUCHDOWN`;
+                }
+
+                // Regular plays
+                if (text.includes('pass')) {
+                    return `${yards}-YD PASS`;
+                }
+                if (text.includes('rush') || text.includes('left tackle') || text.includes('right tackle') || text.includes('left guard') || text.includes('right guard') || text.includes('up the middle') || text.includes('left end') || text.includes('right end')) {
+                    return `${yards}-YD RUN`;
+                }
+
+                // Sacks
+                if (text.includes('sacked')) {
+                    return `${yards}-YD SACK`;
+                }
+
+                // Penalties
+                if (text.includes('penalty')) {
+                    return 'PENALTY';
+                }
+
+                return yards !== 0 ? `${yards}-YD PLAY` : 'PLAY';
+            };
+
+            const renderPlayCard = (play, isHome, index) => {
                 const typeClass = getPlayTypeClass(play.type, category);
-                const showYards = category !== 'Turnovers' && play.yards;
-                const yardsClass = play.yards >= 0 ? 'positive' : 'negative';
+                const yardsVal = typeof play.yards === 'number' ? play.yards : null;
+                const yardsClass = yardsVal !== null && yardsVal >= 0 ? 'positive' : 'negative';
+                const yardsLabel = yardsVal !== null ? (yardsVal > 0 ? `+${yardsVal}` : yardsVal === 0 ? '0' : `${yardsVal}`) : '';
 
                 let wpHtml = '';
+                let isBigPlay = false;
+                let wpSwing = 0;
+
                 if (play.probability) {
                     const deltaRaw = isHome ? play.probability.homeDelta : play.probability.awayDelta;
                     const delta = formatDelta(deltaRaw);
                     if (delta) {
-                        wpHtml = `
-                            <div class="play-wp">
-                                <span class="wp-delta ${delta.class}">${delta.value}% Win Probability</span>
-                            </div>
-                        `;
+                        wpSwing = delta.raw;
+                        const bigSwingClass = wpSwing >= 10 ? 'big-swing' : '';
+                        wpHtml = `<div class="play-wp"><span class="wp-delta ${delta.class} ${bigSwingClass}">${delta.value}% WP</span></div>`;
                     }
                 }
 
+                // Determine if this is a "big play" (>10% WP swing or >40 yards)
+                isBigPlay = wpSwing >= 10 || (play.yards && play.yards >= 40);
+                const bigPlayClass = isBigPlay ? 'big-play' : '';
+
+                // Extract headline
+                const headline = extractHeadline(play, category);
+
+                // Staggered animation delay
+                const animDelay = index * 0.08;
+
+                // Determine footer left content based on category
+                let footerLeftHtml = '<span></span>';
+                const text = (play.text || '').toLowerCase();
+
+                if (category === 'Points Per Trip (Inside 40)') {
+                    // Calculate points scored on this play
+                    // But exclude defensive/return TDs (interception returns, fumble returns)
+                    // Those are points for the OTHER team, not this team's red zone trip
+                    let points = 0;
+                    const isDefensiveTD = (text.includes('intercepted') || text.includes('fumble')) && text.includes('touchdown');
+
+                    if (!isDefensiveTD) {
+                        if (text.includes('field goal') && text.includes('good')) {
+                            points = 3;
+                        } else if (text.includes('touchdown')) {
+                            points = 6;
+                            if (text.includes('extra point') && text.includes('good')) {
+                                points = 7;
+                            } else if (text.includes('two-point') && (text.includes('good') || text.includes('succeeded'))) {
+                                points = 8;
+                            }
+                        } else if (text.includes('safety')) {
+                            points = 2;
+                        }
+                    }
+
+                    if (points > 0) {
+                        footerLeftHtml = `<span class="play-yards positive">${points} ${points === 1 ? 'PT' : 'PTS'}</span>`;
+                    }
+                } else if (category !== 'Turnovers' && yardsVal !== null) {
+                    footerLeftHtml = `<span class="play-yards ${yardsClass}">${yardsLabel} YDS</span>`;
+                }
+
                 return `
-                    <div class="play-card">
+                    <div class="play-card ${bigPlayClass}" style="animation-delay: ${animDelay}s">
                         <div class="play-header">
                             <div class="play-meta">
                                 <span class="play-quarter">Q${play.quarter}</span>
@@ -1723,9 +2212,10 @@
                             </div>
                             ${play.type ? `<span class="play-type-badge ${typeClass}">${play.type}</span>` : ''}
                         </div>
+                        <div class="play-headline">${headline}</div>
                         <p class="play-text">${play.text || ''}</p>
                         <div class="play-footer">
-                            ${showYards ? `<span class="play-yards ${yardsClass}">+${play.yards} YDS</span>` : '<span></span>'}
+                            ${footerLeftHtml}
                             ${wpHtml}
                         </div>
                     </div>
@@ -1734,31 +2224,39 @@
 
             const renderColumn = (plays, teamAbbr, teamName, isHome) => {
                 const teamClass = isHome ? 'home' : 'away';
-
+                const teamData = TEAM_DATA[teamAbbr] || TEAM_DATA.default;
                 let playsHtml = '';
+
                 if (plays.length === 0) {
+                    const emptyIcon = category === 'Turnovers'
+                        ? '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>'
+                        : '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>';
+
+                    const emptyMsg = category === 'Turnovers'
+                        ? 'No turnovers committed'
+                        : 'No explosive plays recorded';
+
                     playsHtml = `
                         <div class="empty-state">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"/>
-                                <path d="m15 9-6 6"/><path d="m9 9 6 6"/>
-                            </svg>
-                            <p>No ${category.toLowerCase()} recorded</p>
+                            ${emptyIcon}
+                            <p>${emptyMsg}</p>
                         </div>
                     `;
                 } else {
-                    playsHtml = plays.map(p => renderPlayCard(p, teamAbbr, isHome)).join('');
+                    playsHtml = plays.map((p, i) => renderPlayCard(p, isHome, i)).join('');
                 }
+
+                const playCountText = plays.length === 1 ? '1 play' : `${plays.length} plays`;
 
                 return `
                     <div class="plays-column ${teamClass}">
                         <div class="plays-column-header">
+                            <img class="column-team-logo" src="${teamData.logo}" alt="${teamAbbr}">
                             <span class="column-team-badge">${teamAbbr}</span>
                             <span class="column-team-name">${teamName}</span>
+                            <span class="column-play-count">${playCountText}</span>
                         </div>
-                        <div class="plays-list">
-                            ${playsHtml}
-                        </div>
+                        <div class="plays-list">${playsHtml}</div>
                     </div>
                 `;
             };
@@ -1773,31 +2271,25 @@
         }
 
         function handleStatClick(statKey) {
-            // Update selection visual
-            document.querySelectorAll('.stat-row.clickable').forEach(el => {
-                el.classList.remove('selected');
-            });
-            const row = document.getElementById(`row-${statKey.replace(/\s/g, '')}`);
+            document.querySelectorAll('.stat-row.clickable').forEach(el => el.classList.remove('selected'));
+            const row = document.querySelector(`.stat-row[onclick*="${statKey}"]`);
             if (row) row.classList.add('selected');
-
-            // Update filter dropdown
             document.getElementById('play-filter').value = statKey;
-
-            // Update plays
             currentCategory = statKey;
             renderPlays(statKey);
+
+            // Scroll to the Key Plays section
+            const keyPlaysSection = document.getElementById('key-plays-section');
+            if (keyPlaysSection) {
+                keyPlaysSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
         }
 
         function handleFilterChange(value) {
             currentCategory = value;
-
-            // Update stat row selection
-            document.querySelectorAll('.stat-row.clickable').forEach(el => {
-                el.classList.remove('selected');
-            });
-            const row = document.getElementById(`row-${value.replace(/\s/g, '')}`);
+            document.querySelectorAll('.stat-row.clickable').forEach(el => el.classList.remove('selected'));
+            const row = document.querySelector(`.stat-row[onclick*="${value}"]`);
             if (row) row.classList.add('selected');
-
             renderPlays(value);
         }
 
@@ -1805,7 +2297,7 @@
         window.onload = function() {
             applyTeamColors();
             renderScoreboard();
-            renderAnalysis();
+            renderAISummary();
             renderSummaryStats();
             renderAdvancedStats();
             renderPlays(currentCategory);

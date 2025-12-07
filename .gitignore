@@ -11,6 +11,7 @@ venv/
 env/
 ENV/
 .env
+.env.local
 .env.*
 
 # Distribution / packaging
@@ -42,4 +43,3 @@ game_stats.csv
 
 # Logs
 *.log
-

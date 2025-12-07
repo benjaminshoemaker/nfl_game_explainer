@@ -1,6 +1,11 @@
-# CLAUDE.md
+# AGENTS.md
 
-This file provides guidance to AI Agents when working with code in this repository.
+Guidance for AI agents working with this repository. User-facing setup/usage lives in `README.md`; keep stat definitions aligned with `documentation.txt` and `FAQ.txt`.
+
+## Quick Orientation
+- Primary entry points: `game_compare.py` (analysis/reporting) and `dump_plays_wp.py` (win probability dump).
+- Outputs are written to `game_summaries/` (gitignored). `sample_games.txt` has known ESPN IDs for fast smoke tests.
+- Use Python 3 with the local virtualenv (`.venv`) and dependencies `pandas` and `requests`.
 
 ## Project Overview
 
@@ -13,11 +18,11 @@ NFL Game Explainer is a Python tool that fetches NFL game data from ESPN APIs an
 source .venv/bin/activate
 
 # Run main analysis on a game (requires ESPN game ID from URL)
-python game_compare.py <game_id>
-python game_compare.py <game_id> --expanded  # Show detailed play-by-play
+python3 game_compare.py <game_id>
+python3 game_compare.py <game_id> --expanded  # Show detailed play-by-play
 
 # Dump all plays with win probability data
-python dump_plays_wp.py <game_id>
+python3 dump_plays_wp.py <game_id>
 
 # Run tests
 pytest tests/
@@ -90,4 +95,3 @@ pytest tests/test_game_compare.py -v  # Verbose single test file
   .env.*
   
   Ask the human whether additional patterns should be added, and suggest any that you think are important given the project. 
-

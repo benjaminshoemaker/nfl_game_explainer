@@ -202,7 +202,32 @@ def classify_offense_play(play):
 
     return True, rush_hint, pass_hint
 
-def process_game_stats(game_data, expanded=False, probability_map=None):
+def is_competitive_play(play, probability_map, wp_threshold=0.975):
+    """
+    Return True if the play occurred while the game was still competitive.
+
+    Competitive if:
+    - Overtime period (period number >= 5)
+    - No play id or no probability data (assume competitive)
+    - Both teams' win probability are below the threshold at play start
+    """
+    period = play.get('period', {}).get('number', 0)
+    if period >= 5:
+        return True
+
+    play_id = play.get('id')
+    if play_id is None:
+        return True
+
+    prob = (probability_map or {}).get(str(play_id))
+    if not prob:
+        return True
+
+    home_wp = prob.get('homeWinPercentage', 0.5)
+    away_wp = prob.get('awayWinPercentage', 0.5)
+    return home_wp < wp_threshold and away_wp < wp_threshold
+
+def process_game_stats(game_data, expanded=False, probability_map=None, wp_threshold=0.975):
     boxscore = game_data.get('boxscore', {})
     teams_info = boxscore.get('teams', [])
     id_to_abbr = {}
@@ -362,6 +387,8 @@ def process_game_stats(game_data, expanded=False, probability_map=None):
 
     # --- Non-Offensive Points (defense/special teams/safeties) ---
     for sp in scoring_plays:
+        if not is_competitive_play(sp, probability_map, wp_threshold):
+            continue
         play_id = sp.get('id')
         scoring_team_id = sp.get('team', {}).get('id')
         drive_offense_id = play_to_drive_team.get(str(play_id))
@@ -395,27 +422,19 @@ def process_game_stats(game_data, expanded=False, probability_map=None):
     
     for drive in drives:
         team_id = drive.get('team', {}).get('id')
-        if team_id not in stats: continue
+        if team_id not in stats:
+            continue
         
         drive_plays = drive.get('plays', [])
-        start_yte = -1
-        if drive_plays:
-            start_yte = drive_plays[0].get('start', {}).get('yardsToEndzone', -1)
-        if start_yte == -1:
-            start_yte = drive.get('start', {}).get('yardsToEndzone', -1)
-
-        if start_yte != -1:
-            # 100 - yards_to_endzone = own yard line distance from goal
-            start_loc = 100 - start_yte
-            stats[team_id]['Start Field Pos Sum'] += start_loc
-        stats[team_id]['Drives Count'] += 1
-
-        drive_yards = drive.get('yards', 0)
-        drive_points = 0
-        crossed_40 = False
+        drive_total_yards = drive.get('yards', 0)
+        drive_start_yte = drive.get('start', {}).get('yardsToEndzone', -1)
+        drive_points_competitive = 0
+        drive_crossed_40_competitive = False
+        drive_started_competitive = False
+        drive_first_play_checked = False
 
         # --- Process Plays for Efficiency/Explosives ---
-        for play in drive.get('plays', []):
+        for play in drive_plays:
             text = play.get('text', '')
             text_lower = text.lower()
             play_type = play.get('type', {}).get('text', 'Unknown')
@@ -428,11 +447,41 @@ def process_game_stats(game_data, expanded=False, probability_map=None):
             opponent_id = None
             if len(id_to_abbr) == 2 and start_team_id in id_to_abbr:
                 opponent_id = next((tid for tid in id_to_abbr if tid != start_team_id), None)
+
+            competitive = is_competitive_play(play, probability_map, wp_threshold)
+
+            # Track drive start stats only when the opening play was competitive.
+            if not drive_first_play_checked:
+                drive_first_play_checked = True
+                drive_started_competitive = competitive
+                start_yte = play.get('start', {}).get('yardsToEndzone', -1)
+                if start_yte == -1:
+                    start_yte = drive.get('start', {}).get('yardsToEndzone', -1)
+                if start_yte != -1:
+                    drive_start_yte = start_yte
+                if drive_started_competitive and start_yte != -1:
+                    start_loc = 100 - start_yte
+                    stats[team_id]['Start Field Pos Sum'] += start_loc
+                    stats[team_id]['Drives Count'] += 1
+
+            if competitive and drive_started_competitive and not drive_crossed_40_competitive:
+                yte = play.get('start', {}).get('yardsToEndzone', 100)
+                try:
+                    if yte <= 40:
+                        drive_crossed_40_competitive = True
+                except TypeError:
+                    pass
             
             # Filter out non-plays, nullified, timeouts/end-of-period
             if 'timeout' in play_type_lower or 'end of' in play_type_lower:
+                update_prev_wp(play)
                 continue
             if is_nullified_play(text_lower):
+                update_prev_wp(play)
+                continue
+
+            if not competitive:
+                update_prev_wp(play)
                 continue
             
             # Turnovers
@@ -528,13 +577,13 @@ def process_game_stats(game_data, expanded=False, probability_map=None):
             
             # Track scoring tied to the offense on the drive via scoringPlays map
             play_id = play.get('id')
-            if play.get('scoringPlay'):
+            if play.get('scoringPlay') and drive_started_competitive:
                 if play_id in scoring_map:
                     sp = scoring_map[play_id]
                     if sp.get('team') == team_id:
-                        drive_points += sp.get('points', 0)
+                        drive_points_competitive += sp.get('points', 0)
                 else:
-                    drive_points += play.get('scoreValue', 0)
+                    drive_points_competitive += play.get('scoreValue', 0)
             
             # Special teams net values computed from field position when available
             start_pos_text = play.get('start', {}).get('possessionText')
@@ -674,19 +723,19 @@ def process_game_stats(game_data, expanded=False, probability_map=None):
             # Always update prev WP at end of every play for accurate delta tracking
             update_prev_wp(play)
 
-        # Determine if the drive reached opponent 40 and assign points to that trip
-        # If start inside 40 OR (start position + yards gained) crosses the 40
-        if start_yte != -1:
-            if start_yte <= 40:
-                crossed_40 = True
-            elif (100 - start_yte) + drive_yards >= 60:
-                crossed_40 = True
-        
-        if crossed_40:
-            stats[team_id]['Drives Inside 40'] += 1
-            stats[team_id]['Points Inside 40'] += drive_points
-        
-        stats[team_id]['Drive Points'] += drive_points
+        if drive_started_competitive:
+            if not drive_crossed_40_competitive and drive_start_yte != -1:
+                try:
+                    if drive_start_yte <= 40:
+                        drive_crossed_40_competitive = True
+                    elif (100 - drive_start_yte) + (drive_total_yards or 0) >= 60:
+                        drive_crossed_40_competitive = True
+                except TypeError:
+                    pass
+            if drive_crossed_40_competitive:
+                stats[team_id]['Drives Inside 40'] += 1
+                stats[team_id]['Points Inside 40'] += drive_points_competitive
+            stats[team_id]['Drive Points'] += drive_points_competitive
 
     # --- 3. Format Data for Output ---
     
@@ -832,6 +881,12 @@ def main():
     parser = argparse.ArgumentParser(description="NFL game advanced stats")
     parser.add_argument("game_id", help="ESPN gameId to fetch (from game URL)")
     parser.add_argument("--expanded", action="store_true", help="Show detailed play lists for select categories")
+    parser.add_argument(
+        "--wp-threshold",
+        type=float,
+        default=0.975,
+        help="WP threshold for competitive plays (default: 0.975). Plays where either team's WP >= this value are excluded from stats.",
+    )
     args = parser.parse_args()
 
     try:
@@ -867,7 +922,14 @@ def main():
             last_play_line = f"Last play recorded (core feed) at {modified_raw}{lag_str}"
 
         # Always compute expanded data to support downloadable summary file
-        df, details = process_game_stats(raw_data, expanded=True, probability_map=prob_map)
+        df_filtered, details_filtered = process_game_stats(
+            raw_data, expanded=True, probability_map=prob_map, wp_threshold=args.wp_threshold
+        )
+        df_full, details_full = process_game_stats(
+            raw_data, expanded=True, probability_map=prob_map, wp_threshold=1.0
+        )
+        df = df_filtered
+        details = details_filtered
 
         if last_play_line:
             print(f"\n{last_play_line}")
@@ -930,18 +992,29 @@ def main():
         df[ADVANCED_COLS].to_csv(csv_path, index=False)
 
         # Build JSON payload with summary, advanced, and expanded details
-        filtered_details = {}
-        for t_id, team_detail in details.items():
-            filtered_details[t_id] = {
-                cat: team_detail.get(cat, []) for cat in EXPANDED_CATEGORIES
+        def slice_details(source):
+            return {
+                t_id: {cat: source.get(t_id, {}).get(cat, []) for cat in EXPANDED_CATEGORIES}
+                for t_id in source
             }
+
+        filtered_details = slice_details(details_filtered)
+        filtered_details_full = slice_details(details_full)
 
         payload = {
             "gameId": game_id,
             "label": fname_base,
-            "summary_table": df[SUMMARY_COLS].to_dict(orient="records"),
-            "advanced_table": df[ADVANCED_COLS].to_dict(orient="records"),
+            "wp_filter": {
+                "enabled": True,
+                "threshold": args.wp_threshold,
+                "description": f"Stats reflect competitive plays only (WP < {args.wp_threshold * 100:.1f}%)",
+            },
+            "summary_table": df_filtered[SUMMARY_COLS].to_dict(orient="records"),
+            "advanced_table": df_filtered[ADVANCED_COLS].to_dict(orient="records"),
+            "summary_table_full": df_full[SUMMARY_COLS].to_dict(orient="records"),
+            "advanced_table_full": df_full[ADVANCED_COLS].to_dict(orient="records"),
             "expanded_details": filtered_details,
+            "expanded_details_full": filtered_details_full,
             "team_meta": team_meta,
             "last_play": last_play_line
         }

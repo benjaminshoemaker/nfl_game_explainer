@@ -1,0 +1,165 @@
+drive_team,drive_description,play_id,quarter,clock,play_type,text,home_score,away_score,start_home_wp,start_away_wp,end_home_wp,end_away_wp,home_delta,away_delta
+MIN,"5 plays, 7 yards, 3:49",40177289640,1,15:00,Kickoff,"J.Myers kicks 60 yards from SEA 35 to MIN 5. M.Price to MIN 33 for 28 yards (N.Pritchett, P.O'Connell).",0,0,50.0,50.0,68.07,31.93,18.07,-18.07
+MIN,"5 plays, 7 yards, 3:49",40177289663,1,14:52,Rush,(Shotgun) A.Jones up the middle to MIN 37 for 4 yards (E.Jones).,0,0,68.07,31.93,68.37,31.63,0.3,-0.3
+MIN,"5 plays, 7 yards, 3:49",40177289685,1,14:11,Pass Reception,(Shotgun) M.Brosmer pass short left to A.Jones pushed ob at MIN 37 for no gain (D.Witherspoon).,0,0,68.37,31.63,69.48,30.52,1.11,-1.11
+MIN,"5 plays, 7 yards, 3:49",401772896115,1,13:30,Penalty,"(Shotgun) M.Brosmer sacked at MIN 32 for -5 yards (U.Nwosu).PENALTY on SEA-J.Jobe, Defensive Holding, 5 yards, enforced at MIN 37 - No Play.",0,0,69.48,30.52,66.78,33.22,-2.7,2.7
+MIN,"5 plays, 7 yards, 3:49",401772896146,1,13:13,Rush,A.Jones left guard to MIN 43 for 1 yard (L.Williams).,0,0,66.78,33.22,68.23,31.77,1.45,-1.45
+MIN,"5 plays, 7 yards, 3:49",401772896168,1,12:32,Pass Reception,(Shotgun) M.Brosmer pass short right to A.Jones pushed ob at MIN 49 for 6 yards (D.Witherspoon; N.Emmanwori).,0,0,68.23,31.77,66.81,33.19,-1.42,1.42
+MIN,"5 plays, 7 yards, 3:49",401772896198,1,12:00,Sack,(Shotgun) M.Brosmer sacked at MIN 40 for -9 yards (L.Williams).,0,0,66.81,33.19,71.35,28.65,4.54,-4.54
+MIN,"5 plays, 7 yards, 3:49",401772896218,1,11:18,Punt,"R.Wright punts 56 yards to SEA 4, Center-A.DePaola, fair catch by R.Shaheed.",0,0,71.35,28.65,69.31,30.69,-2.04,2.04
+MIN,"5 plays, 7 yards, 3:49",401772896238,1,11:11,Official Timeout,Official Timeout at 11:11.,0,0,69.31,30.69,69.29,30.71,-0.02,0.02
+SEA,"9 plays, 27 yards, 5:24",401772896245,1,11:11,Rush,(Shotgun) K.Walker right guard to SEA 7 for 3 yards (E.Wilson).,0,0,69.29,30.71,68.27,31.73,-1.02,1.02
+SEA,"9 plays, 27 yards, 5:24",401772896267,1,10:49,Pass Reception,"(No Huddle, Shotgun) S.Darnold pass short left to K.Walker to SEA 21 for 14 yards (B.Cashman).",0,0,68.27,31.73,70.99,29.01,2.72,-2.72
+SEA,"9 plays, 27 yards, 5:24",401772896292,1,10:03,Penalty,"(Shotgun) K.Walker left guard to SEA 26 for 5 yards (J.Allen).PENALTY on MIN-A.Van Ginkel, Defensive Offside, 5 yards, enforced at SEA 21 - No Play.",0,0,70.99,29.01,71.41,28.59,0.42,-0.42
+SEA,"9 plays, 27 yards, 5:24",401772896325,1,9:33,Rush,K.Walker left end to SEA 30 for 4 yards (B.Murphy).,0,0,71.41,28.59,72.52,27.48,1.11,-1.11
+SEA,"9 plays, 27 yards, 5:24",401772896347,1,8:49,Pass Incompletion,S.Darnold pass incomplete deep left [D.Turner].,0,0,72.52,27.48,71.38,28.62,-1.14,1.14
+SEA,"9 plays, 27 yards, 5:24",401772896370,1,8:41,Rush,Direct snap to A.Barner.  A.Barner up the middle to SEA 32 for 2 yards (J.Allen; J.Redmond).,0,0,71.38,28.62,71.86,28.14,0.48,-0.48
+SEA,"9 plays, 27 yards, 5:24",401772896394,1,7:59,Pass Reception,(Shotgun) S.Darnold pass short right to C.Kupp pushed ob at SEA 45 for 13 yards (A.Van Ginkel).,0,0,71.86,28.14,73.16,26.84,1.3,-1.3
+SEA,"9 plays, 27 yards, 5:24",401772896424,1,7:32,Pass Incompletion,"(No Huddle, Shotgun) S.Darnold pass incomplete short right to A.Barner.",0,0,73.16,26.84,71.29,28.71,-1.87,1.87
+SEA,"9 plays, 27 yards, 5:24",401772896447,1,7:29,Rush,(Shotgun) K.Walker right guard to SEA 44 for -1 yards (E.Wilson).,0,0,71.29,28.71,69.8,30.2,-1.49,1.49
+SEA,"9 plays, 27 yards, 5:24",401772896469,1,6:47,Sack,(Shotgun) S.Darnold sacked at SEA 31 for -13 yards (E.Wilson).,0,0,69.8,30.2,66.86,33.14,-2.94,2.94
+SEA,"9 plays, 27 yards, 5:24",401772896489,1,5:58,Punt,"M.Dickson punts 56 yards to MIN 13, Center-C.Stoll, downed by SEA-N.Pritchett.",0,0,66.86,33.14,68.74,31.26,1.88,-1.88
+SEA,"9 plays, 27 yards, 5:24",401772896509,1,5:47,Official Timeout,Official Timeout at 05:47.,0,0,68.74,31.26,68.71,31.29,-0.03,0.03
+MIN,"4 plays, 21 yards, 2:20",401772896516,1,5:47,Pass Reception,M.Brosmer pass short left to A.Jones pushed ob at MIN 26 for 13 yards (E.Jones).,0,0,68.71,31.29,67.15,32.85,-1.56,1.56
+MIN,"4 plays, 21 yards, 2:20",401772896546,1,5:07,Rush,A.Jones left guard to MIN 27 for 1 yard (D.Hall; B.Murphy).,0,0,67.15,32.85,68.53,31.47,1.38,-1.38
+MIN,"4 plays, 21 yards, 2:20",401772896568,1,4:26,Pass Incompletion,(Shotgun) M.Brosmer pass incomplete short middle to J.Addison.,0,0,68.53,31.47,69.44,30.56,0.91,-0.91
+MIN,"4 plays, 21 yards, 2:20",401772896591,1,4:22,Pass Reception,(Shotgun) M.Brosmer pass short right to J.Addison to MIN 34 for 7 yards (D.Witherspoon).,0,0,69.44,30.56,70.78,29.22,1.34,-1.34
+MIN,"4 plays, 21 yards, 2:20",401772896616,1,3:38,Punt,"R.Wright punts 60 yards to SEA 6, Center-A.DePaola. R.Shaheed to SEA 14 for 8 yards (T.Felton; B.Richter).",0,0,70.78,29.22,69.02,30.98,-1.76,1.76
+MIN,"4 plays, 21 yards, 2:20",401772896642,1,3:27,Official Timeout,Official Timeout at 03:27.,0,0,69.02,30.98,68.86,31.14,-0.16,0.16
+SEA,"3 plays, 1 yard, 0:59",401772896649,1,3:27,Rush,K.Walker left tackle pushed ob at SEA 15 for 1 yard (J.Redmond).,0,0,68.86,31.14,67.42,32.58,-1.44,1.44
+SEA,"3 plays, 1 yard, 0:59",401772896676,1,2:45,Pass Incompletion,(Shotgun) S.Darnold pass incomplete short middle to C.Kupp.,0,0,67.42,32.58,66.17,33.83,-1.25,1.25
+SEA,"3 plays, 1 yard, 0:59",401772896699,1,2:42,Pass Incompletion,(Shotgun) S.Darnold pass incomplete short left.,0,0,66.17,33.83,64.18,35.82,-1.99,1.99
+SEA,"3 plays, 1 yard, 0:59",401772896722,1,2:36,Punt,"M.Dickson punts 48 yards to MIN 37, Center-C.Stoll, fair catch by M.Price.PENALTY on MIN-B.Richter, Offensive Holding, 10 yards, enforced at MIN 37.",0,0,64.18,35.82,66.45,33.55,2.27,-2.27
+SEA,"3 plays, 1 yard, 0:59",401772896753,1,2:28,Official Timeout,Official Timeout at 02:28.,0,0,66.45,33.55,66.43,33.57,-0.02,0.02
+MIN,"3 plays, 2 yards, 1:02",401772896760,1,2:28,Pass Incompletion,M.Brosmer pass incomplete deep right to J.Addison.,0,0,66.43,33.57,68.29,31.71,1.86,-1.86
+MIN,"3 plays, 2 yards, 1:02",401772896783,1,2:24,Rush,(Shotgun) J.Mason right guard to MIN 29 for 2 yards (D.Thomas).,0,0,68.29,31.71,68.73,31.27,0.44,-0.44
+MIN,"3 plays, 2 yards, 1:02",401772896805,1,1:40,Pass Incompletion,(Shotgun) M.Brosmer pass incomplete short left to J.Addison.,0,0,68.73,31.27,70.81,29.19,2.08,-2.08
+MIN,"3 plays, 2 yards, 1:02",401772896828,1,1:36,Punt,"R.Wright punts 55 yards to SEA 16, Center-A.DePaola. R.Shaheed pushed ob at SEA 32 for 16 yards (A.Keys).",0,0,70.81,29.19,70.8,29.2,-0.01,0.01
+SEA,"15 plays, 53 yards, 9:16",401772896859,1,1:26,Pass Incompletion,S.Darnold pass incomplete deep right to E.Arroyo (J.Metellus).,0,0,70.8,29.2,68.96,31.04,-1.84,1.84
+SEA,"15 plays, 53 yards, 9:16",401772896882,1,1:18,Rush,(Shotgun) K.Walker left guard to SEA 36 for 4 yards (J.Greenard; B.Cashman).,0,0,68.96,31.04,69.13,30.87,0.17,-0.17
+SEA,"15 plays, 53 yards, 9:16",401772896904,1,0:37,Pass Reception,(Shotgun) S.Darnold pass short middle to A.Barner to SEA 47 for 11 yards (E.Wilson).,0,0,69.13,30.87,72.4,27.6,3.27,-3.27
+SEA,"15 plays, 53 yards, 9:16",401772896929,1,0:00,End Period,END QUARTER 1,0,0,72.4,27.6,72.31,27.69,-0.09,0.09
+SEA,"15 plays, 53 yards, 9:16",401772896949,2,15:00,Pass Reception,(Shotgun) S.Darnold pass short middle to C.Kupp to MIN 47 for 6 yards (H.Smith; B.Cashman).,0,0,72.31,27.69,72.78,27.22,0.47,-0.47
+SEA,"15 plays, 53 yards, 9:16",401772896974,2,14:18,Fumble Recovery (Own),"(Shotgun) S.Darnold sacked at SEA 45 for -8 yards (D.Turner). FUMBLES (D.Turner) [D.Turner], recovered by SEA-C.Kupp at SEA 46.",0,0,72.78,27.22,68.64,31.36,-4.14,4.14
+SEA,"15 plays, 53 yards, 9:16",4017728961004,2,13:24,Pass Reception,(Shotgun) S.Darnold pass short left to C.White to MIN 33 for 21 yards (J.Metellus).,0,0,68.64,31.36,74.63,25.37,5.99,-5.99
+SEA,"15 plays, 53 yards, 9:16",4017728961029,2,12:37,Rush,Z.Charbonnet right guard to MIN 26 for 7 yards (E.Wilson; J.Metellus).,0,0,74.63,25.37,76.21,23.79,1.58,-1.58
+SEA,"15 plays, 53 yards, 9:16",4017728961051,2,11:55,Rush,Z.Charbonnet right end to MIN 20 for 6 yards (B.Murphy; H.Smith).,0,0,76.21,23.79,76.56,23.44,0.35,-0.35
+SEA,"15 plays, 53 yards, 9:16",4017728961073,2,11:11,Rush,K.Walker left guard to MIN 18 for 2 yards (J.Redmond).,0,0,76.56,23.44,75.41,24.59,-1.15,1.15
+SEA,"15 plays, 53 yards, 9:16",4017728961095,2,10:29,Pass Reception,(Shotgun) S.Darnold pass short right to C.Kupp pushed ob at MIN 13 for 5 yards (I.Rodgers).,0,0,75.41,24.59,76.95,23.05,1.54,-1.54
+SEA,"15 plays, 53 yards, 9:16",4017728961125,2,9:55,Rush,(Shotgun) Z.Charbonnet right guard to MIN 8 for 5 yards (J.Allen; F.Moreau).,0,0,76.95,23.05,77.4,22.6,0.45,-0.45
+SEA,"15 plays, 53 yards, 9:16",4017728961147,2,9:14,Rush,J.Jones reported in as eligible.  Z.Charbonnet left tackle to MIN 8 for no gain (D.Turner).,0,0,77.4,22.6,76.47,23.53,-0.93,0.93
+SEA,"15 plays, 53 yards, 9:16",4017728961171,2,8:34,Rush,Z.Charbonnet up the middle to MIN 10 for -2 yards (E.Wilson).,0,0,76.47,23.53,73.93,26.07,-2.54,2.54
+SEA,"15 plays, 53 yards, 9:16",4017728961193,2,7:54,Sack,(Shotgun) S.Darnold sacked at MIN 15 for -5 yards (A.Van Ginkel).,0,0,73.93,26.07,71.64,28.36,-2.29,2.29
+SEA,"15 plays, 53 yards, 9:16",4017728961213,2,7:10,Field Goal Good,"J.Myers 33 yard field goal is GOOD, Center-C.Stoll, Holder-M.Dickson.",3,0,71.64,28.36,72.77,27.23,1.13,-1.13
+SEA,"15 plays, 53 yards, 9:16",4017728961233,2,7:10,Official Timeout,Official Timeout at 07:10.,3,0,72.77,27.23,72.77,27.23,0.0,0.0
+MIN,"4 plays, 18 yards, 1:44",4017728961240,2,7:10,Kickoff,J.Myers kicks 63 yards from SEA 35 to MIN 2. M.Price pushed ob at MIN 29 for 27 yards (N.Pritchett).,3,0,72.77,27.23,71.97,28.03,-0.8,0.8
+MIN,"4 plays, 18 yards, 1:44",4017728961268,2,7:04,Pass Reception,M.Brosmer pass short left to T.Hockenson to MIN 42 for 13 yards (D.Witherspoon).,3,0,71.97,28.03,70.37,29.63,-1.6,1.6
+MIN,"4 plays, 18 yards, 1:44",4017728961303,2,6:20,Pass Incompletion,(Shotgun) M.Brosmer pass incomplete short right to J.Jefferson.,3,0,70.37,29.63,72.17,27.83,1.8,-1.8
+MIN,"4 plays, 18 yards, 1:44",4017728961326,2,6:14,Pass Reception,(Shotgun) M.Brosmer pass short middle to J.Addison to MIN 47 for 5 yards (T.Woolen).,3,0,72.17,27.83,71.49,28.51,-0.68,0.68
+MIN,"4 plays, 18 yards, 1:44",4017728961351,2,5:40,Pass Incompletion,(Shotgun) M.Brosmer pass incomplete deep right to J.Jefferson (N.Emmanwori).,3,0,71.49,28.51,74.75,25.25,3.26,-3.26
+MIN,"4 plays, 18 yards, 1:44",4017728961374,2,5:33,Punt,"R.Wright punts 31 yards to SEA 22, Center-A.DePaola, fair catch by R.Shaheed.",3,0,74.75,25.25,75.04,24.96,0.29,-0.29
+MIN,"4 plays, 18 yards, 1:44",4017728961394,2,5:26,Official Timeout,Official Timeout at 05:26.,3,0,75.04,24.96,75.02,24.98,-0.02,0.02
+SEA,"1 play, -9 yards, 0:05",4017728961401,2,5:26,Sack Opp Fumble Recovery,"S.Darnold sacked at SEA 15 for -7 yards (D.Turner). FUMBLES (D.Turner) [D.Turner], RECOVERED by MIN-J.Redmond at SEA 13.",3,0,75.02,24.98,61.49,38.51,-13.53,13.53
+MIN,"4 plays, 9 yards, 2:22",4017728961431,2,5:21,Rush,A.Jones left guard to SEA 12 for 1 yard (E.Jones).,3,0,61.49,38.51,64.17,35.83,2.68,-2.68
+MIN,"4 plays, 9 yards, 2:22",4017728961453,2,4:44,Pass Reception,(Shotgun) M.Brosmer pass short right to T.Hockenson to SEA 9 for 3 yards (T.Okada).,3,0,64.17,35.83,64.02,35.98,-0.15,0.15
+MIN,"4 plays, 9 yards, 2:22",4017728961478,2,3:58,Pass Reception,(Shotgun) M.Brosmer pass short left to J.Addison pushed ob at SEA 4 for 5 yards (J.Jobe).,3,0,64.02,35.98,68.06,31.94,4.04,-4.04
+MIN,"4 plays, 9 yards, 2:22",4017728961508,2,2:59,Interception Return Touchdown,"M.Brosmer pass short right INTERCEPTED by E.Jones [D.Lawrence] at SEA 15. E.Jones for 85 yards, TOUCHDOWN. J.Myers extra point is GOOD, Center-C.Stoll, Holder-M.Dickson.",10,0,68.06,31.94,86.72,13.28,18.66,-18.66
+MIN,"4 plays, 9 yards, 2:22",4017728961544,2,2:59,Official Timeout,Official Timeout at 02:59.,10,0,86.72,13.28,88.24,11.76,1.52,-1.52
+MIN,"3 plays, -8 yards, 2:01",4017728961551,2,2:59,Kickoff,J.Myers kicks 62 yards from SEA 35 to MIN 3. M.Price to MIN 32 for 29 yards (P.O'Connell).,10,0,88.24,11.76,85.99,14.01,-2.25,2.25
+MIN,"3 plays, -8 yards, 2:01",4017728961581,2,2:52,Rush,J.Mason up the middle to MIN 34 for 2 yards (D.Thomas; E.Jones).,10,0,85.99,14.01,86.54,13.46,0.55,-0.55
+MIN,"3 plays, -8 yards, 2:01",4017728961603,2,2:19,Penalty,"(Shotgun) PENALTY on MIN-R.Kelly, False Start, 5 yards, enforced at MIN 34 - No Play.",10,0,86.54,13.46,87.62,12.38,1.08,-1.08
+MIN,"3 plays, -8 yards, 2:01",4017728961627,2,2:11,Fumble Recovery (Own),"(Shotgun) M.Brosmer pass short right to J.Mason to MIN 25 for -4 yards (B.Mafe). FUMBLES (B.Mafe), and recovers at MIN 28. J.Mason to MIN 30 for 2 yards (B.Murphy).",10,0,87.62,12.38,88.01,11.99,0.39,-0.39
+MIN,"3 plays, -8 yards, 2:01",4017728961648,2,2:00,Two-minute warning,Two-Minute Warning,10,0,88.01,11.99,88.02,11.98,0.01,-0.01
+MIN,"3 plays, -8 yards, 2:01",4017728961668,2,2:00,Sack,(Shotgun) M.Brosmer sacked at MIN 24 for -6 yards (D.Lawrence).,10,0,88.02,11.98,89.1,10.9,1.08,-1.08
+MIN,"3 plays, -8 yards, 2:01",4017728961695,2,1:12,Punt,"R.Wright punts 50 yards to SEA 26, Center-A.DePaola. R.Shaheed pushed ob at SEA 45 for 19 yards (B.Richter).",10,0,89.1,10.9,89.77,10.23,0.67,-0.67
+SEA,"7 plays, 17 yards, 0:50",4017728961731,2,0:58,Rush,(Shotgun) Z.Charbonnet left guard to MIN 46 for 9 yards (J.Metellus; H.Smith).,10,0,89.77,10.23,90.98,9.02,1.21,-1.21
+SEA,"7 plays, 17 yards, 0:50",4017728961753,2,0:39,Pass Incompletion,"(No Huddle, Shotgun) S.Darnold pass incomplete short left to J.Smith-Njigba.",10,0,90.98,9.02,90.3,9.7,-0.68,0.68
+SEA,"7 plays, 17 yards, 0:50",4017728961776,2,0:36,Rush,(Shotgun) Z.Charbonnet right guard to MIN 45 for 1 yard (B.Cashman).,10,0,90.3,9.7,89.9,10.1,-0.4,0.4
+SEA,"7 plays, 17 yards, 0:50",4017728961787,2,0:23,Timeout,Timeout #1 by SEA at 00:23.,10,0,89.9,10.1,89.55,10.45,-0.35,0.35
+SEA,"7 plays, 17 yards, 0:50",4017728961798,2,0:23,Pass Reception,(Shotgun) S.Darnold pass short right to R.Shaheed pushed ob at MIN 38 for 7 yards (F.Moreau).,10,0,89.55,10.45,90.77,9.23,1.22,-1.22
+SEA,"7 plays, 17 yards, 0:50",4017728961835,2,0:19,Pass Incompletion,(Shotgun) S.Darnold pass incomplete short right to R.Shaheed (B.Cashman).,10,0,90.77,9.23,90.22,9.78,-0.55,0.55
+SEA,"7 plays, 17 yards, 0:50",4017728961858,2,0:15,Pass Incompletion,(Shotgun) S.Darnold pass incomplete short right to J.Smith-Njigba (H.Smith).,10,0,90.22,9.78,88.5,11.5,-1.72,1.72
+SEA,"7 plays, 17 yards, 0:50",4017728961881,2,0:08,Field Goal Good,"J.Myers 56 yard field goal is GOOD, Center-C.Stoll, Holder-M.Dickson.",13,0,88.5,11.5,92.15,7.85,3.65,-3.65
+MIN,"1 play, -1 yard, 0:08",4017728961901,2,0:08,Kickoff,J.Myers kicks 63 yards from SEA 35 to MIN 2. M.Price to MIN 31 for 29 yards (N.Kallerup).,13,0,92.15,7.85,91.94,8.06,-0.21,0.21
+MIN,"1 play, -1 yard, 0:08",4017728961924,2,0:03,Rush,M.Brosmer kneels to MIN 30 for -1 yards.,13,0,91.94,8.06,91.9,8.1,-0.04,0.04
+MIN,"1 play, -1 yard, 0:08",4017728961946,2,0:00,End of Half,END QUARTER 2,13,0,91.9,8.1,92.21,7.79,0.31,-0.31
+SEA,"8 plays, 44 yards, 3:46",4017728961966,3,15:00,Kickoff,"W.Reichard kicks 65 yards from MIN 35 to landing zone to end zone, Touchback to the SEA 20.",13,0,92.21,7.79,93.25,6.75,1.04,-1.04
+SEA,"8 plays, 44 yards, 3:46",4017728961983,3,15:00,Rush,K.Walker left tackle to SEA 44 for 24 yards (H.Smith).,13,0,93.25,6.75,94.43,5.57,1.18,-1.18
+SEA,"8 plays, 44 yards, 3:46",4017728962005,3,14:18,Rush,K.Walker right end to SEA 46 for 2 yards (B.Cashman).,13,0,94.43,5.57,93.3,6.7,-1.13,1.13
+SEA,"8 plays, 44 yards, 3:46",4017728962027,3,13:33,Pass Reception,(Shotgun) S.Darnold pass short left to K.Walker to SEA 46 for no gain (I.Rodgers; A.Van Ginkel).,13,0,93.3,6.7,92.92,7.08,-0.38,0.38
+SEA,"8 plays, 44 yards, 3:46",4017728962052,3,12:49,Penalty,"(Shotgun) S.Darnold pass incomplete deep right to J.Smith-Njigba.PENALTY on MIN-J.Allen, Defensive Offside, 5 yards, enforced at SEA 46 - No Play.",13,0,92.92,7.08,93.79,6.21,0.87,-0.87
+SEA,"8 plays, 44 yards, 3:46",4017728962086,3,12:44,Pass Reception,(Shotgun) S.Darnold pass short left to K.Walker to MIN 45 for 4 yards (J.Metellus).,13,0,93.79,6.21,94.5,5.5,0.71,-0.71
+SEA,"8 plays, 44 yards, 3:46",4017728962111,3,12:04,Rush,K.Walker right end pushed ob at MIN 41 for 4 yards (I.Rodgers).,13,0,94.5,5.5,94.38,5.62,-0.12,0.12
+SEA,"8 plays, 44 yards, 3:46",4017728962133,3,11:26,Pass Incompletion,(Shotgun) S.Darnold pass incomplete short right to K.Walker (D.Turner).,13,0,94.38,5.62,93.99,6.01,-0.39,0.39
+SEA,"8 plays, 44 yards, 3:46",4017728962156,3,11:23,Penalty,"(Shotgun) PENALTY on MIN-J.Greenard, Neutral Zone Infraction, 5 yards, enforced at MIN 41 - No Play.",13,0,93.99,6.01,95.17,4.83,1.18,-1.18
+SEA,"8 plays, 44 yards, 3:46",4017728962180,3,11:23,Pass Incompletion,S.Darnold pass incomplete short right to E.Arroyo (J.Metellus).,13,0,95.17,4.83,93.29,6.71,-1.88,1.88
+SEA,"8 plays, 44 yards, 3:46",4017728962208,3,11:14,Field Goal Good,"J.Myers 54 yard field goal is GOOD, Center-C.Stoll, Holder-M.Dickson.",16,0,93.29,6.71,95.34,4.66,2.05,-2.05
+SEA,"8 plays, 44 yards, 3:46",4017728962218,3,11:14,Official Timeout,Official Timeout at 11:14.,16,0,95.34,4.66,95.34,4.66,0.0,0.0
+MIN,"5 plays, 28 yards, 2:33",4017728962228,3,11:14,Kickoff,J.Myers kicks 61 yards from SEA 35 to MIN 4. M.Price to MIN 32 for 28 yards (T.Knight).,16,0,95.34,4.66,94.8,5.2,-0.54,0.54
+MIN,"5 plays, 28 yards, 2:33",4017728962258,3,11:08,Rush,A.Jones right end to MIN 32 for no gain (E.Jones).,16,0,94.8,5.2,95.28,4.72,0.48,-0.48
+MIN,"5 plays, 28 yards, 2:33",4017728962280,3,10:23,Pass Reception,(Shotgun) M.Brosmer pass deep right to T.Hockenson to SEA 39 for 29 yards (N.Emmanwori).,16,0,95.28,4.72,93.32,6.68,-1.96,1.96
+MIN,"5 plays, 28 yards, 2:33",4017728962305,3,9:38,Rush,A.Jones up the middle to SEA 43 for -4 yards (D.Thomas).,16,0,93.32,6.68,94.95,5.05,1.63,-1.63
+MIN,"5 plays, 28 yards, 2:33",4017728962327,3,8:56,Pass Incompletion,(Shotgun) M.Brosmer pass incomplete short right to J.Jefferson.,16,0,94.95,5.05,95.5,4.5,0.55,-0.55
+MIN,"5 plays, 28 yards, 2:33",4017728962350,3,8:52,Fumble Recovery (Opponent),"(Shotgun) M.Brosmer pass short right to A.Jones to SEA 40 for 3 yards (D.Lawrence). FUMBLES (D.Lawrence), RECOVERED by SEA-T.Okada at SEA 37.",16,0,95.5,4.5,96.86,3.14,1.36,-1.36
+MIN,"5 plays, 28 yards, 2:33",4017728962391,3,8:41,Official Timeout,Official Timeout at 08:41.,16,0,96.86,3.14,96.88,3.12,0.02,-0.02
+SEA,"9 plays, 42 yards, 5:25",4017728962398,3,8:41,Penalty,"K.Walker left guard pushed ob at SEA 43 for 6 yards (H.Smith).PENALTY on SEA-C.Kupp, Illegal Shift, 5 yards, enforced at SEA 37 - No Play.",16,0,96.88,3.12,96.13,3.87,-0.75,0.75
+SEA,"9 plays, 42 yards, 5:25",4017728962436,3,8:12,Pass Reception,(Shotgun) S.Darnold pass short right to A.Barner to SEA 45 for 13 yards (B.Cashman).,16,0,96.13,3.87,97.15,2.85,1.02,-1.02
+SEA,"9 plays, 42 yards, 5:25",4017728962461,3,7:29,Rush,K.Walker up the middle to SEA 49 for 4 yards (B.Cashman).,16,0,97.15,2.85,97.27,2.73,0.12,-0.12
+SEA,"9 plays, 42 yards, 5:25",4017728962483,3,7:01,Pass Reception,(No Huddle) S.Darnold pass short right to A.Barner to MIN 42 for 9 yards (I.Rodgers).,16,0,97.27,2.73,97.82,2.18,0.55,-0.55
+SEA,"9 plays, 42 yards, 5:25",4017728962508,3,6:28,Rush,(No Huddle) K.Walker right guard to MIN 38 for 4 yards (E.Wilson).,16,0,97.82,2.18,97.84,2.16,0.02,-0.02
+SEA,"9 plays, 42 yards, 5:25",4017728962530,3,5:51,Penalty,"S.Darnold pass incomplete deep right to J.Smith-Njigba.PENALTY on MIN-B.Murphy, Illegal Contact, 5 yards, enforced at MIN 38 - No Play.",16,0,97.84,2.16,98.07,1.93,0.23,-0.23
+SEA,"9 plays, 42 yards, 5:25",4017728962564,3,5:47,Penalty,"K.Walker right guard to MIN 27 for 6 yards (D.Turner; B.Cashman).PENALTY on MIN-T.Ingram-Dawkins, Defensive Offside, 5 yards, enforced at MIN 33 - No Play.",16,0,98.07,1.93,98.16,1.84,0.09,-0.09
+SEA,"9 plays, 42 yards, 5:25",4017728962597,3,5:26,Pass Reception,(Shotgun) S.Darnold pass short left to J.Smith-Njigba pushed ob at MIN 22 for 6 yards (I.Rodgers).,16,0,98.16,1.84,98.38,1.62,0.22,-0.22
+SEA,"9 plays, 42 yards, 5:25",4017728962627,3,4:44,Rush,Z.Charbonnet right tackle to MIN 22 for no gain (A.Van Ginkel; J.Allen).,16,0,98.38,1.62,98.13,1.87,-0.25,0.25
+SEA,"9 plays, 42 yards, 5:25",4017728962649,3,4:03,Rush,K.Walker left guard to MIN 21 for 1 yard (E.Wilson; J.Allen).,16,0,98.13,1.87,98.12,1.88,-0.01,0.01
+SEA,"9 plays, 42 yards, 5:25",4017728962671,3,3:22,Pass Incompletion,(Shotgun) S.Darnold pass incomplete short left to R.Shaheed (F.Moreau).,16,0,98.12,1.88,97.96,2.04,-0.16,0.16
+SEA,"9 plays, 42 yards, 5:25",4017728962696,3,3:16,Field Goal Good,"J.Myers 40 yard field goal is GOOD, Center-C.Stoll, Holder-M.Dickson.",19,0,97.96,2.04,98.38,1.62,0.42,-0.42
+SEA,"9 plays, 42 yards, 5:25",4017728962712,3,3:16,Official Timeout,Official Timeout at 03:16.,19,0,98.38,1.62,98.38,1.62,0.0,0.0
+MIN,"5 plays, 22 yards, 2:14",4017728962727,3,3:16,Kickoff,J.Myers kicks 60 yards from SEA 35 to MIN 5. M.Price to MIN 33 for 28 yards (C.Bryant; P.O'Connell).,19,0,98.38,1.62,98.07,1.93,-0.31,0.31
+MIN,"5 plays, 22 yards, 2:14",4017728962762,3,3:08,Rush,J.Mason up the middle to MIN 37 for 4 yards (B.Mafe; E.Jones).,19,0,98.07,1.93,98.08,1.92,0.01,-0.01
+MIN,"5 plays, 22 yards, 2:14",4017728962784,3,2:48,Pass Reception,(No Huddle) M.Brosmer pass short middle to T.Hockenson to MIN 38 for 1 yard (E.Jones).,19,0,98.08,1.92,98.28,1.72,0.2,-0.2
+MIN,"5 plays, 22 yards, 2:14",4017728962809,3,2:07,Pass Reception,(Shotgun) M.Brosmer pass short right to T.Hockenson to MIN 44 for 6 yards (E.Jones).,19,0,98.28,1.72,97.99,2.01,-0.29,0.29
+MIN,"5 plays, 22 yards, 2:14",4017728962834,3,1:28,Pass Reception,"(Shotgun) M.Brosmer pass short left to J.Jefferson to MIN 40 for -4 yards (N.Emmanwori) [D.Thomas].PENALTY on SEA-N.Emmanwori, Unnecessary Roughness, 15 yards, enforced at MIN 40.",19,0,97.99,2.01,97.86,2.14,-0.13,0.13
+MIN,"5 plays, 22 yards, 2:14",4017728962870,3,1:09,Pass Interception Return,M.Brosmer pass deep right intended for J.Nailor INTERCEPTED by C.Bryant at SEA 21. C.Bryant to SEA 21 for no gain (J.Nailor).,19,0,97.86,2.14,98.95,1.05,1.09,-1.09
+MIN,"5 plays, 22 yards, 2:14",4017728962897,3,1:02,Official Timeout,Official Timeout at 01:02.,19,0,98.95,1.05,98.96,1.04,0.01,-0.01
+SEA,"5 plays, 26 yards, 2:36",4017728962904,3,1:02,Rush,K.Walker right end pushed ob at SEA 25 for 4 yards (E.Wilson).,19,0,98.96,1.04,98.89,1.11,-0.07,0.07
+SEA,"5 plays, 26 yards, 2:36",4017728962931,3,0:25,Pass Reception,S.Darnold pass short left to J.Smith-Njigba to SEA 42 for 17 yards (A.Van Ginkel).,19,0,98.89,1.11,99.3,0.7,0.41,-0.41
+SEA,"5 plays, 26 yards, 2:36",4017728962956,3,0:00,End Period,END QUARTER 3,19,0,99.3,0.7,99.34,0.66,0.04,-0.04
+SEA,"5 plays, 26 yards, 2:36",4017728962976,4,15:00,Rush,Z.Charbonnet left end pushed ob at SEA 38 for -4 yards (E.Wilson).,19,0,99.34,0.66,99.06,0.94,-0.28,0.28
+SEA,"5 plays, 26 yards, 2:36",4017728963008,4,14:18,Pass Incompletion,(Shotgun) S.Darnold pass incomplete short right.,19,0,99.06,0.94,99.07,0.93,0.01,-0.01
+SEA,"5 plays, 26 yards, 2:36",4017728963031,4,14:15,Rush,(Shotgun) R.Shaheed left end pushed ob at SEA 47 for 9 yards (H.Smith).,19,0,99.07,0.93,99.04,0.96,-0.03,0.03
+SEA,"5 plays, 26 yards, 2:36",4017728963058,4,13:34,Punt,"M.Dickson punts 53 yards to end zone, Center-C.Stoll, Touchback.",19,0,99.04,0.96,99.11,0.89,0.07,-0.07
+SEA,"5 plays, 26 yards, 2:36",4017728963076,4,13:26,Official Timeout,Official Timeout at 13:26.,19,0,99.11,0.89,99.13,0.87,0.02,-0.02
+MIN,"2 plays, 4 yards, 0:34",4017728963083,4,13:26,Pass Reception,(Shotgun) M.Brosmer pass short left to Z.Scott to MIN 24 for 4 yards (E.Jones; D.Witherspoon).,19,0,99.13,0.87,99.03,0.97,-0.1,0.1
+MIN,"2 plays, 4 yards, 0:34",4017728963113,4,13:02,Pass Interception Return,"(No Huddle, Shotgun) M.Brosmer pass short middle intended for J.Jefferson INTERCEPTED by E.Jones (J.Jobe) at MIN 38. E.Jones to MIN 32 for 6 yards (W.Fries; J.Jefferson).",19,0,99.03,0.97,99.67,0.33,0.64,-0.64
+MIN,"2 plays, 4 yards, 0:34",4017728963140,4,12:52,Official Timeout,Official Timeout at 12:52.,19,0,99.67,0.33,99.68,0.32,0.01,-0.01
+SEA,"6 plays, 32 yards, 3:41",4017728963147,4,12:52,Rush,(Shotgun) Z.Charbonnet left end to MIN 24 for 8 yards (D.Turner).,19,0,99.68,0.32,99.71,0.29,0.03,-0.03
+SEA,"6 plays, 32 yards, 3:41",4017728963169,4,12:06,Rush,Z.Charbonnet up the middle to MIN 23 for 1 yard (B.Murphy; E.Wilson).,19,0,99.71,0.29,99.75,0.25,0.04,-0.04
+SEA,"6 plays, 32 yards, 3:41",4017728963191,4,11:26,Rush,Z.Charbonnet up the middle to MIN 23 for no gain (T.Ingram-Dawkins; B.Cashman).,19,0,99.75,0.25,99.68,0.32,-0.07,0.07
+SEA,"6 plays, 32 yards, 3:41",4017728963202,4,10:40,Timeout,Timeout #1 by SEA at 10:40.,19,0,99.68,0.32,99.73,0.27,0.05,-0.05
+SEA,"6 plays, 32 yards, 3:41",4017728963213,4,10:40,Pass Reception,(Shotgun) S.Darnold pass short left to A.Barner to MIN 21 for 2 yards (B.Murphy).,19,0,99.73,0.27,99.86,0.14,0.13,-0.13
+SEA,"6 plays, 32 yards, 3:41",4017728963245,4,9:59,Rush,Z.Charbonnet left end pushed ob at MIN 17 for 4 yards (J.Allen; B.Murphy).,19,0,99.86,0.14,99.87,0.13,0.01,-0.01
+SEA,"6 plays, 32 yards, 3:41",4017728963272,4,9:11,Rushing Touchdown,Zach Charbonnet 17 Yd Run (Jason Myers Kick),26,0,99.87,0.13,99.9,0.1,0.03,-0.03
+SEA,"6 plays, 32 yards, 3:41",4017728963303,4,9:11,Official Timeout,Official Timeout at 09:11.,26,0,99.9,0.1,99.9,0.1,0.0,0.0
+MIN,"8 plays, 47 yards, 3:38",4017728963310,4,9:11,Kickoff,"J.Myers kicks 25 yards from 50 to MIN 25, short of landing zone.PENALTY on SEA-J.Myers, Kickoff Short of Landing Zone, placed at MIN 25.",26,0,99.9,0.1,99.9,0.1,0.0,0.0
+MIN,"8 plays, 47 yards, 3:38",4017728963360,4,9:11,Rush,(Shotgun) J.Mason up the middle to MIN 36 for 11 yards (T.Okada). MIN-J.Mason was injured during the play.,26,0,99.9,0.1,99.9,0.1,0.0,0.0
+MIN,"8 plays, 47 yards, 3:38",4017728963385,4,8:33,Pass Reception,(Shotgun) M.Brosmer pass short left to J.Addison pushed ob at MIN 47 for 11 yards (D.Witherspoon).,26,0,99.9,0.1,99.9,0.1,0.0,0.0
+MIN,"8 plays, 47 yards, 3:38",4017728963415,4,8:02,Rush,(Shotgun) Z.Scott left guard to SEA 49 for 4 yards (E.Jones).,26,0,99.9,0.1,99.9,0.1,0.0,0.0
+MIN,"8 plays, 47 yards, 3:38",4017728963437,4,7:24,Pass Incompletion,(Shotgun) M.Brosmer pass incomplete short right to J.Addison.,26,0,99.9,0.1,99.9,0.1,0.0,0.0
+MIN,"8 plays, 47 yards, 3:38",4017728963460,4,7:21,Pass Reception,(Shotgun) M.Brosmer pass short right to J.Addison to SEA 41 for 8 yards (T.Woolen).,26,0,99.9,0.1,99.9,0.1,0.0,0.0
+MIN,"8 plays, 47 yards, 3:38",4017728963485,4,6:47,Rush,"(No Huddle, Shotgun) J.Mason up the middle to SEA 17 for 24 yards (D.Witherspoon; J.Jobe). ** Injury Update: MIN-J.Mason has returned to the game. SEA-J.Jobe was injured during the play. PENALTY on MIN-B.Brandel, Unnecessary Roughness, 15 yards, enforced between downs.",26,0,99.9,0.1,99.9,0.1,0.0,0.0
+MIN,"8 plays, 47 yards, 3:38",4017728963518,4,6:26,Rush,J.Mason right guard to SEA 28 for 4 yards (E.Jones; C.Bryant).,26,0,99.9,0.1,99.9,0.1,0.0,0.0
+MIN,"8 plays, 47 yards, 3:38",4017728963546,4,5:48,Fumble Recovery (Opponent),"(Shotgun) M.Brosmer pass deep left intended for J.Addison INTERCEPTED by T.Woolen at SEA 5. T.Woolen to SEA 35 for 30 yards (J.Nailor). FUMBLES (J.Nailor), touched at SEA 38, RECOVERED by MIN-J.Nailor at SEA 37.",26,0,99.9,0.1,99.9,0.1,0.0,0.0
+MIN,"4 plays, -10 yards, 2:23",4017728963589,4,5:33,Penalty,"(Shotgun) Z.Scott right end pushed ob at SEA 30 for 7 yards (E.Jones).PENALTY on MIN-B.O'Neill, Offensive Holding, 10 yards, enforced at SEA 37 - No Play.",26,0,99.9,0.1,99.9,0.1,0.0,0.0
+MIN,"4 plays, -10 yards, 2:23",4017728963627,4,5:12,Pass Reception,(Shotgun) M.Brosmer pass short middle to T.Hockenson to SEA 40 for 7 yards (D.Thomas; E.Jones). SEA-E.Jones was injured during the play.,26,0,99.9,0.1,99.9,0.1,0.0,0.0
+MIN,"4 plays, -10 yards, 2:23",4017728963655,4,4:42,Sack,(Shotgun) M.Brosmer sacked at SEA 48 for -8 yards (B.Murphy).,26,0,99.9,0.1,99.9,0.1,0.0,0.0
+MIN,"4 plays, -10 yards, 2:23",4017728963675,4,3:57,Pass Reception,(Shotgun) M.Brosmer pass short left to J.Jefferson to SEA 40 for 8 yards (N.Emmanwori).,26,0,99.9,0.1,99.9,0.1,0.0,0.0
+MIN,"4 plays, -10 yards, 2:23",4017728963705,4,3:15,Sack,(Shotgun) M.Brosmer sacked at SEA 47 for -7 yards (sack split by D.Thomas and U.Nwosu).,26,0,99.9,0.1,99.9,0.1,0.0,0.0
+SEA,"3 plays, 6 yards, 2:19",4017728963725,4,3:10,Rush,D.Lock in at QB M.Gaskin left tackle to 50 for 3 yards (B.Cashman; D.Turner).,26,0,99.9,0.1,99.9,0.1,0.0,0.0
+SEA,"3 plays, 6 yards, 2:19",4017728963751,4,2:28,Rush,M.Gaskin up the middle to 50 for no gain (J.Allen).,26,0,99.9,0.1,99.9,0.1,0.0,0.0
+SEA,"3 plays, 6 yards, 2:19",4017728963762,4,2:00,Two-minute warning,Two-Minute Warning,26,0,99.9,0.1,99.9,0.1,0.0,0.0
+SEA,"3 plays, 6 yards, 2:19",4017728963773,4,2:00,Rush,M.Gaskin right end to MIN 47 for 3 yards (L.Rodriguez).,26,0,99.9,0.1,99.9,0.1,0.0,0.0
+SEA,"3 plays, 6 yards, 2:19",4017728963802,4,1:00,Punt,"M.Dickson punts 45 yards to MIN 2, impetus ends at MIN 1, Center-C.Stoll, downed by SEA-V.Jones.",26,0,99.9,0.1,99.9,0.1,0.0,0.0
+MIN,"2 plays, 13 yards, 0:51",4017728963827,4,0:51,Rush,"Z.Scott up the middle to MIN 11 for 9 yards (C.Bryant, D.Bell).",26,0,99.9,0.1,99.9,0.1,0.0,0.0
+MIN,"2 plays, 13 yards, 0:51",4017728963849,4,0:19,Rush,Z.Scott up the middle to MIN 15 for 4 yards (Q.Bohanna; B.Pili).,26,0,99.9,0.1,99.9,0.1,0.0,0.0
+MIN,"2 plays, 13 yards, 0:51",4017728963871,4,0:00,End of Game,END GAME,26,0,99.9,0.1,100.0,0.0,0.1,-0.1

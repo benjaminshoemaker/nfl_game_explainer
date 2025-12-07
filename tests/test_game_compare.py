@@ -563,3 +563,403 @@ def test_process_game_stats_filters_noncompetitive_time():
     # Expanded details should only include competitive plays
     assert len(details["1"]["Explosive Plays"]) == 2
     assert details["2"]["Explosive Plays"] == []
+
+
+def test_build_top_plays_by_wp_filters_and_sorts():
+    game_data = {
+        "boxscore": {
+            "teams": [
+                {"team": {"id": "1", "abbreviation": "AAA"}},
+                {"team": {"id": "2", "abbreviation": "BBB"}},
+            ]
+        },
+        "drives": {
+            "previous": [
+                {
+                    "team": {"id": "1"},
+                    "plays": [
+                        {"id": "1", "period": {"number": 1}, "clock": {"displayValue": "10:00"}, "text": "Play one big gain"},
+                        {"id": "2", "period": {"number": 2}, "clock": {"displayValue": "05:00"}, "text": "Blowout garbage time"},
+                    ],
+                },
+                {
+                    "team": {"id": "2"},
+                    "plays": [{"id": "3", "period": {"number": 4}, "clock": {"displayValue": "02:00"}, "text": "Late swing"}],
+                },
+            ]
+        },
+    }
+    probability_map = {
+        "1": {"homeWinPercentage": 0.8, "awayWinPercentage": 0.2},
+        "2": {"homeWinPercentage": 0.98, "awayWinPercentage": 0.02},
+        "3": {"homeWinPercentage": 0.7, "awayWinPercentage": 0.3},
+    }
+
+    result = gc.build_top_plays_by_wp(game_data, probability_map, wp_threshold=0.975)
+    lines = result.splitlines()
+    assert lines[0].startswith("30.0% | Q1 10:00 | AAA")
+    assert lines[1].startswith("28.0% | Q4 02:00 | BBB")
+    assert len(lines) == 2
+
+
+def test_calculate_wp_trajectory_stats_uses_leader(monkeypatch):
+    game_data = {
+        "drives": {
+            "previous": [
+                {
+                    "plays": [
+                        {"id": "1", "period": {"number": 1}, "clock": {"displayValue": "15:00"}, "text": "First play"},
+                        {"id": "2", "period": {"number": 2}, "clock": {"displayValue": "10:00"}, "text": "Second swing"},
+                        {"id": "3", "period": {"number": 3}, "clock": {"displayValue": "05:00"}, "text": "Third play"},
+                    ]
+                }
+            ]
+        }
+    }
+    probability_map = {
+        "1": {"homeWinPercentage": 0.6, "awayWinPercentage": 0.4},
+        "2": {"homeWinPercentage": 0.45, "awayWinPercentage": 0.55},
+        "3": {"homeWinPercentage": 0.55, "awayWinPercentage": 0.45},
+    }
+
+    stats = gc.calculate_wp_trajectory_stats(game_data, probability_map, leader_is_home=False)
+    assert stats["leader_min_wp"] == pytest.approx(40.0)
+    assert stats["wp_crossings"] == 2
+    assert stats["max_wp_delta"] == pytest.approx(15.0)
+    assert "Q2 10:00" in stats["max_wp_play_desc"]
+
+
+def test_generate_game_summary_in_progress(monkeypatch):
+    payload = {
+        "team_meta": [
+            {"id": "1", "abbr": "AWY", "name": "Away Team", "homeAway": "away"},
+            {"id": "2", "abbr": "HOM", "name": "Home Team", "homeAway": "home"},
+        ],
+        "summary_table": [{"Team": "AWY", "Score": 10}, {"Team": "HOM", "Score": 14}],
+        "advanced_table": [
+            {"Team": "AWY", "Turnovers": 1, "Success Rate": 0.4, "Explosive Plays": 3, "Points Per Trip (Inside 40)": 3.0, "Non-Offensive Points": 0},
+            {"Team": "HOM", "Turnovers": 0, "Success Rate": 0.6, "Explosive Plays": 4, "Points Per Trip (Inside 40)": 4.5, "Non-Offensive Points": 7},
+        ],
+    }
+    game_data = {
+        "header": {
+            "competitions": [
+                {
+                    "status": {"type": {"completed": False}, "period": 2, "displayClock": "12:00"},
+                    "competitors": [
+                        {"id": "1", "homeAway": "away", "team": {"abbreviation": "AWY", "displayName": "Away Team"}},
+                        {"id": "2", "homeAway": "home", "team": {"abbreviation": "HOM", "displayName": "Home Team"}},
+                    ],
+                }
+            ]
+        },
+        "boxscore": {"teams": [{"team": {"id": "1", "abbreviation": "AWY"}}, {"team": {"id": "2", "abbreviation": "HOM"}}]},
+        "drives": {
+            "previous": [
+                {"team": {"id": "1"}, "plays": [{"id": "1", "period": {"number": 1}, "clock": {"displayValue": "10:00"}, "text": "Away touchdown"}]},
+                {"team": {"id": "2"}, "plays": [{"id": "2", "period": {"number": 2}, "clock": {"displayValue": "08:00"}, "text": "Home response"}]},
+            ]
+        },
+    }
+    probability_map = {
+        "1": {"homeWinPercentage": 0.3, "awayWinPercentage": 0.7},
+        "2": {"homeWinPercentage": 0.55, "awayWinPercentage": 0.45},
+    }
+
+    monkeypatch.setenv("OPENAI_API_KEY", "test-key")
+    captured = {}
+
+    class FakeResponse:
+        def __init__(self):
+            self.choices = [type("obj", (), {"message": type("msg", (), {"content": "Stub summary"})()})]
+
+    class FakeOpenAI:
+        def __init__(self, api_key=None):
+            self.chat = self
+            self.completions = self
+            self.api_key = api_key
+
+        def create(self, **kwargs):
+            captured["request"] = kwargs
+            return FakeResponse()
+
+    monkeypatch.setattr(gc, "OpenAI", FakeOpenAI)
+
+    summary = gc.generate_game_summary(payload, game_data, probability_map, wp_threshold=0.975)
+    assert summary == "Stub summary"
+    user_prompt = captured["request"]["messages"][1]["content"]
+    assert "Status: Q2 12:00" in user_prompt
+    assert "HOM leads by 4" in user_prompt
+    assert "why HOM leads" in user_prompt
+
+
+def test_points_per_trip_details_use_drive_finisher():
+    sample = {
+        "boxscore": {
+            "teams": [
+                {"team": {"id": "1", "abbreviation": "AAA"}},
+                {"team": {"id": "2", "abbreviation": "BBB"}},
+            ]
+        },
+        "header": {
+            "competitions": [
+                {"competitors": [{"id": "1", "score": "7", "homeAway": "home"}, {"id": "2", "score": "0", "homeAway": "away"}]}
+            ]
+        },
+        "drives": {
+            "previous": [
+                {
+                    "team": {"id": "1"},
+                    "start": {"yardsToEndzone": 35},
+                    "plays": [
+                        {
+                            "id": "10",
+                            "text": "Run to the 20",
+                            "type": {"text": "Rush"},
+                            "statYardage": 15,
+                            "start": {"down": 1, "distance": 10, "yardsToEndzone": 35, "possessionText": "AAA 35"},
+                            "period": {"number": 1},
+                            "clock": {"displayValue": "10:00"},
+                            "team": {"abbreviation": "AAA", "id": "1"},
+                        },
+                        {
+                            "id": "11",
+                            "text": "Touchdown catch",
+                            "type": {"text": "Pass"},
+                            "statYardage": 20,
+                            "start": {"down": 2, "distance": 5, "yardsToEndzone": 20, "possessionText": "BBB 20"},
+                            "period": {"number": 1},
+                            "clock": {"displayValue": "08:00"},
+                            "team": {"abbreviation": "AAA", "id": "1"},
+                            "scoringPlay": True,
+                            "scoreValue": 7,
+                        },
+                    ],
+                }
+            ]
+        },
+        "scoringPlays": [
+            {
+                "id": "11",
+                "team": {"id": "1"},
+                "type": {"text": "Pass Reception Touchdown"},
+                "text": "Touchdown catch",
+                "homeScore": 7,
+                "awayScore": 0,
+                "period": {"number": 1},
+                "clock": {"displayValue": "08:00"},
+                "scoringType": {"name": "touchdown"},
+            }
+        ],
+    }
+
+    df, details = gc.process_game_stats(sample, expanded=True)
+    finisher = details["1"]["Points Per Trip (Inside 40)"][0]
+    assert finisher["text"] == "Touchdown catch"
+    assert finisher.get("points") == 7
+
+
+def test_points_per_trip_skips_timeouts_as_finisher():
+    sample = {
+        "boxscore": {
+            "teams": [
+                {"team": {"id": "1", "abbreviation": "AAA"}},
+                {"team": {"id": "2", "abbreviation": "BBB"}},
+            ]
+        },
+        "header": {"competitions": [{"competitors": [{"id": "1", "score": "3"}, {"id": "2", "score": "0"}]}]},
+        "drives": {
+            "previous": [
+                {
+                    "team": {"id": "1"},
+                    "start": {"yardsToEndzone": 30},
+                    "plays": [
+                        {
+                            "id": "31",
+                            "text": "Field goal good",
+                            "type": {"text": "Field Goal"},
+                            "statYardage": 0,
+                            "start": {"down": 4, "distance": 5, "yardsToEndzone": 20, "possessionText": "BBB 20"},
+                            "period": {"number": 2},
+                            "clock": {"displayValue": "01:00"},
+                            "team": {"abbreviation": "AAA", "id": "1"},
+                            "scoringPlay": True,
+                            "scoreValue": 3,
+                        },
+                        {
+                            "id": "32",
+                            "text": "Official Timeout",
+                            "type": {"text": "Timeout"},
+                            "start": {"down": 1, "distance": 10, "yardsToEndzone": 65, "possessionText": "AAA 35"},
+                            "period": {"number": 2},
+                            "clock": {"displayValue": "00:55"},
+                            "team": {"abbreviation": "AAA", "id": "1"},
+                        },
+                    ],
+                }
+            ]
+        },
+        "scoringPlays": [
+            {
+                "id": "31",
+                "team": {"id": "1"},
+                "type": {"text": "Field Goal"},
+                "text": "Field goal good",
+                "homeScore": 3,
+                "awayScore": 0,
+                "period": {"number": 2},
+                "clock": {"displayValue": "01:00"},
+                "scoringType": {"name": "field goal"},
+            }
+        ],
+    }
+
+    df, details = gc.process_game_stats(sample, expanded=True)
+    finisher = details["1"]["Points Per Trip (Inside 40)"][0]
+    assert finisher["text"] == "Field goal good"
+
+
+def test_points_per_trip_excludes_drives_without_40_entry():
+    sample = {
+        "boxscore": {
+            "teams": [
+                {"team": {"id": "1", "abbreviation": "SEA"}},
+                {"team": {"id": "2", "abbreviation": "DAL"}},
+            ]
+        },
+        "header": {"competitions": [{"competitors": [{"id": "1", "score": "0"}, {"id": "2", "score": "0"}]}]},
+        "drives": {
+            "previous": [
+                {
+                    "team": {"id": "1"},
+                    "start": {"yardsToEndzone": 69},
+                    "plays": [
+                        {
+                            "id": "40",
+                            "text": "Punt",
+                            "type": {"text": "Punt"},
+                            "statYardage": 40,
+                            "start": {"down": 4, "distance": 8, "yardsToEndzone": 69, "possessionText": "SEA 31"},
+                            "end": {"yardsToEndzone": 30},
+                            "period": {"number": 1},
+                            "clock": {"displayValue": "05:58"},
+                            "team": {"abbreviation": "SEA", "id": "1"},
+                        }
+                    ],
+                }
+            ]
+        },
+        "scoringPlays": [],
+    }
+
+    df, details = gc.process_game_stats(sample, expanded=True)
+    assert details["1"]["Points Per Trip (Inside 40)"] == []
+
+
+def test_penalty_details_capture_all_penalties():
+    sample = {
+        "boxscore": {
+            "teams": [
+                {"team": {"id": "1", "abbreviation": "AAA"}},
+                {"team": {"id": "2", "abbreviation": "BBB"}},
+            ]
+        },
+        "header": {"competitions": [{"competitors": [{"id": "1", "score": "0"}, {"id": "2", "score": "0"}]}]},
+        "drives": {
+            "previous": [
+                {
+                    "team": {"id": "1"},
+                    "plays": [
+                        {
+                            "id": "21",
+                            "text": "Penalty on offense, holding",
+                            "type": {"text": "Penalty"},
+                            "start": {"down": 1, "distance": 10, "yardsToEndzone": 60, "possessionText": "AAA 40"},
+                            "period": {"number": 2},
+                            "clock": {"displayValue": "05:00"},
+                            "team": {"abbreviation": "AAA", "id": "1"},
+                            "penalty": {"yards": 10, "team": {"id": "1"}},
+                        },
+                        {
+                            "id": "22",
+                            "text": "Declined penalty on BBB defense",
+                            "type": {"text": "Pass"},
+                            "start": {"down": 2, "distance": 15, "yardsToEndzone": 50, "possessionText": "AAA 50"},
+                            "period": {"number": 2},
+                            "clock": {"displayValue": "04:30"},
+                            "team": {"abbreviation": "AAA", "id": "1"},
+                            "hasPenalty": True,
+                        },
+                    ],
+                }
+            ]
+        },
+        "scoringPlays": [],
+    }
+
+    _, details = gc.process_game_stats(sample, expanded=True)
+    penalties_offense = details["1"]["Penalty Yards"]
+    penalties_defense = details["2"]["Penalty Yards"]
+    assert len(penalties_offense) == 1
+    assert penalties_offense[0]["yards"] == -10
+    assert "holding" in penalties_offense[0]["text"]
+    assert len(penalties_defense) == 1
+    assert penalties_defense[0]["yards"] is None or penalties_defense[0]["yards"] <= 0
+
+
+def test_non_offensive_points_details_show_scoring_play():
+    sample = {
+        "boxscore": {
+            "teams": [
+                {"team": {"id": "1", "abbreviation": "AAA"}, "statistics": []},
+                {"team": {"id": "2", "abbreviation": "BBB"}, "statistics": []},
+            ]
+        },
+        "header": {
+            "competitions": [
+                {
+                    "competitors": [
+                        {"id": "1", "score": "0", "homeAway": "home"},
+                        {"id": "2", "score": "7", "homeAway": "away"},
+                    ]
+                }
+            ]
+        },
+        "drives": {
+            "previous": [
+                {
+                    "team": {"id": "1"},
+                    "start": {"yardsToEndzone": 70},
+                    "plays": [
+                        {
+                            "id": "10",
+                            "text": "Pick-six by defense",
+                            "type": {"text": "Interception Return Touchdown"},
+                            "statYardage": -5,
+                            "start": {"down": 2, "distance": 8, "team": {"id": "1"}},
+                            "team": {"abbreviation": "AAA", "id": "1"},
+                            "scoringPlay": True,
+                        }
+                    ],
+                }
+            ]
+        },
+        "scoringPlays": [
+            {
+                "id": "10",
+                "team": {"id": "2"},
+                "type": {"text": "Interception Return Touchdown"},
+                "text": "Pick-six by BBB",
+                "homeScore": 0,
+                "awayScore": 7,
+                "scoringType": {"name": "touchdown"},
+                "period": {"number": 1},
+                "clock": {"displayValue": "10:00"},
+            }
+        ],
+    }
+
+    df, details = gc.process_game_stats(sample, expanded=True)
+    non_off = details["2"]["Non-Offensive Points"]
+    assert non_off[0]["points"] == 7
+    assert "Pick-six" in non_off[0]["text"]

@@ -1,89 +1,65 @@
 import argparse
 import os
-import io
-import csv
 import requests
 import pandas as pd
 import json
-from dotenv import load_dotenv
+try:
+    from dotenv import load_dotenv
+except ImportError:  # pragma: no cover - fallback for environments without python-dotenv
+    def load_dotenv(*args, **kwargs):
+        return False
 from openai import OpenAI
 
 load_dotenv('.env.local')
 
-GAME_SUMMARY_SYSTEM_PROMPT = """You are a sports analyst generating tweet-length NFL game summaries. Your summaries must be statistically grounded and narratively compelling.
+GAME_SUMMARY_SYSTEM_PROMPT = """You generate 280-character NFL game summaries that explain the score.
 
-## DECISION FRAMEWORK
+## FACTOR PRIORITY
 
-Execute this sequence for each game:
+**Tier 1 - Lead with these:**
+- Turnovers (~4 points per turnover; 70% win rate when winning the battle)
+- Non-offensive points (pick-sixes, fumble returns, ST TDs)
+- Explosive plays (drives with explosives see expected points nearly quadruple)
 
-1. **Identify the narrative pattern** from the WP trajectory:
-   - BLOWOUT: Winner led by 17+ points, WP never competitive after Q1
-   - CONTROLLED: Steady WP ramp, no 50% line crossings after early game
-   - COMEBACK: Winner's WP dropped below 25% at some point
-   - BACK-AND-FORTH: 3+ crossings of the 50% WP line
-   - SINGLE-PLAY-DECISIVE: One play with ≥20% WP delta that the game never recovered from
+**Tier 2 - Strong support:**
+- Success rate, Points per trip inside 40
 
-2. **Check for "despite" trigger**: If winning team lost 3+ statistical categories, lead with what DID explain the win (usually turnovers, explosive plays, or non-offensive points).
-
-3. **Select your lead** using these rules:
-   - SINGLE PLAY: If any play has ≥20% WP delta AND occurred Q4/OT AND WP never recovered → lead with that play
-   - SINGLE PLAY: If max WP delta is 15-19% and no dominant statistical factor → lead with that play
-   - DOMINANT FACTOR: If no play ≥15% WP delta AND one factor shows clear dominance (+3 turnovers, 200+ yard advantage) → lead with factor
-   - DESPITE NARRATIVE: If winning team lost 3+ stat categories → lead with "wins despite [deficit], [explanation]"
-   - SCORE ITSELF: If margin is 30+ points → lead with the historic margin
+**Tier 3 - Context only:**
+- Field position, Penalty yards (weakest correlation—rarely lead with this)
 
 ## WP DELTA THRESHOLDS
 
-| Category | WP Delta | Action |
-|----------|----------|--------|
-| Game-changing | ≥20% | MUST mention; likely should lead |
-| Major impact | 15-19% | Strong mention candidate; lead if no 20%+ plays |
-| Key play | 10-14% | Mention if space permits |
-| Moderate | 5-9% | Only if exemplifies theme |
-| Routine | <5% | Do not mention individually |
+- ≥20%: Game-changing. Must mention, likely lead with it.
+- 15-19%: Major impact. Mention if no 20%+ plays.
+- 10-14%: Key play. Mention if space permits.
+- <10%: Don't mention individually.
 
-## FACTOR HIERARCHY
+## NARRATIVE SELECTION
 
-**Tier 1 (lead with these):**
-- Turnovers: ~4 points per turnover; 70% win rate when winning battle
-- Non-offensive points: Pick-sixes, fumble returns, ST TDs—rare and narrative-worthy
-- Explosive play rate: Drives with explosives see expected points nearly quadruple
+**Single play**: Lead with a specific play if WP delta ≥20% in 4th quarter/OT.
+**Despite narrative**: Use when winner/leader lost 2+ stat categories. Explain what overcame the deficit.
+**Comeback**: Use when winner/leader dropped below 25% WP at some point.
+**Dominant factor**: Use when no play ≥15% delta but one stat shows clear edge (+3 turnovers, etc).
 
-**Tier 2 (strong support):**
-- Yards per play, Success rate, Points per trip inside 40
+## STYLE
 
-**Tier 3 (contextual only):**
-- Field position, Raw explosive count, Possession count, Penalty yards
+- First sentence must include the score
+- Completed games: past tense ("cruised", "edged", "survived")
+- In-progress games: present tense ("leads", "controlling", "hanging on")
+- Match verb to margin: "cruised" (17+), "beats" (10-16), "edges" (3-9), "survives" (1-2)
+- Include player names for key plays
+- Use correlation language ("won with +3 turnover margin") not causation ("won because of")
 
-## STYLE RULES
+## DO NOT
 
-- Start with final score in first sentence (ALWAYS)
-- Match verb to margin: "cruised" (17+), "beats" (10-16), "edges" (3-9), "survives/escapes" (1-2), "outlasts" (OT)
-- Use correlation language, NOT causation: "won with +3 turnover margin" not "won because of turnovers"
-- Include player names for decisive plays
-- Every word must add information—no "great game" or "big win"
+- Lead with penalty yards unless a specific penalty decided the game
+- Say "great game" or "big win"—every word must add information
+- Treat yards as deterministic (teams win despite being outgained 30% of the time)
+- Miss clusters (three 8% plays on one drive = 24% cumulative)
 
-## ANTI-PATTERNS (DO NOT DO THESE)
+## OUTPUT
 
-- Never lead with penalty yards unless a specific penalty directly decided the game
-- Never treat yards as deterministic—teams win despite being outgained 30% of the time
-- Never mention possession count without explaining what drove it
-- Never ignore that late-game plays matter more (same INT is 25% WP delta in Q4 vs 8% in Q1)
-- Never miss cluster patterns—three 8% plays on one drive (24% cumulative) beats one 15% play
-
-## OUTPUT FORMAT
-
-Target exactly 280 characters. Maximum 300 characters. Structure by narrative type:
-
-BLOWOUT: [Team] [cruised/dominated] [opponent], [score]. [Star]: [stat line]. [Control narrative].
-
-CLOSE GAME - SINGLE PLAY: [Team] [edges/survives] [opponent] [score] on [decisive play with context]. [Supporting detail].
-
-DESPITE: [Team] wins [score] despite [deficit]. [What overcame it—turnovers/ST/explosives].
-
-BACK-AND-FORTH: [Team] [survives] [score] over [opponent] in [thriller/OT]. [Volatility description]. [Star line].
-
-DEFENSIVE DOMINANCE: [Team]'s defense [key stat] in [score] win. [Conversion to points] + [supporting stat]."""
+Shoot for ~280 characters. Brevity is key—if you can say it in fewer words, do. No hashtags or emojis."""
 SUMMARY_COLS = ['Team', 'Score', 'Total Yards', 'Drives']
 ADVANCED_COLS = [
     'Team', 'Score', 'Turnovers', 'Total Yards', 'Yards Per Play',
@@ -91,7 +67,14 @@ ADVANCED_COLS = [
     'Points Per Trip (Inside 40)', 'Ave Start Field Pos',
     'Penalty Yards', 'Non-Offensive Points'
 ]
-EXPANDED_CATEGORIES = ['Turnovers', 'Explosive Plays', 'Non-Offensive Scores']
+EXPANDED_CATEGORIES = [
+    'Turnovers',
+    'Explosive Plays',
+    'Non-Offensive Scores',
+    'Points Per Trip (Inside 40)',
+    'Penalty Yards',
+    'Non-Offensive Points'
+]
 
 
 def yardline_to_coord(pos_text, team_abbr):
@@ -233,107 +216,80 @@ def latest_play_from_v2(game_id):
     return None, None
 
 
-def build_competitive_plays_csv(game_data, probability_map, wp_threshold=0.975):
+def build_top_plays_by_wp(game_data, probability_map, wp_threshold=0.975, limit=10):
     """
-    Build a CSV string of all competitive plays for the LLM.
-
-    Returns:
-        str: CSV-formatted string with headers
+    Build a simple list of top plays by WP delta for the LLM.
+    Only includes competitive plays with ≥5% WP swing, sorted by impact.
     """
-    output = io.StringIO()
-    fieldnames = [
-        'quarter', 'clock', 'drive_team', 'play_type', 'text',
-        'home_score', 'away_score', 'start_home_wp', 'start_away_wp',
-        'end_home_wp', 'end_away_wp', 'home_delta', 'away_delta'
-    ]
-    writer = csv.DictWriter(output, fieldnames=fieldnames)
-    writer.writeheader()
+    plays_with_delta = []
 
-    # Get team abbrevs
     teams_info = game_data.get('boxscore', {}).get('teams', [])
     id_to_abbr = {}
     for t in teams_info:
         tid = t.get('team', {}).get('id')
-        abbr = t.get('team', {}).get('abbreviation')
-        if tid and abbr:
+        abbr = t.get('team', {}).get('abbreviation', '?')
+        if tid:
             id_to_abbr[tid] = abbr
 
     prev_home_wp = 0.5
-    prev_away_wp = 0.5
-
     drives = game_data.get('drives', {}).get('previous', [])
 
     for drive in drives:
-        drive_team_id = drive.get('team', {}).get('id')
-        drive_team = id_to_abbr.get(drive_team_id, '?')
+        drive_team = id_to_abbr.get(drive.get('team', {}).get('id'), '?')
 
         for play in drive.get('plays', []):
             play_id = str(play.get('id', ''))
             period = play.get('period', {}).get('number', 0)
 
-            # Get current WP
             prob = probability_map.get(play_id)
-            if prob:
-                home_wp = prob.get('homeWinPercentage', 0.5)
-                away_wp = prob.get('awayWinPercentage', 0.5)
-            else:
-                home_wp = prev_home_wp
-                away_wp = prev_away_wp
+            if not prob:
+                continue
 
-            # Check if competitive (OT always competitive)
-            if period < 5:
-                if home_wp >= wp_threshold or away_wp >= wp_threshold:
-                    # Update prev and skip
-                    prev_home_wp = home_wp
-                    prev_away_wp = away_wp
-                    continue
+            home_wp = prob.get('homeWinPercentage', 0.5)
+            away_wp = prob.get('awayWinPercentage', 0.5)
 
-            # Calculate deltas
-            home_delta = round((home_wp - prev_home_wp) * 100, 1)
-            away_delta = round((away_wp - prev_away_wp) * 100, 1)
+            # Skip non-competitive plays (unless OT)
+            if period < 5 and (home_wp >= wp_threshold or away_wp >= wp_threshold):
+                prev_home_wp = home_wp
+                continue
 
-            row = {
-                'quarter': period,
-                'clock': play.get('clock', {}).get('displayValue', ''),
-                'drive_team': drive_team,
-                'play_type': play.get('type', {}).get('text', 'Unknown'),
-                'text': (play.get('text', '') or '')[:150],  # Truncate long plays
-                'home_score': play.get('homeScore', ''),
-                'away_score': play.get('awayScore', ''),
-                'start_home_wp': round(prev_home_wp * 100, 1),
-                'start_away_wp': round(prev_away_wp * 100, 1),
-                'end_home_wp': round(home_wp * 100, 1),
-                'end_away_wp': round(away_wp * 100, 1),
-                'home_delta': home_delta,
-                'away_delta': away_delta
-            }
-            writer.writerow(row)
+            delta = abs(home_wp - prev_home_wp) * 100
 
-            # Update previous
+            if delta >= 5:  # Only include plays with meaningful impact
+                plays_with_delta.append({
+                    'delta': round(delta, 1),
+                    'quarter': period,
+                    'clock': play.get('clock', {}).get('displayValue', ''),
+                    'team': drive_team,
+                    'text': (play.get('text', '') or '')[:100]
+                })
+
             prev_home_wp = home_wp
-            prev_away_wp = away_wp
 
-    return output.getvalue()
+    # Sort by delta descending, take top N
+    plays_with_delta.sort(key=lambda x: x['delta'], reverse=True)
+    top_plays = plays_with_delta[:limit]
+
+    # Format as simple text lines
+    lines = []
+    for p in top_plays:
+        lines.append(f"{p['delta']}% | Q{p['quarter']} {p['clock']} | {p['team']} | {p['text']}")
+
+    return "\n".join(lines) if lines else "No high-impact plays (5%+ WP delta)"
 
 
-def calculate_wp_trajectory_stats(game_data, probability_map, winner_is_home):
+def calculate_wp_trajectory_stats(game_data, probability_map, leader_is_home):
     """
-    Calculate WP trajectory statistics for narrative detection.
-
-    Returns:
-        dict with:
-        - winner_min_wp: Lowest WP the winner had during the game
-        - wp_crossings: Number of times WP crossed the 50% line
-        - max_wp_delta: Largest single-play WP swing (absolute value)
-        - max_wp_play_desc: Description of the max delta play
+    Calculate WP trajectory statistics.
+    Uses 'leader' instead of 'winner' to work for in-progress games.
     """
-    winner_min_wp = 100.0
+    leader_min_wp = 100.0
     wp_crossings = 0
     max_wp_delta = 0.0
     max_wp_play_desc = ""
 
     prev_home_wp = 0.5
-    prev_above_50 = None  # Track which side of 50% we're on
+    prev_above_50 = None
 
     drives = game_data.get('drives', {}).get('previous', [])
 
@@ -348,10 +304,10 @@ def calculate_wp_trajectory_stats(game_data, probability_map, winner_is_home):
             home_wp = prob.get('homeWinPercentage', 0.5)
             away_wp = prob.get('awayWinPercentage', 0.5)
 
-            # Track winner's minimum WP
-            winner_wp = home_wp if winner_is_home else away_wp
-            if winner_wp < winner_min_wp:
-                winner_min_wp = winner_wp
+            # Track leader's minimum WP
+            leader_wp = home_wp if leader_is_home else away_wp
+            if leader_wp < leader_min_wp:
+                leader_min_wp = leader_wp
 
             # Track 50% line crossings
             currently_above_50 = home_wp > 0.5
@@ -363,34 +319,25 @@ def calculate_wp_trajectory_stats(game_data, probability_map, winner_is_home):
             delta = abs(home_wp - prev_home_wp) * 100
             if delta > max_wp_delta:
                 max_wp_delta = delta
-                play_text = (play.get('text', '') or '')[:80]
-                play_type = play.get('type', {}).get('text', 'Play')
+                play_text = (play.get('text', '') or '')[:60]
                 quarter = play.get('period', {}).get('number', '?')
                 clock = play.get('clock', {}).get('displayValue', '?')
-                max_wp_play_desc = f"Q{quarter} {clock} - {play_type}: {play_text}"
+                max_wp_play_desc = f"Q{quarter} {clock} - {play_text}"
 
             prev_home_wp = home_wp
 
     return {
-        'winner_min_wp': round(winner_min_wp * 100, 1),
+        'leader_min_wp': round(leader_min_wp * 100, 1),
         'wp_crossings': wp_crossings,
         'max_wp_delta': round(max_wp_delta, 1),
         'max_wp_play_desc': max_wp_play_desc
     }
 
 
-def generate_game_summary(payload, competitive_plays_csv, wp_trajectory_stats, wp_threshold=0.975):
+def generate_game_summary(payload, game_data, probability_map, wp_threshold=0.975):
     """
     Generate a concise game summary using OpenAI.
-
-    Args:
-        payload: The game data payload with summary_table, advanced_table, team_meta
-        competitive_plays_csv: String containing CSV of all competitive plays
-        wp_trajectory_stats: Dict with winner_min_wp, wp_crossings, max_wp_delta, max_wp_play_desc
-        wp_threshold: The WP threshold used for filtering
-
-    Returns:
-        str: Generated summary, or None if generation fails
+    Handles both completed and in-progress games.
     """
     api_key = os.environ.get('OPENAI_API_KEY')
     if not api_key:
@@ -412,107 +359,107 @@ def generate_game_summary(payload, competitive_plays_csv, wp_trajectory_stats, w
         summary_map = {row.get('Team'): row for row in payload.get('summary_table', [])}
         away_score = summary_map.get(away_abbr, {}).get('Score', 0)
         home_score = summary_map.get(home_abbr, {}).get('Score', 0)
-        winner_abbr = home_abbr if home_score > away_score else away_abbr
 
-        # Get advanced stats (use filtered stats)
+        # Determine game status
+        game_status = "Final"
+        is_final = True
+        header = game_data.get('header', {})
+        competitions = header.get('competitions', [])
+        if competitions:
+            status_obj = competitions[0].get('status', {})
+            status_type = status_obj.get('type', {})
+            is_final = status_type.get('completed', False)
+
+            if not is_final:
+                period = status_obj.get('period', 0)
+                clock = status_obj.get('displayClock', '')
+                if period <= 4:
+                    game_status = f"Q{period} {clock}" if clock else f"Q{period}"
+                else:
+                    game_status = f"OT {clock}" if clock else "OT"
+            else:
+                game_status = "Final"
+
+        # Determine leader
+        if home_score > away_score:
+            leader_abbr = home_abbr
+            margin = home_score - away_score
+            leader_line = f"{home_abbr} {'won' if is_final else 'leads'} by {margin}"
+        elif away_score > home_score:
+            leader_abbr = away_abbr
+            margin = away_score - home_score
+            leader_line = f"{away_abbr} {'won' if is_final else 'leads'} by {margin}"
+        else:
+            leader_abbr = home_abbr  # Default for WP calc
+            leader_line = "Tied game"
+
+        # Get advanced stats
         advanced_map = {row.get('Team'): row for row in payload.get('advanced_table', [])}
         away_stats = advanced_map.get(away_abbr, {})
         home_stats = advanced_map.get(home_abbr, {})
 
-        # Build user prompt
-        user_prompt = f"""Generate a game summary for:
+        # Calculate WP trajectory stats
+        leader_is_home = home_score >= away_score
+        wp_stats = calculate_wp_trajectory_stats(game_data, probability_map, leader_is_home)
+
+        # Build top plays list
+        top_plays = build_top_plays_by_wp(game_data, probability_map, wp_threshold, limit=10)
+
+        # Summary focus based on game state
+        if is_final:
+            if home_score != away_score:
+                summary_focus = f"why {leader_abbr} won"
+            else:
+                summary_focus = "how the game ended in a tie"
+        else:
+            if home_score != away_score:
+                summary_focus = f"why {leader_abbr} leads"
+            else:
+                summary_focus = "why the game is tied"
+
+        # Build compact user prompt
+        user_prompt = f"""Generate a game summary:
 
 {away_name} ({away_abbr}) {away_score} @ {home_name} ({home_abbr}) {home_score}
-Winner: {winner_abbr}
+Status: {game_status}
+{leader_line}
 
-## TEAM STATS (competitive plays only, WP < {wp_threshold*100:.1f}%):
+## STATS (competitive plays only):
 
-{away_abbr}:
-- Turnovers: {away_stats.get('Turnovers', 'N/A')}
-- Yards Per Play: {away_stats.get('Yards Per Play', 'N/A')}
-- Success Rate: {away_stats.get('Success Rate', 'N/A')}
-- Explosive Plays: {away_stats.get('Explosive Plays', 'N/A')}
-- Explosive Play Rate: {away_stats.get('Explosive Play Rate', 'N/A')}
-- Points Per Trip (Inside 40): {away_stats.get('Points Per Trip (Inside 40)', 'N/A')}
-- Field Position: {away_stats.get('Ave Start Field Pos', 'N/A')}
-- Penalty Yards: {away_stats.get('Penalty Yards', 'N/A')}
-- Non-Offensive Points: {away_stats.get('Non-Offensive Points', 'N/A')}
-- Possessions: {summary_map.get(away_abbr, {}).get('Drives', 'N/A')}
+{away_abbr}: TO {away_stats.get('Turnovers', 'N/A')} | SR {away_stats.get('Success Rate', 'N/A')} | Exp {away_stats.get('Explosive Plays', 'N/A')} | PPT {away_stats.get('Points Per Trip (Inside 40)', 'N/A')} | Non-Off {away_stats.get('Non-Offensive Points', 'N/A')}
+{home_abbr}: TO {home_stats.get('Turnovers', 'N/A')} | SR {home_stats.get('Success Rate', 'N/A')} | Exp {home_stats.get('Explosive Plays', 'N/A')} | PPT {home_stats.get('Points Per Trip (Inside 40)', 'N/A')} | Non-Off {home_stats.get('Non-Offensive Points', 'N/A')}
 
-{home_abbr}:
-- Turnovers: {home_stats.get('Turnovers', 'N/A')}
-- Yards Per Play: {home_stats.get('Yards Per Play', 'N/A')}
-- Success Rate: {home_stats.get('Success Rate', 'N/A')}
-- Explosive Plays: {home_stats.get('Explosive Plays', 'N/A')}
-- Explosive Play Rate: {home_stats.get('Explosive Play Rate', 'N/A')}
-- Points Per Trip (Inside 40): {home_stats.get('Points Per Trip (Inside 40)', 'N/A')}
-- Field Position: {home_stats.get('Ave Start Field Pos', 'N/A')}
-- Penalty Yards: {home_stats.get('Penalty Yards', 'N/A')}
-- Non-Offensive Points: {home_stats.get('Non-Offensive Points', 'N/A')}
-- Possessions: {summary_map.get(home_abbr, {}).get('Drives', 'N/A')}
+## KEY WP MOMENTS:
 
-## WP TRAJECTORY ANALYSIS:
+- Largest swing: {wp_stats.get('max_wp_delta', 'N/A')}% ({wp_stats.get('max_wp_play_desc', 'N/A')})
+- {leader_abbr}'s lowest WP: {wp_stats.get('leader_min_wp', 'N/A')}%
+- Lead changes: {wp_stats.get('wp_crossings', 'N/A')}
 
-- Winner's minimum WP during game: {wp_trajectory_stats.get('winner_min_wp', 'N/A')}%
-- Number of 50% line crossings: {wp_trajectory_stats.get('wp_crossings', 'N/A')}
-- Largest single-play WP delta: {wp_trajectory_stats.get('max_wp_delta', 'N/A')}% ({wp_trajectory_stats.get('max_wp_play_desc', 'N/A')})
+## TOP PLAYS BY WP IMPACT:
+{top_plays}
 
-## FULL PLAY-BY-PLAY (competitive plays only):
-{competitive_plays_csv}
+Write a concise summary (~280 chars) explaining {summary_focus}."""
 
-Instructions:
-1. Scan the home_delta and away_delta columns to find high-leverage plays (≥10%)
-2. Identify the narrative pattern from the WP trajectory
-3. Check if winner lost 3+ stat categories (despite narrative)
-4. Apply the decision framework from your system instructions
-5. Generate a ~280 character summary (max 300)"""
-
-        model_name = os.environ.get("OPENAI_MODEL", "gpt-4o-mini")
-        # Some models (o-series) require max_completion_tokens and may not support temperature.
-        request_params = {
-            "model": model_name,
-            "messages": [
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",  # Update to gpt-5-mini when available
+            messages=[
                 {"role": "system", "content": GAME_SUMMARY_SYSTEM_PROMPT},
                 {"role": "user", "content": user_prompt}
             ],
-        }
-        # Models that require max_completion_tokens instead of max_tokens
-        # Reasoning models (o-series, gpt-5) need higher limits for internal thinking
-        if model_name.startswith("o1") or model_name.startswith("o3") or model_name.startswith("gpt-5"):
-            request_params["max_completion_tokens"] = 16000
-        else:
-            request_params["max_tokens"] = 300
-            request_params["temperature"] = 0.7
+            max_tokens=150,
+            temperature=0.7
+        )
 
-        try:
-            response = client.chat.completions.create(**request_params)
-        except Exception as inner_e:
-            # Fallback: swap token parameter in case of model-specific requirement.
-            if "max_tokens" in request_params:
-                request_params.pop("max_tokens", None)
-                request_params["max_completion_tokens"] = 16000
-            else:
-                request_params.pop("max_completion_tokens", None)
-                request_params["max_tokens"] = 300
-            # Some models may not support temperature; drop it on retry.
-            request_params.pop("temperature", None)
-            response = client.chat.completions.create(**request_params)
+        summary = response.choices[0].message.content.strip()
 
-        content = response.choices[0].message.content
-        summary = (content or "").strip()
-
-        # Remove quotes if the model wrapped the response
+        # Clean up response
         if summary.startswith('"') and summary.endswith('"'):
             summary = summary[1:-1]
-
-        # Truncate if over 300 chars
-        if len(summary) > 300:
-            summary = summary[:297] + "..."
+        # No hard truncation - we trust the model to be concise
 
         return summary
 
     except Exception as e:
-        # Fail silently
         print(f"Warning: Could not generate AI summary: {e}")
         return None
 
@@ -589,6 +536,13 @@ def classify_offense_play(play):
     if is_special_teams_play(text_lower, type_lower):
         return False, False, False
 
+    # Kickoff/punt return TDs are special teams plays, not offensive plays
+    # (is_special_teams_play excludes TDs to not block offensive TDs)
+    if ('kickoff' in text_lower or 'kickoff' in type_lower) and 'return' in type_lower:
+        return False, False, False
+    if ('punt' in text_lower or 'punt' in type_lower) and 'return' in type_lower:
+        return False, False, False
+
     pass_hint = any_stat_contains(play, ['pass', 'sack']) or 'pass' in type_lower or 'sack' in type_lower or 'scramble' in type_lower or 'pass' in text_lower or 'sack' in text_lower or 'scramble' in text_lower
     rush_hint = any_stat_contains(play, ['rush']) or 'rush' in type_lower or 'run' in text_lower
 
@@ -648,7 +602,6 @@ def process_game_stats(game_data, expanded=False, probability_map=None, pregame_
             play_id = play.get('id')
             if play_id:
                 play_to_drive_team[str(play_id)] = drive_team_id
-
     # Track previous WP for delta calculation, seeded from pre-game projections when available
     prev_home_wp = sanitize_prob(preg_home)
     prev_away_wp = sanitize_prob(preg_away, fallback=1 - prev_home_wp)
@@ -693,7 +646,9 @@ def process_game_stats(game_data, expanded=False, probability_map=None, pregame_
         abbr = t.get('team', {}).get('abbreviation')
         if tid and abbr:
             id_to_abbr[tid] = abbr
+    abbr_to_id = {abbr.lower(): tid for tid, abbr in id_to_abbr.items()}
     scoring_map = {}
+    non_offensive_play_map = {}
     scoring_plays = game_data.get('scoringPlays', [])
     if scoring_plays:
         prev_home = 0
@@ -717,7 +672,8 @@ def process_game_stats(game_data, expanded=False, probability_map=None, pregame_
             points = dh if dh > 0 else da
             scoring_map[sp.get('id')] = {
                 'team': sp.get('team', {}).get('id'),
-                'points': points
+                'points': points,
+                'is_non_offensive': False
             }
     
     # Initialize storage for both teams
@@ -756,7 +712,10 @@ def process_game_stats(game_data, expanded=False, probability_map=None, pregame_
                 'Net Kickoff': [],
                 'Hidden Yards': [],
                 'ST Penalties': [],
-                'Non-Offensive Scores': []
+                'Non-Offensive Scores': [],
+                'Points Per Trip (Inside 40)': [],
+                'Penalty Yards': [],
+                'Non-Offensive Points': []
             }
 
     # --- 1. Get High Level Score/Turnovers ---
@@ -806,14 +765,31 @@ def process_game_stats(game_data, expanded=False, probability_map=None, pregame_
         is_safety = 'safety' in play_type or 'safety' in scoring_type or 'safety' in play_text
         is_non_offensive = False
 
+        # Detect kickoff/punt return TDs - these are special teams scores
+        has_touchdown = 'touchdown' in play_text or 'touchdown' in play_type or 'touchdown' in scoring_type
+        is_kick_return_td = ('kickoff' in play_text or 'kickoff' in play_type) and has_touchdown
+        is_punt_return_td = ('punt' in play_text or 'punt' in play_type) and has_touchdown and ('return' in play_text or 'return' in play_type)
+
         if is_safety:
             is_non_offensive = True
             points = 2  # Safeties are always 2 points
+        elif is_kick_return_td or is_punt_return_td:
+            is_non_offensive = True
         elif drive_offense_id and scoring_team_id and drive_offense_id != scoring_team_id:
             is_non_offensive = True
 
         if is_non_offensive and scoring_team_id in stats:
             stats[scoring_team_id]['Non-Offensive Points'] += points
+            if play_id in scoring_map:
+                scoring_map[play_id]['is_non_offensive'] = True
+            non_offensive_play_map[str(play_id)] = {
+                'team_id': scoring_team_id,
+                'points': points,
+                'type': sp.get('type', {}).get('text', ''),
+                'text': sp.get('text', ''),
+                'quarter': sp.get('period', {}).get('number'),
+                'clock': sp.get('clock', {}).get('displayValue'),
+            }
             if expanded:
                 details[scoring_team_id]['Non-Offensive Scores'].append({
                     'type': sp.get('type', {}).get('text', ''),
@@ -838,6 +814,10 @@ def process_game_stats(game_data, expanded=False, probability_map=None, pregame_
         drive_crossed_40_competitive = False
         drive_started_competitive = False
         drive_first_play_checked = False
+        drive_has_offensive_play = False  # Track if drive had any offensive plays
+        last_competitive_play = None
+        last_competitive_prob = None
+        current_yte_est = drive_start_yte if isinstance(drive_start_yte, (int, float)) else None
 
         # --- Process Plays for Efficiency/Explosives ---
         for play in drive_plays:
@@ -855,6 +835,7 @@ def process_game_stats(game_data, expanded=False, probability_map=None, pregame_
                 opponent_id = next((tid for tid in id_to_abbr if tid != start_team_id), None)
 
             competitive = is_competitive_play(play, probability_map, wp_threshold)
+            probability_snapshot = lookup_probability_with_delta(play)
 
             # Track drive start stats only when the opening play was competitive.
             if not drive_first_play_checked:
@@ -870,14 +851,37 @@ def process_game_stats(game_data, expanded=False, probability_map=None, pregame_
                     stats[team_id]['Start Field Pos Sum'] += start_loc
                     stats[team_id]['Drives Count'] += 1
 
-            if competitive and drive_started_competitive and not drive_crossed_40_competitive:
-                yte = play.get('start', {}).get('yardsToEndzone', 100)
-                try:
-                    if yte <= 40:
-                        drive_crossed_40_competitive = True
-                except TypeError:
-                    pass
-            
+            # Capture penalty plays for key-play surfacing
+            penalty_info = play.get('penalty') or {}
+            has_penalty_flag = bool(penalty_info) or play.get('hasPenalty') or 'penalty' in text_lower
+            if expanded and has_penalty_flag:
+                commit_team_id = penalty_info.get('team', {}).get('id')
+                if not commit_team_id:
+                    for abbr_lower, tid in abbr_to_id.items():
+                        if f"penalty on {abbr_lower}" in text_lower:
+                            commit_team_id = tid
+                            break
+                if not commit_team_id:
+                    if 'on defense' in text_lower and opponent_id:
+                        commit_team_id = opponent_id
+                    else:
+                        commit_team_id = team_id
+                yards_pen = penalty_info.get('yards')
+                if isinstance(yards_pen, (int, float)):
+                    yards_pen = -abs(yards_pen)
+                if commit_team_id not in details:
+                    commit_team_id = team_id
+                details[commit_team_id]['Penalty Yards'].append({
+                    'yards': yards_pen,
+                    'text': play.get('text', ''),
+                    'type': play_type,
+                    'quarter': play.get('period', {}).get('number'),
+                    'clock': play.get('clock', {}).get('displayValue'),
+                    'start_pos': play.get('start', {}).get('possessionText'),
+                    'down_dist': play.get('start', {}).get('downDistanceText') or play.get('start', {}).get('shortDownDistanceText'),
+                    'probability': probability_snapshot
+                })
+
             # Filter out non-plays, nullified, timeouts/end-of-period
             if 'timeout' in play_type_lower or 'end of' in play_type_lower:
                 update_prev_wp(play)
@@ -889,6 +893,28 @@ def process_game_stats(game_data, expanded=False, probability_map=None, pregame_
             if not competitive:
                 update_prev_wp(play)
                 continue
+            last_competitive_play = play
+            last_competitive_prob = probability_snapshot
+
+            if competitive and drive_started_competitive:
+                is_offense_play, _, _ = classify_offense_play(play)
+                if is_offense_play:
+                    drive_has_offensive_play = True
+                if is_offense_play and not drive_crossed_40_competitive:
+                    yte_start = play.get('start', {}).get('yardsToEndzone')
+                    gained = play.get('statYardage')
+                    if isinstance(yte_start, (int, float)):
+                        current_yte_est = yte_start
+                    yte_for_check = yte_start if isinstance(yte_start, (int, float)) else current_yte_est
+                    try:
+                        if yte_for_check is not None and yte_for_check <= 40:
+                            drive_crossed_40_competitive = True
+                        elif isinstance(yte_for_check, (int, float)) and isinstance(gained, (int, float)):
+                            if yte_for_check - gained <= 40:
+                                drive_crossed_40_competitive = True
+                            current_yte_est = yte_for_check - gained
+                    except TypeError:
+                        pass
             
             # Turnovers
             muffed_punt = 'muffed punt' in text_lower or 'muff' in play_type_lower
@@ -990,6 +1016,21 @@ def process_game_stats(game_data, expanded=False, probability_map=None, pregame_
                         drive_points_competitive += sp.get('points', 0)
                 else:
                     drive_points_competitive += play.get('scoreValue', 0)
+
+            non_off_entry = non_offensive_play_map.get(str(play_id))
+            if expanded and non_off_entry:
+                target_team = non_off_entry.get('team_id')
+                if target_team in details:
+                    details[target_team]['Non-Offensive Points'].append({
+                        'type': non_off_entry.get('type') or play_type,
+                        'text': non_off_entry.get('text') or text,
+                        'points': non_off_entry.get('points'),
+                        'quarter': play.get('period', {}).get('number'),
+                        'clock': play.get('clock', {}).get('displayValue'),
+                        'start_pos': play.get('start', {}).get('possessionText'),
+                        'down_dist': play.get('start', {}).get('downDistanceText') or play.get('start', {}).get('shortDownDistanceText'),
+                        'probability': probability_snapshot
+                    })
             
             # Special teams net values computed from field position when available
             start_pos_text = play.get('start', {}).get('possessionText')
@@ -1130,18 +1171,26 @@ def process_game_stats(game_data, expanded=False, probability_map=None, pregame_
             update_prev_wp(play)
 
         if drive_started_competitive:
-            if not drive_crossed_40_competitive and drive_start_yte != -1:
-                try:
-                    if drive_start_yte <= 40:
-                        drive_crossed_40_competitive = True
-                    elif (100 - drive_start_yte) + (drive_total_yards or 0) >= 60:
-                        drive_crossed_40_competitive = True
-                except TypeError:
-                    pass
-            if drive_crossed_40_competitive:
+            # Consider drives that started already inside the 40 (but only if they had offensive plays)
+            if drive_has_offensive_play and drive_start_yte != -1 and drive_start_yte <= 40:
+                drive_crossed_40_competitive = True
+            # Only count drives with offensive plays for "inside 40" stats
+            if drive_crossed_40_competitive and drive_has_offensive_play:
                 stats[team_id]['Drives Inside 40'] += 1
                 stats[team_id]['Points Inside 40'] += drive_points_competitive
             stats[team_id]['Drive Points'] += drive_points_competitive
+            if expanded and drive_crossed_40_competitive and drive_has_offensive_play and last_competitive_play:
+                details[team_id]['Points Per Trip (Inside 40)'].append({
+                    'text': last_competitive_play.get('text', ''),
+                    'type': last_competitive_play.get('type', {}).get('text', ''),
+                    'yards': last_competitive_play.get('statYardage'),
+                    'quarter': last_competitive_play.get('period', {}).get('number'),
+                    'clock': last_competitive_play.get('clock', {}).get('displayValue'),
+                    'start_pos': last_competitive_play.get('start', {}).get('possessionText'),
+                    'down_dist': last_competitive_play.get('start', {}).get('downDistanceText') or last_competitive_play.get('start', {}).get('shortDownDistanceText'),
+                    'points': drive_points_competitive,
+                    'probability': last_competitive_prob
+                })
 
     # --- 3. Format Data for Output ---
     
@@ -1352,9 +1401,21 @@ def main():
         game_id = args.game_id
         home_abbr = away_abbr = None
         team_meta = []
+        game_status_label = "Final"
+        game_is_final = True
         if comps:
             comp0 = comps[0]
             game_date_str = comp0.get('date', '')
+            status_obj = comp0.get('status', {})
+            status_type = status_obj.get('type', {})
+            game_is_final = status_type.get('completed', False)
+            if not game_is_final:
+                period = status_obj.get('period', 0)
+                clock = status_obj.get('displayClock', '')
+                if period <= 4:
+                    game_status_label = f"Q{period} {clock}".strip()
+                else:
+                    game_status_label = f"OT {clock}".strip() if clock else "OT"
             for comp in comp0.get('competitors', []):
                 abbr = comp.get('team', {}).get('abbreviation')
                 display_name = comp.get('team', {}).get('displayName', abbr or "")
@@ -1418,19 +1479,11 @@ def main():
             "expanded_details": filtered_details,
             "expanded_details_full": filtered_details_full,
             "team_meta": team_meta,
-            "last_play": last_play_line
+            "last_play": last_play_line,
+            "game_status": game_status_label,
+            "is_final": game_is_final
         }
-        # Build AI summary context
-        summary_map = {row.get('Team'): row for row in payload.get('summary_table', [])}
-        home_meta = next((t for t in team_meta if t.get('homeAway') == 'home'), {})
-        away_meta = next((t for t in team_meta if t.get('homeAway') == 'away'), {})
-        home_score_val = summary_map.get(home_meta.get('abbr'), {}).get('Score', 0)
-        away_score_val = summary_map.get(away_meta.get('abbr'), {}).get('Score', 0)
-        winner_is_home = home_score_val > away_score_val
-
-        wp_trajectory_stats = calculate_wp_trajectory_stats(raw_data, prob_map, winner_is_home)
-        competitive_csv = build_competitive_plays_csv(raw_data, prob_map, args.wp_threshold)
-        ai_summary = generate_game_summary(payload, competitive_csv, wp_trajectory_stats, args.wp_threshold)
+        ai_summary = generate_game_summary(payload, raw_data, prob_map, args.wp_threshold)
         payload["ai_summary"] = ai_summary
         payload["analysis"] = build_analysis_text(payload)
 

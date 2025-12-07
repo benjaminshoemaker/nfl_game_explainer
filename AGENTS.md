@@ -33,8 +33,9 @@ pytest tests/test_game_compare.py -v  # Verbose single test file
 
 **game_compare.py** - Main module containing:
 - `get_game_data(game_id)` - Fetches play-by-play JSON from ESPN core API
+- `get_pregame_probabilities(game_id)` - Fetches pre-game win probability from the first entry in ESPN summary's `winprobability` array
 - `get_play_probabilities(game_id)` - Fetches win probability data from ESPN v2 API (paginated)
-- `process_game_stats(game_data, expanded, probability_map)` - Core analysis engine that iterates through drives/plays to compute:
+- `process_game_stats(game_data, expanded, probability_map, pregame_probabilities)` - Core analysis engine that iterates through drives/plays to compute:
   - Success rate (40%/60%/100% thresholds by down)
   - Explosive plays (10+ yard runs, 20+ yard passes)
   - Turnovers, field position, points per trip inside 40
@@ -48,10 +49,11 @@ pytest tests/test_game_compare.py -v  # Verbose single test file
 
 ## Data Flow
 
-1. ESPN game ID → `get_game_data()` fetches play-by-play from `cdn.espn.com/core/nfl/playbyplay`
-2. Same ID → `get_play_probabilities()` fetches WP from `sports.core.api.espn.com/v2/.../probabilities`
-3. `process_game_stats()` iterates drives/plays, classifies each play, accumulates stats
-4. Output written to `game_summaries/` as `{away}_at_{home}_{date}_{id}.[csv|json|html]`
+1. ESPN game ID → `get_pregame_probabilities()` pulls pre-game WP from summary.winprobability[0] (home/away) to seed the initial play.
+2. ESPN game ID → `get_game_data()` fetches play-by-play from `cdn.espn.com/core/nfl/playbyplay`
+3. Same ID → `get_play_probabilities()` fetches WP from `sports.core.api.espn.com/v2/.../probabilities`
+4. `process_game_stats()` iterates drives/plays, classifies each play, accumulates stats
+5. Output written to `game_summaries/` as `{away}_at_{home}_{date}_{id}.[csv|json|html]`
 
 ## Key Implementation Details
 

@@ -13,6 +13,8 @@ ENV/
 .env
 .env.local
 .env.*
+.envrc
+.python-version
 
 # Distribution / packaging
 build/

@@ -42,6 +42,8 @@ htmlcov/
 # Outputs
 game_summaries/
 game_stats.csv
+plays_wp_*.csv
+*.csv
 
 # Logs
 *.log

@@ -257,6 +257,40 @@
             color: var(--home-secondary);
         }
 
+        .view-toggle-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .view-note {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .view-note-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: var(--away-secondary);
+            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.04);
+        }
+
+        .view-toggle-control {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
         /* ==================== CARDS ==================== */
         .card {
             background: var(--bg-card);
@@ -1111,6 +1145,16 @@
 
             .team-abbr { display: none; }
 
+            .view-toggle-bar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .view-toggle-control {
+                width: 100%;
+                justify-content: space-between;
+            }
+
             .stat-row {
                 grid-template-columns: 60px 1fr 60px;
                 gap: 0.5rem;
@@ -1162,6 +1206,19 @@
     </section>
 
     <div class="container">
+        <div class="view-toggle-bar animate-fade-in-up delay-2">
+            <div class="view-note">
+                <span class="view-note-dot"></span>
+                <span id="wp-note">Stats reflect competitive plays only (WP < 97.5%)</span>
+            </div>
+            <div class="view-toggle-control">
+                <label for="view-toggle" style="color: var(--text-muted); font-size: 0.85rem;">View</label>
+                <select id="view-toggle" class="filter-select" onchange="toggleGameView(this.value)">
+                    <option value="competitive">Competitive</option>
+                    <option value="full">Full Game</option>
+                </select>
+            </div>
+        </div>
         <!-- Analysis Card -->
         <section class="section animate-fade-in-up delay-2">
             <div class="card analysis-card">
@@ -1305,6 +1362,48 @@
         };
 
         let currentCategory = 'Explosive Plays';
+        let showFullGame = false;
+
+        function getActiveData() {
+            const summaryFull = gameData.summary_table_full || gameData.summary_table;
+            const advancedFull = gameData.advanced_table_full || gameData.advanced_table;
+            const detailsFull = gameData.expanded_details_full || gameData.expanded_details;
+
+            if (showFullGame) {
+                return {
+                    summary: summaryFull,
+                    advanced: advancedFull,
+                    details: detailsFull
+                };
+            }
+            return {
+                summary: gameData.summary_table,
+                advanced: gameData.advanced_table,
+                details: gameData.expanded_details
+            };
+        }
+
+        function toggleGameView(value) {
+            showFullGame = value === 'full';
+            renderScoreboard();
+            renderSummaryStats();
+            renderAdvancedStats();
+            renderPlays(currentCategory);
+            updateViewIndicator();
+        }
+
+        function updateViewIndicator() {
+            const noteEl = document.getElementById('wp-note');
+            const threshold = gameData.wp_filter?.threshold || 0.975;
+            const desc = gameData.wp_filter?.description || `Stats reflect competitive plays only (WP < ${(threshold * 100).toFixed(1)}%)`;
+            if (noteEl) {
+                noteEl.textContent = showFullGame ? 'Showing full-game totals (no WP filter).' : desc;
+            }
+            const selector = document.getElementById('view-toggle');
+            if (selector) {
+                selector.value = showFullGame ? 'full' : 'competitive';
+            }
+        }
 
         // Apply team colors to CSS variables
         function applyTeamColors() {
@@ -1321,8 +1420,9 @@
         }
 
         function renderScoreboard() {
-            const awayStats = gameData.summary_table.find(t => t.Team === TEAMS.away.abbr);
-            const homeStats = gameData.summary_table.find(t => t.Team === TEAMS.home.abbr);
+            const active = getActiveData();
+            const awayStats = active.summary.find(t => t.Team === TEAMS.away.abbr);
+            const homeStats = active.summary.find(t => t.Team === TEAMS.home.abbr);
 
             document.getElementById('away-abbr-bg').textContent = TEAMS.away.abbr;
             document.getElementById('home-abbr-bg').textContent = TEAMS.home.abbr;
@@ -1351,8 +1451,9 @@
         }
 
         function renderSummaryStats() {
-            const awayData = gameData.summary_table.find(t => t.Team === TEAMS.away.abbr);
-            const homeData = gameData.summary_table.find(t => t.Team === TEAMS.home.abbr);
+            const active = getActiveData();
+            const awayData = active.summary.find(t => t.Team === TEAMS.away.abbr);
+            const homeData = active.summary.find(t => t.Team === TEAMS.home.abbr);
 
             // Set table headers
             document.getElementById('summary-away-header').textContent = TEAMS.away.abbr;
@@ -1439,8 +1540,9 @@
         }
 
         function renderAdvancedStats() {
-            const awayData = gameData.advanced_table.find(t => t.Team === TEAMS.away.abbr);
-            const homeData = gameData.advanced_table.find(t => t.Team === TEAMS.home.abbr);
+            const active = getActiveData();
+            const awayData = active.advanced.find(t => t.Team === TEAMS.away.abbr);
+            const homeData = active.advanced.find(t => t.Team === TEAMS.home.abbr);
 
             const statsToRender = [
                 { key: "Turnovers", description: "Margin", invertBetter: true, clickable: true },
@@ -1560,8 +1662,9 @@
 
         function renderPlays(category) {
             const container = document.getElementById('plays-container');
-            const awayRaw = (gameData.expanded_details[TEAMS.away.id] || {})[category] || [];
-            const homeRaw = (gameData.expanded_details[TEAMS.home.id] || {})[category] || [];
+            const details = getActiveData().details;
+            const awayRaw = (details[TEAMS.away.id] || {})[category] || [];
+            const homeRaw = (details[TEAMS.home.id] || {})[category] || [];
 
             const parseClockSec = (t) => {
                 if (!t) return 0;
@@ -1706,6 +1809,7 @@
             renderSummaryStats();
             renderAdvancedStats();
             renderPlays(currentCategory);
+            updateViewIndicator();
         };
     </script>
 </body>

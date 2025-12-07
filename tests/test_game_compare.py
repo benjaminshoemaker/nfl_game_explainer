@@ -290,3 +290,167 @@ def test_non_offensive_points_pick_six():
 
     details = df[1]
     assert details["2"]["Non-Offensive Scores"][0]["points"] == 7
+
+
+def test_is_competitive_play_logic():
+    prob_map = {
+        "1": {"homeWinPercentage": 0.98, "awayWinPercentage": 0.02},
+        "2": {"homeWinPercentage": 0.6, "awayWinPercentage": 0.4},
+        "3": {"homeWinPercentage": 0.1, "awayWinPercentage": 0.9},
+    }
+
+    high_wp_home = {"id": "1", "period": {"number": 2}}
+    assert gc.is_competitive_play(high_wp_home, prob_map, wp_threshold=0.97) is False
+
+    balanced = {"id": "2", "period": {"number": 2}}
+    assert gc.is_competitive_play(balanced, prob_map, wp_threshold=0.97) is True
+
+    high_wp_away = {"id": "3", "period": {"number": 3}}
+    assert gc.is_competitive_play(high_wp_away, prob_map, wp_threshold=0.85) is False
+
+    missing_wp = {"id": "999", "period": {"number": 2}}
+    assert gc.is_competitive_play(missing_wp, prob_map, wp_threshold=0.5) is True
+
+    overtime_play = {"id": "1", "period": {"number": 5}}
+    assert gc.is_competitive_play(overtime_play, prob_map, wp_threshold=0.5) is True
+
+
+def test_process_game_stats_filters_noncompetitive_time():
+    sample = {
+        "boxscore": {
+            "teams": [
+                {"team": {"id": "1", "abbreviation": "AAA"}},
+                {"team": {"id": "2", "abbreviation": "BBB"}},
+            ]
+        },
+        "header": {
+            "competitions": [
+                {
+                    "competitors": [
+                        {"id": "1", "score": "14", "homeAway": "home"},
+                        {"id": "2", "score": "7", "homeAway": "away"},
+                    ]
+                }
+            ]
+        },
+        "drives": {
+            "previous": [
+                {
+                    "team": {"id": "1"},
+                    "start": {"yardsToEndzone": 75},
+                    "yards": 65,
+                    "plays": [
+                        {
+                            "id": "11",
+                            "text": "Run for 5",
+                            "type": {"text": "Rush"},
+                            "statYardage": 5,
+                            "start": {"down": 1, "distance": 10, "yardsToEndzone": 75, "possessionText": "AAA 25"},
+                            "team": {"abbreviation": "AAA", "id": "1"},
+                        },
+                        {
+                            "id": "12",
+                            "text": "Pass for 25",
+                            "type": {"text": "Pass"},
+                            "statYardage": 25,
+                            "start": {"down": 2, "distance": 5, "yardsToEndzone": 50, "possessionText": "AAA 50"},
+                            "team": {"abbreviation": "AAA", "id": "1"},
+                        },
+                        {
+                            "id": "13",
+                            "text": "Touchdown pass",
+                            "type": {"text": "Pass"},
+                            "statYardage": 35,
+                            "start": {
+                                "down": 1,
+                                "distance": 10,
+                                "yardsToEndzone": 30,
+                                "possessionText": "BBB 30",
+                                "downDistanceText": "1st & 10",
+                            },
+                            "team": {"abbreviation": "AAA", "id": "1"},
+                            "scoringPlay": True,
+                            "scoreValue": 7,
+                        },
+                    ],
+                },
+                {
+                    "team": {"id": "2"},
+                    "start": {"yardsToEndzone": 70},
+                    "yards": 10,
+                    "plays": [
+                        {
+                            "id": "21",
+                            "text": "Late rush for 10",
+                            "type": {"text": "Rush"},
+                            "statYardage": 10,
+                            "start": {"down": 1, "distance": 10, "yardsToEndzone": 70, "possessionText": "BBB 30"},
+                            "team": {"abbreviation": "BBB", "id": "2"},
+                        },
+                        {
+                            "id": "22",
+                            "text": "Garbage time TD",
+                            "type": {"text": "Pass"},
+                            "statYardage": 10,
+                            "start": {"down": 2, "distance": 5, "yardsToEndzone": 20, "possessionText": "AAA 20"},
+                            "team": {"abbreviation": "BBB", "id": "2"},
+                            "scoringPlay": True,
+                            "scoreValue": 7,
+                        },
+                    ],
+                },
+            ]
+        },
+        "scoringPlays": [
+            {
+                "id": "13",
+                "team": {"id": "1"},
+                "type": {"text": "Pass Reception Touchdown"},
+                "text": "AAA TD",
+                "homeScore": 7,
+                "awayScore": 0,
+                "period": {"number": 1},
+                "clock": {"displayValue": "05:00"},
+                "scoringType": {"name": "touchdown"},
+            },
+            {
+                "id": "22",
+                "team": {"id": "2"},
+                "type": {"text": "Pass Reception Touchdown"},
+                "text": "BBB TD late",
+                "homeScore": 14,
+                "awayScore": 7,
+                "period": {"number": 4},
+                "clock": {"displayValue": "01:00"},
+                "scoringType": {"name": "touchdown"},
+            },
+        ],
+    }
+    probability_map = {
+        "11": {"homeWinPercentage": 0.6, "awayWinPercentage": 0.4},
+        "12": {"homeWinPercentage": 0.65, "awayWinPercentage": 0.35},
+        "13": {"homeWinPercentage": 0.7, "awayWinPercentage": 0.3},
+        "21": {"homeWinPercentage": 0.9, "awayWinPercentage": 0.1},
+        "22": {"homeWinPercentage": 0.97, "awayWinPercentage": 0.03},
+    }
+
+    df, details = gc.process_game_stats(sample, expanded=True, probability_map=probability_map, wp_threshold=0.8)
+    table = df.set_index("Team")
+
+    aaa = table.loc["AAA"]
+    assert aaa["Total Yards"] == 65
+    assert aaa["Explosive Plays"] == 2
+    assert aaa["Points per Drive"] == 7
+    assert aaa["Points Per Trip (Inside 40)"] == 7
+    assert aaa["Drives"] == 1
+
+    bbb = table.loc["BBB"]
+    assert bbb["Total Yards"] == 0
+    assert bbb["Explosive Plays"] == 0
+    assert bbb["Points per Drive"] == 0
+    assert bbb["Drives"] == 0
+    assert bbb["Points Per Trip (Inside 40)"] == 0
+
+    # Expanded details should only include competitive plays
+    assert len(details["1"]["Explosive Plays"]) == 2
+    assert details["2"]["Explosive Plays"] == []

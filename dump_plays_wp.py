@@ -29,6 +29,7 @@ def main():
     print("=" * 120)
 
     drives = game_data.get('drives', {}).get('previous', [])
+    csv_rows = []
 
     # Track previous WP for delta calculation
     prev_home_wp = 0.5
@@ -44,7 +45,8 @@ def main():
             quarter = play.get('period', {}).get('number', '?')
             clock = play.get('clock', {}).get('displayValue', '?')
             play_type = play.get('type', {}).get('text', 'Unknown')
-            text = play.get('text', '')[:70]  # Truncate for readability
+            text_full = play.get('text', '') or ''
+            text = text_full[:70]  # Truncate for readability on console
 
             # Get score at this point
             home_score = play.get('homeScore', '?')
@@ -52,6 +54,8 @@ def main():
 
             # Get WP and compute delta
             prob = prob_map.get(play_id)
+            start_home_wp = prev_home_wp
+            start_away_wp = prev_away_wp
             if prob:
                 home_wp = prob.get('homeWinPercentage', 0.5)
                 away_wp = prob.get('awayWinPercentage', 0.5)
@@ -66,15 +70,48 @@ def main():
                         return "  0.0"
                     return f"+{d:5.1f}" if d > 0 else f"{d:6.1f}"
 
-                wp_str = f"{away_abbr} {away_wp*100:5.1f}% ({fmt_delta(away_delta)}) | {home_abbr} {home_wp*100:5.1f}% ({fmt_delta(home_delta)})"
+                wp_str = (
+                    f"WP start {away_abbr} {start_away_wp*100:5.1f}% / {home_abbr} {start_home_wp*100:5.1f}% -> "
+                    f"end {away_abbr} {away_wp*100:5.1f}% ({fmt_delta(away_delta)}) | {home_abbr} {home_wp*100:5.1f}% ({fmt_delta(home_delta)})"
+                )
 
                 # Update previous
                 prev_home_wp = home_wp
                 prev_away_wp = away_wp
             else:
-                wp_str = "(no WP data)"
+                wp_str = (
+                    f"WP start {away_abbr} {start_away_wp*100:5.1f}% / {home_abbr} {start_home_wp*100:5.1f}% -> end (no WP data)"
+                )
+                home_wp = away_wp = home_delta = away_delta = None
 
             print(f"Q{quarter} {clock:>5} | {away_abbr} {away_score}-{home_score} {home_abbr} | {wp_str} | {play_type}: {text}")
+
+            csv_rows.append({
+                "drive_team": team_abbr,
+                "drive_description": drive_desc,
+                "play_id": play_id,
+                "quarter": quarter,
+                "clock": clock,
+                "play_type": play_type,
+                "text": text_full,
+                "home_score": home_score,
+                "away_score": away_score,
+                "start_home_wp": round(start_home_wp * 100, 3),
+                "start_away_wp": round(start_away_wp * 100, 3),
+                "end_home_wp": None if home_wp is None else round(home_wp * 100, 3),
+                "end_away_wp": None if away_wp is None else round(away_wp * 100, 3),
+                "home_delta": None if home_delta is None else round(home_delta, 3),
+                "away_delta": None if away_delta is None else round(away_delta, 3),
+            })
+
+    if csv_rows:
+        import csv
+        csv_path = f"plays_wp_{game_id}.csv"
+        with open(csv_path, "w", newline="", encoding="utf-8") as f:
+            writer = csv.DictWriter(f, fieldnames=list(csv_rows[0].keys()))
+            writer.writeheader()
+            writer.writerows(csv_rows)
+        print(f"\nCSV written to {csv_path} ({len(csv_rows)} rows)")
 
 if __name__ == "__main__":
     main()

@@ -1,6 +1,8 @@
 import os
 import sys
 
+import pytest
+
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 import game_compare as gc
@@ -12,6 +14,113 @@ def test_calculate_success_thresholds():
     assert gc.calculate_success(2, 10, 6) is True
     assert gc.calculate_success(3, 5, 5) is True
     assert gc.calculate_success(4, 1, 0.9) is False
+
+
+def test_get_pregame_probabilities_from_winprobability(monkeypatch):
+    class FakeResponse:
+        def __init__(self, payload, status=200):
+            self._payload = payload
+            self.status_code = status
+
+        def json(self):
+            return self._payload
+
+        def raise_for_status(self):
+            if self.status_code >= 400:
+                raise gc.requests.HTTPError("error")
+
+    def fake_get(url, headers=None, timeout=None):
+        assert "summary" in url
+        return FakeResponse(
+            {
+                "winprobability": [
+                    {"homeWinPercentage": 0.7047, "tiePercentage": 0.0, "playId": "pre"},
+                    {"homeWinPercentage": 0.70, "playId": "123"},
+                ]
+            }
+        )
+
+    monkeypatch.setattr(gc.requests, "get", fake_get)
+    home_wp, away_wp = gc.get_pregame_probabilities("12345")
+    assert home_wp == pytest.approx(0.7047)
+    assert away_wp == pytest.approx(0.2953)
+
+
+def test_get_pregame_probabilities_missing_predictor_returns_even(monkeypatch):
+    class FakeResponse:
+        def __init__(self, payload, status=200):
+            self._payload = payload
+            self.status_code = status
+
+        def json(self):
+            return self._payload
+
+        def raise_for_status(self):
+            if self.status_code >= 400:
+                raise gc.requests.HTTPError("error")
+
+    def fake_get(url, headers=None, timeout=None):
+        return FakeResponse({})
+
+    monkeypatch.setattr(gc.requests, "get", fake_get)
+    assert gc.get_pregame_probabilities("abcde") == (0.5, 0.5)
+
+
+def test_wp_delta_starts_from_pregame_probabilities():
+    # Home pregame WP 0.60 -> first play WP 0.65 should yield +0.05 delta.
+    game_data = {
+        "boxscore": {
+            "teams": [
+                {"team": {"id": "1", "abbreviation": "HOM"}},
+                {"team": {"id": "2", "abbreviation": "AWY"}},
+            ]
+        },
+        "header": {
+            "competitions": [
+                {
+                    "competitors": [
+                        {"id": "1", "score": "0", "homeAway": "home"},
+                        {"id": "2", "score": "0", "homeAway": "away"},
+                    ]
+                }
+            ]
+        },
+        "drives": {
+            "previous": [
+                {
+                    "team": {"id": "1", "abbreviation": "HOM"},
+                    "start": {"yardsToEndzone": 75},
+                    "yards": 25,
+                    "plays": [
+                        {
+                            "id": "10",
+                            "text": "Pass complete for 25 yards",
+                            "type": {"text": "Pass"},
+                            "statYardage": 25,
+                            "start": {"down": 1, "distance": 10},
+                            "period": {"number": 1},
+                            "clock": {"displayValue": "15:00"},
+                            "team": {"abbreviation": "HOM", "id": "1"},
+                        }
+                    ],
+                }
+            ]
+        },
+        "scoringPlays": [],
+    }
+    probability_map = {"10": {"homeWinPercentage": 0.65, "awayWinPercentage": 0.35}}
+
+    _, details = gc.process_game_stats(
+        game_data,
+        expanded=True,
+        probability_map=probability_map,
+        pregame_probabilities=(0.6, 0.4),
+    )
+
+    explosive = details["1"]["Explosive Plays"][0]
+    prob = explosive["probability"]
+    assert prob["homeWinPercentage"] == pytest.approx(0.65)
+    assert prob["homeDelta"] == pytest.approx(0.05)
 
 
 def test_process_game_stats_basic():

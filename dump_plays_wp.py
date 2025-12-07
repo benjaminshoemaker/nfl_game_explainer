@@ -1,6 +1,6 @@
 """Dump all plays from a game with their win probabilities and delta."""
 import sys
-from game_compare import get_game_data, get_play_probabilities
+from game_compare import get_game_data, get_play_probabilities, get_pregame_probabilities
 
 def main():
     if len(sys.argv) < 2:
@@ -12,6 +12,7 @@ def main():
 
     game_data = get_game_data(game_id)
     prob_map = get_play_probabilities(game_id)
+    pregame_home_wp, pregame_away_wp = get_pregame_probabilities(game_id)
 
     # Get team info
     comps = game_data.get('header', {}).get('competitions', [])
@@ -25,6 +26,9 @@ def main():
                 away_abbr = abbr
 
     print(f"\n{away_abbr} @ {home_abbr}")
+    print(
+        f"Pregame WP: {away_abbr} {pregame_away_wp*100:5.1f}% / {home_abbr} {pregame_home_wp*100:5.1f}%"
+    )
     print(f"Probabilities: {len(prob_map)} plays have WP data\n")
     print("=" * 120)
 
@@ -32,8 +36,8 @@ def main():
     csv_rows = []
 
     # Track previous WP for delta calculation
-    prev_home_wp = 0.5
-    prev_away_wp = 0.5
+    prev_home_wp = pregame_home_wp
+    prev_away_wp = pregame_away_wp
 
     for drive in drives:
         team_abbr = drive.get('team', {}).get('abbreviation', '?')

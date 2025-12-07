@@ -1,5 +1,5 @@
 drive_team,drive_description,play_id,quarter,clock,play_type,text,home_score,away_score,start_home_wp,start_away_wp,end_home_wp,end_away_wp,home_delta,away_delta
-MIN,"5 plays, 7 yards, 3:49",40177289640,1,15:00,Kickoff,"J.Myers kicks 60 yards from SEA 35 to MIN 5. M.Price to MIN 33 for 28 yards (N.Pritchett, P.O'Connell).",0,0,50.0,50.0,68.07,31.93,18.07,-18.07
+MIN,"5 plays, 7 yards, 3:49",40177289640,1,15:00,Kickoff,"J.Myers kicks 60 yards from SEA 35 to MIN 5. M.Price to MIN 33 for 28 yards (N.Pritchett, P.O'Connell).",0,0,70.47,29.53,68.07,31.93,-2.4,2.4
 MIN,"5 plays, 7 yards, 3:49",40177289663,1,14:52,Rush,(Shotgun) A.Jones up the middle to MIN 37 for 4 yards (E.Jones).,0,0,68.07,31.93,68.37,31.63,0.3,-0.3
 MIN,"5 plays, 7 yards, 3:49",40177289685,1,14:11,Pass Reception,(Shotgun) M.Brosmer pass short left to A.Jones pushed ob at MIN 37 for no gain (D.Witherspoon).,0,0,68.37,31.63,69.48,30.52,1.11,-1.11
 MIN,"5 plays, 7 yards, 3:49",401772896115,1,13:30,Penalty,"(Shotgun) M.Brosmer sacked at MIN 32 for -5 yards (U.Nwosu).PENALTY on SEA-J.Jobe, Defensive Holding, 5 yards, enforced at MIN 37 - No Play.",0,0,69.48,30.52,66.78,33.22,-2.7,2.7

@@ -102,6 +102,38 @@ def get_play_probabilities(game_id):
     return prob_map
 
 
+def get_pregame_probabilities(game_id):
+    """
+    Fetch pre-game win probabilities from ESPN summary winprobability array.
+    Uses the first entry as the opening WP; returns (home_wp, away_wp).
+    Falls back to (0.5, 0.5) if unavailable.
+    """
+    headers = {'User-Agent': 'Mozilla/5.0'}
+    url = f"https://site.api.espn.com/apis/site/v2/sports/football/nfl/summary?event={game_id}"
+
+    try:
+        resp = requests.get(url, headers=headers, timeout=15)
+        resp.raise_for_status()
+        data = resp.json() or {}
+    except Exception:
+        return 0.5, 0.5
+
+    def clamp(val, fallback=0.5):
+        try:
+            return max(0.0, min(1.0, float(val)))
+        except (TypeError, ValueError):
+            return fallback
+
+    wp_list = data.get('winprobability') or []
+    if not wp_list or not isinstance(wp_list, list):
+        return 0.5, 0.5
+
+    first = wp_list[0] or {}
+    home_wp = clamp(first.get('homeWinPercentage'), fallback=0.5)
+    away_wp = clamp(1.0 - home_wp, fallback=0.5)
+    return home_wp, away_wp
+
+
 def latest_play_from_core(game_data):
     """Return (period, clock_seconds) of the last play in drives.previous."""
     drives = game_data.get('drives', {}).get('previous', [])
@@ -227,12 +259,22 @@ def is_competitive_play(play, probability_map, wp_threshold=0.975):
     away_wp = prob.get('awayWinPercentage', 0.5)
     return home_wp < wp_threshold and away_wp < wp_threshold
 
-def process_game_stats(game_data, expanded=False, probability_map=None, wp_threshold=0.975):
+def process_game_stats(game_data, expanded=False, probability_map=None, pregame_probabilities=None, wp_threshold=0.975):
     boxscore = game_data.get('boxscore', {})
     teams_info = boxscore.get('teams', [])
     id_to_abbr = {}
     probability_map = probability_map or {}
     drives = game_data.get('drives', {}).get('previous', [])
+    try:
+        preg_home, preg_away = pregame_probabilities or (0.5, 0.5)
+    except Exception:
+        preg_home, preg_away = 0.5, 0.5
+
+    def sanitize_prob(val, fallback=0.5):
+        try:
+            return max(0.0, min(1.0, float(val)))
+        except (TypeError, ValueError):
+            return fallback
 
     # Map play_id -> drive offensive team for later attribution (e.g., non-offensive scores)
     play_to_drive_team = {}
@@ -243,9 +285,9 @@ def process_game_stats(game_data, expanded=False, probability_map=None, wp_thres
             if play_id:
                 play_to_drive_team[str(play_id)] = drive_team_id
 
-    # Track previous WP for delta calculation
-    prev_home_wp = 0.5
-    prev_away_wp = 0.5
+    # Track previous WP for delta calculation, seeded from pre-game projections when available
+    prev_home_wp = sanitize_prob(preg_home)
+    prev_away_wp = sanitize_prob(preg_away, fallback=1 - prev_home_wp)
 
     def lookup_probability_with_delta(play):
         """Compute WP and delta from previous play. Does NOT update prev."""
@@ -892,6 +934,7 @@ def main():
     try:
         print(f"Fetching data for Game ID: {args.game_id}...")
         raw_data = get_game_data(args.game_id)
+        pregame_home_wp, pregame_away_wp = get_pregame_probabilities(args.game_id)
         prob_map = {}
         try:
             prob_map = get_play_probabilities(args.game_id)
@@ -923,10 +966,18 @@ def main():
 
         # Always compute expanded data to support downloadable summary file
         df_filtered, details_filtered = process_game_stats(
-            raw_data, expanded=True, probability_map=prob_map, wp_threshold=args.wp_threshold
+            raw_data,
+            expanded=True,
+            probability_map=prob_map,
+            pregame_probabilities=(pregame_home_wp, pregame_away_wp),
+            wp_threshold=args.wp_threshold
         )
         df_full, details_full = process_game_stats(
-            raw_data, expanded=True, probability_map=prob_map, wp_threshold=1.0
+            raw_data,
+            expanded=True,
+            probability_map=prob_map,
+            pregame_probabilities=(pregame_home_wp, pregame_away_wp),
+            wp_threshold=1.0
         )
         df = df_filtered
         details = details_filtered

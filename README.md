@@ -26,12 +26,13 @@ Python tool that pulls NFL play-by-play data from ESPN and turns it into advance
 - Explosiveness: explosive play counts and rates (10+ yards).
 - Finishing drives: points per trip inside the opponent 40.
 - Turnovers and non-offensive points.
-- Average starting field position, penalty yards, possessions, and per-play win probability deltas (ESPN v2 probabilities feed).
+- Average starting field position, penalty yards, possessions, and per-play win probability deltas (seeded by ESPN's summary.winprobability[0] pre-game/opening value plus per-play probabilities feed).
 
 ## Data Flow
-1. `get_game_data(game_id)` pulls play-by-play from `cdn.espn.com/core/nfl/playbyplay`.
-2. `get_play_probabilities(game_id)` pulls win probabilities from `sports.core.api.espn.com/v2/.../probabilities`.
-3. `process_game_stats(...)` iterates drives/plays to compute metrics and render CSV/JSON/HTML reports.
+1. `get_pregame_probabilities(game_id)` pulls pre-game win probability from the first entry in ESPN's `winprobability` array on the summary endpoint to seed the opening play.
+2. `get_game_data(game_id)` pulls play-by-play from `cdn.espn.com/core/nfl/playbyplay`.
+3. `get_play_probabilities(game_id)` pulls win probabilities from `sports.core.api.espn.com/v2/.../probabilities`.
+4. `process_game_stats(...)` iterates drives/plays to compute metrics and render CSV/JSON/HTML reports.
 
 ## Development Notes
 - Activate the virtualenv before running scripts: `source .venv/bin/activate`.

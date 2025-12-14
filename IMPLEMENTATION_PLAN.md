@@ -263,13 +263,13 @@ Note: This is the largest step - take care to preserve all the existing logic. T
 ```
 
 **Checklist:**
-- [ ] api/lib/game_analysis.py created with ported functions
-- [ ] api/lib/__init__.py created
-- [ ] api/game/[gameId].py created and calls analysis functions
-- [ ] File I/O removed from analysis module
-- [ ] Returns proper JSON payload
-- [ ] Manual test with real gameId works
-- [ ] Both filtered and full stats included
+- [x] api/lib/game_analysis.py created with ported functions
+- [x] api/lib/__init__.py created
+- [x] api/game/[gameId].py created and calls analysis functions
+- [x] File I/O removed from analysis module
+- [x] Returns proper JSON payload
+- [x] Manual test with real gameId works
+- [x] Both filtered and full stats included
 
 ---
 

@@ -1,5 +1,5 @@
-import { ScoreboardResponse, ScoreboardGame } from '@/types';
-import { GameCard } from '@/components/GameCard';
+import { ScoreboardResponse } from '@/types';
+import { DirectoryClient } from './DirectoryClient';
 
 async function getScoreboard(): Promise<ScoreboardResponse | null> {
   try {
@@ -23,62 +23,6 @@ async function getScoreboard(): Promise<ScoreboardResponse | null> {
     console.error('Error fetching scoreboard:', error);
     return null;
   }
-}
-
-function sortGames(games: ScoreboardGame[]): ScoreboardGame[] {
-  return [...games].sort((a, b) => {
-    // In-progress games first
-    if (a.isActive && !b.isActive) return -1;
-    if (!a.isActive && b.isActive) return 1;
-
-    // Then pregame by start time
-    if (a.status === 'pregame' && b.status === 'pregame') {
-      const aTime = a.startTime ? new Date(a.startTime).getTime() : 0;
-      const bTime = b.startTime ? new Date(b.startTime).getTime() : 0;
-      return aTime - bTime;
-    }
-    if (a.status === 'pregame') return -1;
-    if (b.status === 'pregame') return 1;
-
-    // Final games last
-    return 0;
-  });
-}
-
-function LoadingState() {
-  return (
-    <div className="container mx-auto px-6 py-12">
-      <div className="text-center mb-12">
-        <h1 className="font-display text-5xl tracking-wide text-text-primary mb-2">
-          NFL Games
-        </h1>
-        <p className="font-condensed text-lg text-text-secondary uppercase tracking-wider">
-          Loading games...
-        </p>
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        {[...Array(8)].map((_, i) => (
-          <div key={i} className="bg-bg-card rounded-xl border border-border-subtle p-4 animate-pulse">
-            <div className="space-y-3">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-bg-elevated rounded-full" />
-                <div className="h-4 bg-bg-elevated rounded flex-1" />
-                <div className="w-8 h-6 bg-bg-elevated rounded" />
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-bg-elevated rounded-full" />
-                <div className="h-4 bg-bg-elevated rounded flex-1" />
-                <div className="w-8 h-6 bg-bg-elevated rounded" />
-              </div>
-            </div>
-            <div className="mt-4 pt-3 border-t border-border-subtle">
-              <div className="h-3 bg-bg-elevated rounded w-20" />
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
 }
 
 function EmptyState() {
@@ -119,41 +63,7 @@ export default async function Home() {
     return <EmptyState />;
   }
 
-  const sortedGames = sortGames(scoreboard.games);
-  const activeCount = sortedGames.filter((g) => g.isActive).length;
-
-  return (
-    <div className="container mx-auto px-6 py-8">
-      {/* Header */}
-      <div className="text-center mb-8">
-        <h1 className="font-display text-4xl md:text-5xl tracking-wide text-text-primary mb-2">
-          NFL {scoreboard.week.label}
-        </h1>
-        <p className="font-condensed text-lg text-text-secondary uppercase tracking-wider">
-          {sortedGames.length} Games
-          {activeCount > 0 && (
-            <span className="ml-2 text-positive">
-              • {activeCount} Live
-            </span>
-          )}
-        </p>
-      </div>
-
-      {/* Games grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        {sortedGames.map((game) => (
-          <GameCard key={game.gameId} game={game} />
-        ))}
-      </div>
-
-      {/* Footer */}
-      <div className="mt-12 text-center">
-        <p className="font-condensed text-xs text-text-muted uppercase tracking-wider">
-          Data from ESPN • Click any game for detailed analysis
-        </p>
-      </div>
-    </div>
-  );
+  return <DirectoryClient initialData={scoreboard} />;
 }
 
 export const metadata = {

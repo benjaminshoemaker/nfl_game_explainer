@@ -10,10 +10,13 @@ function SparkleIcon({ className }: { className?: string }) {
     <svg
       className={className}
       viewBox="0 0 24 24"
-      fill="currentColor"
-      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     >
-      <path d="M12 2L13.09 8.26L18 6L14.74 10.91L21 12L14.74 13.09L18 18L13.09 15.74L12 22L10.91 15.74L6 18L9.26 13.09L3 12L9.26 10.91L6 6L10.91 8.26L12 2Z" />
+      <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
     </svg>
   );
 }
@@ -35,24 +38,31 @@ export function AISummary({ summary, isLoading = false }: AISummaryProps) {
   }
 
   return (
-    <div className="relative bg-bg-card rounded-2xl border border-border-subtle overflow-hidden">
-      {/* Animated gradient border effect */}
+    <div
+      className="relative overflow-hidden rounded-2xl bg-bg-card border border-border-subtle"
+    >
+      {/* Top accent bar */}
       <div
-        className="absolute inset-0 rounded-2xl opacity-50 pointer-events-none"
+        className="absolute top-0 left-0 right-0 h-[2px]"
         style={{
-          background: 'linear-gradient(135deg, rgba(255,215,0,0.1) 0%, transparent 50%, rgba(96,165,250,0.1) 100%)',
+          background: 'linear-gradient(90deg, var(--away-secondary, #FFC62F), var(--gold), var(--home-secondary, #69BE28))',
         }}
       />
 
-      {/* Left accent bar */}
-      <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-gold via-gold/50 to-accent" />
-
-      <div className="relative p-5 pl-6">
+      <div className="relative px-6 py-5">
         {/* Header */}
-        <div className="flex items-center gap-2 mb-3">
-          <SparkleIcon className="w-4 h-4 text-gold" />
-          <span className="font-condensed text-xs uppercase tracking-widest text-gold">
-            AI Analysis
+        <div className="flex items-center gap-3 mb-4">
+          <div
+            className="w-8 h-8 flex items-center justify-center rounded-lg"
+            style={{
+              background: 'linear-gradient(135deg, var(--gold) 0%, #f59e0b 100%)',
+              boxShadow: '0 4px 12px rgba(251, 191, 36, 0.25)',
+            }}
+          >
+            <SparkleIcon className="w-4 h-4 text-bg-deep" />
+          </div>
+          <span className="font-condensed text-xs font-semibold uppercase tracking-wider text-gold">
+            AI Game Summary
           </span>
         </div>
 
@@ -60,19 +70,11 @@ export function AISummary({ summary, isLoading = false }: AISummaryProps) {
         {isLoading ? (
           <LoadingSkeleton />
         ) : (
-          <p className="font-body text-base leading-relaxed text-text-primary">
+          <p className="font-body text-sm md:text-base leading-relaxed text-text-secondary">
             {summary}
           </p>
         )}
       </div>
-
-      {/* Subtle glow effect at bottom */}
-      <div
-        className="absolute bottom-0 left-0 right-0 h-px"
-        style={{
-          background: 'linear-gradient(90deg, transparent, rgba(255,215,0,0.3), transparent)',
-        }}
-      />
     </div>
   );
 }

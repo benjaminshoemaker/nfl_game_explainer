@@ -1,146 +1,229 @@
 'use client';
 
+import {
+  calculateStrength,
+  getStrengthDiamonds,
+  getStrengthLabel,
+  parseStatValue,
+  formatStatValue,
+  type Winner,
+} from '@/lib/teamColors';
+
 interface StatRowProps {
   label: string;
-  sublabel?: string;
+  description: string;
   awayValue: number | string;
   homeValue: number | string;
-  awayColor: string;
-  homeColor: string;
-  lowerIsBetter?: boolean;
+  awayAbbr: string;
+  homeAbbr: string;
+  awayTextColor: string;
+  homeTextColor: string;
+  awaySecondary: string;
+  homeSecondary: string;
+  awayPrimary: string;
+  homePrimary: string;
+  invertBetter?: boolean;
   isPercentage?: boolean;
-}
-
-function formatValue(value: number | string, isPercentage?: boolean): string {
-  if (typeof value === 'string') return value;
-  if (isPercentage) return `${(value * 100).toFixed(1)}%`;
-  return value.toFixed(value % 1 === 0 ? 0 : 2);
-}
-
-function getNumericValue(value: number | string): number {
-  if (typeof value === 'number') return value;
-  // Try to parse string values like "Own 32" -> 32
-  const match = value.match(/(\d+)/);
-  return match ? parseFloat(match[1]) : 0;
-}
-
-function calculateStrength(awayNum: number, homeNum: number): { diamonds: string; glowColor: string; winner: 'away' | 'home' | 'tie' } {
-  const total = Math.abs(awayNum) + Math.abs(homeNum);
-  if (total === 0) return { diamonds: '·', glowColor: '', winner: 'tie' };
-
-  const diff = Math.abs(awayNum - homeNum);
-  const percentDiff = diff / (total / 2);
-
-  let diamonds: string;
-  if (percentDiff > 0.30) diamonds = '◆◆◆';
-  else if (percentDiff > 0.15) diamonds = '◆◆';
-  else if (percentDiff > 0.05) diamonds = '◆';
-  else diamonds = '·';
-
-  const winner = awayNum > homeNum ? 'away' : homeNum > awayNum ? 'home' : 'tie';
-
-  return { diamonds, glowColor: '', winner };
+  clickable?: boolean;
+  selected?: boolean;
+  onClick?: () => void;
 }
 
 export function StatRow({
   label,
-  sublabel,
+  description,
   awayValue,
   homeValue,
-  awayColor,
-  homeColor,
-  lowerIsBetter = false,
+  awayAbbr,
+  homeAbbr,
+  awayTextColor,
+  homeTextColor,
+  awaySecondary,
+  homeSecondary,
+  awayPrimary,
+  homePrimary,
+  invertBetter = false,
   isPercentage = false,
+  clickable = false,
+  selected = false,
+  onClick,
 }: StatRowProps) {
-  const awayNum = getNumericValue(awayValue);
-  const homeNum = getNumericValue(homeValue);
+  const numAway = parseStatValue(awayValue);
+  const numHome = parseStatValue(homeValue);
+  const total = numAway + numHome;
 
-  // Determine winner (accounting for lowerIsBetter)
-  let awayIsWinner: boolean;
-  let homeIsWinner: boolean;
+  const pctAway = total > 0 ? (numAway / total) * 100 : 50;
+  const pctHome = total > 0 ? (numHome / total) * 100 : 50;
 
-  if (lowerIsBetter) {
-    awayIsWinner = awayNum < homeNum;
-    homeIsWinner = homeNum < awayNum;
-  } else {
-    awayIsWinner = awayNum > homeNum;
-    homeIsWinner = homeNum > awayNum;
-  }
+  const displayAway = formatStatValue(awayValue, isPercentage);
+  const displayHome = formatStatValue(homeValue, isPercentage);
 
-  const { diamonds, winner } = calculateStrength(
-    lowerIsBetter ? -awayNum : awayNum,
-    lowerIsBetter ? -homeNum : homeNum
-  );
+  const { winner, strength, pctDiff } = calculateStrength(numAway, numHome, invertBetter);
+  const diamonds = getStrengthDiamonds(strength);
+  const strengthLabel = getStrengthLabel(strength);
 
-  // Calculate bar widths (proportional to values)
-  const maxVal = Math.max(awayNum, homeNum, 1);
-  const awayWidth = (awayNum / maxVal) * 50;
-  const homeWidth = (homeNum / maxVal) * 50;
+  const tooltip = winner !== 'even'
+    ? `${winner === 'away' ? awayAbbr : homeAbbr} · ${strengthLabel} · ${(pctDiff * 100).toFixed(0)}% difference`
+    : '';
 
-  const glowColor = awayIsWinner ? awayColor : homeIsWinner ? homeColor : '';
+  // Dynamic styles based on winner
+  const getBarStyle = (side: 'away' | 'home', winnerSide: Winner) => {
+    if (winnerSide === 'even') {
+      return { background: 'rgba(255,255,255,0.18)' };
+    }
+    if (side === winnerSide) {
+      // Winner gets team gradient
+      if (side === 'away') {
+        return { background: `linear-gradient(90deg, ${awayPrimary}, ${awaySecondary})` };
+      }
+      return { background: `linear-gradient(90deg, ${homeSecondary}, ${homePrimary})` };
+    }
+    // Loser is muted grey
+    return { background: 'rgba(255,255,255,0.18)' };
+  };
+
+  const getNumberColor = (side: 'away' | 'home', winnerSide: Winner) => {
+    if (winnerSide === 'even') return 'var(--text-muted)';
+    if (side === winnerSide) {
+      return side === 'away' ? awayTextColor : homeTextColor;
+    }
+    return 'var(--text-muted)';
+  };
 
   return (
-    <div className="py-3 border-b border-border-subtle last:border-b-0">
-      {/* Label row */}
-      <div className="flex items-center justify-between mb-2">
+    <div
+      className={`
+        grid gap-3 py-5 border-b border-border-subtle last:border-b-0 relative overflow-hidden
+        transition-colors duration-200
+        ${clickable ? 'cursor-pointer -mx-6 px-6 hover:bg-bg-hover' : ''}
+        ${selected ? 'bg-bg-hover border-l-[3px] !pl-[calc(1.5rem-3px)]' : ''}
+      `}
+      style={{
+        gridTemplateColumns: '70px minmax(80px, auto) 1fr minmax(80px, auto) 70px',
+        borderLeftColor: selected ? homeSecondary : 'transparent',
+      }}
+      onClick={clickable ? onClick : undefined}
+      data-winner={winner}
+    >
+      {/* Watermark */}
+      {winner !== 'even' && (
         <span
-          className={`font-body text-sm ${awayIsWinner ? 'text-text-primary font-semibold' : 'text-text-muted'}`}
+          className="absolute font-display text-5xl md:text-6xl opacity-[0.04] pointer-events-none leading-none top-1/2 -translate-y-1/2"
+          style={{
+            color: winner === 'away' ? awaySecondary : homeSecondary,
+            left: winner === 'away' ? (clickable ? 'calc(70px + 1.5rem)' : '70px') : 'auto',
+            right: winner === 'home' ? (clickable ? 'calc(70px + 1.5rem)' : '70px') : 'auto',
+          }}
         >
-          {formatValue(awayValue, isPercentage)}
+          {winner === 'away' ? awayAbbr : homeAbbr}
         </span>
+      )}
 
-        <div className="flex items-center gap-2">
-          <span className="font-condensed text-xs text-text-secondary uppercase tracking-wider">
-            {label}
-          </span>
-          {sublabel && (
-            <span className="font-condensed text-xs text-text-muted">
-              ({sublabel})
+      {/* Away Value */}
+      <div className="text-right relative z-[2]">
+        <span
+          className="font-display text-2xl md:text-3xl leading-none"
+          style={{ color: getNumberColor('away', winner) }}
+        >
+          {displayAway}
+        </span>
+      </div>
+
+      {/* Away Advantage */}
+      <div className="flex items-end justify-end relative z-[2]">
+        {winner === 'away' && (
+          <div
+            className="flex items-center gap-1 cursor-help"
+            title={tooltip}
+          >
+            <span
+              className="text-lg md:text-xl tracking-wider"
+              style={{
+                color: awayTextColor,
+                textShadow: `0 0 10px ${awayTextColor}`,
+              }}
+            >
+              {diamonds}
             </span>
-          )}
+          </div>
+        )}
+      </div>
+
+      {/* Center - Label and Bar */}
+      <div className="flex flex-col gap-2 relative z-[1]">
+        <div className="flex justify-start">
+          <span className="font-condensed text-xs font-semibold uppercase tracking-wider text-text-muted">
+            <span className="text-text-primary">{label}</span>
+            {description && <span className="text-text-muted ml-2">{description}</span>}
+            {clickable && (
+              <svg
+                className={`inline-block ml-2 w-3 h-3 transition-opacity duration-200 ${selected ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
+                style={{ color: selected ? homeSecondary : 'currentColor' }}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path d="m9 18 6-6-6-6" />
+              </svg>
+            )}
+          </span>
         </div>
 
-        <span
-          className={`font-body text-sm ${homeIsWinner ? 'text-text-primary font-semibold' : 'text-text-muted'}`}
-        >
-          {formatValue(homeValue, isPercentage)}
-        </span>
+        {/* Tug-of-war bar */}
+        <div className="relative flex h-[10px] bg-bg-deep rounded-[5px] overflow-visible">
+          {/* Center line */}
+          <div
+            className="absolute left-1/2 -translate-x-1/2 -top-[6px] -bottom-[6px] w-[2px] rounded-[1px] bg-text-primary opacity-40 z-[3]"
+          />
+
+          {/* Away bar */}
+          <div
+            className="h-full rounded-l-[5px] transition-all duration-600"
+            style={{
+              width: `${pctAway}%`,
+              ...getBarStyle('away', winner),
+            }}
+          />
+
+          {/* Home bar */}
+          <div
+            className="h-full rounded-r-[5px] transition-all duration-600"
+            style={{
+              width: `${pctHome}%`,
+              ...getBarStyle('home', winner),
+            }}
+          />
+        </div>
       </div>
 
-      {/* Tug-of-war bar */}
-      <div className="relative h-2 bg-bg-elevated rounded-full overflow-hidden">
-        {/* Center line */}
-        <div className="absolute left-1/2 top-0 bottom-0 w-px bg-border-medium -translate-x-1/2 z-10" />
-
-        {/* Away bar (grows from center to left) */}
-        <div
-          className="absolute right-1/2 top-0 bottom-0 rounded-l-full transition-all duration-300"
-          style={{
-            width: `${awayWidth}%`,
-            backgroundColor: awayIsWinner ? awayColor : `${awayColor}40`,
-          }}
-        />
-
-        {/* Home bar (grows from center to right) */}
-        <div
-          className="absolute left-1/2 top-0 bottom-0 rounded-r-full transition-all duration-300"
-          style={{
-            width: `${homeWidth}%`,
-            backgroundColor: homeIsWinner ? homeColor : `${homeColor}40`,
-          }}
-        />
+      {/* Home Advantage */}
+      <div className="flex items-end justify-start relative z-[2]">
+        {winner === 'home' && (
+          <div
+            className="flex items-center gap-1 cursor-help"
+            title={tooltip}
+          >
+            <span
+              className="text-lg md:text-xl tracking-wider"
+              style={{
+                color: homeTextColor,
+                textShadow: `0 0 10px ${homeTextColor}`,
+              }}
+            >
+              {diamonds}
+            </span>
+          </div>
+        )}
       </div>
 
-      {/* Strength indicator */}
-      <div className="flex justify-end mt-1">
+      {/* Home Value */}
+      <div className="text-left relative z-[2]">
         <span
-          className="text-xs tracking-wider"
-          style={{
-            color: glowColor || 'var(--text-muted)',
-            textShadow: glowColor ? `0 0 8px ${glowColor}` : 'none',
-          }}
+          className="font-display text-2xl md:text-3xl leading-none"
+          style={{ color: getNumberColor('home', winner) }}
         >
-          {diamonds}
+          {displayHome}
         </span>
       </div>
     </div>

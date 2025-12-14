@@ -1,47 +1,51 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { PlayDetail, TeamMeta } from '@/types';
 import { PlayList } from './PlayList';
-import { PlayTabs } from './PlayTabs';
-import { getTeamColors } from '@/lib/teamColors';
+import { getTeamColorVars } from '@/lib/teamColors';
+import Image from 'next/image';
 
 interface GamePlaysProps {
   expandedDetails: Record<string, Record<string, PlayDetail[]>>;
   teamMeta: TeamMeta[];
+  selectedCategory?: string;
 }
 
 // Map of internal category keys to display labels
-const CATEGORY_LABELS: Record<string, string> = {
-  'Turnovers': 'Turnovers',
-  'Explosive Plays': 'Explosive',
-  'Non-Offensive Scores': 'Non-Off TDs',
-  'Scoring Plays': 'Scoring',
-  'Key Plays': 'Key Plays',
-};
+const CATEGORY_OPTIONS = [
+  { key: 'Explosive Plays', label: 'Explosive Plays' },
+  { key: 'Turnovers', label: 'Turnovers' },
+  { key: 'Points Per Trip (Inside 40)', label: 'Points Per Trip' },
+  { key: 'Penalty Yards', label: 'Penalty Plays' },
+  { key: 'Non-Offensive Points', label: 'Non-Offensive Points' },
+];
 
-export function GamePlays({ expandedDetails, teamMeta }: GamePlaysProps) {
-  // Get available categories from the data
-  const categories = useMemo(() => {
-    const cats = Object.keys(expandedDetails);
-    // Sort to put most important first
-    const order = ['Turnovers', 'Explosive Plays', 'Non-Offensive Scores', 'Scoring Plays', 'Key Plays'];
-    return cats.sort((a, b) => {
-      const aIdx = order.indexOf(a);
-      const bIdx = order.indexOf(b);
-      if (aIdx === -1 && bIdx === -1) return a.localeCompare(b);
-      if (aIdx === -1) return 1;
-      if (bIdx === -1) return -1;
-      return aIdx - bIdx;
-    });
-  }, [expandedDetails]);
+export function GamePlays({ expandedDetails, teamMeta, selectedCategory }: GamePlaysProps) {
+  const [activeCategory, setActiveCategory] = useState(selectedCategory || 'Explosive Plays');
 
-  const [activeTab, setActiveTab] = useState(categories[0] || '');
+  // Update active category when selectedCategory changes from parent
+  useEffect(() => {
+    if (selectedCategory) {
+      setActiveCategory(selectedCategory);
+    }
+  }, [selectedCategory]);
 
   const away = teamMeta.find((t) => t.homeAway === 'away');
   const home = teamMeta.find((t) => t.homeAway === 'home');
 
-  if (!away || !home || categories.length === 0) {
+  // Get available categories from the data
+  const availableCategories = useMemo(() => {
+    return CATEGORY_OPTIONS.filter(opt => {
+      const catData = expandedDetails[opt.key];
+      return catData && (
+        (catData[away?.id || '']?.length || 0) +
+        (catData[home?.id || '']?.length || 0) > 0
+      );
+    });
+  }, [expandedDetails, away, home]);
+
+  if (!away || !home || availableCategories.length === 0) {
     return (
       <div className="bg-bg-card rounded-2xl border border-border-subtle p-6 text-center">
         <p className="text-text-muted font-body">No play data available</p>
@@ -49,87 +53,140 @@ export function GamePlays({ expandedDetails, teamMeta }: GamePlaysProps) {
     );
   }
 
-  const awayColors = getTeamColors(away.abbr);
-  const homeColors = getTeamColors(home.abbr);
+  const awayColors = getTeamColorVars(away.abbr);
+  const homeColors = getTeamColorVars(home.abbr);
 
-  // Build tabs with counts
-  const tabs = categories.map((cat) => {
-    const catData = expandedDetails[cat] || {};
-    const awayPlays = catData[away.abbr] || [];
-    const homePlays = catData[home.abbr] || [];
-    const totalCount = awayPlays.length + homePlays.length;
-
-    return {
-      id: cat,
-      label: CATEGORY_LABELS[cat] || cat,
-      count: totalCount,
-    };
-  });
-
-  // Get plays for current category
-  const currentCategoryData = expandedDetails[activeTab] || {};
-  const awayPlays = currentCategoryData[away.abbr] || [];
-  const homePlays = currentCategoryData[home.abbr] || [];
+  // Get plays for current category - use team ID as key
+  const currentCategoryData = expandedDetails[activeCategory] || {};
+  const awayPlays = currentCategoryData[away.id] || currentCategoryData[away.abbr] || [];
+  const homePlays = currentCategoryData[home.id] || currentCategoryData[home.abbr] || [];
 
   return (
     <div className="bg-bg-card rounded-2xl border border-border-subtle overflow-hidden">
-      {/* Header */}
-      <div className="px-4 py-3 bg-bg-elevated border-b border-border-subtle">
-        <h3 className="font-display text-lg tracking-wide text-text-primary">
-          Key Plays
-        </h3>
-        <p className="font-condensed text-xs text-text-muted uppercase tracking-wider mt-1">
-          Game-changing moments
-        </p>
-      </div>
-
-      {/* Tabs */}
-      <div className="p-3 border-b border-border-subtle">
-        <PlayTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} />
-      </div>
-
-      {/* Team sections */}
-      <div className="divide-y divide-border-subtle">
-        {/* Away team plays */}
-        <div className="p-4">
-          <div className="flex items-center gap-2 mb-3">
-            <div
-              className="w-3 h-3 rounded-full"
-              style={{ backgroundColor: awayColors.primary }}
-            />
-            <span className="font-condensed text-sm uppercase tracking-wider text-text-secondary">
-              {away.abbr}
-            </span>
-            <span className="text-xs text-text-muted">
-              ({awayPlays.length})
-            </span>
-          </div>
-          <PlayList
-            plays={awayPlays}
-            teamAbbr={away.abbr}
-            teamColor={awayColors.primary}
-          />
+      {/* Header with filter */}
+      <div className="px-6 py-4 bg-bg-elevated border-b border-border-subtle flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <svg
+            className="w-5 h-5 text-text-muted"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+          </svg>
+          <h3 className="font-display text-lg tracking-wider text-text-primary">
+            KEY PLAYS
+          </h3>
         </div>
 
-        {/* Home team plays */}
-        <div className="p-4">
-          <div className="flex items-center gap-2 mb-3">
+        {/* Category dropdown */}
+        <select
+          value={activeCategory}
+          onChange={(e) => setActiveCategory(e.target.value)}
+          className="appearance-none bg-bg-elevated border border-border-medium rounded-lg px-4 py-2 pr-10 font-body text-sm font-semibold text-text-primary cursor-pointer transition-all duration-200 hover:border-text-muted focus:outline-none focus:border-text-muted"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")`,
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'right 0.75rem center',
+          }}
+        >
+          {CATEGORY_OPTIONS.map((opt) => (
+            <option key={opt.key} value={opt.key}>
+              {opt.label}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Two-column plays grid */}
+      <div className="p-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Away Column */}
+          <div className="plays-column">
+            {/* Column Header */}
             <div
-              className="w-3 h-3 rounded-full"
-              style={{ backgroundColor: homeColors.primary }}
+              className="flex items-center gap-3 mb-4 pb-3 border-b-2"
+              style={{ borderColor: awayColors.secondary }}
+            >
+              <div className="relative w-7 h-7 flex-shrink-0">
+                <Image
+                  src={awayColors.logo}
+                  alt={away.abbr}
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <span
+                className="font-display text-sm px-3 py-1.5 rounded-md tracking-wide"
+                style={{
+                  background: awayColors.primary,
+                  color: awayColors.secondary,
+                }}
+              >
+                {away.abbr}
+              </span>
+              <span className="font-condensed font-semibold text-sm uppercase tracking-wider text-text-secondary">
+                {away.name}
+              </span>
+              <span className="ml-auto font-condensed text-xs font-medium text-text-muted uppercase tracking-wider">
+                {awayPlays.length} plays
+              </span>
+            </div>
+
+            <PlayList
+              plays={awayPlays}
+              teamAbbr={away.abbr}
+              teamPrimary={awayColors.primary}
+              teamSecondary={awayColors.secondary}
+              teamTextColor={awayColors.text}
+              side="away"
             />
-            <span className="font-condensed text-sm uppercase tracking-wider text-text-secondary">
-              {home.abbr}
-            </span>
-            <span className="text-xs text-text-muted">
-              ({homePlays.length})
-            </span>
           </div>
-          <PlayList
-            plays={homePlays}
-            teamAbbr={home.abbr}
-            teamColor={homeColors.primary}
-          />
+
+          {/* Home Column */}
+          <div className="plays-column">
+            {/* Column Header */}
+            <div
+              className="flex items-center gap-3 mb-4 pb-3 border-b-2"
+              style={{ borderColor: homeColors.secondary }}
+            >
+              <div className="relative w-7 h-7 flex-shrink-0">
+                <Image
+                  src={homeColors.logo}
+                  alt={home.abbr}
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <span
+                className="font-display text-sm px-3 py-1.5 rounded-md tracking-wide"
+                style={{
+                  background: homeColors.primary,
+                  color: homeColors.secondary,
+                }}
+              >
+                {home.abbr}
+              </span>
+              <span className="font-condensed font-semibold text-sm uppercase tracking-wider text-text-secondary">
+                {home.name}
+              </span>
+              <span className="ml-auto font-condensed text-xs font-medium text-text-muted uppercase tracking-wider">
+                {homePlays.length} plays
+              </span>
+            </div>
+
+            <PlayList
+              plays={homePlays}
+              teamAbbr={home.abbr}
+              teamPrimary={homeColors.primary}
+              teamSecondary={homeColors.secondary}
+              teamTextColor={homeColors.text}
+              side="home"
+            />
+          </div>
         </div>
       </div>
     </div>

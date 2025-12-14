@@ -863,10 +863,24 @@ def analyze_game(game_id, wp_threshold=0.975):
     # Build label
     label = f"{away_abbr}_at_{home_abbr}_{game_id}" if away_abbr and home_abbr else f"game_{game_id}"
 
+    # Extract game clock info
+    game_clock = None
+    if not game_is_final and comps:
+        status_obj = comps[0].get('status', {})
+        period = status_obj.get('period', 0)
+        clock = status_obj.get('displayClock', '')
+        if period > 0:
+            game_clock = {
+                "quarter": period,
+                "clock": clock,
+                "displayValue": game_status_label
+            }
+
     payload = {
         "gameId": game_id,
         "label": label,
         "status": status,
+        "gameClock": game_clock,
         "wp_filter": {
             "enabled": True,
             "threshold": wp_threshold,

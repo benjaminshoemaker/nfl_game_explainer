@@ -21,6 +21,7 @@ const REFRESH_INTERVAL = 60000; // 60 seconds
 export function GamePageClient({ initialGameData }: GamePageClientProps) {
   const [viewMode, setViewMode] = useState<ViewMode>('competitive');
   const [gameData, setGameData] = useState<GameResponse>(initialGameData);
+  const [selectedCategory, setSelectedCategory] = useState<string>('Explosive Plays');
 
   const isLive = gameData.status === 'in-progress';
 
@@ -32,7 +33,7 @@ export function GamePageClient({ initialGameData }: GamePageClientProps) {
     return response.json();
   }, [gameData.gameId]);
 
-  const { isRefreshing, lastUpdated, secondsUntilRefresh } = useAutoRefresh({
+  const { isRefreshing, secondsSinceUpdate } = useAutoRefresh({
     fetchFn: fetchGameData,
     interval: REFRESH_INTERVAL,
     enabled: isLive,
@@ -76,86 +77,118 @@ export function GamePageClient({ initialGameData }: GamePageClientProps) {
     ? gameData.advanced_table
     : gameData.advanced_table_full;
 
-  const expandedDetails = viewMode === 'competitive'
+  const rawExpandedDetails = viewMode === 'competitive'
     ? gameData.expanded_details
     : gameData.expanded_details_full;
 
-  // Parse status detail from label
-  const statusDetail = gameData.status === 'final'
-    ? 'Final'
-    : gameData.status === 'pregame'
-    ? 'Pregame'
-    : 'In Progress';
+  // Transform expanded_details from {teamId: {category: plays[]}}
+  // to {category: {teamId: plays[]}} format expected by GamePlays
+  const expandedDetails = (() => {
+    const transformed: Record<string, Record<string, typeof rawExpandedDetails[string][string]>> = {};
+    for (const [teamId, categories] of Object.entries(rawExpandedDetails || {})) {
+      for (const [category, plays] of Object.entries(categories || {})) {
+        if (!transformed[category]) {
+          transformed[category] = {};
+        }
+        transformed[category][teamId] = plays;
+      }
+    }
+    return transformed;
+  })();
+
+  // Parse status detail from gameClock or fallback
+  const statusDetail = (() => {
+    if (gameData.status === 'final') return 'Final';
+    if (gameData.status === 'pregame') return 'Pregame';
+
+    // For in-progress games, show quarter and time
+    if (gameData.gameClock) {
+      const { quarter, clock } = gameData.gameClock;
+      if (quarter <= 4) {
+        return `Q${quarter} ${clock}`;
+      }
+      return `OT ${clock}`;
+    }
+    return 'In Progress';
+  })();
+
+  // Handle stat row click to sync with GamePlays
+  const handleStatClick = (category: string) => {
+    setSelectedCategory(category);
+    // Scroll to plays section
+    const playsSection = document.getElementById('plays-section');
+    if (playsSection) {
+      playsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
 
   return (
     <div className="min-h-screen bg-bg-deep">
       {/* Main content */}
-      <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
+      <div className="max-w-5xl mx-auto px-4 py-4 space-y-4">
         {/* Live Update Indicator */}
         <UpdateIndicator
           isLive={isLive}
           isRefreshing={isRefreshing}
-          lastUpdated={lastUpdated}
-          secondsUntilRefresh={secondsUntilRefresh}
+          secondsSinceUpdate={secondsSinceUpdate}
         />
 
         {/* Scoreboard */}
-        <Scoreboard
-          homeTeam={homeTeam}
-          awayTeam={awayTeam}
-          status={gameData.status}
-          statusDetail={statusDetail}
-        />
-
-        {/* AI Summary */}
-        <AISummary
-          summary={gameData.ai_summary || null}
-          isLoading={false}
-        />
-
-        {/* Advanced Stats with View Toggle */}
-        <div className="space-y-3">
-          <div className="flex items-center justify-between">
-            <h2 className="font-display text-xl tracking-wide text-text-primary">
-              Game Stats
-            </h2>
-            <ViewToggle
-              value={viewMode}
-              onChange={setViewMode}
-              showIndicator={false}
-            />
-          </div>
-
-          {/* Filter indicator when in competitive mode */}
-          {viewMode === 'competitive' && gameData.wp_filter.enabled && (
-            <p className="font-condensed text-xs text-text-muted">
-              {gameData.wp_filter.description}
-            </p>
-          )}
-
-          <AdvancedStats
-            stats={advancedStats}
-            teamMeta={gameData.team_meta}
+        <div className="animate-fade-in-up">
+          <Scoreboard
+            homeTeam={homeTeam}
+            awayTeam={awayTeam}
+            status={gameData.status}
+            statusDetail={statusDetail}
           />
         </div>
 
-        {/* Plays */}
-        <GamePlays
-          expandedDetails={expandedDetails}
-          teamMeta={gameData.team_meta}
-        />
+        {/* AI Summary (falls back to analysis if no AI summary) */}
+        <div className="animate-fade-in-up delay-1">
+          <AISummary
+            summary={gameData.ai_summary || gameData.analysis || null}
+            isLoading={false}
+          />
+        </div>
 
-        {/* Text Analysis (fallback if no AI summary) */}
-        {!gameData.ai_summary && gameData.analysis && (
-          <div className="bg-bg-card rounded-2xl border border-border-subtle p-5">
-            <h3 className="font-display text-lg tracking-wide text-text-primary mb-3">
-              Game Analysis
-            </h3>
-            <p className="font-body text-sm text-text-secondary whitespace-pre-wrap leading-relaxed">
-              {gameData.analysis}
-            </p>
+        {/* View Toggle Bar */}
+        <div className="animate-fade-in-up delay-2 flex items-center justify-between gap-4 bg-bg-card border border-border-subtle rounded-xl px-5 py-3">
+          <div className="flex items-center gap-2">
+            <span
+              className="w-2 h-2 rounded-full bg-positive flex-shrink-0"
+              style={{ boxShadow: '0 0 8px var(--positive)' }}
+            />
+            <span className="font-condensed text-xs text-text-secondary tracking-wide">
+              {viewMode === 'competitive'
+                ? (gameData.wp_filter?.description || 'Stats reflect competitive plays only (WP < 97.5%)')
+                : 'Showing full-game totals (no WP filter)'}
+            </span>
           </div>
-        )}
+          <ViewToggle
+            value={viewMode}
+            onChange={setViewMode}
+            showIndicator={false}
+          />
+        </div>
+
+        {/* Advanced Stats */}
+        <div className="animate-fade-in-up delay-3">
+          <AdvancedStats
+            stats={advancedStats}
+            teamMeta={gameData.team_meta}
+            onStatClick={handleStatClick}
+            selectedCategory={selectedCategory}
+          />
+        </div>
+
+        {/* Key Plays */}
+        <div id="plays-section" className="animate-fade-in-up delay-4">
+          <GamePlays
+            expandedDetails={expandedDetails}
+            teamMeta={gameData.team_meta}
+            selectedCategory={selectedCategory}
+          />
+        </div>
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ async function getScoreboard(): Promise<ScoreboardResponse | null> {
     const baseUrl = process.env.VERCEL_URL
       ? `https://${process.env.VERCEL_URL}`
       : process.env.NODE_ENV === 'development'
-      ? 'http://localhost:3000'
+      ? 'http://localhost:8000'  // Local Python API server
       : '';
 
     const response = await fetch(`${baseUrl}/api/scoreboard`, {

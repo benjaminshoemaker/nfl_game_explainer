@@ -117,11 +117,11 @@ def generate_ai_summary(payload: dict, game_data: dict, probability_map: dict, w
         key_plays_text = []
         for team_abbr, plays in turnovers.items():
             for play in plays[:2]:  # Top 2 turnovers per team
-                key_plays_text.append(f"- Turnover ({team_abbr}): {play.get('text', '')[:100]}")
+                key_plays_text.append(f"- Turnover ({team_abbr}): {play.get('text', '')}")
 
         for team_abbr, plays in explosives.items():
             for play in plays[:2]:  # Top 2 explosive plays per team
-                key_plays_text.append(f"- Explosive ({team_abbr}): {play.get('text', '')[:100]}")
+                key_plays_text.append(f"- Explosive ({team_abbr}): {play.get('text', '')}")
 
         # Determine summary focus
         score_diff = abs(home_score - away_score)

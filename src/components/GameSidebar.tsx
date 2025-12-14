@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ScoreboardGame } from '@/types';
-import { getTeamColors } from '@/lib/teamColors';
+import { getTeamTextColor } from '@/lib/teamColors';
 
 interface GameSidebarProps {
   games: ScoreboardGame[];
@@ -12,8 +12,6 @@ interface GameSidebarProps {
 
 function GameRow({ game, isActive: isCurrent }: { game: ScoreboardGame; isActive: boolean }) {
   const { homeTeam, awayTeam, status, statusDetail, gameId, isActive } = game;
-  const awayColors = getTeamColors(awayTeam.abbr);
-  const homeColors = getTeamColors(homeTeam.abbr);
 
   const isPregame = status === 'pregame';
   const isFinal = status === 'final';
@@ -40,7 +38,7 @@ function GameRow({ game, isActive: isCurrent }: { game: ScoreboardGame; isActive
               className={`font-condensed text-xs uppercase tracking-wide ${
                 isAwayWinning && isFinal ? 'font-bold' : ''
               }`}
-              style={{ color: awayColors.primary }}
+              style={{ color: getTeamTextColor(awayTeam.abbr) }}
             >
               {awayTeam.abbr}
             </span>
@@ -49,7 +47,7 @@ function GameRow({ game, isActive: isCurrent }: { game: ScoreboardGame; isActive
               className={`font-condensed text-xs uppercase tracking-wide ${
                 isHomeWinning && isFinal ? 'font-bold' : ''
               }`}
-              style={{ color: homeColors.primary }}
+              style={{ color: getTeamTextColor(homeTeam.abbr) }}
             >
               {homeTeam.abbr}
             </span>
@@ -118,10 +116,10 @@ export function GameSidebar({ games, weekLabel }: GameSidebarProps) {
       {/* Header */}
       <div className="p-4 border-b border-border-subtle">
         <Link href="/" className="block hover:opacity-80 transition-opacity">
-          <h2 className="font-display text-lg tracking-wide text-text-primary">
-            NFL Games
+          <h2 className="font-display text-lg tracking-wider text-text-primary">
+            NFL GAMES
           </h2>
-          <p className="font-condensed text-xs text-text-muted uppercase tracking-wider">
+          <p className="font-condensed text-xs font-medium text-text-muted uppercase tracking-wider">
             {weekLabel}
           </p>
         </Link>

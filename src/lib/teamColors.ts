@@ -75,17 +75,160 @@ function getContrastRatio(hex1: string, hex2: string): number {
 }
 
 /**
- * Get the best text color for a team against a dark background
+ * Lighten a hex color by a percentage
+ */
+function lightenColor(hex: string, percent: number): string {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+
+  const newR = Math.min(255, Math.round(r + (255 - r) * percent));
+  const newG = Math.min(255, Math.round(g + (255 - g) * percent));
+  const newB = Math.min(255, Math.round(b + (255 - b) * percent));
+
+  return `#${newR.toString(16).padStart(2, '0')}${newG.toString(16).padStart(2, '0')}${newB.toString(16).padStart(2, '0')}`;
+}
+
+/**
+ * Get the best text color for a team against a dark background.
+ * Ensures high visibility by enforcing strong contrast requirements.
  */
 export function getTeamTextColor(abbr: string, bgColor = '#12121a'): string {
   const teamData = getTeamColors(abbr);
+
+  // High contrast threshold for excellent readability on dark backgrounds
+  const minContrast = 5.5;
+
   const primaryContrast = getContrastRatio(teamData.primary, bgColor);
+  const secondaryContrast = getContrastRatio(teamData.secondary, bgColor);
 
-  // For team brand colors, use a lower threshold (2.5:1) to preserve team identity
-  const minContrast = 2.5;
-
+  // Prefer primary color if it meets threshold
   if (primaryContrast >= minContrast) {
     return teamData.primary;
   }
+
+  // Fall back to secondary if it meets threshold
+  if (secondaryContrast >= minContrast) {
+    return teamData.secondary;
+  }
+
+  // If neither meets threshold, aggressively lighten the better-contrasting color
+  const bestColor = secondaryContrast > primaryContrast ? teamData.secondary : teamData.primary;
+
+  // Aggressively lighten until we meet the threshold
+  for (let i = 1; i <= 8; i++) {
+    const lightened = lightenColor(bestColor, i * 0.12);
+    if (getContrastRatio(lightened, bgColor) >= minContrast) {
+      return lightened;
+    }
+  }
+
+  // Ultimate fallback: bright white-ish color
+  return '#f3f4f6';
+}
+
+/**
+ * Check if color is too close to green/red (positive/negative indicators)
+ */
+function isProblematicColor(hex: string): boolean {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  if (g > 150 && g > r * 1.3 && g > b * 1.3) return true;
+  if (r > 180 && r > g * 1.5 && r > b * 1.5) return true;
+  return false;
+}
+
+/**
+ * Get safe secondary color (fallback if too close to indicator colors)
+ */
+export function getSafeSecondary(abbr: string): string {
+  const teamData = getTeamColors(abbr);
+  if (isProblematicColor(teamData.secondary)) {
+    return '#60a5fa';
+  }
   return teamData.secondary;
+}
+
+/**
+ * Get all team color variants for CSS variables
+ */
+export function getTeamColorVars(abbr: string) {
+  const teamData = getTeamColors(abbr);
+  return {
+    primary: teamData.primary,
+    secondary: getSafeSecondary(abbr),
+    text: getTeamTextColor(abbr),
+    logo: teamData.logo || `https://a.espncdn.com/i/teamlogos/nfl/500/${abbr.toLowerCase()}.png`,
+  };
+}
+
+// Strength calculation for stat comparisons
+export type StrengthLevel = 'dominant' | 'strong' | 'slight' | 'minimal';
+export type Winner = 'home' | 'away' | 'even';
+
+export interface StrengthResult {
+  winner: Winner;
+  strength: StrengthLevel;
+  pctDiff: number;
+}
+
+export function calculateStrength(numAway: number, numHome: number, invertBetter: boolean): StrengthResult {
+  if (numAway === numHome) return { winner: 'even', strength: 'minimal', pctDiff: 0 };
+
+  const avg = (Math.abs(numAway) + Math.abs(numHome)) / 2;
+  const pctDiff = avg > 0 ? Math.abs(numAway - numHome) / avg : 0;
+
+  let winner: Winner;
+  if (invertBetter) {
+    winner = numAway < numHome ? 'away' : 'home';
+  } else {
+    winner = numAway > numHome ? 'away' : 'home';
+  }
+
+  let strength: StrengthLevel;
+  if (pctDiff > 0.3) strength = 'dominant';
+  else if (pctDiff > 0.15) strength = 'strong';
+  else if (pctDiff > 0.05) strength = 'slight';
+  else strength = 'minimal';
+
+  return { winner, strength, pctDiff };
+}
+
+export function getStrengthDiamonds(strength: StrengthLevel): string {
+  switch (strength) {
+    case 'dominant': return '◆◆◆';
+    case 'strong': return '◆◆';
+    case 'slight': return '◆';
+    default: return '·';
+  }
+}
+
+export function getStrengthLabel(strength: StrengthLevel): string {
+  switch (strength) {
+    case 'dominant': return 'Dominant advantage';
+    case 'strong': return 'Strong advantage';
+    case 'slight': return 'Slight advantage';
+    default: return 'Minimal advantage';
+  }
+}
+
+/**
+ * Parse field position value (e.g., "Own 28" -> 28)
+ */
+export function parseStatValue(val: string | number): number {
+  if (typeof val === 'string' && val.includes('Own')) {
+    return parseInt(val.replace('Own', '').trim());
+  }
+  return parseFloat(String(val));
+}
+
+/**
+ * Format stat value (percentage handling)
+ */
+export function formatStatValue(val: string | number, isPercentage: boolean): string {
+  if (!isPercentage) return String(val);
+  const num = parseFloat(String(val));
+  if (isNaN(num)) return String(val);
+  return (num * 100).toFixed(1) + '%';
 }

@@ -3,27 +3,20 @@
 interface UpdateIndicatorProps {
   isLive: boolean;
   isRefreshing: boolean;
-  lastUpdated: Date | null;
-  secondsUntilRefresh: number;
+  secondsSinceUpdate: number;
 }
 
-function formatLastUpdated(date: Date | null): string {
-  if (!date) return '';
-
-  const now = new Date();
-  const diffSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
-
-  if (diffSeconds < 5) return 'just now';
-  if (diffSeconds < 60) return `${diffSeconds}s ago`;
-  if (diffSeconds < 120) return '1 min ago';
-  return `${Math.floor(diffSeconds / 60)} mins ago`;
+function formatSecondsAgo(seconds: number): string {
+  if (seconds < 5) return 'just now';
+  if (seconds < 60) return `${seconds}s ago`;
+  if (seconds < 120) return '1 min ago';
+  return `${Math.floor(seconds / 60)} mins ago`;
 }
 
 export function UpdateIndicator({
   isLive,
   isRefreshing,
-  lastUpdated,
-  secondsUntilRefresh,
+  secondsSinceUpdate,
 }: UpdateIndicatorProps) {
   if (!isLive) {
     return null;
@@ -71,13 +64,8 @@ export function UpdateIndicator({
         ) : (
           <>
             <span className="font-condensed text-xs uppercase tracking-wider">
-              Updated {formatLastUpdated(lastUpdated)}
+              Updated {formatSecondsAgo(secondsSinceUpdate)}
             </span>
-            {secondsUntilRefresh > 0 && (
-              <span className="font-condensed text-xs text-text-muted">
-                (next in {secondsUntilRefresh}s)
-              </span>
-            )}
           </>
         )}
       </div>

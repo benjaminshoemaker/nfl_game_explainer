@@ -73,11 +73,19 @@ export interface PlayDetail {
   };
 }
 
+// Game clock info for live games
+export interface GameClock {
+  quarter: number;
+  clock: string;
+  displayValue: string;
+}
+
 // Full game response
 export interface GameResponse {
   gameId: string;
   label: string;
   status: 'pregame' | 'in-progress' | 'final';
+  gameClock?: GameClock | null;
   team_meta: TeamMeta[];
   summary_table: SummaryStats[];
   summary_table_full: SummaryStats[];

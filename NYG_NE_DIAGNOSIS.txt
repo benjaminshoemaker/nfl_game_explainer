@@ -1,0 +1,131 @@
+coding@macbookpro nfl_game_explainer % .venv/bin/python diagnose_game_discrepancies.py 401772821
+Fetching ESPN official stats for game 401772821...
+Fetching play-by-play data...
+
+================================================================================
+=== DIAGNOSTIC REPORT: NYG 15 @ NE 33 (401772821) ===
+================================================================================
+
+ESPN Totals:
+  NYG: 239 yards, 1 turnovers
+  NE: 395 yards, 0 turnovers
+
+game_compare Totals:
+  NYG: 222 yards (DELTA: -17 yards), 0 turnovers (DELTA: -1 turnovers)
+  NE: 398 yards (DELTA: +3 yards), 1 turnovers (DELTA: +1 turnovers)
+
+================================================================================
+SECTION A: YARDAGE BY PLAY TYPE
+================================================================================
+
+NYG Offensive Plays (Counted toward Total Yards):
+  Rushing: 22 plays, 104 yards
+  Passing: 30 plays, 118 yards
+  Subtotal: 222 yards
+
+NYG Special Teams (NOT Counted toward Total Yards):
+  Kickoff: 7 plays, 142 yards
+  Punt: 3 plays, 30 yards
+  Field Goal: 1 plays, -13 yards
+
+NE Offensive Plays (Counted toward Total Yards):
+  Rushing: 25 plays, 112 yards
+  Passing: 36 plays, 286 yards
+  Subtotal: 398 yards
+
+NE Special Teams (NOT Counted toward Total Yards):
+  Punt Return: 1 plays, 94 yards  <-- POSSIBLE MISSING YARDS
+  Kickoff: 3 plays, 79 yards
+  Punt: 3 plays, -5 yards
+  Field Goal: 5 plays, 148 yards
+
+================================================================================
+SECTION B: EXCLUDED PLAYS WITH YARDAGE
+================================================================================
+
+NYG Excluded Plays:
+  Q2 6:28 | Field Goal | -13 yards | Rush
+    "(Field Goal formation) J.Gillan right end to NE 42 for -13 yards (J.Pharms)."
+  Q1 9:14 | Kickoff | +14 yards | Kickoff
+    "A.Borregales kicks 54 yards from NE 35 to NYG 11. G.Olszewski to NYG 25 for 14 yards (C.Elliss)."
+  Q1 5:17 | Kickoff | +19 yards | Kickoff
+    "A.Borregales kicks 54 yards from NE 35 to NYG 11. G.Olszewski to NYG 30 for 19 yards (C.Elliss)."
+  Q1 1:00 | Kickoff | +34 yards | Kickoff
+    "A.Borregales kicks 61 yards from NE 35 to NYG 4. D.Banks to NYG 38 for 34 yards (C.Murphy; A.Jenning"
+  Q2 3:29 | Kickoff | +21 yards | Kickoff
+    "A.Borregales kicks 59 yards from NE 35 to NYG 6. G.Olszewski to NYG 27 for 21 yards (M.Mapu; C.Ellis"
+  Q2 1:48 | Kickoff | +24 yards | Kickoff
+    "A.Borregales kicks 58 yards from NE 35 to NYG 7. D.Singletary to NYG 31 for 24 yards (J.Tavai)."
+  Q3 15:00 | Kickoff | +30 yards | Kickoff
+    "A.Borregales kicks 66 yards from NE 35 to NYG -1. D.Singletary to NYG 29 for 30 yards (C.Murphy; C.E"
+  Q1 4:42 | Penalty (No Play) | -5 yards | Penalty
+    "PENALTY on NYG-T.Johnson, False Start, 5 yards, enforced at NYG 32 - No Play."
+  Q2 13:03 | Penalty (No Play) | +15 yards | Penalty
+    "(No Huddle, Shotgun) J.Dart pass incomplete deep right to T.Johnson (C.Woodson).PENALTY on NE-J.Hawk"
+  Q2 7:41 | Penalty (No Play) | -5 yards | Penalty
+    "(Shotgun) J.Dart pass short left to D.Singletary to NE 24 for 5 yards (C.Gonzalez).PENALTY on NYG-J."
+  Q2 1:13 | Penalty (No Play) | -5 yards | Penalty
+    "(Run formation) PENALTY on NYG, Delay of Game, 5 yards, enforced at NYG 40 - No Play."
+  Q1 3:49 | Punt | +17 yards | Punt
+    "J.Gillan punts 54 yards to NE 22, Center-C.Kreiter. M.Jones to NE 39 for 17 yards (N.Hewitt; Z.Barne"
+  Q4 7:52 | Punt | +13 yards | Punt
+    "J.Gillan punts 49 yards to NE 24, Center-C.Kreiter. M.Jones to NE 37 for 13 yards (Z.Barnes; C.Golst"
+
+NE Excluded Plays:
+  Q1 9:14 | Field Goal | +22 yards | Field Goal Good
+    " A.Borregales 22 yard field goal is GOOD, Center-J.Ashby, Holder-B.Baringer."
+  Q2 1:48 | Field Goal | +30 yards | Field Goal Good
+    "A.Borregales 30 yard field goal is GOOD, Center-J.Ashby, Holder-B.Baringer."
+  Q2 0:00 | Field Goal | +28 yards | Field Goal Good
+    "A.Borregales 28 yard field goal is GOOD, Center-J.Ashby, Holder-B.Baringer."
+  Q3 4:13 | Field Goal | +45 yards | Field Goal Missed
+    "A.Borregales 45 yard field goal is No Good, Wide Left, Center-J.Ashby, Holder-B.Baringer."
+  Q4 2:14 | Field Goal | +23 yards | Field Goal Good
+    "A.Borregales 23 yard field goal is GOOD, Center-J.Ashby, Holder-B.Baringer."
+  Q1 15:00 | Kickoff | +39 yards | Kickoff
+    "Y.Koo kicks 57 yards from NYG 35 to NE 8. T.Jennings to NE 47 for 39 yards (J.Holland)."
+  Q2 12:46 | Kickoff | +22 yards | Kickoff
+    "Y.Koo kicks 62 yards from NYG 35 to NE 3. E.Chism to NE 25 for 22 yards (T.Fox; N.Hewitt)."
+  Q4 14:54 | Kickoff | +18 yards | Kickoff
+    "Y.Koo kicks 60 yards from NYG 35 to NE 5. K.Williams to NE 23 for 18 yards (D.Belton)."
+  Q2 4:37 | Penalty (No Play) | -10 yards | Penalty
+    "(Shotgun) D.Maye pass short left to K.Boutte pushed ob at NYG 28 for 8 yards (P.Adebo).PENALTY on NE"
+  Q4 10:52 | Punt | -5 yards | Penalty
+    "(Punt formation) PENALTY on NE, Delay of Game, 5 yards, enforced at NYG 41 - No Play."
+  Q1 5:17 | Punt Return | +94 yards | Punt Return Touchdown
+    "Marcus Jones 94 Yd Punt Return (Andy Borregales Kick)"
+  Q4 1:08 | Spike/Kneel | -2 yards | Rush
+    "D.Maye kneels to NE 40 for -2 yards."
+  Q4 0:38 | Spike/Kneel | -1 yards | Rush
+    "D.Maye kneels to NE 39 for -1 yards."
+
+================================================================================
+SECTION C: TURNOVERS DETECTED BY game_compare
+================================================================================
+
+NYG Turnovers (0 detected):
+  Q2 3:29 | "A.Borregales kicks 59 yards from NE 35 to NYG 6. G.Olszewski to NYG 27 for 21 yards (M.Mapu; C.Ellis" | Reason: fumble lost
+
+NE Turnovers (1 detected):
+  (none)
+
+================================================================================
+SECTION D: POTENTIAL MISSING TURNOVERS
+================================================================================
+
+Plays with turnover keywords NOT counted:
+  (none found)
+
+================================================================================
+SUMMARY
+================================================================================
+
+Yardage Gap Explanation:
+  NYG: -17 yards, likely from: Unknown source ?
+  NE: +3 yards, likely from: Punt returns (94) ?
+
+Turnover Gap Explanation:
+  NYG: -1 turnovers - game_compare may have missed 1 turnover(s)
+  NE: +1 turnovers - game_compare may have overcounted
+
+================================================================================

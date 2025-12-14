@@ -4,4 +4,5 @@ Follow-ups:
 - [DONE] Pull win-probability values from the v2 plays feed (dereference probability $ref) and show them in expanded output.
 - INclude WP filter
 - Add plays that explain more rows; all plays that you give the ball to the other team --> field position
-- Implement a check that checks the output from our script against the Team Stats display in ESPN, as a sanity check
+- [DONE] Implement a check that checks the output from our script against the Team Stats display in ESPN, as a sanity check
+- Investigate and resolve output differences

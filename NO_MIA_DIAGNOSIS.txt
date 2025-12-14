@@ -1,0 +1,133 @@
+coding@macbookpro nfl_game_explainer % .venv/bin/python diagnose_game_discrepancies.py 401772892
+Fetching ESPN official stats for game 401772892...
+Fetching play-by-play data...
+
+================================================================================
+=== DIAGNOSTIC REPORT: NO 17 @ MIA 21 (401772892) ===
+================================================================================
+
+ESPN Totals:
+  NO: 294 yards, 2 turnovers
+  MIA: 298 yards, 1 turnovers
+
+game_compare Totals:
+  NO: 278 yards (DELTA: -16 yards), 3 turnovers (DELTA: +1 turnovers)
+  MIA: 300 yards (DELTA: +2 yards), 2 turnovers (DELTA: +1 turnovers)
+
+================================================================================
+SECTION A: YARDAGE BY PLAY TYPE
+================================================================================
+
+NO Offensive Plays (Counted toward Total Yards):
+  Rushing: 25 plays, 82 yards
+  Passing: 44 plays, 206 yards
+  Subtotal: 288 yards
+
+NO Special Teams (NOT Counted toward Total Yards):
+  Kickoff: 6 plays, 115 yards
+  Punt: 6 plays, -10 yards
+  Field Goal: 1 plays, 56 yards
+
+MIA Offensive Plays (Counted toward Total Yards):
+  Rushing: 31 plays, 152 yards
+  Passing: 25 plays, 148 yards
+  Subtotal: 300 yards
+
+MIA Special Teams (NOT Counted toward Total Yards):
+  Kickoff: 3 plays, 45 yards
+  Punt: 4 plays, 12 yards
+  Field Goal: 4 plays, 145 yards
+
+================================================================================
+SECTION B: EXCLUDED PLAYS WITH YARDAGE
+================================================================================
+
+NO Excluded Plays:
+  Q4 6:08 | Field Goal | +56 yards | Field Goal Good
+    "C.Smyth 56 yard field goal is GOOD, Center-Z.Wood, Holder-K.Kroeger."
+  Q1 11:19 | Kickoff | +23 yards | Kickoff
+    "R.Patterson kicks 61 yards from MIA 35 to NO 4. D.Pettis to NO 27 for 23 yards (E.Campbell; E.Bonner"
+  Q2 14:09 | Kickoff | +36 yards | Kickoff
+    "R.Patterson kicks 63 yards from MIA 35 to NO 2. M.Tipton ran ob at NO 38 for 36 yards (R.Patterson)."
+  Q2 6:07 | Kickoff | +24 yards | Kickoff
+    "R.Patterson kicks 61 yards from MIA 35 to NO 4. D.Pettis to NO 28 for 24 yards (D.Trader)."
+  Q4 9:39 | Kickoff | +22 yards | Kickoff
+    "R.Patterson kicks 61 yards from MIA 35 to NO 4. M.Tipton to NO 26 for 22 yards (N.Westbrook-Ikhine)."
+  Q4 1:17 | Kickoff | +10 yards | Kickoff
+    "C.Smyth kicks onside 10 yards from NO 35 to NO 45. RECOVERED by NO-D.Vele.The Replay Official review"
+  Q2 2:00 | Penalty (No Play) | +5 yards | Penalty
+    "(Shotgun) PENALTY on MIA-C.Robinson, Neutral Zone Infraction, 5 yards, enforced at MIA 45 - No Play."
+  Q3 10:45 | Penalty (No Play) | -5 yards | Penalty
+    "(Shotgun) PENALTY on NO-D.Radunz, False Start, 5 yards, enforced at MIA 12 - No Play."
+  Q3 8:19 | Penalty (No Play) | -5 yards | Penalty
+    "(Shotgun) PENALTY on NO-F.Moreau, False Start, 5 yards, enforced at NO 12 - No Play."
+  Q3 6:19 | Penalty (No Play) | -5 yards | Penalty
+    "(Shotgun) PENALTY on NO-K.Banks, False Start, 5 yards, enforced at NO 45 - No Play."
+  Q4 2:37 | Penalty (No Play) | -10 yards | Penalty
+    "(No Huddle, Shotgun) T.Shough pass incomplete short right to D.Vele.PENALTY on NO-T.Fuaga, Offensive"
+  Q4 1:17 | Penalty (No Play) | -5 yards | Penalty
+    " PENALTY on NO-T.Fuaga, False Start, 5 yards, enforced at MIA 2 - No Play."
+  Q2 11:43 | Punt | -15 yards | Punt
+    "K.Kroeger punts 46 yards to MIA 34, Center-Z.Wood, downed by NO-M.Davis.PENALTY on NO-M.Davis, Kick "
+  Q4 13:33 | Punt | +5 yards | Punt
+    "K.Kroeger punts 48 yards to MIA 42, Center-Z.Wood. M.Washington to MIA 47 for 5 yards (I.Yiadom)."
+
+MIA Excluded Plays:
+  Q2 14:09 | Field Goal | +39 yards | Field Goal Good
+    "R.Patterson 39 yard field goal is GOOD, Center-J.Cardona, Holder-J.Bailey."
+  Q2 6:07 | Field Goal | +25 yards | Field Goal Good
+    " R.Patterson 25 yard field goal is GOOD, Center-J.Cardona, Holder-J.Bailey."
+  Q2 0:00 | Field Goal | +48 yards | Field Goal Good
+    " R.Patterson 48 yard field goal is GOOD, Center-J.Cardona, Holder-J.Bailey."
+  Q4 9:39 | Field Goal | +33 yards | Field Goal Good
+    " R.Patterson 33 yard field goal is GOOD, Center-J.Cardona, Holder-J.Bailey."
+  Q1 15:00 | Kickoff | +25 yards | Kickoff
+    "C.Smyth kicks 59 yards from NO 35 to MIA 6. M.Washington to MIA 31 for 25 yards (C.Rumph)."
+  Q3 10:40 | Kickoff | +20 yards | Kickoff
+    "C.Smyth kicks 58 yards from NO 35 to MIA 7. M.Washington to MIA 27 for 20 yards (I.Yiadom)."
+  Q1 5:10 | Penalty (No Play) | -5 yards | Penalty
+    "(Shotgun) PENALTY on MIA, Offensive Too Many Men on Field, 5 yards, enforced at MIA 21 - No Play."
+  Q1 8:13 | Punt | +7 yards | Punt
+    "J.Bailey punts 53 yards to NO 27, Center-J.Cardona. D.Pettis to NO 34 for 7 yards (C.Johnson)."
+  Q1 4:18 | Punt | +5 yards | Punt
+    "J.Bailey punts 49 yards to NO 39, Center-J.Cardona. D.Pettis pushed ob at NO 44 for 5 yards (E.Campb"
+  Q4 0:29 | Spike/Kneel | -1 yards | Rush
+    " T.Tagovailoa kneels to MIA 34 for -1 yards."
+  Q4 0:26 | Spike/Kneel | -1 yards | Rush
+    " T.Tagovailoa kneels to MIA 33 for -1 yards."
+
+================================================================================
+SECTION C: TURNOVERS DETECTED BY game_compare
+================================================================================
+
+NO Turnovers (3 detected):
+  Q2 12:37 | "(No Huddle, Shotgun) T.Shough sacked at NO 41 for -10 yards (M.Fitzpatrick). FUMBLES (M.Fitzpatrick)" | Reason: fumble lost
+  Q2 1:16 | "(Shotgun) T.Shough pass short left intended for C.Olave INTERCEPTED by R.Douglas at MIA 20. R.Dougla" | Reason: interception
+  Q4 1:17 | "(No Huddle, Shotgun) T.Shough pass short right to D.Vele for 15 yards, TOUCHDOWN. TWO-POINT CONVERSI" | Reason: interception
+
+MIA Turnovers (2 detected):
+  Q2 12:31 | "(Shotgun) D.Brunskill reported in as eligible.  T.Tagovailoa pass deep left intended for J.Waddle IN" | Reason: interception
+  Q4 1:17 | "C.Smyth kicks onside 10 yards from NO 35 to NO 45. RECOVERED by NO-D.Vele.The Replay Official review" | Reason: onside kick lost
+
+================================================================================
+SECTION D: POTENTIAL MISSING TURNOVERS
+================================================================================
+
+Plays with turnover keywords NOT counted:
+
+MIA:
+  Q1 12:16 | "(Shotgun) T.Tagovailoa to MIA 47 for -5 yards. FUMBLES, and recovers at MIA 47. T.Tagovailoa pass sh" | NOT COUNTED: fumble (own recovery)
+
+================================================================================
+SUMMARY
+================================================================================
+
+Yardage Gap Explanation:
+  NO: -16 yards, likely from: Unknown source ?
+  MIA: +2 yards, likely from: Unknown source
+
+Turnover Gap Explanation:
+  NO: +1 turnovers - game_compare may have overcounted
+  MIA: +1 turnovers - game_compare may have overcounted
+
+================================================================================

@@ -21,9 +21,10 @@ Python tool that pulls NFL play-by-play data from ESPN and turns it into advance
   ```
 - Other utilities:
   ```bash
-  python validate_game_stats.py <game_id>  # validate game statistics
-  python audit_turnovers.py <game_id>      # audit turnover plays
-  python debug_pregame_wp.py <game_id>     # debug pre-game win probability
+  python validate_game_stats.py <game_id>           # validate game statistics
+  python diagnose_game_discrepancies.py <game_id>  # detailed discrepancy analysis
+  python audit_turnovers.py <game_id>               # audit turnover plays
+  python debug_pregame_wp.py <game_id>              # debug pre-game win probability
   ```
 - Outputs: CSV, JSON, and HTML files land in `game_summaries/` (gitignored) as `{away}_at_{home}_{date}_{id}.*`.
 

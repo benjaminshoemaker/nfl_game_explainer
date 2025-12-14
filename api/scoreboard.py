@@ -1,0 +1,122 @@
+from http.server import BaseHTTPRequestHandler
+import json
+import urllib.request
+import urllib.error
+
+
+ESPN_SCOREBOARD_URL = "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard"
+
+
+def fetch_scoreboard():
+    """Fetch current NFL scoreboard from ESPN API."""
+    try:
+        with urllib.request.urlopen(ESPN_SCOREBOARD_URL, timeout=10) as response:
+            return json.loads(response.read().decode())
+    except (urllib.error.URLError, json.JSONDecodeError) as e:
+        return {"error": str(e)}
+
+
+def transform_game(event):
+    """Transform ESPN event data to our response format."""
+    competition = event.get("competitions", [{}])[0]
+    status = event.get("status", {})
+    status_type = status.get("type", {})
+
+    # Get competitors (home and away teams)
+    competitors = competition.get("competitors", [])
+    home_team = None
+    away_team = None
+
+    for comp in competitors:
+        team_data = {
+            "abbr": comp.get("team", {}).get("abbreviation", ""),
+            "name": comp.get("team", {}).get("displayName", ""),
+            "score": int(comp.get("score", 0) or 0),
+            "logo": comp.get("team", {}).get("logo", ""),
+            "id": comp.get("team", {}).get("id", "")
+        }
+        if comp.get("homeAway") == "home":
+            home_team = team_data
+        else:
+            away_team = team_data
+
+    # Determine game status
+    state = status_type.get("state", "pre")
+    if state == "in":
+        game_status = "in-progress"
+    elif state == "post":
+        game_status = "final"
+    else:
+        game_status = "pregame"
+
+    # Get status detail (quarter/time or "Final")
+    status_detail = status_type.get("shortDetail", "")
+
+    # Get start time for pregame
+    start_time = event.get("date") if game_status == "pregame" else None
+
+    return {
+        "gameId": event.get("id", ""),
+        "status": game_status,
+        "statusDetail": status_detail,
+        "homeTeam": home_team,
+        "awayTeam": away_team,
+        "startTime": start_time,
+        "isActive": state == "in"
+    }
+
+
+def build_response(data):
+    """Build the full scoreboard response."""
+    if "error" in data:
+        return {
+            "week": {"number": 0, "label": "Unknown"},
+            "games": [],
+            "error": data["error"]
+        }
+
+    week_data = data.get("week", {})
+    events = data.get("events", [])
+
+    games = [transform_game(event) for event in events]
+
+    # Sort: in-progress first, then pregame by time, then final
+    def sort_key(game):
+        if game["status"] == "in-progress":
+            return (0, "")
+        elif game["status"] == "pregame":
+            return (1, game.get("startTime", ""))
+        else:
+            return (2, "")
+
+    games.sort(key=sort_key)
+
+    return {
+        "week": {
+            "number": week_data.get("number", 0),
+            "label": f"Week {week_data.get('number', 0)}"
+        },
+        "games": games
+    }
+
+
+class handler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        # Fetch and transform scoreboard data
+        raw_data = fetch_scoreboard()
+        response_data = build_response(raw_data)
+
+        # Send response
+        self.send_response(200)
+        self.send_header('Content-type', 'application/json')
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Cache-Control', 'public, max-age=30')
+        self.end_headers()
+        self.wfile.write(json.dumps(response_data).encode())
+
+    def do_OPTIONS(self):
+        self.send_response(200)
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', 'GET, OPTIONS')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+        self.end_headers()

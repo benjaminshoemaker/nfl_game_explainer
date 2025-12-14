@@ -1,21 +1,43 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { GameResponse } from '@/types';
 import { Scoreboard } from '@/components/Scoreboard';
 import { AdvancedStats } from '@/components/AdvancedStats';
 import { AISummary } from '@/components/AISummary';
 import { GamePlays } from '@/components/GamePlays';
 import { ViewToggle } from '@/components/ViewToggle';
+import { UpdateIndicator } from '@/components/UpdateIndicator';
+import { useAutoRefresh } from '@/hooks/useAutoRefresh';
 
 interface GamePageClientProps {
-  gameData: GameResponse;
+  initialGameData: GameResponse;
 }
 
 type ViewMode = 'competitive' | 'full';
 
-export function GamePageClient({ gameData }: GamePageClientProps) {
+const REFRESH_INTERVAL = 60000; // 60 seconds
+
+export function GamePageClient({ initialGameData }: GamePageClientProps) {
   const [viewMode, setViewMode] = useState<ViewMode>('competitive');
+  const [gameData, setGameData] = useState<GameResponse>(initialGameData);
+
+  const isLive = gameData.status === 'in-progress';
+
+  const fetchGameData = useCallback(async (): Promise<GameResponse> => {
+    const response = await fetch(`/api/game/${gameData.gameId}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch game data');
+    }
+    return response.json();
+  }, [gameData.gameId]);
+
+  const { isRefreshing, lastUpdated, secondsUntilRefresh } = useAutoRefresh({
+    fetchFn: fetchGameData,
+    interval: REFRESH_INTERVAL,
+    enabled: isLive,
+    onSuccess: (data) => setGameData(data),
+  });
 
   // Get home and away teams from team_meta
   const awayMeta = gameData.team_meta.find((t) => t.homeAway === 'away');
@@ -69,6 +91,14 @@ export function GamePageClient({ gameData }: GamePageClientProps) {
     <div className="min-h-screen bg-bg-deep">
       {/* Main content */}
       <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
+        {/* Live Update Indicator */}
+        <UpdateIndicator
+          isLive={isLive}
+          isRefreshing={isRefreshing}
+          lastUpdated={lastUpdated}
+          secondsUntilRefresh={secondsUntilRefresh}
+        />
+
         {/* Scoreboard */}
         <Scoreboard
           homeTeam={homeTeam}

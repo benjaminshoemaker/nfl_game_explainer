@@ -80,7 +80,7 @@ export default async function GamePage({ params }: PageProps) {
     return <ErrorState gameId={gameId} />;
   }
 
-  return <GamePageClient gameData={gameData} />;
+  return <GamePageClient initialGameData={gameData} />;
 }
 
 // Generate metadata for the page

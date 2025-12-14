@@ -47,3 +47,12 @@ plays_wp_*.csv
 
 # Logs
 *.log
+
+# Next.js
+.next/
+out/
+node_modules/
+package-lock.json
+
+# Vercel
+.vercel/

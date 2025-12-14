@@ -390,11 +390,11 @@ These should call the API routes and handle errors.
 ```
 
 **Checklist:**
-- [ ] src/types/index.ts created with all interfaces
-- [ ] Types match API response structure
-- [ ] src/lib/api.ts created with fetch functions
-- [ ] TypeScript compiles without errors
-- [ ] Types are exported and importable
+- [x] src/types/index.ts created with all interfaces
+- [x] Types match API response structure
+- [x] src/lib/api.ts created with fetch functions
+- [x] TypeScript compiles without errors
+- [x] Types are exported and importable
 
 ---
 

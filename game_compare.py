@@ -544,7 +544,12 @@ def classify_offense_play(play):
         return False, False, False
 
     pass_hint = any_stat_contains(play, ['pass', 'sack']) or 'pass' in type_lower or 'sack' in type_lower or 'scramble' in type_lower or 'pass' in text_lower or 'sack' in text_lower or 'scramble' in text_lower
-    rush_hint = any_stat_contains(play, ['rush']) or 'rush' in type_lower or 'run' in text_lower
+
+    # Detect rushing plays - include common rush direction phrases
+    rush_patterns = ['up the middle', 'left end', 'right end', 'left tackle', 'right tackle',
+                     'left guard', 'right guard', 'middle for', 'around left', 'around right']
+    rush_hint = (any_stat_contains(play, ['rush']) or 'rush' in type_lower or 'run' in text_lower
+                 or any(p in text_lower for p in rush_patterns))
 
     # Scrambles should be treated as pass dropbacks, not runs.
     if pass_hint and rush_hint and ('scramble' in text_lower or 'scramble' in type_lower):

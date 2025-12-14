@@ -209,13 +209,13 @@ ESPN provides a scoreboard endpoint that returns all games for a given week. We 
 ```
 
 **Checklist:**
-- [ ] api/scoreboard.py created
-- [ ] Fetches from ESPN scoreboard API
-- [ ] Extracts all required fields per game
-- [ ] Returns properly formatted JSON
-- [ ] isActive flag correctly identifies in-progress games
-- [ ] Error handling works
-- [ ] Manual test returns expected data
+- [x] api/scoreboard.py created
+- [x] Fetches from ESPN scoreboard API
+- [x] Extracts all required fields per game
+- [x] Returns properly formatted JSON
+- [x] isActive flag correctly identifies in-progress games
+- [x] Error handling works
+- [x] Manual test returns expected data
 
 ---
 

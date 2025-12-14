@@ -13,7 +13,7 @@ interface UseAutoRefreshOptions<T> {
 interface UseAutoRefreshResult<T> {
   data: T | null;
   isRefreshing: boolean;
-  lastUpdated: Date | null;
+  secondsSinceUpdate: number;
   secondsUntilRefresh: number;
   refresh: () => Promise<void>;
 }
@@ -27,67 +27,68 @@ export function useAutoRefresh<T>({
 }: UseAutoRefreshOptions<T>): UseAutoRefreshResult<T> {
   const [data, setData] = useState<T | null>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
+  const [secondsSinceUpdate, setSecondsSinceUpdate] = useState(0);
   const [secondsUntilRefresh, setSecondsUntilRefresh] = useState(0);
 
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  const countdownRef = useRef<NodeJS.Timeout | null>(null);
+  // Use refs for callbacks to avoid dependency issues
+  const fetchFnRef = useRef(fetchFn);
+  const onSuccessRef = useRef(onSuccess);
+  const onErrorRef = useRef(onError);
+
+  // Update refs when callbacks change
+  useEffect(() => {
+    fetchFnRef.current = fetchFn;
+    onSuccessRef.current = onSuccess;
+    onErrorRef.current = onError;
+  }, [fetchFn, onSuccess, onError]);
 
   const refresh = useCallback(async () => {
     setIsRefreshing(true);
     try {
-      const result = await fetchFn();
+      const result = await fetchFnRef.current();
       setData(result);
-      setLastUpdated(new Date());
+      setSecondsSinceUpdate(0);
       setSecondsUntilRefresh(Math.floor(interval / 1000));
-      onSuccess?.(result);
+      onSuccessRef.current?.(result);
     } catch (error) {
-      onError?.(error instanceof Error ? error : new Error('Refresh failed'));
+      onErrorRef.current?.(error instanceof Error ? error : new Error('Refresh failed'));
     } finally {
       setIsRefreshing(false);
     }
-  }, [fetchFn, interval, onSuccess, onError]);
+  }, [interval]);
 
-  // Set up polling interval
+  // Set up polling and countdown
   useEffect(() => {
     if (!enabled) {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-        intervalRef.current = null;
-      }
-      if (countdownRef.current) {
-        clearInterval(countdownRef.current);
-        countdownRef.current = null;
-      }
       setSecondsUntilRefresh(0);
       return;
     }
 
-    // Initial fetch
-    refresh();
+    // Initial fetch after a short delay to prevent flash
+    const initialTimeout = setTimeout(() => {
+      refresh();
+    }, 100);
 
     // Set up refresh interval
-    intervalRef.current = setInterval(refresh, interval);
+    const refreshInterval = setInterval(refresh, interval);
 
-    // Set up countdown
-    countdownRef.current = setInterval(() => {
+    // Set up countdown timer (updates both counters every second)
+    const countdownInterval = setInterval(() => {
       setSecondsUntilRefresh((prev) => Math.max(0, prev - 1));
+      setSecondsSinceUpdate((prev) => prev + 1);
     }, 1000);
 
     return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
-      if (countdownRef.current) {
-        clearInterval(countdownRef.current);
-      }
+      clearTimeout(initialTimeout);
+      clearInterval(refreshInterval);
+      clearInterval(countdownInterval);
     };
   }, [enabled, interval, refresh]);
 
   return {
     data,
     isRefreshing,
-    lastUpdated,
+    secondsSinceUpdate,
     secondsUntilRefresh,
     refresh,
   };

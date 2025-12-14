@@ -49,8 +49,7 @@ def main():
             quarter = play.get('period', {}).get('number', '?')
             clock = play.get('clock', {}).get('displayValue', '?')
             play_type = play.get('type', {}).get('text', 'Unknown')
-            text_full = play.get('text', '') or ''
-            text = text_full[:70]  # Truncate for readability on console
+            text = play.get('text', '') or ''
 
             # Get score at this point
             home_score = play.get('homeScore', '?')
@@ -97,7 +96,7 @@ def main():
                 "quarter": quarter,
                 "clock": clock,
                 "play_type": play_type,
-                "text": text_full,
+                "text": text,
                 "home_score": home_score,
                 "away_score": away_score,
                 "start_home_wp": round(start_home_wp * 100, 3),

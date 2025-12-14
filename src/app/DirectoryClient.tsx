@@ -84,7 +84,7 @@ export function DirectoryClient({ initialData }: DirectoryClientProps) {
     setScoreboard(data);
   }, []);
 
-  const { isRefreshing, lastUpdated, secondsUntilRefresh } = useAutoRefresh({
+  const { isRefreshing, secondsSinceUpdate } = useAutoRefresh({
     fetchFn: fetchScoreboard,
     interval: REFRESH_INTERVAL,
     enabled: hasActiveGames,
@@ -139,7 +139,6 @@ export function DirectoryClient({ initialData }: DirectoryClientProps) {
             ) : (
               <span className="font-condensed text-xs uppercase tracking-wider">
                 Scores update automatically
-                {secondsUntilRefresh > 0 && ` (${secondsUntilRefresh}s)`}
               </span>
             )}
           </div>
@@ -166,9 +165,9 @@ export function DirectoryClient({ initialData }: DirectoryClientProps) {
       <div className="mt-12 text-center">
         <p className="font-condensed text-xs text-text-muted uppercase tracking-wider">
           Data from ESPN • Click any game for detailed analysis
-          {lastUpdated && (
+          {hasActiveGames && secondsSinceUpdate > 0 && (
             <span className="ml-2">
-              • Last updated {lastUpdated.toLocaleTimeString()}
+              • Updated {secondsSinceUpdate < 60 ? `${secondsSinceUpdate}s` : `${Math.floor(secondsSinceUpdate / 60)}m`} ago
             </span>
           )}
         </p>

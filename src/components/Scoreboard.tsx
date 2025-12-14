@@ -1,121 +1,158 @@
 'use client';
 
 import { ScoreboardProps } from '@/types';
-import { getTeamColors, getTeamLogo } from '@/lib/teamColors';
+import { getTeamColorVars } from '@/lib/teamColors';
 import Image from 'next/image';
 
 export function Scoreboard({ homeTeam, awayTeam, status, statusDetail }: ScoreboardProps) {
-  const awayColors = getTeamColors(awayTeam.abbr);
-  const homeColors = getTeamColors(homeTeam.abbr);
+  const awayColors = getTeamColorVars(awayTeam.abbr);
+  const homeColors = getTeamColorVars(homeTeam.abbr);
 
   const isHomeWinning = homeTeam.score > awayTeam.score;
   const isAwayWinning = awayTeam.score > homeTeam.score;
   const isFinal = status === 'final';
 
   return (
-    <div className="relative w-full overflow-hidden rounded-2xl bg-bg-card">
-      {/* Background with team colors */}
-      <div className="absolute inset-0 overflow-hidden">
-        {/* Away team side */}
-        <div
-          className="absolute inset-y-0 left-0 w-1/2"
-          style={{
-            background: `linear-gradient(135deg, ${awayColors.primary}40 0%, ${awayColors.primary}10 100%)`
-          }}
-        />
-        {/* Home team side */}
-        <div
-          className="absolute inset-y-0 right-0 w-1/2"
-          style={{
-            background: `linear-gradient(225deg, ${homeColors.primary}40 0%, ${homeColors.primary}10 100%)`
-          }}
-        />
-        {/* Diagonal separator */}
+    <section className="relative flex flex-col overflow-hidden rounded-2xl">
+      {/* Hero Background - Diagonal Split */}
+      <div className="absolute inset-0 z-0">
+        {/* Diagonal team colors */}
         <div
           className="absolute inset-0"
           style={{
-            background: `linear-gradient(to right, transparent 48%, var(--bg-card) 50%, transparent 52%)`
+            background: `linear-gradient(135deg, ${awayColors.primary} 0%, ${awayColors.primary} 50%, ${homeColors.primary} 50%, ${homeColors.primary} 100%)`
+          }}
+        />
+        {/* Gradient overlays for depth */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `
+              radial-gradient(ellipse 60% 80% at 20% 50%, rgba(0,0,0,0.3) 0%, transparent 60%),
+              radial-gradient(ellipse 60% 80% at 80% 50%, rgba(0,0,0,0.3) 0%, transparent 60%),
+              linear-gradient(180deg, transparent 60%, var(--bg-deep) 100%)
+            `
+          }}
+        />
+        {/* Stadium lights effect */}
+        <div
+          className="absolute top-[-50%] left-1/2 w-[200%] h-full -translate-x-1/2 pointer-events-none"
+          style={{
+            background: 'radial-gradient(ellipse 50% 30% at 50% 0%, rgba(255,255,255,0.08) 0%, transparent 60%)'
           }}
         />
       </div>
 
       {/* Content */}
-      <div className="relative z-10 px-4 py-8 md:px-8 md:py-12">
-        <div className="flex items-center justify-between">
-          {/* Away Team */}
-          <div className={`flex flex-col items-center gap-3 flex-1 ${isAwayWinning && isFinal ? 'opacity-100' : isFinal ? 'opacity-70' : ''}`}>
-            <div className="relative w-16 h-16 md:w-24 md:h-24">
-              <Image
-                src={getTeamLogo(awayTeam.abbr)}
-                alt={awayTeam.name}
-                fill
-                className="object-contain"
-              />
-            </div>
-            <span
-              className="font-condensed text-lg md:text-xl font-semibold tracking-wide uppercase"
-              style={{ color: awayColors.secondary }}
-            >
-              {awayTeam.abbr}
-            </span>
-          </div>
-
-          {/* Score */}
-          <div className="flex flex-col items-center gap-2 flex-shrink-0 px-4">
-            <div className="flex items-center gap-4 md:gap-8">
-              <span
-                className={`font-display text-5xl md:text-7xl tracking-wide ${isAwayWinning && isFinal ? 'text-gold' : 'text-text-primary'}`}
+      <div className="relative z-10 flex-1 flex flex-col">
+        <div className="container mx-auto px-4 md:px-6">
+          {/* Scoreboard Grid */}
+          <div className="grid grid-cols-3 items-center gap-2 md:gap-4 py-4 md:py-5 max-w-4xl mx-auto w-full">
+            {/* Away Team */}
+            <div className="flex flex-col items-center md:items-end gap-2 md:gap-4 text-center md:text-right">
+              <div
+                className="w-[70px] h-[70px] md:w-[100px] md:h-[100px] flex items-center justify-center rounded-2xl backdrop-blur-md transition-all duration-300 hover:scale-105 hover:shadow-xl"
+                style={{
+                  background: 'rgba(255,255,255,0.1)',
+                  border: '1px solid rgba(255,255,255,0.15)',
+                  boxShadow: '0 8px 32px rgba(0,0,0,0.3)'
+                }}
               >
-                {awayTeam.score}
-              </span>
-              <span className="font-display text-3xl md:text-5xl text-text-muted">-</span>
-              <span
-                className={`font-display text-5xl md:text-7xl tracking-wide ${isHomeWinning && isFinal ? 'text-gold' : 'text-text-primary'}`}
-              >
-                {homeTeam.score}
-              </span>
+                <div className="relative w-[50px] h-[50px] md:w-[70px] md:h-[70px]">
+                  <Image
+                    src={awayColors.logo}
+                    alt={awayTeam.name}
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col gap-0.5">
+                <h2
+                  className="font-display text-xl md:text-3xl lg:text-4xl tracking-wide text-text-primary"
+                  style={{ textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}
+                >
+                  {awayTeam.name.split(' ').pop()}
+                </h2>
+              </div>
             </div>
-            {/* Status */}
-            <div className="flex items-center gap-2">
-              {status === 'in-progress' && (
-                <span className="w-2 h-2 rounded-full bg-positive animate-pulse-glow" />
-              )}
-              <span className={`font-condensed text-sm md:text-base uppercase tracking-wider ${status === 'in-progress' ? 'text-positive' : 'text-text-secondary'}`}>
-                {statusDetail || status}
-              </span>
-            </div>
-          </div>
 
-          {/* Home Team */}
-          <div className={`flex flex-col items-center gap-3 flex-1 ${isHomeWinning && isFinal ? 'opacity-100' : isFinal ? 'opacity-70' : ''}`}>
-            <div className="relative w-16 h-16 md:w-24 md:h-24">
-              <Image
-                src={getTeamLogo(homeTeam.abbr)}
-                alt={homeTeam.name}
-                fill
-                className="object-contain"
-              />
+            {/* Score Center */}
+            <div className="flex flex-col items-center gap-3 md:gap-4 px-2 md:px-8">
+              <div className="flex items-center gap-2 md:gap-4">
+                <span
+                  className={`font-display text-5xl md:text-7xl lg:text-8xl leading-none tracking-tight relative ${isAwayWinning && isFinal ? 'text-gold' : 'text-text-primary'}`}
+                  style={{ textShadow: '0 4px 20px rgba(0,0,0,0.5)' }}
+                >
+                  {awayTeam.score}
+                  {isAwayWinning && isFinal && (
+                    <span
+                      className="absolute bottom-[-8px] left-1/2 -translate-x-1/2 w-4/5 h-1 rounded bg-gold"
+                      style={{ boxShadow: '0 0 20px var(--gold)' }}
+                    />
+                  )}
+                </span>
+                <span className="font-display text-4xl md:text-5xl text-white/30">-</span>
+                <span
+                  className={`font-display text-5xl md:text-7xl lg:text-8xl leading-none tracking-tight relative ${isHomeWinning && isFinal ? 'text-gold' : 'text-text-primary'}`}
+                  style={{ textShadow: '0 4px 20px rgba(0,0,0,0.5)' }}
+                >
+                  {homeTeam.score}
+                  {isHomeWinning && isFinal && (
+                    <span
+                      className="absolute bottom-[-8px] left-1/2 -translate-x-1/2 w-4/5 h-1 rounded bg-gold"
+                      style={{ boxShadow: '0 0 20px var(--gold)' }}
+                    />
+                  )}
+                </span>
+              </div>
+
+              {/* Game Status Indicator */}
+              <div
+                className="px-4 py-1.5 rounded-full backdrop-blur-md"
+                style={{
+                  background: 'rgba(255,255,255,0.1)',
+                  border: '1px solid rgba(255,255,255,0.15)',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                }}
+              >
+                <span className="font-condensed text-xs md:text-sm font-semibold uppercase tracking-wider text-text-secondary">
+                  {isFinal ? 'Final' : statusDetail}
+                </span>
+              </div>
             </div>
-            <span
-              className="font-condensed text-lg md:text-xl font-semibold tracking-wide uppercase"
-              style={{ color: homeColors.secondary }}
-            >
-              {homeTeam.abbr}
-            </span>
+
+            {/* Home Team */}
+            <div className="flex flex-col items-center md:items-start gap-2 md:gap-4 text-center md:text-left">
+              <div
+                className="w-[70px] h-[70px] md:w-[100px] md:h-[100px] flex items-center justify-center rounded-2xl backdrop-blur-md transition-all duration-300 hover:scale-105 hover:shadow-xl"
+                style={{
+                  background: 'rgba(255,255,255,0.1)',
+                  border: '1px solid rgba(255,255,255,0.15)',
+                  boxShadow: '0 8px 32px rgba(0,0,0,0.3)'
+                }}
+              >
+                <div className="relative w-[50px] h-[50px] md:w-[70px] md:h-[70px]">
+                  <Image
+                    src={homeColors.logo}
+                    alt={homeTeam.name}
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col gap-0.5">
+                <h2
+                  className="font-display text-xl md:text-3xl lg:text-4xl tracking-wide text-text-primary"
+                  style={{ textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}
+                >
+                  {homeTeam.name.split(' ').pop()}
+                </h2>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-
-      {/* Winner glow effect */}
-      {isFinal && (isHomeWinning || isAwayWinning) && (
-        <div
-          className="absolute inset-y-0 w-1/3 pointer-events-none"
-          style={{
-            [isAwayWinning ? 'left' : 'right']: 0,
-            background: `radial-gradient(ellipse at ${isAwayWinning ? 'left' : 'right'} center, ${isAwayWinning ? awayColors.primary : homeColors.primary}30 0%, transparent 70%)`
-          }}
-        />
-      )}
-    </div>
+    </section>
   );
 }

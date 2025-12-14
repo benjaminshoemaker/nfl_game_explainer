@@ -261,7 +261,7 @@ def build_top_plays_by_wp(game_data, probability_map, wp_threshold=0.975, limit=
                     'quarter': period,
                     'clock': play.get('clock', {}).get('displayValue', ''),
                     'team': drive_team,
-                    'text': (play.get('text', '') or '')[:100]
+                    'text': play.get('text', '') or ''
                 })
 
             prev_home_wp = home_wp
@@ -319,7 +319,7 @@ def calculate_wp_trajectory_stats(game_data, probability_map, leader_is_home):
             delta = abs(home_wp - prev_home_wp) * 100
             if delta > max_wp_delta:
                 max_wp_delta = delta
-                play_text = (play.get('text', '') or '')[:60]
+                play_text = play.get('text', '') or ''
                 quarter = play.get('period', {}).get('number', '?')
                 clock = play.get('clock', {}).get('displayValue', '?')
                 max_wp_play_desc = f"Q{quarter} {clock} - {play_text}"

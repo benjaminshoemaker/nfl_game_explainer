@@ -325,8 +325,7 @@ def diagnose_game(game_id):
                 'clock': clock,
                 'type': play_type,
                 'yards': yards,
-                'text': text[:100],
-                'full_text': text,
+                'text': text,
             }
 
             # Classify the play
@@ -375,8 +374,7 @@ def diagnose_game(game_id):
                 turnover_info = {
                     'quarter': quarter,
                     'clock': clock,
-                    'text': text[:100],
-                    'full_text': text,
+                    'text': text,
                     'reason': reason,
                     'is_counted': is_counted,
                 }
@@ -423,7 +421,7 @@ def diagnose_game(game_id):
                     'quarter': quarter,
                     'clock': clock,
                     'type': play_type,
-                    'text': text[:100],
+                    'text': text,
                     'keywords': [kw for kw in turnover_keywords if kw in text_lower],
                 })
 

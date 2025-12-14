@@ -505,14 +505,14 @@ This is the core statistical display showing how each team performed on a metric
 ```
 
 **Checklist:**
-- [ ] src/components/StatRow.tsx created
-- [ ] Tug-of-war bar visualization works
-- [ ] Bar widths proportional to values
-- [ ] Winner/loser styling correct
-- [ ] Strength indicators (diamonds) display correctly
-- [ ] lowerIsBetter prop inverts logic for turnovers/penalties
-- [ ] src/components/AdvancedStats.tsx wraps all rows
-- [ ] Visual test matches existing template
+- [x] src/components/StatRow.tsx created
+- [x] Tug-of-war bar visualization works
+- [x] Bar widths proportional to values
+- [x] Winner/loser styling correct
+- [x] Strength indicators (diamonds) display correctly
+- [x] lowerIsBetter prop inverts logic for turnovers/penalties
+- [x] src/components/AdvancedStats.tsx wraps all rows
+- [x] Visual test matches existing template
 
 ---
 

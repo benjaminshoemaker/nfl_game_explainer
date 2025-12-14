@@ -7,6 +7,7 @@ import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from lib.game_analysis import analyze_game
+from lib.ai_summary import generate_ai_summary, get_cached_summary
 
 
 class handler(BaseHTTPRequestHandler):
@@ -36,6 +37,42 @@ class handler(BaseHTTPRequestHandler):
         try:
             # Analyze the game
             payload = analyze_game(game_id)
+
+            # Get scores for cache lookup
+            summary_table = payload.get('summary_table', [])
+            team_meta = payload.get('team_meta', [])
+
+            home_team = next((t for t in team_meta if t['homeAway'] == 'home'), None)
+            away_team = next((t for t in team_meta if t['homeAway'] == 'away'), None)
+
+            home_score = 0
+            away_score = 0
+
+            if home_team and away_team:
+                home_summary = next((s for s in summary_table if s['Team'] == home_team['abbr']), {})
+                away_summary = next((s for s in summary_table if s['Team'] == away_team['abbr']), {})
+                home_score = home_summary.get('Score', 0)
+                away_score = away_summary.get('Score', 0)
+
+            # Check for cached AI summary first
+            cached_summary = get_cached_summary(game_id, home_score, away_score)
+
+            if cached_summary:
+                payload['ai_summary'] = cached_summary
+            else:
+                # Try to generate AI summary (will fail gracefully if no API key)
+                try:
+                    ai_summary = generate_ai_summary(
+                        payload=payload,
+                        game_data={},  # Raw data not needed for basic summary
+                        probability_map={},  # Probability data not needed for basic summary
+                        wp_threshold=0.975
+                    )
+                    payload['ai_summary'] = ai_summary
+                except Exception as e:
+                    # AI summary generation failed, continue without it
+                    print(f"AI summary generation failed: {e}")
+                    payload['ai_summary'] = None
 
             # Send response
             self.send_response(200)

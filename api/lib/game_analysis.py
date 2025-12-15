@@ -35,23 +35,16 @@ EXPANDED_CATEGORIES = [
 
 
 def get_game_data(game_id):
-    """Pull the full game play-by-play JSON from ESPN core API."""
-    import time
-    cache_buster = int(time.time())
-    url = f"https://cdn.espn.com/core/nfl/playbyplay?xhr=1&gameId={game_id}&cb={cache_buster}"
+    """Pull the full game data from ESPN summary API."""
+    # Use site.api.espn.com instead of cdn.espn.com - more reliable from cloud environments
+    url = f"https://site.api.espn.com/apis/site/v2/sports/football/nfl/summary?event={game_id}"
 
-    # Full browser-like headers to avoid 401 errors from ESPN CDN
     headers = {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
         'Accept': 'application/json, text/plain, */*',
         'Accept-Language': 'en-US,en;q=0.9',
         'Referer': 'https://www.espn.com/',
         'Origin': 'https://www.espn.com',
-        'DNT': '1',
-        'Connection': 'keep-alive',
-        'Sec-Fetch-Dest': 'empty',
-        'Sec-Fetch-Mode': 'cors',
-        'Sec-Fetch-Site': 'same-site',
     }
 
     try:
@@ -59,7 +52,7 @@ def get_game_data(game_id):
         with urllib.request.urlopen(req, timeout=15) as response:
             raw_data = _decompress_response(response.read())
             data = json.loads(raw_data.decode())
-        return data.get('gamepackageJSON', {})
+        return data  # Summary endpoint returns data directly (not wrapped in gamepackageJSON)
     except urllib.error.HTTPError as e:
         raise Exception(f"Failed to fetch game {game_id}: HTTP {e.code}")
     except urllib.error.URLError as e:

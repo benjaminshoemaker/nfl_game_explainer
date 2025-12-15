@@ -943,10 +943,17 @@ def process_game_stats(game_data, expanded=False, probability_map=None, pregame_
 
             # Interception flips possession once.
             if interception and not overturned:
-                turnover_events.append((current_possessor, 'interception'))
-                if opponent_id:
-                    current_possessor = opponent_id
-                    current_off_abbr = id_to_abbr.get(opponent_id, '').lower()
+                # For "interception return" plays, ESPN records the play from the
+                # returning team's perspective, so start_team_id is the defense.
+                # Attribute turnover to opponent (who threw the INT) and skip
+                # possession flip since returning team already has the ball.
+                if 'interception return' in play_type_lower and opponent_id:
+                    turnover_events.append((opponent_id, 'interception'))
+                else:
+                    turnover_events.append((current_possessor, 'interception'))
+                    if opponent_id:
+                        current_possessor = opponent_id
+                        current_off_abbr = id_to_abbr.get(opponent_id, '').lower()
 
             # Fumble logic with recovery/possession change detection.
             recovered_by_def = False

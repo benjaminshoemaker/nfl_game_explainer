@@ -31,12 +31,31 @@ def get_game_data(game_id):
     import time
     cache_buster = int(time.time())
     url = f"https://cdn.espn.com/core/nfl/playbyplay?xhr=1&gameId={game_id}&cb={cache_buster}"
-    headers = {'User-Agent': 'Mozilla/5.0'}
 
-    req = urllib.request.Request(url, headers=headers)
-    with urllib.request.urlopen(req, timeout=15) as response:
-        data = json.loads(response.read().decode())
-    return data.get('gamepackageJSON', {})
+    # Full browser-like headers to avoid 401 errors from ESPN CDN
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Accept': 'application/json, text/plain, */*',
+        'Accept-Language': 'en-US,en;q=0.9',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Referer': 'https://www.espn.com/',
+        'Origin': 'https://www.espn.com',
+        'DNT': '1',
+        'Connection': 'keep-alive',
+        'Sec-Fetch-Dest': 'empty',
+        'Sec-Fetch-Mode': 'cors',
+        'Sec-Fetch-Site': 'same-site',
+    }
+
+    try:
+        req = urllib.request.Request(url, headers=headers)
+        with urllib.request.urlopen(req, timeout=15) as response:
+            data = json.loads(response.read().decode())
+        return data.get('gamepackageJSON', {})
+    except urllib.error.HTTPError as e:
+        raise Exception(f"Failed to fetch game {game_id}: HTTP {e.code}")
+    except urllib.error.URLError as e:
+        raise Exception(f"Failed to connect to ESPN for game {game_id}: {e.reason}")
 
 
 def get_play_probabilities(game_id):
@@ -44,7 +63,14 @@ def get_play_probabilities(game_id):
     Pull the v2 probabilities feed and map play_id -> probability payload.
     Returns a dict mapping play_id -> probability payload.
     """
-    headers = {'User-Agent': 'Mozilla/5.0'}
+    # Full browser-like headers to avoid 401 errors from ESPN
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Accept': 'application/json, text/plain, */*',
+        'Accept-Language': 'en-US,en;q=0.9',
+        'Referer': 'https://www.espn.com/',
+        'Origin': 'https://www.espn.com',
+    }
     base = f"https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/{game_id}/competitions/{game_id}/probabilities"
     prob_map = {}
 
@@ -87,7 +113,14 @@ def get_pregame_probabilities(game_id):
     Fetch pre-game win probabilities from ESPN summary winprobability array.
     Returns (home_wp, away_wp).
     """
-    headers = {'User-Agent': 'Mozilla/5.0'}
+    # Full browser-like headers to avoid 401 errors from ESPN
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Accept': 'application/json, text/plain, */*',
+        'Accept-Language': 'en-US,en;q=0.9',
+        'Referer': 'https://www.espn.com/',
+        'Origin': 'https://www.espn.com',
+    }
     url = f"https://site.api.espn.com/apis/site/v2/sports/football/nfl/summary?event={game_id}"
 
     try:

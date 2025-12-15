@@ -1,51 +1,15 @@
-import { ScoreboardResponse } from '@/types';
-import { GameSidebar } from '@/components/GameSidebar';
-
-async function getScoreboard(): Promise<ScoreboardResponse | null> {
-  try {
-    const baseUrl = process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : process.env.NODE_ENV === 'development'
-      ? 'http://localhost:8000'  // Local Python API server
-      : '';
-
-    const response = await fetch(`${baseUrl}/api/scoreboard`, {
-      next: { revalidate: 60 },
-    });
-
-    if (!response.ok) {
-      return null;
-    }
-
-    return await response.json();
-  } catch {
-    return null;
-  }
-}
+import { GameSidebarClient } from '@/components/GameSidebarClient';
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
-export default async function GameLayout({ children }: LayoutProps) {
-  const scoreboard = await getScoreboard();
-
+export default function GameLayout({ children }: LayoutProps) {
   return (
     <div className="flex min-h-screen">
       {/* Sidebar - hidden on mobile, visible on lg+ */}
       <aside className="hidden lg:block w-64 flex-shrink-0 sticky top-0 h-screen">
-        {scoreboard ? (
-          <GameSidebar
-            games={scoreboard.games}
-            weekLabel={scoreboard.week.label}
-          />
-        ) : (
-          <div className="h-full bg-bg-card border-r border-border-subtle flex items-center justify-center p-4">
-            <p className="font-condensed text-xs text-text-muted text-center uppercase tracking-wider">
-              Unable to load games
-            </p>
-          </div>
-        )}
+        <GameSidebarClient />
       </aside>
 
       {/* Main content */}

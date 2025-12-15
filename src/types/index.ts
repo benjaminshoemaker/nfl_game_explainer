@@ -86,6 +86,7 @@ export interface GameResponse {
   label: string;
   status: 'pregame' | 'in-progress' | 'final';
   gameClock?: GameClock | null;
+  lastPlayTime?: string | null;
   team_meta: TeamMeta[];
   summary_table: SummaryStats[];
   summary_table_full: SummaryStats[];

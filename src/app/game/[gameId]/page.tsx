@@ -9,12 +9,10 @@ interface PageProps {
 
 async function getGameData(gameId: string): Promise<GameResponse | null> {
   try {
-    // In development, use localhost; in production, use relative URL
+    // In production, use the Vercel URL; in development, rewrites handle proxying
     const baseUrl = process.env.VERCEL_URL
       ? `https://${process.env.VERCEL_URL}`
-      : process.env.NODE_ENV === 'development'
-      ? 'http://localhost:8000'  // Local Python API server
-      : '';
+      : 'http://localhost:3000';
 
     const response = await fetch(`${baseUrl}/api/game/${gameId}`, {
       // Revalidate every 30 seconds for live games

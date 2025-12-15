@@ -2,16 +2,25 @@ from http.server import BaseHTTPRequestHandler
 import json
 import urllib.request
 import urllib.error
+import gzip
 
 
 ESPN_SCOREBOARD_URL = "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard"
+
+
+def _decompress_response(data):
+    """Decompress gzip data if needed, return raw data otherwise."""
+    if data[:2] == b'\x1f\x8b':  # gzip magic bytes
+        return gzip.decompress(data)
+    return data
 
 
 def fetch_scoreboard():
     """Fetch current NFL scoreboard from ESPN API."""
     try:
         with urllib.request.urlopen(ESPN_SCOREBOARD_URL, timeout=10) as response:
-            return json.loads(response.read().decode())
+            raw_data = _decompress_response(response.read())
+            return json.loads(raw_data.decode())
     except (urllib.error.URLError, json.JSONDecodeError) as e:
         return {"error": str(e)}
 

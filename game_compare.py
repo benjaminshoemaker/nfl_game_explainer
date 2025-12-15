@@ -557,7 +557,7 @@ def classify_offense_play(play):
 
     return True, rush_hint, pass_hint
 
-def is_competitive_play(play, probability_map, wp_threshold=0.975):
+def is_competitive_play(play, probability_map, wp_threshold=0.975, start_home_wp=None, start_away_wp=None):
     """
     Return True if the play occurred while the game was still competitive.
 
@@ -565,10 +565,17 @@ def is_competitive_play(play, probability_map, wp_threshold=0.975):
     - Overtime period (period number >= 5)
     - No play id or no probability data (assume competitive)
     - Both teams' win probability are below the threshold at play start
+
+    If start_home_wp/start_away_wp are provided, use those (start-of-play).
+    Otherwise fall back to the play's probability data (end-of-play).
     """
     period = play.get('period', {}).get('number', 0)
     if period >= 5:
         return True
+
+    # Use start-of-play probabilities if provided
+    if start_home_wp is not None and start_away_wp is not None:
+        return start_home_wp < wp_threshold and start_away_wp < wp_threshold
 
     play_id = play.get('id')
     if play_id is None:
@@ -839,7 +846,7 @@ def process_game_stats(game_data, expanded=False, probability_map=None, pregame_
             if len(id_to_abbr) == 2 and start_team_id in id_to_abbr:
                 opponent_id = next((tid for tid in id_to_abbr if tid != start_team_id), None)
 
-            competitive = is_competitive_play(play, probability_map, wp_threshold)
+            competitive = is_competitive_play(play, probability_map, wp_threshold, prev_home_wp, prev_away_wp)
             probability_snapshot = lookup_probability_with_delta(play)
 
             # Track drive start stats only when the opening play was competitive.
@@ -943,17 +950,10 @@ def process_game_stats(game_data, expanded=False, probability_map=None, pregame_
 
             # Interception flips possession once.
             if interception and not overturned:
-                # For "interception return" plays, ESPN records the play from the
-                # returning team's perspective, so start_team_id is the defense.
-                # Attribute turnover to opponent (who threw the INT) and skip
-                # possession flip since returning team already has the ball.
-                if 'interception return' in play_type_lower and opponent_id:
-                    turnover_events.append((opponent_id, 'interception'))
-                else:
-                    turnover_events.append((current_possessor, 'interception'))
-                    if opponent_id:
-                        current_possessor = opponent_id
-                        current_off_abbr = id_to_abbr.get(opponent_id, '').lower()
+                turnover_events.append((current_possessor, 'interception'))
+                if opponent_id:
+                    current_possessor = opponent_id
+                    current_off_abbr = id_to_abbr.get(opponent_id, '').lower()
 
             # Fumble logic with recovery/possession change detection.
             recovered_by_def = False

@@ -71,17 +71,10 @@ def classify_turnover_events(
         current_off_abbr = id_to_abbr.get(opponent_id, "").lower()
 
     if interception and not overturned:
-        # For "interception return" plays, ESPN records the play from the
-        # returning team's perspective, so start_team_id is the defense.
-        # Attribute turnover to opponent (who threw the INT) and skip
-        # possession flip since returning team already has the ball.
-        if "interception return" in play_type_lower and opponent_id:
-            events.append((opponent_id, "interception"))
-        else:
-            events.append((current_possessor, "interception"))
-            if opponent_id:
-                current_possessor = opponent_id
-                current_off_abbr = id_to_abbr.get(opponent_id, "").lower()
+        events.append((current_possessor, "interception"))
+        if opponent_id:
+            current_possessor = opponent_id
+            current_off_abbr = id_to_abbr.get(opponent_id, "").lower()
 
     recovered_by_def = False
     recovered_team_id = None

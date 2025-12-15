@@ -3,7 +3,6 @@
   "outputDirectory": ".next",
   "functions": {
     "api/**/*.py": {
-      "runtime": "@vercel/python",
       "maxDuration": 30
     }
   },

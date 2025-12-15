@@ -6,7 +6,15 @@ Removes file I/O, CLI parsing, and returns data structures directly.
 import json
 import urllib.request
 import urllib.error
+import gzip
 from urllib.parse import urlparse
+
+
+def _decompress_response(data):
+    """Decompress gzip data if needed, return raw data otherwise."""
+    if data[:2] == b'\x1f\x8b':  # gzip magic bytes
+        return gzip.decompress(data)
+    return data
 
 
 SUMMARY_COLS = ['Team', 'Score', 'Total Yards', 'Drives']
@@ -37,7 +45,6 @@ def get_game_data(game_id):
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
         'Accept': 'application/json, text/plain, */*',
         'Accept-Language': 'en-US,en;q=0.9',
-        'Accept-Encoding': 'gzip, deflate, br',
         'Referer': 'https://www.espn.com/',
         'Origin': 'https://www.espn.com',
         'DNT': '1',
@@ -50,7 +57,8 @@ def get_game_data(game_id):
     try:
         req = urllib.request.Request(url, headers=headers)
         with urllib.request.urlopen(req, timeout=15) as response:
-            data = json.loads(response.read().decode())
+            raw_data = _decompress_response(response.read())
+            data = json.loads(raw_data.decode())
         return data.get('gamepackageJSON', {})
     except urllib.error.HTTPError as e:
         raise Exception(f"Failed to fetch game {game_id}: HTTP {e.code}")
@@ -88,7 +96,8 @@ def get_play_probabilities(game_id):
         try:
             req = urllib.request.Request(f"{base}?page={page}", headers=headers)
             with urllib.request.urlopen(req, timeout=15) as resp:
-                data = json.loads(resp.read().decode())
+                raw_data = _decompress_response(resp.read())
+                data = json.loads(raw_data.decode())
         except Exception:
             break
 
@@ -126,7 +135,8 @@ def get_pregame_probabilities(game_id):
     try:
         req = urllib.request.Request(url, headers=headers)
         with urllib.request.urlopen(req, timeout=15) as resp:
-            data = json.loads(resp.read().decode()) or {}
+            raw_data = _decompress_response(resp.read())
+            data = json.loads(raw_data.decode()) or {}
     except Exception:
         return 0.5, 0.5
 

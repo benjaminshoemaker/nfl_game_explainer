@@ -774,6 +774,36 @@ def build_analysis_text(payload):
     return " ".join(parts)
 
 
+def get_last_play_time(raw_data):
+    """
+    Extract the wallclock timestamp from the last play.
+    Checks current drive first (for live games), then previous drives.
+    Returns the ISO timestamp string or None if not found.
+    """
+    drives_data = raw_data.get('drives', {})
+    last_timestamp = None
+
+    # Check current drive first (most recent for live games)
+    current_drive = drives_data.get('current', {})
+    if current_drive:
+        plays = current_drive.get('plays', [])
+        if plays:
+            last_play = plays[-1]
+            last_timestamp = last_play.get('wallclock') or last_play.get('modified')
+
+    # If no timestamp from current drive, check previous drives
+    if not last_timestamp:
+        previous_drives = drives_data.get('previous', [])
+        if previous_drives:
+            last_drive = previous_drives[-1]
+            plays = last_drive.get('plays', [])
+            if plays:
+                last_play = plays[-1]
+                last_timestamp = last_play.get('wallclock') or last_play.get('modified')
+
+    return last_timestamp
+
+
 def analyze_game(game_id, wp_threshold=0.975):
     """
     Main function to analyze a game and return full payload.
@@ -876,11 +906,15 @@ def analyze_game(game_id, wp_threshold=0.975):
                 "displayValue": game_status_label
             }
 
+    # Get last play time for live games
+    last_play_time = get_last_play_time(raw_data) if not game_is_final else None
+
     payload = {
         "gameId": game_id,
         "label": label,
         "status": status,
         "gameClock": game_clock,
+        "lastPlayTime": last_play_time,
         "wp_filter": {
             "enabled": True,
             "threshold": wp_threshold,

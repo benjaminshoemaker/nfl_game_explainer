@@ -131,6 +131,7 @@ export function GamePageClient({ initialGameData }: GamePageClientProps) {
           isLive={isLive}
           isRefreshing={isRefreshing}
           secondsSinceUpdate={secondsSinceUpdate}
+          lastPlayTime={gameData.lastPlayTime}
         />
 
         {/* Scoreboard */}

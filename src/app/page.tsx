@@ -1,24 +1,88 @@
 import { ScoreboardResponse } from '@/types';
-import { DirectoryClient } from './DirectoryClient';
+import { DirectoryClient, DirectoryClientFallback } from './DirectoryClient';
+
+// ESPN API URL for direct fetching (bypasses Python API for faster server-side render)
+const ESPN_SCOREBOARD_URL = 'https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard';
+
+function transformEspnGame(event: Record<string, unknown>): ScoreboardResponse['games'][0] {
+  const competition = ((event.competitions as unknown[]) || [{}])[0] as Record<string, unknown>;
+  const status = (event.status as Record<string, unknown>) || {};
+  const statusType = (status.type as Record<string, unknown>) || {};
+  const competitors = (competition.competitors as Record<string, unknown>[]) || [];
+
+  let homeTeam = { abbr: '', name: '', score: 0, logo: '', id: '' };
+  let awayTeam = { abbr: '', name: '', score: 0, logo: '', id: '' };
+
+  for (const comp of competitors) {
+    const team = (comp.team as Record<string, unknown>) || {};
+    const teamData = {
+      abbr: (team.abbreviation as string) || '',
+      name: (team.displayName as string) || '',
+      score: parseInt(String(comp.score || 0), 10) || 0,
+      logo: (team.logo as string) || '',
+      id: (team.id as string) || '',
+    };
+    if (comp.homeAway === 'home') {
+      homeTeam = teamData;
+    } else {
+      awayTeam = teamData;
+    }
+  }
+
+  const state = (statusType.state as string) || 'pre';
+  let gameStatus: 'in-progress' | 'final' | 'pregame' = 'pregame';
+  if (state === 'in') gameStatus = 'in-progress';
+  else if (state === 'post') gameStatus = 'final';
+
+  return {
+    gameId: (event.id as string) || '',
+    status: gameStatus,
+    statusDetail: (statusType.shortDetail as string) || '',
+    homeTeam,
+    awayTeam,
+    startTime: gameStatus === 'pregame' ? (event.date as string) : null,
+    isActive: state === 'in',
+  };
+}
 
 async function getScoreboard(): Promise<ScoreboardResponse | null> {
   try {
-    const baseUrl = process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : process.env.NODE_ENV === 'development'
-      ? 'http://localhost:8000'  // Local Python API server
-      : '';
-
-    const response = await fetch(`${baseUrl}/api/scoreboard`, {
-      next: { revalidate: 60 }, // Revalidate every minute
+    // Fetch directly from ESPN API for server-side rendering
+    // This bypasses our Python API which can have issues with server-to-server calls on Vercel
+    const response = await fetch(ESPN_SCOREBOARD_URL, {
+      next: { revalidate: 30 },
     });
 
     if (!response.ok) {
-      console.error(`Failed to fetch scoreboard: ${response.status}`);
+      console.error(`Failed to fetch ESPN scoreboard: ${response.status}`);
       return null;
     }
 
-    return await response.json();
+    const data = await response.json();
+    const weekData = data.week || {};
+    const events = data.events || [];
+
+    const games = events.map(transformEspnGame);
+
+    // Sort: in-progress first, then pregame by time, then final
+    games.sort((a: ScoreboardResponse['games'][0], b: ScoreboardResponse['games'][0]) => {
+      if (a.status === 'in-progress' && b.status !== 'in-progress') return -1;
+      if (a.status !== 'in-progress' && b.status === 'in-progress') return 1;
+      if (a.status === 'pregame' && b.status === 'pregame') {
+        return (a.startTime || '').localeCompare(b.startTime || '');
+      }
+      if (a.status === 'pregame') return -1;
+      if (b.status === 'pregame') return 1;
+      return 0;
+    });
+
+    return {
+      week: {
+        number: weekData.number || 0,
+        label: `Week ${weekData.number || 0}`,
+      },
+      games,
+    };
   } catch (error) {
     console.error('Error fetching scoreboard:', error);
     return null;

@@ -4,12 +4,71 @@ import { useState, useCallback, useEffect, useRef } from 'react';
 import { ScoreboardResponse, ScoreboardGame } from '@/types';
 import { GameCard } from '@/components/GameCard';
 import { useAutoRefresh } from '@/hooks/useAutoRefresh';
+import { DirectoryLoading } from '@/components/LoadingStates';
 
 interface DirectoryClientProps {
   initialData: ScoreboardResponse;
 }
 
 const REFRESH_INTERVAL = 60000; // 60 seconds
+
+/**
+ * Fallback component that loads scoreboard data client-side
+ * Used when server-side fetch fails
+ */
+export function DirectoryClientFallback() {
+  const [scoreboard, setScoreboard] = useState<ScoreboardResponse | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadScoreboard() {
+      try {
+        const response = await fetch('/api/scoreboard');
+        if (!response.ok) {
+          throw new Error(`Failed to load: ${response.status}`);
+        }
+        const data = await response.json();
+        setScoreboard(data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to load games');
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadScoreboard();
+  }, []);
+
+  if (loading) {
+    return <DirectoryLoading />;
+  }
+
+  if (error || !scoreboard) {
+    return (
+      <div className="container mx-auto px-6 py-12 text-center">
+        <h1 className="font-display text-4xl text-text-primary mb-4">Unable to Load Games</h1>
+        <p className="text-text-secondary mb-4">{error || 'Please try again later.'}</p>
+        <button
+          onClick={() => window.location.reload()}
+          className="px-4 py-2 bg-gold text-bg-deep rounded-lg font-condensed uppercase tracking-wider"
+        >
+          Retry
+        </button>
+      </div>
+    );
+  }
+
+  if (scoreboard.games.length === 0) {
+    return (
+      <div className="container mx-auto px-6 py-12 text-center">
+        <h1 className="font-display text-4xl text-text-primary mb-4">No Games Today</h1>
+        <p className="text-text-secondary">Check back during game days.</p>
+      </div>
+    );
+  }
+
+  return <DirectoryClient initialData={scoreboard} />;
+}
 
 function sortGames(games: ScoreboardGame[]): ScoreboardGame[] {
   return [...games].sort((a, b) => {

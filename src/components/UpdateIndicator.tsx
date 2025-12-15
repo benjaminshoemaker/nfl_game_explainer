@@ -1,9 +1,12 @@
 'use client';
 
+import { useMemo } from 'react';
+
 interface UpdateIndicatorProps {
   isLive: boolean;
   isRefreshing: boolean;
   secondsSinceUpdate: number;
+  lastPlayTime?: string | null;
 }
 
 function formatSecondsAgo(seconds: number): string {
@@ -13,11 +16,37 @@ function formatSecondsAgo(seconds: number): string {
   return `${Math.floor(seconds / 60)} mins ago`;
 }
 
+function formatLastPlayAgo(isoTimestamp: string): string | null {
+  try {
+    const playTime = new Date(isoTimestamp);
+    const now = new Date();
+    const diffSeconds = Math.floor((now.getTime() - playTime.getTime()) / 1000);
+
+    if (diffSeconds < 0) return null;
+
+    const minutes = Math.floor(diffSeconds / 60);
+    const seconds = diffSeconds % 60;
+
+    if (minutes === 0) {
+      return `${seconds}s ago`;
+    }
+    return `${minutes}m ${seconds}s ago`;
+  } catch {
+    return null;
+  }
+}
+
 export function UpdateIndicator({
   isLive,
   isRefreshing,
   secondsSinceUpdate,
+  lastPlayTime,
 }: UpdateIndicatorProps) {
+  const lastPlayAgo = useMemo(() => {
+    if (!lastPlayTime) return null;
+    return formatLastPlayAgo(lastPlayTime);
+  }, [lastPlayTime]);
+
   if (!isLive) {
     return null;
   }
@@ -62,11 +91,12 @@ export function UpdateIndicator({
             </span>
           </>
         ) : (
-          <>
-            <span className="font-condensed text-xs uppercase tracking-wider">
-              Updated {formatSecondsAgo(secondsSinceUpdate)}
-            </span>
-          </>
+          <span className="font-condensed text-xs uppercase tracking-wider">
+            Updated {formatSecondsAgo(secondsSinceUpdate)}
+            {lastPlayAgo && (
+              <span className="text-text-secondary"> (Last play {lastPlayAgo})</span>
+            )}
+          </span>
         )}
       </div>
     </div>

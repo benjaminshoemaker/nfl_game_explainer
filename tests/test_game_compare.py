@@ -553,16 +553,18 @@ def test_process_game_stats_filters_noncompetitive_time():
     assert aaa["Points Per Trip (Inside 40)"] == 7
     assert aaa["Drives"] == 1
 
+    # BBB's plays: play 21 starts with home WP 0.7 (competitive), play 22 starts with home WP 0.9 (non-competitive)
+    # So play 21 (10 yards) counts, but play 22 (TD) is filtered out
     bbb = table.loc["BBB"]
-    assert bbb["Total Yards"] == 0
-    assert bbb["Explosive Plays"] == 0
-    assert bbb["Points per Drive"] == 0
-    assert bbb["Drives"] == 0
-    assert bbb["Points Per Trip (Inside 40)"] == 0
+    assert bbb["Total Yards"] == 10  # Play 21's 10 yards counts (start WP 0.7 < threshold 0.8)
+    assert bbb["Explosive Plays"] == 1  # Play 21 is a 10-yard rush (explosive run >= 10 yards)
+    assert bbb["Points per Drive"] == 0  # TD was in non-competitive time
+    assert bbb["Drives"] == 1  # Drive started competitive (first play was competitive)
+    assert bbb["Points Per Trip (Inside 40)"] == 0  # No points in competitive time
 
     # Expanded details should only include competitive plays
     assert len(details["1"]["Explosive Plays"]) == 2
-    assert details["2"]["Explosive Plays"] == []
+    assert len(details["2"]["Explosive Plays"]) == 1  # Play 21's 10-yard rush is explosive
 
 
 def test_build_top_plays_by_wp_filters_and_sorts():

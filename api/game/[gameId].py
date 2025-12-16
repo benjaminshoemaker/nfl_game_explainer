@@ -2,6 +2,7 @@ from http.server import BaseHTTPRequestHandler
 import json
 import sys
 import os
+import traceback
 
 # Add the parent directory to the path for imports
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -12,6 +13,8 @@ from lib.ai_summary import generate_ai_summary, get_cached_summary
 
 class handler(BaseHTTPRequestHandler):
     def do_GET(self):
+        request_id = self.headers.get('x-nfl-request-id')
+
         # Extract gameId from the path
         # Path will be like /api/game/401772896
         path_parts = self.path.split('/')
@@ -27,6 +30,8 @@ class handler(BaseHTTPRequestHandler):
             self.send_response(400)
             self.send_header('Content-type', 'application/json')
             self.send_header('Access-Control-Allow-Origin', '*')
+            if request_id:
+                self.send_header('X-NFL-Request-Id', request_id)
             self.end_headers()
             self.wfile.write(json.dumps({
                 "error": "Invalid game ID",
@@ -71,7 +76,7 @@ class handler(BaseHTTPRequestHandler):
                     payload['ai_summary'] = ai_summary
                 except Exception as e:
                     # AI summary generation failed, continue without it
-                    print(f"AI summary generation failed: {e}")
+                    print(f"[api/game] request_id={request_id} game_id={game_id} ai_summary_failed error={e}")
                     payload['ai_summary'] = None
 
             # Send response
@@ -79,13 +84,19 @@ class handler(BaseHTTPRequestHandler):
             self.send_header('Content-type', 'application/json')
             self.send_header('Access-Control-Allow-Origin', '*')
             self.send_header('Cache-Control', 'public, max-age=30')
+            if request_id:
+                self.send_header('X-NFL-Request-Id', request_id)
             self.end_headers()
             self.wfile.write(json.dumps(payload).encode())
 
         except Exception as e:
+            print(f"[api/game] request_id={request_id} game_id={game_id} failed error={e}")
+            print(traceback.format_exc())
             self.send_response(500)
             self.send_header('Content-type', 'application/json')
             self.send_header('Access-Control-Allow-Origin', '*')
+            if request_id:
+                self.send_header('X-NFL-Request-Id', request_id)
             self.end_headers()
             self.wfile.write(json.dumps({
                 "error": "Failed to analyze game",
@@ -98,4 +109,6 @@ class handler(BaseHTTPRequestHandler):
         self.send_header('Access-Control-Allow-Origin', '*')
         self.send_header('Access-Control-Allow-Methods', 'GET, OPTIONS')
         self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+        if self.headers.get('x-nfl-request-id'):
+            self.send_header('X-NFL-Request-Id', self.headers.get('x-nfl-request-id'))
         self.end_headers()

@@ -1,5 +1,6 @@
 import { GamePageClient } from './GamePageClient';
 import { GameResponse } from '@/types';
+import { headers } from 'next/headers';
 
 interface PageProps {
   params: Promise<{
@@ -7,26 +8,53 @@ interface PageProps {
   }>;
 }
 
-async function getGameData(gameId: string): Promise<GameResponse | null> {
-  try {
-    // In production, use the Vercel URL; in development, rewrites handle proxying
-    const baseUrl = process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : 'http://localhost:3000';
+function getRequestOrigin(): string {
+  const h = headers();
+  const forwardedProto = h.get('x-forwarded-proto');
+  const forwardedHost = h.get('x-forwarded-host');
+  const host = forwardedHost ?? h.get('host') ?? process.env.VERCEL_URL ?? 'localhost:3000';
+  const proto = forwardedProto ?? (process.env.NODE_ENV === 'development' ? 'http' : 'https');
+  return `${proto}://${host}`;
+}
 
-    const response = await fetch(`${baseUrl}/api/game/${gameId}`, {
+async function getGameData(gameId: string): Promise<GameResponse | null> {
+  const requestId =
+    (globalThis.crypto && 'randomUUID' in globalThis.crypto && typeof globalThis.crypto.randomUUID === 'function')
+      ? globalThis.crypto.randomUUID()
+      : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+
+  try {
+    // Prefer the request host over `VERCEL_URL` so we don't accidentally call a protected deployment URL.
+    const origin = getRequestOrigin();
+    const url = new URL(`/api/game/${gameId}`, origin);
+
+    const response = await fetch(url, {
       // Revalidate every 30 seconds for live games
       next: { revalidate: 30 },
+      headers: {
+        'x-nfl-request-id': requestId,
+      },
     });
 
     if (!response.ok) {
-      console.error(`Failed to fetch game ${gameId}: ${response.status}`);
+      const responseText = await response.text().catch(() => '');
+      console.error('Failed to fetch game data', {
+        gameId,
+        status: response.status,
+        url: url.toString(),
+        requestId,
+        vercelUrl: process.env.VERCEL_URL,
+        host: headers().get('host'),
+        forwardedHost: headers().get('x-forwarded-host'),
+        forwardedProto: headers().get('x-forwarded-proto'),
+        responseText: responseText.slice(0, 500),
+      });
       return null;
     }
 
     return await response.json();
   } catch (error) {
-    console.error(`Error fetching game ${gameId}:`, error);
+    console.error('Error fetching game data', { gameId, requestId, error });
     return null;
   }
 }

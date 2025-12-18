@@ -138,8 +138,6 @@ export function GamePlays({ expandedDetails, teamMeta, selectedCategory }: GameP
 
             <PlayList
               plays={awayPlays}
-              teamAbbr={away.abbr}
-              teamPrimary={awayColors.primary}
               teamSecondary={awayColors.secondary}
               teamTextColor={awayColors.text}
               side="away"
@@ -180,8 +178,6 @@ export function GamePlays({ expandedDetails, teamMeta, selectedCategory }: GameP
 
             <PlayList
               plays={homePlays}
-              teamAbbr={home.abbr}
-              teamPrimary={homeColors.primary}
               teamSecondary={homeColors.secondary}
               teamTextColor={homeColors.text}
               side="home"

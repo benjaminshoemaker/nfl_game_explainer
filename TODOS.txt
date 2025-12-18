@@ -6,6 +6,8 @@ Follow-ups:
 - Add plays that explain more rows; all plays that you give the ball to the other team --> field position
 - [DONE] Implement a check that checks the output from our script against the Team Stats display in ESPN, as a sanity check
 - Investigate and resolve output differences
-- Add a week toggle
+- Add a week toggle to the main page
 - Add caching for completed games with numerators and denominators
 - Add summary for a team for the season for just their stats, with a time range picker + sparkles
+- Add a card export
+- Add a game summary and halftime report for each game

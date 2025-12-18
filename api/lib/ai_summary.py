@@ -4,6 +4,7 @@ import os
 import json
 import hashlib
 from datetime import datetime, timedelta
+from typing import Optional
 
 # Cache directory for Vercel serverless (uses /tmp)
 CACHE_DIR = "/tmp/nfl_summaries"
@@ -13,7 +14,7 @@ def get_cache_key(game_id: str, home_score: int, away_score: int) -> str:
     raw_key = f"{game_id}_{home_score}_{away_score}"
     return hashlib.md5(raw_key.encode()).hexdigest()
 
-def get_cached_summary(game_id: str, home_score: int, away_score: int) -> str | None:
+def get_cached_summary(game_id: str, home_score: int, away_score: int) -> Optional[str]:
     """Retrieve cached summary if it exists and is not expired."""
     try:
         cache_key = get_cache_key(game_id, home_score, away_score)
@@ -57,7 +58,37 @@ def set_cached_summary(game_id: str, home_score: int, away_score: int, summary: 
     except Exception:
         return False
 
-def generate_ai_summary(payload: dict, game_data: dict, probability_map: dict, wp_threshold: float = 0.975) -> str | None:
+def _extract_category_plays_by_team_abbr(expanded_details: dict, team_meta: list, category: str) -> dict:
+    """
+    Normalize expanded_details into a dict keyed by team abbreviation for one category.
+
+    Supports both shapes:
+    1) Team-keyed: {teamId: {category: [plays...]}}
+    2) Category-keyed: {category: {teamAbbr: [plays...]}}
+    """
+    if not expanded_details or not isinstance(expanded_details, dict):
+        return {}
+
+    direct = expanded_details.get(category)
+    if isinstance(direct, dict):
+        return direct
+
+    plays_by_abbr = {}
+    for team in team_meta or []:
+        team_id = str(team.get("id", "") or "")
+        team_abbr = team.get("abbr")
+        if not team_id or not team_abbr:
+            continue
+        team_details = expanded_details.get(team_id) or {}
+        if not isinstance(team_details, dict):
+            continue
+        plays = team_details.get(category) or []
+        if isinstance(plays, list):
+            plays_by_abbr[team_abbr] = plays
+    return plays_by_abbr
+
+
+def generate_ai_summary(payload: dict, game_data: dict, probability_map: dict, wp_threshold: float = 0.975) -> Optional[str]:
     """
     Generate a concise game summary using OpenAI.
     Handles both completed and in-progress games.
@@ -111,8 +142,8 @@ def generate_ai_summary(payload: dict, game_data: dict, probability_map: dict, w
         is_final = game_status == 'final'
 
         # Build key plays summary
-        turnovers = expanded_details.get('Turnovers', {})
-        explosives = expanded_details.get('Explosive Plays', {})
+        turnovers = _extract_category_plays_by_team_abbr(expanded_details, team_meta, 'Turnovers')
+        explosives = _extract_category_plays_by_team_abbr(expanded_details, team_meta, 'Explosive Plays')
 
         key_plays_text = []
         for team_abbr, plays in turnovers.items():

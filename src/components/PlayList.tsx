@@ -4,8 +4,6 @@ import { PlayDetail } from '@/types';
 
 interface PlayListProps {
   plays: PlayDetail[];
-  teamAbbr: string;
-  teamPrimary: string;
   teamSecondary: string;
   teamTextColor: string;
   side: 'away' | 'home';
@@ -102,7 +100,7 @@ function extractHeadline(text: string, type: string): string {
   return type.toUpperCase();
 }
 
-export function PlayList({ plays, teamAbbr, teamPrimary, teamSecondary, teamTextColor, side }: PlayListProps) {
+export function PlayList({ plays, teamSecondary, teamTextColor, side }: PlayListProps) {
   if (plays.length === 0) {
     return (
       <div className="py-8 px-4 text-center border border-dashed border-border-medium rounded-xl">

@@ -59,19 +59,6 @@ async function getGameData(gameId: string): Promise<GameResponse | null> {
   }
 }
 
-function LoadingState() {
-  return (
-    <div className="min-h-screen bg-bg-deep flex items-center justify-center">
-      <div className="text-center space-y-4">
-        <div className="w-12 h-12 border-4 border-gold border-t-transparent rounded-full animate-spin mx-auto" />
-        <p className="font-condensed text-sm uppercase tracking-wider text-text-muted">
-          Loading game data...
-        </p>
-      </div>
-    </div>
-  );
-}
-
 function ErrorState({ gameId }: { gameId: string }) {
   return (
     <div className="min-h-screen bg-bg-deep flex items-center justify-center">

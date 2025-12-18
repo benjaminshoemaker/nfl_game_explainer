@@ -24,7 +24,7 @@ export function GameSidebarClient() {
   // Enable polling if we haven't loaded yet OR if there are active games
   const shouldPoll = !initialLoadDone || hasActiveGames;
 
-  const { isRefreshing } = useAutoRefresh({
+  useAutoRefresh({
     fetchFn: fetchScoreboard,
     interval: REFRESH_INTERVAL,
     enabled: shouldPoll,

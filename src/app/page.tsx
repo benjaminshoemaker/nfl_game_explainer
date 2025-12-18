@@ -1,8 +1,10 @@
 import { ScoreboardResponse } from '@/types';
-import { DirectoryClient, DirectoryClientFallback } from './DirectoryClient';
+import { DirectoryClient } from './DirectoryClient';
 
 // ESPN API URL for direct fetching (bypasses Python API for faster server-side render)
 const ESPN_SCOREBOARD_URL = 'https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard';
+
+export const dynamic = 'force-dynamic';
 
 function transformEspnGame(event: Record<string, unknown>): ScoreboardResponse['games'][0] {
   const competition = ((event.competitions as unknown[]) || [{}])[0] as Record<string, unknown>;

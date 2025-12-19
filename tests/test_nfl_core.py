@@ -161,9 +161,17 @@ class TestIsPenaltyPlay:
         play = {"penalty": {"yards": 10}}
         assert is_penalty_play(play, "penalty on sea, no play", "penalty") is True
 
-    def test_has_penalty_flag(self):
+    def test_penalty_declined_text_returns_false(self):
         play = {"hasPenalty": True}
-        assert is_penalty_play(play, "pass complete", "pass") is True
+        assert is_penalty_play(play, "run for 10 yards, penalty declined", "rush") is False
+
+    def test_has_penalty_flag_without_no_play_returns_false(self):
+        play = {"hasPenalty": True}
+        assert is_penalty_play(play, "pass complete", "pass") is False
+
+    def test_has_penalty_flag_with_no_play_returns_true(self):
+        play = {"hasPenalty": True}
+        assert is_penalty_play(play, "penalty on aaa, no play", "pass") is True
 
     def test_no_play_with_penalty_in_text(self):
         play = {}
@@ -464,6 +472,128 @@ class TestProcessGameStats:
         by_team = {row["Team"]: row for row in rows}
         assert by_team["AAA"]["Turnovers"] == 1
         assert len(details["1"]["Turnovers"]) == 1
+
+    def test_fumble_turnover_with_replay_reversal_counts(self):
+        text = (
+            "Fumble Recovery (Opponent): (Shotgun) S.Darnold pass short middle to C.Kupp to LA 17 "
+            "for 17 yards (K.Curl). FUMBLES (K.Curl), RECOVERED by LA-C.Durant at LA 1."
+            "The Replay Official reviewed the touchback ruling, and the play was REVERSED."
+            "(Shotgun) S.Darnold pass short middle to C.Kupp to LA 17 for 17 yards (K.Curl). "
+            "FUMBLES (K.Curl), RECOVERED by LA-C.Durant at LA 0. Touchback."
+        )
+        sample = {
+            "boxscore": {
+                "teams": [
+                    {"team": {"id": "1", "abbreviation": "SEA"}},
+                    {"team": {"id": "2", "abbreviation": "LAR"}},
+                ]
+            },
+            "header": {
+                "competitions": [
+                    {"competitors": [{"id": "1", "score": "0"}, {"id": "2", "score": "0"}]}
+                ]
+            },
+            "drives": {
+                "previous": [
+                    {
+                        "team": {"id": "1"},
+                        "plays": [
+                            {
+                                "id": "1",
+                                "text": text,
+                                "type": {"text": "Pass"},
+                                "start": {"team": {"id": "1"}},
+                                "end": {"team": {"id": "2"}},
+                                "team": {"abbreviation": "SEA", "id": "1"},
+                            }
+                        ],
+                    }
+                ]
+            },
+            "scoringPlays": [],
+        }
+        rows, details = process_game_stats(sample, expanded=True)
+        by_team = {row["Team"]: row for row in rows}
+        assert by_team["SEA"]["Turnovers"] == 1
+        assert len(details["1"]["Turnovers"]) == 1
+        assert details["1"]["Turnovers"][0]["reason"] == "fumble"
+
+    def test_two_point_conversion_interception_not_counted_as_turnover(self):
+        sample = {
+            "boxscore": {
+                "teams": [
+                    {"team": {"id": "1", "abbreviation": "AAA"}},
+                    {"team": {"id": "2", "abbreviation": "BBB"}},
+                ]
+            },
+            "header": {
+                "competitions": [
+                    {"competitors": [{"id": "1", "score": "0"}, {"id": "2", "score": "0"}]}
+                ]
+            },
+            "drives": {
+                "previous": [
+                    {
+                        "team": {"id": "1"},
+                        "plays": [
+                            {
+                                "id": "1",
+                                "text": "T.Shough pass to D.Vele is intercepted. ATTEMPT FAILS. TWO-POINT CONVERSION ATTEMPT.",
+                                "type": {"text": "Pass"},
+                                "start": {"team": {"id": "1"}},
+                                "end": {"team": {"id": "2"}},
+                                "team": {"abbreviation": "AAA", "id": "1"},
+                            }
+                        ],
+                    }
+                ]
+            },
+            "scoringPlays": [],
+        }
+        rows, details = process_game_stats(sample, expanded=True)
+        by_team = {row["Team"]: row for row in rows}
+        assert by_team["AAA"]["Turnovers"] == 0
+        assert details["1"]["Turnovers"] == []
+
+    def test_onside_kick_recovered_by_kicking_team_charges_receiving_turnover(self):
+        sample = {
+            "boxscore": {
+                "teams": [
+                    {"team": {"id": "1", "abbreviation": "AAA"}},
+                    {"team": {"id": "2", "abbreviation": "BBB"}},
+                ]
+            },
+            "header": {
+                "competitions": [
+                    {"competitors": [{"id": "1", "score": "0"}, {"id": "2", "score": "0"}]}
+                ]
+            },
+            "drives": {
+                "previous": [
+                    {
+                        # On kickoffs, drives are typically attributed to the receiving team.
+                        "team": {"id": "2"},
+                        "plays": [
+                            {
+                                "id": "1",
+                                "text": "Onside kick recovered by AAA at BBB 45.",
+                                "type": {"text": "Kickoff"},
+                                "start": {"team": {"id": "1"}},
+                                "end": {"team": {"id": "1"}},
+                                "team": {"abbreviation": "AAA", "id": "1"},
+                            }
+                        ],
+                    }
+                ]
+            },
+            "scoringPlays": [],
+        }
+        rows, details = process_game_stats(sample, expanded=True)
+        by_team = {row["Team"]: row for row in rows}
+        assert by_team["BBB"]["Turnovers"] == 1
+        assert by_team["AAA"]["Turnovers"] == 0
+        assert len(details["2"]["Turnovers"]) == 1
+        assert details["2"]["Turnovers"][0]["reason"] == "onside_kick_lost"
 
 
 # =============================================================================

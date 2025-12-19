@@ -11,3 +11,7 @@ Follow-ups:
 - Add summary for a team for the season for just their stats, with a time range picker + sparkles
 - Add a card export
 - Add a game summary and halftime report for each game
+- blog post explanations for games
+- edit special teams point logic to account for safeties and 2 point conversions
+- all plays sorted by WP option
+- improve logic for the LLM generation 

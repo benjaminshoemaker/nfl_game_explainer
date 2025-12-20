@@ -2,14 +2,23 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { ScoreboardGame } from '@/types';
+import { ScoreboardGame, WeekSelection } from '@/types';
 import { getTeamColorVars } from '@/lib/teamColors';
 
 interface GameCardProps {
   game: ScoreboardGame;
+  week?: WeekSelection | null;
 }
 
-export function GameCard({ game }: GameCardProps) {
+function buildGameHref(gameId: string, week?: WeekSelection | null): string {
+  if (!week || week.weekNumber <= 0) return `/game/${gameId}`;
+  const params = new URLSearchParams();
+  params.set('week', String(week.weekNumber));
+  params.set('seasontype', String(week.seasonType));
+  return `/game/${gameId}?${params.toString()}`;
+}
+
+export function GameCard({ game, week }: GameCardProps) {
   const { homeTeam, awayTeam, status, statusDetail, gameId, isActive } = game;
 
   const homeColors = getTeamColorVars(homeTeam.abbr);
@@ -21,7 +30,7 @@ export function GameCard({ game }: GameCardProps) {
   const isPregame = status === 'pregame';
 
   return (
-    <Link href={`/game/${gameId}`} className="block group">
+    <Link href={buildGameHref(gameId, week)} className="block group">
       <div
         className={`
           relative bg-bg-card rounded-xl border border-border-subtle overflow-hidden

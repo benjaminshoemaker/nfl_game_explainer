@@ -2,15 +2,24 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ScoreboardGame } from '@/types';
+import { ScoreboardGame, WeekSelection } from '@/types';
 import { getTeamTextColor } from '@/lib/teamColors';
 
 interface GameSidebarProps {
   games: ScoreboardGame[];
   weekLabel: string;
+  week?: WeekSelection | null;
 }
 
-function GameRow({ game, isActive: isCurrent }: { game: ScoreboardGame; isActive: boolean }) {
+function buildGameHref(gameId: string, week?: WeekSelection | null): string {
+  if (!week || week.weekNumber <= 0) return `/game/${gameId}`;
+  const params = new URLSearchParams();
+  params.set('week', String(week.weekNumber));
+  params.set('seasontype', String(week.seasonType));
+  return `/game/${gameId}?${params.toString()}`;
+}
+
+function GameRow({ game, isActive: isCurrent, week }: { game: ScoreboardGame; isActive: boolean; week?: WeekSelection | null }) {
   const { homeTeam, awayTeam, status, statusDetail, gameId, isActive } = game;
 
   const isPregame = status === 'pregame';
@@ -20,7 +29,7 @@ function GameRow({ game, isActive: isCurrent }: { game: ScoreboardGame; isActive
 
   return (
     <Link
-      href={`/game/${gameId}`}
+      href={buildGameHref(gameId, week)}
       className={`
         block px-3 py-2 rounded-lg transition-all duration-200
         ${isCurrent
@@ -98,7 +107,7 @@ function GameRow({ game, isActive: isCurrent }: { game: ScoreboardGame; isActive
   );
 }
 
-export function GameSidebar({ games, weekLabel }: GameSidebarProps) {
+export function GameSidebar({ games, weekLabel, week }: GameSidebarProps) {
   const pathname = usePathname();
   const currentGameId = pathname?.split('/').pop();
 
@@ -132,6 +141,7 @@ export function GameSidebar({ games, weekLabel }: GameSidebarProps) {
             key={game.gameId}
             game={game}
             isActive={game.gameId === currentGameId}
+            week={week}
           />
         ))}
       </div>

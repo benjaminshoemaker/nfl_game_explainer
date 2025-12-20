@@ -1,0 +1,294 @@
+
+===== 401772891 =====
+Fetching ESPN stats for game 401772891...
+Running game_compare.py analysis...
+
+Game: GB 31 @ DET 24 (401772891)
+================================================================================
+Stat                    | Team | ESPN    | game_compare | Delta
+--------------------------------------------------------------------------------
+Score                   | GB   | 31      | 31           | 0 ✓
+Score                   | DET  | 24      | 24           | 0 ✓
+Total Yards             | GB   | 359     | 361          | +2 ⚠️
+Total Yards             | DET  | 352     | 352          | 0 ✓
+Turnovers               | GB   | 0       | 0            | 0 ✓
+Turnovers               | DET  | 0       | 0            | 0 ✓
+Penalty Yards           | GB   | 20      | 20           | 0 ✓
+Penalty Yards           | DET  | 22      | 22           | 0 ✓
+Total Drives            | GB   | 9       | 9            | 0 ✓
+Total Drives            | DET  | 8       | 8            | 0 ✓
+================================================================================
+Summary: 1 mismatch(es) found
+
+===== 401772694 =====
+Fetching ESPN stats for game 401772694...
+Running game_compare.py analysis...
+
+Game: KC 28 @ DAL 31 (401772694)
+================================================================================
+Stat                    | Team | ESPN    | game_compare | Delta
+--------------------------------------------------------------------------------
+Score                   | KC   | 28      | 28           | 0 ✓
+Score                   | DAL  | 31      | 31           | 0 ✓
+Total Yards             | KC   | 362     | 362          | 0 ✓
+Total Yards             | DAL  | 457     | 460          | +3 ⚠️
+Turnovers               | KC   | 0       | 0            | 0 ✓
+Turnovers               | DAL  | 1       | 1            | 0 ✓
+Penalty Yards           | KC   | 119     | 119          | 0 ✓
+Penalty Yards           | DAL  | 50      | 50           | 0 ✓
+Total Drives            | KC   | 9       | 9            | 0 ✓
+Total Drives            | DAL  | 10      | 10           | 0 ✓
+================================================================================
+Summary: 1 mismatch(es) found
+
+===== 401772930 =====
+Fetching ESPN stats for game 401772930...
+Running game_compare.py analysis...
+
+Game: CIN 32 @ BAL 14 (401772930)
+================================================================================
+Stat                    | Team | ESPN    | game_compare | Delta
+--------------------------------------------------------------------------------
+Score                   | CIN  | 32      | 32           | 0 ✓
+Score                   | BAL  | 14      | 14           | 0 ✓
+Total Yards             | CIN  | 382     | 384          | +2 ⚠️
+Total Yards             | BAL  | 346     | 348          | +2 ⚠️
+Turnovers               | CIN  | 1       | 1            | 0 ✓
+Turnovers               | BAL  | 5       | 5            | 0 ✓
+Penalty Yards           | CIN  | 35      | 35           | 0 ✓
+Penalty Yards           | BAL  | 53      | 53           | 0 ✓
+Total Drives            | CIN  | 12      | 12           | 0 ✓
+Total Drives            | BAL  | 13      | 13           | 0 ✓
+================================================================================
+Summary: 2 mismatch(es) found
+
+===== 401772621 =====
+Fetching ESPN stats for game 401772621...
+Running game_compare.py analysis...
+
+Game: CHI 24 @ PHI 15 (401772621)
+================================================================================
+Stat                    | Team | ESPN    | game_compare | Delta
+--------------------------------------------------------------------------------
+Score                   | CHI  | 24      | 24           | 0 ✓
+Score                   | PHI  | 15      | 15           | 0 ✓
+Total Yards             | CHI  | 425     | 426          | +1 ⚠️
+Total Yards             | PHI  | 317     | 318          | +1 ⚠️
+Turnovers               | CHI  | 1       | 1            | 0 ✓
+Turnovers               | PHI  | 2       | 2            | 0 ✓
+Penalty Yards           | CHI  | 35      | 35           | 0 ✓
+Penalty Yards           | PHI  | 44      | 44           | 0 ✓
+Total Drives            | CHI  | 12      | 12           | 0 ✓
+Total Drives            | PHI  | 11      | 11           | 0 ✓
+================================================================================
+Summary: 2 mismatch(es) found
+
+===== 401772785 =====
+Fetching ESPN stats for game 401772785...
+Running game_compare.py analysis...
+
+Game: SF 26 @ CLE 8 (401772785)
+================================================================================
+Stat                    | Team | ESPN    | game_compare | Delta
+--------------------------------------------------------------------------------
+Score                   | SF   | 26      | 26           | 0 ✓
+Score                   | CLE  | 8       | 8            | 0 ✓
+Total Yards             | SF   | 252     | 253          | +1 ⚠️
+Total Yards             | CLE  | 253     | 253          | 0 ✓
+Turnovers               | SF   | 0       | 1            | +1 ⚠️
+Turnovers               | CLE  | 2       | 2            | 0 ✓
+Penalty Yards           | SF   | 11      | 11           | 0 ✓
+Penalty Yards           | CLE  | 25      | 25           | 0 ✓
+Total Drives            | SF   | 11      | 11           | 0 ✓
+Total Drives            | CLE  | 9       | 9            | 0 ✓
+================================================================================
+Summary: 2 mismatch(es) found
+
+===== 401772786 =====
+Fetching ESPN stats for game 401772786...
+Running game_compare.py analysis...
+
+Game: JAX 25 @ TEN 3 (401772786)
+================================================================================
+Stat                    | Team | ESPN    | game_compare | Delta
+--------------------------------------------------------------------------------
+Score                   | JAX  | 25      | 25           | 0 ✓
+Score                   | TEN  | 3       | 3            | 0 ✓
+Total Yards             | JAX  | 272     | 241          | -31 ⚠️
+Total Yards             | TEN  | 188     | 189          | +1 ⚠️
+Turnovers               | JAX  | 0       | 1            | +1 ⚠️
+Turnovers               | TEN  | 2       | 1            | -1 ⚠️
+Penalty Yards           | JAX  | 98      | 98           | 0 ✓
+Penalty Yards           | TEN  | 86      | 86           | 0 ✓
+Total Drives            | JAX  | 12      | 12           | 0 ✓
+Total Drives            | TEN  | 11      | 11           | 0 ✓
+================================================================================
+Summary: 4 mismatch(es) found
+
+===== 401772892 =====
+Fetching ESPN stats for game 401772892...
+Running game_compare.py analysis...
+
+Game: NO 17 @ MIA 21 (401772892)
+================================================================================
+Stat                    | Team | ESPN    | game_compare | Delta
+--------------------------------------------------------------------------------
+Score                   | NO   | 17      | 17           | 0 ✓
+Score                   | MIA  | 21      | 21           | 0 ✓
+Total Yards             | NO   | 294     | 293          | -1 ⚠️
+Total Yards             | MIA  | 298     | 300          | +2 ⚠️
+Turnovers               | NO   | 2       | 2            | 0 ✓
+Turnovers               | MIA  | 1       | 1            | 0 ✓
+Penalty Yards           | NO   | 45      | 45           | 0 ✓
+Penalty Yards           | MIA  | 15      | 15           | 0 ✓
+Total Drives            | NO   | 12      | 12           | 0 ✓
+Total Drives            | MIA  | 12      | 12           | 0 ✓
+================================================================================
+Summary: 2 mismatch(es) found
+
+===== 401772893 =====
+Fetching ESPN stats for game 401772893...
+Running game_compare.py analysis...
+
+Game: ATL 24 @ NYJ 27 (401772893)
+================================================================================
+Stat                    | Team | ESPN    | game_compare | Delta
+--------------------------------------------------------------------------------
+Score                   | ATL  | 24      | 24           | 0 ✓
+Score                   | NYJ  | 27      | 27           | 0 ✓
+Total Yards             | ATL  | 389     | 389          | 0 ✓
+Total Yards             | NYJ  | 269     | 270          | +1 ⚠️
+Turnovers               | ATL  | 1       | 1            | 0 ✓
+Turnovers               | NYJ  | 0       | 0            | 0 ✓
+Penalty Yards           | ATL  | 27      | 27           | 0 ✓
+Penalty Yards           | NYJ  | 59      | 59           | 0 ✓
+Total Drives            | ATL  | 11      | 11           | 0 ✓
+Total Drives            | NYJ  | 13      | 13           | 0 ✓
+================================================================================
+Summary: 1 mismatch(es) found
+
+===== 401772895 =====
+Fetching ESPN stats for game 401772895...
+Running game_compare.py analysis...
+
+Game: ARI 17 @ TB 20 (401772895)
+================================================================================
+Stat                    | Team | ESPN    | game_compare | Delta
+--------------------------------------------------------------------------------
+Score                   | ARI  | 17      | 17           | 0 ✓
+Score                   | TB   | 20      | 20           | 0 ✓
+Total Yards             | ARI  | 386     | 360          | -26 ⚠️
+Total Yards             | TB   | 279     | 283          | +4 ⚠️
+Turnovers               | ARI  | 2       | 2            | 0 ✓
+Turnovers               | TB   | 0       | 0            | 0 ✓
+Penalty Yards           | ARI  | 33      | 33           | 0 ✓
+Penalty Yards           | TB   | 40      | 40           | 0 ✓
+Total Drives            | ARI  | 10      | 10           | 0 ✓
+Total Drives            | TB   | 10      | 10           | 0 ✓
+================================================================================
+Summary: 2 mismatch(es) found
+
+===== 401772894 =====
+Fetching ESPN stats for game 401772894...
+Running game_compare.py analysis...
+
+Game: LAR 28 @ CAR 31 (401772894)
+================================================================================
+Stat                    | Team | ESPN    | game_compare | Delta
+--------------------------------------------------------------------------------
+Score                   | LAR  | 28      | 28           | 0 ✓
+Score                   | CAR  | 31      | 31           | 0 ✓
+Total Yards             | LAR  | 379     | 379          | 0 ✓
+Total Yards             | CAR  | 358     | 362          | +4 ⚠️
+Turnovers               | LAR  | 3       | 3            | 0 ✓
+Turnovers               | CAR  | 0       | 0            | 0 ✓
+Penalty Yards           | LAR  | 5       | 5            | 0 ✓
+Penalty Yards           | CAR  | 70      | 70           | 0 ✓
+Total Drives            | LAR  | 9       | 9            | 0 ✓
+Total Drives            | CAR  | 8       | 8            | 0 ✓
+================================================================================
+Summary: 1 mismatch(es) found
+
+===== 401772896 =====
+Fetching ESPN stats for game 401772896...
+Running game_compare.py analysis...
+
+Game: MIN 0 @ SEA 26 (401772896)
+================================================================================
+Stat                    | Team | ESPN    | game_compare | Delta
+--------------------------------------------------------------------------------
+Score                   | MIN  | 0       | 0            | 0 ✓
+Score                   | SEA  | 26      | 26           | 0 ✓
+Total Yards             | MIN  | 162     | 163          | +1 ⚠️
+Total Yards             | SEA  | 219     | 221          | +2 ⚠️
+Turnovers               | MIN  | 5       | 5            | 0 ✓
+Turnovers               | SEA  | 2       | 1            | -1 ⚠️
+Penalty Yards           | MIN  | 80      | 80           | 0 ✓
+Penalty Yards           | SEA  | 25      | 25           | 0 ✓
+Total Drives            | MIN  | 13      | 13           | 0 ✓
+Total Drives            | SEA  | 10      | 10           | 0 ✓
+================================================================================
+Summary: 3 mismatch(es) found
+
+===== 401772789 =====
+Fetching ESPN stats for game 401772789...
+Running game_compare.py analysis...
+
+Game: BUF 26 @ PIT 7 (401772789)
+================================================================================
+Stat                    | Team | ESPN    | game_compare | Delta
+--------------------------------------------------------------------------------
+Score                   | BUF  | 26      | 26           | 0 ✓
+Score                   | PIT  | 7       | 7            | 0 ✓
+Total Yards             | BUF  | 372     | 374          | +2 ⚠️
+Total Yards             | PIT  | 166     | 166          | 0 ✓
+Turnovers               | BUF  | 2       | 2            | 0 ✓
+Turnovers               | PIT  | 2       | 2            | 0 ✓
+Penalty Yards           | BUF  | 45      | 45           | 0 ✓
+Penalty Yards           | PIT  | 67      | 67           | 0 ✓
+Total Drives            | BUF  | 8       | 8            | 0 ✓
+Total Drives            | PIT  | 10      | 10           | 0 ✓
+================================================================================
+Summary: 1 mismatch(es) found
+
+===== 401772788 =====
+Fetching ESPN stats for game 401772788...
+Running game_compare.py analysis...
+
+Game: LV 14 @ LAC 31 (401772788)
+================================================================================
+Stat                    | Team | ESPN    | game_compare | Delta
+--------------------------------------------------------------------------------
+Score                   | LV   | 14      | 14           | 0 ✓
+Score                   | LAC  | 31      | 31           | 0 ✓
+Total Yards             | LV   | 156     | 157          | +1 ⚠️
+Total Yards             | LAC  | 341     | 343          | +2 ⚠️
+Turnovers               | LV   | 1       | 1            | 0 ✓
+Turnovers               | LAC  | 1       | 1            | 0 ✓
+Penalty Yards           | LV   | 50      | 50           | 0 ✓
+Penalty Yards           | LAC  | 27      | 27           | 0 ✓
+Total Drives            | LV   | 10      | 10           | 0 ✓
+Total Drives            | LAC  | 10      | 10           | 0 ✓
+================================================================================
+Summary: 2 mismatch(es) found
+
+===== 401772931 =====
+Fetching ESPN stats for game 401772931...
+Running game_compare.py analysis...
+
+Game: DEN 27 @ WSH 26 (401772931)
+================================================================================
+Stat                    | Team | ESPN    | game_compare | Delta
+--------------------------------------------------------------------------------
+Score                   | DEN  | 27      | 27           | 0 ✓
+Score                   | WSH  | 26      | 26           | 0 ✓
+Total Yards             | DEN  | 402     | 402          | 0 ✓
+Total Yards             | WSH  | 419     | 400          | -19 ⚠️
+Turnovers               | DEN  | 1       | 2            | +1 ⚠️
+Turnovers               | WSH  | 1       | 2            | +1 ⚠️
+Penalty Yards           | DEN  | 33      | 33           | 0 ✓
+Penalty Yards           | WSH  | 35      | 35           | 0 ✓
+Total Drives            | DEN  | 10      | 10           | 0 ✓
+Total Drives            | WSH  | 11      | 11           | 0 ✓
+================================================================================
+Summary: 3 mismatch(es) found

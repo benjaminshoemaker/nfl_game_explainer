@@ -8,7 +8,16 @@ No I/O or HTTP dependencies - just data transformation logic.
 import re
 
 
-_REPLAY_DECISION_RE = re.compile(r"\b(?:reversed|overturned)\.\s*", re.IGNORECASE)
+# ESPN replay notes are inconsistent about punctuation/spacing:
+# e.g. "play was REVERSED.(Shotgun) ..." or "play was REVERSED (Shotgun) ..."
+_REPLAY_DECISION_RE = re.compile(r"\b(?:reversed|overturned)\b[.:]?\s*", re.IGNORECASE)
+_YARDS_FOR_RE = re.compile(r"\bfor (-?\d+) yards\b", re.IGNORECASE)
+_YARDS_LOSS_RE = re.compile(r"\bfor loss of (\d+) yards\b", re.IGNORECASE)
+_RECOVERED_BY_ABBR_RE = re.compile(r"\brecovered by\s+([a-z]{2,4})\b", re.IGNORECASE)
+_TEAM_ABBR_ALIASES = {
+    # ESPN play text can use older abbreviations than the boxscore/team metadata.
+    "was": "wsh",
+}
 
 
 def final_play_text(text):
@@ -31,6 +40,89 @@ def final_play_text(text):
 
     candidate = text[last_match.end():].lstrip()
     return candidate if candidate else text
+
+
+def _credited_yards_before_fumble(event_text):
+    """
+    For fumble plays, ESPN's `statYardage` can reflect net outcome (including recovery),
+    while official offense yards are credited to the gain/loss before the fumble.
+
+    Use the last "for X yards" mention BEFORE the first "fumble" in the (final) play text
+    when available; otherwise return None and fall back to `statYardage`.
+    """
+    if not event_text:
+        return None
+    lower = event_text.lower()
+    if 'fumble' not in lower:
+        return None
+
+    prefix = lower.split('fumble', 1)[0]
+
+    matches = list(_YARDS_FOR_RE.finditer(prefix))
+    if matches:
+        try:
+            return int(matches[-1].group(1))
+        except ValueError:
+            return None
+
+    if 'for no gain' in prefix or 'for no loss' in prefix:
+        return 0
+
+    m = _YARDS_LOSS_RE.search(prefix)
+    if m:
+        try:
+            return -int(m.group(1))
+        except ValueError:
+            return None
+
+    return None
+
+
+def classify_total_offense_play(play):
+    """
+    Classify plays for ESPN-style total offense (Total Yards) reconciliation.
+
+    Compared to `classify_offense_play`, this includes kneels/spikes as offense plays.
+    """
+    text_lower = play.get('text', '').lower()
+    type_lower = play.get('type', {}).get('text', 'unknown').lower()
+
+    if is_nullified_play(text_lower):
+        return False, False, False
+    if is_penalty_play(play, text_lower, type_lower):
+        return False, False, False
+    if is_special_teams_play(text_lower, type_lower):
+        return False, False, False
+
+    # Kickoff/punt returns are special teams plays, not offensive plays.
+    if ('kickoff' in text_lower or 'kickoff' in type_lower) and 'return' in type_lower:
+        return False, False, False
+    if ('punt' in text_lower or 'punt' in type_lower) and 'return' in type_lower:
+        return False, False, False
+
+    # Spikes/kneels should count toward total offense.
+    if is_spike_or_kneel(text_lower, type_lower):
+        return True, 'kneel' in text_lower or 'kneel' in type_lower, 'spike' in text_lower or 'spike' in type_lower
+
+    pass_hint = (any_stat_contains(play, ['pass', 'sack']) or
+                 'pass' in type_lower or 'sack' in type_lower or
+                 'scramble' in type_lower or 'pass' in text_lower or
+                 'sack' in text_lower or 'scramble' in text_lower)
+
+    rush_patterns = ['up the middle', 'left end', 'right end', 'left tackle',
+                     'right tackle', 'left guard', 'right guard', 'middle for',
+                     'around left', 'around right']
+    rush_hint = (any_stat_contains(play, ['rush']) or 'rush' in type_lower or
+                 'run' in text_lower or any(p in text_lower for p in rush_patterns))
+
+    # Aborted snaps are counted as rush attempts in official stats.
+    if 'aborted' in text_lower and 'fumble' in text_lower:
+        rush_hint = True
+
+    if pass_hint and rush_hint and ('scramble' in text_lower or 'scramble' in type_lower):
+        rush_hint = False
+
+    return True, rush_hint, pass_hint
 
 
 def yardline_to_coord(pos_text, team_abbr):
@@ -121,6 +213,31 @@ def is_special_teams_play(text_lower, type_lower):
 def is_nullified_play(text_lower):
     """Detect plays that didn't happen (nullified, no play)."""
     return 'nullified' in text_lower or 'no play' in text_lower
+
+
+def is_declined_only_penalty(text_lower, penalty_info):
+    """
+    Return True when a play contains a declined penalty that should not be shown
+    in penalty play lists.
+
+    ESPN often embeds "declined" in play text even when an accepted penalty is
+    also present (e.g. one enforced + a second declined). When structured
+    penalty info exists and is not declined, treat the play as an enforced
+    penalty.
+    """
+    if not text_lower or 'declined' not in text_lower:
+        status_slug = ((penalty_info or {}).get('status') or {}).get('slug')
+        return status_slug == 'declined'
+
+    status_slug = ((penalty_info or {}).get('status') or {}).get('slug')
+    if status_slug and status_slug != 'declined':
+        return False
+
+    # Keep plays that clearly indicate an enforced/accepted penalty.
+    if 'enforced' in text_lower or 'accepted' in text_lower or 'no play' in text_lower:
+        return False
+
+    return True
 
 
 def classify_offense_play(play):
@@ -231,6 +348,30 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
     prev_home_wp = sanitize_prob(preg_home)
     prev_away_wp = sanitize_prob(preg_away, fallback=1 - prev_home_wp)
 
+    # Build a start-of-play WP lookup keyed by play id so every WP threshold check
+    # can consistently use start-of-play probabilities (not end-of-play).
+    #
+    # ESPN probability_map entries are end-of-play; start-of-play is the previous
+    # play's end-of-play (or pregame for the first play).
+    start_wp_by_play_id = {}
+    walk_home_wp = prev_home_wp
+    walk_away_wp = prev_away_wp
+    for drive in drives:
+        for play in drive.get('plays', []):
+            pid = play.get('id')
+            if pid is None:
+                continue
+            pid_str = str(pid)
+            start_wp_by_play_id[pid_str] = (walk_home_wp, walk_away_wp)
+            prob = probability_map.get(pid_str)
+            if prob:
+                home_end = prob.get('homeWinPercentage')
+                away_end = prob.get('awayWinPercentage')
+                if isinstance(home_end, (int, float)):
+                    walk_home_wp = sanitize_prob(home_end, fallback=walk_home_wp)
+                if isinstance(away_end, (int, float)):
+                    walk_away_wp = sanitize_prob(away_end, fallback=walk_away_wp)
+
     def lookup_probability_with_delta(play):
         pid = play.get('id')
         if pid is None:
@@ -309,6 +450,7 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
             'Team': t_name,
             'Score': 0,
             'Plays': 0,
+            'Offensive Yards': 0,
             'Total Yards': 0,
             'Successful Plays': 0,
             'Explosive Plays': 0,
@@ -329,10 +471,12 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
         }
         if expanded:
             details[t_id] = {
+                'All Plays': [],
                 'Turnovers': [],
                 'Explosive Plays': [],
                 'Non-Offensive Scores': [],
                 'Points Per Trip (Inside 40)': [],
+                'Drive Starts': [],
                 'Penalty Yards': [],
                 'Non-Offensive Points': []
             }
@@ -368,9 +512,20 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
 
     # Non-Offensive Points
     for sp in scoring_plays:
-        if not is_competitive_play(sp, probability_map, wp_threshold):
-            continue
         play_id = sp.get('id')
+        start_wps = start_wp_by_play_id.get(str(play_id)) if play_id is not None else None
+        if start_wps is not None:
+            competitive_scoring = is_competitive_play(
+                sp,
+                probability_map,
+                wp_threshold,
+                start_home_wp=start_wps[0],
+                start_away_wp=start_wps[1],
+            )
+        else:
+            competitive_scoring = is_competitive_play(sp, probability_map, wp_threshold)
+        if not competitive_scoring:
+            continue
         scoring_team_id = sp.get('team', {}).get('id')
         drive_offense_id = play_to_drive_team.get(str(play_id))
         play_text = str(sp.get('text', '')).lower()
@@ -415,13 +570,45 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
                 })
 
     # Process drives and plays
-    for drive in drives:
+    def _end_pos_text(play_obj):
+        end = (play_obj.get('end') or {}) if isinstance(play_obj, dict) else {}
+        if not isinstance(end, dict):
+            return None
+        pos_text = end.get('possessionText')
+        if isinstance(pos_text, str) and pos_text.strip():
+            return pos_text.strip()
+        down_dist = end.get('downDistanceText')
+        if isinstance(down_dist, str):
+            m = re.search(r"\bat\s+([A-Z]{2,3}\s+\d+)\b", down_dist)
+            if m:
+                return m.group(1)
+        return None
+
+    def _is_drive_boundary_noise(play_obj):
+        ptype = (play_obj.get('type', {}) or {}).get('text', '') or ''
+        ptype_lower = ptype.lower()
+        txt = (play_obj.get('text', '') or '').lower()
+        return ('timeout' in ptype_lower) or ('end of' in ptype_lower) or ('end of' in txt)
+
+    def _is_kick_or_punt_start(play_obj):
+        ptype = (play_obj.get('type', {}) or {}).get('text', '') or ''
+        ptype_lower = ptype.lower()
+        txt = (play_obj.get('text', '') or '').lower()
+        return ('kickoff' in ptype_lower) or ('kickoff' in txt) or ('punt' in ptype_lower) or ('onside' in txt)
+
+    for drive_index, drive in enumerate(drives):
         team_id = drive.get('team', {}).get('id')
         if team_id not in stats:
             continue
 
         drive_plays = drive.get('plays', [])
+        drive_first_play = drive_plays[0] if drive_plays else None
         drive_start_yte = drive.get('start', {}).get('yardsToEndzone', -1)
+        drive_start_pos_text = (drive.get('start', {}) or {}).get('text')
+        if not isinstance(drive_start_pos_text, str) or not drive_start_pos_text.strip():
+            drive_start_pos_text = (drive.get('start', {}) or {}).get('yardLine')
+        if not isinstance(drive_start_pos_text, str) or not drive_start_pos_text.strip():
+            drive_start_pos_text = None
         drive_points_competitive = 0
         drive_crossed_40_competitive = False
         drive_started_competitive = False
@@ -430,6 +617,8 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
         last_competitive_play = None
         last_competitive_prob = None
         current_yte_est = drive_start_yte if isinstance(drive_start_yte, (int, float)) else None
+        drive_start_quarter = drive_first_play.get('period', {}).get('number') if drive_first_play else None
+        drive_start_clock = drive_first_play.get('clock', {}).get('displayValue') if drive_first_play else None
 
         for play in drive_plays:
             text = play.get('text', '')
@@ -466,7 +655,7 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
             # Handle penalty plays for expanded details
             penalty_info = play.get('penalty') or {}
             has_penalty_flag = bool(penalty_info) or play.get('hasPenalty') or 'penalty' in text_lower
-            if expanded and has_penalty_flag:
+            if expanded and has_penalty_flag and not is_declined_only_penalty(text_lower, penalty_info):
                 commit_team_id = penalty_info.get('team', {}).get('id')
                 if not commit_team_id:
                     for abbr_lower, tid in abbr_to_id.items():
@@ -489,6 +678,7 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
                     'type': play_type,
                     'quarter': play.get('period', {}).get('number'),
                     'clock': play.get('clock', {}).get('displayValue'),
+                    'end_pos': _end_pos_text(play),
                     'probability': probability_snapshot
                 })
 
@@ -536,6 +726,10 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
                 or '2-point' in event_text_lower
                 or 'conversion attempt' in event_text_lower
             )
+            # Defaults used by offensive/totals yard accounting below.
+            interception = False
+            fumble_phrase = False
+            fumble_turnover = False
             if is_two_point_conversion_attempt:
                 turnover_on_play = False
             else:
@@ -545,10 +739,20 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
                 if has_replay_reversal and ('intercept' not in event_text_lower and 'interception' not in event_text_lower):
                     interception = False
                 fumble_phrase = 'fumble' in event_text_lower
+                is_fumble_recovery_own = 'fumble recovery (own)' in play_type_lower
+                is_fumble_recovery_opp = 'fumble recovery (opponent)' in play_type_lower or 'sack opp fumble recovery' in play_type_lower
+                is_touchback = 'touchback' in event_text_lower
 
                 turnover_events = []
                 current_possessor = start_team_id
                 current_off_abbr = offense_abbrev
+
+                # Punt plays: once the punt is kicked ("punts ..."), the receiving team has the
+                # possession context for any subsequent fumble/recovery in the same play text.
+                punt_in_air = 'punts' in event_text_lower
+                if punt_in_air and opponent_id and (fumble_phrase or muffed_kick):
+                    current_possessor = opponent_id
+                    current_off_abbr = id_to_abbr.get(opponent_id, '').lower()
 
                 # Onside kick - if the kicking team recovers, charge the receiving team (drive team)
                 # with a turnover. On kickoffs, ESPN drives typically attribute the drive to the
@@ -570,24 +774,51 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
                     current_possessor = opponent_id
                     current_off_abbr = id_to_abbr.get(opponent_id, '').lower()
 
+                # Kickoff return fumbles are charged to the receiving team (opponent), even though
+                # `start_team_id` is the kicking team. Without this adjustment, a successful
+                # kick-coverage recovery can be misattributed as a turnover by the kicking team.
+                kickoff_play = 'kickoff' in play_type_lower or 'kickoff' in event_text_lower
+                if kickoff_play and fumble_phrase and opponent_id and not onside_kick and not muffed_kick:
+                    current_possessor = opponent_id
+                    current_off_abbr = id_to_abbr.get(opponent_id, '').lower()
+
                 if interception:
                     turnover_events.append((current_possessor, 'interception'))
                     if opponent_id:
                         current_possessor = opponent_id
+                        current_off_abbr = id_to_abbr.get(opponent_id, '').lower()
 
-                recovered_by_def = False
-                recovered_team_id = None
                 if fumble_phrase:
-                    if 'recovered by' in event_text_lower:
-                        if current_off_abbr:
-                            recovered_by_def = f"recovered by {current_off_abbr}" not in event_text_lower
-                        else:
-                            recovered_by_def = True
-                    if start_team_id and end_team_id and start_team_id != end_team_id:
-                        recovered_by_def = current_possessor != end_team_id
-                        recovered_team_id = end_team_id
+                    recovered_team_id = None
 
-                fumble_turnover = fumble_phrase and recovered_by_def
+                    if is_fumble_recovery_own:
+                        recovered_team_id = current_possessor
+                    elif is_fumble_recovery_opp and opponent_id:
+                        recovered_team_id = opponent_id
+                    else:
+                        m = _RECOVERED_BY_ABBR_RE.search(event_text_lower)
+                        if m:
+                            recovered_abbr = m.group(1).lower()
+                            recovered_abbr = _TEAM_ABBR_ALIASES.get(recovered_abbr, recovered_abbr)
+                            recovered_team_id = abbr_to_id.get(recovered_abbr)
+                            if recovered_team_id is None:
+                                recovered_team_id = end_team_id
+                        elif 'and recovers' in event_text_lower or 'recovers at' in event_text_lower:
+                            recovered_team_id = current_possessor
+                        else:
+                            recovered_team_id = end_team_id
+
+                    if recovered_team_id is not None and current_possessor is not None:
+                        fumble_turnover = recovered_team_id != current_possessor
+                    elif 'recovered by' in event_text_lower:
+                        # Fallback when end team is missing: treat as a turnover unless it
+                        # explicitly looks like an own-team recovery.
+                        fumble_turnover = not (current_off_abbr and f"recovered by {current_off_abbr}" in event_text_lower)
+                    elif 'and recovers' in event_text_lower or 'recovers at' in event_text_lower:
+                        fumble_turnover = False
+
+                    if is_touchback:
+                        fumble_turnover = True
                 if fumble_turnover and not muffed_kick:
                     turnover_events.append((current_possessor, 'fumble'))
 
@@ -607,6 +838,7 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
                                 'yards': play.get('statYardage', 0),
                                 'quarter': play.get('period', {}).get('number'),
                                 'clock': play.get('clock', {}).get('displayValue'),
+                                'end_pos': _end_pos_text(play),
                                 'probability': lookup_probability_with_delta(play),
                                 'reason': reason
                             })
@@ -632,6 +864,7 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
                         'points': non_off_entry.get('points'),
                         'quarter': play.get('period', {}).get('number'),
                         'clock': play.get('clock', {}).get('displayValue'),
+                        'end_pos': _end_pos_text(play),
                         'probability': probability_snapshot
                     })
 
@@ -641,20 +874,30 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
                 stats[team_id]['Plays'] += 1
                 yards = play.get('statYardage', 0)
 
+                penalty_type_slug = (penalty_info.get('type') or {}).get('slug')
+                penalty_status_slug = (penalty_info.get('status') or {}).get('slug')
+                is_intentional_grounding = (
+                    penalty_status_slug == 'accepted'
+                    and penalty_type_slug == 'intentional-grounding'
+                ) or ('intentional grounding' in text_lower)
+                if is_intentional_grounding:
+                    yards = 0
+
                 if turnover_on_play:
                     yards = 0
-                    if fumble_turnover and not interception:
-                        m = re.search(r"for (-?\d+) yards", event_text_lower)
-                        if m:
-                            try:
-                                yards = int(m.group(1))
-                            except ValueError:
-                                yards = 0
+                    if fumble_phrase and not interception:
+                        credited = _credited_yards_before_fumble(event_text)
+                        if credited is not None:
+                            yards = credited
+                elif fumble_phrase:
+                    credited = _credited_yards_before_fumble(event_text)
+                    if credited is not None:
+                        yards = credited
 
                 down = play.get('start', {}).get('down', 1)
                 dist = play.get('start', {}).get('distance', 10)
 
-                stats[team_id]['Total Yards'] += yards
+                stats[team_id]['Offensive Yards'] += yards
 
                 if calculate_success(down, dist, yards):
                     stats[team_id]['Successful Plays'] += 1
@@ -668,8 +911,34 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
                             'type': 'Run' if is_run else 'Pass',
                             'quarter': play.get('period', {}).get('number'),
                             'clock': play.get('clock', {}).get('displayValue'),
+                            'end_pos': _end_pos_text(play),
                             'probability': lookup_probability_with_delta(play)
                         })
+
+            # Total offense (ESPN-style): include kneels/spikes, and use credited yards for fumbles.
+            is_total_offense, _, _ = classify_total_offense_play(play)
+            if is_total_offense:
+                total_yards = play.get('statYardage', 0)
+
+                penalty_type_slug = (penalty_info.get('type') or {}).get('slug')
+                penalty_status_slug = (penalty_info.get('status') or {}).get('slug')
+                is_intentional_grounding = (
+                    penalty_status_slug == 'accepted'
+                    and penalty_type_slug == 'intentional-grounding'
+                ) or ('intentional grounding' in text_lower)
+                if is_intentional_grounding:
+                    total_yards = 0
+
+                # Interceptions are 0 offensive yards by definition; fumble plays use credited gain/loss.
+                if not is_two_point_conversion_attempt:
+                    if interception:
+                        total_yards = 0
+                    elif fumble_phrase:
+                        credited = _credited_yards_before_fumble(event_text)
+                        if credited is not None:
+                            total_yards = credited
+
+                stats[team_id]['Total Yards'] += total_yards
 
             # Special teams tracking (punts, kickoffs)
             if 'punt' in play_type_lower and 'return' not in play_type_lower:
@@ -682,6 +951,29 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
                 if isinstance(yards, (int, float)):
                     stats[team_id]['Kick Net Sum'] += yards
                     stats[team_id]['Kick Plays'] += 1
+
+            # Collect all meaningful plays for "All Plays" category
+            if expanded:
+                is_meaningful = (
+                    (is_offense and (is_run or is_pass)) or  # Offensive play
+                    play.get('scoringPlay') or               # Scoring play
+                    turnover_on_play or                      # Turnover
+                    has_penalty_flag                         # Penalty
+                )
+                if is_meaningful:
+                    play_entry = {
+                        'type': play_type,
+                        'text': text,
+                        'yards': play.get('statYardage', 0),
+                        'quarter': play.get('period', {}).get('number'),
+                        'clock': play.get('clock', {}).get('displayValue'),
+                        'end_pos': _end_pos_text(play),
+                        'probability': probability_snapshot,
+                    }
+                    # Add points if scoring play
+                    if play.get('scoringPlay') and play_id in scoring_map:
+                        play_entry['points'] = scoring_map[play_id].get('points', 0)
+                    details[team_id]['All Plays'].append(play_entry)
 
             update_prev_wp(play)
 
@@ -701,6 +993,31 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
                     'clock': last_competitive_play.get('clock', {}).get('displayValue'),
                     'points': drive_points_competitive,
                     'probability': last_competitive_prob
+                })
+            if expanded and drive_start_yte != -1:
+                start_pos = drive_start_pos_text
+                if not start_pos and isinstance(drive_start_yte, (int, float)):
+                    start_pos = f"Own {int(100 - drive_start_yte)}"
+
+                cause_play = None
+                if drive_first_play and _is_kick_or_punt_start(drive_first_play):
+                    cause_play = drive_first_play
+                elif drive_index > 0:
+                    prev_drive = drives[drive_index - 1] or {}
+                    prev_plays = prev_drive.get('plays', []) or []
+                    for cand in reversed(prev_plays):
+                        if not _is_drive_boundary_noise(cand):
+                            cause_play = cand
+                            break
+
+                details[team_id]['Drive Starts'].append({
+                    'text': (cause_play.get('text', '') if cause_play else 'Start of game'),
+                    'type': (cause_play.get('type', {}) or {}).get('text', 'Drive Start') if cause_play else 'Drive Start',
+                    'yards': (cause_play.get('statYardage') if cause_play else None),
+                    'quarter': drive_start_quarter,
+                    'clock': drive_start_clock,
+                    'start_pos': start_pos,
+                    'end_pos': start_pos,
                 })
 
     # Calculate turnover margins
@@ -728,7 +1045,7 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
             'Score': d['Score'],
             'Turnovers': d['Turnovers'],
             'Total Yards': d['Total Yards'],
-            'Yards Per Play': round(d['Total Yards'] / plays, 2),
+            'Yards Per Play': round(d['Offensive Yards'] / plays, 2),
             'Success Rate': round((d['Successful Plays'] / plays), 3),
             'Explosive Plays': d['Explosive Plays'],
             'Explosive Play Rate': round(d['Explosive Plays'] / plays, 3),

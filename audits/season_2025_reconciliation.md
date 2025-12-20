@@ -1,0 +1,8861 @@
+# Season 2025 Reconciliation Report
+
+## Summary
+- Games analyzed: 238
+- Mismatch games: 173
+- Games with turnover mismatches: 9
+- Games with yards mismatches: 171
+- Games with penalty-yards mismatches: 0
+
+## Priority Sort
+Sorted by `max(|turnovers_delta|) desc`, then `max(|yards_delta|) desc` per game.
+
+## Suggested Reconciliation Work Items (Heuristic)
+- Turnover deltas: review turnover classification (muffed kicks, onside recoveries, replay reversals).
+- Yards deltas: review how yards are attributed on turnover plays (interceptions/fumbles with returns) vs offensive yards.
+- Penalty deltas: review how penalties are attributed (defensive/offensive, accepted vs no-play).
+- Excluded plays with non-zero yards can indicate classification mismatches (penalty/no-play, special teams returns).
+
+Heuristic counts across mismatch games:
+- Potential missed turnover-keyword plays (not counted by windelta): 303
+- Excluded non-zero-yard plays (not counted as offense by windelta): 4576
+
+## Games (Prioritized)
+
+### 401772877 NO @ CAR (TOΔ max 1, YdsΔ max 43, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| NO | 388 | 345 | -43 | 1 | 0 | -1 | 60 | 60 | +0 |
+| CAR | 175 | 218 | +43 | 2 | 2 | +0 | 5 | 5 | +0 |
+
+**NO Reconciliation Clues**
+
+- Excluded non-zero-yard plays (up to 9 shown):
+- Q1 2:52 (20 yds) Field Goal Good: Blake Grupe 20 Yd Field Goal  [special_teams]
+- Q2 0:27 (-5 yds) Penalty: (Shotgun) PENALTY on NO-L.Fortner, False Start, 5 yards, enforced at CAR 40 - No Play. [nullified]
+- Q2 15:00 (10 yds) Punt: K.Kroeger punts 54 yards to CAR 37, Center-Z.Wood. T.Etienne to CAR 47 for 10 yards (C.Rumph; M.Davis). [special_teams]
+- Q2 6:21 (5 yds) Punt: K.Kroeger punts 52 yards to CAR 8, Center-Z.Wood. T.Etienne to CAR 13 for 5 yards (I.Stalbird). [special_teams]
+- Q3 14:16 (-10 yds) Penalty: (Shotgun) T.Shough scrambles left end pushed ob at NO 47 for 7 yards (T.Incoom).PENALTY on NO-D.Radunz, Offensive Holding, 10 yards, enforced at NO 40 - No Play. [nullified]
+- Q3 15:00 (31 yds) Kickoff: R.Fitzgerald kicks 59 yards from CAR 35 to NO 6. D.Pettis ran ob at NO 37 for 31 yards (C.Thornton). ** Injury Update: CAR-P.Umanmielen has returned to the game. [special_teams]
+- Q4 0:38 (-2 yds) Rush: T.Shough kneels to CAR 11 for -2 yards. [spike_kneel]
+- Q4 1:19 (-2 yds) Rush: T.Shough kneels to CAR 9 for -2 yards. [spike_kneel]
+- Q4 2:00 (-2 yds) Rush: T.Shough kneels to CAR 7 for -2 yards. [spike_kneel]
+
+**CAR Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q3 4:34 (0 yds) Fumble Recovery (Opponent): B.Young FUMBLES (Aborted) at NO 19, touched at NO 19, RECOVERED by NO-P.Werner at NO 17. [fumble]
+- Q4 13:00 (11 yds) Pass Interception Return: (Shotgun) B.Young pass short right intended for T.McMillan INTERCEPTED by A.Taylor at NO 46. A.Taylor pushed ob at CAR 43 for 11 yards (T.McMillan). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q1 9:31 (8 yds) Penalty: (Shotgun) B.Young pass deep middle intended for J.Sanders INTERCEPTED by D.Davis at NO 15. D.Davis pushed ob at NO 23 for 8 yards (J.Coker).PENALTY on NO-J.Reid, Roughing the Passer, 15 yards, enforced at NO 31 - No Play.
+- Q3 6:36 (0 yds) Blocked Field Goal: R.Fitzgerald 48 yard field goal is BLOCKED (N.Shepherd), Center-J.Jansen, Holder-S.Martin, recovered by CAR-D.Lewis at NO 30.The Replay Official reviewed the kick touched ruling, and the play was REVERSED.R.Fitzgerald 48 yard field goal is BLOCKED (N.Shepherd), Center-J.Jansen, Holder-S.Martin. C.Jordan MUFFS catch at NO 29, RECOVERED by CAR-D.Lewis at NO 30.
+
+- Excluded non-zero-yard plays (up to 10 shown):
+- Q1 12:18 (5 yds) Penalty: (Shotgun) B.Young pass incomplete short right to J.Sanders.PENALTY on NO-B.Bresee, Defensive Offside, 5 yards, enforced at CAR 46 - No Play. [nullified]
+- Q1 15:00 (25 yds) Kickoff: B.Grupe kicks 57 yards from NO 35 to CAR 8. C.Hubbard to CAR 33 for 25 yards (T.Burgess; D.Stutsman). [special_teams]
+- Q1 2:52 (27 yds) Kickoff: B.Grupe kicks 64 yards from NO 35 to CAR 1. C.Hubbard to CAR 28 for 27 yards (C.Rumph; D.Stutsman). [special_teams]
+- Q1 9:31 (8 yds) Penalty: (Shotgun) B.Young pass deep middle intended for J.Sanders INTERCEPTED by D.Davis at NO 15. D.Davis pushed ob at NO 23 for 8 yards (J.Coker).PENALTY on NO-J.Reid, Roughing the Passer, 15 yards, enforced at NO 31 - No Play. [nullified]
+- Q2 0:07 (-5 yds) Penalty: (Shotgun) PENALTY on CAR-X.Legette, False Start, 5 yards, enforced at CAR 32 - No Play. [nullified]
+- Q2 13:27 (7 yds) Punt: S.Martin punts 47 yards to NO 18, Center-J.Jansen. D.Pettis to NO 25 for 7 yards (M.Njongmeta; T.Incoom). [special_teams]
+- Q2 4:09 (-9 yds) Punt: S.Martin punts 59 yards to NO 25, Center-J.Jansen. D.Pettis pushed ob at NO 26 for 1 yard (B.Martin-Scott; J.Sanders).PENALTY on NO-J.Ford, Offensive Holding, 10 yards, enforced at NO 26.Penalty on NO-I.Yiadom, Offensive Holding, declined. [special_teams]
+- Q2 9:21 (30 yds) Kickoff: B.Grupe kicks 57 yards from NO 35 to CAR 8. T.Etienne to CAR 38 for 30 yards (I.Yiadom). ** Injury Update: CAR-M.Evans has returned to the game. [special_teams]
+- Q4 10:20 (26 yds) Kickoff: B.Grupe kicks 59 yards from NO 35 to CAR 6. C.Hubbard to CAR 32 for 26 yards (I.Stalbird). [special_teams]
+- Q4 9:32 (15 yds) Penalty: (Shotgun) B.Young pass incomplete short middle to T.McMillan.PENALTY on NO-D.Davis, Roughing the Passer, 15 yards, enforced at CAR 35 - No Play. [nullified]
+
+### 401772938 SEA @ ARI (TOΔ max 1, YdsΔ max 39, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| SEA | 384 | 345 | -39 | 1 | 0 | -1 | 74 | 74 | +0 |
+| ARI | 253 | 260 | +7 | 2 | 2 | +0 | 46 | 46 | +0 |
+
+**SEA Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q3 14:54 (-1 yds) Fumble Recovery (Own): S.Darnold sacked at SEA 28 for -6 yards (J.Sweat). FUMBLES (J.Sweat) [J.Sweat], recovered by SEA-E.Saubert at SEA 33.
+
+- Excluded non-zero-yard plays (up to 13 shown):
+- Q1 4:37 (19 yds) Kickoff: C.Ryland kicks 61 yards from ARZ 35 to SEA 4. G.Holani to SEA 23 for 19 yards (J.Burch; S.Fehoko). [special_teams]
+- Q2 12:09 (15 yds) Punt: M.Dickson punts 54 yards to ARZ 12, Center-C.Stoll. G.Dortch to ARZ 27 for 15 yards (N.Pritchett). [special_teams]
+- Q3 15:00 (29 yds) Kickoff: C.Ryland kicks 60 yards from ARZ 35 to SEA 5. D.Young to SEA 34 for 29 yards (A.Davis-Gaither). [special_teams]
+- Q3 1:39 (33 yds) Kickoff: C.Ryland kicks 64 yards from ARZ 35 to SEA 1. G.Holani to SEA 34 for 33 yards (D.Taylor-Demerson). [special_teams]
+- Q3 8:56 (44 yds) Field Goal Good: J.Myers 44 yard field goal is GOOD, Center-C.Stoll, Holder-M.Dickson. [special_teams]
+- Q4 0:00 (52 yds) Field Goal Good: J.Myers 52 yard field goal is GOOD, Center-C.Stoll, Holder-M.Dickson. [special_teams]
+- Q4 0:28 (25 yds) Kickoff: C.Ryland kicks 44 yards from ARZ 35 to SEA 21, short of landing zone.PENALTY on ARZ-C.Ryland, Kickoff Short of Landing Zone, placed at SEA 40. [special_teams]
+- Q4 11:04 (-5 yds) Penalty: ** Injury Update: ARZ-J.Thompson has returned to the game.  PENALTY on SEA-E.Saubert, False Start, 5 yards, enforced at ARZ 8 - No Play. [nullified]
+- Q4 11:48 (-16 yds) Rush: Z.Charbonnet right tackle for 7 yards, TOUCHDOWN NULLIFIED by Penalty. ARZ-J.Thompson was injured during the play. PENALTY on SEA-J.Smith-Njigba, Offensive Holding, 10 yards, enforced at ARZ 3. [nullified]
+- Q4 14:22 (5 yds) Penalty: (No Huddle, Shotgun) S.Darnold sacked ob at ARZ 47 for 0 yards (Z.Collins).PENALTY on ARZ-J.Thompson, Defensive Holding, 5 yards, enforced at ARZ 47 - No Play. [nullified]
+- Q4 3:21 (53 yds) Field Goal Missed: J.Myers 53 yard field goal is No Good, Wide Right, Center-C.Stoll, Holder-M.Dickson. ** Injury Update: ARZ-C.Campbell has returned to the game. [special_teams]
+- Q4 5:50 (22 yds) Kickoff: C.Ryland kicks 65 yards from ARZ 35 to SEA 0. G.Holani to SEA 22 for 22 yards (A.Davis-Gaither; E.Higgins). [special_teams]
+- Q4 9:33 (31 yds) Field Goal Good:  J.Myers 31 yard field goal is GOOD, Center-C.Stoll, Holder-M.Dickson. [special_teams]
+
+**ARI Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q1 8:58 (0 yds) Fumble Recovery (Opponent): (Shotgun) K.Murray pass deep middle intended for M.Harrison INTERCEPTED by C.Bryant at SEA 32. C.Bryant to SEA 47 for 15 yards (H.Froholdt). FUMBLES (H.Froholdt), RECOVERED by ARZ-T.Benson at SEA 47.The Replay Official reviewed the runner was not down by contact ruling, and the play was Upheld. The ruling on the field stands. [interception]
+- Q2 8:32 (29 yds) Pass Interception Return: (Shotgun) K.Murray pass short right intended for M.Harrison INTERCEPTED by E.Jones (D.Thomas) at SEA 22. E.Jones to ARZ 49 for 29 yards (H.Froholdt). [interception]
+
+- Excluded non-zero-yard plays (up to 13 shown):
+- Q1 15:00 (25 yds) Kickoff: J.Myers kicks 64 yards from SEA 35 to ARZ 1. G.Dortch pushed ob at ARZ 26 for 25 yards (D.Young). [special_teams]
+- Q1 1:33 (26 yds) Kickoff: J.Myers kicks 65 yards from SEA 35 to ARZ 0. G.Dortch to ARZ 26 for 26 yards (D.Young). [special_teams]
+- Q1 4:37 (33 yds) Field Goal Good:  C.Ryland 33 yard field goal is GOOD, Center-A.Brewer, Holder-B.Gillikin. [special_teams]
+- Q1 5:05 (-5 yds) Penalty: (Field Goal formation) PENALTY on ARZ, Delay of Game, 5 yards, enforced at SEA 9 - No Play. [nullified]
+- Q1 6:21 (-5 yds) Penalty: (Shotgun) PENALTY on ARZ-J.Williams, False Start, 5 yards, enforced at SEA 10 - No Play. [nullified]
+- Q2 15:00 (8 yds) Punt: B.Gillikin punts 57 yards to SEA 18, Center-A.Brewer. T.Horton to SEA 26 for 8 yards (O.Pappoe; K.Crawford). [special_teams]
+- Q2 1:01 (24 yds) Kickoff: J.Myers kicks 63 yards from SEA 35 to ARZ 2. Z.Knight to ARZ 26 for 24 yards (D.Thomas; C.Surratt). [special_teams]
+- Q3 1:39 (57 yds) Field Goal Good: C.Ryland 57 yard field goal is GOOD, Center-A.Brewer, Holder-B.Gillikin. [special_teams]
+- Q3 7:49 (-10 yds) Penalty: (No Huddle, Shotgun) K.Murray scrambles up the middle to SEA 45 for 1 yard (B.Murphy).PENALTY on ARZ-P.Johnson, Offensive Holding, 10 yards, enforced at SEA 46 - No Play. [nullified]
+- Q3 8:19 (14 yds) Penalty: (No Huddle, Shotgun) K.Murray pass incomplete deep left to Mi.Wilson.PENALTY on SEA-T.Woolen, Defensive Pass Interference, 14 yards, enforced at ARZ 37 - No Play. [nullified]
+- Q3 8:56 (31 yds) Kickoff: J.Myers kicks 61 yards from SEA 35 to ARZ 4. G.Dortch to ARZ 35 for 31 yards (D.Bell; E.Saubert). ** Injury Update: ARZ-J.Burch has returned to the game. [special_teams]
+- Q4 6:42 (15 yds) Penalty: (No Huddle, Shotgun) K.Murray pass incomplete deep right to X.Weaver [B.Mafe].PENALTY on SEA-T.Woolen, Defensive Pass Interference, 15 yards, enforced at SEA 24 - No Play. [nullified]
+- Q4 9:33 (20 yds) Kickoff: J.Myers kicks 58 yards from SEA 35 to ARZ 7. Z.Knight to ARZ 27 for 20 yards (D.Young). [special_teams]
+
+### 401772747 TEN @ ARI (TOΔ max 1, YdsΔ max 18, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| TEN | 327 | 330 | +3 | 2 | 1 | -1 | 35 | 35 | +0 |
+| ARI | 360 | 342 | -18 | 3 | 2 | -1 | 47 | 47 | +0 |
+
+**TEN Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q2 12:24 (0 yds) Fumble Recovery (Opponent): T.Pollard left tackle to TEN 30 for 4 yards (Z.Carter; A.Davis-Gaither). FUMBLES (Z.Carter), RECOVERED by ARZ-B.Browning at TEN 27. [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 4:39 (0 yds) Fumble Return Touchdown: Tyler Lockett 0 Yd Fumble Recovery (Joey Slye Kick)
+
+- Excluded non-zero-yard plays (up to 15 shown):
+- Q1 0:39 (12 yds) Kickoff: C.Ryland kicks 64 yards from ARZ 35 to TEN 1. C.Dike to TEN 23 for 22 yards (B.Browning; O.Pappoe).PENALTY on TEN-K.Brooks, Offensive Holding, 10 yards, enforced at TEN 23.Penalty on TEN-K.Winston, Offensive Holding, declined. [special_teams]
+- Q1 10:54 (27 yds) Kickoff: C.Ryland kicks 62 yards from ARZ 35 to TEN 3. C.Dike pushed ob at TEN 30 for 27 yards (A.Davis-Gaither). [special_teams]
+- Q1 5:00 (44 yds) Field Goal Good: J.Slye 44 yard field goal is GOOD, Center-M.Cox, Holder-J.Hekker. [special_teams]
+- Q2 0:06 (-1 yds) Rush: C.Ward kneels to TEN 19 for -1 yards. [spike_kneel]
+- Q2 10:43 (65 yds) Kickoff: C.Ryland kicks 64 yards from ARZ 35 to TEN 1. C.Dike to ARZ 34 for 65 yards (S.Fehoko; D.Hall). [special_teams]
+- Q2 14:06 (6 yds) Punt: J.Hekker punts 43 yards to ARZ 20, Center-M.Cox. G.Dortch to ARZ 26 for 6 yards (J.Williams). [special_teams]
+- Q2 4:48 (5 yds) Sack: (Shotgun) C.Ward sacked at TEN 7 for -3 yards (D.Stills).PENALTY on ARZ-K.Clark, Illegal Contact, 5 yards, enforced at TEN 10 - No Play. [nullified]
+- Q2 8:29 (51 yds) Field Goal Good: J.Slye 51 yard field goal is GOOD, Center-M.Cox, Holder-J.Hekker. [special_teams]
+- Q3 12:51 (-5 yds) Punt: J.Hekker punts 64 yards to end zone, Center-M.Cox, Touchback.PENALTY on TEN, Illegal Formation, 5 yards, enforced at ARZ 20. [special_teams]
+- Q3 15:00 (22 yds) Kickoff: C.Ryland kicks 59 yards from ARZ 35 to TEN 6. C.Dike to TEN 28 for 22 yards (T.Vokolek). [special_teams]
+- Q3 3:22 (10 yds) Punt: J.Hekker punts 59 yards to ARZ 6, Center-M.Cox. G.Dortch to ARZ 16 for 10 yards (K.Brooks). [special_teams]
+- Q4 0:00 (29 yds) Field Goal Good: J.Slye 29 yard field goal is GOOD, Center-M.Cox, Holder-J.Hekker. [special_teams]
+- Q4 0:14 (-2 yds) Rush: C.Ward kneels to ARZ 11 for -2 yards. [spike_kneel]
+- Q4 0:16 (-2 yds) Rush: C.Ward kneels to ARZ 9 for -2 yards. ** Injury Update: ARZ-J.Thompson has returned to the game. [spike_kneel]
+- Q4 0:19 (-3 yds) Rush: C.Ward kneels to ARZ 7 for -3 yards. [spike_kneel]
+
+**ARI Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q3 4:57 (2 yds) Fumble Recovery (Opponent): (Shotgun) K.Murray FUMBLES (Aborted) at TEN 25, RECOVERED by TEN-D.Jones at TEN 24. D.Jones to TEN 26 for 2 yards (J.Williams). ARZ-K.Murray was injured during the play. [fumble]
+- Q4 12:51 (52 yds) Rush: K.Beachum reported in as eligible.  E.Demercado up the middle for 72 yards, TOUCHDOWN.The Replay Official reviewed the runner broke the plane ruling, and the play was REVERSED.K.Beachum reported in as eligible.  E.Demercado up the middle to TEN 1 for 71 yards. FUMBLES, ball out of bounds in End Zone, Touchback. [fumble]
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q1 14:15 (-5 yds) Penalty: (Shotgun) PENALTY on ARZ-I.Adams, False Start, 5 yards, enforced at ARZ 40 - No Play. [nullified]
+- Q1 15:00 (28 yds) Kickoff: J.Slye kicks 60 yards from TEN 35 to ARZ 5. Z.Knight to ARZ 33 for 28 yards (J.Harrell). [special_teams]
+- Q2 1:40 (12 yds) Punt: B.Gillikin punts 60 yards to TEN 37, Center-A.Brewer. C.Dike to TEN 49 for 12 yards (T.Vokolek). [special_teams]
+- Q2 2:00 (32 yds) Pass Reception: (Shotgun) K.Murray pass deep left to T.McBride to ARZ 42 for 32 yards (J.Armour-Davis; X.Woods).PENALTY on ARZ-J.Williams, Offensive Holding, 5 yards, enforced at ARZ 10 - No Play. [nullified]
+- Q2 5:05 (-6 yds) Punt: B.Gillikin punts 62 yards to TEN 16, Center-A.Brewer. C.Dike pushed ob at TEN 33 for 17 yards (A.Davis-Gaither).PENALTY on TEN-M.Harris, Illegal Block Above the Waist, 10 yards, enforced at TEN 20. [special_teams]
+- Q2 8:29 (27 yds) Kickoff: J.Slye kicks 67 yards from TEN 35 to ARZ -2. Z.Knight to ARZ 25 for 27 yards (J.Williams). [special_teams]
+- Q3 2:28 (17 yds) Punt: B.Gillikin punts 63 yards to TEN 20, Center-A.Brewer. C.Dike pushed ob at TEN 37 for 17 yards (E.Demercado). [special_teams]
+- Q3 6:46 (-5 yds) Penalty: (No Huddle, Shotgun) PENALTY on ARZ-I.Adams, False Start, 5 yards, enforced at TEN 18 - No Play. [nullified]
+- Q4 10:26 (20 yds) Kickoff: J.Slye kicks 65 yards from TEN 35 to ARZ 0. Z.Knight to ARZ 25 for 25 yards (D.Mausi).PENALTY on TEN-J.Chestnut, Illegal Formation, 5 yards, enforced at ARZ 25. [special_teams]
+- Q4 14:16 (5 yds) Pass Incompletion: (Shotgun) K.Murray pass incomplete short right to E.Demercado (C.Barton).PENALTY on TEN-R.McCreary, Illegal Contact, 5 yards, enforced at ARZ 14 - No Play. [nullified]
+- Q4 4:39 (10 yds) Kickoff: J.Slye kicks 60 yards from TEN 35 to ARZ 5. Z.Knight MUFFS catch, and recovers at ARZ 10. Z.Knight to ARZ 20 for 10 yards (D.Mausi; M.Harris). [special_teams]
+
+### 401772822 PHI @ LAC (TOΔ max 1, YdsΔ max 17, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| PHI | 365 | 365 | +0 | 5 | 4 | -1 | 53 | 53 | +0 |
+| LAC | 275 | 258 | -17 | 3 | 2 | -1 | 55 | 55 | +0 |
+
+**PHI Reconciliation Clues**
+
+- Windelta counted turnovers (4):
+- Q2 4:45 (6 yds) Pass Interception Return: (Shotgun) J.Hurts pass short right intended for D.Smith INTERCEPTED by D.Jackson at PHI 36. D.Jackson to PHI 30 for 6 yards (D.Goedert). [interception]
+- Q2 8:31 (0 yds) Fumble Recovery (Opponent): (Shotgun) J.Hurts pass short middle intended for A.Brown INTERCEPTED by D.Hand at LAC 17. D.Hand to LAC 24 for 7 yards (W.Shipley). FUMBLES (W.Shipley), RECOVERED by PHI-J.Hurts at LAC 32. J.Hurts to LAC 33 for -1 yards (J.Caldwell). FUMBLES (J.Caldwell), touched at LAC 33, RECOVERED by LAC-T.Dye at LAC 43. [interception]
+- Q4 11:12 (27 yds) Pass Interception Return: (No Huddle, Shotgun) J.Hurts pass deep middle intended for A.Brown INTERCEPTED by C.Hart at LAC 38. C.Hart ran ob at PHI 35 for 27 yards (D.Goedert). [interception]
+- Q5 2:35 (3 yds) Pass Interception Return: (No Huddle, Shotgun) J.Hurts pass deep right intended for J.Dotson INTERCEPTED by T.Jefferson (C.Hart) at LAC 1. T.Jefferson to LAC 4 for 3 yards. [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q3 5:32 (30 yds) Kickoff: C.Dicker kicks 59 yards from LAC 35 to PHI 6. B.Covey to PHI 35 for 29 yards (T.Dye). FUMBLES (T.Dye), touched at PHI 37, and recovers at PHI 36.
+
+- Excluded non-zero-yard plays (up to 19 shown):
+- Q1 15:00 (23 yds) Kickoff: C.Dicker kicks 55 yards from LAC 35 to PHI 10. B.Covey to PHI 33 for 23 yards (D.Phillips). [special_teams]
+- Q1 3:22 (41 yds) Field Goal Good: J.Elliott 41 yard field goal is GOOD, Center-C.Adomitis, Holder-B.Mann. [special_teams]
+- Q1 7:36 (-10 yds) Penalty: (No Huddle, Shotgun) J.Hurts scrambles right end to LAC 33 for 3 yards (D.James).PENALTY on PHI-T.Steen, Offensive Holding, 10 yards, enforced at LAC 36 - No Play. [nullified]
+- Q2 0:05 (48 yds) Field Goal Missed: J.Elliott 48 yard field goal is No Good, Wide Left, Center-C.Adomitis, Holder-B.Mann. [special_teams]
+- Q2 0:48 (30 yds) Field Goal Good: J.Elliott 30 yard field goal is GOOD, Center-C.Adomitis, Holder-B.Mann. [special_teams]
+- Q2 11:52 (5 yds) Penalty: (Shotgun) J.Hurts pass incomplete deep right to A.Brown [D.Henley].PENALTY on LAC-C.Hart, Illegal Contact, 5 yards, enforced at PHI 25 - No Play. [nullified]
+- Q2 14:55 (-10 yds) Punt: B.Mann punts 53 yards to LAC 32, Center-C.Adomitis. D.Davis to LAC 22 for -10 yards (K.Granson). [special_teams]
+- Q2 1:10 (-10 yds) Penalty: (Shotgun) J.Hurts pass short right to A.Brown for 2 yards, TOUCHDOWN NULLIFIED by Penalty [K.Mack].PENALTY on PHI-J.Mailata, Offensive Holding, 10 yards, enforced at LAC 2 - No Play. [nullified]
+- Q2 4:55 (25 yds) Kickoff: C.Dicker kicks 62 yards from LAC 35 to PHI 3. B.Covey to PHI 28 for 25 yards (D.Phillips). [special_teams]
+- Q3 0:38 (5 yds) Penalty: S.Barkley left tackle to PHI 38 for -1 yards (D.James). ** Injury Update: PHI-L.Dickerson has returned to the game. PENALTY on LAC-T.Tart, Defensive Offside, 5 yards, enforced at PHI 39 - No Play. [nullified]
+- Q3 3:22 (54 yds) Field Goal Good: J.Elliott 54 yard field goal is GOOD, Center-C.Adomitis, Holder-B.Mann. [special_teams]
+- Q3 5:32 (30 yds) Kickoff: C.Dicker kicks 59 yards from LAC 35 to PHI 6. B.Covey to PHI 35 for 29 yards (T.Dye). FUMBLES (T.Dye), touched at PHI 37, and recovers at PHI 36. [special_teams]
+- Q4 0:03 (-1 yds) Rush: J.Hurts kneels to PHI 27 for -1 yards. [spike_kneel]
+- Q4 0:08 (27 yds) Kickoff: C.Dicker kicks 64 yards from LAC 35 to PHI 1. W.Shipley to PHI 28 for 27 yards (D.Phillips; H.Haskins). [special_teams]
+- Q4 2:16 (44 yds) Field Goal Good: J.Elliott 44 yard field goal is GOOD, Center-C.Adomitis, Holder-B.Mann. [special_teams]
+- Q4 7:26 (25 yds) Kickoff: C.Dicker kicks 61 yards from LAC 35 to PHI 4. B.Covey to PHI 29 for 25 yards (J.Eboigbe). [special_teams]
+- Q5 3:23 (5 yds) Penalty: (Shotgun) PENALTY on LAC-O.Oweh, Neutral Zone Infraction, 5 yards, enforced at LAC 41 - No Play. [nullified]
+- Q5 5:29 (-10 yds) Penalty: (Shotgun) J.Hurts scrambles left guard to LAC 48 for 17 yards (D.Henley).PENALTY on PHI-C.Jurgens, Offensive Holding, 10 yards, enforced at PHI 35 - No Play. [nullified]
+- Q5 6:24 (29 yds) Kickoff: C.Dicker kicks 63 yards from LAC 35 to PHI 2. W.Shipley to PHI 31 for 29 yards (D.Phillips). [special_teams]
+
+**LAC Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q2 0:17 (-14 yds) Pass Interception Return: (No Huddle, Shotgun) J.Herbert pass short right intended for O.Gadsden INTERCEPTED by A.Jackson (J.Phillips) at LAC 46. A.Jackson to LAC 45 for 1 yard (O.Gadsden; K.Vidal).PENALTY on LAC-K.Vidal, Unnecessary Roughness, 15 yards, enforced at LAC 45. [interception]
+- Q2 4:38 (0 yds) Sack Opp Fumble Recovery: (Shotgun) J.Herbert sacked at PHI 39 for -9 yards (N.Dean). FUMBLES (N.Dean) [N.Dean], RECOVERED by PHI-B.Young at PHI 42. B.Young to PHI 42 for no gain (O.Hampton). [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q1 1:37 (5 yds) Penalty: (Shotgun) J.Herbert pass deep left intended for L.McConkey INTERCEPTED by C.DeJean at PHI 44. C.DeJean pushed ob at PHI 49 for 5 yards (K.Allen).PENALTY on PHI-M.Ojomo, Defensive Offside, 5 yards, enforced at LAC 32 - No Play.
+- Q3 3:15 (5 yds) Fumble Recovery (Own): J.Herbert sacked at LAC 25 for 0 yards (J.Hunt). FUMBLES (J.Hunt) [J.Hunt], recovered by LAC-S.Matlock at LAC 30.
+
+- Excluded non-zero-yard plays (up to 20 shown):
+- Q1 1:37 (5 yds) Penalty: (Shotgun) J.Herbert pass deep left intended for L.McConkey INTERCEPTED by C.DeJean at PHI 44. C.DeJean pushed ob at PHI 49 for 5 yards (K.Allen).PENALTY on PHI-M.Ojomo, Defensive Offside, 5 yards, enforced at LAC 32 - No Play. [nullified]
+- Q1 1:59 (-5 yds) Penalty: (Shotgun) PENALTY on LAC-T.Pipkins, False Start, 5 yards, enforced at LAC 37 - No Play. [nullified]
+- Q1 3:22 (26 yds) Kickoff: J.Elliott kicks 57 yards from PHI 35 to LAC 8. K.Vidal to LAC 34 for 26 yards (C.Latu). [special_teams]
+- Q2 0:48 (28 yds) Kickoff: J.Elliott kicks 62 yards from PHI 35 to LAC 3. H.Haskins to LAC 31 for 28 yards (J.Trotter; S.Brown). [special_teams]
+- Q2 12:46 (14 yds) Punt: J.Scott punts 56 yards to PHI 12, Center-J.Harris. B.Covey to PHI 26 for 14 yards (K.Williamson). [special_teams]
+- Q2 14:04 (-10 yds) Penalty: O.Hampton left end pushed ob at LAC 38 for 1 yard (Z.Baun).PENALTY on LAC-J.Salyer, Offensive Holding, 10 yards, enforced at LAC 37 - No Play. [nullified]
+- Q2 4:55 (45 yds) Field Goal Good: C.Dicker 45 yard field goal is GOOD, Center-J.Harris, Holder-J.Scott. [special_teams]
+- Q3 15:00 (28 yds) Kickoff: J.Elliott kicks 60 yards from PHI 35 to LAC 5. H.Haskins to LAC 33 for 28 yards (C.DeJean). [special_teams]
+- Q3 3:22 (17 yds) Kickoff: J.Elliott kicks 57 yards from PHI 35 to LAC 8. K.Vidal to LAC 25 for 17 yards (A.Sam). [special_teams]
+- Q3 5:32 (34 yds) Field Goal Good: C.Dicker 34 yard field goal is GOOD, Center-J.Harris, Holder-J.Scott. [special_teams]
+- Q3 7:12 (36 yds) Penalty: C.Dicker 36 yard field goal is GOOD, NULLIFIED by Penalty, Center-J.Harris, Holder-J.Scott.PENALTY on PHI-M.Ojomo, Leverage, 9 yards, enforced at PHI 18 - No Play. [nullified]
+- Q4 0:08 (46 yds) Field Goal Good: C.Dicker 46 yard field goal is GOOD, Center-J.Harris, Holder-J.Scott. [special_teams]
+- Q4 12:02 (22 yds) Punt: J.Scott punts 46 yards to PHI 5, Center-J.Harris. B.Covey to PHI 27 for 22 yards (M.Wax). [special_teams]
+- Q4 14:51 (21 yds) Kickoff: J.Elliott kicks 60 yards from PHI 35 to LAC 5. K.Vidal to LAC 26 for 21 yards (S.Mondon). [special_teams]
+- Q4 1:58 (9 yds) Penalty: (Shotgun) J.Herbert pass incomplete deep right to Q.Johnston [M.Ojomo].PENALTY on PHI-Q.Mitchell, Defensive Pass Interference, 9 yards, enforced at LAC 28 - No Play. [nullified]
+- Q4 2:16 (24 yds) Kickoff: J.Elliott kicks 61 yards from PHI 35 to LAC 4. K.Vidal to LAC 28 for 24 yards (J.Campbell; K.Granson). [special_teams]
+- Q4 3:46 (18 yds) Punt: J.Scott punts 57 yards to PHI 22, Center-J.Harris. B.Covey ran ob at PHI 40 for 18 yards (T.Tuipulotu). [special_teams]
+- Q4 7:26 (31 yds) Field Goal Good: C.Dicker 31 yard field goal is GOOD, Center-J.Harris, Holder-J.Scott. [special_teams]
+- Q5 10:00 (23 yds) Kickoff: J.Elliott kicks 58 yards from PHI 35 to LAC 7. K.Vidal to LAC 30 for 23 yards (K.Granson). [special_teams]
+- Q5 6:24 (54 yds) Field Goal Good: C.Dicker 54 yard field goal is GOOD, Center-J.Harris, Holder-J.Scott. [special_teams]
+
+### 401772776 TB @ BUF (TOΔ max 1, YdsΔ max 12, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| TB | 367 | 366 | -1 | 2 | 2 | +0 | 30 | 30 | +0 |
+| BUF | 414 | 402 | -12 | 3 | 2 | -1 | 45 | 45 | +0 |
+
+**TB Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q3 4:05 (12 yds) Pass Interception Return: (Shotgun) B.Mayfield pass short right intended for E.Egbuka INTERCEPTED by C.Bishop at TB 37. C.Bishop to TB 25 for 12 yards (G.Barton). [interception]
+- Q4 1:52 (0 yds) Sack Opp Fumble Recovery: (Shotgun) B.Mayfield sacked at BUF 40 for -9 yards (D.Jones). FUMBLES (D.Jones) [D.Jones], RECOVERED by BUF-D.Williams at BUF 39. [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q2 0:05 (0 yds) Penalty: C.McLaughlin 29 yard field goal is BLOCKED (G.Rousseau), Center-E.Deckers, Holder-R.Dixon.PENALTY on BUF-A.Anderson, Defensive Holding, 5 yards, enforced at BUF 11 - No Play.
+- Q3 11:22 (0 yds) Fumble Recovery (Opponent): R.Dixon punts 46 yards to BUF 41, Center-E.Deckers. M.Hardman to BUF 41 for no gain (J.Hayes). FUMBLES (J.Hayes), RECOVERED by TB-R.Miller at BUF 43.
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q1 0:04 (5 yds) Penalty: PENALTY on BUF-M.Milano, Neutral Zone Infraction, 5 yards, enforced at BUF 24 - No Play. [nullified]
+- Q1 4:09 (24 yds) Kickoff: M.Prater kicks 58 yards from BUF 35 to TB 7. K.Johnson ran ob at TB 31 for 24 yards (J.Poyer). [special_teams]
+- Q1 8:54 (23 yds) Field Goal Good: C.McLaughlin 23 yard field goal is GOOD, Center-E.Deckers, Holder-R.Dixon. [special_teams]
+- Q2 0:00 (24 yds) Field Goal Good: C.McLaughlin 24 yard field goal is GOOD, Center-E.Deckers, Holder-R.Dixon. [special_teams]
+- Q2 0:36 (31 yds) Kickoff: M.Prater kicks 60 yards from BUF 35 to TB 5. K.Johnson to TB 36 for 31 yards (D.Williams; J.Poyer). [special_teams]
+- Q2 8:52 (29 yds) Kickoff: M.Prater kicks 60 yards from BUF 35 to TB 5. K.Johnson to TB 34 for 29 yards (J.Poyer). [special_teams]
+- Q3 3:48 (33 yds) Kickoff: M.Prater kicks 60 yards from BUF 35 to TB 5. K.Johnson to TB 38 for 33 yards (J.Poyer). [special_teams]
+- Q3 5:01 (25 yds) Kickoff: M.Prater kicks 62 yards from BUF 35 to TB 3. O.Wright to TB 28 for 25 yards (J.Andreessen; S.Franklin). [special_teams]
+- Q4 0:38 (-1 yds) Rush: T.Bridgewater kneels to TB 19 for -1 yards. [spike_kneel]
+- Q4 1:57 (15 yds) Pass Incompletion: (Shotgun) B.Mayfield pass incomplete deep right to E.Egbuka.PENALTY on BUF-J.Bosa, Roughing the Passer, 15 yards, enforced at BUF 46 - No Play. [nullified]
+- Q4 9:06 (19 yds) Kickoff: M.Prater kicks 53 yards from BUF 35 to TB 12. K.Johnson to TB 31 for 19 yards (J.Andreessen; K.Latu). [special_teams]
+
+**BUF Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q1 10:34 (3 yds) Pass Interception Return: (Shotgun) J.Allen pass short middle intended for J.Palmer INTERCEPTED by J.Parrish [Y.Diaby] at BUF 10. J.Parrish to BUF 7 for 3 yards (C.Samuel). [interception]
+- Q2 4:30 (0 yds) Pass Interception Return: (Shotgun) J.Allen pass short middle intended for D.Knox INTERCEPTED by S.Dennis (T.Smith) at TB 32. S.Dennis to TB 32 for no gain (K.Latu). TB-T.Smith was injured during the play. [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q1 5:54 (9 yds) Fumble Recovery (Own): (Shotgun) J.Allen pass short left to Ty.Johnson to TB 17 for 7 yards (L.David). FUMBLES (L.David), and recovers at TB 15.
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q1 8:54 (61 yds) Kickoff: C.McLaughlin kicks 62 yards from TB 35 to BUF 3. M.Hardman to TB 36 for 61 yards (C.Braswell). [special_teams]
+- Q2 12:00 (29 yds) Kickoff: C.McLaughlin kicks 61 yards from TB 35 to BUF 4. R.Davis pushed ob at BUF 33 for 29 yards (D.Jones). [special_teams]
+- Q2 1:02 (15 yds) Penalty: (Shotgun) J.Allen pass incomplete short right to J.Cook.PENALTY on TB-L.Hall, Roughing the Passer, 15 yards, enforced at BUF 28 - No Play.Penalty on TB-B.Morrison, Defensive Holding, declined. [nullified]
+- Q2 5:37 (44 yds) Kickoff: C.McLaughlin kicks 60 yards from TB 35 to BUF 5. R.Davis pushed ob at BUF 49 for 44 yards (N.Jackson). [special_teams]
+- Q3 14:20 (-5 yds) Penalty: (Shotgun) PENALTY on BUF-D.Dawkins, False Start, 5 yards, enforced at BUF 46 - No Play. [nullified]
+- Q3 15:00 (41 yds) Kickoff: C.McLaughlin kicks 62 yards from TB 35 to BUF 3. R.Davis pushed ob at BUF 44 for 41 yards (C.Izien; D.Jones). [special_teams]
+- Q3 5:01 (39 yds) Field Goal Good: M.Prater 39 yard field goal is GOOD, Center-R.Ferguson, Holder-M.Wishnowsky. [special_teams]
+- Q3 7:26 (44 yds) Kickoff: C.McLaughlin kicks 55 yards from TB 35 to BUF 10. R.Davis to TB 46 for 44 yards (C.Izien). [special_teams]
+- Q4 11:17 (-5 yds) Penalty: (Shotgun) PENALTY on BUF-D.Dawkins, False Start, 5 yards, enforced at BUF 41 - No Play. [nullified]
+- Q4 13:38 (15 yds) Kickoff: C.McLaughlin kicks 61 yards from TB 35 to BUF 4. C.Samuel to BUF 19 for 15 yards (J.Bullock; J.Hayes). [special_teams]
+- Q4 2:56 (-2 yds) Pass Reception: (Shotgun) J.Allen pass short left to K.Shakir to TB 31 for -2 yards (A.Winfield, S.Dennis).PENALTY on TB-J.Parrish, Face Mask, 15 yards, enforced at TB 29 - No Play. [nullified]
+
+### 401772826 HOU @ SEA (TOΔ max 1, YdsΔ max 12, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| HOU | 254 | 254 | +0 | 1 | 1 | +0 | 105 | 105 | +0 |
+| SEA | 316 | 304 | -12 | 4 | 3 | -1 | 93 | 93 | +0 |
+
+**HOU Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q3 14:14 (5 yds) Pass Interception Return: C.Stroud pass deep middle intended for N.Collins INTERCEPTED by E.Jones [J.Jobe] at HST 46. E.Jones pushed ob at HST 18 for 28 yards (N.Chubb).PENALTY on SEA-U.Nwosu, Illegal Blindside Block, 15 yards, enforced at HST 23. [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q2 10:30 (0 yds) Sack: (Shotgun) C.Stroud sacked at HST 12 for -12 yards (E.Jones). FUMBLES (E.Jones) [E.Jones], touched at HST 5, recovered by HST-B.Berrios at HST -8. B.Berrios tackled in End Zone, SAFETY (E.Jones).Penalty on HST-X.Hutchinson, Illegal Shift, declined.The Replay Official reviewed the loose ball recovery ruling, and the play was REVERSED.(Shotgun) C.Stroud sacked at HST 12 for -12 yards (E.Jones). FUMBLES (E.Jones) [E.Jones], RECOVERED by SEA-D.Thomas at HST 5. D.Thomas to HST 1 for 4 yards (W.Marks). FUMBLES (W.Marks), touched at HST -1, RECOVERED by HST-B.Berrios at HST -8. Touchback.PENALTY on HST, Illegal Shift, 5 yards, enforced at HST 24 - No Play.
+- Q2 5:39 (5 yds) Fumble Recovery (Own): (No Huddle, Shotgun) C.Stroud sacked at HST 28 for -8 yards (B.Mafe). FUMBLES (B.Mafe), recovered by HST-A.Ersery at HST 26.PENALTY on SEA-E.Jones, Defensive Holding, 5 yards, enforced at HST 36 - No Play.
+
+- Excluded non-zero-yard plays (up to 20 shown):
+- Q1 10:15 (12 yds) Punt: T.Townsend punts 55 yards to SEA 44, Center-A.Brinkman. T.Horton to HST 44 for 12 yards (J.Hill). [special_teams]
+- Q1 7:28 (33 yds) Kickoff: J.Myers kicks 61 yards from SEA 35 to HST 4. T.Smith ran ob at HST 37 for 33 yards (J.Myers). [special_teams]
+- Q2 0:00 (46 yds) Field Goal Good:  K.Fairbairn 46 yard field goal is GOOD, Center-A.Brinkman, Holder-T.Townsend. [special_teams]
+- Q2 13:16 (19 yds) Punt: T.Townsend punts 46 yards to SEA 13, Center-A.Brinkman. T.Horton pushed ob at SEA 32 for 19 yards (E.Speed). [special_teams]
+- Q2 13:55 (18 yds) Pass Reception: (Shotgun) C.Stroud pass short left to N.Collins to SEA 41 for 18 yards (J.Jobe).Penalty on HST-A.Ersery, Ineligible Downfield Pass, offsetting, enforced at HST 41 - No Play.Penalty on SEA-J.Jobe, Defensive Pass Interference, offsetting. [nullified]
+- Q2 15:00 (25 yds) Kickoff: J.Myers kicks 60 yards from SEA 35 to HST 5. T.Smith to HST 30 for 25 yards (T.Knight). [special_teams]
+- Q2 2:18 (36 yds) Field Goal Good: K.Fairbairn 36 yard field goal is GOOD, Center-A.Brinkman, Holder-T.Townsend. [special_teams]
+- Q2 3:56 (5 yds) Pass Incompletion: (No Huddle, Shotgun) C.Stroud pass incomplete short left to N.Collins.PENALTY on SEA-D.Thomas, Defensive Pass Interference, 5 yards, enforced at SEA 25 - No Play. [nullified]
+- Q2 5:39 (5 yds) Fumble Recovery (Own): (No Huddle, Shotgun) C.Stroud sacked at HST 28 for -8 yards (B.Mafe). FUMBLES (B.Mafe), recovered by HST-A.Ersery at HST 26.PENALTY on SEA-E.Jones, Defensive Holding, 5 yards, enforced at HST 36 - No Play. [nullified]
+- Q2 9:19 (15 yds) Punt: T.Townsend punts 45 yards to SEA 28, Center-A.Brinkman. T.Horton pushed ob at SEA 43 for 15 yards (H.Bryant). [special_teams]
+- Q3 0:03 (7 yds) Punt: T.Townsend punts 48 yards to SEA 40, Center-A.Brinkman. T.Horton to SEA 47 for 7 yards (J.Hansen). [special_teams]
+- Q3 0:54 (18 yds) Kickoff: J.Myers kicks 65 yards from SEA 35 to HST 0. T.Smith MUFFS catch, and recovers at HST 2. T.Smith to HST 20 for 18 yards (B.Russell). [special_teams]
+- Q3 10:34 (28 yds) Kickoff: J.Myers kicks 61 yards from SEA 35 to HST 4. T.Smith pushed ob at HST 32 for 28 yards (C.Surratt). [special_teams]
+- Q3 15:00 (17 yds) Kickoff: J.Myers kicks 58 yards from SEA 35 to HST 7. T.Smith MUFFS catch, and recovers at HST 8. T.Smith to HST 25 for 17 yards (C.Surratt). [special_teams]
+- Q3 5:15 (33 yds) Kickoff: J.Myers kicks 66 yards from SEA 35 to HST -1. T.Smith ran ob at HST 32 for 33 yards (M.Morris). [special_teams]
+- Q3 9:58 (5 yds) Pass Incompletion: (No Huddle, Shotgun) C.Stroud pass incomplete deep right.PENALTY on SEA-J.Jobe, Defensive Holding, 5 yards, enforced at HST 49 - No Play. [nullified]
+- Q4 12:57 (14 yds) Punt: T.Townsend punts 57 yards to SEA 22, Center-A.Brinkman. T.Horton to SEA 36 for 14 yards (D.Ogunbowale; H.To'oTo'o). [special_teams]
+- Q4 3:42 (-5 yds) Penalty: (Shotgun) PENALTY on HST-J.Scruggs, False Start, 5 yards, enforced at SEA 15 - No Play. [nullified]
+- Q4 5:08 (-4 yds) Penalty:  (Run formation) B.Fisher reported in as eligible.  PENALTY on HST-B.Fisher, False Start, 4 yards, enforced at SEA 1 - No Play. [nullified]
+- Q4 9:54 (-15 yds) Pass Incompletion: (No Huddle, Shotgun) C.Stroud pass incomplete deep right [U.Nwosu].PENALTY on HST-E.Ingram, Illegal Blindside Block, 15 yards, enforced at SEA 40 - No Play. [nullified]
+
+**SEA Reconciliation Clues**
+
+- Windelta counted turnovers (3):
+- Q2 7:10 (11 yds) Pass Interception Return: C.Kupp pass short right intended for J.Smith-Njigba INTERCEPTED by C.Bullock at HST 12. C.Bullock pushed ob at HST 23 for 11 yards (J.Smith-Njigba). [interception]
+- Q4 10:58 (0 yds) Fumble Recovery (Opponent): (Shotgun) S.Darnold pass short left to E.Arroyo to HST 45 for 7 yards (M.Stewart; K.Lassiter). FUMBLES (M.Stewart), RECOVERED by HST-A.Al-Shaair at HST 46. [fumble]
+- Q4 8:33 (2 yds) Pass Interception Return: (Shotgun) S.Darnold pass deep middle intended for A.Barner INTERCEPTED by D.Stingley at HST 46. D.Stingley pushed ob at SEA 37 for 17 yards (J.Smith-Njigba).PENALTY on HST-D.Stingley, Unnecessary Roughness, 15 yards, enforced at SEA 37. [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q2 0:23 (0 yds) Blocked Field Goal: J.Myers 53 yard field goal is BLOCKED (D.Autry), Center-C.Stoll, Holder-M.Dickson.
+- Q3 7:24 (0 yds) Sack Opp Fumble Recovery: (Shotgun) S.Darnold sacked at SEA -5 for -12 yards (W.Anderson). FUMBLES (W.Anderson) [W.Anderson], RECOVERED by HST-W.Anderson at SEA -5. TOUCHDOWN. TWO-POINT CONVERSION ATTEMPT. C.Stroud pass to D.Schultz is incomplete. ATTEMPT FAILS.
+
+- Excluded non-zero-yard plays (up to 19 shown):
+- Q1 15:00 (28 yds) Kickoff: K.Fairbairn kicks 64 yards from HST 35 to SEA 1. D.Young to SEA 29 for 28 yards (J.Hansen). [special_teams]
+- Q1 2:23 (5 yds) Rush: K.Walker left end pushed ob at HST 36 for 1 yard (J.Pitre).PENALTY on HST-W.Anderson, Defensive Offside, 5 yards, enforced at HST 37 - No Play. [nullified]
+- Q2 10:44 (8 yds) Punt: M.Dickson punts 53 yards to HST 16, Center-C.Stoll. B.Berrios to HST 24 for 8 yards (B.Russell). [special_teams]
+- Q2 11:08 (-5 yds) Penalty: (Shotgun) PENALTY on SEA-T.Horton, False Start, 5 yards, enforced at SEA 36 - No Play. [nullified]
+- Q2 12:19 (3 yds) Pass Reception: (Shotgun) S.Darnold pass short right to C.Kupp to SEA 34 for 3 yards (E.Speed).PENALTY on SEA-A.Bradford, Offensive Holding, 10 yards, enforced at SEA 31 - No Play. [nullified]
+- Q2 2:18 (25 yds) Kickoff: K.Fairbairn kicks 60 yards from HST 35 to SEA 5. G.Holani pushed ob at SEA 30 for 25 yards (M.Stewart). [special_teams]
+- Q2 9:10 (15 yds) Rush: K.Walker left end to SEA 39 for -4 yards (K.Lassiter, H.To'oTo'o).PENALTY on HST-M.Edwards, Face Mask, 15 yards, enforced at SEA 43 - No Play. [nullified]
+- Q3 10:34 (26 yds) Field Goal Good: J.Myers 26 yard field goal is GOOD, Center-C.Stoll, Holder-M.Dickson. [special_teams]
+- Q3 1:45 (15 yds) Pass Incompletion: S.Darnold pass incomplete deep left to J.Smith-Njigba.PENALTY on HST-K.Lassiter, Defensive Pass Interference, 15 yards, enforced at HST 17 - No Play. [nullified]
+- Q3 5:15 (47 yds) Field Goal Good: J.Myers 47 yard field goal is GOOD, Center-C.Stoll, Holder-M.Dickson. [special_teams]
+- Q3 7:24 (34 yds) Kickoff: K.Fairbairn kicks 61 yards from HST 35 to SEA 4. G.Holani to SEA 38 for 34 yards (M.Stewart). [special_teams]
+- Q4 0:34 (-1 yds) Rush: S.Darnold kneels to SEA 47 for -1 yards. [spike_kneel]
+- Q4 0:57 (-1 yds) Rush: S.Darnold kneels to SEA 48 for -1 yards. [spike_kneel]
+- Q4 11:50 (-10 yds) Pass Incompletion: S.Darnold pass incomplete deep middle to T.Horton (D.Stingley, C.Bullock).PENALTY on SEA-C.Cross, Offensive Holding, 10 yards, enforced at HST 48 - No Play. [nullified]
+- Q4 13:21 (-5 yds) Penalty: (Punt formation) PENALTY on SEA, Delay of Game, 5 yards, enforced at HST 44 - No Play. [nullified]
+- Q4 13:21 (10 yds) Punt: M.Dickson punts 38 yards to HST 11, Center-C.Stoll. B.Berrios pushed ob at HST 21 for 10 yards (B.Russell). [special_teams]
+- Q4 15:00 (-5 yds) Penalty: PENALTY on SEA-A.Bradford, False Start, 5 yards, enforced at SEA 47 - No Play. [nullified]
+- Q4 2:04 (29 yds) Kickoff: K.Fairbairn kicks 66 yards from HST 35 to SEA -1. G.Holani pushed ob at SEA 28 for 29 yards (M.Stewart). [special_teams]
+- Q4 4:44 (7 yds) Punt: M.Dickson punts 56 yards to HST 43, Center-C.Stoll. B.Berrios to 50 for 7 yards (N.Pritchett). [special_teams]
+
+### 401772896 MIN @ SEA (TOΔ max 1, YdsΔ max 5, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| MIN | 162 | 157 | -5 | 5 | 5 | +0 | 80 | 80 | +0 |
+| SEA | 219 | 220 | +1 | 2 | 1 | -1 | 25 | 25 | +0 |
+
+**MIN Reconciliation Clues**
+
+- Windelta counted turnovers (5):
+- Q2 2:59 (85 yds) Interception Return Touchdown: M.Brosmer pass short right INTERCEPTED by E.Jones [D.Lawrence] at SEA 15. E.Jones for 85 yards, TOUCHDOWN. J.Myers extra point is GOOD, Center-C.Stoll, Holder-M.Dickson. [interception]
+- Q3 1:09 (0 yds) Pass Interception Return: M.Brosmer pass deep right intended for J.Nailor INTERCEPTED by C.Bryant at SEA 21. C.Bryant to SEA 21 for no gain (J.Nailor). [interception]
+- Q3 8:52 (0 yds) Fumble Recovery (Opponent): (Shotgun) M.Brosmer pass short right to A.Jones to SEA 40 for 3 yards (D.Lawrence). FUMBLES (D.Lawrence), RECOVERED by SEA-T.Okada at SEA 37. [fumble]
+- Q4 13:02 (6 yds) Pass Interception Return: (No Huddle, Shotgun) M.Brosmer pass short middle intended for J.Jefferson INTERCEPTED by E.Jones (J.Jobe) at MIN 38. E.Jones to MIN 32 for 6 yards (W.Fries; J.Jefferson). [interception]
+- Q4 5:48 (0 yds) Fumble Recovery (Opponent): (Shotgun) M.Brosmer pass deep left intended for J.Addison INTERCEPTED by T.Woolen at SEA 5. T.Woolen to SEA 35 for 30 yards (J.Nailor). FUMBLES (J.Nailor), touched at SEA 38, RECOVERED by MIN-J.Nailor at SEA 37. [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q2 2:11 (1 yds) Fumble Recovery (Own): (Shotgun) M.Brosmer pass short right to J.Mason to MIN 25 for -4 yards (B.Mafe). FUMBLES (B.Mafe), and recovers at MIN 28. J.Mason to MIN 30 for 2 yards (B.Murphy).
+
+- Excluded non-zero-yard plays (up to 14 shown):
+- Q1 13:30 (5 yds) Penalty: (Shotgun) M.Brosmer sacked at MIN 32 for -5 yards (U.Nwosu).PENALTY on SEA-J.Jobe, Defensive Holding, 5 yards, enforced at MIN 37 - No Play. [nullified]
+- Q1 15:00 (28 yds) Kickoff: J.Myers kicks 60 yards from SEA 35 to MIN 5. M.Price to MIN 33 for 28 yards (N.Pritchett, P.O'Connell). [special_teams]
+- Q1 1:36 (16 yds) Punt: R.Wright punts 55 yards to SEA 16, Center-A.DePaola. R.Shaheed pushed ob at SEA 32 for 16 yards (A.Keys). [special_teams]
+- Q1 3:38 (8 yds) Punt: R.Wright punts 60 yards to SEA 6, Center-A.DePaola. R.Shaheed to SEA 14 for 8 yards (T.Felton; B.Richter). [special_teams]
+- Q2 0:03 (-1 yds) Rush: M.Brosmer kneels to MIN 30 for -1 yards. [spike_kneel]
+- Q2 0:08 (29 yds) Kickoff: J.Myers kicks 63 yards from SEA 35 to MIN 2. M.Price to MIN 31 for 29 yards (N.Kallerup). [special_teams]
+- Q2 1:12 (19 yds) Punt: R.Wright punts 50 yards to SEA 26, Center-A.DePaola. R.Shaheed pushed ob at SEA 45 for 19 yards (B.Richter). [special_teams]
+- Q2 2:19 (-5 yds) Penalty: (Shotgun) PENALTY on MIN-R.Kelly, False Start, 5 yards, enforced at MIN 34 - No Play. [nullified]
+- Q2 2:59 (29 yds) Kickoff: J.Myers kicks 62 yards from SEA 35 to MIN 3. M.Price to MIN 32 for 29 yards (P.O'Connell). [special_teams]
+- Q2 7:10 (27 yds) Kickoff: J.Myers kicks 63 yards from SEA 35 to MIN 2. M.Price pushed ob at MIN 29 for 27 yards (N.Pritchett). [special_teams]
+- Q3 11:14 (28 yds) Kickoff: J.Myers kicks 61 yards from SEA 35 to MIN 4. M.Price to MIN 32 for 28 yards (T.Knight). [special_teams]
+- Q3 3:16 (28 yds) Kickoff: J.Myers kicks 60 yards from SEA 35 to MIN 5. M.Price to MIN 33 for 28 yards (C.Bryant; P.O'Connell). [special_teams]
+- Q4 5:33 (-10 yds) Penalty: (Shotgun) Z.Scott right end pushed ob at SEA 30 for 7 yards (E.Jones).PENALTY on MIN-B.O'Neill, Offensive Holding, 10 yards, enforced at SEA 37 - No Play. [nullified]
+- Q4 9:11 (25 yds) Kickoff: J.Myers kicks 25 yards from 50 to MIN 25, short of landing zone.PENALTY on SEA-J.Myers, Kickoff Short of Landing Zone, placed at MIN 25. [special_teams]
+
+**SEA Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q2 5:26 (0 yds) Sack Opp Fumble Recovery: S.Darnold sacked at SEA 15 for -7 yards (D.Turner). FUMBLES (D.Turner) [D.Turner], RECOVERED by MIN-J.Redmond at SEA 13. [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q2 14:18 (-7 yds) Fumble Recovery (Own): (Shotgun) S.Darnold sacked at SEA 45 for -8 yards (D.Turner). FUMBLES (D.Turner) [D.Turner], recovered by SEA-C.Kupp at SEA 46.
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q1 10:03 (5 yds) Penalty: (Shotgun) K.Walker left guard to SEA 26 for 5 yards (J.Allen).PENALTY on MIN-A.Van Ginkel, Defensive Offside, 5 yards, enforced at SEA 21 - No Play. [nullified]
+- Q1 2:36 (-10 yds) Punt: M.Dickson punts 48 yards to MIN 37, Center-C.Stoll, fair catch by M.Price.PENALTY on MIN-B.Richter, Offensive Holding, 10 yards, enforced at MIN 37. [special_teams]
+- Q2 0:08 (56 yds) Field Goal Good: J.Myers 56 yard field goal is GOOD, Center-C.Stoll, Holder-M.Dickson. [special_teams]
+- Q2 7:10 (33 yds) Field Goal Good: J.Myers 33 yard field goal is GOOD, Center-C.Stoll, Holder-M.Dickson. [special_teams]
+- Q3 11:14 (54 yds) Field Goal Good: J.Myers 54 yard field goal is GOOD, Center-C.Stoll, Holder-M.Dickson. [special_teams]
+- Q3 11:23 (5 yds) Penalty: (Shotgun) PENALTY on MIN-J.Greenard, Neutral Zone Infraction, 5 yards, enforced at MIN 41 - No Play. [nullified]
+- Q3 12:49 (5 yds) Penalty: (Shotgun) S.Darnold pass incomplete deep right to J.Smith-Njigba.PENALTY on MIN-J.Allen, Defensive Offside, 5 yards, enforced at SEA 46 - No Play. [nullified]
+- Q3 3:16 (40 yds) Field Goal Good: J.Myers 40 yard field goal is GOOD, Center-C.Stoll, Holder-M.Dickson. [special_teams]
+- Q3 5:47 (5 yds) Penalty: K.Walker right guard to MIN 27 for 6 yards (D.Turner; B.Cashman).PENALTY on MIN-T.Ingram-Dawkins, Defensive Offside, 5 yards, enforced at MIN 33 - No Play. [nullified]
+- Q3 5:51 (5 yds) Penalty: S.Darnold pass incomplete deep right to J.Smith-Njigba.PENALTY on MIN-B.Murphy, Illegal Contact, 5 yards, enforced at MIN 38 - No Play. [nullified]
+- Q3 8:41 (-5 yds) Penalty: K.Walker left guard pushed ob at SEA 43 for 6 yards (H.Smith).PENALTY on SEA-C.Kupp, Illegal Shift, 5 yards, enforced at SEA 37 - No Play. [nullified]
+
+### 401772890 PHI @ DAL (TOΔ max 1, YdsΔ max 0, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| PHI | 339 | 339 | +0 | 2 | 1 | -1 | 96 | 96 | +0 |
+| DAL | 473 | 473 | +0 | 2 | 2 | +0 | 69 | 69 | +0 |
+
+**PHI Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q4 7:38 (0 yds) Fumble Recovery (Opponent): (Shotgun) J.Hurts pass short left to S.Barkley to DAL 36 for 2 yards (S.Williams). FUMBLES (S.Williams), touched at DAL 35, RECOVERED by DAL-K.Murray at DAL 33. [fumble]
+
+- Excluded non-zero-yard plays (up to 15 shown):
+- Q1 3:57 (5 yds) Penalty: (Shotgun) J.Hurts pass incomplete short left to D.Smith.PENALTY on DAL-J.Clowney, Defensive Offside, 5 yards, enforced at DAL 48 - No Play. [nullified]
+- Q1 6:27 (-5 yds) Penalty: (Shotgun) PENALTY on PHI-F.Johnson, False Start, 5 yards, enforced at PHI 23 - No Play. [nullified]
+- Q2 0:21 (21 yds) Kickoff: B.Aubrey kicks 58 yards from DAL 35 to PHI 7. W.Shipley to PHI 28 for 21 yards (H.Luepke). [special_teams]
+- Q2 14:15 (-10 yds) Penalty: (No Huddle, Shotgun) S.Barkley up the middle to 50 for no gain (O.Odighizuwa).PENALTY on PHI-T.Steen, Offensive Holding, 10 yards, enforced at 50 - No Play. [nullified]
+- Q2 3:35 (-5 yds) Penalty: (Shotgun) PENALTY on PHI-C.Jurgens, False Start, 5 yards, enforced at PHI 28 - No Play. [nullified]
+- Q3 13:45 (1 yds) Punt: B.Mann punts 58 yards to DAL 7, Center-C.Adomitis. K.Turpin to DAL 8 for 1 yard (S.Mondon). [special_teams]
+- Q3 14:13 (-5 yds) Penalty: (Shotgun) M.Pryor reported in as eligible.  J.Hurts pass short left to D.Goedert pushed ob at DAL 40 for 20 yards (D.Wilson).PENALTY on PHI, Illegal Formation, 5 yards, enforced at PHI 40 - No Play. [nullified]
+- Q3 15:00 (30 yds) Kickoff: B.Aubrey kicks 63 yards from DAL 35 to PHI 2. W.Shipley to PHI 32 for 30 yards (H.Luepke; R.Steward). [special_teams]
+- Q3 2:02 (27 yds) Kickoff: B.Aubrey kicks 60 yards from DAL 35 to PHI 5. W.Shipley to PHI 32 for 27 yards (B.Spann-Ford; C.Goodwin). [special_teams]
+- Q4 11:40 (28 yds) Kickoff: B.Aubrey kicks 62 yards from DAL 35 to PHI 3. W.Shipley to PHI 31 for 28 yards (R.Steward). [special_teams]
+- Q4 13:14 (56 yds) Field Goal Missed: J.Elliott 56 yard field goal is No Good, Wide Right, Center-C.Adomitis, Holder-B.Mann. [special_teams]
+- Q4 14:41 (-5 yds) Penalty: (Shotgun) PENALTY on PHI-A.Brown, False Start, 5 yards, enforced at PHI 47 - No Play. [nullified]
+- Q4 15:00 (-10 yds) Penalty: (Shotgun) J.Hurts pass short right to D.Goedert pushed ob at DAL 35 for 8 yards (S.James).PENALTY on PHI-D.Smith, Offensive Pass Interference, 10 yards, enforced at DAL 43 - No Play. [nullified]
+- Q4 1:44 (-5 yds) Punt: B.Mann punts 49 yards to DAL 32, Center-C.Adomitis, fair catch by K.Turpin.PENALTY on DAL-K.Turpin, Invalid Fair Catch Signal, 5 yards, enforced at DAL 32. [special_teams]
+- Q4 8:08 (-10 yds) Penalty: (No Huddle, Shotgun) J.Hurts pass deep left to D.Smith pushed ob at DAL 12 for 16 yards (D.Wilson).PENALTY on PHI-F.Johnson, Illegal Use of Hands, 10 yards, enforced at DAL 28 - No Play. [nullified]
+
+**DAL Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q2 14:49 (0 yds) Fumble Recovery (Opponent): K.Turpin left tackle to PHI 32 for -1 yards. FUMBLES, touched at PHI 29, RECOVERED by PHI-Z.Baun at PHI 34. [fumble]
+- Q2 5:07 (0 yds) Pass Interception Return: (Shotgun) D.Prescott pass short right intended for C.Lamb INTERCEPTED by R.Blankenship at PHI -2. Touchback. [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 3 shown):
+- Q3 6:51 (0 yds) Penalty: (Shotgun) D.Prescott pass short right intended for J.Ferguson INTERCEPTED by N.Dean [Z.Baun] at PHI 37. N.Dean to DAL 45 for 18 yards (T.Steele).Penalty on PHI, Defensive Too Many Men on Field, offsetting, enforced at PHI 33 - No Play.Penalty on DAL-T.Booker, Ineligible Downfield Pass, offsetting.
+- Q4 1:35 (7 yds) Pass Reception: (Shotgun) D.Prescott pass short right to J.Ferguson to DAL 35 for 8 yards (C.DeJean; N.Smith). FUMBLES (C.DeJean), ball out of bounds at DAL 34. ** Injury Update: DAL-G.Pickens has returned to the game.
+- Q4 5:25 (0 yds) Fumble Recovery (Opponent): B.Anger punts 58 yards to PHI 2, Center-T.Sieg. X.Gipson to PHI 12 for 10 yards (A.Clark; M.Bell). FUMBLES (A.Clark), touched at PHI 7, RECOVERED by DAL-T.Sieg at PHI 8. PHI-X.Gipson was injured during the play.
+
+- Excluded non-zero-yard plays (up to 15 shown):
+- Q1 15:00 (24 yds) Kickoff: J.Elliott kicks 61 yards from PHI 35 to DAL 4. K.Turpin to DAL 28 for 24 yards (J.Trotter; W.Shipley). [special_teams]
+- Q1 8:34 (5 yds) Penalty: (Shotgun) D.Prescott pass incomplete short middle to C.Lamb.PENALTY on PHI-N.Dean, Illegal Contact, 5 yards, enforced at DAL 19 - No Play. [nullified]
+- Q1 8:41 (18 yds) Kickoff: J.Elliott kicks 64 yards from PHI 35 to DAL 1. K.Turpin to DAL 29 for 28 yards (K.Ringo; S.Mondon).PENALTY on DAL-S.James, Offensive Holding, 10 yards, enforced at DAL 29. [special_teams]
+- Q2 11:32 (33 yds) Kickoff: J.Elliott kicks 58 yards from PHI 35 to DAL 7. K.Turpin to DAL 40 for 33 yards (J.Trotter). [special_teams]
+- Q2 1:26 (-15 yds) Penalty: (Shotgun) D.Prescott pass short right to J.Williams to PHI 16 for -3 yards (Z.Baun).PENALTY on DAL-T.Guyton, Tripping, 15 yards, enforced at PHI 13 - No Play. [nullified]
+- Q2 5:16 (-4 yds) Penalty: PENALTY on DAL-T.Guyton, False Start, 4 yards, enforced at PHI 1 - No Play. [nullified]
+- Q2 9:44 (-5 yds) Penalty: PENALTY on DAL-J.Ferguson, False Start, 5 yards, enforced at PHI 48 - No Play. [nullified]
+- Q3 11:38 (4 yds) Punt: B.Anger punts 62 yards to PHI 26, Center-T.Sieg. X.Gipson to PHI 41 for 15 yards (H.Luepke; C.Goodwin).PENALTY on PHI-J.Uche, Illegal Block Above the Waist, 10 yards, enforced at PHI 40. [special_teams]
+- Q3 2:12 (10 yds) Penalty: (Shotgun) D.Prescott pass incomplete short right to C.Lamb.PENALTY on PHI-K.Ringo, Defensive Pass Interference, 10 yards, enforced at PHI 14 - No Play. [nullified]
+- Q3 4:13 (6 yds) Penalty: (Shotgun) D.Prescott pass incomplete short left to K.Turpin.PENALTY on PHI-Q.Mitchell, Defensive Pass Interference, 6 yards, enforced at DAL 11 - No Play. [nullified]
+- Q3 6:39 (51 yds) Field Goal Missed: B.Aubrey 51 yard field goal is No Good, Wide Left, Center-T.Sieg, Holder-B.Anger. [special_teams]
+- Q4 0:00 (42 yds) Field Goal Good: B.Aubrey 42 yard field goal is GOOD, Center-T.Sieg, Holder-B.Anger. [special_teams]
+- Q4 0:14 (-1 yds) Rush:  D.Prescott kneels to PHI 24 for -1 yards. [spike_kneel]
+- Q4 0:35 (-1 yds) Rush: D.Prescott kneels to PHI 23 for -1 yards. [spike_kneel]
+- Q4 6:19 (-10 yds) Penalty: (Shotgun) D.Prescott pass incomplete deep right to G.Pickens.PENALTY on DAL-T.Booker, Offensive Holding, 10 yards, enforced at DAL 43 - No Play. [nullified]
+
+### 401772946 BUF @ HOU (TOΔ max 1, YdsΔ max 0, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| BUF | 326 | 326 | +0 | 3 | 2 | -1 | 54 | 54 | +0 |
+| HOU | 261 | 261 | +0 | 0 | 0 | +0 | 40 | 40 | +0 |
+
+**BUF Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q3 4:19 (9 yds) Fumble Recovery (Opponent): (Shotgun) J.Allen pass short left to K.Shakir to BUF 28 for 13 yards (C.Bullock). FUMBLES (C.Bullock), RECOVERED by HST-J.Reed at BUF 31. J.Reed to BUF 22 for 9 yards (D.Knox). [fumble]
+- Q4 0:24 (0 yds) Pass Interception Return: (Shotgun) J.Allen pass short left intended for J.Palmer INTERCEPTED by C.Bullock at HST 9. C.Bullock to HST 9 for no gain (J.Palmer).Penalty on BUF-G.Davis, Offensive Pass Interference, declined. [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q2 3:41 (0 yds) Pass Interception Return: J.Allen pass deep right intended for E.Moore INTERCEPTED by C.Bullock (A.Al-Shaair) at BUF 44. C.Bullock for 44 yards, TOUCHDOWN NULLIFIED by Penalty.PENALTY on HST-D.Barnett, Illegal Blindside Block, 15 yards, enforced at BUF 15.
+
+- Excluded non-zero-yard plays (up to 7 shown):
+- Q1 4:32 (12 yds) Kickoff: K.Fairbairn kicks 65 yards from HST 35 to BUF 0. Ty.Johnson to BUF 22 for 22 yards (E.Speed).PENALTY on BUF-J.Hawes, Offensive Holding, 10 yards, enforced at BUF 22. [special_teams]
+- Q2 0:05 (-1 yds) Rush: J.Allen kneels to BUF 34 for -1 yards. [spike_kneel]
+- Q2 3:47 (23 yds) Kickoff: K.Fairbairn kicks 63 yards from HST 35 to BUF 2. R.Davis pushed ob at BUF 25 for 23 yards (J.Hansen). [special_teams]
+- Q2 9:35 (44 yds) Field Goal Good: M.Prater 44 yard field goal is GOOD, Center-R.Ferguson, Holder-M.Wishnowsky. [special_teams]
+- Q3 15:00 (25 yds) Kickoff: K.Fairbairn kicks 70 yards from HST 35 to BUF -5. R.Davis to BUF 20 for 25 yards (J.Hansen). [special_teams]
+- Q4 0:24 (-5 yds) Penalty: (Shotgun) PENALTY on BUF-D.Dawkins, False Start, 5 yards, enforced at HST 17 - No Play. [nullified]
+- Q4 5:44 (38 yds) Field Goal Good: M.Prater 38 yard field goal is GOOD, Center-R.Ferguson, Holder-M.Wishnowsky. [special_teams]
+
+**HOU Reconciliation Clues**
+
+- Excluded non-zero-yard plays (up to 19 shown):
+- Q1 14:04 (-10 yds) Punt: T.Townsend punts 43 yards to BUF 29, Center-A.Brinkman. K.Shakir pushed ob at BUF 37 for 8 yards (J.Reed).PENALTY on BUF-J.Hancock, Offensive Holding, 10 yards, enforced at BUF 29. [special_teams]
+- Q1 15:00 (21 yds) Kickoff: M.Prater kicks 64 yards from BUF 35 to HST 1. J.Noel to HST 22 for 21 yards (S.Franklin). [special_teams]
+- Q1 4:32 (24 yds) Field Goal Good: K.Fairbairn 24 yard field goal is GOOD, Center-A.Brinkman, Holder-T.Townsend. [special_teams]
+- Q1 9:11 (38 yds) Kickoff: M.Prater kicks 62 yards from BUF 35 to HST 3. J.Noel to HST 41 for 38 yards (D.Williams). [special_teams]
+- Q2 1:43 (97 yds) Kickoff Return Touchdown: K.Fairbairn kicks 62 yards from HST 35 to BUF 3. R.Davis for 97 yards, TOUCHDOWN. M.Prater extra point is GOOD, Center-R.Ferguson, Holder-M.Wishnowsky. [special_teams_return]
+- Q2 1:43 (20 yds) Kickoff: M.Prater kicks 60 yards from BUF 35 to HST 5. T.Smith to HST 25 for 20 yards (C.Lewis). [special_teams]
+- Q2 1:56 (43 yds) Field Goal Good:  K.Fairbairn 43 yard field goal is GOOD, Center-A.Brinkman, Holder-T.Townsend. [special_teams]
+- Q2 6:09 (5 yds) Penalty: D.Mills pass incomplete short right to N.Collins (C.Benford).PENALTY on BUF-Ta.Johnson, Illegal Contact, 5 yards, enforced at BUF 18 - No Play. [nullified]
+- Q2 9:35 (19 yds) Kickoff: M.Prater kicks 61 yards from BUF 35 to HST 4. J.Noel to HST 23 for 19 yards (R.Gilliam; J.Andreessen). [special_teams]
+- Q3 0:17 (26 yds) Field Goal Good: K.Fairbairn 26 yard field goal is GOOD, Center-A.Brinkman, Holder-T.Townsend. [special_teams]
+- Q3 10:20 (-10 yds) Penalty: (Shotgun) D.Mills scrambles right end pushed ob at HST 32 for 7 yards (S.Thompson).PENALTY on HST-T.Brown, Offensive Holding, 10 yards, enforced at HST 25 - No Play. [nullified]
+- Q3 11:11 (-5 yds) Penalty: B.Fisher reported in as eligible.  D.Mills pass short left to N.Chubb to HST 39 for 8 yards (D.Walker) [T.Bernard].PENALTY on HST-J.Andrews, Ineligible Downfield Pass, 5 yards, enforced at HST 31 - No Play. [nullified]
+- Q3 1:23 (-5 yds) Penalty: (Shotgun) PENALTY on HST, Delay of Game, 5 yards, enforced at BUF 11 - No Play. [nullified]
+- Q3 5:58 (-5 yds) Penalty: (Punt formation) PENALTY on HST-E.Speed, False Start, 5 yards, enforced at BUF 45 - No Play. [nullified]
+- Q3 9:15 (-9 yds) Punt: T.Townsend punts 56 yards to BUF 19, Center-A.Brinkman. K.Shakir to BUF 12 for -7 yards (D.Ogunbowale).PENALTY on BUF-C.Lewis, Offensive Holding, 9 yards, enforced at BUF 19. [special_teams]
+- Q4 0:18 (-1 yds) Rush: D.Mills kneels to HST 8 for -1 yards. [spike_kneel]
+- Q4 2:57 (4 yds) Punt: T.Townsend punts 41 yards to BUF 14, Center-A.Brinkman. K.Shakir ran ob at BUF 18 for 4 yards (B.Brooks). [special_teams]
+- Q4 5:44 (18 yds) Kickoff: M.Prater kicks 62 yards from BUF 35 to HST 3. J.Noel to HST 21 for 18 yards (J.Solomon). [special_teams]
+- Q4 9:21 (11 yds) Punt: T.Townsend punts 47 yards to BUF 27, Center-A.Brinkman. K.Shakir to BUF 38 for 11 yards (E.Speed). [special_teams]
+
+### 401772742 CHI @ LV (TOΔ max 0, YdsΔ max 68, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| CHI | 271 | 203 | -68 | 1 | 1 | +0 | 60 | 60 | +0 |
+| LV | 357 | 343 | -14 | 4 | 4 | +0 | 36 | 36 | +0 |
+
+**CHI Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q1 4:24 (19 yds) Pass Interception Return: (Shotgun) C.Williams pass short middle intended for R.Odunze INTERCEPTED by M.Crosby at LV 15. M.Crosby pushed ob at LV 34 for 19 yards (D.Moore). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q2 12:09 (-6 yds) Fumble Recovery (Own): (Shotgun) C.Williams to LV 29 for -5 yards (M.Crosby). FUMBLES (M.Crosby), and recovers at LV 30.
+- Q4 12:27 (-19 yds) Fumble Recovery (Own): (Shotgun) C.Williams FUMBLES (Aborted) at LV 22, and recovers at LV 33.
+
+- Excluded non-zero-yard plays (up to 18 shown):
+- Q1 0:04 (-5 yds) Penalty: C.Williams pass short right to D.Swift to CHI 36 for 5 yards (A.Butler).PENALTY on CHI-R.Odunze, Illegal Motion, 5 yards, enforced at CHI 31 - No Play. [nullified]
+- Q1 0:08 (23 yds) Kickoff: D.Carlson kicks 57 yards from LV 35 to CHI 8. L.Burden to CHI 31 for 23 yards (T.McCollum). [special_teams]
+- Q1 13:24 (7 yds) Punt: T.Taylor punts 46 yards to LV 18, Center-S.Daly. T.Tucker to LV 25 for 7 yards (J.Owens; D.Hardy). [special_teams]
+- Q1 15:00 (24 yds) Kickoff: D.Carlson kicks 60 yards from LV 35 to CHI 5. D.Duvernay to CHI 29 for 24 yards (D.Laube; T.Eichenberg). [special_teams]
+- Q1 9:53 (46 yds) Field Goal Good: C.Santos 46 yard field goal is GOOD, Center-S.Daly, Holder-T.Taylor. [special_teams]
+- Q2 0:53 (52 yds) Field Goal Good: C.Santos 52 yard field goal is GOOD, Center-S.Daly, Holder-T.Taylor. [special_teams]
+- Q2 4:03 (25 yds) Kickoff: D.Carlson kicks 61 yards from LV 35 to CHI 4. D.Duvernay to CHI 29 for 25 yards (T.Eichenberg; C.Smith). [special_teams]
+- Q2 4:22 (43 yds) Field Goal Good:  C.Santos 43 yard field goal is GOOD, Center-S.Daly, Holder-T.Taylor. [special_teams]
+- Q3 12:12 (-5 yds) Penalty: PENALTY on CHI-T.Benedet, False Start, 5 yards, enforced at LV 22 - No Play. [nullified]
+- Q3 3:43 (-1 yds) Punt: T.Taylor punts 62 yards to LV 2, Center-S.Daly, downed by CHI-J.Owens.PENALTY on LV-T.Eichenberg, Offensive Holding, 1 yard, enforced at LV 2. [special_teams]
+- Q3 3:49 (-5 yds) Penalty: (Run formation) PENALTY on CHI-C.Kmet, False Start, 5 yards, enforced at CHI 41 - No Play. [nullified]
+- Q3 5:23 (27 yds) Kickoff: D.Carlson kicks 60 yards from LV 35 to CHI 5. D.Duvernay to CHI 32 for 27 yards (J.Bech; T.Eichenberg). [special_teams]
+- Q4 0:33 (-1 yds) Rush: C.Williams kneels to CHI 43 for -1 yards. [spike_kneel]
+- Q4 11:38 (51 yds) Field Goal Good: C.Santos 51 yard field goal is GOOD, Center-S.Daly, Holder-T.Taylor. [special_teams]
+- Q4 13:18 (5 yds) Penalty: (Shotgun) C.Williams pass incomplete short right to K.Monangai.PENALTY on LV-G.Pratt, Illegal Contact, 5 yards, enforced at LV 24 - No Play. [nullified]
+- Q4 14:20 (-10 yds) Penalty: K.Monangai up the middle to LV 16 for 11 yards (D.Porter).PENALTY on CHI-J.Jackson, Offensive Holding, 10 yards, enforced at LV 27 - No Play. [nullified]
+- Q4 4:08 (-4 yds) Penalty: PENALTY on CHI-C.Kmet, False Start, 4 yards, enforced at LV 37 - No Play. [nullified]
+- Q4 6:45 (23 yds) Kickoff: D.Carlson kicks 57 yards from LV 35 to CHI 8. L.Burden to CHI 31 for 23 yards (D.Laube). [special_teams]
+
+**LV Reconciliation Clues**
+
+- Windelta counted turnovers (4):
+- Q1 11:00 (35 yds) Pass Interception Return: (Shotgun) G.Smith pass short middle intended for J.Meyers INTERCEPTED by K.Byard at CHI 41. K.Byard to LV 24 for 35 yards (J.Powers-Johnson). [interception]
+- Q1 7:21 (0 yds) Fumble Recovery (Opponent): A.Jeanty up the middle to LV 30 for -5 yards (A.Billings, N.Sewell). FUMBLES (N.Sewell), touched at LV 24, RECOVERED by CHI-T.Stevenson at LV 20. [fumble]
+- Q2 8:58 (12 yds) Pass Interception Return: (Shotgun) G.Smith pass short right intended for J.Meyers INTERCEPTED by K.Byard at LV 36. K.Byard to LV 24 for 12 yards (J.Powers-Johnson). [interception]
+- Q3 14:54 (3 yds) Pass Interception Return: (Shotgun) G.Smith pass deep right intended for J.Meyers INTERCEPTED by T.Stevenson at LV 43. T.Stevenson to LV 40 for 3 yards (J.Meyers; I.Thomas). CHI-T.Stevenson was injured during the play. [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 0:38 (54 yds) Blocked Field Goal: D.Carlson 54 yard field goal is BLOCKED (J.Blackwell), Center-J.Bobenmoyer, Holder-A.Cole.
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q1 3:32 (6 yds) Penalty: PENALTY on CHI-A.Billings, Neutral Zone Infraction, 6 yards, enforced at LV 43 - No Play. [nullified]
+- Q1 9:53 (19 yds) Kickoff: C.Santos kicks 58 yards from CHI 35 to LV 7. D.Laube to LV 26 for 19 yards (C.Jones; D.Hardy). [special_teams]
+- Q2 0:53 (-3 yds) Kickoff: C.Santos kicks 65 yards from CHI 35 to LV 0. R.Mostert to LV 32 for 32 yards (E.Hicks).PENALTY on LV-J.Shorter, Offensive Holding, 10 yards, enforced at LV 25. [special_teams]
+- Q2 4:22 (37 yds) Kickoff: C.Santos kicks 66 yards from CHI 35 to LV -1. D.Laube to LV 36 for 37 yards (D.Hardy). [special_teams]
+- Q3 11:38 (-4 yds) Kickoff: C.Santos kicks 62 yards from CHI 35 to LV 3. R.Mostert to LV 36 for 33 yards (C.Jones; J.Jones).PENALTY on LV-J.Bech, Offensive Holding, 10 yards, enforced at LV 30. [special_teams]
+- Q3 15:00 (22 yds) Kickoff: C.Santos kicks 60 yards from CHI 35 to LV 5. R.Mostert to LV 27 for 22 yards (J.Walker; D.Jackson). [special_teams]
+- Q3 1:22 (19 yds) Punt: A.Cole punts 60 yards to CHI 32, Center-J.Bobenmoyer. D.Duvernay to LV 49 for 19 yards (M.Koonce). [special_teams]
+- Q4 0:38 (54 yds) Blocked Field Goal: D.Carlson 54 yard field goal is BLOCKED (J.Blackwell), Center-J.Bobenmoyer, Holder-A.Cole. [special_teams]
+- Q4 11:38 (22 yds) Kickoff: T.Taylor kicks 61 yards from CHI 35 to LV 4. R.Mostert to LV 26 for 22 yards (R.Johnson). [special_teams]
+- Q4 1:34 (38 yds) Kickoff: T.Taylor kicks 61 yards from CHI 35 to LV 4. D.Laube pushed ob at LV 42 for 38 yards (T.Taylor). [special_teams]
+- Q4 6:45 (29 yds) Field Goal Good: D.Carlson 29 yard field goal is GOOD, Center-J.Bobenmoyer, Holder-A.Cole. [special_teams]
+
+### 401772726 CLE @ BAL (TOΔ max 0, YdsΔ max 66, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| CLE | 323 | 389 | +66 | 2 | 2 | +0 | 42 | 42 | +0 |
+| BAL | 242 | 242 | +0 | 0 | 0 | +0 | 28 | 28 | +0 |
+
+**CLE Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q3 11:46 (61 yds) Pass Interception Return: (Shotgun) J.Flacco pass deep right intended for D.Njoku INTERCEPTED by N.Wiggins [R.Smith] at BLT 34. N.Wiggins to CLV 5 for 61 yards (J.Bitonio). [interception]
+- Q4 8:19 (63 yds) Sack Opp Fumble Recovery: Roquan Smith 63 Yd Fumble Return (Tyler Loop Kick) [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q2 12:12 (-21 yds) Blocked Punt: C.Bojorquez punt is BLOCKED by J.Hummel, Center-R.Sunahara, RECOVERED by BLT-S.Kane at CLV 29. S.Kane to CLV 24 for 5 yards (R.Hickman).
+
+- Excluded non-zero-yard plays (up to 13 shown):
+- Q1 12:30 (-5 yds) Penalty: (Shotgun) PENALTY on CLV-D.Jones, False Start, 5 yards, enforced at CLV 35 - No Play. [nullified]
+- Q1 15:00 (13 yds) Kickoff: T.Loop kicks 56 yards from BLT 35 to CLV 9. D.Carter to CLV 22 for 13 yards (R.Ali). [special_teams]
+- Q1 3:06 (25 yds) Kickoff: T.Loop kicks 44 yards from BLT 35 to CLV 21, short of landing zone.PENALTY on BLT-T.Loop, Kickoff Short of Landing Zone, placed at CLV 40. [special_teams]
+- Q1 6:57 (23 yds) Punt: C.Bojorquez punts 53 yards to BLT 28, Center-R.Sunahara. L.Wester to CLV 49 for 23 yards (R.Jenkins). [special_teams]
+- Q2 0:29 (38 yds) Field Goal Good: A.Szmyt 38 yard field goal is GOOD, Center-R.Sunahara, Holder-C.Bojorquez. [special_teams]
+- Q2 11:13 (25 yds) Kickoff: T.Loop kicks 62 yards from BLT 35 to CLV 3. J.Ford to CLV 28 for 25 yards (T.Tampa). [special_teams]
+- Q2 12:12 (-21 yds) Blocked Punt: C.Bojorquez punt is BLOCKED by J.Hummel, Center-R.Sunahara, RECOVERED by BLT-S.Kane at CLV 29. S.Kane to CLV 24 for 5 yards (R.Hickman). [special_teams]
+- Q3 10:09 (15 yds) Kickoff: T.Loop kicks 59 yards from BLT 35 to CLV 6. J.Ford MUFFS catch, and recovers at CLV 14. J.Ford to CLV 29 for 15 yards (T.Simpson). [special_teams]
+- Q3 12:26 (25 yds) Kickoff: T.Loop kicks 56 yards from BLT 35 to CLV 9, out of bounds.PENALTY on BLT-T.Loop, Kickoff Out of Bounds, placed at CLV 40. [special_teams]
+- Q4 12:13 (-10 yds) Penalty: J.Flacco pass short middle to Q.Judkins to CLV 45 for 4 yards (R.Smith; T.Buchanan).PENALTY on CLV-K.Leveston, Offensive Holding, 10 yards, enforced at CLV 41 - No Play. [nullified]
+- Q4 13:26 (22 yds) Kickoff: T.Loop kicks 58 yards from BLT 35 to CLV 7. J.Ford to CLV 29 for 22 yards (T.Buchanan; T.Tampa). [special_teams]
+- Q4 6:22 (-5 yds) Penalty: (Shotgun) PENALTY on CLV, Delay of Game, 5 yards, enforced at CLV 41 - No Play. [nullified]
+- Q4 8:19 (19 yds) Kickoff: T.Loop kicks 59 yards from BLT 35 to CLV 6. J.Ford to CLV 25 for 19 yards (T.Simpson). [special_teams]
+
+**BAL Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q2 12:06 (9 yds) Fumble Recovery (Own): (Shotgun) D.Henry right tackle to CLV 16 for 8 yards (C.Mitchell; R.Hickman). FUMBLES (C.Mitchell), recovered by BLT-T.Wallace at CLV 15.
+
+- Excluded non-zero-yard plays (up to 14 shown):
+- Q1 0:45 (5 yds) Penalty: (Shotgun) PENALTY on CLV-M.Garrett, Encroachment, 5 yards, enforced at BLT 11 - No Play. [nullified]
+- Q1 3:06 (43 yds) Field Goal Good: T.Loop 43 yard field goal is GOOD, Center-N.Moore, Holder-J.Stout. [special_teams]
+- Q2 0:29 (26 yds) Kickoff: A.Szmyt kicks 65 yards from CLV 35 to BLT 0. T.Wallace pushed ob at BLT 26 for 26 yards (R.Jenkins; A.Wright). [special_teams]
+- Q2 2:00 (-4 yds) Penalty: (Run formation) PENALTY on BLT, Delay of Game, 4 yards, enforced at BLT 13 - No Play. [nullified]
+- Q3 12:26 (32 yds) Field Goal Good: T.Loop 32 yard field goal is GOOD, Center-N.Moore, Holder-J.Stout.Penalty on CLV-C.Thomas, Defensive Offside, declined. [special_teams]
+- Q3 13:16 (-4 yds) Penalty: PENALTY on BLT-Z.Mitchell-Paden, False Start, 4 yards, enforced at CLV 1 - No Play. [nullified]
+- Q3 4:56 (-10 yds) Penalty: (Shotgun) L.Jackson pass short right to Z.Flowers to BLT 43 for 9 yards (C.Mitchell).PENALTY on BLT-T.Wallace, Offensive Pass Interference, 10 yards, enforced at BLT 34 - No Play. [nullified]
+- Q3 5:02 (33 yds) Kickoff: A.Szmyt kicks 64 yards from CLV 35 to BLT 1. T.Wallace to BLT 34 for 33 yards (C.Schwesinger; M.Diabate). [special_teams]
+- Q4 0:34 (-1 yds) Rush: C.Rush kneels to BLT 25 for -1 yards. [spike_kneel]
+- Q4 13:38 (-10 yds) Penalty: (Shotgun) L.Jackson pass incomplete short right to M.Andrews (G.Delpit).PENALTY on BLT-M.Andrews, Offensive Pass Interference, 10 yards, enforced at CLV 14 - No Play. [nullified]
+- Q4 1:04 (-2 yds) Rush: C.Rush kneels to BLT 26 for -2 yards. [spike_kneel]
+- Q4 1:44 (-1 yds) Rush: C.Rush kneels to BLT 28 for -1 yards. [spike_kneel]
+- Q4 1:50 (20 yds) Kickoff: A.Szmyt kicks 56 yards from CLV 35 to BLT 9. T.Wallace to BLT 29 for 20 yards (R.Jenkins). [special_teams]
+- Q4 5:33 (12 yds) Penalty: (Shotgun) L.Jackson pass incomplete short left to D.Hopkins.PENALTY on CLV-C.Mitchell, Defensive Pass Interference, 12 yards, enforced at CLV 35 - No Play. [nullified]
+
+### 401772928 DET @ PHI (TOΔ max 0, YdsΔ max 53, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| DET | 317 | 317 | +0 | 1 | 1 | +0 | 48 | 48 | +0 |
+| PHI | 272 | 219 | -53 | 0 | 0 | +0 | 78 | 78 | +0 |
+
+**DET Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q1 11:18 (21 yds) Pass Interception Return: (No Huddle, Shotgun) J.Goff pass short middle intended for B.Wright INTERCEPTED by C.DeJean (J.Davis) at DET 32. C.DeJean to DET 11 for 21 yards (A.St. Brown; G.Glasgow). [interception]
+
+- Excluded non-zero-yard plays (up to 7 shown):
+- Q1 1:35 (-5 yds) Penalty: (Shotgun) PENALTY on DET, Delay of Game, 5 yards, enforced at PHI 40 - No Play. [nullified]
+- Q1 8:31 (-10 yds) Punt: J.Fox punts 55 yards to PHI 30, Center-H.Hatten, downed by DET-H.Hatten.PENALTY on PHI-J.Trotter, Offensive Holding, 10 yards, enforced at PHI 30. [special_teams]
+- Q1 9:43 (15 yds) Kickoff: J.Elliott kicks 59 yards from PHI 35 to DET 6. K.Raymond to DET 21 for 15 yards (C.Latu). [special_teams]
+- Q2 0:16 (-1 yds) Rush: J.Goff kneels to DET 34 for -1 yards. [spike_kneel]
+- Q2 6:02 (21 yds) Kickoff: J.Elliott kicks 60 yards from PHI 35 to DET 5. K.Raymond to DET 26 for 21 yards (J.Trotter). [special_teams]
+- Q4 10:15 (26 yds) Kickoff: J.Elliott kicks 63 yards from PHI 35 to DET 2. J.Saylors to DET 28 for 26 yards (S.Brown; S.Mondon). [special_teams]
+- Q4 1:58 (54 yds) Field Goal Good: J.Bates 54 yard field goal is GOOD, Center-H.Hatten, Holder-J.Fox. [special_teams]
+
+**PHI Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q2 3:01 (-3 yds) Fumble Recovery (Own): (No Huddle, Shotgun) J.Hurts FUMBLES (Aborted) at DET 41, touched at DET 40, recovered by PHI-S.Barkley at DET 40.
+
+- Excluded non-zero-yard plays (up to 15 shown):
+- Q1 12:28 (-1 yds) Punt: B.Mann punts 42 yards to DET 15, Center-C.Adomitis. K.Raymond to DET 14 for -1 yards (C.Adomitis). [special_teams]
+- Q1 14:06 (-10 yds) Pass Incompletion: (No Huddle, Shotgun) J.Hurts pass incomplete deep left to S.Barkley (A.Anzalone) [A.Muhammad].PENALTY on PHI-L.Johnson, Offensive Holding, 10 yards, enforced at PHI 47 - No Play. [nullified]
+- Q1 9:43 (27 yds) Field Goal Good:  J.Elliott 27 yard field goal is GOOD, Center-C.Adomitis, Holder-B.Mann. [special_teams]
+- Q2 12:46 (-15 yds) Punt: B.Mann punts 28 yards to DET 20, Center-C.Adomitis, fair catch by K.Raymond.PENALTY on PHI-J.Trotter, Face Mask, 15 yards, enforced at DET 20. [special_teams]
+- Q2 5:05 (22 yds) Kickoff: J.Bates kicks 51 yards from DET 35 to PHI 14. X.Gipson to PHI 36 for 22 yards (D.Thomas). [special_teams]
+- Q2 6:02 (34 yds) Field Goal Good: J.Elliott 34 yard field goal is GOOD, Center-C.Adomitis, Holder-B.Mann. [special_teams]
+- Q3 10:37 (-5 yds) Penalty: (Punt formation) PENALTY on PHI, Delay of Game, 5 yards, enforced at PHI 37 - No Play. [nullified]
+- Q3 11:06 (-4 yds) Penalty: PENALTY on PHI-T.Steen, False Start, 4 yards, enforced at PHI 41 - No Play. [nullified]
+- Q3 3:09 (4 yds) Punt: B.Mann punts 41 yards to DET 11, Center-C.Adomitis. K.Raymond to DET 15 for 4 yards (C.Adomitis; K.Ringo). [special_teams]
+- Q4 0:12 (-1 yds) Rush: J.Hurts kneels to DET 46 for -1 yards. [spike_kneel]
+- Q4 10:15 (49 yds) Field Goal Good: J.Elliott 49 yard field goal is GOOD, Center-C.Adomitis, Holder-B.Mann. [special_teams]
+- Q4 14:17 (10 yds) Pass Reception: (Shotgun) J.Hurts pass short right to A.Brown pushed ob at DET 46 for 10 yards (R.Ya-Sin).PENALTY on DET-A.Robertson, Defensive Holding, 5 yards, enforced at PHI 44 - No Play. [nullified]
+- Q4 1:51 (-5 yds) Penalty: (Shotgun) PENALTY on PHI-F.Johnson, False Start, 5 yards, enforced at PHI 42 - No Play. [nullified]
+- Q4 1:51 (8 yds) Pass Incompletion: (Shotgun) J.Hurts pass incomplete short right to A.Brown.PENALTY on DET-R.Ya-Sin, Defensive Pass Interference, 8 yards, enforced at PHI 37 - No Play. [nullified]
+- Q4 6:25 (-4 yds) Penalty: (Run formation) PENALTY on PHI-D.Cooper, False Start, 4 yards, enforced at PHI 41 - No Play. [nullified]
+
+### 401772814 KC @ JAX (TOΔ max 0, YdsΔ max 50, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| KC | 476 | 426 | -50 | 1 | 1 | +0 | 109 | 109 | +0 |
+| JAX | 319 | 310 | -9 | 2 | 2 | +0 | 25 | 25 | +0 |
+
+**KC Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q3 2:19 (99 yds) Interception Return Touchdown: (Shotgun) P.Mahomes pass short middle intended for J.Smith-Schuster INTERCEPTED by D.Lloyd at JAX 1. D.Lloyd for 99 yards, TOUCHDOWN. C.Little extra point is GOOD, Center-R.Matiscik, Holder-L.Cooke. [interception]
+
+- Excluded non-zero-yard plays (up to 9 shown):
+- Q1 10:48 (-5 yds) Rush: (Shotgun) I.Pacheco up the middle to JAX 42 for 6 yards (J.Hines-Allen).PENALTY on KC-J.Taylor, Illegal Formation, 5 yards, enforced at JAX 48 - No Play. [nullified]
+- Q3 13:24 (-1 yds) Punt: M.Araiza punts 45 yards to JAX 14, Center-J.Winchester. P.Washington to JAX 13 for -1 yards (N.Williams). [special_teams]
+- Q3 15:00 (30 yds) Kickoff: C.Little kicks 62 yards from JAX 35 to KC 3. B.Smith to KC 33 for 30 yards (M.Brown). [special_teams]
+- Q3 2:19 (22 yds) Kickoff: C.Little kicks 66 yards from JAX 35 to KC -1. B.Smith to JAX 38 for 63 yards (M.Brown).PENALTY on KC-J.Cochrane, Offensive Holding, 10 yards, enforced at KC 30. [special_teams]
+- Q3 8:40 (26 yds) Kickoff: C.Little kicks 59 yards from JAX 35 to KC 6. B.Smith pushed ob at KC 32 for 26 yards (J.Kiser; V.Miller). [special_teams]
+- Q4 0:03 (-5 yds) Penalty: (Shotgun) PENALTY on KC, Delay of Game, 5 yards, enforced at KC 28 - No Play. [nullified]
+- Q4 0:23 (-1 yds) Kickoff: C.Little kicks 63 yards from JAX 35 to KC 2. B.Smith to KC 36 for 34 yards (An.Johnson).PENALTY on KC-J.Cochrane, Offensive Holding, 10 yards, enforced at KC 27. [special_teams]
+- Q4 14:53 (-5 yds) Penalty: (Shotgun) PENALTY on KC, Delay of Game, 5 yards, enforced at KC 47 - No Play. [nullified]
+- Q4 8:08 (-9 yds) Kickoff: C.Little kicks 56 yards from JAX 35 to KC 9. B.Smith to KC 31 for 22 yards (Q.Morris; R.Lane).PENALTY on KC-N.Remigio, Illegal Double-Team Block, 13 yards, enforced at KC 27. [special_teams]
+
+**JAX Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q2 13:41 (1 yds) Fumble Recovery (Opponent): T.Lawrence up the middle to KC 1 for no gain (N.Bolton). FUMBLES (N.Bolton), RECOVERED by KC-G.Karlaftis at KC 2. G.Karlaftis to KC 3 for 1 yard (B.Tuten).The Replay Official reviewed the short of the goal line ruling, and the play was Upheld. The ruling on the field stands. [fumble]
+- Q4 13:12 (2 yds) Pass Interception Return: (Shotgun) T.Lawrence pass short right intended for P.Washington INTERCEPTED by T.McDuffie [G.Karlaftis] at JAX 21. T.McDuffie to JAX 19 for 2 yards (T.Etienne). ** Injury Update: JAX-T.Hunter has returned to the game. [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 0:38 (0 yds) Penalty: (Shotgun) T.Lawrence pass deep left intended for B.Thomas INTERCEPTED by B.Cook (C.Conner) at KC -5. Touchback.PENALTY on KC-C.Conner, Defensive Pass Interference, 13 yards, enforced at KC 14 - No Play.
+
+- Excluded non-zero-yard plays (up to 12 shown):
+- Q1 15:00 (22 yds) Kickoff: H.Butker kicks 57 yards from KC 35 to JAX 8. L.Allen to JAX 30 for 22 yards (N.Williams). [special_teams]
+- Q1 4:02 (34 yds) Kickoff: H.Butker kicks 60 yards from KC 35 to JAX 5. L.Allen to JAX 39 for 34 yards (J.Cochrane; J.Brownlee). [special_teams]
+- Q1 8:38 (2 yds) Punt: L.Cooke punts 52 yards to KC 26, Center-R.Matiscik. N.Remigio to KC 28 for 2 yards (R.Lane). [special_teams]
+- Q2 0:35 (-10 yds) Penalty: (No Huddle, Shotgun) T.Lawrence pass incomplete deep right to D.Brown.PENALTY on JAX-P.Mekari, Offensive Holding, 10 yards, enforced at JAX 21 - No Play. [nullified]
+- Q2 10:44 (23 yds) Kickoff: H.Butker kicks 58 yards from KC 35 to JAX 7. L.Allen to JAX 30 for 23 yards (C.Conner; C.Roland-Wallace). [special_teams]
+- Q2 9:00 (13 yds) Pass Incompletion: (Shotgun) T.Lawrence pass incomplete short left to B.Thomas [G.Karlaftis].PENALTY on KC-J.Watson, Defensive Pass Interference, 13 yards, enforced at JAX 25 - No Play. [nullified]
+- Q2 9:09 (-5 yds) Penalty: (Shotgun) PENALTY on JAX-B.Strange, False Start, 5 yards, enforced at JAX 30 - No Play. [nullified]
+- Q3 11:34 (5 yds) Penalty: (No Huddle) T.Lawrence pass short right to T.Hunter to KC 27 for 1 yard (J.Hicks).PENALTY on KC-J.Watson, Illegal Contact, 5 yards, enforced at KC 28 - No Play. [nullified]
+- Q4 0:44 (-5 yds) Penalty: (Shotgun) PENALTY on JAX, Delay of Game, 5 yards, enforced at KC 11 - No Play. [nullified]
+- Q4 12:20 (38 yds) Kickoff: H.Butker kicks 62 yards from KC 35 to JAX 3. L.Allen to JAX 41 for 38 yards (J.Williams; H.Butker). [special_teams]
+- Q4 1:45 (25 yds) Kickoff: H.Butker kicks 60 yards from KC 35 to JAX 5, out of bounds.PENALTY on KC-H.Butker, Kickoff Out of Bounds, placed at JAX 40. [special_teams]
+- Q4 8:08 (52 yds) Field Goal Good: C.Little 52 yard field goal is GOOD, Center-R.Matiscik, Holder-L.Cooke. [special_teams]
+
+### 401772862 PHI @ MIN (TOΔ max 0, YdsΔ max 50, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| PHI | 361 | 341 | -20 | 0 | 0 | +0 | 64 | 64 | +0 |
+| MIN | 387 | 337 | -50 | 2 | 2 | +0 | 30 | 30 | +0 |
+
+**PHI Reconciliation Clues**
+
+- Excluded non-zero-yard plays (up to 13 shown):
+- Q1 0:42 (-5 yds) Penalty: PENALTY on PHI-A.Brown, False Start, 5 yards, enforced at PHI 43 - No Play. [nullified]
+- Q1 15:00 (25 yds) Kickoff: W.Reichard kicks 65 yards from MIN 35 to PHI 0. W.Shipley to PHI 25 for 25 yards (T.Felton; C.Ham). [special_teams]
+- Q1 2:04 (33 yds) Kickoff: W.Reichard kicks 64 yards from MIN 35 to PHI 1. W.Shipley to PHI 34 for 33 yards (C.Ham). [special_teams]
+- Q2 4:30 (6 yds) Punt: B.Mann punts 47 yards to MIN 26, Center-C.Adomitis. M.Price to MIN 32 for 6 yards (P.Johnson). [special_teams]
+- Q2 6:29 (-10 yds) Rush: F.Johnson reported in as eligible.  S.Barkley right end to PHI 24 for -2 yards (J.Redmond).PENALTY on PHI-J.Mailata, Offensive Holding, 10 yards, enforced at PHI 26 - No Play. [nullified]
+- Q2 6:34 (11 yds) Kickoff: W.Reichard kicks 50 yards from MIN 35 to PHI 15. X.Gipson to PHI 31 for 16 yards (E.Williams).PENALTY on PHI-E.Jenkins, Illegal Formation, 5 yards, enforced at PHI 31. [special_teams]
+- Q3 3:38 (28 yds) Kickoff: W.Reichard kicks 63 yards from MIN 35 to PHI 2. X.Gipson pushed ob at PHI 30 for 28 yards (T.Thomas). [special_teams]
+- Q3 9:02 (3 yds) Kickoff: W.Reichard kicks 56 yards from MIN 35 to PHI 9. X.Gipson to PHI 34 for 25 yards (T.Batty).PENALTY on PHI-C.Latu, Illegal Double-Team Block, 15 yards, enforced at PHI 31. [special_teams]
+- Q4 0:02 (-5 yds) Penalty:  (Run formation) PENALTY on PHI, Delay of Game, 5 yards, enforced at MIN 19 - No Play. [nullified]
+- Q4 0:02 (-5 yds) Rush: J.Hurts kneels to MIN 29 for -5 yards. [spike_kneel]
+- Q4 10:06 (25 yds) Kickoff: W.Reichard kicks 60 yards from MIN 35 to PHI 5. X.Gipson to PHI 30 for 25 yards (A.Keys). [special_teams]
+- Q4 14:19 (42 yds) Field Goal Missed: J.Elliott 42 yard field goal is No Good, Wide Right, Center-C.Adomitis, Holder-B.Mann. [special_teams]
+- Q4 1:57 (37 yds) Kickoff: W.Reichard kicks 59 yards from MIN 35 to PHI 6. X.Gipson to PHI 43 for 37 yards (T.Felton). [special_teams]
+
+**MIN Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q2 12:10 (0 yds) Pass Interception Return: (Shotgun) C.Wentz pass deep right intended for J.Addison INTERCEPTED by A.Mukuba [J.Hunt] at PHI 44. A.Mukuba to PHI 44 for no gain (J.Addison). [interception]
+- Q2 13:26 (42 yds) Interception Return Touchdown: (Shotgun) C.Wentz pass short middle intended for J.Jefferson INTERCEPTED by J.Hunt [J.Carter] at MIN 42. J.Hunt for 42 yards, TOUCHDOWN. J.Elliott extra point is GOOD, Center-C.Adomitis, Holder-B.Mann. [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q1 2:58 (-22 yds) Fumble Recovery (Own): (Shotgun) C.Wentz Aborted. B.Brandel FUMBLES at PHI 25, recovered by MIN-C.Wentz at PHI 41.
+- Q2 12:57 (-8 yds) Rush: (Shotgun) C.Wentz FUMBLES (Aborted) at MIN 9, ball out of bounds at MIN 9.
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q1 2:04 (59 yds) Field Goal Good: W.Reichard 59 yard field goal is GOOD, Center-A.DePaola, Holder-R.Wright. [special_teams]
+- Q2 13:26 (17 yds) Kickoff: J.Elliott kicks 56 yards from PHI 35 to MIN 9. T.Felton to MIN 26 for 17 yards (P.Johnson; C.Latu). [special_teams]
+- Q2 6:34 (34 yds) Field Goal Good: W.Reichard 34 yard field goal is GOOD, Center-A.DePaola, Holder-R.Wright. [special_teams]
+- Q2 6:42 (-10 yds) Pass Reception: C.Wentz pass short right to J.Nailor for 6 yards, TOUCHDOWN NULLIFIED by Penalty.PENALTY on MIN-B.Brandel, Offensive Holding, 10 yards, enforced at PHI 6 - No Play. [nullified]
+- Q3 15:00 (38 yds) Kickoff: J.Elliott kicks 55 yards from PHI 35 to MIN 10. M.Price pushed ob at MIN 48 for 38 yards (C.DeJean). [special_teams]
+- Q3 8:07 (25 yds) Kickoff: J.Elliott kicks 43 yards from PHI 35 to MIN 22, short of landing zone.PENALTY on PHI-J.Elliott, Kickoff Short of Landing Zone, placed at MIN 40. [special_teams]
+- Q3 8:07 (14 yds) Pass Incompletion: C.Wentz pass incomplete short right to T.Hockenson.PENALTY on PHI-J.Hunt, Defensive Pass Interference, 14 yards, enforced at MIN 40 - No Play. [nullified]
+- Q3 9:02 (28 yds) Field Goal Good: W.Reichard 28 yard field goal is GOOD, Center-A.DePaola, Holder-R.Wright. [special_teams]
+- Q4 10:06 (35 yds) Field Goal Good:  W.Reichard 35 yard field goal is GOOD, Center-A.DePaola, Holder-R.Wright. [special_teams]
+- Q4 1:57 (29 yds) Field Goal Good:  W.Reichard 29 yard field goal is GOOD, Center-A.DePaola, Holder-R.Wright. [special_teams]
+- Q4 6:35 (19 yds) Kickoff: J.Elliott kicks 56 yards from PHI 35 to MIN 9. M.Price pushed ob at MIN 28 for 19 yards (C.DeJean). [special_teams]
+
+### 401772908 CAR @ NO (TOΔ max 0, YdsΔ max 49, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| CAR | 281 | 264 | -17 | 1 | 1 | +0 | 103 | 103 | +0 |
+| NO | 337 | 288 | -49 | 0 | 0 | +0 | 78 | 78 | +0 |
+
+**CAR Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q4 0:02 (0 yds) Fumble Recovery (Opponent): (Shotgun) B.Young pass short right to J.Coker to CAR 37 for 2 yards. FUMBLES, touched at CAR 24, RECOVERED by NO-P.Werner at CAR 23. [fumble]
+
+- Excluded non-zero-yard plays (up to 9 shown):
+- Q2 0:21 (40 yds) Field Goal Good: R.Fitzgerald 40 yard field goal is GOOD, Center-J.Jansen, Holder-S.Martin. [special_teams]
+- Q2 3:32 (23 yds) Kickoff: C.Smyth kicks 61 yards from NO 35 to CAR 4. R.Dowdle to CAR 27 for 23 yards (D.Stutsman). [special_teams]
+- Q3 10:33 (-10 yds) Penalty: (Shotgun) B.Young scrambles right end ran ob at NO 16 for 6 yards (Q.Riley).PENALTY on CAR-T.Moton, Offensive Holding, 10 yards, enforced at NO 22 - No Play. [nullified]
+- Q3 15:00 (27 yds) Kickoff: C.Smyth kicks 62 yards from NO 35 to CAR 3. C.Hubbard to CAR 30 for 27 yards (J.Williams). [special_teams]
+- Q3 1:03 (-5 yds) Penalty: PENALTY on CAR-M.Evans, False Start, 5 yards, enforced at CAR 38 - No Play. [nullified]
+- Q3 1:49 (25 yds) Kickoff: C.Smyth kicks 52 yards from NO 40 to CAR 8. T.Etienne to CAR 33 for 25 yards (I.Stalbird; C.Rumph). [special_teams]
+- Q3 1:56 (50 yds) Penalty: C.Smyth kicks 63 yards from NO 35 to CAR 2. T.Etienne pushed ob at NO 48 for 50 yards (I.Yiadom).PENALTY on CAR-B.Tremayne, Illegal Formation, 5 yards, enforced at NO 35 - No Play. [nullified]
+- Q4 1:04 (-8 yds) Punt: S.Martin punts 40 yards to NO 17, Center-J.Jansen, fair catch by D.Pettis.PENALTY on NO-J.Howden, Offensive Holding, 8 yards, enforced at NO 17. [special_teams]
+- Q4 2:29 (23 yds) Kickoff: C.Smyth kicks 59 yards from NO 35 to CAR 6. C.Hubbard to CAR 29 for 23 yards (J.Ford). [special_teams]
+
+**NO Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q3 9:08 (-9 yds) Fumble Recovery (Own): M.Tipton left end to NO 31 for -3 yards (M.Jackson). FUMBLES (M.Jackson), touched at NO 30, recovered by NO-D.Radunz at NO 25.
+
+- Excluded non-zero-yard plays (up to 17 shown):
+- Q1 14:08 (16 yds) Punt: K.Kroeger punts 58 yards to CAR 10, Center-Z.Wood. T.Etienne to CAR 26 for 16 yards (D.Stutsman). [special_teams]
+- Q1 15:00 (23 yds) Kickoff: R.Fitzgerald kicks 60 yards from CAR 35 to NO 5. E.Hull to NO 28 for 23 yards (C.Cherelus). [special_teams]
+- Q1 3:07 (-5 yds) Penalty: (Shotgun) PENALTY on NO-L.Fortner, False Start, 5 yards, enforced at CAR 44 - No Play. [nullified]
+- Q1 6:39 (29 yds) Kickoff: R.Fitzgerald kicks 60 yards from CAR 35 to NO 5. E.Hull to NO 34 for 29 yards (R.Rochell; L.Ransom). [special_teams]
+- Q2 0:15 (-1 yds) Rush: T.Shough kneels to NO 27 for -1 yards. [spike_kneel]
+- Q2 0:21 (19 yds) Kickoff: R.Fitzgerald kicks 56 yards from CAR 35 to NO 9. M.Tipton to NO 28 for 19 yards (P.Umanmielen). [special_teams]
+- Q2 10:51 (5 yds) Penalty: (Shotgun) T.Shough pass short left to D.Neal to NO 41 for no gain (T.Moehrig).PENALTY on CAR-B.Brown, Illegal Use of Hands, 5 yards, enforced at NO 41 - No Play. [nullified]
+- Q2 12:54 (-5 yds) Penalty: (Shotgun) PENALTY on NO-L.Fortner, False Start, 5 yards, enforced at NO 19 - No Play. [nullified]
+- Q2 8:17 (-5 yds) Penalty: (Shotgun) PENALTY on NO-T.Fuaga, False Start, 5 yards, enforced at CAR 45 - No Play. [nullified]
+- Q2 9:20 (-10 yds) Penalty: (No Huddle) A.Estime right end to CAR 39 for 3 yards (Ja.Horn).PENALTY on NO-J.Johnson, Offensive Holding, 10 yards, enforced at CAR 42 - No Play. [nullified]
+- Q3 1:56 (42 yds) Field Goal Good: C.Smyth 42 yard field goal is GOOD, Center-Z.Wood, Holder-K.Kroeger. [special_teams]
+- Q3 4:38 (8 yds) Penalty: (Shotgun) T.Shough pass incomplete deep left to M.Tipton.PENALTY on CAR-Ja.Horn, Defensive Pass Interference, 8 yards, enforced at CAR 33 - No Play. [nullified]
+- Q3 9:54 (20 yds) Kickoff: R.Fitzgerald kicks 57 yards from CAR 35 to NO 8. E.Hull to NO 28 for 20 yards (R.Rochell). [special_teams]
+- Q4 0:02 (47 yds) Field Goal Good:  C.Smyth 47 yard field goal is GOOD, Center-Z.Wood, Holder-K.Kroeger.
+Penalty on CAR-C.Smith-Wade, Defensive Offside, declined. [special_teams]
+- Q4 10:56 (5 yds) Penalty: (Shotgun) E.Hull up the middle to NO 35 for no gain (T.Gipson; B.Brown).PENALTY on CAR-L.Ray, Illegal Use of Hands, 5 yards, enforced at NO 35 - No Play. [nullified]
+- Q4 3:26 (-5 yds) Penalty: (No Huddle, Shotgun) T.Shough pass short left to M.Tipton to CAR 3 for 13 yards (N.Scott).PENALTY on NO-K.Banks, Ineligible Downfield Pass, 5 yards, enforced at CAR 16 - No Play. [nullified]
+- Q4 7:03 (46 yds) Penalty: C.Smyth 46 yard field goal is GOOD, NULLIFIED by Penalty, Center-Z.Wood, Holder-K.Kroeger.PENALTY on CAR-C.Smith-Wade, Defensive Offside, 5 yards, enforced at CAR 28 - No Play. [nullified]
+
+### 401772817 WSH @ KC (TOΔ max 0, YdsΔ max 42, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| WSH | 260 | 262 | +2 | 2 | 2 | +0 | 35 | 35 | +0 |
+| KC | 432 | 390 | -42 | 2 | 2 | +0 | 95 | 95 | +0 |
+
+**WSH Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q1 9:49 (10 yds) Pass Interception Return: (No Huddle, Shotgun) M.Mariota pass short left intended for D.Samuel INTERCEPTED by M.Danna at KC 22. M.Danna to KC 32 for 10 yards (D.Samuel). [interception]
+- Q4 0:22 (-15 yds) Pass Interception Return: (No Huddle, Shotgun) M.Mariota pass short left intended for Z.Ertz INTERCEPTED by J.Cochrane [C.Omenihu] at 50. J.Cochrane to 50 for no gain (Z.Ertz).PENALTY on KC-C.Omenihu, Unsportsmanlike Conduct, 15 yards, enforced at 50. [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q4 1:30 (0 yds) Rush: (No Huddle, Shotgun) M.Mariota scrambles right end to WAS 41 for 2 yards (J.Bassa). FUMBLES (J.Bassa), ball out of bounds at WAS 39.
+- Q4 1:59 (12 yds) Penalty: (Shotgun) M.Mariota pass deep left intended for C.Moore INTERCEPTED by J.Williams at WAS 47. J.Williams to WAS 35 for 12 yards (C.Moore; J.Lane).PENALTY on KC-C.Jones, Defensive Offside, 5 yards, enforced at WAS 25 - No Play.
+
+- Excluded non-zero-yard plays (up to 6 shown):
+- Q1 15:00 (37 yds) Kickoff: H.Butker kicks 59 yards from KC 35 to WAS 6. L.McCaffrey to WAS 43 for 37 yards (J.Williams). [special_teams]
+- Q2 5:46 (30 yds) Kickoff: H.Butker kicks 61 yards from KC 35 to WAS 4. J.Lane to WAS 34 for 30 yards (J.Cochrane; C.McDonald). [special_teams]
+- Q3 8:19 (11 yds) Punt: T.Way punts 59 yards to KC 14, Center-T.Ott. N.Remigio to KC 25 for 11 yards (P.Butler). [special_teams]
+- Q4 1:59 (12 yds) Penalty: (Shotgun) M.Mariota pass deep left intended for C.Moore INTERCEPTED by J.Williams at WAS 47. J.Williams to WAS 35 for 12 yards (C.Moore; J.Lane).PENALTY on KC-C.Jones, Defensive Offside, 5 yards, enforced at WAS 25 - No Play. [nullified]
+- Q4 6:59 (-8 yds) Punt: T.Way punts 41 yards to KC 23, Center-T.Ott. N.Remigio to KC 39 for 16 yards (J.Reaves).PENALTY on KC-J.Bassa, Illegal Block Above the Waist, 10 yards, enforced at KC 25. [special_teams]
+- Q4 7:52 (-5 yds) Penalty: (Shotgun) PENALTY on WAS-J.Conerly, False Start, 5 yards, enforced at WAS 35 - No Play. [nullified]
+
+**KC Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q1 5:40 (0 yds) Pass Interception Return: (Shotgun) P.Mahomes pass deep left intended for M.Brown INTERCEPTED by M.Lattimore at WAS 7. M.Lattimore pushed ob at WAS 7 for no gain (M.Brown). [interception]
+- Q2 13:09 (1 yds) Pass Interception Return: (Shotgun) P.Mahomes pass short middle intended for T.Kelce INTERCEPTED by B.Wagner at WAS 40. B.Wagner to WAS 41 for 1 yard (T.Kelce; M.Caliendo). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q1 7:08 (1 yds) Fumble Recovery (Own): (Shotgun) B.Smith left end to KC 47 for 1 yard (J.Newton; F.Luvu). FUMBLES (J.Newton), and recovers at KC 47.
+- Q3 6:01 (15 yds) Fumble Recovery (Own): (Shotgun) P.Mahomes pass short left to R.Rice to WAS 27 for 13 yards (D.Savage). FUMBLES (D.Savage), and recovers at WAS 25.
+
+- Excluded non-zero-yard plays (up to 5 shown):
+- Q2 0:58 (-8 yds) Kickoff: M.Wright kicks 56 yards from WAS 35 to KC 9. N.Remigio to KC 27 for 18 yards (L.McCaffrey; N.Bellore).PENALTY on KC-J.Cochrane, Offensive Holding, 10 yards, enforced at KC 25. [special_teams]
+- Q3 14:09 (15 yds) Pass Incompletion: (Shotgun) P.Mahomes pass incomplete short middle to N.Gray (B.Wagner).PENALTY on WAS-Q.Martin, Unnecessary Roughness, 15 yards, enforced at KC 25 - No Play. [nullified]
+- Q3 15:00 (-8 yds) Kickoff: M.Wright kicks 65 yards from WAS 35 to KC 0. N.Remigio to KC 32 for 32 yards (C.Rodriguez).PENALTY on KC-C.Roland-Wallace, Offensive Holding, 10 yards, enforced at KC 30. [special_teams]
+- Q4 0:12 (-1 yds) Rush: P.Mahomes kneels to KC 34 for -1 yards. [spike_kneel]
+- Q4 2:29 (14 yds) Punt: M.Araiza punts 56 yards to WAS 6, Center-J.Winchester. J.Lane to WAS 20 for 14 yards (J.Bassa). [special_teams]
+
+### 401772834 NYG @ DAL (TOΔ max 0, YdsΔ max 42, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| NYG | 506 | 464 | -42 | 1 | 1 | +0 | 160 | 160 | +0 |
+| DAL | 478 | 477 | -1 | 1 | 1 | +0 | 106 | 106 | +0 |
+
+**NYG Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q5 2:09 (0 yds) Pass Interception Return: (Shotgun) R.Wilson pass deep left intended for M.Nabers INTERCEPTED by D.Wilson at DAL 30. D.Wilson to DAL 30 for no gain (M.Nabers). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q5 5:39 (-14 yds) Sack: (Shotgun) R.Wilson sacked at NYG 29 for -6 yards. FUMBLES, ball out of bounds at NYG 21.
+
+- Excluded non-zero-yard plays (up to 18 shown):
+- Q1 12:08 (2 yds) Rush: (Shotgun) T.Tracy left tackle to NYG 42 for 2 yards (M.Kneeland; S.Thomas). [spike_kneel]
+- Q1 15:00 (28 yds) Kickoff: B.Aubrey kicks 64 yards from DAL 35 to NYG 1. G.Olszewski to DAL 32 for 67 yards (R.Flournoy).PENALTY on NYG-S.Bozeman, Offensive Holding, 10 yards, enforced at NYG 30. [special_teams]
+- Q1 1:05 (33 yds) Field Goal Good: G.Gano 33 yard field goal is GOOD, Center-C.Kreiter, Holder-J.Gillan. [special_teams]
+- Q1 4:47 (-5 yds) Penalty: (Shotgun) PENALTY on NYG-D.Bellinger, False Start, 5 yards, enforced at NYG 31 - No Play. [nullified]
+- Q1 6:11 (38 yds) Field Goal Good: G.Gano 38 yard field goal is GOOD, Center-C.Kreiter, Holder-J.Gillan. [special_teams]
+- Q1 6:40 (-5 yds) Penalty: PENALTY on NYG-J.Hudson, False Start, 5 yards, enforced at DAL 15 - No Play. [nullified]
+- Q1 7:47 (-5 yds) Penalty: (Shotgun) PENALTY on NYG-J.Hudson, False Start, 5 yards, enforced at DAL 47 - No Play. [nullified]
+- Q1 8:29 (-15 yds) Penalty: (Shotgun) C.Skattebo right guard to DAL 33 for 10 yards (D.Wilson).PENALTY on NYG-J.Hudson, Unnecessary Roughness, 15 yards, enforced at DAL 43 - No Play. [nullified]
+- Q2 1:46 (-8 yds) Punt: J.Gillan punts 44 yards to DAL 28, Center-C.Kreiter. K.Turpin to DAL 34 for 6 yards (D.Belton; C.Board).PENALTY on DAL-R.Flournoy, Offensive Holding, 10 yards, enforced at DAL 30. [special_teams]
+- Q2 2:11 (22 yds) Kickoff: B.Aubrey kicks 64 yards from DAL 35 to NYG 1. T.Tracy to NYG 23 for 22 yards (R.Rochell; J.Thomas). [special_teams]
+- Q2 8:25 (25 yds) Kickoff: B.Aubrey kicks 60 yards from DAL 35 to NYG 5. T.Tracy to NYG 30 for 25 yards (R.Flournoy). [special_teams]
+- Q3 5:38 (33 yds) Field Goal Good: G.Gano 33 yard field goal is GOOD, Center-C.Kreiter, Holder-J.Gillan. [special_teams]
+- Q3 5:41 (-5 yds) Penalty:  (Shotgun) PENALTY on NYG, Delay of Game, 5 yards, enforced at DAL 10 - No Play. [nullified]
+- Q3 7:20 (25 yds) Kickoff: B.Aubrey kicks 57 yards from DAL 35 to NYG 8. T.Tracy to NYG 33 for 25 yards (H.Luepke; C.Goodwin). [special_teams]
+- Q4 0:52 (30 yds) Kickoff: B.Aubrey kicks 58 yards from DAL 35 to NYG 7. T.Tracy to NYG 37 for 30 yards (H.Luepke; Z.Childress). [special_teams]
+- Q4 12:58 (21 yds) Penalty: (Shotgun) R.Wilson pass incomplete deep middle to D.Slayton.PENALTY on DAL-D.Wilson, Defensive Pass Interference, 21 yards, enforced at DAL 46 - No Play. [nullified]
+- Q4 14:13 (-5 yds) Kickoff: B.Aubrey kicks 65 yards from DAL 35 to end zone, Touchback to the NYG 35.PENALTY on DAL-M.Bell, Illegal Formation, 5 yards, enforced at NYG 35. [special_teams]
+- Q4 6:14 (30 yds) Kickoff: B.Aubrey kicks 58 yards from DAL 35 to NYG 7. T.Tracy to NYG 37 for 30 yards (C.Goodwin; B.Spann-Ford). [special_teams]
+
+**DAL Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q3 14:49 (0 yds) Pass Interception Return: (Shotgun) D.Prescott pass deep middle intended for C.Lamb INTERCEPTED by A.Phillips [A.Carter] at DAL 40. A.Phillips to DAL 40 for no gain (C.Lamb). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q5 7:46 (-1 yds) Fumble Recovery (Own): D.Prescott FUMBLES (Aborted) at DAL 42, and recovers at DAL 42.
+
+- Excluded non-zero-yard plays (up to 25 shown):
+- Q1 1:05 (25 yds) Kickoff: G.Gano kicks 59 yards from NYG 35 to DAL 6. K.Turpin to DAL 31 for 25 yards (B.Collins). [special_teams]
+- Q1 4:58 (-5 yds) Penalty: (Run formation) PENALTY on DAL, Delay of Game, 5 yards, enforced at DAL 41 - No Play. [nullified]
+- Q1 4:58 (8 yds) Punt: B.Anger punts 41 yards to NYG 23, Center-T.Sieg. G.Olszewski to NYG 31 for 8 yards (J.Thomas; B.Spann-Ford). [special_teams]
+- Q1 6:11 (23 yds) Kickoff: G.Gano kicks 56 yards from NYG 35 to DAL 9. J.Tolbert to DAL 32 for 23 yards (D.Belton). [special_teams]
+- Q2 0:01 (-5 yds) Penalty: (No Huddle) PENALTY on DAL-C.Lamb, False Start, 5 yards, enforced at NYG 48 - No Play. [nullified]
+- Q2 1:01 (-10 yds) Penalty: (No Huddle, Shotgun) D.Prescott pass short right to J.Tolbert pushed ob at DAL 47 for 11 yards (C.Flott) [K.Thibodeaux].PENALTY on DAL-T.Guyton, Offensive Holding, 10 yards, enforced at DAL 36 - No Play. [nullified]
+- Q2 3:42 (5 yds) Penalty: M.Sanders left tackle to NYG 24 for no gain (R.Robertson-Harris).PENALTY on NYG-A.Carter, Defensive Offside, 5 yards, enforced at NYG 24 - No Play. [nullified]
+- Q2 5:37 (29 yds) Kickoff: G.Gano kicks 58 yards from NYG 35 to DAL 7. K.Turpin to DAL 36 for 29 yards (J.Holland). [special_teams]
+- Q2 8:25 (51 yds) Field Goal Good: B.Aubrey 51 yard field goal is GOOD, Center-T.Sieg, Holder-B.Anger. [special_teams]
+- Q3 15:00 (17 yds) Kickoff: G.Gano kicks 61 yards from NYG 35 to DAL 4. K.Turpin to DAL 21 for 17 yards (B.Collins; S.Bozeman). [special_teams]
+- Q3 1:07 (23 yds) Penalty: (Shotgun) D.Prescott pass incomplete deep right to G.Pickens.PENALTY on NYG-P.Adebo, Defensive Pass Interference, 23 yards, enforced at NYG 46 - No Play. [nullified]
+- Q3 5:38 (19 yds) Kickoff: G.Gano kicks 66 yards from NYG 35 to DAL -1. K.Turpin to DAL 28 for 29 yards (T.Nubin).
+PENALTY on DAL-M.Bell, Offensive Holding, 10 yards, enforced at DAL 28. [special_teams]
+- Q3 7:33 (22 yds) Penalty: (Shotgun) D.Prescott pass incomplete deep right to G.Pickens.PENALTY on NYG-A.Phillips, Defensive Pass Interference, 22 yards, enforced at DAL 48 - No Play. [nullified]
+- Q4 0:00 (64 yds) Field Goal Good: B.Aubrey 64 yard field goal is GOOD, Center-T.Sieg, Holder-B.Anger. [special_teams]
+- Q4 0:25 (30 yds) Kickoff: G.Gano kicks 62 yards from NYG 35 to DAL 3. J.Tolbert to DAL 33 for 30 yards (C.Board). [special_teams]
+- Q4 12:07 (-1 yds) Kickoff: G.Gano kicks 56 yards from NYG 35 to DAL 9. J.Tolbert MUFFS catch, and recovers at DAL 16. J.Tolbert to DAL 25 for 9 yards (C.Golston).PENALTY on DAL-D.Clark, Illegal Block Above the Waist, 10 yards, enforced at DAL 25. [special_teams]
+- Q4 14:13 (44 yds) Field Goal Good: B.Aubrey 44 yard field goal is GOOD, Center-T.Sieg, Holder-B.Anger. [special_teams]
+- Q4 15:00 (-5 yds) Penalty: (Shotgun) PENALTY on DAL-T.Guyton, False Start, 5 yards, enforced at NYG 24 - No Play. [nullified]
+- Q4 2:44 (23 yds) Kickoff: G.Gano kicks 59 yards from NYG 35 to DAL 6. J.Tolbert to DAL 29 for 23 yards (A.Green). [special_teams]
+- Q5 0:00 (46 yds) Field Goal Good: B.Aubrey 46 yard field goal is GOOD, Center-T.Sieg, Holder-B.Anger. [special_teams]
+- Q5 10:00 (-6 yds) Kickoff: G.Gano kicks 60 yards from NYG 35 to DAL 5. M.Sanders to DAL 33 for 28 yards (B.Brade; D.Belton).
+PENALTY on DAL-H.Luepke, Offensive Holding, 10 yards, enforced at DAL 29. [special_teams]
+- Q5 3:01 (-5 yds) Penalty: (Punt formation) PENALTY on DAL, Delay of Game, 5 yards, enforced at DAL 43 - No Play. [nullified]
+- Q5 3:01 (21 yds) Punt: B.Anger punts 49 yards to NYG 13, Center-T.Sieg. G.Olszewski to NYG 34 for 21 yards (B.Spann-Ford; J.Thomas). [special_teams]
+- Q5 4:11 (-10 yds) Penalty: (Shotgun) D.Prescott pass short left to G.Pickens to DAL 48 for 19 yards (P.Adebo).PENALTY on DAL-G.Pickens, Offensive Pass Interference, 10 yards, enforced at DAL 29 - No Play. [nullified]
+- Q5 6:56 (9 yds) Punt: B.Anger punts 53 yards to NYG 5, Center-T.Sieg. G.Olszewski to NYG 14 for 9 yards (C.Goodwin). [special_teams]
+
+### 401772839 LAR @ PHI (TOΔ max 0, YdsΔ max 42, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| LAR | 356 | 398 | +42 | 1 | 1 | +0 | 41 | 41 | +0 |
+| PHI | 288 | 271 | -17 | 1 | 1 | +0 | 50 | 50 | +0 |
+
+**LAR Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q1 13:32 (0 yds) Pass Interception Return: (No Huddle, Shotgun) M.Stafford pass short middle intended for D.Adams INTERCEPTED by Z.Baun at LA 38. Z.Baun to LA 38 for no gain (D.Adams). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q4 0:00 (44 yds) Blocked Field Goal: J.Karty 44 yard field goal is BLOCKED (J.Davis), Center-A.Ward, Holder-E.Evans, RECOVERED by PHI-J.Davis at PHI 39. J.Davis for 61 yards, TOUCHDOWN.
+- Q4 8:46 (36 yds) Blocked Field Goal: J.Karty 36 yard field goal is BLOCKED (J.Carter), Center-A.Ward, Holder-E.Evans, recovered by LA-J.Karty at PHI 24.PENALTY on PHI-J.Carter, Unnecessary Roughness, 9 yards, enforced between downs. Incomplete Pass by 16-J.Karty after Blocked Kick Recovery.
+
+- Excluded non-zero-yard plays (up to 12 shown):
+- Q1 15:00 (22 yds) Kickoff: J.Elliott kicks 64 yards from PHI 35 to LA 1. B.Corum to LA 23 for 22 yards (J.Trotter; K.Granson). [special_teams]
+- Q1 4:00 (51 yds) Field Goal Good: J.Karty 51 yard field goal is GOOD, Center-A.Ward, Holder-E.Evans. [special_teams]
+- Q1 8:07 (26 yds) Kickoff: J.Elliott kicks 61 yards from PHI 35 to LA 4. B.Corum to LA 30 for 26 yards (K.Ringo). [special_teams]
+- Q2 0:10 (46 yds) Field Goal Good: J.Karty 46 yard field goal is GOOD, Center-A.Ward, Holder-E.Evans. [special_teams]
+- Q2 13:03 (17 yds) Penalty: (Shotgun) M.Stafford pass incomplete deep right to D.Adams.PENALTY on PHI-Q.Mitchell, Defensive Pass Interference, 17 yards, enforced at 50 - No Play. [nullified]
+- Q2 3:43 (33 yds) Field Goal Good: J.Karty 33 yard field goal is GOOD, Center-A.Ward, Holder-E.Evans. [special_teams]
+- Q2 9:15 (28 yds) Field Goal Good: J.Karty 28 yard field goal is GOOD, Center-A.Ward, Holder-E.Evans. [special_teams]
+- Q2 9:30 (-18 yds) Rush: K.Williams right guard for 2 yards, TOUCHDOWN NULLIFIED by Penalty.PENALTY on LA-C.Shelton, Offensive Holding, 10 yards, enforced at PHI 0. [nullified]
+- Q3 11:38 (19 yds) Kickoff: J.Elliott kicks 53 yards from PHI 35 to LA 12. B.Corum to LA 31 for 19 yards (K.Ringo; S.Brown). [special_teams]
+- Q3 2:16 (27 yds) Kickoff: J.Elliott kicks 62 yards from PHI 35 to LA 3. B.Corum to LA 30 for 27 yards (T.Bigsby). LA-K.Dotson was injured during the play. [special_teams]
+- Q4 1:48 (21 yds) Kickoff: J.Elliott kicks 56 yards from PHI 35 to LA 9. B.Corum to LA 30 for 21 yards (J.Trotter). [special_teams]
+- Q4 8:46 (36 yds) Blocked Field Goal: J.Karty 36 yard field goal is BLOCKED (J.Carter), Center-A.Ward, Holder-E.Evans, recovered by LA-J.Karty at PHI 24.PENALTY on PHI-J.Carter, Unnecessary Roughness, 9 yards, enforced between downs. Incomplete Pass by 16-J.Karty after Blocked Kick Recovery. [special_teams]
+
+**PHI Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q3 14:25 (0 yds) Sack Opp Fumble Recovery: (No Huddle, Shotgun) J.Hurts sacked at PHI 5 for -8 yards (J.Verse). FUMBLES (J.Verse) [J.Verse], RECOVERED by LA-N.Landman at PHI 10. [fumble]
+
+- Excluded non-zero-yard plays (up to 13 shown):
+- Q1 1:20 (16 yds) Kickoff: J.Karty kicks 62 yards from LA 35 to PHI 3. T.Bigsby pushed ob at PHI 19 for 16 yards (T.Reeder). [special_teams]
+- Q1 2:29 (20 yds) Punt: B.Mann punts 59 yards to LA 26, Center-C.Hughlett. X.Smith to LA 46 for 20 yards (J.Trotter). [special_teams]
+- Q1 8:16 (1 yds) Penalty: J.Hurts pass incomplete short middle to A.Brown.PENALTY on LA-Q.Lake, Defensive Pass Interference, 1 yard, enforced at LA 2 - No Play. [nullified]
+- Q2 0:10 (-1 yds) Rush: J.Hurts kneels to PHI 34 for -1 yards. [spike_kneel]
+- Q2 15:00 (9 yds) Punt: B.Mann punts 64 yards to LA 25, Center-C.Hughlett. X.Smith to LA 34 for 9 yards (G.Calcaterra).Penalty on LA-J.McCollough, Offensive Holding, offsetting, enforced at LA 34.Penalty on PHI-S.Brown, Unnecessary Roughness, offsetting. [special_teams]
+- Q2 2:00 (9 yds) Punt: B.Mann punts 42 yards to LA 43, Center-C.Hughlett. X.Smith to PHI 48 for 9 yards (M.Epps). [special_teams]
+- Q2 3:43 (8 yds) Kickoff: J.Karty kicks 53 yards from LA 35 to PHI 12. T.Bigsby MUFFS catch, and recovers at PHI 6. T.Bigsby to PHI 14 for 8 yards (X.Smith; S.Dolac). [special_teams]
+- Q2 7:55 (15 yds) Punt: B.Mann punts 57 yards to LA 31, Center-C.Hughlett. X.Smith to LA 46 for 15 yards (J.Trotter). [special_teams]
+- Q2 9:15 (2 yds) Kickoff: J.Karty kicks 58 yards from LA 35 to PHI 7. J.Metchie MUFFS catch, and recovers at PHI 6. J.Metchie to PHI 27 for 21 yards (O.Speights).PENALTY on PHI-J.Trotter, Illegal Block Above the Waist, 8 yards, enforced at PHI 17.Penalty on PHI-G.Calcaterra, Offensive Holding, declined. [special_teams]
+- Q3 12:40 (-10 yds) Penalty: (No Huddle, Shotgun) J.Hurts left tackle to PHI 42 for 3 yards (K.Turner).PENALTY on PHI-L.Dickerson, Offensive Holding, 10 yards, enforced at PHI 39 - No Play.Penalty on PHI-C.Jurgens, Offensive Holding, declined. [nullified]
+- Q3 14:06 (13 yds) Kickoff: J.Karty kicks 56 yards from LA 35 to PHI 9. J.Metchie MUFFS catch, and recovers at PHI 8. J.Metchie to PHI 21 for 13 yards (T.Reeder; J.McCollough). [special_teams]
+- Q3 15:00 (7 yds) Kickoff: J.Karty kicks 61 yards from LA 35 to PHI 4. J.Metchie MUFFS catch, and recovers at PHI 3. J.Metchie to PHI 10 for 7 yards (K.Kinchens). [special_teams]
+- Q3 7:23 (15 yds) Penalty: (No Huddle, Shotgun) J.Hurts pass incomplete short middle to D.Smith.PENALTY on LA-K.Kinchens, Unnecessary Roughness, 15 yards, enforced at PHI 36 - No Play. [nullified]
+
+### 401772864 WSH @ DAL (TOΔ max 0, YdsΔ max 41, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| WSH | 341 | 339 | -2 | 2 | 2 | +0 | 118 | 118 | +0 |
+| DAL | 409 | 368 | -41 | 0 | 0 | +0 | 79 | 79 | +0 |
+
+**WSH Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q3 11:53 (0 yds) Sack Opp Fumble Recovery: (No Huddle, Shotgun) J.Daniels sacked at DAL 45 for -6 yards (S.James). FUMBLES (S.James) [S.James], touched at DAL 43, RECOVERED by DAL-J.Clowney at DAL 45. WAS-J.Daniels was injured during the play. [fumble]
+- Q3 5:31 (68 yds) Interception Return Touchdown: (Shotgun) M.Mariota pass short right intended for J.McNichols INTERCEPTED by D.Bland [D.Fowler] at DAL 32. D.Bland for 68 yards, TOUCHDOWN. B.Aubrey extra point is GOOD, Center-T.Sieg, Holder-B.Anger. [interception]
+
+- Excluded non-zero-yard plays (up to 19 shown):
+- Q1 11:46 (-5 yds) Penalty: (No Huddle, Shotgun) PENALTY on WAS-S.Cosmi, False Start, 5 yards, enforced at WAS 46 - No Play. [nullified]
+- Q1 13:05 (34 yds) Kickoff: B.Aubrey kicks 60 yards from DAL 35 to WAS 5. L.McCaffrey to WAS 39 for 34 yards (S.James). [special_teams]
+- Q1 4:27 (24 yds) Kickoff: B.Aubrey kicks 61 yards from DAL 35 to WAS 4. L.McCaffrey to WAS 28 for 24 yards (B.Spann-Ford). [special_teams]
+- Q1 4:48 (4 yds) Punt: T.Way punts 56 yards to DAL 22, Center-T.Ott. K.Turpin to DAL 26 for 4 yards (T.Owens). [special_teams]
+- Q1 6:14 (3 yds) Kickoff: B.Aubrey kicks 60 yards from DAL 35 to WAS 5. L.McCaffrey to WAS 29 for 24 yards (B.Spann-Ford; H.Luepke).PENALTY on WAS-C.Yankoff, Tripping, 13 yards, enforced at WAS 26. [special_teams]
+- Q2 0:06 (-1 yds) Rush: J.Daniels kneels to WAS 25 for -1 yards. [spike_kneel]
+- Q2 0:10 (26 yds) Kickoff: B.Aubrey kicks 65 yards from DAL 35 to WAS 0. L.McCaffrey to WAS 26 for 26 yards (M.Davis). WAS-L.McCaffrey was injured during the play. [special_teams]
+- Q2 1:35 (5 yds) Penalty: (No Huddle, Shotgun) J.Daniels pass incomplete deep right to R.Chosen.PENALTY on DAL-O.Odighizuwa, Defensive Offside, 5 yards, enforced at DAL 42 - No Play. [nullified]
+- Q2 5:40 (-5 yds) Penalty: (Punt formation) PENALTY on WAS-T.Ott, False Start, 5 yards, enforced at WAS 18 - No Play. [nullified]
+- Q2 6:47 (-5 yds) Penalty: (No Huddle, Shotgun) PENALTY on WAS-J.Conerly, False Start, 5 yards, enforced at WAS 12 - No Play. [nullified]
+- Q2 7:22 (4 yds) Kickoff: B.Aubrey kicks 56 yards from DAL 35 to WAS 9. L.McCaffrey to WAS 24 for 15 yards (M.Liufau).PENALTY on WAS-T.Owens, Illegal Block Above the Waist, 10 yards, enforced at WAS 20. [special_teams]
+- Q3 15:00 (30 yds) Kickoff: B.Aubrey kicks 60 yards from DAL 35 to WAS 5. L.McCaffrey to WAS 35 for 30 yards (M.Davis; S.James). ** Injury Update: WAS-L.McCaffrey has returned to the game. [special_teams]
+- Q3 3:25 (14 yds) Pass Incompletion: (No Huddle, Shotgun) M.Mariota pass incomplete deep right to R.Chosen.PENALTY on DAL-K.Elam, Defensive Pass Interference, 14 yards, enforced at DAL 26 - No Play. [nullified]
+- Q3 3:34 (-5 yds) Penalty: (Shotgun) PENALTY on WAS, Delay of Game, 5 yards, enforced at DAL 21 - No Play. [nullified]
+- Q3 5:31 (41 yds) Kickoff: B.Aubrey kicks 59 yards from DAL 35 to WAS 6. L.McCaffrey to WAS 47 for 41 yards (R.Steward; C.Goodwin). [special_teams]
+- Q3 6:11 (-5 yds) Penalty: (No Huddle, Shotgun) PENALTY on WAS-J.Conerly, False Start, 5 yards, enforced at DAL 33 - No Play. [nullified]
+- Q3 7:44 (25 yds) Kickoff: B.Aubrey kicks 48 yards from DAL 35 to WAS 17, out of bounds.PENALTY on DAL-B.Aubrey, Kickoff Out of Bounds, placed at WAS 40. [special_teams]
+- Q4 12:45 (22 yds) Kickoff: B.Aubrey kicks 59 yards from DAL 35 to WAS 6. L.McCaffrey to WAS 28 for 22 yards (R.Flournoy; J.Houston). [special_teams]
+- Q4 4:45 (-10 yds) Punt: T.Way punts 59 yards to DAL 35, Center-T.Ott, downed by WAS-P.Butler.PENALTY on DAL-C.Carson, Offensive Holding, 10 yards, enforced at DAL 35. [special_teams]
+
+**DAL Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q2 8:12 (-2 yds) Fumble Recovery (Own): D.Prescott FUMBLES (Aborted) at WAS 43, and recovers at WAS 43.
+
+- Excluded non-zero-yard plays (up to 15 shown):
+- Q1 0:46 (15 yds) Sack: (Shotgun) D.Prescott sacked at DAL 17 for -8 yards (J.Martin).PENALTY on WAS-J.Martin, Roughing the Passer, 15 yards, enforced at DAL 25 - No Play.Penalty on WAS-M.Sainristil, Illegal Contact, declined. [nullified]
+- Q1 13:15 (37 yds) Pass Incompletion: (Shotgun) D.Prescott pass incomplete deep left to G.Pickens.PENALTY on WAS-M.Lattimore, Defensive Pass Interference, 37 yards, enforced at WAS 39 - No Play. [nullified]
+- Q1 15:00 (30 yds) Kickoff: M.Gay kicks 61 yards from WAS 35 to DAL 4. K.Turpin pushed ob at DAL 34 for 30 yards (C.Yankoff). [special_teams]
+- Q1 6:14 (47 yds) Field Goal Good: B.Aubrey 47 yard field goal is GOOD, Center-T.Sieg, Holder-B.Anger. [special_teams]
+- Q1 7:38 (25 yds) Kickoff: M.Gay kicks 62 yards from WAS 35 to DAL 3, out of bounds.PENALTY on WAS-M.Gay, Kickoff Out of Bounds, placed at DAL 40. [special_teams]
+- Q2 0:45 (25 yds) Kickoff: M.Gay kicks 62 yards from WAS 35 to DAL 3. K.Turpin to DAL 28 for 25 yards (N.Bellore). [special_teams]
+- Q2 15:00 (-5 yds) Penalty: (Shotgun) PENALTY on DAL-J.Blue, False Start, 5 yards, enforced at DAL 35 - No Play. [nullified]
+- Q2 2:05 (8 yds) Punt: B.Anger punts 38 yards to WAS 24, Center-T.Sieg. J.Lane to WAS 32 for 8 yards (M.Davis). [special_teams]
+- Q2 7:22 (61 yds) Field Goal Good: B.Aubrey 61 yard field goal is GOOD, Center-T.Sieg, Holder-B.Anger. [special_teams]
+- Q2 9:14 (-10 yds) Rush: T.Bass reported in as eligible.  D.Prescott scrambles left tackle to WAS 42 for 4 yards (B.Wagner).PENALTY on DAL-T.Smith, Offensive Holding, 10 yards, enforced at WAS 46 - No Play. [nullified]
+- Q3 1:47 (18 yds) Pass Incompletion: (Shotgun) D.Prescott pass incomplete deep middle to C.Lamb.PENALTY on WAS-M.Lattimore, Defensive Pass Interference, 18 yards, enforced at DAL 38 - No Play. [nullified]
+- Q3 2:35 (25 yds) Kickoff: M.Gay kicks 57 yards from WAS 35 to DAL 8. K.Turpin pushed ob at DAL 33 for 25 yards (J.Jones). [special_teams]
+- Q4 0:39 (-1 yds) Rush: D.Prescott kneels to DAL 46 for -1 yards. [spike_kneel]
+- Q4 12:45 (29 yds) Field Goal Good: B.Aubrey 29 yard field goal is GOOD, Center-T.Sieg, Holder-B.Anger. [special_teams]
+- Q4 9:02 (-10 yds) Rush: (Shotgun) D.Prescott scrambles right end pushed ob at WAS 43 for 5 yards (B.Wagner).PENALTY on DAL-T.Booker, Offensive Holding, 10 yards, enforced at WAS 48 - No Play. [nullified]
+
+### 401772716 CIN @ DEN (TOΔ max 0, YdsΔ max 40, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| CIN | 159 | 159 | +0 | 0 | 0 | +0 | 65 | 65 | +0 |
+| DEN | 512 | 472 | -40 | 1 | 1 | +0 | 72 | 72 | +0 |
+
+**CIN Reconciliation Clues**
+
+- Excluded non-zero-yard plays (up to 17 shown):
+- Q1 14:56 (5 yds) Penalty: (Shotgun) J.Browning pass incomplete short right to C.Brown.PENALTY on DEN-P.Surtain, Defensive Holding, 5 yards, enforced at CIN 30 - No Play. [nullified]
+- Q1 15:00 (30 yds) Kickoff: W.Lutz kicks 65 yards from DEN 35 to CIN 0. C.Jones to CIN 30 for 30 yards (K.Reid). [special_teams]
+- Q1 4:30 (-5 yds) Penalty: (Shotgun) PENALTY on CIN-T.Karras, False Start, 5 yards, enforced at CIN 45 - No Play. [nullified]
+- Q1 6:05 (22 yds) Penalty: (Shotgun) J.Browning pass incomplete deep left to J.Chase.PENALTY on DEN-R.Moss, Defensive Pass Interference, 22 yards, enforced at CIN 15 - No Play. [nullified]
+- Q1 9:08 (26 yds) Field Goal Good: E.McPherson 26 yard field goal is GOOD, Center-W.Wagner, Holder-R.Rehkow. [special_teams]
+- Q2 0:08 (-1 yds) Rush: J.Browning kneels to CIN 34 for -1 yards. [spike_kneel]
+- Q2 12:07 (-5 yds) Penalty: (Punt formation) PENALTY on CIN, Delay of Game, 5 yards, enforced at CIN 49 - No Play. [nullified]
+- Q2 12:49 (-5 yds) Penalty: (Shotgun) PENALTY on CIN, Delay of Game, 5 yards, enforced at CIN 44 - No Play. [nullified]
+- Q2 13:44 (-5 yds) Penalty: (Shotgun) PENALTY on CIN-D.Fairchild, False Start, 5 yards, enforced at CIN 44 - No Play. [nullified]
+- Q2 14:08 (-5 yds) Penalty: (Shotgun) J.Browning pass deep right to T.Higgins pushed ob at DEN 14 for 37 yards (R.Moss).PENALTY on CIN-A.Mims, Illegal Formation, 5 yards, enforced at CIN 49 - No Play. [nullified]
+- Q2 14:24 (5 yds) Penalty: (Shotgun) S.Perine left guard to CIN 46 for 2 yards (A.Singleton).PENALTY on DEN-J.Franklin-Myers, Defensive Offside, 5 yards, enforced at CIN 44 - No Play. [nullified]
+- Q2 1:24 (4 yds) Punt:  R.Rehkow punts 63 yards to DEN 16, Center-W.Wagner. M.Mims to DEN 20 for 4 yards (P.Jules). [special_teams]
+- Q2 8:24 (13 yds) Punt: R.Rehkow punts 69 yards to DEN 17, Center-W.Wagner. M.Mims to DEN 30 for 13 yards (S.Heyward; P.Jules). [special_teams]
+- Q2 8:48 (-7 yds) Kickoff: W.Lutz kicks 59 yards from DEN 35 to CIN 6. C.Jones to CIN 27 for 21 yards (G.Wallow; D.Key).PENALTY on CIN-T.Anderson, Offensive Holding, 10 yards, enforced at CIN 24. [special_teams]
+- Q3 4:39 (-10 yds) Penalty: (Shotgun) J.Browning pass incomplete short right [S.Jones].PENALTY on CIN-T.Karras, Offensive Holding, 10 yards, enforced at DEN 44 - No Play. [nullified]
+- Q4 11:21 (7 yds) Punt:  R.Rehkow punts 61 yards to DEN 17, Center-W.Wagner. M.Mims to DEN 24 for 7 yards (S.Heyward). [special_teams]
+- Q4 4:58 (-5 yds) Penalty: PENALTY on CIN-D.Fairchild, False Start, 5 yards, enforced at CIN 35 - No Play. [nullified]
+
+**DEN Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q2 2:04 (0 yds) Pass Interception Return: B.Nix pass short right intended for T.Franklin INTERCEPTED by D.Knight at CIN -5. Touchback.The Replay Official reviewed the interception ruling, and the play was Upheld. The ruling on the field stands. [interception]
+
+- Excluded non-zero-yard plays (up to 9 shown):
+- Q1 6:55 (-10 yds) Punt: J.Crawshaw punts 62 yards to end zone, Center-M.Fraboni, Touchback.PENALTY on CIN-T.Brooks, Offensive Holding, 10 yards, enforced at CIN 20. [special_teams]
+- Q1 9:08 (29 yds) Kickoff: E.McPherson kicks 64 yards from CIN 35 to DEN 1. R.Harvey to DEN 30 for 29 yards (S.Heyward; B.Carter). [special_teams]
+- Q3 12:44 (16 yds) Punt: J.Crawshaw punts 42 yards to CIN 14, Center-M.Fraboni. C.Jones ran ob at CIN 30 for 16 yards (N.Adkins). [special_teams]
+- Q3 15:00 (29 yds) Kickoff: E.McPherson kicks 64 yards from CIN 35 to DEN 1. R.Harvey to DEN 30 for 29 yards (S.Heyward; B.Carter). [special_teams]
+- Q3 8:47 (-15 yds) Penalty: A.Palczewski reported in as eligible.  J.Dobbins left tackle to DEN 49 for 5 yards (T.Slaton; B.Carter).PENALTY on DEN-A.Palczewski, Illegal Blindside Block, 15 yards, enforced at DEN 44 - No Play. [nullified]
+- Q4 0:38 (-1 yds) Rush:  B.Nix kneels to DEN 39 for -1 yards. [spike_kneel]
+- Q4 14:27 (-5 yds) Penalty: (Shotgun) PENALTY on DEN-L.Wattenberg, False Start, 5 yards, enforced at DEN 34 - No Play. [nullified]
+- Q4 1:16 (-1 yds) Rush: B.Nix kneels to DEN 40 for -1 yards. [spike_kneel]
+- Q4 1:59 (-1 yds) Rush: B.Nix kneels to DEN 41 for -1 yards. [spike_kneel]
+
+### 401772843 ARI @ SF (TOΔ max 0, YdsΔ max 40, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| ARI | 260 | 260 | +0 | 0 | 0 | +0 | 30 | 30 | +0 |
+| SF | 355 | 315 | -40 | 1 | 1 | +0 | 69 | 69 | +0 |
+
+**ARI Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q1 6:52 (8 yds) Fumble Recovery (Own): (Shotgun) J.Conner up the middle to ARZ 15 for 7 yards (N.Bosa; D.Winters). FUMBLES (N.Bosa), recovered by ARZ-H.Froholdt at ARZ 16.
+
+- Excluded non-zero-yard plays (up to 14 shown):
+- Q1 10:10 (-5 yds) Penalty: (Shotgun) PENALTY on ARZ, Delay of Game, 5 yards, enforced at SF 41 - No Play. [nullified]
+- Q1 11:16 (-5 yds) Penalty: (Shotgun) PENALTY on ARZ-K.Beachum, False Start, 5 yards, enforced at SF 46 - No Play. [nullified]
+- Q1 15:00 (36 yds) Kickoff: E.Pineiro kicks 62 yards from SF 35 to ARZ 3. E.Demercado to ARZ 39 for 36 yards (C.Lucas). [special_teams]
+- Q1 1:01 (14 yds) Punt: B.Gillikin punts 50 yards to SF 9, Center-A.Brewer. S.Moore to SF 23 for 14 yards (C.Simon; Z.Collins). [special_teams]
+- Q1 8:19 (57 yds) Field Goal Missed: C.Ryland 57 yard field goal is No Good, Wide Right, Center-A.Brewer, Holder-B.Gillikin. [special_teams]
+- Q2 0:17 (33 yds) Kickoff: E.Pineiro kicks 61 yards from SF 35 to ARZ 4. G.Dortch to ARZ 37 for 33 yards (J.Brown). [special_teams]
+- Q2 2:19 (4 yds) Punt: B.Gillikin punts 53 yards to SF 10, Center-A.Brewer. S.Moore pushed ob at SF 14 for 4 yards (S.Fehoko). [special_teams]
+- Q2 4:22 (21 yds) Kickoff: E.Pineiro kicks 58 yards from SF 35 to ARZ 7. E.Demercado to ARZ 28 for 21 yards (B.Willis; S.Neal). [special_teams]
+- Q2 8:45 (34 yds) Field Goal Good: C.Ryland 34 yard field goal is GOOD, Center-A.Brewer, Holder-B.Gillikin. [special_teams]
+- Q3 10:43 (-5 yds) Penalty: (Shotgun) PENALTY on ARZ-K.Beachum, False Start, 5 yards, enforced at ARZ 45 - No Play. [nullified]
+- Q3 6:37 (28 yds) Field Goal Good: C.Ryland 28 yard field goal is GOOD, Center-A.Brewer, Holder-B.Gillikin. [special_teams]
+- Q4 14:11 (8 yds) Punt: B.Gillikin punts 55 yards to SF 44, Center-A.Brewer. S.Moore to ARZ 48 for 8 yards (K.Crawford). [special_teams]
+- Q4 3:15 (25 yds) Kickoff: E.Pineiro kicks 70 yards from SF 20 to ARZ 10. G.Dortch to ARZ 35 for 25 yards (T.Bethune). [special_teams]
+- Q4 9:29 (33 yds) Penalty: (Shotgun) K.Murray pass incomplete deep left to M.Harrison.PENALTY on SF-R.Green, Defensive Pass Interference, 33 yards, enforced at SF 34 - No Play. [nullified]
+
+**SF Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q4 5:19 (18 yds) Pass Interception Return: (Shotgun) M.Jones pass short right intended for R.Pearsall INTERCEPTED by D.Taylor-Demerson at ARZ 21. D.Taylor-Demerson to ARZ 39 for 18 yards (T.Williams). [interception]
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q2 0:17 (51 yds) Field Goal Good: E.Pineiro 51 yard field goal is GOOD, Center-J.Weeks, Holder-T.Morstead. [special_teams]
+- Q2 0:36 (-10 yds) Penalty: (Shotgun) M.Jones pass incomplete short left to R.Pearsall (K.Clark).PENALTY on SF-J.Brendel, Offensive Holding, 10 yards, enforced at ARZ 39 - No Play. [nullified]
+- Q2 4:22 (38 yds) Field Goal Good: E.Pineiro 38 yard field goal is GOOD, Center-J.Weeks, Holder-T.Morstead. [special_teams]
+- Q2 8:45 (31 yds) Kickoff: C.Ryland kicks 64 yards from ARZ 35 to SF 1. S.Moore to SF 32 for 31 yards (C.Simon; K.Clark). [special_teams]
+- Q3 13:24 (8 yds) Punt: T.Morstead punts 48 yards to ARZ 6, Center-J.Weeks. G.Dortch to ARZ 14 for 8 yards (D.Luter; L.Gifford). [special_teams]
+- Q3 6:37 (30 yds) Kickoff: C.Ryland kicks 59 yards from ARZ 35 to SF 6. S.Moore to SF 36 for 30 yards (K.Crawford; K.Clark). [special_teams]
+- Q4 0:00 (35 yds) Field Goal Good: E.Pineiro 35 yard field goal is GOOD, Center-J.Weeks, Holder-T.Morstead. [special_teams]
+- Q4 0:06 (-1 yds) Rush: M.Jones kneels to ARZ 17 for -1 yards. [spike_kneel]
+- Q4 1:12 (5 yds) Penalty: (No Huddle, Shotgun) M.Jones pass incomplete short left to J.Tonges (D.Taylor-Demerson).PENALTY on ARZ-D.Burke, Illegal Use of Hands, 5 yards, enforced at SF 41 - No Play. [nullified]
+- Q4 3:15 (-6 yds) Penalty: (Shotgun) M.Jones sacked at SF 6 for 0 yards (Ma.Wilson).PENALTY on SF-D.Puni, Offensive Holding, 6 yards, enforced in End Zone, SAFETY - No Play. [nullified]
+- Q4 8:37 (19 yds) Kickoff: C.Ryland kicks 56 yards from ARZ 35 to SF 9. I.Guerendo to SF 28 for 19 yards (A.Davis-Gaither; O.Pappoe). [special_teams]
+
+### 401772885 SF @ ARI (TOΔ max 0, YdsΔ max 40, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| SF | 281 | 281 | +0 | 0 | 0 | +0 | 15 | 15 | +0 |
+| ARI | 488 | 448 | -40 | 3 | 3 | +0 | 130 | 130 | +0 |
+
+**SF Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 4 shown):
+- Q1 9:51 (30 yds) Passing Touchdown: (Shotgun) B.Purdy pass deep right to G.Kittle for 30 yards, TOUCHDOWN [W.Nolen]. E.Pineiro extra point is Blocked (K.Crawford), Center-J.Weeks, Holder-T.Morstead.
+- Q2 0:01 (16 yds) Blocked Field Goal: E.Pineiro 62 yard field goal is BLOCKED (C.Campbell), Center-J.Weeks, Holder-T.Morstead. G.Dortch at ARZ 14 to ARZ 30 for 16 yards (L.Farrell).PENALTY on ARZ-C.Campbell, Unnecessary Roughness, 15 yards, enforced at ARZ 44 - No Play.
+- Q4 2:43 (10 yds) Kickoff: C.Ryland kicks onside 10 yards from ARZ 35 to ARZ 45. I.Guerendo (didn't try to advance) to ARZ 45 for no gain.
+- Q4 8:28 (10 yds) Kickoff: C.Ryland kicks onside 11 yards from ARZ 35 to ARZ 46. K.Juszczyk (didn't try to advance) to ARZ 45 for 1 yard.
+
+- Excluded non-zero-yard plays (up to 16 shown):
+- Q1 15:00 (98 yds) Kickoff: C.Ryland kicks 64 yards from ARZ 35 to SF 1. S.Moore to ARZ 1 for 98 yards (K.Clark). [special_teams]
+- Q1 3:03 (40 yds) Punt: T.Morstead punts 49 yards to ARZ 16, Center-J.Weeks. G.Dortch to SF 44 for 40 yards (C.Robinson; J.Weeks). [special_teams]
+- Q2 0:00 (47 yds) Field Goal Good:  E.Pineiro 47 yard field goal is GOOD, Center-J.Weeks, Holder-T.Morstead. [special_teams]
+- Q2 0:01 (16 yds) Blocked Field Goal: E.Pineiro 62 yard field goal is BLOCKED (C.Campbell), Center-J.Weeks, Holder-T.Morstead. G.Dortch at ARZ 14 to ARZ 30 for 16 yards (L.Farrell).PENALTY on ARZ-C.Campbell, Unnecessary Roughness, 15 yards, enforced at ARZ 44 - No Play. [nullified]
+- Q2 0:12 (5 yds) Pass Incompletion: (Shotgun) B.Purdy pass incomplete short right to G.Kittle.PENALTY on ARZ-D.Burke, Illegal Contact, 5 yards, enforced at SF 45 - No Play. [nullified]
+- Q2 13:49 (5 yds) Pass Incompletion: B.Purdy pass incomplete short right to K.Juszczyk.PENALTY on ARZ-M.Melton, Defensive Holding, 5 yards, enforced at ARZ 14 - No Play. [nullified]
+- Q2 1:01 (48 yds) Field Goal Good:  E.Pineiro 48 yard field goal is GOOD, Center-J.Weeks, Holder-T.Morstead. [special_teams]
+- Q2 2:05 (5 yds) Penalty: (Shotgun) PENALTY on ARZ-P.Mustipher, Encroachment, 5 yards, enforced at ARZ 49 - No Play. [nullified]
+- Q2 6:29 (37 yds) Kickoff: C.Ryland kicks 60 yards from ARZ 35 to SF 5. B.Robinson to SF 47 for 42 yards (K.Clark).PENALTY on ARZ-A.Davis-Gaither, Illegal Formation, 5 yards, enforced at SF 47. [special_teams]
+- Q3 7:27 (47 yds) Field Goal Good: E.Pineiro 47 yard field goal is GOOD, Center-J.Weeks, Holder-T.Morstead. [special_teams]
+- Q4 0:15 (-1 yds) Rush: M.Jones kneels to ARZ 37 for -1 yards. [spike_kneel]
+- Q4 0:46 (-1 yds) Rush: M.Jones kneels to ARZ 36 for -1 yards. [spike_kneel]
+- Q4 11:59 (1 yds) Punt: T.Morstead punts 55 yards to ARZ 34, Center-J.Weeks. G.Dortch to SF 44 for 22 yards (J.Tonges). SF-L.Gifford was injured during the play. PENALTY on ARZ-J.Deguara, Offensive Holding, 10 yards, enforced at ARZ 45. [special_teams]
+- Q4 1:20 (-1 yds) Rush: M.Jones kneels to ARZ 35 for -1 yards. [spike_kneel]
+- Q4 2:43 (10 yds) Kickoff: C.Ryland kicks onside 10 yards from ARZ 35 to ARZ 45. I.Guerendo (didn't try to advance) to ARZ 45 for no gain. [special_teams]
+- Q4 8:28 (10 yds) Kickoff: C.Ryland kicks onside 11 yards from ARZ 35 to ARZ 46. K.Juszczyk (didn't try to advance) to ARZ 45 for 1 yard. [special_teams]
+
+**ARI Reconciliation Clues**
+
+- Windelta counted turnovers (3):
+- Q2 0:26 (0 yds) Pass Interception Return: (Shotgun) J.Brissett pass deep middle intended for X.Weaver INTERCEPTED by M.Mustapha at SF 33. M.Mustapha to SF 33 for no gain (G.Dortch). [interception]
+- Q3 4:44 (64 yds) Pass Interception Return: (Shotgun) J.Brissett pass short right intended for E.Higgins INTERCEPTED by D.Lenoir [S.Okuayinonu] at SF 22. D.Lenoir to ARZ 14 for 64 yards (M.Carter). [interception]
+- Q4 14:03 (0 yds) Fumble Recovery (Opponent): (Shotgun) J.Brissett pass short middle to E.Higgins to SF 1 for 7 yards (U.Stout; C.Robinson). FUMBLES (U.Stout), RECOVERED by SF-K.White at SF 3. K.White to SF 3 for no gain (I.Adams). [fumble]
+
+- Excluded non-zero-yard plays (up to 19 shown):
+- Q1 12:30 (-5 yds) Penalty: (Shotgun) PENALTY on ARZ, Delay of Game, 5 yards, enforced at ARZ 44 - No Play. [nullified]
+- Q1 14:44 (20 yds) Kickoff: E.Pineiro kicks 58 yards from SF 35 to ARZ 7. A.Baccellia to ARZ 27 for 20 yards (L.Gifford). [special_teams]
+- Q1 1:00 (58 yds) Field Goal Missed: C.Ryland 58 yard field goal is No Good, Wide Left, Center-A.Brewer, Holder-P.O'Donnell. [special_teams]
+- Q1 2:01 (-5 yds) Penalty: J.Fryar reported in as eligible.  PENALTY on ARZ-P.Brown, False Start, 5 yards, enforced at SF 41 - No Play. [nullified]
+- Q1 9:51 (27 yds) Kickoff: E.Pineiro kicks 64 yards from SF 35 to ARZ 1. A.Baccellia to ARZ 28 for 27 yards (L.Gifford). [special_teams]
+- Q2 0:32 (-5 yds) Penalty: (Shotgun) PENALTY on ARZ-P.Johnson, False Start, 5 yards, enforced at ARZ 45 - No Play. [nullified]
+- Q2 13:39 (27 yds) Kickoff: E.Pineiro kicks 63 yards from SF 35 to ARZ 2. M.Carter to ARZ 29 for 27 yards (L.Gifford; L.Farrell). [special_teams]
+- Q2 1:01 (27 yds) Kickoff: E.Pineiro kicks 64 yards from SF 35 to ARZ 1. A.Baccellia to ARZ 28 for 27 yards (L.Gifford). [special_teams]
+- Q2 6:29 (26 yds) Field Goal Good: C.Ryland 26 yard field goal is GOOD, Center-A.Brewer, Holder-P.O'Donnell. [special_teams]
+- Q2 9:04 (-10 yds) Rush: Direct snap to G.Dortch.  G.Dortch right tackle to SF 1 for 6 yards (U.Stout; J.Elliott).PENALTY on ARZ-T.McBride, Offensive Holding, 10 yards, enforced at SF 7 - No Play. [nullified]
+- Q3 12:45 (9 yds) Punt: P.O'Donnell punts 46 yards to SF 23, Center-A.Brewer. S.Moore to SF 32 for 9 yards (Z.Collins). [special_teams]
+- Q3 12:56 (-9 yds) Rush: J.Fryar reported in as eligible.  Z.Knight right tackle for 60 yards, TOUCHDOWN NULLIFIED by Penalty.PENALTY on ARZ-P.Brown, Offensive Holding, 9 yards, enforced at ARZ 40 - No Play. [nullified]
+- Q3 14:44 (-5 yds) Rush: G.Dortch left end pushed ob at ARZ 40 for 9 yards (R.Green).PENALTY on ARZ, Illegal Shift, 5 yards, enforced at ARZ 31 - No Play. [nullified]
+- Q3 15:00 (31 yds) Kickoff: E.Pineiro kicks 65 yards from SF 35 to ARZ 0. G.Dortch to ARZ 31 for 31 yards (S.Neal; M.Sigle). [special_teams]
+- Q3 2:32 (25 yds) Kickoff: T.Morstead kicks 60 yards from SF 35 to ARZ 5. G.Dortch to ARZ 30 for 25 yards (N.Martin). [special_teams]
+- Q3 5:06 (-5 yds) Rush: (Shotgun) Direct snap to G.Dortch.  G.Dortch up the middle to SF 18 for 4 yards (K.Davis).PENALTY on ARZ, Illegal Shift, 5 yards, enforced at SF 22 - No Play. [nullified]
+- Q3 7:20 (12 yds) Pass Reception: J.Brissett pass short middle to E.Higgins to ARZ 37 for 12 yards (C.Robinson; J.Brown).PENALTY on ARZ-P.Johnson, Offensive Holding, 10 yards, enforced at ARZ 25 - No Play. [nullified]
+- Q3 7:27 (23 yds) Kickoff: E.Pineiro kicks 63 yards from SF 35 to ARZ 2. G.Dortch to ARZ 25 for 23 yards (D.Luter). [special_teams]
+- Q4 15:00 (-10 yds) Rush: (Shotgun) J.Brissett scrambles up the middle to SF 1 for 6 yards (K.Davis). ** Injury Update: SF-C.Robinson has returned to the game. PENALTY on ARZ-K.Beachum, Offensive Holding, 10 yards, enforced at SF 7 - No Play. [nullified]
+
+### 401772900 SEA @ ATL (TOΔ max 0, YdsΔ max 40, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| SEA | 365 | 365 | +0 | 1 | 1 | +0 | 60 | 60 | +0 |
+| ATL | 274 | 234 | -40 | 3 | 3 | +0 | 56 | 56 | +0 |
+
+**SEA Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q2 9:40 (6 yds) Pass Interception Return: S.Darnold pass deep left intended for E.Arroyo INTERCEPTED by M.Hughes (A.Terrell) at SEA 36. M.Hughes to SEA 30 for 6 yards (Z.Charbonnet; K.Walker). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q1 3:34 (10 yds) Pass Reception: (Shotgun) S.Darnold pass short left to J.Smith-Njigba to ATL 21 for 11 yards (A.Terrell). FUMBLES (A.Terrell), touched at ATL 21, ball out of bounds at ATL 22.
+- Q4 2:00 (0 yds) Fumble Recovery (Own): D.Lock FUMBLES (Aborted) at SEA 48, and recovers at SEA 47. D.Lock to SEA 48 for 1 yard (L.London).
+
+- Excluded non-zero-yard plays (up to 12 shown):
+- Q1 0:49 (22 yds) Field Goal Good:  J.Myers 22 yard field goal is GOOD, Center-C.Stoll, Holder-M.Dickson. [special_teams]
+- Q1 2:08 (-5 yds) Penalty: PENALTY on SEA-A.Barner, False Start, 5 yards, enforced at ATL 9 - No Play. [nullified]
+- Q1 2:56 (6 yds) Penalty: (Run formation) PENALTY on ATL-D.Onyemata, Neutral Zone Infraction, 6 yards, enforced at ATL 22 - No Play. [nullified]
+- Q1 5:40 (5 yds) Penalty: S.Darnold pass short left to A.Barner to SEA 32 for -5 yards (K.Street).PENALTY on ATL-L.Floyd, Defensive Offside, 5 yards, enforced at SEA 37 - No Play. [nullified]
+- Q1 7:14 (27 yds) Kickoff: Z.Gonzalez kicks 66 yards from ATL 35 to SEA -1. R.Shaheed to SEA 26 for 27 yards (F.Franks). [special_teams]
+- Q1 9:30 (14 yds) Punt: M.Dickson punts 52 yards to ATL 47, Center-C.Stoll. J.Agnew to SEA 39 for 14 yards (C.White). [special_teams]
+- Q2 0:00 (48 yds) Field Goal Good: J.Myers 48 yard field goal is GOOD, Center-C.Stoll, Holder-M.Dickson. [special_teams]
+- Q2 11:23 (-5 yds) Penalty: K.Walker up the middle to SEA 22 for 12 yards (R.Harrison; A.Terrell). ** Injury Update: ATL-J.Pearce has returned to the game. PENALTY on SEA-R.Ouzts, Offensive Holding, 5 yards, enforced at SEA 10 - No Play. [nullified]
+- Q2 1:01 (21 yds) Kickoff: Z.Gonzalez kicks 61 yards from ATL 35 to SEA 4. R.Shaheed to SEA 25 for 21 yards (X.Watts). [special_teams]
+- Q3 2:39 (37 yds) Field Goal Good: J.Myers 37 yard field goal is GOOD, Center-C.Stoll, Holder-M.Dickson. [special_teams]
+- Q4 14:57 (25 yds) Kickoff: Z.Gonzalez kicks 63 yards from ATL 35 to SEA 2, out of bounds.PENALTY on ATL-Z.Gonzalez, Kickoff Out of Bounds, placed at SEA 40. [special_teams]
+- Q4 4:05 (-10 yds) Penalty: V.Jones left guard to SEA 42 for 12 yards (D.Deablo).PENALTY on SEA-B.Cabeldue, Offensive Holding, 10 yards, enforced at SEA 30 - No Play. [nullified]
+
+**ATL Reconciliation Clues**
+
+- Windelta counted turnovers (3):
+- Q3 11:26 (0 yds) Fumble Recovery (Opponent): B.Robinson up the middle to SEA 18 for no gain (D.Lawrence; E.Jones). FUMBLES (D.Lawrence), RECOVERED by SEA-D.Witherspoon at SEA 12. D.Witherspoon to SEA 12 for no gain (D.Sills). [fumble]
+- Q3 5:01 (0 yds) Pass Interception Return: (Shotgun) K.Cousins pass short right intended for K.Pitts INTERCEPTED by N.Emmanwori (D.Witherspoon) at ATL 47. N.Emmanwori to ATL 47 for no gain (K.Pitts). [interception]
+- Q4 11:38 (3 yds) Pass Interception Return: (No Huddle, Shotgun) K.Cousins pass short right intended for D.Sills INTERCEPTED by D.Witherspoon (D.Hall) at ATL 38. D.Witherspoon to ATL 35 for 3 yards (R.Neuzil; C.Lindstrom). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q2 7:38 (0 yds) Blocked Field Goal: Z.Gonzalez 50 yard field goal is BLOCKED (N.Emmanwori), Center-L.McCullough, Holder-B.Pinion, recovered by ATL-J.Nelson at SEA 34.
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q1 0:49 (25 yds) Kickoff: J.Myers kicks 61 yards from SEA 35 to ATL 4. D.Thompkins to ATL 29 for 25 yards (P.O'Connell; V.Jones). [special_teams]
+- Q1 15:00 (22 yds) Kickoff: J.Myers kicks 64 yards from SEA 35 to ATL 1. D.Thompkins to ATL 23 for 22 yards (D.Bell). [special_teams]
+- Q1 7:14 (35 yds) Field Goal Good:  Z.Gonzalez 35 yard field goal is GOOD, Center-L.McCullough, Holder-B.Pinion. [special_teams]
+- Q1 7:17 (-5 yds) Penalty: (Shotgun) PENALTY on ATL, Delay of Game, 5 yards, enforced at SEA 12 - No Play. [nullified]
+- Q2 1:01 (43 yds) Field Goal Good: Z.Gonzalez 43 yard field goal is GOOD, Center-L.McCullough, Holder-B.Pinion. ** Injury Update: SEA-B.Pili has returned to the game. [special_teams]
+- Q3 14:48 (100 yds) Kickoff Return Touchdown: Z.Gonzalez kicks 65 yards from ATL 35 to SEA 0. R.Shaheed for 100 yards, TOUCHDOWN. J.Myers extra point is GOOD, Center-C.Stoll, Holder-M.Dickson. [special_teams_return]
+- Q3 2:39 (27 yds) Kickoff: J.Myers kicks 60 yards from SEA 35 to ATL 5. D.Thompkins to ATL 32 for 27 yards (T.Knight). [special_teams]
+- Q4 14:57 (27 yds) Field Goal Good: Z.Gonzalez 27 yard field goal is GOOD, Center-L.McCullough, Holder-B.Pinion. [special_teams]
+- Q4 6:09 (10 yds) Penalty: (No Huddle, Shotgun) K.Cousins pass incomplete short right to D.Sills.PENALTY on SEA-J.Jobe, Defensive Pass Interference, 10 yards, enforced at SEA 15 - No Play. [nullified]
+- Q4 7:56 (15 yds) Penalty: (No Huddle, Shotgun) K.Cousins pass incomplete short left to T.Allgeier.PENALTY on SEA-M.Morris, Roughing the Passer, 15 yards, enforced at SEA 42 - No Play. [nullified]
+- Q4 8:27 (47 yds) Kickoff: J.Myers kicks 60 yards from SEA 35 to ATL 5. D.Thompkins pushed ob at SEA 48 for 47 yards (J.Myers). [special_teams]
+
+### 401772783 JAX @ ARI (TOΔ max 0, YdsΔ max 34, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| JAX | 371 | 337 | -34 | 4 | 4 | +0 | 60 | 60 | +0 |
+| ARI | 326 | 326 | +0 | 0 | 0 | +0 | 53 | 53 | +0 |
+
+**JAX Reconciliation Clues**
+
+- Windelta counted turnovers (4):
+- Q1 2:26 (7 yds) Sack Opp Fumble Recovery: (Shotgun) T.Lawrence sacked at JAX 3 for -9 yards (J.Thompson). FUMBLES (J.Thompson), RECOVERED by ARZ-W.Nolen at JAX 7. W.Nolen for 7 yards, TOUCHDOWN. C.Ryland extra point is GOOD, Center-A.Brewer, Holder-M.Haack. [fumble]
+- Q3 13:04 (0 yds) Pass Interception Return: (Shotgun) T.Lawrence pass short right intended for J.Meyers INTERCEPTED by G.Williams (C.Campbell) at ARZ -6. Touchback. [interception]
+- Q3 3:34 (0 yds) Pass Interception Return: (Shotgun) T.Lawrence pass short middle intended for J.Meyers INTERCEPTED by A.Davis-Gaither at JAX 39. A.Davis-Gaither to JAX 39 for no gain (P.Washington). [interception]
+- Q4 8:45 (0 yds) Pass Interception Return: (Shotgun) T.Lawrence pass short left intended for A.Trammell INTERCEPTED by B.Baker at JAX 41. B.Baker to JAX 41 for no gain (A.Trammell). [interception]
+
+- Excluded non-zero-yard plays (up to 6 shown):
+- Q1 8:18 (5 yds) Penalty: PENALTY on ARZ-D.Tomlinson, Encroachment, 5 yards, enforced at JAX 35 - No Play. [nullified]
+- Q2 12:55 (52 yds) Field Goal Good: C.Little 52 yard field goal is GOOD, Center-R.Matiscik, Holder-L.Cooke. [special_teams]
+- Q3 15:00 (39 yds) Kickoff: C.Ryland kicks 61 yards from ARZ 35 to JAX 4. B.Tuten to JAX 43 for 39 yards (A.Davis-Gaither). [special_teams]
+- Q4 0:03 (-1 yds) Rush: T.Lawrence kneels to JAX 34 for -1 yards. [spike_kneel]
+- Q4 5:20 (5 yds) Penalty: (No Huddle, Shotgun) T.Lawrence pass incomplete deep right to Q.Morris.PENALTY on ARZ-B.Ojulari, Defensive Offside, 5 yards, enforced at ARZ 24 - No Play. [nullified]
+- Q5 7:46 (52 yds) Field Goal Good: C.Little 52 yard field goal is GOOD, Center-R.Matiscik, Holder-L.Cooke. [special_teams]
+
+**ARI Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q1 15:00 (28 yds) Kickoff: C.Little kicks 65 yards from JAX 35 to ARZ 0. G.Dortch to ARZ 23 for 23 yards (B.Combs). FUMBLES (B.Combs), and recovers at ARZ 23. G.Dortch to ARZ 28 for 5 yards (R.Lane; D.Gardeck).
+- Q3 11:47 (-10 yds) Penalty: (Shotgun) J.Brissett to ARZ 18 for -8 yards. FUMBLES, and recovers at ARZ 17. J.Brissett pass short left to X.Weaver ran ob at ARZ 33 for 7 yards [D.Gardeck].PENALTY on ARZ-P.Johnson, Offensive Holding, 10 yards, enforced at ARZ 26 - No Play.
+
+- Excluded non-zero-yard plays (up to 18 shown):
+- Q1 15:00 (28 yds) Kickoff: C.Little kicks 65 yards from JAX 35 to ARZ 0. G.Dortch to ARZ 23 for 23 yards (B.Combs). FUMBLES (B.Combs), and recovers at ARZ 23. G.Dortch to ARZ 28 for 5 yards (R.Lane; D.Gardeck). [special_teams]
+- Q1 5:04 (4 yds) Penalty: (Shotgun) J.Brissett pass incomplete short middle to T.McBride.PENALTY on JAX-D.Gardeck, Defensive Pass Interference, 4 yards, enforced at JAX 38 - No Play. [nullified]
+- Q1 7:10 (21 yds) Kickoff: C.Little kicks 63 yards from JAX 35 to ARZ 2. G.Dortch to ARZ 23 for 21 yards (Q.Morris). [special_teams]
+- Q2 0:17 (33 yds) Field Goal Missed: C.Ryland 33 yard field goal is No Good, Wide Right, Center-A.Brewer, Holder-M.Haack. [special_teams]
+- Q2 10:56 (15 yds) Penalty: J.Fryar reported in as eligible.  J.Brissett pass incomplete short right to G.Dortch.PENALTY on JAX-D.Lloyd, Roughing the Passer, 15 yards, enforced at 50 - No Play. [nullified]
+- Q2 12:03 (-5 yds) Penalty: J.Fryar reported in as eligible.  M.Carter left tackle to ARZ 47 for 3 yards (M.Dickerson; Au.Johnson).PENALTY on ARZ-J.Fryar, Illegal Formation, 5 yards, enforced at ARZ 44 - No Play. [nullified]
+- Q2 12:10 (5 yds) Penalty: (Shotgun) J.Brissett pass incomplete deep left to Mi.Wilson.PENALTY on JAX-G.Newsome, Illegal Contact, 5 yards, enforced at ARZ 39 - No Play. [nullified]
+- Q2 2:00 (6 yds) Penalty: (Run formation) J.Fryar reported in as eligible.  PENALTY on JAX-M.Smith, Neutral Zone Infraction, 6 yards, enforced at ARZ 34 - No Play. [nullified]
+- Q2 6:06 (-6 yds) Penalty: J.Fryar reported in as eligible.  Z.Knight left tackle to ARZ 17 for 4 yards (D.Lloyd; J.Hines-Allen).PENALTY on ARZ-K.Beachum, Offensive Holding, 6 yards, enforced at ARZ 13 - No Play. [nullified]
+- Q3 11:12 (43 yds) Punt: M.Haack punts 54 yards to JAX 30, Center-A.Brewer. P.Washington pushed ob at ARZ 27 for 43 yards (A.Davis-Gaither; M.Melton). [special_teams]
+- Q3 11:47 (-10 yds) Penalty: (Shotgun) J.Brissett to ARZ 18 for -8 yards. FUMBLES, and recovers at ARZ 17. J.Brissett pass short left to X.Weaver ran ob at ARZ 33 for 7 yards [D.Gardeck].PENALTY on ARZ-P.Johnson, Offensive Holding, 10 yards, enforced at ARZ 26 - No Play. [nullified]
+- Q3 5:16 (-10 yds) Punt: M.Haack punts 53 yards to JAX 33, Center-A.Brewer. P.Washington ran ob at JAX 41 for 8 yards (P.Brown).PENALTY on JAX-G.Newsome, Offensive Holding, 10 yards, enforced at JAX 33. [special_teams]
+- Q3 8:10 (20 yds) Kickoff: C.Little kicks 64 yards from JAX 35 to ARZ 1. G.Dortch to ARZ 21 for 20 yards (R.Lane). [special_teams]
+- Q4 0:03 (29 yds) Field Goal Good: C.Ryland 29 yard field goal is GOOD, Center-A.Brewer, Holder-M.Haack. [special_teams]
+- Q4 0:49 (5 yds) Penalty: (No Huddle, Shotgun) J.Brissett pass short left to M.Wilson to ARZ 46 for 9 yards (C.Braswell).PENALTY on JAX, Defensive Too Many Men on Field, 5 yards, enforced at ARZ 37 - No Play. [nullified]
+- Q4 2:23 (-10 yds) Penalty: (Shotgun) J.Brissett pass short left to M.Wilson pushed ob at ARZ 47 for 18 yards (A.Wingard).PENALTY on ARZ-E.Higgins, Offensive Pass Interference, 10 yards, enforced at ARZ 29 - No Play. [nullified]
+- Q4 3:47 (30 yds) Kickoff: C.Little kicks 65 yards from JAX 35 to ARZ 0. G.Dortch to ARZ 30 for 30 yards (V.Miller). [special_teams]
+- Q5 7:46 (28 yds) Kickoff: C.Little kicks 65 yards from JAX 35 to ARZ 0. G.Dortch to ARZ 28 for 28 yards (B.Combs; V.Miller). [special_teams]
+
+### 401772779 IND @ KC (TOΔ max 0, YdsΔ max 31, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| IND | 255 | 235 | -20 | 0 | 0 | +0 | 83 | 83 | +0 |
+| KC | 494 | 463 | -31 | 2 | 2 | +0 | 57 | 57 | +0 |
+
+**IND Reconciliation Clues**
+
+- Excluded non-zero-yard plays (up to 16 shown):
+- Q1 11:06 (-5 yds) Penalty: (Shotgun) D.Jones pass short right to M.Pittman to KC 39 for 19 yards (C.Conner; J.Hicks).PENALTY on IND-B.Smith, Illegal Formation, 5 yards, enforced at IND 42 - No Play. [nullified]
+- Q1 15:00 (23 yds) Kickoff: H.Butker kicks 57 yards from KC 35 to IND 8. A.Abdullah to IND 31 for 23 yards (L.Chenal; J.Cochrane). [special_teams]
+- Q1 9:41 (-4 yds) Punt: R.Sanchez punts 48 yards to KC 8, Center-L.Rhodes, fair catch by N.Remigio.PENALTY on KC-C.McDonald, Offensive Holding, 4 yards, enforced at KC 8. [special_teams]
+- Q1 9:51 (-5 yds) Penalty: (Shotgun) PENALTY on IND-M.Goncalves, False Start, 5 yards, enforced at IND 49 - No Play. [nullified]
+- Q2 0:01 (-1 yds) Rush: D.Jones kneels to IND 32 for -1 yards. [spike_kneel]
+- Q2 0:07 (40 yds) Kickoff: H.Butker kicks 72 yards from KC 35 to IND -7. A.Dulin pushed ob at IND 33 for 40 yards (C.Roland-Wallace). [special_teams]
+- Q2 14:51 (26 yds) Kickoff: H.Butker kicks 66 yards from KC 35 to IND -1. A.Gould to IND 25 for 26 yards (L.Chenal). [special_teams]
+- Q2 1:50 (-5 yds) Penalty: (Run formation) PENALTY on IND, Delay of Game, 5 yards, enforced at IND 40 - No Play. [nullified]
+- Q2 2:19 (25 yds) Kickoff: H.Butker kicks 59 yards from KC 35 to IND 6. A.Abdullah to IND 31 for 25 yards (C.Roland-Wallace; C.McDonald). [special_teams]
+- Q3 1:26 (23 yds) Field Goal Good:  M.Badgley 23 yard field goal is GOOD, Center-L.Rhodes, Holder-R.Sanchez. [special_teams]
+- Q3 9:12 (32 yds) Field Goal Good:  M.Badgley 32 yard field goal is GOOD, Center-L.Rhodes, Holder-R.Sanchez. [special_teams]
+- Q4 14:02 (7 yds) Punt: R.Sanchez punts 59 yards to KC 37, Center-L.Rhodes. N.Remigio to KC 44 for 7 yards (R.Thomas; B.Johnson). [special_teams]
+- Q4 4:52 (-5 yds) Penalty: (Shotgun) PENALTY on IND, Delay of Game, 5 yards, enforced at KC 45 - No Play. [nullified]
+- Q4 4:52 (-5 yds) Punt:  R.Sanchez punts 39 yards to KC 11, Center-L.Rhodes. N.Remigio to KC 14 for 3 yards (C.Lammons).
+PENALTY on KC-K.Fulton, Offensive Holding, 5 yards, enforced at KC 11. [special_teams]
+- Q4 8:37 (29 yds) Kickoff: H.Butker kicks 61 yards from KC 35 to IND 4. A.Abdullah to IND 33 for 29 yards (B.Cook; C.McDonald). [special_teams]
+- Q5 10:00 (29 yds) Kickoff: H.Butker kicks 61 yards from KC 35 to IND 4. A.Abdullah to IND 33 for 29 yards (N.Williams; K.Knowles). [special_teams]
+
+**KC Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q1 9:01 (3 yds) Pass Interception Return: (Shotgun) P.Mahomes pass short left intended for R.Rice INTERCEPTED by L.Latu at KC 6. L.Latu to KC 3 for 3 yards (P.Mahomes). [interception]
+- Q4 14:56 (0 yds) Fumble Recovery (Opponent): (Shotgun) K.Hunt right end to IND 12 for 5 yards (Z.Franklin). FUMBLES (Z.Franklin), touched at IND 6, RECOVERED by IND-C.Ward at IND 6. [fumble]
+
+- Excluded non-zero-yard plays (up to 20 shown):
+- Q1 0:14 (-29 yds) Rush: (Shotgun) Direct snap to T.Kelce.  T.Kelce up the middle for 4 yards, TOUCHDOWN NULLIFIED by Penalty.PENALTY on KC-J.Taylor, Face Mask, 15 yards, enforced at IND 3. [nullified]
+- Q1 8:11 (24 yds) Kickoff: M.Badgley kicks 63 yards from IND 35 to KC 2. N.Remigio pushed ob at KC 26 for 24 yards (C.Lammons). [special_teams]
+- Q2 0:07 (22 yds) Field Goal Good:  H.Butker 22 yard field goal is GOOD, Center-J.Winchester, Holder-M.Araiza. [special_teams]
+- Q2 0:32 (6 yds) Penalty: (Shotgun) P.Mahomes pass incomplete short right.PENALTY on IND-L.Latu, Roughing the Passer, 6 yards, enforced at IND 12 - No Play. [nullified]
+- Q2 0:48 (-5 yds) Penalty: (Shotgun) PENALTY on KC-T.Smith, False Start, 5 yards, enforced at KC 47 - No Play. [nullified]
+- Q2 10:31 (22 yds) Kickoff: M.Badgley kicks 65 yards from IND 35 to KC 0. N.Remigio to KC 22 for 22 yards (C.Lammons). [special_teams]
+- Q2 14:51 (28 yds) Field Goal Good:  H.Butker 28 yard field goal is GOOD, Center-J.Winchester, Holder-M.Araiza. [special_teams]
+- Q2 15:00 (5 yds) Penalty: (Shotgun) PENALTY on IND-L.Latu, Neutral Zone Infraction, 5 yards, enforced at IND 15 - No Play. [nullified]
+- Q2 2:19 (48 yds) Field Goal Good: H.Butker 48 yard field goal is GOOD, Center-J.Winchester, Holder-M.Araiza. [special_teams]
+- Q2 4:38 (15 yds) Penalty: P.Mahomes pass incomplete short right to R.Tonyan.PENALTY on IND-G.Stewart, Roughing the Passer, 15 yards, enforced at IND 45 - No Play. [nullified]
+- Q3 13:29 (21 yds) Punt: M.Araiza punts 48 yards to IND 16, Center-J.Winchester. A.Gould pushed ob at IND 37 for 21 yards (C.McDonald). [special_teams]
+- Q3 15:00 (22 yds) Kickoff: M.Badgley kicks 58 yards from IND 35 to KC 7. T.Thornton to KC 29 for 22 yards (A.Ogletree; J.Jones). [special_teams]
+- Q3 1:26 (25 yds) Kickoff: M.Badgley kicks 62 yards from IND 35 to KC 3. T.Thornton to KC 28 for 25 yards (J.Tuimoloau). [special_teams]
+- Q3 6:27 (19 yds) Punt: M.Araiza punts 50 yards to IND 7, Center-J.Winchester. A.Gould pushed ob at IND 26 for 19 yards (J.Hicks). [special_teams]
+- Q3 7:58 (5 yds) Penalty: (Shotgun) P.Mahomes pass incomplete deep left to M.Brown.PENALTY on IND-K.Moore, Illegal Contact, 5 yards, enforced at KC 31 - No Play. [nullified]
+- Q3 9:12 (12 yds) Kickoff: M.Badgley kicks 57 yards from IND 35 to KC 8. N.Remigio to KC 30 for 22 yards (L.Treadwell).PENALTY on KC-K.Knowles, Offensive Holding, 10 yards, enforced at KC 30. [special_teams]
+- Q4 0:00 (25 yds) Field Goal Good: H.Butker 25 yard field goal is GOOD, Center-J.Winchester, Holder-M.Araiza. [special_teams]
+- Q4 4:43 (-3 yds) Penalty: (Shotgun) P.Mahomes pass short right to K.Hunt to KC 12 for 6 yards (G.Pratt).PENALTY on KC-T.Kelce, Offensive Pass Interference, 3 yards, enforced at KC 6 - No Play. [nullified]
+- Q4 5:55 (9 yds) Punt: M.Araiza punts 49 yards to IND 40, Center-J.Winchester. A.Gould pushed ob at IND 49 for 9 yards (B.Cook). [special_teams]
+- Q5 1:57 (27 yds) Field Goal Good:  H.Butker 27 yard field goal is GOOD, Center-J.Winchester, Holder-M.Araiza. [special_teams]
+
+### 401772780 PIT @ CHI (TOΔ max 0, YdsΔ max 31, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| PIT | 345 | 343 | -2 | 2 | 2 | +0 | 41 | 41 | +0 |
+| CHI | 328 | 297 | -31 | 2 | 2 | +0 | 83 | 83 | +0 |
+
+**PIT Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q1 12:41 (0 yds) Pass Interception Return: (Shotgun) M.Rudolph pass deep left intended for D.Metcalf INTERCEPTED by N.Wright at CHI 44. N.Wright pushed ob at CHI 44 for no gain (D.Metcalf). [interception]
+- Q3 4:04 (0 yds) Sack Opp Fumble Recovery: M.Rudolph sacked at CHI 45 for -8 yards (M.Sweat). FUMBLES (M.Sweat) [M.Sweat], touched at CHI 45, RECOVERED by CHI-M.Sweat at CHI 46. ** Injury Update: PIT-D.Metcalf has returned to the game. [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q3 8:29 (19 yds) Kickoff: C.Santos kicks 57 yards from CHI 35 to PIT 8. K.Williams to PIT 27 for 19 yards (N.Kalinic; J.Owens). FUMBLES (N.Kalinic), ball out of bounds at PIT 30.
+
+- Excluded non-zero-yard plays (up to 10 shown):
+- Q1 8:28 (2 yds) Kickoff: C.Santos kicks 56 yards from CHI 35 to PIT 9. K.Gainwell MUFFS catch, and recovers at PIT 3. K.Gainwell to PIT 5 for 2 yards (D.Robinson). [special_teams]
+- Q2 2:34 (-5 yds) Penalty: PENALTY on PIT-J.Smith, False Start, 5 yards, enforced at PIT 35 - No Play. [nullified]
+- Q3 11:31 (-10 yds) Penalty: C.Waitman punts 54 yards to CHI 10, Center-C.Kuntz. D.Duvernay to CHI 10 for no gain (B.Echols).PENALTY on PIT-B.Skowronek, Offensive Holding, 10 yards, enforced at PIT 36 - No Play. [nullified]
+- Q3 15:00 (16 yds) Kickoff: C.Santos kicks 56 yards from CHI 35 to PIT 9. K.Gainwell to PIT 25 for 16 yards (N.Kalinic). [special_teams]
+- Q3 4:45 (27 yds) Penalty: (Shotgun) M.Rudolph pass incomplete deep right to C.Austin.PENALTY on CHI-N.McCloud, Defensive Pass Interference, 27 yards, enforced at PIT 38 - No Play. [nullified]
+- Q3 8:29 (19 yds) Kickoff: C.Santos kicks 57 yards from CHI 35 to PIT 8. K.Williams to PIT 27 for 19 yards (N.Kalinic; J.Owens). FUMBLES (N.Kalinic), ball out of bounds at PIT 30. [special_teams]
+- Q4 14:14 (26 yds) Kickoff: C.Santos kicks 64 yards from CHI 35 to PIT 1. K.Williams to PIT 27 for 26 yards (J.Jones). [special_teams]
+- Q4 2:14 (-5 yds) Penalty: (Shotgun) M.Rudolph scrambles left guard to 50 for 22 yards (K.Byard).PENALTY on PIT, Illegal Formation, 5 yards, enforced at PIT 28 - No Play. [nullified]
+- Q4 7:41 (-18 yds) Rush: K.Gainwell left end for 4 yards, TOUCHDOWN NULLIFIED by Penalty.PENALTY on PIT-D.Metcalf, Offensive Holding, 10 yards, enforced at CHI 2. [nullified]
+- Q4 9:23 (11 yds) Penalty: (No Huddle, Shotgun) M.Rudolph pass incomplete short left to D.Metcalf.PENALTY on CHI-N.Wright, Defensive Pass Interference, 11 yards, enforced at CHI 26 - No Play. [nullified]
+
+**CHI Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q2 12:06 (0 yds) Fumble Recovery (Opponent): (Shotgun) D.Swift left guard to PIT 47 for 2 yards (Y.Black; K.Dugger). FUMBLES (Y.Black), RECOVERED by PIT-Y.Black at PIT 48. [fumble]
+- Q2 14:44 (0 yds) Sack Opp Fumble Recovery: (Shotgun) C.Williams sacked at CHI -2 for -12 yards (T.Watt). FUMBLES (T.Watt) [T.Watt], RECOVERED by PIT-N.Herbig at CHI -1. TOUCHDOWN. C.Boswell extra point is GOOD, Center-C.Kuntz, Holder-C.Waitman. [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q2 1:13 (-16 yds) Penalty: (Shotgun) C.Williams pass deep right intended for D.Moore INTERCEPTED by J.Porter at PIT 31. J.Porter to PIT 22 for -9 yards (D.Moore). FUMBLES (D.Moore), and recovers at PIT 18. J.Porter to PIT 15 for -3 yards (D.Moore).PENALTY on PIT-N.Herbig, Defensive Offside, 5 yards, enforced at CHI 36 - No Play.
+
+- Excluded non-zero-yard plays (up to 14 shown):
+- Q1 0:24 (-10 yds) Penalty: D.Swift right guard to CHI 23 for 3 yards (N.Herbig).PENALTY on CHI-D.Wright, Offensive Holding, 10 yards, enforced at CHI 20 - No Play. [nullified]
+- Q1 0:30 (-5 yds) Kickoff: C.Boswell kicks 64 yards from PIT 35 to CHI 1. D.Duvernay ran ob at CHI 35 for 34 yards (P.Wilson).PENALTY on CHI-D.Smythe, Offensive Holding, 10 yards, enforced at CHI 30. [special_teams]
+- Q1 13:30 (12 yds) Punt:  T.Taylor punts 58 yards to PIT 9, Center-S.Daly. C.Austin pushed ob at PIT 21 for 12 yards (D.Hardy). [special_teams]
+- Q1 15:00 (28 yds) Kickoff: C.Boswell kicks 64 yards from PIT 35 to CHI 1. J.Blackwell to CHI 29 for 28 yards (J.Sawyer). [special_teams]
+- Q1 8:35 (6 yds) Penalty: (Shotgun) C.Williams pass incomplete short right to C.Kmet.PENALTY on PIT-P.Wilson, Defensive Pass Interference, 6 yards, enforced at PIT 11 - No Play. [nullified]
+- Q2 0:00 (47 yds) Field Goal Good: C.Santos 47 yard field goal is GOOD, Center-S.Daly, Holder-T.Taylor. [special_teams]
+- Q2 0:35 (-5 yds) Penalty: (Shotgun) C.Williams pass short right to D.Swift pushed ob at PIT 37 for 6 yards (P.Wilson).PENALTY on CHI, Illegal Shift, 5 yards, enforced at PIT 43 - No Play. [nullified]
+- Q2 14:44 (16 yds) Kickoff: C.Boswell kicks 55 yards from PIT 35 to CHI 10. D.Duvernay to CHI 26 for 16 yards (S.Castro). [special_teams]
+- Q2 1:13 (-16 yds) Penalty: (Shotgun) C.Williams pass deep right intended for D.Moore INTERCEPTED by J.Porter at PIT 31. J.Porter to PIT 22 for -9 yards (D.Moore). FUMBLES (D.Moore), and recovers at PIT 18. J.Porter to PIT 15 for -3 yards (D.Moore).PENALTY on PIT-N.Herbig, Defensive Offside, 5 yards, enforced at CHI 36 - No Play. [nullified]
+- Q2 1:19 (31 yds) Kickoff: C.Boswell kicks 60 yards from PIT 35 to CHI 5. J.Blackwell to CHI 36 for 31 yards (C.Bruener). [special_teams]
+- Q3 5:17 (12 yds) Punt: T.Taylor punts 42 yards to PIT 22, Center-S.Daly. C.Austin pushed ob at PIT 34 for 12 yards (C.Jones). [special_teams]
+- Q4 0:17 (-1 yds) Rush: C.Williams kneels to CHI 47 for -1 yards. ** Injury Update: PIT-J.Pierre has returned to the game. [spike_kneel]
+- Q4 5:30 (-5 yds) Penalty: (Shotgun) PENALTY on CHI, Delay of Game, 5 yards, enforced at CHI 34 - No Play. [nullified]
+- Q4 6:27 (30 yds) Kickoff: C.Boswell kicks 63 yards from PIT 35 to CHI 2. J.Blackwell to CHI 32 for 30 yards (C.Holcomb). [special_teams]
+
+### 401772845 PHI @ TB (TOΔ max 0, YdsΔ max 31, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| PHI | 200 | 219 | +19 | 0 | 0 | +0 | 83 | 83 | +0 |
+| TB | 376 | 407 | +31 | 2 | 2 | +0 | 40 | 40 | +0 |
+
+**PHI Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q3 0:03 (-15 yds) Fumble Recovery (Own): (Shotgun) J.Hurts Aborted. C.Jurgens FUMBLES at PHI 36, recovered by PHI-J.Hurts at PHI 33. J.Hurts to PHI 30 for -3 yards (C.Braswell).Penalty on PHI, Illegal Shift, declined.
+- Q3 6:00 (5 yds) Rush: (Shotgun) J.Hurts scrambles left end to TB 15 for 5 yards (A.Nelson). FUMBLES (A.Nelson), ball out of bounds at TB 15.
+
+- Excluded non-zero-yard plays (up to 13 shown):
+- Q2 0:58 (39 yds) Field Goal Good:  J.Elliott 39 yard field goal is GOOD, Center-C.Hughlett, Holder-B.Mann. [special_teams]
+- Q2 12:49 (5 yds) Punt: B.Mann punts 52 yards to TB 11, Center-C.Hughlett. K.Johnson to TB 16 for 5 yards (K.Granson; J.Trotter). [special_teams]
+- Q2 15:00 (29 yds) Kickoff: C.McLaughlin kicks 64 yards from TB 35 to PHI 1. T.Bigsby to PHI 30 for 29 yards (J.Bullock). [special_teams]
+- Q3 12:48 (46 yds) Punt: B.Mann punts 63 yards to TB 14, Center-C.Hughlett. K.Johnson pushed ob at PHI 40 for 46 yards (K.Granson). [special_teams]
+- Q3 15:00 (27 yds) Kickoff: C.McLaughlin kicks 60 yards from TB 35 to PHI 5. W.Shipley to PHI 32 for 27 yards (R.Wisdom). [special_teams]
+- Q3 2:10 (31 yds) Kickoff: C.McLaughlin kicks 61 yards from TB 35 to PHI 4. T.Bigsby to PHI 35 for 31 yards (K.Merriweather; J.Bullock). [special_teams]
+- Q3 8:21 (13 yds) Punt: B.Mann punts 63 yards to TB 4, Center-C.Hughlett. K.Johnson ran ob at TB 17 for 13 yards (C.Latu; S.Brown). [special_teams]
+- Q3 9:51 (39 yds) Kickoff: C.McLaughlin kicks 64 yards from TB 35 to PHI 1. W.Shipley to PHI 40 for 39 yards (J.Parrish; M.Watts). [special_teams]
+- Q4 0:06 (-5 yds) Penalty: (Run formation) PENALTY on PHI, Delay of Game, 5 yards, enforced at PHI 39 - No Play. [nullified]
+- Q4 12:00 (27 yds) Punt: B.Mann punts 51 yards to TB 26, Center-C.Hughlett. K.Johnson to PHI 47 for 27 yards (M.McWilliams). [special_teams]
+- Q4 12:16 (22 yds) Kickoff: C.McLaughlin kicks 64 yards from TB 35 to PHI 1. T.Bigsby to PHI 23 for 22 yards (J.Hayes). [special_teams]
+- Q4 15:00 (7 yds) Punt: B.Mann punts 46 yards to TB 24, Center-C.Hughlett. K.Johnson to TB 31 for 7 yards (W.Shipley). [special_teams]
+- Q4 6:18 (2 yds) Punt: B.Mann punts 52 yards to TB 20, Center-C.Hughlett. K.Johnson to TB 22 for 2 yards (S.Brown). [special_teams]
+
+**TB Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q3 7:26 (0 yds) Fumble Recovery (Opponent): (Shotgun) B.Irving left tackle to TB 24 for 2 yards (J.Hunt; J.Campbell). FUMBLES (J.Hunt), RECOVERED by PHI-K.Ringo at TB 25.The Replay Official reviewed the runner was not down by contact ruling, and the play was Upheld. The ruling on the field stands. [fumble]
+- Q4 7:57 (0 yds) Pass Interception Return: (Shotgun) B.Mayfield pass short right intended for C.Godwin INTERCEPTED by J.Campbell (R.Blankenship) at PHI 0. Touchback.Penalty on TB-G.Barton, Ineligible Downfield Pass, declined. [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q1 0:46 (-8 yds) Fumble Recovery (Own): (Shotgun) B.Mayfield sacked at PHI 27 for -12 yards (Z.Baun). FUMBLES (Z.Baun), and recovers at PHI 23.
+- Q1 12:51 (35 yds) Blocked Punt Touchdown: R.Dixon punt is BLOCKED by C.Latu, Center-E.Deckers, RECOVERED by PHI-S.Brown at TB 35. S.Brown for 35 yards, TOUCHDOWN. J.Elliott extra point is GOOD, Center-C.Hughlett, Holder-B.Mann.
+
+- Excluded non-zero-yard plays (up to 15 shown):
+- Q1 0:00 (42 yds) Field Goal Good: C.McLaughlin 42 yard field goal is GOOD, Center-E.Deckers, Holder-R.Dixon. [special_teams]
+- Q1 12:51 (21 yds) Kickoff: J.Elliott kicks 61 yards from PHI 35 to TB 4. K.Johnson to TB 25 for 21 yards (J.Uche). [special_teams]
+- Q1 7:08 (17 yds) Kickoff: J.Elliott kicks 54 yards from PHI 35 to TB 11. S.Tucker to TB 28 for 17 yards (K.Granson). [special_teams]
+- Q2 0:00 (65 yds) Field Goal Good: C.McLaughlin 65 yard field goal is GOOD, Center-E.Deckers, Holder-R.Dixon. [special_teams]
+- Q2 0:28 (15 yds) Penalty: (No Huddle, Shotgun) B.Mayfield pass short left to B.Irving to TB 27 for -5 yards (J.Campbell). TB-B.Irving was injured during the play. PENALTY on PHI-J.Carter, Roughing the Passer, 15 yards, enforced at TB 32 - No Play. [nullified]
+- Q2 0:58 (20 yds) Kickoff: J.Elliott kicks 62 yards from PHI 35 to TB 3. S.Tucker to TB 23 for 20 yards (C.Latu). [special_teams]
+- Q2 5:10 (3 yds) Punt: R.Dixon punts 52 yards to PHI 22, Center-E.Deckers. J.Dotson to PHI 25 for 3 yards (A.Nelson). [special_teams]
+- Q2 6:10 (13 yds) Kickoff: J.Elliott kicks 56 yards from PHI 35 to TB 9. K.Johnson pushed ob at PHI 47 for 44 yards (J.Elliott).PENALTY on TB-A.Nelson, Offensive Holding, 10 yards, enforced at TB 30. [special_teams]
+- Q2 9:50 (-10 yds) Punt: R.Dixon punts 18 yards to PHI 43, Center-E.Deckers, out of bounds.PENALTY on PHI-P.Nickerson, Offensive Holding, 10 yards, enforced at PHI 43. [special_teams]
+- Q3 3:51 (-6 yds) Kickoff: J.Elliott kicks 58 yards from PHI 35 to TB 7. S.Tucker to TB 28 for 21 yards (K.Granson; M.Epps).PENALTY on TB-D.Culp, Offensive Holding, 10 yards, enforced at TB 24. [special_teams]
+- Q4 10:58 (5 yds) Penalty: (Shotgun) B.Mayfield pass incomplete short left to S.Shepard [Z.Smith].PENALTY on PHI-K.Ringo, Defensive Pass Interference, 5 yards, enforced at PHI 42 - No Play. [nullified]
+- Q4 12:16 (58 yds) Field Goal Good:  C.McLaughlin 58 yard field goal is GOOD, Center-E.Deckers, Holder-R.Dixon. [special_teams]
+- Q4 13:41 (-10 yds) Penalty: B.Irving left tackle to PHI 26 for 12 yards (K.Ringo).PENALTY on TB-P.Durham, Offensive Holding, 10 yards, enforced at PHI 38 - No Play. [nullified]
+- Q4 13:44 (3 yds) Penalty: (Shotgun) B.Mayfield pass incomplete short middle to B.Irving.PENALTY on PHI-P.Johnson, Defensive Pass Interference, 3 yards, enforced at PHI 41 - No Play. [nullified]
+- Q4 2:01 (-5 yds) Penalty: (No Huddle, Shotgun) PENALTY on TB-E.Egbuka, False Start, 5 yards, enforced at PHI 38 - No Play. [nullified]
+
+### 401772720 LV @ NE (TOΔ max 0, YdsΔ max 30, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| LV | 389 | 359 | -30 | 1 | 1 | +0 | 77 | 77 | +0 |
+| NE | 336 | 336 | +0 | 1 | 1 | +0 | 70 | 70 | +0 |
+
+**LV Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q1 6:30 (1 yds) Pass Interception Return: G.Smith pass deep left intended for B.Bowers INTERCEPTED by J.Hawkins (C.Davis) at NE 17. J.Hawkins pushed ob at NE 18 for 1 yard (B.Bowers). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 0:19 (17 yds) Kickoff: A.Borregales kicks onside 17 yards from NE 35 to LV 48, out of bounds.PENALTY on NE-A.Borregales, Kickoff Out of Bounds, placed at LV 48.
+
+- Excluded non-zero-yard plays (up to 14 shown):
+- Q1 12:23 (-5 yds) Penalty: (Shotgun) PENALTY on LV-D.Parham, False Start, 5 yards, enforced at NE 21 - No Play. [nullified]
+- Q1 15:00 (34 yds) Kickoff: A.Borregales kicks 65 yards from NE 35 to LV 0. D.Laube to LV 34 for 34 yards (M.Mapu). [special_teams]
+- Q1 1:02 (31 yds) Kickoff: A.Borregales kicks 65 yards from NE 35 to LV 0. Z.White to LV 31 for 31 yards (M.Robinson, J.Gibbens). [special_teams]
+- Q2 0:02 (58 yds) Field Goal Missed: D.Carlson 58 yard field goal is No Good, Wide Left, Center-J.Bobenmoyer, Holder-A.Cole. [special_teams]
+- Q2 14:21 (9 yds) Punt: A.Cole punts 55 yards to NE 17, Center-J.Bobenmoyer. M.Jones to NE 26 for 9 yards (D.Richardson). [special_teams]
+- Q2 1:36 (-3 yds) Punt: A.Cole punts 56 yards to NE 29, Center-J.Bobenmoyer. M.Jones to NE 39 for 10 yards (C.Snowden; J.Bobenmoyer).PENALTY on NE-J.Gibbens, Illegal Block Above the Waist, 10 yards, enforced at NE 36. [special_teams]
+- Q2 1:57 (31 yds) Kickoff: A.Borregales kicks 60 yards from NE 35 to LV 5. D.Laube to LV 36 for 31 yards (M.Robinson; C.Ballentine). [special_teams]
+- Q3 0:52 (51 yds) Field Goal Good:  D.Carlson 51 yard field goal is GOOD, Center-J.Bobenmoyer, Holder-A.Cole. [special_teams]
+- Q3 2:54 (-10 yds) Penalty: (Shotgun) A.Jeanty left tackle to NE 33 for 4 yards (C.Elliss).PENALTY on LV-D.Glaze, Offensive Holding, 10 yards, enforced at NE 37 - No Play. [nullified]
+- Q3 6:33 (-5 yds) Punt: A.Cole punts 60 yards to end zone, Center-J.Bobenmoyer, Touchback.PENALTY on LV-C.Snowden, Illegal Formation, 5 yards, enforced at NE 20. [special_teams]
+- Q4 0:18 (-1 yds) Rush:  G.Smith kneels to LV 47 for -1 yards. [spike_kneel]
+- Q4 0:19 (17 yds) Kickoff: A.Borregales kicks onside 17 yards from NE 35 to LV 48, out of bounds.PENALTY on NE-A.Borregales, Kickoff Out of Bounds, placed at LV 48. [special_teams]
+- Q4 4:48 (-5 yds) Penalty: (Shotgun) PENALTY on LV-T.Tucker, False Start, 5 yards, enforced at LV 35 - No Play. [nullified]
+- Q4 6:46 (40 yds) Field Goal Good:  D.Carlson 40 yard field goal is GOOD, Center-J.Bobenmoyer, Holder-A.Cole. [special_teams]
+
+**NE Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q3 12:23 (0 yds) Pass Interception Return: (No Huddle, Shotgun) D.Maye pass deep right intended for S.Diggs INTERCEPTED by I.Pola-Mao [M.Crosby] at LV 29. I.Pola-Mao to LV 29 for no gain (S.Diggs). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 6:15 (-8 yds) Fumble Recovery (Own): (No Huddle, Shotgun) D.Maye sacked at NE 36 for -8 yards (M.Koonce). FUMBLES (M.Koonce) [M.Koonce], recovered by NE-W.Campbell at NE 36.
+
+- Excluded non-zero-yard plays (up to 16 shown):
+- Q1 12:17 (41 yds) Kickoff: D.Carlson kicks 59 yards from LV 35 to NE 6. A.Gibson to NE 47 for 41 yards (T.Eichenberg). [special_teams]
+- Q1 6:22 (5 yds) Penalty: (Shotgun) PENALTY on LV-A.Butler, Encroachment, 5 yards, enforced at NE 18 - No Play. [nullified]
+- Q2 14:09 (-10 yds) Penalty: (Shotgun) T.Henderson left tackle to NE 29 for 3 yards (G.Pratt). ** Injury Update: NE-K.Boutte has returned to the game. PENALTY on NE-J.Wilson, Offensive Holding, 10 yards, enforced at NE 26 - No Play. [nullified]
+- Q2 1:57 (35 yds) Field Goal Good: A.Borregales 35 yard field goal is GOOD, Center-J.Ashby, Holder-B.Baringer. [special_teams]
+- Q2 4:05 (22 yds) Penalty: (Shotgun) D.Maye pass incomplete deep left to M.Hollins.PENALTY on LV-K.Kelly, Defensive Pass Interference, 22 yards, enforced at LV 47 - No Play. [nullified]
+- Q2 7:42 (-10 yds) Penalty: (Shotgun) T.Henderson left tackle to NE 30 for 3 yards (K.Kelly).PENALTY on NE-A.Hooper, Offensive Holding, 10 yards, enforced at NE 27 - No Play. [nullified]
+- Q2 9:11 (40 yds) Field Goal Missed: A.Borregales 40 yard field goal is No Good, Wide Right, Center-J.Ashby, Holder-B.Baringer. [special_teams]
+- Q2 9:48 (-5 yds) Penalty: (Shotgun) PENALTY on NE, Delay of Game, 5 yards, enforced at LV 17 - No Play. [nullified]
+- Q3 0:45 (-5 yds) Penalty: (Shotgun) PENALTY on NE-W.Campbell, False Start, 5 yards, enforced at NE 31 - No Play. [nullified]
+- Q3 0:52 (27 yds) Kickoff: D.Carlson kicks 61 yards from LV 35 to NE 4. A.Gibson to NE 31 for 27 yards (J.Shorter; A.Bachman). [special_teams]
+- Q3 15:00 (-3 yds) Kickoff: D.Carlson kicks 63 yards from LV 35 to NE 2. T.Henderson to NE 29 for 27 yards (C.Snowden).PENALTY on NE-E.Ponder, Offensive Holding, 10 yards, enforced at NE 22. [special_teams]
+- Q3 4:39 (3 yds) Punt: B.Baringer punts 59 yards to LV 13, Center-J.Ashby. T.Tucker pushed ob at LV 30 for 17 yards (J.Gibbens).PENALTY on LV-T.Eichenberg, Illegal Block Above the Waist, 10 yards, enforced at LV 26. [special_teams]
+- Q3 9:39 (21 yds) Kickoff: D.Carlson kicks 29 yards from LV 35 to NE 36, short of landing zone.PENALTY on LV-D.Carlson, Kickoff Short of Landing Zone, 4 yards, placed at NE 36. [special_teams]
+- Q4 0:19 (44 yds) Field Goal Good: A.Borregales 44 yard field goal is GOOD, Center-J.Ashby, Holder-B.Baringer. [special_teams]
+- Q4 4:53 (-5 yds) Penalty: (No Huddle, Shotgun) PENALTY on NE-W.Campbell, False Start, 5 yards, enforced at NE 49 - No Play. [nullified]
+- Q4 6:46 (23 yds) Kickoff: D.Carlson kicks 60 yards from LV 35 to NE 5. T.Henderson to NE 28 for 23 yards (T.Eichenberg; J.Shorter). [special_teams]
+
+### 401772721 PIT @ NYJ (TOΔ max 0, YdsΔ max 30, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| PIT | 271 | 271 | +0 | 0 | 0 | +0 | 26 | 26 | +0 |
+| NYJ | 394 | 364 | -30 | 1 | 1 | +0 | 74 | 74 | +0 |
+
+**PIT Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q1 0:25 (23 yds) Kickoff: N.Folk kicks 60 yards from NYJ 35 to PIT 5. K.Johnson to PIT 28 for 23 yards (M.McCrary-Ball). FUMBLES (M.McCrary-Ball), recovered by PIT-J.Thornhill at PIT 28.
+- Q2 1:12 (0 yds) Fumble Recovery (Own): (Shotgun) K.Gainwell left tackle to NYJ 24 for no gain (Q.Williams). FUMBLES (Q.Williams), and recovers at NYJ 24.
+
+- Excluded non-zero-yard plays (up to 14 shown):
+- Q1 0:25 (23 yds) Kickoff: N.Folk kicks 60 yards from NYJ 35 to PIT 5. K.Johnson to PIT 28 for 23 yards (M.McCrary-Ball). FUMBLES (M.McCrary-Ball), recovered by PIT-J.Thornhill at PIT 28. [special_teams]
+- Q1 9:15 (29 yds) Kickoff: N.Folk kicks 65 yards from NYJ 35 to PIT 0. K.Johnson to PIT 29 for 29 yards (C.Jones; M.McCrary-Ball). [special_teams]
+- Q2 10:03 (23 yds) Kickoff: N.Folk kicks 60 yards from NYJ 35 to PIT 5. K.Johnson to PIT 28 for 23 yards (C.Jones; I.Davis). [special_teams]
+- Q2 13:26 (56 yds) Field Goal Good: C.Boswell 56 yard field goal is GOOD, Center-C.Kuntz, Holder-C.Waitman. [special_teams]
+- Q3 10:59 (5 yds) Penalty: (No Huddle) A.Rodgers pass incomplete deep middle to J.Smith.PENALTY on NYJ, Defensive Too Many Men on Field, 5 yards, enforced at PIT 29 - No Play. [nullified]
+- Q3 13:32 (-5 yds) Penalty: (Shotgun) PENALTY on PIT, Delay of Game, 5 yards, enforced at PIT 39 - No Play. [nullified]
+- Q3 15:00 (28 yds) Kickoff: N.Folk kicks 63 yards from NYJ 35 to PIT 2. K.Johnson to PIT 30 for 28 yards (M.McCrary-Ball). [special_teams]
+- Q3 3:46 (29 yds) Kickoff: N.Folk kicks 62 yards from NYJ 35 to PIT 3. K.Johnson to PIT 32 for 29 yards (M.Moore; Q.Stiggers). [special_teams]
+- Q3 9:08 (19 yds) Punt: C.Waitman punts 50 yards to NYJ 13, Center-C.Kuntz. X.Gipson pushed ob at NYJ 32 for 19 yards (M.Killebrew). [special_teams]
+- Q4 0:18 (-1 yds) Rush: A.Rodgers kneels to NYJ 38 for -1 yards. [spike_kneel]
+- Q4 1:03 (60 yds) Field Goal Good:  C.Boswell 60 yard field goal is GOOD, Center-C.Kuntz, Holder-C.Waitman. [special_teams]
+- Q4 2:46 (19 yds) Penalty: (Shotgun) A.Rodgers pass incomplete deep right to C.Austin.PENALTY on NYJ-B.Stephens, Defensive Pass Interference, 19 yards, enforced at PIT 29 - No Play. [nullified]
+- Q4 5:29 (-10 yds) Punt: C.Waitman punts 46 yards to NYJ 31, Center-C.Kuntz. X.Gipson ran ob at NYJ 34 for 3 yards (C.Clark).PENALTY on NYJ-Q.Stiggers, Illegal Block Above the Waist, 10 yards, enforced at NYJ 31. [special_teams]
+- Q4 7:01 (33 yds) Kickoff: N.Folk kicks 61 yards from NYJ 35 to PIT 4. K.Gainwell to PIT 37 for 33 yards (T.Adams; Q.Stiggers). [special_teams]
+
+**NYJ Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q4 14:57 (19 yds) Kickoff: C.Boswell kicks 64 yards from PIT 35 to NYJ 1. X.Gipson to NYJ 20 for 19 yards (K.Gainwell). FUMBLES (K.Gainwell), RECOVERED by PIT-B.Skowronek at NYJ 22. B.Skowronek to NYJ 22 for no gain (X.Gipson). [fumble]
+
+- Excluded non-zero-yard plays (up to 13 shown):
+- Q1 0:25 (1 yds) Penalty: N.Folk extra point is No Good, Wide Left, Center-T.Hennessy, Holder-A.McNamara.PENALTY on PIT, Illegal Formation, 1 yard, enforced at PIT 15 - No Play. [nullified]
+- Q1 15:00 (33 yds) Kickoff: C.Boswell kicks 63 yards from PIT 35 to NYJ 2. K.Nwangwu to NYJ 35 for 33 yards (M.Harrison). [special_teams]
+- Q1 3:38 (40 yds) Kickoff: C.Boswell kicks 60 yards from PIT 35 to NYJ 5. X.Gipson to NYJ 45 for 40 yards (J.Thornhill). [special_teams]
+- Q1 9:15 (35 yds) Field Goal Good: N.Folk 35 yard field goal is GOOD, Center-T.Hennessy, Holder-A.McNamara. [special_teams]
+- Q2 0:32 (29 yds) Kickoff: C.Boswell kicks 61 yards from PIT 35 to NYJ 4. X.Gipson to NYJ 33 for 29 yards (C.Bruener; C.Clark). [special_teams]
+- Q2 13:26 (25 yds) Kickoff: C.Boswell kicks 58 yards from PIT 35 to NYJ 7. X.Gipson to NYJ 32 for 25 yards (B.Skowronek). [special_teams]
+- Q2 2:54 (51 yds) Field Goal Good: N.Folk 51 yard field goal is GOOD, Center-T.Hennessy, Holder-A.McNamara. [special_teams]
+- Q2 5:06 (-5 yds) Penalty: PENALTY on NYJ, Delay of Game, 5 yards, enforced at PIT 38 - No Play. [nullified]
+- Q3 11:37 (-15 yds) Punt: A.McNamara punts 39 yards to PIT 38, Center-T.Hennessy, downed by NYJ-A.Beck.PENALTY on PIT-Co.Heyward, Unnecessary Roughness, 15 yards, enforced at PIT 38. [special_teams]
+- Q3 6:02 (-5 yds) Penalty: (Shotgun) PENALTY on NYJ-T.Johnson, False Start, 5 yards, enforced at PIT 35 - No Play. [nullified]
+- Q4 14:07 (29 yds) Kickoff: C.Boswell kicks 61 yards from PIT 35 to NYJ 4. X.Gipson to NYJ 33 for 29 yards (M.Harrison; J.Sawyer). [special_teams]
+- Q4 14:57 (19 yds) Kickoff: C.Boswell kicks 64 yards from PIT 35 to NYJ 1. X.Gipson to NYJ 20 for 19 yards (K.Gainwell). FUMBLES (K.Gainwell), RECOVERED by PIT-B.Skowronek at NYJ 22. B.Skowronek to NYJ 22 for no gain (X.Gipson). [special_teams]
+- Q4 1:03 (31 yds) Kickoff: C.Boswell kicks 65 yards from PIT 35 to NYJ 0. Ar.Smith to NYJ 31 for 31 yards (C.Clark). [special_teams]
+
+### 401772734 HOU @ JAX (TOΔ max 0, YdsΔ max 30, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| HOU | 271 | 241 | -30 | 3 | 3 | +0 | 66 | 66 | +0 |
+| JAX | 291 | 291 | +0 | 1 | 1 | +0 | 70 | 70 | +0 |
+
+**HOU Reconciliation Clues**
+
+- Windelta counted turnovers (3):
+- Q4 0:27 (0 yds) Pass Interception Return: (Shotgun) C.Stroud pass deep middle intended for C.Kirk INTERCEPTED by An.Johnson (J.Hines-Allen) at JAX 4. An.Johnson to JAX 4 for no gain (X.Hutchinson). [interception]
+- Q4 13:56 (6 yds) Pass Interception Return: (Shotgun) C.Stroud pass short left intended for C.Kirk INTERCEPTED by J.Lewis at JAX 19. J.Lewis to JAX 25 for 6 yards (D.Schultz). [interception]
+- Q4 3:58 (2 yds) Fumble Recovery (Opponent): (No Huddle, Shotgun) C.Stroud pass short left to N.Collins to JAX 21 for 10 yards (T.Campbell). FUMBLES (T.Campbell), RECOVERED by JAX-D.Lloyd at JAX 15. D.Lloyd to JAX 17 for 2 yards (D.Schultz; X.Hutchinson). [fumble]
+
+- Excluded non-zero-yard plays (up to 12 shown):
+- Q1 0:42 (-6 yds) Punt: T.Townsend punts 47 yards to JAX 37, Center-A.Brinkman. P.Washington to JAX 41 for 4 yards (E.Speed; J.Hansen).PENALTY on JAX-V.Miller, Illegal Block Above the Waist, 10 yards, enforced at JAX 41. [special_teams]
+- Q1 6:45 (52 yds) Field Goal Missed: K.Fairbairn 52 yard field goal is No Good, Wide Right, Center-A.Brinkman, Holder-T.Townsend. [special_teams]
+- Q1 7:10 (-5 yds) Penalty: (Shotgun) PENALTY on HST-T.Howard, False Start, 5 yards, enforced at JAX 28 - No Play. [nullified]
+- Q2 0:04 (-1 yds) Rush: C.Stroud kneels to HST 17 for -1 yards. [spike_kneel]
+- Q2 11:46 (-10 yds) Penalty: (Shotgun) C.Stroud pass short left to X.Hutchinson to JAX 47 for 12 yards (J.Lewis; T.Campbell).PENALTY on HST-A.Ersery, Offensive Holding, 10 yards, enforced at HST 41 - No Play. [nullified]
+- Q2 1:53 (-5 yds) Penalty: (Shotgun) PENALTY on HST-D.Schultz, False Start, 5 yards, enforced at HST 42 - No Play. [nullified]
+- Q2 6:54 (27 yds) Field Goal Good: K.Fairbairn 27 yard field goal is GOOD, Center-A.Brinkman, Holder-T.Townsend. [special_teams]
+- Q2 8:33 (5 yds) Penalty: C.Stroud pass incomplete short left to X.Hutchinson.PENALTY on JAX-D.Gardeck, Defensive Holding, 5 yards, enforced at JAX 20 - No Play. [nullified]
+- Q3 6:23 (30 yds) Kickoff: C.Little kicks 65 yards from JAX 35 to HST 0. J.Noel to HST 30 for 30 yards (D.Lloyd). [special_teams]
+- Q4 0:57 (5 yds) Penalty: (Shotgun) C.Stroud pass incomplete short left.PENALTY on JAX-T.Campbell, Defensive Holding, 5 yards, enforced at HST 46 - No Play. [nullified]
+- Q4 1:48 (23 yds) Kickoff: C.Little kicks 62 yards from JAX 35 to HST 3. J.Noel to HST 26 for 23 yards (D.Lloyd). [special_teams]
+- Q4 9:55 (13 yds) Punt: T.Townsend punts 66 yards to JAX 20, Center-A.Brinkman. P.Washington ran ob at JAX 33 for 13 yards (J.Johnson). [special_teams]
+
+**JAX Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q4 9:33 (0 yds) Pass Interception Return: (Shotgun) T.Lawrence pass deep right intended for P.Washington INTERCEPTED by J.Pitre at 50. J.Pitre to 50 for no gain (P.Washington). [interception]
+
+- Excluded non-zero-yard plays (up to 14 shown):
+- Q1 0:18 (5 yds) Penalty: (Shotgun) PENALTY on HST-D.Hunter, Neutral Zone Infraction, 5 yards, enforced at JAX 31 - No Play. [nullified]
+- Q1 2:15 (11 yds) Penalty: (Shotgun) T.Lawrence pass incomplete short right to D.Brown.PENALTY on HST-D.Stingley, Defensive Pass Interference, 11 yards, enforced at HST 12 - No Play. [nullified]
+- Q2 14:55 (-5 yds) Penalty: (Shotgun) PENALTY on JAX-B.Strange, False Start, 5 yards, enforced at JAX 42 - No Play. [nullified]
+- Q2 2:09 (11 yds) Punt: L.Cooke punts 59 yards to HST 31, Center-R.Matiscik. J.Noel to HST 42 for 11 yards (An.Johnson; V.Miller). [special_teams]
+- Q2 3:22 (-5 yds) Penalty: (Shotgun) T.Lawrence pass deep right to B.Thomas to JAX 46 for 18 yards (C.Bullock).PENALTY on JAX-D.Brown, Illegal Shift, 5 yards, enforced at JAX 28 - No Play. [nullified]
+- Q2 3:40 (-5 yds) Penalty: (Shotgun) PENALTY on JAX-J.Mundt, False Start, 5 yards, enforced at JAX 33 - No Play. [nullified]
+- Q2 6:54 (22 yds) Kickoff: K.Fairbairn kicks 67 yards from HST 35 to JAX -2. L.Allen to JAX 20 for 22 yards (E.Speed). [special_teams]
+- Q3 13:50 (-10 yds) Penalty: T.Etienne left end to JAX 38 for 5 yards (A.Al-Shaair).PENALTY on JAX-W.Little, Offensive Holding, 10 yards, enforced at JAX 33 - No Play. [nullified]
+- Q3 1:15 (47 yds) Field Goal Missed: C.Little 47 yard field goal is No Good, Wide Right, Center-R.Matiscik, Holder-L.Cooke. [special_teams]
+- Q3 6:23 (39 yds) Field Goal Good: C.Little 39 yard field goal is GOOD, Center-R.Matiscik, Holder-L.Cooke. [special_teams]
+- Q3 8:00 (52 yds) Penalty: C.Little 52 yard field goal is GOOD, NULLIFIED by Penalty, Center-R.Matiscik, Holder-L.Cooke.PENALTY on HST-D.Barnett, Leverage, 15 yards, enforced at HST 33 - No Play. [nullified]
+- Q3 9:56 (-10 yds) Penalty: (Shotgun) T.Etienne up the middle to HST 32 for 2 yards (D.Horton; T.Settle).PENALTY on JAX-P.Mekari, Offensive Holding, 10 yards, enforced at HST 34 - No Play. [nullified]
+- Q4 0:20 (-1 yds) Rush: T.Lawrence kneels to JAX 3 for -1 yards. [spike_kneel]
+- Q4 9:17 (26 yds) Kickoff: K.Fairbairn kicks 63 yards from HST 35 to JAX 2. L.Allen to JAX 28 for 26 yards (E.Speed; D.Ogunbowale). [special_teams]
+
+### 401772748 CLE @ PIT (TOΔ max 0, YdsΔ max 30, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| CLE | 248 | 218 | -30 | 0 | 0 | +0 | 44 | 44 | +0 |
+| PIT | 335 | 335 | +0 | 0 | 0 | +0 | 59 | 59 | +0 |
+
+**CLE Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q3 14:16 (5 yds) Sack Opp Fumble Recovery: (Shotgun) D.Gabriel sacked at CLV 20 for -7 yards (T.Watt). FUMBLES (T.Watt) [T.Watt], recovered by CLV-D.Njoku at CLV 30. D.Njoku to CLV 30 for no gain (J.Peppers). FUMBLES (J.Peppers), RECOVERED by PIT-J.Peppers at CLV 27. J.Peppers to CLV 22 for 5 yards (W.Teller).PENALTY on PIT-T.Watt, Defensive Offside, 4 yards, enforced at CLV 27 - No Play.
+
+- Excluded non-zero-yard plays (up to 20 shown):
+- Q1 10:06 (5 yds) Penalty: (Shotgun) D.Gabriel pass incomplete short middle to I.Bond (T.Watt).PENALTY on PIT-T.Watt, Defensive Offside, 5 yards, enforced at CLV 28 - No Play. [nullified]
+- Q1 10:55 (27 yds) Kickoff: C.Boswell kicks 64 yards from PIT 35 to CLV 1. D.Sampson to CLV 28 for 27 yards (C.Bruener; B.Skowronek). [special_teams]
+- Q1 2:32 (5 yds) Penalty: (Shotgun) D.Gabriel pass incomplete short left to Q.Judkins.PENALTY on PIT-J.Peppers, Illegal Use of Hands, 5 yards, enforced at CLV 43 - No Play. [nullified]
+- Q1 8:09 (-2 yds) Punt: C.Bojorquez punts 52 yards to PIT 12, Center-R.Sunahara. K.Williams to CLV 41 for 47 yards (R.Jenkins).PENALTY on PIT-J.Peppers, Illegal Blindside Block, 10 yards, enforced at PIT 20. [special_teams]
+- Q2 0:00 (31 yds) Field Goal Good:  A.Szmyt 31 yard field goal is GOOD, Center-R.Sunahara, Holder-C.Bojorquez. [special_teams]
+- Q2 11:01 (24 yds) Kickoff: C.Boswell kicks 61 yards from PIT 35 to CLV 4. D.Sampson to CLV 28 for 24 yards (J.Pierre; M.Killebrew). [special_teams]
+- Q2 1:47 (22 yds) Pass Reception: (Shotgun) D.Gabriel pass short middle to J.Jeudy to PIT 36 for 22 yards (D.Elliott; P.Wilson).PENALTY on CLV-C.Robinson, Illegal Formation, 5 yards, enforced at CLV 42 - No Play. [nullified]
+- Q2 2:00 (5 yds) Pass Incompletion: (Shotgun) D.Gabriel pass incomplete short left [A.Highsmith].PENALTY on PIT-Ca.Heyward, Illegal Use of Hands, 5 yards, enforced at CLV 25 - No Play. [nullified]
+- Q2 3:38 (5 yds) Kickoff: C.Boswell kicks 63 yards from PIT 35 to CLV 2. D.Sampson to CLV 30 for 28 yards (J.Thornhill). PIT-M.Killebrew was injured during the play. PENALTY on CLV-J.Baker, Offensive Holding, 10 yards, enforced at CLV 25. [special_teams]
+- Q2 9:09 (7 yds) Punt:  C.Bojorquez punts 58 yards to PIT 14, Center-R.Sunahara. K.Williams to PIT 21 for 7 yards (B.Whiteheart). [special_teams]
+- Q3 14:02 (15 yds) Punt: C.Bojorquez punts 67 yards to PIT 6, Center-R.Sunahara. K.Williams to PIT 21 for 15 yards (R.Jenkins; T.Avery). [special_teams]
+- Q3 14:12 (-4 yds) Penalty: K.Leveston reported in as eligible.  PENALTY on CLV-C.Robinson, False Start, 4 yards, enforced at CLV 31 - No Play. [nullified]
+- Q3 14:16 (5 yds) Sack Opp Fumble Recovery: (Shotgun) D.Gabriel sacked at CLV 20 for -7 yards (T.Watt). FUMBLES (T.Watt) [T.Watt], recovered by CLV-D.Njoku at CLV 30. D.Njoku to CLV 30 for no gain (J.Peppers). FUMBLES (J.Peppers), RECOVERED by PIT-J.Peppers at CLV 27. J.Peppers to CLV 22 for 5 yards (W.Teller).PENALTY on PIT-T.Watt, Defensive Offside, 4 yards, enforced at CLV 27 - No Play. [nullified]
+- Q3 15:00 (20 yds) Kickoff: C.Boswell kicks 63 yards from PIT 35 to CLV 2. D.Sampson to CLV 22 for 20 yards (P.Wilson; Co.Heyward). [special_teams]
+- Q3 4:08 (53 yds) Field Goal Good: A.Szmyt 53 yard field goal is GOOD, Center-R.Sunahara, Holder-C.Bojorquez. [special_teams]
+- Q3 7:46 (30 yds) Kickoff: C.Boswell kicks 64 yards from PIT 35 to CLV 1. D.Sampson to CLV 31 for 30 yards (P.Wilson). [special_teams]
+- Q4 10:31 (2 yds) Pass Incompletion: (Shotgun) D.Gabriel pass incomplete short right to J.Jeudy. ** Injury Update: PIT-J.Porter has returned to the game. PENALTY on PIT-B.Echols, Defensive Pass Interference, 2 yards, enforced at PIT 5 - No Play. [nullified]
+- Q4 11:14 (-5 yds) Penalty: (Shotgun) PENALTY on CLV, Delay of Game, 5 yards, enforced at PIT 24 - No Play. [nullified]
+- Q4 14:55 (22 yds) Kickoff: C.Boswell kicks 55 yards from PIT 35 to CLV 10. J.Ford to CLV 32 for 22 yards (J.Sawyer). [special_teams]
+- Q4 9:29 (32 yds) Field Goal Good:  A.Szmyt 32 yard field goal is GOOD, Center-R.Sunahara, Holder-C.Bojorquez. [special_teams]
+
+**PIT Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q1 14:55 (36 yds) Pass Reception: (Shotgun) S.Anderson reported in as eligible.  A.Rodgers pass short right to D.Washington to CLV 36 for 36 yards (T.Campbell). FUMBLES (T.Campbell), ball out of bounds at CLV 27.
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q1 10:55 (44 yds) Field Goal Good:  C.Boswell 44 yard field goal is GOOD, Center-C.Kuntz, Holder-C.Waitman. [special_teams]
+- Q1 15:00 (25 yds) Kickoff: A.Szmyt kicks 62 yards from CLV 35 to PIT 3. K.Williams to PIT 28 for 25 yards (J.Tryon). [special_teams]
+- Q2 11:01 (50 yds) Field Goal Good: C.Boswell 50 yard field goal is GOOD, Center-C.Kuntz, Holder-C.Waitman. [special_teams]
+- Q2 3:38 (48 yds) Field Goal Good: C.Boswell 48 yard field goal is GOOD, Center-C.Kuntz, Holder-C.Waitman. [special_teams]
+- Q2 5:02 (-5 yds) Penalty: PENALTY on PIT-D.Metcalf, False Start, 5 yards, enforced at CLV 33 - No Play. [nullified]
+- Q3 11:59 (5 yds) Punt: C.Waitman punts 46 yards to CLV 27, Center-C.Kuntz. G.Larvadain to CLV 35 for 8 yards (J.Pierre; B.Skowronek).PENALTY on CLV-C.Thomas, Running Into the Kicker, 5 yards, enforced at PIT 27 - No Play. [nullified]
+- Q3 13:48 (-10 yds) Rush: S.Anderson reported in as eligible.  J.Warren left tackle to PIT 22 for 1 yard (C.Schwesinger; A.Wright).PENALTY on PIT-S.Anderson, Offensive Holding, 10 yards, enforced at PIT 21 - No Play. [nullified]
+- Q3 4:08 (24 yds) Kickoff: A.Szmyt kicks 62 yards from CLV 35 to PIT 3. K.Gainwell to PIT 27 for 24 yards (D.McMillon). [special_teams]
+- Q4 3:44 (54 yds) Field Goal Missed: C.Boswell 54 yard field goal is No Good, Short, Center-C.Kuntz, Holder-C.Waitman. [special_teams]
+- Q4 7:19 (4 yds) Punt: C.Waitman punts 50 yards to CLV 16, Center-C.Kuntz. I.Bond pushed ob at CLV 25 for 9 yards (C.Holcomb).PENALTY on PIT-B.Skowronek, Player Out of Bounds on Kick, 5 yards, enforced at CLV 25. [special_teams]
+- Q4 9:29 (25 yds) Kickoff: A.Szmyt kicks 62 yards from CLV 35 to PIT 3. K.Williams to PIT 28 for 25 yards (M.Harden; G.Delpit). [special_teams]
+
+### 401772759 CHI @ BAL (TOΔ max 0, YdsΔ max 30, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| CHI | 372 | 372 | +0 | 1 | 1 | +0 | 79 | 79 | +0 |
+| BAL | 355 | 325 | -30 | 0 | 0 | +0 | 45 | 45 | +0 |
+
+**CHI Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q4 9:08 (9 yds) Pass Interception Return: C.Williams pass short right intended for R.Odunze INTERCEPTED by N.Wiggins at CHI 18. N.Wiggins ran ob at CHI 9 for 9 yards (C.Loveland). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q3 10:05 (24 yds) Kickoff: T.Loop kicks 64 yards from BLT 35 to CHI 1. J.Blackwell to CHI 25 for 24 yards (J.Higgins). FUMBLES (J.Higgins), recovered by CHI-D.Jackson at CHI 28.
+
+- Excluded non-zero-yard plays (up to 14 shown):
+- Q1 0:03 (39 yds) Field Goal Good: C.Santos 39 yard field goal is GOOD, Center-S.Daly, Holder-T.Taylor. [special_teams]
+- Q1 10:00 (-5 yds) Penalty: (No Huddle, Shotgun) PENALTY on CHI-C.Loveland, False Start, 5 yards, enforced at BLT 8 - No Play. [nullified]
+- Q1 15:00 (3 yds) Kickoff: T.Loop kicks 57 yards from BLT 35 to CHI 8. D.Duvernay to CHI 35 for 27 yards (T.Tampa). CHI-D.Robinson was injured during the play. PENALTY on CHI-J.Blackwell, Offensive Holding, 10 yards, enforced at CHI 32. [special_teams]
+- Q1 3:28 (5 yds) Pass Incompletion: (Shotgun) C.Williams pass incomplete deep middle to R.Odunze.PENALTY on BLT-N.Wiggins, Illegal Contact, 5 yards, enforced at CHI 36 - No Play. [nullified]
+- Q1 6:50 (32 yds) Field Goal Good: C.Santos 32 yard field goal is GOOD, Center-S.Daly, Holder-T.Taylor. [special_teams]
+- Q2 0:03 (58 yds) Field Goal Missed: C.Santos 58 yard field goal is No Good, Short, Center-S.Daly, Holder-T.Taylor. [special_teams]
+- Q2 1:06 (23 yds) Kickoff: T.Loop kicks 60 yards from BLT 35 to CHI 5. D.Duvernay to CHI 28 for 23 yards (J.Hummel; C.Kolar). [special_teams]
+- Q2 8:15 (49 yds) Kickoff: T.Loop kicks 61 yards from BLT 35 to CHI 4. D.Duvernay pushed ob at BLT 47 for 49 yards (T.Tampa). [special_teams]
+- Q3 10:05 (24 yds) Kickoff: T.Loop kicks 64 yards from BLT 35 to CHI 1. J.Blackwell to CHI 25 for 24 yards (J.Higgins). FUMBLES (J.Higgins), recovered by CHI-D.Jackson at CHI 28. [special_teams]
+- Q3 3:35 (2 yds) Kickoff: T.Loop kicks 52 yards from BLT 35 to CHI 13. J.Blackwell to CHI 34 for 21 yards (A.Gilman).PENALTY on CHI-N.Sewell, Low Block, 15 yards, enforced at CHI 32. [special_teams]
+- Q3 8:07 (-10 yds) Punt: T.Taylor punts 65 yards to end zone, Center-S.Daly, Touchback.PENALTY on BLT-K.Martin, Offensive Holding, 10 yards, enforced at BLT 20. [special_teams]
+- Q4 5:06 (47 yds) Field Goal Good: C.Santos 47 yard field goal is GOOD, Center-S.Daly, Holder-T.Taylor. [special_teams]
+- Q4 8:13 (18 yds) Kickoff: T.Loop kicks 61 yards from BLT 35 to CHI 4. J.Blackwell to CHI 22 for 18 yards (K.Jackson). [special_teams]
+- Q4 9:48 (-2 yds) Penalty: O.Trapilo reported in as eligible. ** Injury Update: BLT-M.Humphrey has returned to the game.  PENALTY on CHI-J.Thuney, False Start, 2 yards, enforced at CHI 4 - No Play. [nullified]
+
+**BAL Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q2 5:09 (24 yds) Pass Reception: (Shotgun) T.Huntley pass deep right to M.Andrews to CHI 44 for 24 yards (J.Jones). FUMBLES (J.Jones), ball out of bounds at CHI 44.
+
+- Excluded non-zero-yard plays (up to 15 shown):
+- Q1 0:03 (33 yds) Kickoff: C.Santos kicks 60 yards from CHI 35 to BLT 5. R.Ali to BLT 38 for 33 yards (D.Jackson). [special_teams]
+- Q1 4:44 (8 yds) Punt: J.Stout punts 55 yards to CHI 9, Center-N.Moore. D.Duvernay pushed ob at CHI 17 for 8 yards (K.Jackson). [special_teams]
+- Q1 6:50 (21 yds) Kickoff: C.Santos kicks 58 yards from CHI 35 to BLT 7. R.Ali to BLT 28 for 21 yards (D.Jackson; J.Walker). [special_teams]
+- Q2 12:11 (-5 yds) Penalty: (Shotgun) PENALTY on BLT-R.Stanley, False Start, 5 yards, enforced at CHI 39 - No Play. [nullified]
+- Q2 1:06 (42 yds) Field Goal Good: T.Loop 42 yard field goal is GOOD, Center-N.Moore, Holder-J.Stout. [special_teams]
+- Q2 1:21 (4 yds) Pass Reception: (Shotgun) T.Huntley pass short right to M.Andrews to CHI 10 for 4 yards (K.Byard).PENALTY on BLT-M.Andrews, Illegal Motion, 5 yards, enforced at CHI 14 - No Play. [nullified]
+- Q2 5:13 (3 yds) Pass Incompletion: (Shotgun) T.Huntley pass incomplete short right to Z.Flowers [T.Edmunds].PENALTY on CHI-N.McCloud, Defensive Pass Interference, 3 yards, enforced at BLT 29 - No Play. [nullified]
+- Q3 10:05 (28 yds) Field Goal Good:  T.Loop 28 yard field goal is GOOD, Center-N.Moore, Holder-J.Stout. [special_teams]
+- Q3 15:00 (27 yds) Kickoff: C.Santos kicks 58 yards from CHI 35 to BLT 7. K.Mitchell to BLT 34 for 27 yards (C.Jones; E.Hicks). [special_teams]
+- Q3 3:35 (32 yds) Field Goal Good: T.Loop 32 yard field goal is GOOD, Center-N.Moore, Holder-J.Stout. [special_teams]
+- Q4 12:22 (39 yds) Kickoff: C.Santos kicks 60 yards from CHI 35 to BLT 5. K.Mitchell ran ob at BLT 44 for 39 yards (T.Homer). [special_teams]
+- Q4 3:02 (5 yds) Penalty: PENALTY on CHI-A.Billings, Encroachment, 5 yards, enforced at CHI 18 - No Play. [nullified]
+- Q4 3:12 (5 yds) Rush: (Shotgun) K.Mitchell right end to CHI 17 for 8 yards (J.Jones).PENALTY on CHI-J.Ford, Defensive Offside, 5 yards, enforced at CHI 25 - No Play. [nullified]
+- Q4 5:06 (34 yds) Kickoff: C.Santos kicks 65 yards from CHI 35 to BLT 0. R.Ali to BLT 34 for 34 yards (J.Owens). [special_teams]
+- Q4 9:55 (-5 yds) Penalty: (Shotgun) ** Injury Update: CHI-G.Dexter has returned to the game.  PENALTY on BLT, Delay of Game, 5 yards, enforced at CHI 39 - No Play. [nullified]
+
+### 401772765 CHI @ CIN (TOΔ max 0, YdsΔ max 30, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| CHI | 576 | 576 | +0 | 0 | 0 | +0 | 43 | 43 | +0 |
+| CIN | 495 | 465 | -30 | 3 | 3 | +0 | 49 | 49 | +0 |
+
+**CHI Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q2 0:08 (0 yds) Blocked Field Goal: C.Santos 47 yard field goal is BLOCKED (J.Ossai), Center-S.Daly, Holder-T.Taylor.
+
+- Excluded non-zero-yard plays (up to 17 shown):
+- Q1 0:54 (47 yds) Field Goal Missed: C.Santos 47 yard field goal is No Good, Wide Right, Center-S.Daly, Holder-T.Taylor.PENALTY on CIN-D.Ivey, Defensive Offside, 5 yards, enforced at CIN 30 - No Play. [nullified]
+- Q1 13:09 (5 yds) Sack: (Shotgun) C.Williams sacked at CHI 40 for -1 yards (J.Ossai).PENALTY on CIN-D.Knight, Illegal Contact, 5 yards, enforced at CHI 41 - No Play. [nullified]
+- Q1 14:49 (98 yds) Kickoff Return Touchdown: C.Santos kicks 63 yards from CHI 35 to CIN 2. C.Jones for 98 yards, TOUCHDOWN. E.McPherson extra point is GOOD, Center-W.Wagner, Holder-R.Rehkow. [special_teams_return]
+- Q1 14:49 (24 yds) Kickoff: E.McPherson kicks 62 yards from CIN 35 to CHI 3. D.Duvernay to CHI 27 for 24 yards (D.Ivey; T.Anderson). [special_teams]
+- Q1 4:29 (-5 yds) Rush: (No Huddle, Shotgun) C.Williams scrambles up the middle to CIN 38 for 10 yards (J.Battle).PENALTY on CHI, Illegal Shift, 5 yards, enforced at CIN 48 - No Play. [nullified]
+- Q1 5:41 (21 yds) Kickoff: E.McPherson kicks 60 yards from CIN 35 to CHI 5. D.Duvernay to CHI 26 for 21 yards (J.Battle). [special_teams]
+- Q2 10:21 (10 yds) Punt: T.Taylor punts 69 yards to CIN 5, Center-S.Daly. C.Jones to CIN 15 for 10 yards (D.Jackson; C.Jones). [special_teams]
+- Q2 1:12 (32 yds) Kickoff: E.McPherson kicks 55 yards from CIN 35 to CHI 10. D.Duvernay pushed ob at CIN 38 for 52 yards (J.Newton).PENALTY on CHI-J.Walker, Offensive Holding, 10 yards, enforced at CHI 30. [special_teams]
+- Q2 1:29 (24 yds) Field Goal Good: C.Santos 24 yard field goal is GOOD, Center-S.Daly, Holder-T.Taylor. [special_teams]
+- Q2 5:47 (-10 yds) Rush: K.Monangai left end to CHI 34 for -1 yards (C.Taylor-Britt).PENALTY on CHI-T.Benedet, Offensive Holding, 10 yards, enforced at CHI 35 - No Play. [nullified]
+- Q3 15:00 (18 yds) Kickoff: E.McPherson kicks 60 yards from CIN 35 to CHI 5. D.Duvernay to CHI 28 for 23 yards (O.Burks).PENALTY on CHI-D.Smythe, Illegal Formation, 5 yards, enforced at CHI 28. [special_teams]
+- Q3 5:19 (23 yds) Kickoff: E.McPherson kicks 62 yards from CIN 35 to CHI 3. J.Blackwell to CHI 26 for 23 yards (P.Jules; J.Battle). [special_teams]
+- Q3 8:36 (-4 yds) Penalty: PENALTY on CHI, Delay of Game, 4 yards, enforced at CIN 1 - No Play. [nullified]
+- Q4 0:54 (23 yds) Kickoff: E.McPherson kicks 60 yards from CIN 35 to CHI 5. B.Brown to CHI 28 for 23 yards (T.Anderson). [special_teams]
+- Q4 12:03 (36 yds) Field Goal Good: C.Santos 36 yard field goal is GOOD, Center-S.Daly, Holder-T.Taylor. [special_teams]
+- Q4 2:24 (2 yds) Punt: T.Taylor punts 48 yards to CIN 43, Center-S.Daly. C.Jones pushed ob at CIN 45 for 2 yards (N.Sewell). [special_teams]
+- Q4 2:35 (-2 yds) Penalty: PENALTY on CHI-T.Benedet, False Start, 2 yards, enforced at CHI 5 - No Play. [nullified]
+
+**CIN Reconciliation Clues**
+
+- Windelta counted turnovers (3):
+- Q4 0:04 (6 yds) Pass Interception Return: (Shotgun) J.Flacco pass deep middle INTERCEPTED by N.Wright at CHI 20. N.Wright to CHI 26 for 6 yards. [interception]
+- Q4 15:00 (0 yds) Sack Opp Fumble Recovery: (Shotgun) J.Flacco sacked at CIN 38 for -10 yards (A.Booker). FUMBLES (A.Booker) [A.Booker], RECOVERED by CHI-G.Dexter at CIN 38. [fumble]
+- Q4 2:46 (0 yds) Pass Interception Return: (Shotgun) J.Flacco pass short right intended for C.Brown INTERCEPTED by T.Edmunds at CHI 4. T.Edmunds for 96 yards, TOUCHDOWN.The Replay Official reviewed the runner was not down by contact ruling, and the play was REVERSED.(Shotgun) J.Flacco pass short right intended for C.Brown INTERCEPTED by T.Edmunds at CHI 4. T.Edmunds to CHI 4 for no gain (C.Brown). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q4 1:43 (8 yds) Kickoff: E.McPherson kicks onside 8 yards from CIN 35 to CIN 43, impetus ends at CIN 43. RECOVERED by CIN-O.Burks.
+- Q4 3:07 (90 yds) Pass Interception Return: (Shotgun) J.Flacco pass short right intended for J.Chase INTERCEPTED by K.Byard (N.McCloud) at CHI 1. K.Byard to CIN 9 for 90 yards (C.Brown).PENALTY on CHI-N.McCloud, Defensive Pass Interference, 7 yards, enforced at CHI 12 - No Play.
+
+- Excluded non-zero-yard plays (up to 15 shown):
+- Q1 5:41 (41 yds) Field Goal Good: E.McPherson 41 yard field goal is GOOD, Center-W.Wagner, Holder-R.Rehkow. [special_teams]
+- Q1 8:44 (38 yds) Kickoff: C.Santos kicks 58 yards from CHI 35 to CIN 7. S.Perine to CIN 45 for 38 yards (E.Hicks; J.Owens). [special_teams]
+- Q2 0:03 (-1 yds) Rush: J.Flacco kneels to CIN 36 for -1 yards. [spike_kneel]
+- Q2 13:26 (-5 yds) Penalty: (Shotgun) PENALTY on CIN-O.Brown, False Start, 5 yards, enforced at CIN 39 - No Play. [nullified]
+- Q2 14:13 (-5 yds) Penalty: J.Flacco pass incomplete short right to J.Chase.PENALTY on CIN-T.Karras, Ineligible Downfield Pass, 5 yards, enforced at CIN 39 - No Play. [nullified]
+- Q2 14:54 (25 yds) Kickoff: C.Santos kicks 59 yards from CHI 35 to CIN 6. S.Perine to CIN 31 for 25 yards (D.Jackson). CIN-S.Perine was injured during the play. [special_teams]
+- Q2 1:29 (31 yds) Kickoff: C.Santos kicks 59 yards from CHI 35 to CIN 6. T.Brooks to CIN 37 for 31 yards (J.Jones). [special_teams]
+- Q2 5:47 (33 yds) Field Goal Good: E.McPherson 33 yard field goal is GOOD, Center-W.Wagner, Holder-R.Rehkow. [special_teams]
+- Q3 1:57 (24 yds) Kickoff: C.Santos kicks 62 yards from CHI 35 to CIN 3. T.Brooks to CIN 27 for 24 yards (C.Jones; J.Walker). [special_teams]
+- Q3 8:11 (28 yds) Kickoff: C.Santos kicks 62 yards from CHI 35 to CIN 3. C.Jones to CIN 31 for 28 yards (T.Homer). [special_teams]
+- Q4 12:03 (23 yds) Kickoff: C.Santos kicks 62 yards from CHI 35 to CIN 3. C.Jones to CIN 26 for 23 yards (D.Jackson; D.Hardy). [special_teams]
+- Q4 1:43 (8 yds) Kickoff: E.McPherson kicks onside 8 yards from CIN 35 to CIN 43, impetus ends at CIN 43. RECOVERED by CIN-O.Burks. [special_teams]
+- Q4 3:07 (90 yds) Pass Interception Return: (Shotgun) J.Flacco pass short right intended for J.Chase INTERCEPTED by K.Byard (N.McCloud) at CHI 1. K.Byard to CIN 9 for 90 yards (C.Brown).PENALTY on CHI-N.McCloud, Defensive Pass Interference, 7 yards, enforced at CHI 12 - No Play. [turnover_return]
+- Q4 4:53 (30 yds) Kickoff: C.Santos kicks 62 yards from CHI 35 to CIN 3. C.Jones to CIN 33 for 30 yards (T.Homer). [special_teams]
+- Q4 5:58 (54 yds) Field Goal Missed: E.McPherson 54 yard field goal is No Good, Short, Center-W.Wagner, Holder-R.Rehkow. [special_teams]
+
+### 401772774 CIN @ PIT (TOΔ max 0, YdsΔ max 30, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| CIN | 297 | 297 | +0 | 2 | 2 | +0 | 67 | 67 | +0 |
+| PIT | 343 | 313 | -30 | 0 | 0 | +0 | 76 | 76 | +0 |
+
+**CIN Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q3 0:37 (73 yds) Interception Return Touchdown: (Shotgun) J.Flacco pass short middle intended for T.Higgins INTERCEPTED by K.Dugger [T.Watt] at PIT 27. K.Dugger for 73 yards, TOUCHDOWN. C.Boswell extra point is GOOD, Center-C.Kuntz, Holder-C.Waitman. [interception]
+- Q4 3:22 (34 yds) Fumble Return Touchdown: (Shotgun) J.Flacco pass short right to N.Fant to CIN 33 for 5 yards (B.Echols). FUMBLES (B.Echols), RECOVERED by PIT-J.Pierre at CIN 34. J.Pierre for 34 yards, TOUCHDOWN. ** Injury Update: PIT-B.Echols has returned to the game. C.Boswell extra point is GOOD, Center-C.Kuntz, Holder-C.Waitman. [fumble]
+
+- Excluded non-zero-yard plays (up to 17 shown):
+- Q1 10:12 (29 yds) Kickoff: C.Boswell kicks 65 yards from PIT 35 to CIN 0. C.Jones to CIN 29 for 29 yards (P.Wilson). [special_teams]
+- Q1 5:10 (1 yds) Penalty: E.McPherson extra point is GOOD, Center-W.Wagner, Holder-R.Rehkow.PENALTY on PIT-Y.Black, Unnecessary Roughness, 1 yard, enforced at PIT 15 - No Play. [nullified]
+- Q1 6:23 (5 yds) Penalty: (Shotgun) K.Milton up the middle to PIT 44 for 4 yards (D.Harmon; P.Queen).PENALTY on PIT-N.Herbig, Defensive Offside, 5 yards, enforced at PIT 48 - No Play. [nullified]
+- Q2 0:03 (-1 yds) Rush: J.Flacco kneels to CIN 29 for -1 yards. [spike_kneel]
+- Q2 0:10 (17 yds) Kickoff: C.Boswell kicks 52 yards from PIT 35 to CIN 13. C.Jones to CIN 30 for 17 yards (K.Gainwell). [special_teams]
+- Q2 12:06 (-5 yds) Penalty: (Shotgun) PENALTY on CIN-D.Fairchild, False Start, 5 yards, enforced at CIN 46 - No Play. [nullified]
+- Q2 12:54 (15 yds) Penalty: (Shotgun) J.Flacco pass incomplete short left to T.Hudson (T.Watt).PENALTY on PIT-T.Watt, Roughing the Passer, 15 yards, enforced at CIN 26 - No Play. [nullified]
+- Q2 2:03 (3 yds) Punt: R.Rehkow punts 55 yards to PIT 4, Center-W.Wagner. C.Austin pushed ob at PIT 7 for 3 yards (T.Anderson). [special_teams]
+- Q2 8:27 (12 yds) Punt: R.Rehkow punts 61 yards to PIT 11, Center-W.Wagner. C.Austin to PIT 23 for 12 yards (J.Giles-Harris). [special_teams]
+- Q2 9:05 (-5 yds) Penalty: (Shotgun) PENALTY on CIN, Delay of Game, 5 yards, enforced at CIN 26 - No Play. [nullified]
+- Q3 0:37 (2 yds) Kickoff: C.Boswell kicks 56 yards from PIT 35 to CIN 9. C.Jones ran ob at CIN 35 for 26 yards (J.Peppers).PENALTY on CIN-T.Hudson, Offensive Holding, 10 yards, enforced at CIN 33. [special_teams]
+- Q3 11:53 (43 yds) Field Goal Good: E.McPherson 43 yard field goal is GOOD, Center-W.Wagner, Holder-R.Rehkow. [special_teams]
+- Q3 15:00 (21 yds) Kickoff: C.Boswell kicks 62 yards from PIT 35 to CIN 3. C.Jones pushed ob at CIN 24 for 21 yards (B.Skowronek). [special_teams]
+- Q3 4:16 (24 yds) Kickoff: C.Boswell kicks 57 yards from PIT 35 to CIN 8. C.Jones to CIN 32 for 24 yards (J.Peppers). [special_teams]
+- Q4 3:40 (23 yds) Kickoff: C.Boswell kicks 60 yards from PIT 35 to CIN 5. C.Jones to CIN 28 for 23 yards (J.Peppers). [special_teams]
+- Q4 9:41 (48 yds) Field Goal Good: E.McPherson 48 yard field goal is GOOD, Center-W.Wagner, Holder-R.Rehkow. [special_teams]
+- Q4 9:51 (-5 yds) Penalty: (Shotgun) PENALTY on CIN, Delay of Game, 5 yards, enforced at PIT 25 - No Play. [nullified]
+
+**PIT Reconciliation Clues**
+
+- Excluded non-zero-yard plays (up to 14 shown):
+- Q1 15:00 (20 yds) Kickoff: E.McPherson kicks 63 yards from CIN 35 to PIT 2. K.Williams to PIT 22 for 20 yards (C.Johnson, O.Burks). [special_teams]
+- Q1 3:39 (5 yds) Penalty: PENALTY on CIN-M.Murphy, Neutral Zone Infraction, 5 yards, enforced at PIT 29 - No Play. [nullified]
+- Q1 5:10 (20 yds) Kickoff: E.McPherson kicks 66 yards from CIN 35 to PIT -1. D.Jamison to PIT 19 for 20 yards (P.Jules). [special_teams]
+- Q2 0:10 (25 yds) Field Goal Good: C.Boswell 25 yard field goal is GOOD, Center-C.Kuntz, Holder-C.Waitman. [special_teams]
+- Q2 0:35 (10 yds) Penalty: (Shotgun) A.Rodgers pass incomplete short right to K.Gainwell (B.Carter).PENALTY on CIN-J.Ossai, Roughing the Passer, 10 yards, enforced at CIN 19 - No Play. [nullified]
+- Q2 0:55 (15 yds) Penalty: (Shotgun) A.Rodgers pass incomplete short middle to K.Gainwell.PENALTY on CIN-M.Murphy, Roughing the Passer, 15 yards, enforced at PIT 23 - No Play. [nullified]
+- Q2 0:59 (-10 yds) Penalty: (Shotgun) A.Rodgers pass incomplete short left to P.Freiermuth.PENALTY on PIT-D.Metcalf, Offensive Pass Interference, 10 yards, enforced at PIT 33 - No Play. [nullified]
+- Q2 1:03 (12 yds) Penalty: (Shotgun) A.Rodgers pass incomplete short right to C.Austin.PENALTY on CIN-C.Taylor-Britt, Defensive Pass Interference, 12 yards, enforced at PIT 21 - No Play. [nullified]
+- Q2 5:11 (4 yds) Punt: C.Waitman punts 42 yards to CIN 13, Center-C.Kuntz. C.Jones pushed ob at CIN 17 for 4 yards (M.Harrison). [special_teams]
+- Q3 11:53 (24 yds) Kickoff: E.McPherson kicks 62 yards from CIN 35 to PIT 3. K.Gainwell to PIT 27 for 24 yards (P.Jules). [special_teams]
+- Q3 4:16 (30 yds) Field Goal Good: C.Boswell 30 yard field goal is GOOD, Center-C.Kuntz, Holder-C.Waitman. [special_teams]
+- Q3 7:51 (-10 yds) Penalty: (Shotgun) M.Rudolph pass deep left to D.Metcalf pushed ob at CIN 14 for 30 yards (D.Turner).PENALTY on PIT-D.Metcalf, Offensive Pass Interference, 10 yards, enforced at CIN 44 - No Play. [nullified]
+- Q4 0:05 (-1 yds) Rush: M.Rudolph kneels to PIT 14 for -1 yards. [spike_kneel]
+- Q4 8:11 (-5 yds) Penalty: S.Anderson reported in as eligible.  PENALTY on PIT, Delay of Game, 5 yards, enforced at PIT 46 - No Play. [nullified]
+
+### 401772798 LAC @ KC (TOΔ max 0, YdsΔ max 30, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| LAC | 295 | 302 | +7 | 1 | 1 | +0 | 50 | 50 | +0 |
+| KC | 239 | 209 | -30 | 2 | 2 | +0 | 64 | 64 | +0 |
+
+**LAC Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q2 11:09 (14 yds) Pass Interception Return: (Shotgun) J.Herbert pass short middle intended for L.McConkey INTERCEPTED by A.Gillotte [D.Tranquill] at LAC 33. A.Gillotte to LAC 19 for 14 yards (K.Vidal). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q2 3:42 (2 yds) Fumble Recovery (Own): (Shotgun) J.Herbert pass short right to K.Allen to KC 42 for 7 yards. FUMBLES, recovered by LAC-O.Hampton at KC 49. O.Hampton to KC 47 for 2 yards (N.Bolton).
+
+- Excluded non-zero-yard plays (up to 15 shown):
+- Q1 2:30 (49 yds) Field Goal Good: C.Dicker 49 yard field goal is GOOD, Center-J.Harris, Holder-J.Scott. [special_teams]
+- Q1 6:06 (5 yds) Penalty: K.Vidal left guard to KC 48 for 2 yards (N.Bolton; D.Tranquill).PENALTY on KC-C.Jones, Defensive Offside, 5 yards, enforced at 50 - No Play. [nullified]
+- Q1 8:52 (22 yds) Kickoff: H.Butker kicks 58 yards from KC 35 to LAC 7. K.Lambert-Smith to LAC 29 for 22 yards (N.Williams). [special_teams]
+- Q2 0:38 (34 yds) Kickoff: H.Butker kicks 59 yards from KC 35 to LAC 6. K.Lambert-Smith to LAC 40 for 34 yards (H.Butker). [special_teams]
+- Q2 2:57 (-6 yds) Punt: J.Scott punts 35 yards to KC 12, Center-J.Harris, fair catch by N.Remigio.PENALTY on KC-J.Williams, Offensive Holding, 6 yards, enforced at KC 12. [special_teams]
+- Q2 4:34 (5 yds) Penalty: (Shotgun) J.Herbert pass incomplete short right to K.Allen (G.Karlaftis).PENALTY on KC-C.Jones, Defensive Offside, 5 yards, enforced at KC 48 - No Play. [nullified]
+- Q2 8:04 (18 yds) Kickoff: H.Butker kicks 59 yards from KC 35 to LAC 6. K.Lambert-Smith to LAC 24 for 18 yards (K.Knowles). [special_teams]
+- Q3 0:51 (49 yds) Field Goal Good: C.Dicker 49 yard field goal is GOOD, Center-J.Harris, Holder-J.Scott. [special_teams]
+- Q3 13:32 (-10 yds) Penalty: (Shotgun) K.Vidal left end to KC 44 for 4 yards (N.Williams).PENALTY on LAC-J.Salyer, Offensive Holding, 10 yards, enforced at KC 48 - No Play. [nullified]
+- Q3 14:56 (5 yds) Penalty: T.Penning reported in as eligible.  J.Herbert pass incomplete deep left to O.Gadsden. ** Injury Update: LAC-T.Harris has returned to the game. PENALTY on KC-N.Williams, Defensive Holding, 5 yards, enforced at LAC 29 - No Play. [nullified]
+- Q3 15:00 (19 yds) Kickoff: H.Butker kicks 55 yards from KC 35 to LAC 10. K.Lambert-Smith to LAC 29 for 19 yards (C.Conner). [special_teams]
+- Q3 5:03 (-5 yds) Penalty: (Punt formation) PENALTY on LAC-K.Lambert-Smith, False Start, 5 yards, enforced at LAC 45 - No Play. [nullified]
+- Q3 8:55 (23 yds) Field Goal Good: C.Dicker 23 yard field goal is GOOD, Center-J.Harris, Holder-J.Scott. ** Injury Update: KC-K.Knowles has returned to the game. [special_teams]
+- Q4 0:14 (-1 yds) Rush:  J.Herbert kneels to LAC 17 for -1 yards. [spike_kneel]
+- Q4 5:29 (-8 yds) Punt: J.Scott punts 28 yards to KC 16, Center-J.Harris. N.Remigio to KC 18 for 2 yards (K.Williamson; J.Harris).PENALTY on KC-N.Williams, Offensive Holding, 8 yards, enforced at KC 16. [special_teams]
+
+**KC Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q4 0:20 (0 yds) Pass Interception Return:  (Shotgun) G.Minshew pass deep left intended for T.Kelce INTERCEPTED by D.James at LAC 18. D.James to LAC 18 for no gain (T.Kelce). [interception]
+- Q4 12:47 (0 yds) Pass Interception Return: (Shotgun) P.Mahomes pass deep right intended for K.Hunt INTERCEPTED by D.Henley at LAC 1. D.Henley to LAC 1 for no gain (K.Hunt). [interception]
+
+- Excluded non-zero-yard plays (up to 10 shown):
+- Q1 15:00 (26 yds) Kickoff: C.Dicker kicks 59 yards from LAC 35 to KC 6. N.Remigio to KC 32 for 26 yards (R.Mickens). [special_teams]
+- Q1 2:30 (26 yds) Kickoff: C.Dicker kicks 59 yards from LAC 35 to KC 6. N.Remigio to KC 32 for 26 yards (B.St-Juste). [special_teams]
+- Q2 0:05 (28 yds) Kickoff: C.Dicker kicks 56 yards from LAC 35 to KC 9. T.Thornton to KC 37 for 28 yards (K.Williamson). [special_teams]
+- Q2 0:38 (47 yds) Field Goal Good: H.Butker 47 yard field goal is GOOD, Center-J.Winchester, Holder-M.Araiza. [special_teams]
+- Q2 1:43 (5 yds) Penalty: (No Huddle, Shotgun) P.Mahomes pass short left to X.Worthy ran ob at KC 27 for 4 yards (T.Still).The Replay Official reviewed the too many players on field ruling, and the play was REVERSED.(No Huddle, Shotgun) P.Mahomes pass short left to X.Worthy ran ob at KC 27 for 4 yards (T.Still).PENALTY on LAC, Defensive Too Many Men on Field, 5 yards, enforced at KC 23 - No Play. [nullified]
+- Q2 8:04 (27 yds) Field Goal Good: H.Butker 27 yard field goal is GOOD, Center-J.Winchester, Holder-M.Araiza. [special_teams]
+- Q3 0:51 (24 yds) Kickoff: C.Dicker kicks 55 yards from LAC 35 to KC 10. N.Remigio to KC 34 for 24 yards (D.Phillips; K.Williamson). [special_teams]
+- Q3 8:55 (26 yds) Kickoff: C.Dicker kicks 62 yards from LAC 35 to KC 3. N.Remigio to KC 29 for 26 yards (T.Jefferson). [special_teams]
+- Q4 0:20 (-5 yds) Penalty: (Shotgun) PENALTY on KC, Delay of Game, 5 yards, enforced at LAC 34 - No Play. [nullified]
+- Q4 2:00 (-10 yds) Penalty: P.Mahomes pass incomplete short right [D.Hand]. KC-P.Mahomes was injured during the play. PENALTY on KC-C.Godrick, Offensive Holding, 10 yards, enforced at LAC 46 - No Play. [nullified]
+
+### 401772847 CAR @ NE (TOΔ max 0, YdsΔ max 30, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| CAR | 326 | 326 | +0 | 0 | 0 | +0 | 29 | 29 | +0 |
+| NE | 307 | 277 | -30 | 0 | 0 | +0 | 54 | 54 | +0 |
+
+**CAR Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 6:01 (24 yds) Pass Reception: (Shotgun) A.Dalton pass short right to B.Tremayne to CAR 48 for 24 yards (D.Pettus). FUMBLES (D.Pettus), ball out of bounds at NE 44.
+
+- Excluded non-zero-yard plays (up to 15 shown):
+- Q1 13:45 (4 yds) Penalty: (Shotgun) B.Young pass incomplete short right to T.McMillan.PENALTY on NE-C.Davis, Defensive Pass Interference, 4 yards, enforced at CAR 45 - No Play. [nullified]
+- Q1 15:00 (18 yds) Kickoff: A.Borregales kicks 59 yards from NE 35 to CAR 6. R.Dowdle to CAR 24 for 18 yards (J.Gibbens). [special_teams]
+- Q1 5:34 (30 yds) Kickoff: A.Borregales kicks 54 yards from NE 35 to CAR 11. R.Dowdle to CAR 41 for 30 yards (A.Borregales). [special_teams]
+- Q1 7:51 (5 yds) Penalty: (Shotgun) PENALTY on NE-H.Landry, Neutral Zone Infraction, 5 yards, enforced at CAR 35 - No Play. [nullified]
+- Q2 11:31 (5 yds) Penalty: B.Young pass incomplete deep left to T.McMillan.PENALTY on NE-C.Davis, Defensive Holding, 5 yards, enforced at NE 36 - No Play. [nullified]
+- Q2 14:54 (21 yds) Kickoff: A.Borregales kicks 53 yards from NE 35 to CAR 12. T.Etienne to CAR 33 for 21 yards (B.Schooler; J.Gibbens). [special_teams]
+- Q2 1:57 (26 yds) Kickoff: A.Borregales kicks 59 yards from NE 35 to CAR 6. R.Dowdle to CAR 32 for 26 yards (K.Dugger; J.Gibbens). [special_teams]
+- Q2 4:23 (61 yds) Punt: S.Martin punts 53 yards to NE 25, Center-J.Jansen. M.Jones to CAR 14 for 61 yards (S.Martin). [special_teams]
+- Q2 5:43 (-5 yds) Penalty: (Shotgun) ** Injury Update: NE-C.Davis has returned to the game.  PENALTY on CAR-T.Tremble, False Start, 5 yards, enforced at CAR 25 - No Play. [nullified]
+- Q2 5:48 (18 yds) Kickoff: A.Borregales kicks 58 yards from NE 35 to CAR 7. T.Etienne to CAR 25 for 18 yards (A.Jennings). [special_teams]
+- Q2 9:59 (55 yds) Field Goal Missed: R.Fitzgerald 55 yard field goal is No Good, Short, Center-J.Jansen, Holder-S.Martin. [special_teams]
+- Q3 10:17 (26 yds) Kickoff: A.Borregales kicks 59 yards from NE 35 to CAR 6. R.Dowdle to CAR 32 for 26 yards (D.Harris). [special_teams]
+- Q3 2:34 (19 yds) Punt: S.Martin punts 55 yards to NE 40, Center-J.Jansen. M.Jones to CAR 41 for 19 yards (T.Incoom; C.Cherelus). [special_teams]
+- Q3 2:57 (-4 yds) Penalty: (Shotgun) PENALTY on CAR-I.Ekwonu, False Start, 4 yards, enforced at CAR 9 - No Play. [nullified]
+- Q4 12:51 (-10 yds) Penalty: R.Dowdle left tackle to 50 for -1 yards (K.White, D.Pettus).PENALTY on CAR-D.Lewis, Offensive Holding, 10 yards, enforced at NE 49 - No Play. [nullified]
+
+**NE Reconciliation Clues**
+
+- Excluded non-zero-yard plays (up to 10 shown):
+- Q1 5:34 (87 yds) Punt Return Touchdown: S.Martin punts 30 yards to NE 13, Center-J.Jansen. M.Jones for 87 yards, TOUCHDOWN. NE-C.Woods was injured during the play. A.Borregales extra point is GOOD, Center-J.Ashby, Holder-B.Baringer. [special_teams_return]
+- Q1 9:26 (-5 yds) Penalty: (Punt formation) PENALTY on NE-K.Chaisson, False Start, 5 yards, enforced at NE 42 - No Play. [nullified]
+- Q1 9:26 (8 yds) Punt: B.Baringer punts 48 yards to CAR 15, Center-J.Ashby. T.Etienne ran ob at CAR 23 for 8 yards (J.Hawkins). [special_teams]
+- Q2 0:12 (13 yds) Punt: B.Baringer punts 59 yards to CAR 34, Center-J.Ashby. H.Renfrow to CAR 47 for 13 yards (B.Schooler; D.Harris). [special_teams]
+- Q3 13:30 (-10 yds) Penalty: (Shotgun) D.Maye scrambles up the middle to CAR 47 for 8 yards (N.Scourton).PENALTY on NE-T.Henderson, Offensive Holding, 10 yards, enforced at NE 45 - No Play. [nullified]
+- Q3 15:00 (-2 yds) Kickoff: R.Fitzgerald kicks 53 yards from CAR 35 to NE 12. T.Henderson to NE 40 for 28 yards (A.Evans).PENALTY on NE-D.Pettus, Offensive Holding, 10 yards, enforced at NE 32. [special_teams]
+- Q3 4:32 (-2 yds) Punt:  B.Baringer punts 56 yards to CAR 3, Center-J.Ashby. T.Etienne to CAR 1 for -2 yards (B.Schooler). [special_teams]
+- Q4 0:37 (-1 yds) Rush: J.Dobbs kneels to NE 29 for -1 yards. [spike_kneel]
+- Q4 1:48 (-1 yds) Rush: J.Dobbs kneels to NE 30 for -1 yards. [spike_kneel]
+- Q4 1:56 (28 yds) Kickoff: R.Fitzgerald kicks 62 yards from CAR 35 to NE 3. A.Gibson to NE 31 for 28 yards (A.Evans). [special_teams]
+
+### 401772866 SF @ HOU (TOΔ max 0, YdsΔ max 30, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| SF | 223 | 193 | -30 | 1 | 1 | +0 | 30 | 30 | +0 |
+| HOU | 475 | 455 | -20 | 1 | 1 | +0 | 55 | 55 | +0 |
+
+**SF Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q4 2:01 (0 yds) Pass Interception Return: (No Huddle, Shotgun) M.Jones pass deep left intended for J.Jennings INTERCEPTED by K.Lassiter at HST 1. Touchback.The Replay Official reviewed the touchback ruling, and the play was REVERSED.(No Huddle, Shotgun) M.Jones pass deep left intended for J.Jennings INTERCEPTED by K.Lassiter at HST 1. K.Lassiter to HST 1 for no gain (J.Jennings). [interception]
+
+- Excluded non-zero-yard plays (up to 12 shown):
+- Q1 3:47 (-3 yds) Punt: T.Morstead punts 46 yards to HST 16, Center-J.Weeks. J.Noel to HST 13 for -3 yards (S.Neal). [special_teams]
+- Q1 5:00 (5 yds) Rush: C.McCaffrey up the middle to SF 36 for 6 yards (A.Al-Shaair).PENALTY on HST-W.Anderson, Defensive Offside, 5 yards, enforced at SF 30 - No Play. [nullified]
+- Q1 5:14 (-5 yds) Rush: (Shotgun) C.McCaffrey right tackle to SF 34 for -1 yards (E.Speed, S.Rankins).PENALTY on SF, Illegal Formation, 5 yards, enforced at SF 35 - No Play. [nullified]
+- Q1 5:21 (30 yds) Kickoff: K.Fairbairn kicks 60 yards from HST 35 to SF 5. B.Robinson to SF 35 for 30 yards (B.Brooks). [special_teams]
+- Q2 0:58 (31 yds) Kickoff: K.Fairbairn kicks 61 yards from HST 35 to SF 4. B.Robinson to 50 for 46 yards (D.Horton).PENALTY on HST-D.Horton, Face Mask, 15 yards, enforced at 50. [special_teams]
+- Q2 14:57 (23 yds) Kickoff: K.Fairbairn kicks 63 yards from HST 35 to SF 2. B.Robinson to SF 25 for 23 yards (J.Hansen; B.Brooks). [special_teams]
+- Q2 6:04 (14 yds) Punt: T.Morstead punts 54 yards to HST 6, Center-J.Weeks. J.Noel to HST 20 for 14 yards (J.Tonges). [special_teams]
+- Q3 15:00 (25 yds) Kickoff: K.Fairbairn kicks 36 yards from HST 35 to SF 29, short of landing zone.PENALTY on HST-K.Fairbairn, Kickoff Short of Landing Zone, placed at SF 40. [special_teams]
+- Q3 5:25 (-5 yds) Penalty: (Shotgun) PENALTY on SF-C.Colby, False Start, 5 yards, enforced at SF 41 - No Play. [nullified]
+- Q3 5:25 (5 yds) Rush: (Shotgun) M.Jones scrambles left end to SF 39 for 3 yards (W.Anderson).PENALTY on HST-W.Anderson, Defensive Offside, 5 yards, enforced at SF 36 - No Play. [nullified]
+- Q3 7:29 (23 yds) Kickoff: K.Fairbairn kicks 64 yards from HST 35 to SF 1. S.Moore to SF 24 for 23 yards (D.Ogunbowale). [special_teams]
+- Q4 9:41 (29 yds) Kickoff: K.Fairbairn kicks 62 yards from HST 35 to SF 3. S.Moore to SF 32 for 29 yards (B.Brooks). [special_teams]
+
+**HOU Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q2 0:11 (26 yds) Fumble Recovery (Own): (Shotgun) C.Stroud pass deep right intended for J.Noel INTERCEPTED by D.Lenoir at SF 44. D.Lenoir to HST 30 for 26 yards (L.Tomlinson). FUMBLES (L.Tomlinson), recovered by SF-M.Williams at HST 30. [interception]
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q1 10:19 (-5 yds) Pass Incompletion: C.Stroud pass incomplete short right.PENALTY on HST-J.Andrews, Ineligible Downfield Pass, 5 yards, enforced at SF 33 - No Play. [nullified]
+- Q1 12:09 (-5 yds) Rush: B.Fisher reported in as eligible.  W.Marks up the middle to SF 41 for 5 yards (R.Beal; A.Collins).PENALTY on HST, Illegal Shift, 5 yards, enforced at SF 46 - No Play. [nullified]
+- Q1 15:00 (20 yds) Kickoff: E.Pineiro kicks 57 yards from SF 35 to HST 8. D.Pierce to HST 28 for 20 yards (L.Farrell; M.Sigle). [special_teams]
+- Q1 5:21 (33 yds) Field Goal Good: K.Fairbairn 33 yard field goal is GOOD, Center-A.Brinkman, Holder-T.Townsend. [special_teams]
+- Q2 0:25 (24 yds) Kickoff: E.Pineiro kicks 60 yards from SF 35 to HST 5. D.Pierce to HST 29 for 24 yards (S.Neal; C.Robinson). [special_teams]
+- Q2 0:58 (37 yds) Field Goal Good:  K.Fairbairn 37 yard field goal is GOOD, Center-A.Brinkman, Holder-T.Townsend. [special_teams]
+- Q2 14:57 (34 yds) Field Goal Good: K.Fairbairn 34 yard field goal is GOOD, Center-A.Brinkman, Holder-T.Townsend. [special_teams]
+- Q2 1:54 (-10 yds) Rush: (Shotgun) N.Chubb left guard to SF 22 for no gain (K.Givens; D.Winters).PENALTY on HST-J.Scruggs, Offensive Holding, 10 yards, enforced at SF 22 - No Play. [nullified]
+- Q2 4:28 (5 yds) Pass Incompletion: (Shotgun) C.Stroud pass incomplete short right to X.Hutchinson (A.Collins).PENALTY on SF-U.Stout, Defensive Holding, 5 yards, enforced at HST 27 - No Play. [nullified]
+- Q3 0:28 (26 yds) Kickoff: E.Pineiro kicks 60 yards from SF 35 to HST 5. D.Pierce to HST 31 for 26 yards (R.Beal). [special_teams]
+- Q4 9:41 (30 yds) Field Goal Good: K.Fairbairn 30 yard field goal is GOOD, Center-A.Brinkman, Holder-T.Townsend. [special_teams]
+
+### 401772876 BAL @ MIN (TOΔ max 0, YdsΔ max 30, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| BAL | 321 | 321 | +0 | 0 | 0 | +0 | 62 | 62 | +0 |
+| MIN | 365 | 335 | -30 | 3 | 3 | +0 | 102 | 102 | +0 |
+
+**BAL Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 3 shown):
+- Q2 4:25 (9 yds) Rush: K.Mitchell right end to MIN 40 for 9 yards (H.Smith). FUMBLES (H.Smith), ball out of bounds at MIN 40.
+- Q4 2:23 (6 yds) Fumble Recovery (Own): (Shotgun) L.Jackson FUMBLES (Aborted) at BLT 24, recovered by BLT-Z.Flowers at BLT 25. Z.Flowers to BLT 35 for 10 yards (E.Wilson).
+- Q4 3:23 (15 yds) Kickoff: W.Reichard kicks 63 yards from MIN 35 to BLT 2. L.Wester to BLT 22 for 20 yards (E.Wilson). FUMBLES (E.Wilson), ball out of bounds at BLT 22.PENALTY on BLT, Illegal Formation, 5 yards, enforced at BLT 22.
+
+- Excluded non-zero-yard plays (up to 17 shown):
+- Q1 13:25 (5 yds) Punt: J.Stout punts 52 yards to MIN 9, Center-N.Moore. M.Price to MIN 14 for 5 yards (M.Starks; C.Kolar). [special_teams]
+- Q1 15:00 (28 yds) Kickoff: W.Reichard kicks 62 yards from MIN 35 to BLT 3. J.Hill to BLT 31 for 28 yards (D.Turner). [special_teams]
+- Q1 1:25 (-5 yds) Penalty: PENALTY on BLT-A.Vorhees, False Start, 5 yards, enforced at BLT 19 - No Play. [nullified]
+- Q1 4:25 (44 yds) Field Goal Good: T.Loop 44 yard field goal is GOOD, Center-N.Moore, Holder-J.Stout. [special_teams]
+- Q1 9:46 (24 yds) Kickoff: W.Reichard kicks 57 yards from MIN 35 to BLT 8. K.Mitchell to BLT 32 for 24 yards (T.Thomas). [special_teams]
+- Q2 0:02 (30 yds) Field Goal Good: T.Loop 30 yard field goal is GOOD, Center-N.Moore, Holder-J.Stout. [special_teams]
+- Q2 0:10 (13 yds) Penalty: (Shotgun) L.Jackson sacked at MIN 35 for -10 yards (D.Turner).PENALTY on MIN-D.Turner, Roughing the Passer, 13 yards, enforced at MIN 25 - No Play. [nullified]
+- Q2 10:56 (30 yds) Kickoff: W.Reichard kicks 65 yards from MIN 35 to BLT 0. L.Wester to BLT 30 for 30 yards (I.Pace; C.Ham). [special_teams]
+- Q2 1:11 (28 yds) Field Goal Good: T.Loop 28 yard field goal is GOOD, Center-N.Moore, Holder-J.Stout. [special_teams]
+- Q2 5:23 (5 yds) Penalty: (Shotgun) L.Jackson sacked at BLT 32 for -1 yards (J.Redmond).PENALTY on MIN-B.Murphy, Illegal Use of Hands, 5 yards, enforced at BLT 33 - No Play. [nullified]
+- Q3 10:19 (22 yds) Field Goal Good: T.Loop 22 yard field goal is GOOD, Center-N.Moore, Holder-J.Stout. [special_teams]
+- Q3 12:41 (22 yds) Penalty: L.Jackson pass incomplete deep right to I.Likely.PENALTY on MIN-H.Smith, Defensive Pass Interference, 22 yards, enforced at BLT 29 - No Play. [nullified]
+- Q3 2:16 (29 yds) Kickoff: W.Reichard kicks 61 yards from MIN 35 to BLT 4. L.Wester to BLT 33 for 29 yards (C.Ham). [special_teams]
+- Q3 5:00 (56 yds) Field Goal Missed: T.Loop 56 yard field goal is No Good, Wide Left, Center-N.Moore, Holder-J.Stout. [special_teams]
+- Q4 0:09 (-1 yds) Rush: L.Jackson kneels to MIN 41 for -1 yards. [spike_kneel]
+- Q4 1:55 (-7 yds) Punt: J.Stout punts 50 yards to MIN 15, Center-N.Moore. M.Price to MIN 27 for 12 yards (J.Hummel).PENALTY on MIN-D.McGlothern, Offensive Holding, 7 yards, enforced at MIN 15. [special_teams]
+- Q4 3:23 (15 yds) Kickoff: W.Reichard kicks 63 yards from MIN 35 to BLT 2. L.Wester to BLT 22 for 20 yards (E.Wilson). FUMBLES (E.Wilson), ball out of bounds at BLT 22.PENALTY on BLT, Illegal Formation, 5 yards, enforced at BLT 22. [special_teams]
+
+**MIN Reconciliation Clues**
+
+- Windelta counted turnovers (3):
+- Q2 6:54 (0 yds) Pass Interception Return: (Shotgun) J.McCarthy pass deep right intended for J.Jefferson INTERCEPTED by M.Starks at BLT 22. M.Starks to BLT 46 for 24 yards (J.Addison).The Replay Official reviewed the runner was not down by contact ruling, and the play was REVERSED.(Shotgun) J.McCarthy pass deep right intended for J.Jefferson INTERCEPTED by M.Starks at BLT 22. M.Starks to BLT 22 for no gain (J.Jefferson). [interception]
+- Q3 10:19 (23 yds) Kickoff: T.Loop kicks 65 yards from BLT 35 to MIN 0. M.Price to MIN 23 for 23 yards (K.Jackson; T.Simpson). FUMBLES (K.Jackson), RECOVERED by BLT-K.Jackson at MIN 23. [fumble]
+- Q3 12:55 (27 yds) Pass Interception Return: J.McCarthy pass deep middle intended for J.Jefferson INTERCEPTED by M.Humphrey at BLT 2. M.Humphrey ran ob at BLT 29 for 27 yards (D.Jackson; A.Jones). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q3 8:02 (27 yds) Kickoff: T.Loop kicks 65 yards from BLT 35 to MIN 0. M.Price to MIN 27 for 27 yards (T.Buchanan; T.Wallace). FUMBLES (T.Buchanan), touched at MIN 28, recovered by MIN-B.Yurosek at MIN 33.
+
+- Excluded non-zero-yard plays (up to 20 shown):
+- Q1 4:25 (30 yds) Kickoff: T.Loop kicks 66 yards from BLT 35 to MIN -1. M.Price to MIN 29 for 30 yards (J.Higgins). [special_teams]
+- Q2 0:02 (25 yds) Kickoff: T.Loop kicks 64 yards from BLT 35 to MIN 1. M.Price to MIN 26 for 25 yards (T.Wallace). [special_teams]
+- Q2 0:40 (19 yds) Punt:  R.Wright punts 54 yards to BLT 6, Center-A.DePaola. L.Wester to BLT 25 for 19 yards (T.Batty). [special_teams]
+- Q2 10:56 (49 yds) Field Goal Good:  W.Reichard 49 yard field goal is GOOD, Center-A.DePaola, Holder-R.Wright. [special_teams]
+- Q2 11:55 (-5 yds) Penalty: (Shotgun) PENALTY on MIN-B.Brandel, False Start, 5 yards, enforced at BLT 31 - No Play. [nullified]
+- Q2 8:03 (-5 yds) Penalty: PENALTY on MIN-B.O'Neill, False Start, 5 yards, enforced at MIN 33 - No Play. [nullified]
+- Q3 10:19 (23 yds) Kickoff: T.Loop kicks 65 yards from BLT 35 to MIN 0. M.Price to MIN 23 for 23 yards (K.Jackson; T.Simpson). FUMBLES (K.Jackson), RECOVERED by BLT-K.Jackson at MIN 23. [special_teams]
+- Q3 15:00 (22 yds) Kickoff: T.Loop kicks 63 yards from BLT 35 to MIN 2. M.Price to MIN 24 for 22 yards (T.Buchanan). [special_teams]
+- Q3 2:16 (43 yds) Field Goal Good: W.Reichard 43 yard field goal is GOOD, Center-A.DePaola, Holder-R.Wright. [special_teams]
+- Q3 2:55 (-5 yds) Penalty: PENALTY on MIN-C.Darrisaw, False Start, 5 yards, enforced at BLT 20 - No Play. [nullified]
+- Q3 7:17 (-5 yds) Penalty: PENALTY on MIN-B.Yurosek, False Start, 5 yards, enforced at MIN 46 - No Play. [nullified]
+- Q3 8:02 (27 yds) Kickoff: T.Loop kicks 65 yards from BLT 35 to MIN 0. M.Price to MIN 27 for 27 yards (T.Buchanan; T.Wallace). FUMBLES (T.Buchanan), touched at MIN 28, recovered by MIN-B.Yurosek at MIN 33. [special_teams]
+- Q4 0:47 (-5 yds) Penalty: (Shotgun) PENALTY on MIN-B.O'Neill, False Start, 5 yards, enforced at MIN 38 - No Play. [nullified]
+- Q4 10:40 (26 yds) Kickoff: T.Loop kicks 62 yards from BLT 35 to MIN 3. M.Price pushed ob at MIN 29 for 26 yards (J.Higgins). [special_teams]
+- Q4 3:28 (-5 yds) Penalty: (Shotgun) PENALTY on MIN-B.O'Neill, False Start, 5 yards, enforced at BLT 5 - No Play. [nullified]
+- Q4 5:11 (9 yds) Penalty: (No Huddle, Shotgun) J.McCarthy pass incomplete short left to A.Jones [T.Bryan].PENALTY on BLT-R.Smith, Defensive Pass Interference, 9 yards, enforced at BLT 44 - No Play. [nullified]
+- Q4 5:35 (-5 yds) Penalty: PENALTY on MIN-J.McCarthy, False Start, 5 yards, enforced at MIN 35 - No Play. [nullified]
+- Q4 8:43 (38 yds) Penalty: (No Huddle, Shotgun) J.McCarthy pass incomplete deep left to J.Jefferson.PENALTY on BLT-C.Awuzie, Defensive Pass Interference, 38 yards, enforced at MIN 42 - No Play. [nullified]
+- Q4 9:57 (-5 yds) Penalty: PENALTY on MIN-J.Jefferson, False Start, 5 yards, enforced at MIN 41 - No Play. [nullified]
+- Q4 9:57 (5 yds) Penalty: (Shotgun) J.McCarthy pass incomplete short middle to T.Hockenson.PENALTY on BLT-R.Smith, Defensive Pass Interference, 5 yards, enforced at MIN 36 - No Play. [nullified]
+
+### 401772905 WSH @ NYG (TOΔ max 0, YdsΔ max 30, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| WSH | 340 | 340 | +0 | 2 | 2 | +0 | 67 | 67 | +0 |
+| NYG | 384 | 354 | -30 | 1 | 1 | +0 | 62 | 62 | +0 |
+
+**WSH Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q4 2:42 (1 yds) Rush: A.Wylie reported in as eligible.  J.McNichols left tackle to NYG 46 for -7 yards (T.Nubin, A.Carter). FUMBLES (A.Carter), RECOVERED by NYG-A.Carter at NYG 48. A.Carter to NYG 42 for -6 yards. Lateral to P.Adebo to WAS 40 for 18 yards. Lateral to J.Holland to WAS 29 for 11 yards (J.Bates; S.Cosmi).The Replay Official reviewed the runner was not down by contact ruling, and the play was REVERSED.A.Wylie reported in as eligible.  J.McNichols left tackle to NYG 46 for -7 yards (T.Nubin, A.Carter). FUMBLES (A.Carter), RECOVERED by NYG-A.Carter at NYG 48. A.Carter to NYG 49 for 1 yard (J.McNichols). [fumble]
+- Q4 5:50 (23 yds) Sack Opp Fumble Recovery: (No Huddle, Shotgun) M.Mariota sacked at WAS 43 for -10 yards (D.Belton). FUMBLES (D.Belton) [D.Belton], RECOVERED by NYG-B.Burns at WAS 44. B.Burns to WAS 21 for 23 yards (D.Samuel). [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q1 3:10 (-7 yds) Fumble Recovery (Own): (No Huddle, Shotgun) M.Mariota sacked at NYG 39 for -8 yards (A.Carter). FUMBLES (A.Carter) [A.Carter], recovered by WAS-J.Conerly at NYG 38.
+- Q2 11:28 (7 yds) Fumble Recovery (Own): (No Huddle) J.Croskey-Merritt right tackle to WAS 48 for 6 yards (D.Belton; D.Muasau). FUMBLES (D.Belton), recovered by WAS-J.Conerly at WAS 49.
+
+- Excluded non-zero-yard plays (up to 19 shown):
+- Q1 11:09 (-10 yds) Penalty: (No Huddle, Shotgun) M.Mariota pass short left to D.Samuel to NYG 28 for 1 yard (B.Okereke).PENALTY on WAS-T.Burks, Offensive Holding, 10 yards, enforced at NYG 29 - No Play. [nullified]
+- Q1 11:59 (-5 yds) Penalty: (No Huddle, Shotgun) PENALTY on WAS-J.Conerly, False Start, 5 yards, enforced at WAS 48 - No Play. [nullified]
+- Q1 15:00 (22 yds) Kickoff: Y.Koo kicks 54 yards from NYG 35 to WAS 11. C.Edmonds to WAS 33 for 22 yards (C.Golston). [special_teams]
+- Q1 9:22 (46 yds) Field Goal Good: J.Moody 46 yard field goal is GOOD, Center-T.Ott, Holder-T.Way. [special_teams]
+- Q2 0:00 (42 yds) Field Goal Good: J.Moody 42 yard field goal is GOOD, Center-T.Ott, Holder-T.Way. [special_teams]
+- Q2 1:05 (63 yds) Punt Return Touchdown: C.Johnston punts 48 yards to WAS 37, Center-C.Kreiter. J.Lane for 63 yards, TOUCHDOWN.Penalty on NYG-Z.Barnes, Ineligible Downfield Kick, declined. J.Moody extra point is No Good, Hit Right Upright, Center-T.Ott, Holder-T.Way. [special_teams_return]
+- Q2 1:54 (-3 yds) Punt: T.Way punts 55 yards to NYG 28, Center-T.Ott. J.Holland to NYG 25 for -3 yards (J.Reaves). [special_teams]
+- Q2 3:31 (-10 yds) Penalty: (Shotgun) J.McNichols right end pushed ob at WAS 34 for 11 yards (P.Adebo).PENALTY on WAS-D.Samuel, Offensive Holding, 10 yards, enforced at WAS 23 - No Play. [nullified]
+- Q2 3:37 (18 yds) Kickoff: Y.Koo kicks 60 yards from NYG 35 to WAS 5. C.Edmonds to WAS 23 for 18 yards (D.Cambre). [special_teams]
+- Q2 8:26 (39 yds) Field Goal Good: J.Moody 39 yard field goal is GOOD, Center-T.Ott, Holder-T.Way. [special_teams]
+- Q3 11:48 (3 yds) Kickoff: Y.Koo kicks 65 yards from NYG 35 to WAS 0. C.Edmonds to WAS 31 for 31 yards (T.Nubin).PENALTY on WAS-T.Owens, Illegal Block Above the Waist, 9 yards, enforced at WAS 19. [special_teams]
+- Q3 9:16 (10 yds) Punt: T.Way punts 55 yards to NYG 9, Center-T.Ott. J.Holland to NYG 19 for 10 yards (J.Magee). [special_teams]
+- Q4 0:36 (-1 yds) Rush:  M.Mariota kneels to WAS 35 for -1 yards. [spike_kneel]
+- Q4 0:56 (-1 yds) Rush:  M.Mariota kneels to WAS 36 for -1 yards. [spike_kneel]
+- Q4 10:22 (17 yds) Penalty: (Shotgun) A.Wylie reported in as eligible.  M.Mariota pass incomplete deep middle to T.McLaurin.PENALTY on NYG-C.Flott, Defensive Pass Interference, 17 yards, enforced at WAS 4 - No Play. [nullified]
+- Q4 13:56 (-5 yds) Penalty: (Shotgun) PENALTY on WAS-J.McNichols, False Start, 5 yards, enforced at NYG 46 - No Play. [nullified]
+- Q4 14:07 (-5 yds) Penalty: (No Huddle) PENALTY on WAS-T.Biadasz, False Start, 5 yards, enforced at NYG 41 - No Play. [nullified]
+- Q4 1:37 (-1 yds) Rush:  M.Mariota kneels to WAS 37 for -1 yards. [spike_kneel]
+- Q4 3:43 (14 yds) Kickoff: Y.Koo kicks 65 yards from NYG 35 to WAS 0. J.McNichols to WAS 14 for 14 yards (N.Hewitt). [special_teams]
+
+**NYG Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q2 0:26 (55 yds) Pass Interception Return: (Shotgun) J.Dart pass short middle intended for J.Hyatt INTERCEPTED by M.Sainristil at WAS 21. M.Sainristil to NYG 24 for 55 yards (J.Hyatt). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 5:06 (4 yds) Fumble Recovery (Own): (Shotgun) J.Dart up the middle to WAS 13 for 4 yards (J.Kinlaw). FUMBLES (J.Kinlaw), recovered by NYG-J.Runyan at WAS 13.
+
+- Excluded non-zero-yard plays (up to 12 shown):
+- Q1 0:43 (20 yds) Punt:  C.Johnston punts 49 yards to WAS 33, Center-C.Kreiter. J.Lane to NYG 47 for 20 yards (D.Muasau). [special_teams]
+- Q1 7:04 (52 yds) Field Goal Missed: Y.Koo 52 yard field goal is No Good, Wide Left, Center-C.Kreiter, Holder-C.Johnston. [special_teams]
+- Q1 8:42 (5 yds) Penalty: (No Huddle) PENALTY on WAS-J.Kinlaw, Neutral Zone Infraction, 5 yards, enforced at WAS 48 - No Play. [nullified]
+- Q1 9:22 (28 yds) Kickoff: J.Moody kicks 60 yards from WAS 35 to NYG 5. D.Banks to NYG 33 for 28 yards (A.Kaho; C.Yankoff). [special_teams]
+- Q2 1:05 (25 yds) Kickoff: J.Moody kicks 56 yards from WAS 35 to NYG 9, out of bounds.PENALTY on WAS-J.Moody, Kickoff Out of Bounds, placed at NYG 40. [special_teams]
+- Q2 1:26 (-5 yds) Penalty: (Shotgun) PENALTY on NYG-J.Eluemunor, False Start, 5 yards, enforced at NYG 17 - No Play. [nullified]
+- Q3 15:00 (-4 yds) Kickoff: J.Moody kicks 60 yards from WAS 35 to NYG 5. D.Banks to NYG 34 for 29 yards (Q.Martin).PENALTY on NYG-N.Hewitt, Offensive Holding, 10 yards, enforced at NYG 28. [special_teams]
+- Q3 7:32 (8 yds) Punt: C.Johnston punts 47 yards to WAS 28, Center-C.Kreiter. J.Lane to WAS 36 for 8 yards (D.Muasau). [special_teams]
+- Q3 8:33 (-5 yds) Penalty: (No Huddle, Shotgun) PENALTY on NYG-T.Tracy, False Start, 5 yards, enforced at NYG 24 - No Play. [nullified]
+- Q4 11:44 (8 yds) Penalty: (No Huddle, Shotgun) J.Dart pass incomplete short right to D.Bellinger.PENALTY on WAS-J.Reaves, Defensive Pass Interference, 8 yards, enforced at WAS 9 - No Play. [nullified]
+- Q4 13:46 (28 yds) Kickoff: J.Moody kicks 60 yards from WAS 35 to NYG 5. D.Banks to NYG 33 for 28 yards (N.Bellore). [special_teams]
+- Q4 15:00 (51 yds) Field Goal Missed: Y.Koo 51 yard field goal is No Good, Wide Left, Center-C.Kreiter, Holder-C.Johnston. [special_teams]
+
+### 401772945 NYJ @ NE (TOΔ max 0, YdsΔ max 30, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| NYJ | 245 | 215 | -30 | 1 | 1 | +0 | 62 | 62 | +0 |
+| NE | 336 | 336 | +0 | 0 | 0 | +0 | 20 | 20 | +0 |
+
+**NYJ Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q4 7:34 (0 yds) Fumble Recovery (Opponent): (Shotgun) J.Fields FUMBLES (Aborted) at NYJ 11, RECOVERED by NE-A.Jennings at NYJ 11. [fumble]
+
+- Excluded non-zero-yard plays (up to 4 shown):
+- Q1 15:00 (24 yds) Kickoff: A.Borregales kicks 61 yards from NE 35 to NYJ 4. I.Williams to NYJ 28 for 24 yards (J.Tavai). [special_teams]
+- Q2 14:16 (21 yds) Kickoff: A.Borregales kicks 55 yards from NE 35 to NYJ 10. K.Nwangwu to NYJ 31 for 21 yards (J.Tavai; D.Harris). [special_teams]
+- Q2 7:54 (27 yds) Kickoff: A.Borregales kicks 54 yards from NE 35 to NYJ 11. K.Nwangwu to NYJ 38 for 27 yards (D.Harris). [special_teams]
+- Q4 12:06 (23 yds) Kickoff: A.Borregales kicks 60 yards from NE 35 to NYJ 5. K.Nwangwu to NYJ 28 for 23 yards (M.Mapu). [special_teams]
+
+**NE Reconciliation Clues**
+
+- Excluded non-zero-yard plays (up to 16 shown):
+- Q1 6:56 (23 yds) Kickoff: A.McNamara kicks 57 yards from NYJ 35 to NE 8. E.Chism to NE 31 for 23 yards (K.King). [special_teams]
+- Q2 0:03 (45 yds) Field Goal Missed: A.Borregales 45 yard field goal is No Good, Hit Right Upright, Center-J.Ashby, Holder-B.Baringer. [special_teams]
+- Q2 0:34 (5 yds) Penalty: (No Huddle, Shotgun) D.Maye sacked at NE 35 for -10 yards (Q.Williams).PENALTY on NYJ-B.Stephens, Illegal Contact, 5 yards, enforced at NE 45 - No Play. [nullified]
+- Q2 1:16 (-10 yds) Penalty: (Shotgun) D.Maye pass incomplete deep right to K.Williams.PENALTY on NE-W.Campbell, Offensive Holding, 10 yards, enforced at NE 47 - No Play. [nullified]
+- Q2 1:48 (5 yds) Penalty: B.Brown reported in as eligible.  PENALTY on NYJ, Defensive Too Many Men on Field, 5 yards, enforced at NE 41 - No Play. [nullified]
+- Q2 3:31 (-7 yds) Punt: B.Baringer punts 56 yards to NYJ 14, Center-J.Ashby. I.Williams to NYJ 31 for 17 yards (B.Schooler).PENALTY on NYJ-D.Clark, Offensive Holding, 7 yards, enforced at NYJ 14. [special_teams]
+- Q3 14:17 (19 yds) Punt:  B.Baringer punts 50 yards to NYJ 13, Center-J.Ashby. I.Williams to NYJ 32 for 19 yards (E.Ponder). [special_teams]
+- Q3 15:00 (24 yds) Kickoff: A.McNamara kicks 55 yards from NYJ 35 to NE 10. E.Chism pushed ob at NE 34 for 24 yards (M.Walker). [special_teams]
+- Q3 3:06 (-10 yds) Penalty:  D.Johnson right tackle to NE 38 for 10 yards (I.Oliver; J.Sherwood).
+PENALTY on NE-J.Westover, Offensive Holding, 10 yards, enforced at NE 28 - No Play. [nullified]
+- Q3 3:10 (21 yds) Kickoff: A.McNamara kicks 58 yards from NYJ 35 to NE 7. E.Chism pushed ob at NE 28 for 21 yards (D.Clark). [special_teams]
+- Q4 0:36 (-1 yds) Rush: B.Brown reported in as eligible.  D.Maye kneels to NE 24 for -1 yards. [spike_kneel]
+- Q4 12:06 (44 yds) Field Goal Good: A.Borregales 44 yard field goal is GOOD, Center-J.Ashby, Holder-B.Baringer. [special_teams]
+- Q4 14:24 (5 yds) Penalty: D.Maye pass incomplete short right to J.Westover.PENALTY on NYJ-J.Brownlee, Defensive Holding, 5 yards, enforced at NYJ 28 - No Play. [nullified]
+- Q4 1:05 (-2 yds) Rush: B.Brown reported in as eligible.  D.Maye kneels to NE 25 for -2 yards. [spike_kneel]
+- Q4 6:36 (26 yds) Field Goal Good: A.Borregales 26 yard field goal is GOOD, Center-J.Ashby, Holder-B.Baringer. [special_teams]
+- Q4 7:43 (-1 yds) Punt:  B.Baringer punts 47 yards to NYJ 16, Center-J.Ashby. I.Williams to NYJ 15 for -1 yards (C.Woods). [special_teams]
+
+### 401772797 NYJ @ JAX (TOΔ max 0, YdsΔ max 28, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| NYJ | 284 | 284 | +0 | 3 | 3 | +0 | 44 | 44 | +0 |
+| JAX | 438 | 410 | -28 | 1 | 1 | +0 | 60 | 60 | +0 |
+
+**NYJ Reconciliation Clues**
+
+- Windelta counted turnovers (3):
+- Q2 1:13 (0 yds) Pass Interception Return: (No Huddle, Shotgun) B.Cook pass short right intended for A.Mitchell INTERCEPTED by M.Brown at NYJ 47. M.Brown to NYJ 47 for no gain (A.Mitchell). [interception]
+- Q4 1:30 (5 yds) Pass Interception Return: (No Huddle, Shotgun) B.Cook pass deep right intended for A.Smith INTERCEPTED by An.Johnson at JAX 19. An.Johnson pushed ob at JAX 24 for 5 yards (S.Smartt). [interception]
+- Q4 7:36 (0 yds) Pass Interception Return: B.Cook pass short left intended for A.Lazard INTERCEPTED by V.Miller [J.Hines-Allen] at JAX -8. Touchback. [interception]
+
+- Excluded non-zero-yard plays (up to 4 shown):
+- Q2 10:50 (-5 yds) Penalty:  (Punt formation) PENALTY on NYJ, Delay of Game, 5 yards, enforced at JAX 42 - No Play. [nullified]
+- Q2 5:03 (41 yds) Field Goal Good: N.Folk 41 yard field goal is GOOD, Center-T.Hennessy, Holder-A.McNamara. [special_teams]
+- Q3 10:47 (51 yds) Field Goal Good: N.Folk 51 yard field goal is GOOD, Center-T.Hennessy, Holder-A.McNamara. [special_teams]
+- Q3 1:11 (-5 yds) Penalty: (Shotgun) PENALTY on NYJ-A.Membou, False Start, 5 yards, enforced at NYJ 37 - No Play. [nullified]
+
+**JAX Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q4 9:51 (25 yds) Fumble Recovery (Opponent): D.Brown left end to JAX 35 for 4 yards (B.Stephens). FUMBLES (B.Stephens), RECOVERED by NYJ-M.Moore at JAX 41. M.Moore to JAX 16 for 25 yards (P.Mekari; N.Mullens). [fumble]
+
+- Excluded non-zero-yard plays (up to 14 shown):
+- Q1 15:00 (24 yds) Kickoff: A.McNamara kicks 61 yards from NYJ 35 to JAX 4. B.Tuten to JAX 28 for 24 yards (M.Walker). [special_teams]
+- Q1 1:47 (43 yds) Kickoff: A.McNamara kicks 63 yards from NYJ 35 to JAX 2. B.Tuten to JAX 45 for 43 yards (A.Beck). [special_teams]
+- Q2 0:59 (5 yds) Penalty: (Shotgun) T.Lawrence pass incomplete short middle to J.Meyers (Q.Stiggers).PENALTY on NYJ-Q.Stiggers, Illegal Contact, 5 yards, enforced at JAX 43 - No Play. [nullified]
+- Q2 14:24 (4 yds) Penalty: (Shotgun) T.Lawrence pass incomplete short left to B.Strange.PENALTY on NYJ-Q.Williams, Defensive Pass Interference, 4 yards, enforced at NYJ 20 - No Play. [nullified]
+- Q2 1:07 (-10 yds) Penalty: (Shotgun) T.Lawrence scrambles left end ran ob at NYJ 38 for 9 yards (Q.Williams).PENALTY on JAX-A.Harrison, Offensive Holding, 10 yards, enforced at NYJ 47 - No Play. [nullified]
+- Q2 1:33 (33 yds) Field Goal Good: C.Little 33 yard field goal is GOOD, Center-R.Matiscik, Holder-L.Cooke. [special_teams]
+- Q2 5:03 (25 yds) Kickoff: A.McNamara kicks 63 yards from NYJ 35 to JAX 2, out of bounds.PENALTY on NYJ-A.McNamara, Kickoff Out of Bounds, placed at JAX 40. [special_teams]
+- Q2 9:55 (-15 yds) Punt: L.Cooke punts 47 yards to JAX 49, Center-R.Matiscik. I.Williams for 49 yards, TOUCHDOWN NULLIFIED by Penalty.PENALTY on NYJ-I.Davis, Unsportsmanlike Conduct, 15 yards, enforced at JAX 49. [nullified]
+- Q3 10:47 (26 yds) Kickoff: A.McNamara kicks 63 yards from NYJ 35 to JAX 2. B.Tuten to JAX 28 for 26 yards (E.Watts; M.Walker). NYJ-E.Watts was injured during the play. [special_teams]
+- Q3 1:43 (22 yds) Field Goal Good: C.Little 22 yard field goal is GOOD, Center-R.Matiscik, Holder-L.Cooke. [special_teams]
+- Q4 0:46 (-1 yds) Rush: N.Mullens kneels to JAX 22 for -1 yards. [spike_kneel]
+- Q4 14:08 (50 yds) Kickoff: A.McNamara kicks 60 yards from NYJ 35 to JAX 5. L.Allen to NYJ 45 for 50 yards (M.Walker; J.Taylor). [special_teams]
+- Q4 1:24 (-1 yds) Rush: N.Mullens kneels to JAX 23 for -1 yards. [spike_kneel]
+- Q4 5:14 (9 yds) Punt: L.Cooke punts 57 yards to NYJ 14, Center-R.Matiscik. I.Williams to NYJ 23 for 9 yards (B.Combs; R.Lane). [special_teams]
+
+### 401772840 NYJ @ TB (TOΔ max 0, YdsΔ max 28, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| NYJ | 267 | 266 | -1 | 2 | 2 | +0 | 81 | 81 | +0 |
+| TB | 347 | 375 | +28 | 0 | 0 | +0 | 124 | 124 | +0 |
+
+**NYJ Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q2 0:17 (55 yds) Interception Return Touchdown: (Shotgun) T.Taylor pass short left intended for G.Wilson INTERCEPTED by J.Dean at TB 45. J.Dean for 55 yards, TOUCHDOWN. C.McLaughlin extra point is GOOD, Center-E.Deckers, Holder-R.Dixon. [interception]
+- Q2 2:59 (0 yds) Sack Opp Fumble Recovery: (Shotgun) T.Taylor sacked at NYJ 32 for -9 yards (A.Winfield). FUMBLES (A.Winfield) [A.Winfield], RECOVERED by TB-V.Vea at NYJ 33. [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 5:22 (0 yds) Penalty: (No Huddle, Shotgun) T.Taylor pass short left intended for T.Johnson INTERCEPTED by J.Dean at NYJ 44. J.Dean to NYJ 44 for no gain (T.Johnson).PENALTY on TB-J.Dean, Defensive Pass Interference, 15 yards, enforced at NYJ 30 - No Play.
+
+- Excluded non-zero-yard plays (up to 16 shown):
+- Q1 0:50 (-10 yds) Penalty: (Shotgun) T.Taylor pass incomplete short left to G.Wilson (J.Dean).PENALTY on NYJ-O.Fashanu, Offensive Holding, 10 yards, enforced at TB 28 - No Play. [nullified]
+- Q1 10:31 (4 yds) Penalty: (Shotgun) T.Taylor pass incomplete short middle to M.Taylor.PENALTY on TB-L.David, Defensive Pass Interference, 4 yards, enforced at TB 30 - No Play. [nullified]
+- Q1 13:11 (15 yds) Penalty: (Shotgun) T.Taylor sacked at NYJ 41 for 0 yards (L.Hall).PENALTY on TB-L.Hall, Horse Collar Tackle, 15 yards, enforced at NYJ 41 - No Play. [nullified]
+- Q1 15:00 (31 yds) Kickoff: C.McLaughlin kicks 67 yards from TB 35 to NYJ -2. B.Allen to NYJ 29 for 31 yards (K.Kieft; M.Watts). [special_teams]
+- Q1 2:20 (31 yds) Kickoff: C.McLaughlin kicks 59 yards from TB 35 to NYJ 6. I.Davis to NYJ 37 for 31 yards (C.Braswell). [special_teams]
+- Q1 8:51 (38 yds) Field Goal Good: N.Folk 38 yard field goal is GOOD, Center-T.Hennessy, Holder-A.McNamara. [special_teams]
+- Q1 9:50 (-5 yds) Penalty: B.Allen up the middle to TB 11 for 6 yards (E.Simmons; T.Smith).PENALTY on NYJ, Illegal Formation, 5 yards, enforced at TB 17 - No Play. [nullified]
+- Q2 0:12 (-1 yds) Rush:  T.Taylor kneels to NYJ 31 for -1 yards. [spike_kneel]
+- Q2 0:17 (25 yds) Kickoff: C.McLaughlin kicks 58 yards from TB 35 to NYJ 7. I.Davis to NYJ 32 for 25 yards (K.Kieft; J.Hayes). [special_teams]
+- Q2 11:15 (25 yds) Kickoff: C.McLaughlin kicks 55 yards from TB 35 to NYJ 10. B.Allen to NYJ 35 for 25 yards (R.Miller). [special_teams]
+- Q2 14:01 (42 yds) Field Goal Good: N.Folk 42 yard field goal is GOOD, Center-T.Hennessy, Holder-A.McNamara. [special_teams]
+- Q2 1:31 (-1 yds) Punt: A.McNamara punts 51 yards to TB 24, Center-T.Hennessy. K.Johnson to TB 23 for -1 yards (Q.Stiggers). [special_teams]
+- Q2 7:40 (5 yds) Penalty: B.Hall right tackle to NYJ 21 for 3 yards (Y.Diaby; G.Gaines).PENALTY on TB-Y.Diaby, Defensive Offside, 5 yards, enforced at NYJ 18 - No Play. [nullified]
+- Q3 5:51 (20 yds) Kickoff: C.McLaughlin kicks 57 yards from TB 35 to NYJ 8. I.Davis to NYJ 33 for 25 yards (K.Merriweather).PENALTY on NYJ, Illegal Formation, 5 yards, enforced at NYJ 33. [special_teams]
+- Q4 5:14 (-5 yds) Penalty: (Shotgun) PENALTY on NYJ-O.Fashanu, False Start, 5 yards, enforced at NYJ 45 - No Play. [nullified]
+- Q4 6:13 (20 yds) Kickoff: C.McLaughlin kicks 58 yards from TB 35 to NYJ 7. B.Allen to NYJ 27 for 20 yards (J.Hayes). [special_teams]
+
+**TB Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q2 4:55 (-8 yds) Fumble Recovery (Own): (Shotgun) B.Mayfield sacked at TB 28 for -3 yards (sack split by H.Phillips and Qu.Williams). FUMBLES (H.Phillips) [Qu.Williams], recovered by TB-G.Barton at TB 23.
+- Q4 1:49 (43 yds) Blocked Field Goal: C.McLaughlin 43 yard field goal is BLOCKED (W.McDonald), Center-E.Deckers, Holder-R.Dixon, RECOVERED by NYJ-W.McDonald at 50. W.McDonald for 50 yards, TOUCHDOWN. N.Folk extra point is GOOD, Center-T.Hennessy, Holder-A.McNamara.
+
+- Excluded non-zero-yard plays (up to 22 shown):
+- Q1 2:20 (54 yds) Field Goal Good:  C.McLaughlin 54 yard field goal is GOOD, Center-E.Deckers, Holder-R.Dixon. [special_teams]
+- Q1 3:27 (-10 yds) Penalty: (Shotgun) B.Mayfield pass deep left to M.Evans pushed ob at NYJ 7 for 22 yards (A.Gardner).PENALTY on TB-G.Barton, Offensive Holding, 10 yards, enforced at NYJ 29 - No Play. [nullified]
+- Q1 3:57 (-10 yds) Penalty: (Shotgun) B.Mayfield pass short middle to S.Shepard to NYJ 5 for 14 yards (Qu.Williams).PENALTY on TB-L.Haggard, Offensive Holding, 10 yards, enforced at NYJ 19 - No Play. [nullified]
+- Q1 5:30 (26 yds) Penalty: (Shotgun) B.Mayfield pass incomplete deep right to M.Evans.PENALTY on NYJ-A.Gardner, Defensive Pass Interference, 26 yards, enforced at TB 49 - No Play. [nullified]
+- Q1 5:59 (-10 yds) Penalty: (Shotgun) B.Mayfield pass short left to R.White pushed ob at NYJ 31 for 10 yards (A.Gardner; M.Carter).PENALTY on TB-M.Evans, Offensive Holding, 10 yards, enforced at NYJ 41 - No Play. [nullified]
+- Q1 6:06 (-10 yds) Penalty: (Shotgun) B.Mayfield pass incomplete short left to R.White.PENALTY on TB-L.Haggard, Offensive Holding, 10 yards, enforced at NYJ 31 - No Play. [nullified]
+- Q1 8:27 (15 yds) Penalty: (No Huddle, Shotgun) B.Irving up the middle to TB 36 for no gain (Q.Williams; W.McDonald).PENALTY on NYJ-Q.Williams, Face Mask, 15 yards, enforced at TB 36 - No Play. [nullified]
+- Q1 8:51 (25 yds) Kickoff: N.Folk kicks 58 yards from NYJ 35 to TB 7. S.Tucker to TB 32 for 25 yards (I.Davis; A.Beck). [special_teams]
+- Q2 14:01 (22 yds) Kickoff: N.Folk kicks 64 yards from NYJ 35 to TB 1. S.Tucker to TB 23 for 22 yards (I.Davis; I.Oliver). [special_teams]
+- Q2 1:43 (33 yds) Field Goal Good: C.McLaughlin 33 yard field goal is GOOD, Center-E.Deckers, Holder-R.Dixon. [special_teams]
+- Q2 5:41 (-5 yds) Penalty: (Shotgun) PENALTY on TB-B.Bredeson, False Start, 5 yards, enforced at TB 30 - No Play. [nullified]
+- Q2 8:18 (-10 yds) Penalty:  (Shotgun) R.White right end to NYJ 27 for 9 yards (M.Moore).
+PENALTY on TB-E.Klein, Offensive Holding, 10 yards, enforced at NYJ 36 - No Play. [nullified]
+- Q3 12:23 (-10 yds) Penalty: (No Huddle, Shotgun) R.White left end to NYJ 38 for 5 yards (W.McDonald).PENALTY on TB-E.Klein, Offensive Holding, 10 yards, enforced at NYJ 43 - No Play. [nullified]
+- Q3 15:00 (24 yds) Kickoff: A.McNamara kicks 66 yards from NYJ 35 to TB -1. S.Tucker to TB 23 for 24 yards (D.Clark; M.McCrary-Ball). [special_teams]
+- Q3 5:51 (28 yds) Field Goal Good:  C.McLaughlin 28 yard field goal is GOOD, Center-E.Deckers, Holder-R.Dixon. [special_teams]
+- Q4 0:00 (36 yds) Field Goal Good:  C.McLaughlin 36 yard field goal is GOOD, Center-E.Deckers, Holder-R.Dixon. [special_teams]
+- Q4 0:07 (-1 yds) Rush: B.Mayfield kneels to NYJ 18 for -1 yards. [spike_kneel]
+- Q4 10:12 (22 yds) Kickoff: A.McNamara kicks 60 yards from NYJ 35 to TB 5. S.Tucker to TB 27 for 22 yards (D.Clark). [special_teams]
+- Q4 1:49 (31 yds) Kickoff: A.McNamara kicks 62 yards from NYJ 35 to TB 3. S.Tucker to TB 34 for 31 yards (M.McCrary-Ball). [special_teams]
+- Q4 2:00 (-5 yds) Penalty: (Run formation) PENALTY on TB, Delay of Game, 5 yards, enforced at NYJ 20 - No Play. [nullified]
+- Q4 6:13 (55 yds) Field Goal Good:  C.McLaughlin 55 yard field goal is GOOD, Center-E.Deckers, Holder-R.Dixon.
+Penalty on NYJ-W.McDonald, Running Into the Kicker, declined. [special_teams]
+- Q4 6:26 (-5 yds) Penalty: (Shotgun) PENALTY on TB-B.Bredeson, False Start, 5 yards, enforced at NYJ 32 - No Play. [nullified]
+
+### 401772925 GB @ PIT (TOΔ max 0, YdsΔ max 28, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| GB | 454 | 454 | +0 | 0 | 0 | +0 | 47 | 47 | +0 |
+| PIT | 295 | 267 | -28 | 1 | 1 | +0 | 65 | 65 | +0 |
+
+**GB Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q1 3:20 (8 yds) Pass Reception: J.Love pass short left to E.Wilson to GB 26 for 8 yards (N.Herbig). FUMBLES (N.Herbig), ball out of bounds at GB 26.
+- Q4 2:07 (13 yds) Kickoff: C.Boswell kicks onside 13 yards from PIT 35 to PIT 48. R.Doubs (didn't try to advance) ran ob at PIT 48 for no gain.
+
+- Excluded non-zero-yard plays (up to 13 shown):
+- Q1 13:37 (5 yds) Punt: D.Whelan punts 56 yards to PIT 15, Center-M.Orzech. K.Williams to PIT 20 for 5 yards (B.Melton). [special_teams]
+- Q1 15:00 (11 yds) Kickoff: C.Boswell kicks 56 yards from PIT 35 to GB 9. S.Williams to GB 30 for 21 yards (Co.Heyward).PENALTY on GB-C.Brooks, Offensive Holding, 10 yards, enforced at GB 30. [special_teams]
+- Q1 8:41 (30 yds) Kickoff: C.Boswell kicks 62 yards from PIT 35 to GB 3. S.Williams to GB 33 for 30 yards (Co.Heyward). [special_teams]
+- Q2 0:02 (44 yds) Field Goal Missed: B.McManus 44 yard field goal is No Good, Wide Left, Center-M.Orzech, Holder-D.Whelan. [special_teams]
+- Q2 11:17 (16 yds) Punt: D.Whelan punts 53 yards to PIT 20, Center-M.Orzech. K.Williams pushed ob at PIT 36 for 16 yards (M.Orzech). [special_teams]
+- Q2 12:18 (22 yds) Kickoff: C.Boswell kicks 61 yards from PIT 35 to GB 4. B.Melton to GB 26 for 22 yards (P.Wilson). [special_teams]
+- Q2 14:55 (57 yds) Field Goal Missed: B.McManus 57 yard field goal is No Good, Short, Center-M.Orzech, Holder-D.Whelan. [special_teams]
+- Q2 5:52 (27 yds) Kickoff: C.Boswell kicks 58 yards from PIT 35 to GB 7. S.Williams to GB 34 for 27 yards (K.Gainwell; Co.Heyward). [special_teams]
+- Q3 5:34 (19 yds) Kickoff: C.Boswell kicks 62 yards from PIT 35 to GB 3. S.Williams to GB 22 for 19 yards (Co.Heyward; C.Bruener). [special_teams]
+- Q4 0:34 (-1 yds) Rush: J.Love kneels to PIT 38 for -1 yards. [spike_kneel]
+- Q4 2:07 (13 yds) Kickoff: C.Boswell kicks onside 13 yards from PIT 35 to PIT 48. R.Doubs (didn't try to advance) ran ob at PIT 48 for no gain. [special_teams]
+- Q4 3:59 (25 yds) Field Goal Good: B.McManus 25 yard field goal is GOOD, Center-M.Orzech, Holder-D.Whelan. [special_teams]
+- Q4 5:28 (28 yds) Field Goal Good: B.McManus 28 yard field goal is GOOD, Center-M.Orzech, Holder-D.Whelan. [special_teams]
+
+**PIT Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q4 5:17 (0 yds) Fumble Recovery (Opponent): (No Huddle, Shotgun) A.Rodgers pass short middle to K.Gainwell to PIT 28 for 5 yards (E.Cooper). FUMBLES (E.Cooper), RECOVERED by GB-J.Bullard at PIT 26. [fumble]
+
+- Excluded non-zero-yard plays (up to 18 shown):
+- Q1 4:29 (5 yds) Pass Reception: (Shotgun) A.Rodgers pass short left to P.Freiermuth to PIT 42 for 5 yards (C.Valentine).PENALTY on PIT, Illegal Shift, 5 yards, enforced at PIT 37 - No Play. [nullified]
+- Q1 8:41 (56 yds) Field Goal Good: C.Boswell 56 yard field goal is GOOD, Center-C.Kuntz, Holder-C.Waitman. [special_teams]
+- Q2 12:18 (50 yds) Field Goal Good: C.Boswell 50 yard field goal is GOOD, Center-C.Kuntz, Holder-C.Waitman. [special_teams]
+- Q2 1:27 (21 yds) Pass Incompletion: (Shotgun) A.Rodgers pass incomplete deep right to C.Austin [E.Cooper].PENALTY on GB-K.Nixon, Defensive Pass Interference, 21 yards, enforced at GB 36 - No Play. [nullified]
+- Q2 5:52 (48 yds) Field Goal Good: C.Boswell 48 yard field goal is GOOD, Center-C.Kuntz, Holder-C.Waitman. [special_teams]
+- Q2 6:08 (-5 yds) Penalty: (Field Goal formation) PENALTY on PIT-Ca.Heyward, False Start, 5 yards, enforced at GB 24 - No Play. [nullified]
+- Q2 9:42 (5 yds) Pass Incompletion: (Shotgun) A.Rodgers pass incomplete deep middle to D.Metcalf (E.Williams).PENALTY on GB-K.Nixon, Defensive Holding, 5 yards, enforced at 50 - No Play. [nullified]
+- Q3 14:12 (-10 yds) Punt: C.Waitman punts 51 yards to GB 20, Center-C.Kuntz. R.Doubs to GB 23 for 3 yards (C.Kuntz).PENALTY on GB-J.Bullard, Offensive Holding, 10 yards, enforced at GB 20. [special_teams]
+- Q3 15:00 (25 yds) Kickoff: B.McManus kicks 63 yards from GB 35 to PIT 2. K.Gainwell to PIT 27 for 25 yards (N.Niemann). [special_teams]
+- Q3 5:34 (56 yds) Field Goal Good: C.Boswell 56 yard field goal is GOOD, Center-C.Kuntz, Holder-C.Waitman. [special_teams]
+- Q3 8:48 (10 yds) Kickoff: B.McManus kicks 55 yards from GB 35 to PIT 10. K.Williams MUFFS catch, and recovers at PIT 13. K.Williams to PIT 23 for 10 yards (A.Mosby; E.Williams). [special_teams]
+- Q4 10:57 (23 yds) Kickoff: B.McManus kicks 63 yards from GB 35 to PIT 2. K.Williams to PIT 25 for 23 yards (N.Niemann; J.Bullard). [special_teams]
+- Q4 13:09 (-4 yds) Punt: C.Waitman punts 51 yards to GB 29, Center-C.Kuntz. R.Doubs to GB 40 for 11 yards (C.Bruener).PENALTY on PIT-N.Herbig, Unnecessary Roughness, 15 yards, enforced at GB 40. [special_teams]
+- Q4 14:55 (15 yds) Kickoff: B.McManus kicks 57 yards from GB 35 to PIT 8. K.Gainwell to PIT 23 for 15 yards (N.Niemann). [special_teams]
+- Q4 2:07 (1 yds) Penalty: TWO-POINT CONVERSION ATTEMPT. A.Rodgers pass to D.Washington is incomplete. ATTEMPT FAILS.
+PENALTY on GB-C.Valentine, Defensive Pass Interference, 1 yard, enforced at GB 2 - No Play. [nullified]
+- Q4 3:59 (30 yds) Kickoff: B.McManus kicks 65 yards from GB 35 to PIT 0. K.Gainwell to PIT 30 for 30 yards (I.McDuffie; E.Cooper). [special_teams]
+- Q4 5:28 (20 yds) Kickoff: B.McManus kicks 62 yards from GB 35 to PIT 3. K.Gainwell to PIT 23 for 20 yards (E.Williams; I.McDuffie). [special_teams]
+- Q4 9:08 (6 yds) Punt: C.Waitman punts 46 yards to GB 38, Center-C.Kuntz. R.Doubs to GB 44 for 6 yards (C.Bruener). [special_teams]
+
+### 401772865 BUF @ CAR (TOΔ max 0, YdsΔ max 26, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| BUF | 410 | 410 | +0 | 0 | 0 | +0 | 60 | 60 | +0 |
+| CAR | 244 | 218 | -26 | 3 | 3 | +0 | 20 | 20 | +0 |
+
+**BUF Reconciliation Clues**
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q1 7:14 (45 yds) Field Goal Good: M.Prater 45 yard field goal is GOOD, Center-R.Ferguson, Holder-M.Wishnowsky. [special_teams]
+- Q2 13:03 (43 yds) Field Goal Good:  M.Prater 43 yard field goal is GOOD, Center-R.Ferguson, Holder-M.Wishnowsky. [special_teams]
+- Q2 13:24 (5 yds) Penalty: (Field Goal formation) PENALTY on CAR-T.Wharton, Encroachment, 5 yards, enforced at CAR 30 - No Play. [nullified]
+- Q2 14:33 (-5 yds) Rush: (No Huddle) J.Allen up the middle to CAR 8 for 1 yard (A.Robinson).PENALTY on BUF, Illegal Formation, 5 yards, enforced at CAR 9 - No Play. [nullified]
+- Q2 15:00 (-5 yds) Penalty: (Shotgun) PENALTY on BUF-D.Dawkins, False Start, 5 yards, enforced at CAR 19 - No Play. [nullified]
+- Q2 8:58 (21 yds) Kickoff: R.Fitzgerald kicks 63 yards from CAR 35 to BUF 2. Ty.Johnson to BUF 23 for 21 yards (B.Tremayne; A.Evans). [special_teams]
+- Q3 13:15 (5 yds) Pass Incompletion: (Shotgun) J.Allen pass incomplete deep right to T.Shavers.PENALTY on CAR-Ja.Horn, Defensive Holding, 5 yards, enforced at BUF 38 - No Play. [nullified]
+- Q3 15:00 (-10 yds) Rush: J.Cook right guard to BUF 39 for 4 yards (D.Wonnum; C.Rozeboom).PENALTY on BUF-S.Brown, Offensive Holding, 10 yards, enforced at BUF 35 - No Play. [nullified]
+- Q4 10:33 (13 yds) Kickoff: R.Fitzgerald kicks 62 yards from CAR 35 to BUF 3. C.Samuel to BUF 26 for 23 yards (C.Thornton; T.Incoom).PENALTY on BUF-S.Franklin, Offensive Holding, 10 yards, enforced at BUF 26. [special_teams]
+- Q4 1:57 (7 yds) Punt: M.Wishnowsky punts 54 yards to CAR 16, Center-R.Ferguson. T.Etienne to CAR 23 for 7 yards (C.Lewis). [special_teams]
+- Q4 5:06 (6 yds) Punt: M.Wishnowsky punts 45 yards to CAR 13, Center-R.Ferguson. T.Etienne to CAR 19 for 6 yards (J.Hancock). [special_teams]
+
+**CAR Reconciliation Clues**
+
+- Windelta counted turnovers (3):
+- Q1 3:51 (6 yds) Fumble Recovery (Opponent): (Shotgun) A.Dalton scrambles right end to BUF 20 for 1 yard (G.Rousseau). FUMBLES (G.Rousseau), RECOVERED by BUF-C.Benford at BUF 11. C.Benford to BUF 17 for 6 yards (B.Christensen; A.Dalton). [fumble]
+- Q2 1:58 (24 yds) Pass Interception Return: (Shotgun) A.Dalton pass short left intended for J.Coker INTERCEPTED by A.Epenesa at CAR 25. A.Epenesa to CAR 1 for 24 yards (C.Hubbard). [interception]
+- Q3 4:50 (6 yds) Sack Opp Fumble Recovery: (Shotgun) A.Dalton sacked at CAR 22 for -7 yards (M.Hoecht). FUMBLES (M.Hoecht), RECOVERED by BUF-D.Walker at CAR 25. D.Walker to CAR 19 for 6 yards (R.Dowdle). ** Injury Update: CAR-Ji.Horn has returned to the game. [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q3 11:02 (-8 yds) Fumble Recovery (Own): (Shotgun) A.Dalton Aborted. A.Corbett FUMBLES at CAR 32, recovered by CAR-A.Dalton at CAR 32.
+
+- Excluded non-zero-yard plays (up to 13 shown):
+- Q1 12:57 (4 yds) Punt: S.Martin punts 54 yards to BUF 20, Center-J.Jansen. K.Shakir ran ob at BUF 24 for 4 yards (J.Sanders). [special_teams]
+- Q1 15:00 (29 yds) Kickoff: M.Prater kicks 63 yards from BUF 35 to CAR 2. R.Dowdle to CAR 31 for 29 yards (J.Andreessen; J.Hancock). [special_teams]
+- Q1 5:58 (5 yds) Pass Incompletion: A.Dalton pass incomplete short right to B.Tremayne.PENALTY on BUF-J.Poyer, Defensive Holding, 5 yards, enforced at CAR 46 - No Play. [nullified]
+- Q1 7:14 (27 yds) Kickoff: M.Prater kicks 63 yards from BUF 35 to CAR 2. C.Hubbard to CAR 29 for 27 yards (J.Andreessen; D.Williams). [special_teams]
+- Q2 0:01 (32 yds) Field Goal Missed: R.Fitzgerald 32 yard field goal is No Good, Wide Left, Center-J.Jansen, Holder-S.Martin. [special_teams]
+- Q2 0:30 (10 yds) Sack: (Shotgun) A.Dalton sacked at BUF 31 for -12 yards (J.Bosa).PENALTY on BUF-J.Bosa, Tripping, 10 yards, enforced at BUF 19 - No Play. [nullified]
+- Q2 1:50 (26 yds) Kickoff: M.Prater kicks 60 yards from BUF 35 to CAR 5. T.Etienne to CAR 31 for 26 yards (J.Solomon). [special_teams]
+- Q2 5:51 (6 yds) Punt: S.Martin punts 50 yards to BUF 20, Center-J.Jansen. K.Coleman to BUF 26 for 6 yards (B.Martin-Scott; T.Incoom). [special_teams]
+- Q2 7:23 (26 yds) Kickoff: M.Prater kicks 64 yards from BUF 35 to CAR 1. T.Etienne to CAR 27 for 26 yards (R.Gilliam; J.Solomon). [special_teams]
+- Q2 8:58 (48 yds) Field Goal Good: R.Fitzgerald 48 yard field goal is GOOD, Center-J.Jansen, Holder-S.Martin. [special_teams]
+- Q3 10:24 (4 yds) Punt: S.Martin punts 60 yards to BUF 8, Center-J.Jansen. K.Shakir ran ob at BUF 12 for 4 yards (T.Incoom). [special_teams]
+- Q3 1:19 (27 yds) Kickoff: M.Prater kicks 59 yards from BUF 35 to CAR 6. T.Etienne to CAR 33 for 27 yards (D.Williams). [special_teams]
+- Q3 4:59 (21 yds) Kickoff: M.Prater kicks 57 yards from BUF 35 to CAR 8. T.Etienne to CAR 29 for 21 yards (A.Epenesa; R.Gilliam). [special_teams]
+
+### 401772943 BAL @ MIA (TOΔ max 0, YdsΔ max 26, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| BAL | 338 | 312 | -26 | 0 | 0 | +0 | 56 | 56 | +0 |
+| MIA | 332 | 332 | +0 | 3 | 3 | +0 | 45 | 45 | +0 |
+
+**BAL Reconciliation Clues**
+
+- Excluded non-zero-yard plays (up to 7 shown):
+- Q1 12:07 (30 yds) Kickoff: R.Patterson kicks 62 yards from MIA 35 to BLT 3. R.Ali to BLT 33 for 30 yards (D.Trader). [special_teams]
+- Q2 0:41 (3 yds) Punt: J.Stout punts 63 yards to MIA 16, Center-N.Moore. M.Washington to MIA 19 for 3 yards (T.Tampa). [special_teams]
+- Q2 7:57 (24 yds) Kickoff: R.Patterson kicks 61 yards from MIA 35 to BLT 4. K.Mitchell pushed ob at BLT 28 for 24 yards (E.Bonner). [special_teams]
+- Q2 9:05 (25 yds) Punt: J.Stout punts 60 yards to MIA 26, Center-N.Moore. M.Washington to BLT 39 for 35 yards (J.Stout).PENALTY on BLT-K.Jackson, Offensive Holding, 10 yards, enforced at BLT 39. [special_teams]
+- Q3 15:00 (23 yds) Kickoff: R.Patterson kicks 56 yards from MIA 35 to BLT 9. R.Ali pushed ob at BLT 32 for 23 yards (I.Johnson). [special_teams]
+- Q4 0:32 (-1 yds) Rush: L.Jackson kneels to MIA 43 for -1 yards. [spike_kneel]
+- Q4 1:14 (-1 yds) Rush: L.Jackson kneels to MIA 42 for -1 yards. [spike_kneel]
+
+**MIA Reconciliation Clues**
+
+- Windelta counted turnovers (3):
+- Q1 9:46 (11 yds) Fumble Recovery (Opponent): (Shotgun) T.Tagovailoa pass short right to T.Washington to MIA 18 for 11 yards (A.Gilman; T.Buchanan). FUMBLES (A.Gilman), RECOVERED by BLT-A.Gilman at MIA 18. A.Gilman to MIA 7 for 11 yards (T.Washington; G.Dulcich). [fumble]
+- Q4 11:11 (0 yds) Fumble Recovery (Opponent): M.Washington right end to BLT 11 for 3 yards (T.Buchanan, M.Humphrey). FUMBLES (M.Humphrey), RECOVERED by BLT-M.Humphrey at BLT 10. [fumble]
+- Q4 6:44 (9 yds) Pass Interception Return: (Shotgun) T.Tagovailoa pass deep left intended for T.Washington INTERCEPTED by M.Starks [B.Urban] at BLT 15. M.Starks pushed ob at BLT 45 for 30 yards (M.Washington).PENALTY on BLT-K.Hamilton, Illegal Blindside Block, 12 yards, enforced at BLT 24. [interception]
+
+- Excluded non-zero-yard plays (up to 13 shown):
+- Q1 12:07 (49 yds) Field Goal Good: R.Patterson 49 yard field goal is GOOD, Center-J.Cardona, Holder-J.Bailey. [special_teams]
+- Q1 15:00 (25 yds) Kickoff: T.Loop kicks 47 yards from BLT 35 to MIA 18. D.Eskridge pushed ob at MIA 43 for 25 yards (T.Wallace). [special_teams]
+- Q1 2:40 (35 yds) Field Goal Missed: R.Patterson 35 yard field goal is No Good, Wide Right, Center-J.Cardona, Holder-J.Bailey. [special_teams]
+- Q1 2:54 (-5 yds) Penalty: (Shotgun) PENALTY on MIA-L.Borom, False Start, 5 yards, enforced at BLT 12 - No Play. [nullified]
+- Q1 8:25 (26 yds) Kickoff: T.Loop kicks 65 yards from BLT 35 to MIA 0. D.Eskridge to MIA 26 for 26 yards (K.Jackson). [special_teams]
+- Q2 10:48 (17 yds) Punt: J.Bailey punts 47 yards to BLT 6, Center-J.Cardona. L.Wester to BLT 23 for 17 yards (K.Britt). [special_teams]
+- Q2 12:03 (-15 yds) Penalty: T.Tagovailoa pass deep right to J.Waddle to BLT 7 for 36 yards (M.Starks).PENALTY on MIA-O.Gordon, Tripping, 15 yards, enforced at BLT 43 - No Play. [nullified]
+- Q2 5:12 (-5 yds) Penalty: (Shotgun) PENALTY on MIA-C.Strange, False Start, 5 yards, enforced at MIA 20 - No Play. [nullified]
+- Q2 7:57 (43 yds) Field Goal Good: R.Patterson 43 yard field goal is GOOD, Center-J.Cardona, Holder-J.Bailey. [special_teams]
+- Q3 4:15 (21 yds) Kickoff: T.Loop kicks 56 yards from BLT 35 to MIA 9. D.Eskridge to MIA 30 for 21 yards (K.Jackson). [special_teams]
+- Q3 6:34 (-10 yds) Punt: J.Bailey punts 44 yards to 50, Center-J.Cardona, downed by MIA-I.Johnson.PENALTY on BLT-K.Jackson, Offensive Holding, 10 yards, enforced at 50. [special_teams]
+- Q3 8:09 (-4 yds) Kickoff: T.Loop kicks 59 yards from BLT 35 to MIA 6. D.Eskridge to MIA 29 for 23 yards (J.Hummel).PENALTY on MIA-T.Conner, Illegal Block Above the Waist, 10 yards, enforced at MIA 23. [special_teams]
+- Q4 11:15 (11 yds) Penalty: (No Huddle, Shotgun) T.Tagovailoa pass incomplete short middle to N.Westbrook-Ikhine.PENALTY on BLT-N.Wiggins, Defensive Pass Interference, 11 yards, enforced at BLT 25 - No Play. [nullified]
+
+### 401772790 MIA @ NYJ (TOΔ max 0, YdsΔ max 25, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| MIA | 358 | 358 | +0 | 0 | 0 | +0 | 54 | 54 | +0 |
+| NYJ | 207 | 182 | -25 | 3 | 3 | +0 | 50 | 50 | +0 |
+
+**MIA Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q3 7:41 (0 yds) Fumble Recovery (Own): D.Brunskill reported in as eligible.  T.Tagovailoa FUMBLES (Aborted) at MIA 30, recovered by MIA-O.Gordon at MIA 35.
+
+- Excluded non-zero-yard plays (up to 14 shown):
+- Q1 0:20 (25 yds) Kickoff: A.McNamara kicks 57 yards from NYJ 35 to MIA 8. D.Eskridge to MIA 33 for 25 yards (F.Mauigoa; K.Herbert). [special_teams]
+- Q1 14:56 (5 yds) Penalty: PENALTY on NYJ-J.Briggs, Neutral Zone Infraction, 5 yards, enforced at MIA 31 - No Play. [nullified]
+- Q1 15:00 (26 yds) Kickoff: A.McNamara kicks 60 yards from NYJ 35 to MIA 5. D.Eskridge to MIA 31 for 26 yards (Q.Stiggers). [special_teams]
+- Q1 6:07 (-5 yds) Penalty: (Shotgun) PENALTY on MIA-M.Washington, False Start, 5 yards, enforced at NYJ 18 - No Play. [nullified]
+- Q2 0:19 (13 yds) Punt: J.Bailey punts 49 yards to NYJ 41, Center-J.Cardona. I.Williams to MIA 46 for 13 yards (C.Goode; K.Britt). [special_teams]
+- Q2 1:56 (43 yds) Field Goal Good: R.Patterson 43 yard field goal is GOOD, Center-J.Cardona, Holder-J.Bailey. [special_teams]
+- Q2 3:19 (-5 yds) Penalty: (Shotgun) PENALTY on MIA-A.Jackson, False Start, 5 yards, enforced at NYJ 21 - No Play. [nullified]
+- Q2 6:23 (15 yds) Penalty: J.Wright right end to MIA 49 for no gain (J.Johnson).PENALTY on NYJ-Q.Stiggers, Low Block, 15 yards, enforced at MIA 49 - No Play. [nullified]
+- Q3 10:44 (-10 yds) Punt: J.Bailey punts 50 yards to NYJ 37, Center-J.Cardona. I.Williams to MIA 49 for 14 yards (C.Goode; A.Davis).PENALTY on NYJ-J.Ruckert, Illegal Block Above the Waist, 10 yards, enforced at NYJ 37. [special_teams]
+- Q3 3:16 (-5 yds) Penalty: D.Brunskill reported in as eligible.  PENALTY on MIA-P.Paul, False Start, 5 yards, enforced at NYJ 37 - No Play. [nullified]
+- Q4 0:38 (-1 yds) Rush: Z.Wilson kneels to MIA 18 for -1 yards. [spike_kneel]
+- Q4 12:13 (25 yds) Kickoff: A.McNamara kicks 57 yards from NYJ 35 to MIA 8. M.Washington to MIA 33 for 25 yards (K.Herbert). [special_teams]
+- Q4 1:14 (-1 yds) Rush: Z.Wilson kneels to MIA 19 for -1 yards. [spike_kneel]
+- Q4 2:24 (53 yds) Field Goal Good: R.Patterson 53 yard field goal is GOOD, Center-J.Cardona, Holder-J.Bailey. [special_teams]
+
+**NYJ Reconciliation Clues**
+
+- Windelta counted turnovers (3):
+- Q1 7:35 (0 yds) Pass Interception Return: (Shotgun) T.Taylor pass incomplete short left to M.Taylor.Miami challenged the incomplete pass ruling, and the play was REVERSED.(Shotgun) T.Taylor pass short left intended for M.Taylor INTERCEPTED by T.Dodson at NYJ 29. T.Dodson to NYJ 29 for no gain. [interception]
+- Q2 0:37 (5 yds) Pass Interception Return: (Shotgun) B.Cook pass deep left intended for J.Metchie INTERCEPTED by R.Douglas at MIA 0. R.Douglas to MIA 5 for 5 yards (I.Davis). [interception]
+- Q4 1:19 (0 yds) Pass Interception Return: (No Huddle, Shotgun) B.Cook pass short left intended for A.Mitchell INTERCEPTED by E.Bonner at MIA -5. Touchback. [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 3 shown):
+- Q2 12:33 (-3 yds) Fumble Recovery (Own): M.Mitchell reported in as eligible.  B.Cook FUMBLES (Aborted) at NYJ 21, and recovers at NYJ 19.
+- Q2 9:53 (-4 yds) Fumble Recovery (Own): B.Cook sacked at NYJ 13 for -7 yards (C.Robinson). FUMBLES (C.Robinson) [C.Robinson], recovered by NYJ-B.Hall at NYJ 16.
+- Q3 1:07 (19 yds) Fumble Recovery (Own): (Punt formation) M.Moore FUMBLES (Aborted) at NYJ 24, recovered by NYJ-I.Davis at NYJ 24. I.Davis pushed ob at NYJ 44 for 20 yards (N.Westbrook-Ikhine).
+
+- Excluded non-zero-yard plays (up to 13 shown):
+- Q1 0:20 (78 yds) Punt Return Touchdown: J.Bailey punts 58 yards to NYJ 22, Center-J.Cardona. I.Williams for 78 yards, TOUCHDOWN. N.Folk extra point is GOOD, Center-T.Hennessy, Holder-A.McNamara. [special_teams_return]
+- Q1 12:46 (38 yds) Kickoff: R.Patterson kicks 62 yards from MIA 35 to NYJ 3. I.Williams to NYJ 41 for 38 yards (N.Westbrook-Ikhine; C.Johnson). [special_teams]
+- Q2 11:56 (15 yds) Punt:  A.McNamara punts 55 yards to MIA 26, Center-T.Hennessy. M.Washington to MIA 41 for 15 yards (K.King; T.Hennessy). [special_teams]
+- Q2 1:25 (39 yds) Penalty: (Shotgun) B.Cook pass incomplete deep left to I.Williams.PENALTY on MIA-M.Fitzpatrick, Defensive Pass Interference, 39 yards, enforced at NYJ 45 - No Play. [nullified]
+- Q2 8:24 (-5 yds) Penalty: (Shotgun) PENALTY on NYJ-J.Myers, False Start, 5 yards, enforced at NYJ 27 - No Play. [nullified]
+- Q3 15:00 (31 yds) Kickoff: R.Patterson kicks 64 yards from MIA 35 to NYJ 1. I.Williams to NYJ 32 for 31 yards (K.Britt). [special_teams]
+- Q3 1:07 (19 yds) Fumble Recovery (Own): (Punt formation) M.Moore FUMBLES (Aborted) at NYJ 24, recovered by NYJ-I.Davis at NYJ 24. I.Davis pushed ob at NYJ 44 for 20 yards (N.Westbrook-Ikhine). [special_teams]
+- Q3 8:34 (17 yds) Punt:  A.McNamara punts 54 yards to MIA 12, Center-T.Hennessy. M.Washington to MIA 29 for 17 yards (S.Smartt). [special_teams]
+- Q4 12:13 (31 yds) Field Goal Good: N.Folk 31 yard field goal is GOOD, Center-T.Hennessy, Holder-A.McNamara. [special_teams]
+- Q4 12:21 (-5 yds) Penalty: (Shotgun) PENALTY on NYJ-A.Membou, False Start, 5 yards, enforced at MIA 7 - No Play. [nullified]
+- Q4 2:24 (25 yds) Kickoff: R.Patterson kicks 58 yards from MIA 35 to NYJ 7, out of bounds.PENALTY on MIA-R.Patterson, Kickoff Out of Bounds, placed at NYJ 40. [special_teams]
+- Q4 6:12 (-10 yds) Penalty: (Shotgun) B.Cook pass incomplete short right to B.Hall.PENALTY on NYJ-J.Simpson, Offensive Holding, 10 yards, enforced at NYJ 36 - No Play. [nullified]
+- Q4 6:18 (33 yds) Kickoff: R.Patterson kicks 62 yards from MIA 35 to NYJ 3. K.Nwangwu to NYJ 36 for 33 yards (K.Britt; M.Fitzpatrick). [special_teams]
+
+### 401772813 NYJ @ MIA (TOΔ max 0, YdsΔ max 24, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| NYJ | 404 | 383 | -21 | 3 | 3 | +0 | 101 | 101 | +0 |
+| MIA | 300 | 276 | -24 | 0 | 0 | +0 | 40 | 40 | +0 |
+
+**NYJ Reconciliation Clues**
+
+- Windelta counted turnovers (3):
+- Q1 3:06 (0 yds) Fumble Recovery (Opponent): (Shotgun) M.Mitchell reported in as eligible.  B.Allen right guard to MIA 1 for 5 yards (J.Jones; A.Davis). FUMBLES (J.Jones), RECOVERED by MIA-M.Fitzpatrick at MIA 4. [fumble]
+- Q2 4:23 (4 yds) Sack Opp Fumble Recovery: (Shotgun) J.Fields sacked at MIA 47 for -11 yards (T.Dodson). FUMBLES (T.Dodson) [T.Dodson], RECOVERED by MIA-Ja.Phillips at NYJ 47. Ja.Phillips to NYJ 43 for 4 yards (A.Membou). [fumble]
+- Q3 15:00 (30 yds) Kickoff: R.Patterson kicks 59 yards from MIA 35 to NYJ 6. I.Williams to NYJ 36 for 30 yards (C.Goode, D.Trader). FUMBLES (D.Trader), RECOVERED by MIA-D.Trader at NYJ 36. [fumble]
+
+- Excluded non-zero-yard plays (up to 17 shown):
+- Q1 10:51 (15 yds) Kickoff: R.Patterson kicks 66 yards from MIA 35 to NYJ -1. I.Davis to NYJ 27 for 28 yards (T.Conner).PENALTY on NYJ-M.Robinson, Low Block, 13 yards, enforced at NYJ 27.Penalty on NYJ-M.Robinson, Illegal Block Above the Waist, declined. [special_teams]
+- Q1 3:54 (5 yds) Penalty: (Shotgun) J.Fields pass incomplete short right.PENALTY on MIA-Ja.Phillips, Illegal Use of Hands, 5 yards, enforced at MIA 15 - No Play. [nullified]
+- Q1 4:13 (-4 yds) Penalty: PENALTY on NYJ, Delay of Game, 4 yards, enforced at MIA 11 - No Play. [nullified]
+- Q2 0:00 (58 yds) Field Goal Good: N.Folk 58 yard field goal is GOOD, Center-T.Hennessy, Holder-A.McNamara. [special_teams]
+- Q2 0:10 (5 yds) Penalty: (Shotgun) J.Fields pass incomplete short left to M.Taylor.PENALTY on MIA-D.Trader, Illegal Contact, 5 yards, enforced at MIA 45 - No Play. [nullified]
+- Q2 0:46 (-5 yds) Penalty: (Shotgun) PENALTY on NYJ-A.Lazard, False Start, 5 yards, enforced at NYJ 37 - No Play. [nullified]
+- Q2 5:36 (-5 yds) Penalty: (Shotgun) PENALTY on NYJ-M.Taylor, False Start, 5 yards, enforced at MIA 39 - No Play. [nullified]
+- Q2 5:58 (5 yds) Penalty: (Shotgun) PENALTY on MIA-Z.Sieler, Neutral Zone Infraction, 5 yards, enforced at MIA 44 - No Play. [nullified]
+- Q2 6:36 (-4 yds) Penalty: M.Mitchell reported in as eligible.  J.Fields pass incomplete short right.PENALTY on NYJ, Illegal Shift, 4 yards, enforced at MIA 41 - No Play. [nullified]
+- Q2 9:20 (24 yds) Kickoff: R.Patterson kicks 63 yards from MIA 35 to NYJ 2. B.Allen to NYJ 26 for 24 yards (A.Davis). NYJ-B.Allen was injured during the play. Miami challenged the runner was down by contact ruling, and the play was Upheld. The ruling on the field stands. (Timeout #1.) [special_teams]
+- Q3 0:05 (-10 yds) Penalty: (Shotgun) J.Fields pass deep right to G.Wilson for 18 yards, TOUCHDOWN NULLIFIED by Penalty.PENALTY on NYJ-G.Wilson, Offensive Pass Interference, 10 yards, enforced at MIA 18 - No Play. [nullified]
+- Q3 11:33 (36 yds) Kickoff: R.Patterson kicks 63 yards from MIA 35 to NYJ 2. I.Davis pushed ob at NYJ 43 for 41 yards (K.Britt).PENALTY on MIA-M.Judon, Illegal Formation, 5 yards, enforced at NYJ 43. [special_teams]
+- Q3 15:00 (30 yds) Kickoff: R.Patterson kicks 59 yards from MIA 35 to NYJ 6. I.Williams to NYJ 36 for 30 yards (C.Goode, D.Trader). FUMBLES (D.Trader), RECOVERED by MIA-D.Trader at NYJ 36. [special_teams]
+- Q4 13:09 (50 yds) Field Goal Good: N.Folk 50 yard field goal is GOOD, Center-T.Hennessy, Holder-A.McNamara. [special_teams]
+- Q4 3:33 (39 yds) Kickoff: R.Patterson kicks 65 yards from MIA 35 to NYJ 0. I.Davis to NYJ 39 for 39 yards (K.Britt). [special_teams]
+- Q4 8:17 (-10 yds) Penalty: (Shotgun) J.Fields scrambles up the middle to NYJ 39 for 3 yards (M.Fitzpatrick).PENALTY on NYJ-J.Myers, Offensive Holding, 10 yards, enforced at NYJ 36 - No Play. [nullified]
+- Q4 9:01 (-5 yds) Penalty: (Shotgun) PENALTY on NYJ-J.Tippmann, False Start, 5 yards, enforced at NYJ 31 - No Play. [nullified]
+
+**MIA Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 3 shown):
+- Q2 14:21 (-4 yds) Fumble Recovery (Own): (Shotgun) T.Tagovailoa FUMBLES (Aborted) at MIA 49, touched at MIA 48, recovered by MIA-O.Gordon at 50.
+- Q4 1:49 (10 yds) Kickoff: N.Folk kicks onside 10 yards from NYJ 35 to NYJ 45. D.Waller (didn't try to advance) to NYJ 45 for no gain.
+- Q4 5:35 (3 yds) Fumble Recovery (Own): D.Achane left end to NYJ 37 for 3 yards (Q.Williams). FUMBLES (Q.Williams), recovered by MIA-P.Paul at NYJ 37.
+
+- Excluded non-zero-yard plays (up to 10 shown):
+- Q1 10:51 (47 yds) Field Goal Good: R.Patterson 47 yard field goal is GOOD, Center-J.Cardona, Holder-J.Bailey. [special_teams]
+- Q1 15:00 (34 yds) Kickoff: N.Folk kicks 65 yards from NYJ 35 to MIA 0. M.Washington to MIA 34 for 34 yards (M.Walker; I.Oliver). [special_teams]
+- Q2 2:49 (-10 yds) Penalty: (Shotgun) T.Tagovailoa pass short middle to T.Hill to NYJ 28 for 14 yards (M.Carter; J.Sherwood). NYJ-M.Carter was injured during the play. PENALTY on MIA-L.Borom, Offensive Holding, 10 yards, enforced at NYJ 42 - No Play. [nullified]
+- Q3 1:37 (18 yds) Punt: J.Bailey punts 64 yards to NYJ 19, Center-J.Cardona. I.Williams to NYJ 37 for 18 yards (D.Trader). [special_teams]
+- Q3 2:35 (5 yds) Penalty: (Shotgun) PENALTY on NYJ-J.Tufele, Encroachment, 5 yards, enforced at MIA 10 - No Play. [nullified]
+- Q3 9:17 (10 yds) Penalty: T.Tagovailoa pass incomplete short right to J.Waddle (J.Sherwood).PENALTY on NYJ-A.Gardner, Defensive Pass Interference, 10 yards, enforced at MIA 32 - No Play. [nullified]
+- Q3 9:23 (31 yds) Kickoff: N.Folk kicks 64 yards from NYJ 35 to MIA 1. M.Washington to MIA 32 for 31 yards (I.Oliver). [special_teams]
+- Q4 13:09 (31 yds) Kickoff: N.Folk kicks 62 yards from NYJ 35 to MIA 3. M.Washington pushed ob at MIA 34 for 31 yards (M.Moore). [special_teams]
+- Q4 1:49 (10 yds) Kickoff: N.Folk kicks onside 10 yards from NYJ 35 to NYJ 45. D.Waller (didn't try to advance) to NYJ 45 for no gain. [special_teams]
+- Q4 3:33 (36 yds) Field Goal Good:  R.Patterson 36 yard field goal is GOOD, Center-J.Cardona, Holder-J.Bailey. [special_teams]
+
+### 401772830 TB @ ATL (TOΔ max 0, YdsΔ max 24, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| TB | 260 | 240 | -20 | 0 | 0 | +0 | 60 | 60 | +0 |
+| ATL | 358 | 334 | -24 | 0 | 0 | +0 | 55 | 55 | +0 |
+
+**TB Reconciliation Clues**
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q1 13:14 (25 yds) Kickoff: Y.Koo kicks 44 yards from ATL 35 to TB 21, short of landing zone.PENALTY on ATL-Y.Koo, Kickoff Short of Landing Zone, placed at TB 40. [special_teams]
+- Q1 4:59 (12 yds) Punt: R.Dixon punts 61 yards to ATL 26, Center-E.Deckers. J.Agnew to ATL 38 for 12 yards (K.Kieft). [special_teams]
+- Q2 0:19 (17 yds) Punt: R.Dixon punts 62 yards to ATL 21, Center-E.Deckers. J.Agnew to ATL 38 for 17 yards (P.Durham; J.Bullock). [special_teams]
+- Q2 0:53 (18 yds) Kickoff: Y.Koo kicks 61 yards from ATL 35 to TB 4. S.Tucker to TB 22 for 18 yards (F.Franks). [special_teams]
+- Q2 10:17 (48 yds) Field Goal Good: C.McLaughlin 48 yard field goal is GOOD, Center-E.Deckers, Holder-R.Dixon. [special_teams]
+- Q2 15:00 (5 yds) Penalty: S.Tucker left end pushed ob at TB 49 for 7 yards (M.Hughes).PENALTY on ATL-J.Pearce, Defensive Offside, 5 yards, enforced at TB 42 - No Play. [nullified]
+- Q3 0:20 (28 yds) Kickoff: Y.Koo kicks 66 yards from ATL 35 to TB -1. S.Tucker to TB 27 for 28 yards (J.Walker). [special_teams]
+- Q3 11:46 (44 yds) Field Goal Missed: C.McLaughlin 44 yard field goal is No Good, Wide Left, Center-E.Deckers, Holder-R.Dixon. [special_teams]
+- Q4 0:02 (-1 yds) Rush:  B.Mayfield kneels to TB 33 for -1 yards. [spike_kneel]
+- Q4 1:10 (15 yds) Penalty: (No Huddle, Shotgun) B.Mayfield pass incomplete short left.PENALTY on ATL-R.Orhorhoro, Roughing the Passer, 15 yards, enforced at ATL 40 - No Play. [nullified]
+- Q4 2:17 (35 yds) Kickoff: Y.Koo kicks 63 yards from ATL 35 to TB 2. S.Tucker to TB 37 for 35 yards (Y.Koo). [special_teams]
+
+**ATL Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q1 11:46 (-4 yds) Fumble Recovery (Own): (Shotgun) M.Penix FUMBLES (Aborted) at ATL 17, recovered by ATL-B.Robinson at ATL 19.
+
+- Excluded non-zero-yard plays (up to 16 shown):
+- Q1 12:11 (5 yds) Penalty: (Shotgun) B.Robinson up the middle to ATL 24 for 6 yards (L.David; T.Smith).PENALTY on TB-H.Reddick, Defensive Offside, 5 yards, enforced at ATL 18 - No Play. [nullified]
+- Q1 15:00 (29 yds) Kickoff: C.McLaughlin kicks 59 yards from TB 35 to ATL 6. J.Agnew to ATL 35 for 29 yards (R.Miller). [special_teams]
+- Q2 0:03 (-1 yds) Rush: M.Penix kneels to ATL 37 for -1 yards. [spike_kneel]
+- Q2 0:53 (41 yds) Field Goal Good: Y.Koo 41 yard field goal is GOOD, Center-L.McCullough, Holder-B.Pinion. [special_teams]
+- Q2 10:10 (15 yds) Penalty: (Shotgun) M.Penix sacked at ATL 15 for -14 yards (Y.Diaby).PENALTY on TB-J.Dean, Face Mask, 15 yards, enforced at ATL 29 - No Play. [nullified]
+- Q2 10:17 (21 yds) Kickoff: C.McLaughlin kicks 57 yards from TB 35 to ATL 8. N.Brooks to ATL 29 for 21 yards (A.Nelson; J.Parrish). [special_teams]
+- Q2 6:53 (28 yds) Kickoff: C.McLaughlin kicks 63 yards from TB 35 to ATL 2. J.Agnew to ATL 30 for 28 yards (R.Wisdom; D.Jones). [special_teams]
+- Q3 0:20 (36 yds) Field Goal Good: Y.Koo 36 yard field goal is GOOD, Center-L.McCullough, Holder-B.Pinion. [special_teams]
+- Q3 10:34 (-5 yds) Penalty: (Shotgun) M.Penix pass short middle to K.Pitts to ATL 44 for 12 yards (A.Winfield).PENALTY on ATL-K.Pitts, Illegal Shift, 5 yards, enforced at ATL 32 - No Play. [nullified]
+- Q3 4:52 (-5 yds) Penalty: (Shotgun) PENALTY on ATL-E.Wilkinson, False Start, 5 yards, enforced at TB 38 - No Play. [nullified]
+- Q3 7:13 (-5 yds) Penalty: (Shotgun) PENALTY on ATL-E.Wilkinson, False Start, 5 yards, enforced at ATL 29 - No Play. [nullified]
+- Q3 7:26 (25 yds) Kickoff: C.McLaughlin kicks 61 yards from TB 35 to ATL 4. N.Brooks to ATL 29 for 25 yards (R.Miller; R.Wisdom). [special_teams]
+- Q3 9:56 (54 yds) Punt: B.Pinion punts 59 yards to TB 14, Center-L.McCullough. K.Johnson to ATL 32 for 54 yards (B.Pinion). [special_teams]
+- Q4 0:06 (44 yds) Field Goal Missed:  Y.Koo 44 yard field goal is No Good, Wide Right, Center-L.McCullough, Holder-B.Pinion. [special_teams]
+- Q4 0:59 (12 yds) Kickoff: C.McLaughlin kicks 63 yards from TB 35 to ATL 2. N.Brooks to ATL 24 for 22 yards (J.Bullock; A.Nelson).PENALTY on ATL-K.Hodge, Illegal Block Above the Waist, 10 yards, enforced at ATL 24. [special_teams]
+- Q4 9:08 (15 yds) Penalty: (Shotgun) M.Penix pass incomplete deep right to R.McCloud.PENALTY on TB-V.Vea, Roughing the Passer, 15 yards, enforced at ATL 23 - No Play. [nullified]
+
+### 401772892 NO @ MIA (TOΔ max 0, YdsΔ max 24, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| NO | 294 | 293 | -1 | 2 | 2 | +0 | 45 | 45 | +0 |
+| MIA | 298 | 274 | -24 | 1 | 1 | +0 | 15 | 15 | +0 |
+
+**NO Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q2 12:37 (5 yds) Sack Opp Fumble Recovery: (No Huddle, Shotgun) T.Shough sacked at NO 41 for -10 yards (M.Fitzpatrick). FUMBLES (M.Fitzpatrick) [M.Fitzpatrick], RECOVERED by MIA-Z.Sieler at NO 42. Z.Sieler to NO 37 for 5 yards (D.Vele). [fumble]
+- Q2 1:16 (38 yds) Pass Interception Return: (Shotgun) T.Shough pass short left intended for C.Olave INTERCEPTED by R.Douglas at MIA 20. R.Douglas to NO 42 for 38 yards (D.Radunz). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q4 1:17 (15 yds) Passing Touchdown: (No Huddle, Shotgun) T.Shough pass short right to D.Vele for 15 yards, TOUCHDOWN. TWO-POINT CONVERSION ATTEMPT. T.Shough pass to D.Vele is intercepted. ATTEMPT FAILS. DEFENSIVE TWO-POINT ATTEMPT. M.Fitzpatrick intercepted the try attempt. ATTEMPT SUCCEEDS.
+- Q4 1:17 (10 yds) Kickoff: C.Smyth kicks onside 10 yards from NO 35 to NO 45. RECOVERED by NO-D.Vele.The Replay Official reviewed the kick touched ruling, and the play was Upheld. The ruling on the field stands.
+
+- Excluded non-zero-yard plays (up to 14 shown):
+- Q1 11:19 (23 yds) Kickoff: R.Patterson kicks 61 yards from MIA 35 to NO 4. D.Pettis to NO 27 for 23 yards (E.Campbell; E.Bonner). [special_teams]
+- Q2 11:43 (-15 yds) Punt: K.Kroeger punts 46 yards to MIA 34, Center-Z.Wood, downed by NO-M.Davis.PENALTY on NO-M.Davis, Kick Catch Interference, 15 yards, enforced at MIA 34. [special_teams]
+- Q2 14:09 (36 yds) Kickoff: R.Patterson kicks 63 yards from MIA 35 to NO 2. M.Tipton ran ob at NO 38 for 36 yards (R.Patterson). [special_teams]
+- Q2 2:00 (5 yds) Penalty: (Shotgun) PENALTY on MIA-C.Robinson, Neutral Zone Infraction, 5 yards, enforced at MIA 45 - No Play. [nullified]
+- Q2 6:07 (24 yds) Kickoff: R.Patterson kicks 61 yards from MIA 35 to NO 4. D.Pettis to NO 28 for 24 yards (D.Trader). [special_teams]
+- Q3 10:45 (-5 yds) Penalty: (Shotgun) PENALTY on NO-D.Radunz, False Start, 5 yards, enforced at MIA 12 - No Play. [nullified]
+- Q3 6:19 (-5 yds) Penalty: (Shotgun) PENALTY on NO-K.Banks, False Start, 5 yards, enforced at NO 45 - No Play. [nullified]
+- Q3 8:19 (-5 yds) Penalty: (Shotgun) PENALTY on NO-F.Moreau, False Start, 5 yards, enforced at NO 12 - No Play. [nullified]
+- Q4 13:33 (5 yds) Punt: K.Kroeger punts 48 yards to MIA 42, Center-Z.Wood. M.Washington to MIA 47 for 5 yards (I.Yiadom). [special_teams]
+- Q4 1:17 (-5 yds) Penalty:  PENALTY on NO-T.Fuaga, False Start, 5 yards, enforced at MIA 2 - No Play. [nullified]
+- Q4 1:17 (10 yds) Kickoff: C.Smyth kicks onside 10 yards from NO 35 to NO 45. RECOVERED by NO-D.Vele.The Replay Official reviewed the kick touched ruling, and the play was Upheld. The ruling on the field stands. [special_teams]
+- Q4 2:37 (-10 yds) Penalty: (No Huddle, Shotgun) T.Shough pass incomplete short right to D.Vele.PENALTY on NO-T.Fuaga, Offensive Holding, 10 yards, enforced at MIA 43 - No Play. [nullified]
+- Q4 6:08 (56 yds) Field Goal Good: C.Smyth 56 yard field goal is GOOD, Center-Z.Wood, Holder-K.Kroeger. [special_teams]
+- Q4 9:39 (22 yds) Kickoff: R.Patterson kicks 61 yards from MIA 35 to NO 4. M.Tipton to NO 26 for 22 yards (N.Westbrook-Ikhine). [special_teams]
+
+**MIA Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q2 12:31 (0 yds) Pass Interception Return: (Shotgun) D.Brunskill reported in as eligible.  T.Tagovailoa pass deep left intended for J.Waddle INTERCEPTED by K.McKinstry at NO -2. Touchback. [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q1 12:16 (19 yds) Fumble Recovery (Own): (Shotgun) T.Tagovailoa to MIA 47 for -5 yards. FUMBLES, and recovers at MIA 47. T.Tagovailoa pass short middle to M.Washington to NO 29 for 19 yards (A.Taylor). ** Injury Update: NO-J.Reid has returned to the game.
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q1 15:00 (25 yds) Kickoff: C.Smyth kicks 59 yards from NO 35 to MIA 6. M.Washington to MIA 31 for 25 yards (C.Rumph). [special_teams]
+- Q1 4:18 (5 yds) Punt: J.Bailey punts 49 yards to NO 39, Center-J.Cardona. D.Pettis pushed ob at NO 44 for 5 yards (E.Campbell). [special_teams]
+- Q1 5:10 (-5 yds) Penalty: (Shotgun) PENALTY on MIA, Offensive Too Many Men on Field, 5 yards, enforced at MIA 21 - No Play. [nullified]
+- Q1 8:13 (7 yds) Punt: J.Bailey punts 53 yards to NO 27, Center-J.Cardona. D.Pettis to NO 34 for 7 yards (C.Johnson). [special_teams]
+- Q2 0:00 (48 yds) Field Goal Good:  R.Patterson 48 yard field goal is GOOD, Center-J.Cardona, Holder-J.Bailey. [special_teams]
+- Q2 14:09 (39 yds) Field Goal Good: R.Patterson 39 yard field goal is GOOD, Center-J.Cardona, Holder-J.Bailey. [special_teams]
+- Q2 6:07 (25 yds) Field Goal Good:  R.Patterson 25 yard field goal is GOOD, Center-J.Cardona, Holder-J.Bailey. [special_teams]
+- Q3 10:40 (20 yds) Kickoff: C.Smyth kicks 58 yards from NO 35 to MIA 7. M.Washington to MIA 27 for 20 yards (I.Yiadom). [special_teams]
+- Q4 0:26 (-1 yds) Rush:  T.Tagovailoa kneels to MIA 33 for -1 yards. [spike_kneel]
+- Q4 0:29 (-1 yds) Rush:  T.Tagovailoa kneels to MIA 34 for -1 yards. [spike_kneel]
+- Q4 9:39 (33 yds) Field Goal Good:  R.Patterson 33 yard field goal is GOOD, Center-J.Cardona, Holder-J.Bailey. [special_teams]
+
+### 401772889 ATL @ NO (TOΔ max 0, YdsΔ max 22, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| ATL | 302 | 303 | +1 | 1 | 1 | +0 | 82 | 82 | +0 |
+| NO | 293 | 271 | -22 | 2 | 2 | +0 | 36 | 36 | +0 |
+
+**ATL Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q2 6:41 (49 yds) Interception Return Touchdown: (Shotgun) K.Cousins pass short right intended for K.Pitts INTERCEPTED by J.Reid (K.McKinstry) at ATL 49. J.Reid for 49 yards, TOUCHDOWN. B.Grupe extra point is GOOD, Center-Z.Wood, Holder-K.Kroeger. [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q1 6:02 (-8 yds) Fumble Recovery (Own): (Shotgun) K.Cousins sacked at ATL 38 for -7 yards (C.Jordan). FUMBLES (C.Jordan), recovered by ATL-E.Wilkinson at ATL 37.
+
+- Excluded non-zero-yard plays (up to 14 shown):
+- Q1 10:42 (56 yds) Field Goal Good: Z.Gonzalez 56 yard field goal is GOOD, Center-L.McCullough, Holder-B.Pinion. [special_teams]
+- Q1 13:30 (11 yds) Punt: B.Pinion punts 41 yards to NO 31, Center-L.McCullough. D.Pettis ran ob at NO 42 for 11 yards (D.Hellams; T.Allgeier). [special_teams]
+- Q1 15:00 (25 yds) Kickoff: B.Grupe kicks 64 yards from NO 35 to ATL 1. D.Drummond to ATL 26 for 25 yards (J.Ford; I.Stalbird). [special_teams]
+- Q1 5:13 (-7 yds) Punt: B.Pinion punts 48 yards to NO 15, Center-L.McCullough. D.Pettis to NO 17 for 2 yards (T.Allgeier).PENALTY on NO-J.Howden, Offensive Holding, 7 yards, enforced at NO 15. [special_teams]
+- Q1 6:18 (-5 yds) Penalty: (Shotgun) PENALTY on ATL-E.Wilkinson, False Start, 5 yards, enforced at 50 - No Play. [nullified]
+- Q1 6:41 (-4 yds) Penalty: PENALTY on ATL-T.Quitoriano, False Start, 4 yards, enforced at NO 46 - No Play. [nullified]
+- Q2 0:00 (54 yds) Field Goal Good: Z.Gonzalez 54 yard field goal is GOOD, Center-L.McCullough, Holder-B.Pinion. [special_teams]
+- Q2 0:20 (-5 yds) Penalty: (Shotgun) PENALTY on ATL-E.Wilkinson, False Start, 5 yards, enforced at NO 40 - No Play. [nullified]
+- Q2 1:56 (41 yds) Field Goal Good: Z.Gonzalez 41 yard field goal is GOOD, Center-L.McCullough, Holder-B.Pinion.Penalty on NO-I.Stalbird, Defensive Offside, declined. [special_teams]
+- Q2 6:41 (35 yds) Kickoff: B.Grupe kicks 64 yards from NO 35 to ATL 1. J.Agnew to ATL 36 for 35 yards (T.Burgess; I.Stalbird). [special_teams]
+- Q3 5:46 (-1 yds) Punt: B.Pinion punts 47 yards to NO 42, Center-L.McCullough. D.Pettis to NO 41 for -1 yards (M.Ford). [special_teams]
+- Q4 0:10 (-1 yds) Rush: K.Cousins kneels to ATL 19 for -1 yards. [spike_kneel]
+- Q4 12:13 (24 yds) Kickoff: B.Grupe kicks 57 yards from NO 35 to ATL 8. J.Agnew to ATL 47 for 39 yards (I.Yiadom).PENALTY on ATL-F.Franks, Taunting, 15 yards, enforced at ATL 47. [special_teams]
+- Q4 3:09 (-5 yds) Penalty: (Field Goal formation) PENALTY on ATL, Delay of Game, 5 yards, enforced at NO 38 - No Play. [nullified]
+
+**NO Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q1 13:00 (2 yds) Fumble Recovery (Opponent): (No Huddle, Shotgun) T.Shough FUMBLES (Aborted) at NO 39, touched at NO 42, RECOVERED by ATL-D.Alford at NO 41. D.Alford to NO 39 for 2 yards (T.Shough). [fumble]
+- Q4 0:16 (0 yds) Pass Interception Return: (No Huddle, Shotgun) T.Shough pass deep left intended for C.Olave INTERCEPTED by X.Watts at ATL -8. Touchback. [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 12:22 (-28 yds) Fumble Recovery (Own): (Shotgun) Direct snap to T.Hill.  T.Hill to ATL 5 for -4 yards. FUMBLES, and recovers at ATL 12. T.Hill pass incomplete short left.PENALTY on NO-T.Hill, Intentional Grounding, 14 yards, enforced at ATL 1.
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q1 10:42 (75 yds) Kickoff: Z.Gonzalez kicks 56 yards from ATL 35 to NO 9. M.Tipton to ATL 16 for 75 yards (D.Hellams). [special_teams]
+- Q1 8:35 (38 yds) Field Goal Missed: B.Grupe 38 yard field goal is No Good, Wide Right, Center-Z.Wood, Holder-K.Kroeger. [special_teams]
+- Q2 0:56 (47 yds) Field Goal Missed: B.Grupe 47 yard field goal is No Good, Wide Right, Center-Z.Wood, Holder-K.Kroeger. [special_teams]
+- Q2 11:31 (25 yds) Kickoff: Z.Gonzalez kicks 61 yards from ATL 35 to NO 4. D.Pettis to NO 29 for 25 yards (T.Allgeier; D.Hellams). [special_teams]
+- Q2 9:05 (5 yds) Punt: K.Kroeger punts 35 yards to ATL 14, Center-Z.Wood. J.Agnew to ATL 19 for 5 yards (M.Davis). [special_teams]
+- Q3 0:20 (-5 yds) Penalty: (Shotgun) PENALTY on NO-C.Ruiz, False Start, 5 yards, enforced at ATL 18 - No Play. [nullified]
+- Q3 15:00 (23 yds) Kickoff: Z.Gonzalez kicks 63 yards from ATL 35 to NO 2. D.Pettis to NO 25 for 23 yards (M.Ford). [special_teams]
+- Q3 1:02 (13 yds) Penalty: (Shotgun) T.Shough pass incomplete deep left to C.Olave.PENALTY on ATL-A.Terrell, Defensive Pass Interference, 13 yards, enforced at ATL 29 - No Play. [nullified]
+- Q3 9:21 (12 yds) Penalty: (Shotgun) T.Shough pass incomplete deep left to J.Johnson.PENALTY on ATL-X.Watts, Defensive Pass Interference, 12 yards, enforced at ATL 20 - No Play. [nullified]
+- Q4 12:13 (33 yds) Field Goal Good: B.Grupe 33 yard field goal is GOOD, Center-Z.Wood, Holder-K.Kroeger. [special_teams]
+- Q4 9:32 (-10 yds) Punt: K.Kroeger punts 32 yards to ATL 37, Center-Z.Wood, out of bounds.PENALTY on ATL-C.Bryant, Offensive Holding, 10 yards, enforced at ATL 37. [special_teams]
+
+### 401772754 MIA @ CLE (TOΔ max 0, YdsΔ max 21, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| MIA | 219 | 198 | -21 | 4 | 4 | +0 | 103 | 103 | +0 |
+| CLE | 206 | 206 | +0 | 0 | 0 | +0 | 37 | 37 | +0 |
+
+**MIA Reconciliation Clues**
+
+- Windelta counted turnovers (4):
+- Q2 11:19 (0 yds) Kickoff: A.Szmyt kicks 57 yards from CLV 35 to MIA 8. D.Eskridge to MIA 31 for 23 yards (G.Delpit). FUMBLES (G.Delpit), touched at MIA 33, RECOVERED by CLV-R.Jenkins at MIA 46. [fumble]
+- Q3 14:48 (34 yds) Interception Return Touchdown: (Shotgun) T.Tagovailoa pass short left intended for D.Achane INTERCEPTED by T.Campbell at MIA 34. T.Campbell for 34 yards, TOUCHDOWN. A.Szmyt extra point is GOOD, Center-R.Sunahara, Holder-C.Bojorquez. [interception]
+- Q4 10:08 (16 yds) Pass Interception Return:  (Shotgun) T.Tagovailoa pass deep middle intended for T.Conner INTERCEPTED by R.Hickman at CLV 42. R.Hickman to MIA 42 for 16 yards (N.Westbrook-Ikhine).
+Penalty on MIA-P.Paul, Offensive Holding, declined. [interception]
+- Q4 11:06 (9 yds) Pass Interception Return: (Shotgun) T.Tagovailoa pass short middle intended for J.Hill INTERCEPTED by R.Jenkins [G.Delpit] at MIA 11. R.Jenkins to MIA 2 for 9 yards (D.Achane). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 5 shown):
+- Q1 10:25 (-5 yds) Fumble Recovery (Own): (Shotgun) T.Tagovailoa FUMBLES (Aborted) at MIA 27, recovered by MIA-D.Achane at MIA 27.
+- Q2 1:06 (-9 yds) Fumble Recovery (Own): (Shotgun) T.Tagovailoa FUMBLES (Aborted) at CLV 17, and recovers at CLV 21.
+- Q2 4:17 (0 yds) Fumble Recovery (Own): (Shotgun) T.Tagovailoa to MIA 42 for -4 yards. FUMBLES, and recovers at MIA 42. T.Tagovailoa pass incomplete short right to M.Washington (M.Graham).
+- Q4 1:46 (-10 yds) Fumble Recovery (Own): (Shotgun) Q.Ewers sacked at CLV 44 for -10 yards (J.Baker). FUMBLES (J.Baker), recovered by MIA-L.Borom at CLV 44.
+- Q4 7:28 (-3 yds) Fumble Recovery (Own): (Shotgun) Q.Ewers FUMBLES (Aborted) at MIA 14, and recovers at MIA 14. Q.Ewers to MIA 15 for 1 yard (M.Graham).
+
+- Excluded non-zero-yard plays (up to 15 shown):
+- Q1 2:17 (24 yds) Kickoff: A.Szmyt kicks 66 yards from CLV 35 to MIA -1. M.Washington to MIA 23 for 24 yards (M.Harden). [special_teams]
+- Q1 9:11 (7 yds) Punt: J.Bailey punts 50 yards to CLV 24, Center-J.Cardona. G.Larvadain to CLV 31 for 7 yards (J.Cardona). [special_teams]
+- Q2 0:00 (26 yds) Field Goal Good: R.Patterson 26 yard field goal is GOOD, Center-J.Cardona, Holder-J.Bailey. [special_teams]
+- Q2 14:14 (33 yds) Field Goal Good:  R.Patterson 33 yard field goal is GOOD, Center-J.Cardona, Holder-J.Bailey. [special_teams]
+- Q2 1:10 (43 yds) Field Goal Missed: R.Patterson 43 yard field goal is No Good, Hit Left Upright, Center-J.Cardona, Holder-J.Bailey.PENALTY on CLV-S.Harris, Unnecessary Roughness, 12 yards, enforced at CLV 24 - No Play. [nullified]
+- Q2 2:53 (-5 yds) Penalty: PENALTY on MIA-L.Borom, False Start, 5 yards, enforced at CLV 40 - No Play. [nullified]
+- Q2 5:07 (5 yds) Pass Incompletion: (Shotgun) T.Tagovailoa pass incomplete deep middle to N.Westbrook-Ikhine.PENALTY on CLV-M.Harden, Illegal Contact, 5 yards, enforced at MIA 44 - No Play. [nullified]
+- Q2 5:58 (-5 yds) Penalty: PENALTY on MIA-D.Waller, False Start, 5 yards, enforced at MIA 47 - No Play. [nullified]
+- Q2 6:03 (40 yds) Kickoff: A.Szmyt kicks 58 yards from CLV 35 to MIA 7. M.Washington to MIA 47 for 40 yards (G.Delpit; R.Jenkins). [special_teams]
+- Q3 12:43 (-15 yds) Punt:  J.Bailey punts 48 yards to CLV 41, Center-J.Cardona. G.Larvadain to CLV 41 for no gain (E.Bonner).
+PENALTY on MIA-D.Eskridge, Unnecessary Roughness, 15 yards, enforced at CLV 41.
+Penalty on MIA-E.Bonner, Player Out of Bounds on Kick, declined. [special_teams]
+- Q3 14:48 (12 yds) Kickoff: A.Szmyt kicks 59 yards from CLV 35 to MIA 6. M.Washington to MIA 42 for 36 yards (R.Jenkins).PENALTY on MIA-I.Melifonwu, Offensive Holding, 10 yards, enforced at MIA 30. [special_teams]
+- Q3 15:00 (26 yds) Kickoff: A.Szmyt kicks 61 yards from CLV 35 to MIA 4. M.Washington to MIA 30 for 26 yards (C.Schwesinger; J.Baker). [special_teams]
+- Q4 0:55 (-5 yds) Penalty: (Shotgun) PENALTY on MIA, Delay of Game, 5 yards, enforced at CLV 44 - No Play. [nullified]
+- Q4 10:56 (27 yds) Kickoff: A.Szmyt kicks 63 yards from CLV 35 to MIA 2. D.Eskridge to MIA 29 for 27 yards (D.McMillon). [special_teams]
+- Q4 11:50 (-4 yds) Penalty: PENALTY on MIA-D.Achane, False Start, 4 yards, enforced at MIA 7 - No Play. [nullified]
+
+**CLE Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q2 11:34 (0 yds) Pass Interception Return: (Shotgun) D.Gabriel pass deep left intended for H.Fannin INTERCEPTED by A.Davis at MIA 44. A.Davis to MIA 44 for no gain (H.Fannin).PENALTY on MIA-M.Fitzpatrick, Defensive Pass Interference, 14 yards, enforced at CLV 40 - No Play.
+- Q3 11:25 (4 yds) Fumble Recovery (Own): (Shotgun) D.Gabriel pass short right to B.Whiteheart to MIA 38 for 4 yards. FUMBLES, and recovers at MIA 38.
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q1 12:47 (-10 yds) Punt: C.Bojorquez punts 60 yards to end zone, Center-R.Sunahara, Touchback.PENALTY on MIA-J.Brents, Offensive Holding, 10 yards, enforced at MIA 20. [special_teams]
+- Q1 15:00 (27 yds) Kickoff: R.Patterson kicks 59 yards from MIA 35 to CLV 6. D.Sampson to CLV 33 for 27 yards (M.Fitzpatrick). [special_teams]
+- Q1 2:17 (30 yds) Field Goal Good: A.Szmyt 30 yard field goal is GOOD, Center-R.Sunahara, Holder-C.Bojorquez. [special_teams]
+- Q1 5:12 (15 yds) Pass Incompletion: L.Wypler reported in as eligible.  D.Gabriel pass incomplete short middle.PENALTY on MIA-Z.Sieler, Roughing the Passer, 15 yards, enforced at CLV 46 - No Play. [nullified]
+- Q1 7:22 (5 yds) Pass Incompletion: (Shotgun) D.Gabriel pass incomplete short left to J.Thrash.PENALTY on MIA-C.Robinson, Illegal Contact, 5 yards, enforced at CLV 27 - No Play. [nullified]
+- Q1 7:39 (-5 yds) Penalty: (Shotgun) PENALTY on CLV-C.Lucas, False Start, 5 yards, enforced at CLV 32 - No Play. [nullified]
+- Q2 14:14 (10 yds) Kickoff: R.Patterson kicks 60 yards from MIA 35 to CLV 5. D.Sampson MUFFS catch, and recovers at CLV 7. D.Sampson to CLV 17 for 10 yards (C.Goode). [special_teams]
+- Q2 3:03 (11 yds) Punt: C.Bojorquez punts 50 yards to MIA 49, Center-R.Sunahara. M.Washington to CLV 40 for 11 yards (R.Sunahara; E.Mascarenas-Arnold). [special_teams]
+- Q4 0:37 (-1 yds) Rush: D.Gabriel kneels to MIA 42 for -1 yards. [spike_kneel]
+- Q4 14:22 (-10 yds) Rush: L.Wypler reported in as eligible.  Q.Judkins left tackle to MIA 29 for 6 yards (A.Davis).PENALTY on CLV-L.Wypler, Offensive Holding, 10 yards, enforced at MIA 35 - No Play. [nullified]
+- Q4 8:24 (-5 yds) Penalty: (Shotgun) PENALTY on CLV, Delay of Game, 5 yards, enforced at MIA 38 - No Play. [nullified]
+
+### 401772633 MIN @ CLE (TOΔ max 0, YdsΔ max 20, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| MIN | 349 | 329 | -20 | 2 | 2 | +0 | 50 | 50 | +0 |
+| CLE | 322 | 302 | -20 | 0 | 0 | +0 | 78 | 78 | +0 |
+
+**MIN Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q1 10:24 (0 yds) Fumble Recovery (Opponent): J.Mason right guard to MIN 44 for 2 yards (A.Wright; G.Newsome). FUMBLES (A.Wright), RECOVERED by CLV-G.Delpit at MIN 47. [fumble]
+- Q4 14:05 (-15 yds) Fumble Recovery (Opponent): Z.Scott right guard to CLV 45 for -3 yards (I.McGuire, S.Harris). FUMBLES (I.McGuire), RECOVERED by CLV-M.Diabate at CLV 45.PENALTY on CLV-S.Harris, Unnecessary Roughness, 15 yards, enforced at CLV 45. [fumble]
+
+- Excluded non-zero-yard plays (up to 14 shown):
+- Q1 3:53 (-5 yds) Pass Incompletion: (Shotgun) C.Wentz pass incomplete short left to J.Jefferson.PENALTY on MIN-J.Oliver, Offensive Offside, 5 yards, enforced at MIN 48 - No Play. [nullified]
+- Q1 6:14 (-5 yds) Penalty: (No Huddle) PENALTY on MIN-J.Huber, False Start, 5 yards, enforced at MIN 25 - No Play. [nullified]
+- Q1 6:49 (14 yds) Kickoff: A.Szmyt kicks 61 yards from CLV 35 to MIN 4. M.Price to MIN 28 for 24 yards (E.Mascarenas-Arnold; R.Jenkins).PENALTY on MIN-K.King, Offensive Holding, 10 yards, enforced at MIN 28. [special_teams]
+- Q2 0:03 (-1 yds) Rush: (Shotgun) M.Brosmer kneels to MIN 20 for -1 yards. [spike_kneel]
+- Q2 0:09 (10 yds) Kickoff: A.Szmyt kicks 61 yards from CLV 35 to MIN 4. M.Price to MIN 41 for 37 yards (R.Jenkins; M.Corley).PENALTY on MIN-K.King, Offensive Holding, 10 yards, enforced at MIN 31. [special_teams]
+- Q2 12:38 (5 yds) Pass Incompletion: (Shotgun) C.Wentz pass incomplete short right to T.Hockenson (G.Delpit).PENALTY on CLV-D.Ward, Illegal Contact, 5 yards, enforced at MIN 38 - No Play. [nullified]
+- Q2 2:41 (16 yds) Punt: R.Wright punts 63 yards to CLV 18, Center-A.DePaola. G.Larvadain ran ob at CLV 34 for 16 yards (C.Ham; B.Richter). [special_teams]
+- Q2 6:26 (3 yds) Punt: R.Wright punts 54 yards to CLV 23, Center-A.DePaola. G.Larvadain to CLV 26 for 3 yards (A.Keys). [special_teams]
+- Q3 14:08 (12 yds) Pass Incompletion: (Shotgun) C.Wentz pass incomplete short left to J.Jefferson.PENALTY on CLV-G.Newsome, Defensive Pass Interference, 12 yards, enforced at MIN 32 - No Play. [nullified]
+- Q3 15:00 (26 yds) Kickoff: A.Szmyt kicks 62 yards from CLV 35 to MIN 3. M.Price to MIN 29 for 26 yards (J.Tryon). [special_teams]
+- Q3 1:10 (-1 yds) Punt: R.Wright punts 77 yards to CLV 2, Center-A.DePaola, downed by MIN-T.Thomas.PENALTY on CLV-T.Avery, Offensive Holding, 1 yard, enforced at CLV 2. [special_teams]
+- Q3 3:05 (25 yds) Kickoff: A.Szmyt kicks 64 yards from CLV 35 to MIN 1. M.Price to MIN 26 for 25 yards (C.Schwesinger; A.Huntington). [special_teams]
+- Q4 3:38 (12 yds) Punt: R.Wright punts 53 yards to CLV 29, Center-A.DePaola. G.Larvadain pushed ob at CLV 41 for 12 yards (B.Richter; Z.Scott). [special_teams]
+- Q4 9:46 (51 yds) Field Goal Missed: W.Reichard 51 yard field goal is No Good, Wide Right, Center-A.DePaola, Holder-R.Wright. [special_teams]
+
+**CLE Reconciliation Clues**
+
+- Excluded non-zero-yard plays (up to 13 shown):
+- Q1 0:34 (-10 yds) Rush: Q.Judkins left guard for 56 yards, TOUCHDOWN NULLIFIED by Penalty.Penalty on CLV-I.Bond, Offensive Holding, declined.PENALTY on CLV-H.Fannin, Offensive Holding, 10 yards, enforced at CLV 44 - No Play. [nullified]
+- Q1 15:00 (25 yds) Kickoff: W.Reichard kicks 42 yards from MIN 35 to CLV 23, short of landing zone.PENALTY on MIN-W.Reichard, Kickoff Short of Landing Zone, placed at CLV 40. [special_teams]
+- Q1 2:30 (26 yds) Kickoff: W.Reichard kicks 57 yards from MIN 35 to CLV 8. J.Ford to CLV 34 for 26 yards (T.Thomas; I.Pace). [special_teams]
+- Q2 0:09 (31 yds) Field Goal Good: A.Szmyt 31 yard field goal is GOOD, Center-R.Sunahara, Holder-C.Bojorquez. [special_teams]
+- Q2 0:16 (-5 yds) Penalty: (Shotgun) PENALTY on CLV-K.Leveston, False Start, 5 yards, enforced at MIN 8 - No Play. [nullified]
+- Q2 15:00 (-5 yds) Penalty: (Shotgun) PENALTY on CLV-C.Robinson, False Start, 5 yards, enforced at CLV 39 - No Play. [nullified]
+- Q2 8:49 (-10 yds) Punt: C.Bojorquez punts 57 yards to MIN 24, Center-R.Sunahara. M.Price to MIN 32 for 8 yards (R.Sunahara; E.Mascarenas-Arnold).PENALTY on MIN-T.Felton, Offensive Holding, 10 yards, enforced at MIN 24. [special_teams]
+- Q3 11:05 (-5 yds) Rush: Q.Judkins left tackle to CLV 42 for 11 yards (B.Murphy).PENALTY on CLV-J.Conklin, Illegal Formation, 5 yards, enforced at CLV 31 - No Play. [nullified]
+- Q3 11:11 (26 yds) Kickoff: W.Reichard kicks 60 yards from MIN 35 to CLV 5. J.Ford to CLV 31 for 26 yards (K.King). [special_teams]
+- Q4 0:25 (26 yds) Kickoff: W.Reichard kicks 62 yards from MIN 35 to CLV 3. J.Ford to CLV 29 for 26 yards (K.King; T.Thomas). [special_teams]
+- Q4 14:17 (12 yds) Punt: C.Bojorquez punts 44 yards to MIN 46, Center-R.Sunahara. M.Price to CLV 42 for 12 yards (R.Sunahara; T.Avery). [special_teams]
+- Q4 3:16 (3 yds) Punt: C.Bojorquez punts 43 yards to MIN 17, Center-R.Sunahara. M.Price to MIN 20 for 3 yards (D.McMillon; T.Avery). [special_teams]
+- Q4 9:41 (-10 yds) Rush: Q.Judkins right tackle to CLV 40 for -1 yards (J.Hargrave, I.Pace).PENALTY on CLV-K.Leveston, Offensive Holding, 10 yards, enforced at CLV 41 - No Play. [nullified]
+
+### 401772635 LAR @ JAX (TOΔ max 0, YdsΔ max 20, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| LAR | 271 | 271 | +0 | 0 | 0 | +0 | 45 | 45 | +0 |
+| JAX | 358 | 338 | -20 | 0 | 0 | +0 | 119 | 119 | +0 |
+
+**LAR Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 9:06 (10 yds) Kickoff: C.Little kicks onside 10 yards from JAX 35 to JAX 45. Q.Lake (didn't try to advance) to JAX 45 for no gain.
+
+- Excluded non-zero-yard plays (up to 19 shown):
+- Q1 5:00 (26 yds) Pass Incompletion: M.Stafford pass incomplete deep right to T.Atwell.PENALTY on JAX-A.Wingard, Defensive Pass Interference, 26 yards, enforced at LA 21 - No Play. [nullified]
+- Q1 7:22 (3 yds) Pass Incompletion: (Shotgun) M.Stafford pass incomplete short middle to C.Parkinson (F.Oluokun).PENALTY on JAX-A.Wingard, Unnecessary Roughness, 3 yards, enforced at JAX 7 - No Play. [nullified]
+- Q2 0:42 (-1 yds) Rush: M.Stafford kneels to LA 20 for -1 yards. ** Injury Update: JAX-J.Lewis has returned to the game. [spike_kneel]
+- Q2 10:15 (-8 yds) Punt: E.Evans punts 53 yards to JAX 38, Center-A.Ward. P.Washington for 62 yards, TOUCHDOWN NULLIFIED by Penalty.PENALTY on JAX-J.Jones, Illegal Block Above the Waist, 10 yards, enforced at JAX 40. [nullified]
+- Q2 6:34 (17 yds) Pass Incompletion: (No Huddle, Shotgun) M.Stafford pass incomplete deep right to K.Mumpfield.PENALTY on JAX-J.Lewis, Defensive Pass Interference, 17 yards, enforced at 50 - No Play. [nullified]
+- Q3 14:22 (11 yds) Pass Reception: (Shotgun) M.Stafford pass short left to D.Adams to JAX 47 for 11 yards (M.Brown).Penalty on LA-S.Avila, Offensive Holding, offsetting, enforced at LA 42 - No Play.Penalty on JAX-J.Lewis, Illegal Contact, offsetting. [nullified]
+- Q3 15:00 (32 yds) Kickoff: C.Little kicks 61 yards from JAX 35 to LA 4. X.Smith to LA 36 for 32 yards (M.Brown). [special_teams]
+- Q3 4:53 (-5 yds) Penalty: (Punt formation) PENALTY on LA-A.Ward, False Start, 5 yards, enforced at LA 31 - No Play. [nullified]
+- Q3 4:53 (17 yds) Punt: E.Evans punts 48 yards to JAX 26, Center-A.Ward. P.Washington ran ob at JAX 43 for 17 yards (T.Reeder). [special_teams]
+- Q3 9:53 (5 yds) Pass Incompletion: M.Stafford pass incomplete short left [M.Smith].PENALTY on JAX-F.Oluokun, Illegal Contact, 5 yards, enforced at LA 36 - No Play. [nullified]
+- Q4 0:34 (-1 yds) Rush: J.Garoppolo kneels to LA 11 for -1 yards. [spike_kneel]
+- Q4 0:59 (-1 yds) Rush: J.Garoppolo kneels to LA 12 for -1 yards. [spike_kneel]
+- Q4 11:19 (4 yds) Penalty: (Shotgun) PENALTY on JAX-J.Hines-Allen, Neutral Zone Infraction, 4 yards, enforced at JAX 35 - No Play. [nullified]
+- Q4 13:05 (5 yds) Sack: (Shotgun) M.Stafford sacked at LA 40 for -15 yards (J.Hines-Allen).PENALTY on JAX-M.Brown, Defensive Holding, 5 yards, enforced at JAX 45 - No Play. [nullified]
+- Q4 1:49 (-1 yds) Rush: J.Garoppolo kneels to LA 13 for -1 yards. [spike_kneel]
+- Q4 5:07 (1 yds) Pass Incompletion: (Shotgun) M.Stafford pass incomplete short right to T.Ferguson.PENALTY on JAX-D.Gardeck, Roughing the Passer, 1 yard, enforced at JAX 2 - No Play. [nullified]
+- Q4 6:02 (17 yds) Pass Incompletion: (Shotgun) M.Stafford pass incomplete deep right to D.Adams.PENALTY on JAX-J.Lewis, Defensive Pass Interference, 17 yards, enforced at JAX 29 - No Play.PENALTY on JAX-J.Lewis, Face Mask, 6 yards, enforced between downs. [nullified]
+- Q4 7:35 (-5 yds) Penalty: PENALTY on LA, Delay of Game, 5 yards, enforced at JAX 37 - No Play. [nullified]
+- Q4 9:06 (10 yds) Kickoff: C.Little kicks onside 10 yards from JAX 35 to JAX 45. Q.Lake (didn't try to advance) to JAX 45 for no gain. [special_teams]
+
+**JAX Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q2 3:56 (7 yds) Pass Reception: (No Huddle, Shotgun) T.Lawrence pass short left to H.Long to LA 34 for 7 yards (Q.Lake). FUMBLES (Q.Lake), ball out of bounds at LA 34.
+
+- Excluded non-zero-yard plays (up to 9 shown):
+- Q1 15:00 (29 yds) Kickoff: J.Karty kicks 64 yards from LA 35 to JAX 1. D.Brown to JAX 30 for 29 yards (J.McCollough). [special_teams]
+- Q1 5:12 (13 yds) Punt: L.Cooke punts 62 yards to LA 8, Center-R.Matiscik. X.Smith pushed ob at LA 21 for 13 yards (Y.Abdullah). [special_teams]
+- Q1 6:32 (-10 yds) Rush: T.Etienne left tackle to JAX 35 for 2 yards (O.Speights; K.Kinchens).PENALTY on JAX-P.Mekari, Offensive Holding, 10 yards, enforced at JAX 33 - No Play. [nullified]
+- Q1 6:38 (31 yds) Kickoff: J.Karty kicks 63 yards from LA 35 to JAX 2. D.Brown to JAX 33 for 31 yards (T.Reeder). [special_teams]
+- Q2 7:02 (50 yds) Field Goal Missed: C.Little 50 yard field goal is No Good, Wide Left, Center-R.Matiscik, Holder-L.Cooke. [special_teams]
+- Q3 0:42 (-5 yds) Penalty: (Shotgun) ** Injury Update: JAX-D.Brown has returned to the game.  PENALTY on JAX-P.Mekari, False Start, 5 yards, enforced at JAX 21 - No Play. [nullified]
+- Q3 11:39 (5 yds) Pass Incompletion: (Shotgun) T.Lawrence pass incomplete deep left to B.Thomas (K.Curl).PENALTY on LA-K.Curl, Defensive Holding, 5 yards, enforced at LA 43 - No Play. [nullified]
+- Q3 11:48 (15 yds) Pass Incompletion: (Shotgun) T.Lawrence pass incomplete short left to P.Washington.PENALTY on LA-D.Williams, Defensive Pass Interference, 15 yards, enforced at JAX 42 - No Play. [nullified]
+- Q3 2:43 (4 yds) Punt: L.Cooke punts 36 yards to LA 12, Center-R.Matiscik. X.Smith ran ob at LA 16 for 4 yards (B.Green). [special_teams]
+
+### 401772718 ARI @ NO (TOΔ max 0, YdsΔ max 20, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| ARI | 276 | 256 | -20 | 0 | 0 | +0 | 54 | 54 | +0 |
+| NO | 315 | 315 | +0 | 0 | 0 | +0 | 89 | 89 | +0 |
+
+**ARI Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 4:40 (46 yds) Blocked Field Goal: C.Ryland 46 yard field goal is BLOCKED (B.Bresee), Center-A.Brewer, Holder-B.Gillikin.
+
+- Excluded non-zero-yard plays (up to 15 shown):
+- Q1 11:39 (7 yds) Punt: B.Gillikin punts 60 yards to NO 16, Center-A.Brewer. R.Shaheed to NO 23 for 7 yards (A.Davis-Gaither; E.Higgins). [special_teams]
+- Q1 15:00 (22 yds) Kickoff: B.Grupe kicks 65 yards from NO 35 to ARZ 0. G.Dortch to ARZ 22 for 22 yards (D.Stutsman). [special_teams]
+- Q1 5:03 (42 yds) Field Goal Good: C.Ryland 42 yard field goal is GOOD, Center-A.Brewer, Holder-B.Gillikin. [special_teams]
+- Q1 5:14 (-5 yds) Penalty: (Shotgun) PENALTY on ARZ, Delay of Game, 5 yards, enforced at NO 19 - No Play. [nullified]
+- Q1 8:05 (-5 yds) Penalty: (Shotgun) PENALTY on ARZ-I.Adams, False Start, 5 yards, enforced at NO 34 - No Play. [nullified]
+- Q1 8:11 (13 yds) Penalty: (Shotgun) K.Murray pass incomplete short middle to M.Harrison (K.McKinstry).PENALTY on NO-K.McKinstry, Defensive Pass Interference, 13 yards, enforced at NO 47 - No Play. [nullified]
+- Q2 10:56 (2 yds) Penalty: K.Murray pass incomplete short right.PENALTY on NO-D.Davis, Defensive Holding, 2 yards, enforced at NO 3 - No Play. [nullified]
+- Q2 2:00 (5 yds) Penalty: (Shotgun) K.Murray pass incomplete short left to M.Harrison.PENALTY on NO-N.Shepherd, Defensive Offside, 5 yards, enforced at NO 20 - No Play. [nullified]
+- Q2 3:49 (-10 yds) Penalty: J.Conner left end pushed ob at NO 41 for 2 yards (D.Davis).PENALTY on ARZ-Ev.Brown, Offensive Holding, 10 yards, enforced at NO 43 - No Play. [nullified]
+- Q2 4:58 (29 yds) Kickoff: B.Grupe kicks 65 yards from NO 35 to ARZ 0. E.Demercado to ARZ 29 for 29 yards (I.Stalbird). [special_teams]
+- Q3 9:16 (50 yds) Field Goal Good: C.Ryland 50 yard field goal is GOOD, Center-A.Brewer, Holder-B.Gillikin. [special_teams]
+- Q4 13:51 (-3 yds) Penalty: (Shotgun) K.Murray scrambles up the middle to ARZ 8 for 2 yards (P.Werner).PENALTY on ARZ-Ev.Brown, Offensive Holding, 3 yards, enforced at ARZ 6 - No Play. [nullified]
+- Q4 2:00 (11 yds) Punt:  B.Gillikin punts 52 yards to NO 31, Center-A.Brewer. R.Shaheed to NO 42 for 11 yards (G.Dortch; Z.Collins). [special_teams]
+- Q4 2:42 (22 yds) Kickoff: B.Grupe kicks 61 yards from NO 35 to ARZ 4. G.Dortch to ARZ 26 for 22 yards (I.Stalbird). [special_teams]
+- Q4 4:40 (46 yds) Blocked Field Goal: C.Ryland 46 yard field goal is BLOCKED (B.Bresee), Center-A.Brewer, Holder-B.Gillikin. [special_teams]
+
+**NO Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q1 2:11 (0 yds) Penalty: (Shotgun) S.Rattler pass deep left intended for R.Shaheed INTERCEPTED by W.Johnson at ARZ -5. Touchback.
+PENALTY on ARZ-M.Melton, Illegal Contact, 5 yards, enforced at NO 46 - No Play.
+
+- Excluded non-zero-yard plays (up to 20 shown):
+- Q1 0:44 (-5 yds) Penalty: (Shotgun) S.Rattler pass incomplete short right.PENALTY on NO, Illegal Shift, 5 yards, enforced at ARZ 38 - No Play.Penalty on NO, Illegal Formation, declined. [nullified]
+- Q1 10:46 (7 yds) Punt: K.Kroeger punts 47 yards to ARZ 27, Center-Z.Wood. G.Dortch to ARZ 34 for 7 yards (C.Rumph; J.Ford). [special_teams]
+- Q1 2:33 (-10 yds) Penalty: (Shotgun) A.Kamara right guard to ARZ 42 for 2 yards (J.Thompson; P.Mustipher).PENALTY on NO-C.Ruiz, Offensive Holding, 10 yards, enforced at ARZ 44 - No Play. [nullified]
+- Q1 3:39 (-5 yds) Penalty: (No Huddle, Shotgun) S.Rattler pass short left to A.Kamara pushed ob at ARZ 48 for 1 yard (B.Baker; M.Melton).PENALTY on NO-C.Olave, Illegal Shift, 5 yards, enforced at ARZ 49 - No Play. [nullified]
+- Q1 5:03 (22 yds) Kickoff: C.Ryland kicks 62 yards from ARZ 35 to NO 3. K.Miller to NO 25 for 22 yards (O.Pappoe; A.Davis-Gaither). [special_teams]
+- Q2 0:28 (23 yds) Kickoff: C.Ryland kicks 59 yards from ARZ 35 to NO 6. K.Miller to NO 29 for 23 yards (C.Simon). ARZ-C.Simon was injured during the play. ARZ-J.Blount was injured during the play. [special_teams]
+- Q2 10:05 (43 yds) Kickoff: C.Ryland kicks 63 yards from ARZ 35 to NO 2. K.Miller pushed ob at NO 45 for 43 yards (E.Demercado). [special_teams]
+- Q2 4:58 (36 yds) Field Goal Good: B.Grupe 36 yard field goal is GOOD, Center-Z.Wood, Holder-K.Kroeger. [special_teams]
+- Q2 9:07 (-4 yds) Penalty: S.Rattler up the middle to ARZ 45 for 1 yard (Ma.Wilson; A.Davis-Gaither).PENALTY on NO-D.Radunz, Offensive Offside, 4 yards, enforced at ARZ 46 - No Play. [nullified]
+- Q3 0:23 (7 yds) Penalty: (Shotgun) S.Rattler pass incomplete short middle to D.Vele.PENALTY on ARZ-G.Williams, Defensive Pass Interference, 7 yards, enforced at NO 30 - No Play. [nullified]
+- Q3 15:00 (-5 yds) Kickoff: C.Ryland kicks 58 yards from ARZ 35 to NO 7. V.Jones to NO 30 for 23 yards (A.Davis-Gaither).PENALTY on NO-C.Rumph, Offensive Holding, 10 yards, enforced at NO 25. [special_teams]
+- Q3 3:59 (37 yds) Field Goal Missed: B.Grupe 37 yard field goal is No Good, Wide Left, Center-Z.Wood, Holder-K.Kroeger. [special_teams]
+- Q3 5:10 (5 yds) Penalty: (Shotgun) PENALTY on ARZ-D.Robinson, Neutral Zone Infraction, 5 yards, enforced at ARZ 30 - No Play. [nullified]
+- Q3 7:35 (-5 yds) Penalty: (No Huddle, Shotgun) PENALTY on NO-C.Ruiz, False Start, 5 yards, enforced at ARZ 47 - No Play. [nullified]
+- Q3 9:16 (22 yds) Kickoff: C.Ryland kicks 60 yards from ARZ 35 to NO 5. V.Jones to NO 27 for 22 yards (J.Burch). [special_teams]
+- Q4 14:38 (-5 yds) Penalty: (No Huddle, Shotgun) PENALTY on NO-D.Radunz, False Start, 5 yards, enforced at NO 39 - No Play. [nullified]
+- Q4 2:42 (28 yds) Field Goal Good: B.Grupe 28 yard field goal is GOOD, Center-Z.Wood, Holder-K.Kroeger. [special_teams]
+- Q4 2:46 (23 yds) Penalty: B.Grupe 23 yard field goal is GOOD, NULLIFIED by Penalty, Center-Z.Wood, Holder-K.Kroeger.PENALTY on NO, Illegal Formation, 5 yards, enforced at ARZ 5 - No Play. [nullified]
+- Q4 8:57 (23 yds) Punt: K.Kroeger punts 51 yards to ARZ 37, Center-Z.Wood. G.Dortch pushed ob at NO 40 for 23 yards (J.Stoll). [special_teams]
+- Q4 9:01 (-5 yds) Penalty: (Shotgun) PENALTY on NO-A.Richards, False Start, 5 yards, enforced at NO 17 - No Play. [nullified]
+
+### 401772749 SF @ TB (TOΔ max 0, YdsΔ max 20, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| SF | 363 | 343 | -20 | 2 | 2 | +0 | 65 | 65 | +0 |
+| TB | 352 | 352 | +0 | 0 | 0 | +0 | 31 | 31 | +0 |
+
+**SF Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q1 10:46 (13 yds) Pass Interception Return: (Shotgun) M.Jones pass short right intended for K.Bourne INTERCEPTED by K.Vildor at SF 25. K.Vildor to SF 12 for 13 yards (D.Puni). [interception]
+- Q4 5:52 (-9 yds) Pass Interception Return: (Shotgun) M.Jones pass deep left intended for J.Jennings INTERCEPTED by J.Dean at TB 14. J.Dean to TB 20 for 6 yards (J.Tonges).PENALTY on SF-T.Williams, Unnecessary Roughness, 15 yards, enforced at TB 20. [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q1 0:02 (-5 yds) Fumble Recovery (Own): (Shotgun) M.Jones sacked at SF 8 for -8 yards (J.Dean). FUMBLES (J.Dean) [J.Dean], touched at SF 8, recovered by SF-L.Farrell at SF 11.
+
+- Excluded non-zero-yard plays (up to 16 shown):
+- Q1 4:06 (-5 yds) Penalty: (Shotgun) PENALTY on SF-K.Bourne, False Start, 5 yards, enforced at SF 27 - No Play. [nullified]
+- Q1 7:54 (52 yds) Field Goal Good: E.Pineiro 52 yard field goal is GOOD, Center-J.Weeks, Holder-T.Morstead. [special_teams]
+- Q1 9:54 (24 yds) Kickoff: C.McLaughlin kicks 59 yards from TB 35 to SF 6. S.Moore to SF 30 for 24 yards (M.Watts). [special_teams]
+- Q2 0:02 (42 yds) Field Goal Good:  E.Pineiro 42 yard field goal is GOOD, Center-J.Weeks, Holder-T.Morstead. [special_teams]
+- Q2 0:44 (27 yds) Kickoff: C.McLaughlin kicks 63 yards from TB 35 to SF 2. S.Moore to SF 29 for 27 yards (S.Castro). [special_teams]
+- Q2 10:30 (1 yds) Rush: C.McCaffrey up the middle to TB 1 for 1 yard (L.David, E.Roberts).PENALTY on TB-C.Braswell, Defensive Offside, 1 yard, enforced at TB 2 - No Play. [nullified]
+- Q2 2:05 (54 yds) Field Goal Good:  E.Pineiro 54 yard field goal is GOOD, Center-J.Weeks, Holder-T.Morstead. [special_teams]
+- Q2 5:10 (28 yds) Kickoff: C.McLaughlin kicks 56 yards from TB 35 to SF 9. S.Moore to SF 37 for 28 yards (D.Jones; C.Braswell). [special_teams]
+- Q3 14:53 (-5 yds) Penalty: PENALTY on SF-J.Jennings, False Start, 5 yards, enforced at SF 24 - No Play. [nullified]
+- Q3 15:00 (21 yds) Kickoff: C.McLaughlin kicks 62 yards from TB 35 to SF 3. B.Robinson to SF 24 for 21 yards (C.Braswell; K.Merriweather). [special_teams]
+- Q3 2:40 (31 yds) Kickoff: C.McLaughlin kicks 64 yards from TB 35 to SF 1. B.Robinson to SF 32 for 31 yards (C.Braswell). [special_teams]
+- Q3 7:27 (29 yds) Field Goal Good: E.Pineiro 29 yard field goal is GOOD, Center-J.Weeks, Holder-T.Morstead. [special_teams]
+- Q3 8:36 (6 yds) Pass Reception: (Shotgun) M.Jones pass short left to C.McCaffrey pushed ob at TB 9 for 6 yards (A.Winfield).PENALTY on SF-J.Jennings, Offensive Pass Interference, 10 yards, enforced at TB 15 - No Play. [nullified]
+- Q4 13:25 (6 yds) Punt: T.Morstead punts 41 yards to TB 8, Center-J.Weeks. K.Johnson to TB 14 for 6 yards (S.Neal; L.Gifford). [special_teams]
+- Q4 1:55 (30 yds) Kickoff: C.McLaughlin kicks 61 yards from TB 35 to SF 4. S.Moore to SF 34 for 30 yards (C.Izien). [special_teams]
+- Q4 5:52 (-4 yds) Penalty: (Shotgun) PENALTY on SF-D.Puni, False Start, 4 yards, enforced at TB 29 - No Play. [nullified]
+
+**TB Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 4:15 (0 yds) Fumble Recovery (Own): B.Mayfield FUMBLES (Aborted) at TB 45, recovered by TB-R.White at 50.
+
+- Excluded non-zero-yard plays (up to 14 shown):
+- Q1 0:14 (13 yds) Punt: R.Dixon punts 60 yards to SF 3, Center-E.Deckers. S.Moore to SF 16 for 13 yards (R.Miller). [special_teams]
+- Q1 12:47 (-5 yds) Penalty: (Shotgun) PENALTY on TB-C.Otton, False Start, 5 yards, enforced at TB 27 - No Play. [nullified]
+- Q1 15:00 (10 yds) Kickoff: E.Pineiro kicks 59 yards from SF 35 to TB 6. S.Tucker ran ob at TB 36 for 30 yards (C.Lucas).PENALTY on TB-D.Culp, Offensive Holding, 10 yards, enforced at TB 26. [special_teams]
+- Q1 1:34 (4 yds) Pass Reception: (Shotgun) B.Mayfield pass short left to S.Tucker to TB 33 for 4 yards (T.Bethune; U.Stout).PENALTY on SF-D.Lenoir, Illegal Use of Hands, 5 yards, enforced at TB 29 - No Play. [nullified]
+- Q1 6:08 (12 yds) Punt: R.Dixon punts 59 yards to SF 2, Center-E.Deckers. S.Moore to SF 14 for 12 yards (J.Hayes). [special_teams]
+- Q1 7:54 (19 yds) Kickoff: E.Pineiro kicks 48 yards from SF 35 to TB 17. S.Tucker to TB 36 for 19 yards (J.Brown; B.Willis). [special_teams]
+- Q2 0:02 (31 yds) Kickoff: E.Pineiro kicks 70 yards from SF 35 to TB -5. K.Johnson pushed ob at TB 26 for 31 yards (J.Brown). [special_teams]
+- Q2 10:18 (26 yds) Kickoff: E.Pineiro kicks 59 yards from SF 35 to TB 6. S.Tucker to TB 32 for 26 yards (S.Neal). [special_teams]
+- Q2 2:05 (30 yds) Kickoff: E.Pineiro kicks 67 yards from SF 35 to TB -2. S.Tucker to TB 28 for 30 yards (J.Tonges; C.Robinson). [special_teams]
+- Q3 5:26 (-10 yds) Rush: (Shotgun) R.White left end to SF 49 for 6 yards (D.Winters; J.Brown).PENALTY on TB-T.Wirfs, Offensive Holding, 10 yards, enforced at TB 45 - No Play. [nullified]
+- Q3 7:27 (32 yds) Kickoff: E.Pineiro kicks 63 yards from SF 35 to TB 2. S.Tucker to TB 34 for 32 yards (T.Gipson). [special_teams]
+- Q4 0:35 (-1 yds) Rush: B.Mayfield kneels to SF 41 for -1 yards. [spike_kneel]
+- Q4 1:55 (45 yds) Field Goal Good: C.McLaughlin 45 yard field goal is GOOD, Center-E.Deckers, Holder-R.Dixon. [special_teams]
+- Q4 8:46 (49 yds) Field Goal Missed: C.McLaughlin 49 yard field goal is No Good, Wide Right, Center-E.Deckers, Holder-R.Dixon. [special_teams]
+
+### 401772769 CLE @ NYJ (TOΔ max 0, YdsΔ max 20, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| CLE | 278 | 258 | -20 | 0 | 0 | +0 | 78 | 78 | +0 |
+| NYJ | 169 | 169 | +0 | 1 | 1 | +0 | 61 | 61 | +0 |
+
+**CLE Reconciliation Clues**
+
+- Excluded non-zero-yard plays (up to 18 shown):
+- Q1 10:14 (29 yds) Penalty: (Shotgun) D.Gabriel pass incomplete deep right to C.Tillman.PENALTY on NYJ-A.Thomas, Defensive Pass Interference, 29 yards, enforced at CLV 11 - No Play. [nullified]
+- Q1 13:43 (12 yds) Punt: C.Bojorquez punts 49 yards to NYJ 29, Center-R.Sunahara. I.Williams to NYJ 41 for 12 yards (B.Whiteheart; E.Mascarenas-Arnold). [special_teams]
+- Q1 15:00 (27 yds) Kickoff: A.McNamara kicks 62 yards from NYJ 35 to CLV 3. D.Sampson to CLV 30 for 27 yards (Qu.Williams; J.Weston). [special_teams]
+- Q1 1:55 (8 yds) Punt:  C.Bojorquez punts 47 yards to NYJ 14, Center-R.Sunahara. I.Williams to NYJ 22 for 8 yards (C.Edmonds; B.Whiteheart). [special_teams]
+- Q1 2:07 (-5 yds) Penalty: (Shotgun) PENALTY on CLV-H.Fannin, False Start, 5 yards, enforced at CLV 44 - No Play. [nullified]
+- Q1 6:21 (99 yds) Kickoff Return Touchdown: A.Szmyt kicks 64 yards from CLV 35 to NYJ 1. K.Nwangwu for 99 yards, TOUCHDOWN. N.Folk extra point is GOOD, Center-T.Hennessy, Holder-A.McNamara. [special_teams_return]
+- Q1 6:21 (24 yds) Kickoff: A.McNamara kicks 60 yards from NYJ 35 to CLV 5. D.Sampson to CLV 29 for 24 yards (J.Taylor; I.Davis). [special_teams]
+- Q2 0:00 (45 yds) Field Goal Good: A.Szmyt 45 yard field goal is GOOD, Center-R.Sunahara, Holder-C.Bojorquez. [special_teams]
+- Q2 11:38 (-5 yds) Penalty: (Shotgun) PENALTY on CLV-W.Teller, False Start, 5 yards, enforced at NYJ 44 - No Play. [nullified]
+- Q2 13:51 (7 yds) Penalty: (Shotgun) D.Gabriel pass incomplete short right to J.Jeudy [J.Sherwood].PENALTY on NYJ-J.Brownlee, Defensive Pass Interference, 7 yards, enforced at CLV 37 - No Play. [nullified]
+- Q2 1:50 (13 yds) Punt: C.Bojorquez punts 56 yards to NYJ 20, Center-R.Sunahara. I.Williams pushed ob at NYJ 33 for 13 yards (B.Whiteheart; C.Edmonds). [special_teams]
+- Q2 3:51 (19 yds) Kickoff: A.McNamara kicks 61 yards from NYJ 35 to CLV 4. D.Sampson to CLV 23 for 19 yards (K.King). [special_teams]
+- Q3 3:49 (19 yds) Punt: C.Bojorquez punts 58 yards to NYJ 23, Center-R.Sunahara. I.Williams to NYJ 42 for 19 yards (C.Edmonds; R.Jenkins). [special_teams]
+- Q3 4:54 (-5 yds) Penalty: (Shotgun) PENALTY on CLV, Delay of Game, 5 yards, enforced at CLV 12 - No Play. [nullified]
+- Q3 9:15 (-15 yds) Penalty: D.Gabriel scrambles right tackle to CLV 48 for 3 yards (J.Briggs).PENALTY on CLV-J.Conklin, Tripping, 15 yards, enforced at CLV 45 - No Play. [nullified]
+- Q4 14:12 (34 yds) Kickoff: A.McNamara kicks 65 yards from NYJ 35 to CLV 0. D.Sampson to CLV 34 for 34 yards (A.Beck). [special_teams]
+- Q4 2:57 (29 yds) Field Goal Good: A.Szmyt 29 yard field goal is GOOD, Center-R.Sunahara, Holder-C.Bojorquez. [special_teams]
+- Q4 6:13 (22 yds) Kickoff: A.McNamara kicks 56 yards from NYJ 35 to CLV 9. M.Corley to CLV 31 for 22 yards (S.Smartt). [special_teams]
+
+**NYJ Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q2 10:50 (15 yds) Pass Interception Return: M.Mitchell reported in as eligible.  J.Fields pass deep middle intended for G.Wilson INTERCEPTED by R.Hickman at NYJ 37. R.Hickman to NYJ 22 for 15 yards (G.Wilson). [interception]
+
+- Excluded non-zero-yard plays (up to 14 shown):
+- Q1 1:10 (-5 yds) Penalty: (Shotgun) PENALTY on NYJ-J.Tippmann, False Start, 5 yards, enforced at NYJ 24 - No Play. [nullified]
+- Q1 5:45 (74 yds) Punt Return Touchdown: C.Bojorquez punts 45 yards to NYJ 26, Center-R.Sunahara. I.Williams for 74 yards, TOUCHDOWN.Penalty on CLV-T.Avery, Offensive Holding, declined. N.Folk extra point is GOOD, Center-T.Hennessy, Holder-A.McNamara. [special_teams_return]
+- Q2 0:55 (15 yds) Punt:  A.McNamara punts 55 yards to CLV 24, Center-T.Hennessy. G.Larvadain ran ob at CLV 39 for 15 yards (T.Hennessy). [special_teams]
+- Q2 10:34 (23 yds) Kickoff: A.Szmyt kicks 60 yards from CLV 35 to NYJ 5. I.Williams to NYJ 28 for 23 yards (C.Schwesinger). [special_teams]
+- Q2 1:18 (-5 yds) Penalty: (No Huddle, Shotgun) PENALTY on NYJ-J.Myers, False Start, 5 yards, enforced at NYJ 34 - No Play. [nullified]
+- Q2 3:51 (26 yds) Field Goal Good: N.Folk 26 yard field goal is GOOD, Center-T.Hennessy, Holder-A.McNamara. [special_teams]
+- Q3 15:00 (8 yds) Kickoff: A.Szmyt kicks 58 yards from CLV 35 to NYJ 7. K.Nwangwu to NYJ 30 for 23 yards (D.McMillon; M.Harden).PENALTY on CLV-A.Huntington, Unnecessary Roughness, 15 yards, enforced at NYJ 30. [special_teams]
+- Q4 0:21 (-1 yds) Rush: J.Fields kneels to CLV 48 for -1 yards. [spike_kneel]
+- Q4 0:58 (5 yds) Penalty:  (Shotgun) PENALTY on CLV-C.Thomas, Neutral Zone Infraction, 5 yards, enforced at NYJ 49 - No Play. [nullified]
+- Q4 0:58 (-1 yds) Rush:  J.Fields kneels to CLV 47 for -1 yards. [spike_kneel]
+- Q4 1:56 (5 yds) Penalty:  J.Fields sacked at NYJ 38 for -1 yards (D.Ward).
+PENALTY on CLV-D.Bush, Defensive Holding, 5 yards, enforced at NYJ 39 - No Play. [nullified]
+- Q4 2:57 (21 yds) Kickoff: A.Szmyt kicks 53 yards from CLV 35 to NYJ 12. K.Nwangwu to NYJ 33 for 21 yards (A.Huntington). [special_teams]
+- Q4 6:13 (37 yds) Field Goal Good: N.Folk 37 yard field goal is GOOD, Center-T.Hennessy, Holder-A.McNamara. [special_teams]
+- Q4 9:26 (5 yds) Penalty: B.Hall up the middle to CLV 31 for -1 yards (M.Garrett, C.Schwesinger).PENALTY on CLV-M.Collins, Defensive Offside, 5 yards, enforced at CLV 30 - No Play. [nullified]
+
+### 401772778 KC @ DEN (TOΔ max 0, YdsΔ max 20, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| KC | 311 | 291 | -20 | 1 | 1 | +0 | 69 | 69 | +0 |
+| DEN | 342 | 342 | +0 | 0 | 0 | +0 | 147 | 147 | +0 |
+
+**KC Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q3 10:23 (47 yds) Pass Interception Return: (Shotgun) P.Mahomes pass deep right intended for E.Mitchell INTERCEPTED by J.McMillian at DEN 5. J.McMillian to KC 32 for 63 yards (T.Thornton). FUMBLES (T.Thornton), ball out of bounds at KC 32.PENALTY on DEN-J.Franklin-Myers, Illegal Blindside Block, 10 yards, enforced at DEN 21.Penalty on DEN, Unsportsmanlike Conduct, declined. [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q3 14:09 (41 yds) Interception Return Touchdown: (Shotgun) P.Mahomes pass short right intended for T.Kelce INTERCEPTED by J.Barron [J.Franklin-Myers] at KC 41. J.Barron for 41 yards, TOUCHDOWN NULLIFIED by Penalty.PENALTY on DEN-R.Moss, Illegal Contact, 5 yards, enforced at KC 35 - No Play.
+- Q4 9:57 (21 yds) Passing Touchdown: (Shotgun) P.Mahomes pass short middle to T.Kelce for 21 yards, TOUCHDOWN. H.Butker extra point is Blocked (F.Crum), Center-J.Winchester, Holder-M.Araiza.
+
+- Excluded non-zero-yard plays (up to 22 shown):
+- Q1 0:49 (31 yds) Field Goal Good: H.Butker 31 yard field goal is GOOD, Center-J.Winchester, Holder-M.Araiza. [special_teams]
+- Q1 2:12 (40 yds) Pass Incompletion: (Shotgun) P.Mahomes pass incomplete deep right to X.Worthy.PENALTY on DEN-R.Moss, Defensive Pass Interference, 40 yards, enforced at KC 47 - No Play. [nullified]
+- Q1 3:03 (-10 yds) Rush: (Shotgun) P.Mahomes scrambles right tackle to DEN 42 for 5 yards (J.McMillian).PENALTY on KC-K.Suamataia, Illegal Use of Hands, 10 yards, enforced at DEN 47 - No Play. [nullified]
+- Q1 4:53 (20 yds) Kickoff: W.Lutz kicks 56 yards from DEN 35 to KC 9. N.Remigio to KC 29 for 20 yards (D.Tillman). [special_teams]
+- Q1 6:38 (60 yds) Punt: M.Araiza punts 52 yards to DEN 9, Center-J.Winchester. M.Mims pushed ob at KC 21 for 70 yards (C.Roland-Wallace).PENALTY on KC-K.Knowles, Illegal Block Above the Waist, 10 yards, enforced at KC 21. [special_teams]
+- Q1 7:36 (28 yds) Kickoff: W.Lutz kicks 65 yards from DEN 35 to KC 0. N.Remigio to KC 28 for 28 yards (J.Turner; D.Key). [special_teams]
+- Q2 0:02 (5 yds) Penalty: (Shotgun) PENALTY on DEN-N.Bonitto, Neutral Zone Infraction, 5 yards, enforced at KC 36 - No Play. [nullified]
+- Q2 0:21 (-5 yds) Penalty: (Shotgun) PENALTY on KC-J.Simmons, False Start, 5 yards, enforced at KC 37 - No Play. [nullified]
+- Q2 4:38 (31 yds) Field Goal Good:  H.Butker 31 yard field goal is GOOD, Center-J.Winchester, Holder-M.Araiza. [special_teams]
+- Q2 6:17 (-10 yds) Rush: B.Smith left end to DEN 17 for 2 yards (R.Moss).PENALTY on KC-J.Simmons, Offensive Holding, 10 yards, enforced at DEN 19 - No Play. [nullified]
+- Q2 7:49 (-4 yds) Pass Incompletion: (Shotgun) P.Mahomes pass incomplete deep right to R.Rice (R.Moss).PENALTY on KC, Illegal Shift, 4 yards, enforced at DEN 29 - No Play. [nullified]
+- Q3 11:37 (15 yds) Pass Reception: (Shotgun) P.Mahomes pass short right to K.Hunt pushed ob at DEN 2 for 15 yards (B.Jones; N.Bonitto).PENALTY on KC-J.Taylor, Illegal Formation, 5 yards, enforced at DEN 17 - No Play. [nullified]
+- Q3 14:09 (41 yds) Interception Return Touchdown: (Shotgun) P.Mahomes pass short right intended for T.Kelce INTERCEPTED by J.Barron [J.Franklin-Myers] at KC 41. J.Barron for 41 yards, TOUCHDOWN NULLIFIED by Penalty.PENALTY on DEN-R.Moss, Illegal Contact, 5 yards, enforced at KC 35 - No Play. [turnover_return]
+- Q3 15:00 (33 yds) Kickoff: W.Lutz kicks 66 yards from DEN 35 to KC -1. T.Thornton to KC 32 for 33 yards (D.Tillman; G.Wallow). [special_teams]
+- Q3 4:03 (24 yds) Kickoff: W.Lutz kicks 64 yards from DEN 35 to KC 1. N.Remigio to KC 25 for 24 yards (Q.Robinson). [special_teams]
+- Q4 11:00 (47 yds) Pass Incompletion: (Shotgun) P.Mahomes pass incomplete deep right to M.Brown [Z.Allen].PENALTY on DEN-R.Moss, Defensive Pass Interference, 47 yards, enforced at KC 28 - No Play. [nullified]
+- Q4 11:25 (-10 yds) Rush: (Shotgun) P.Mahomes scrambles right end ran ob at KC 47 for 9 yards (J.McMillian).PENALTY on KC-J.Taylor, Offensive Holding, 10 yards, enforced at KC 38 - No Play. [nullified]
+- Q4 12:50 (26 yds) Kickoff: W.Lutz kicks 64 yards from DEN 35 to KC 1. T.Thornton to KC 27 for 26 yards (D.Key). [special_teams]
+- Q4 3:10 (7 yds) Punt: M.Araiza punts 66 yards to DEN 19, Center-J.Winchester. M.Mims to DEN 26 for 7 yards (K.Knowles). [special_teams]
+- Q4 4:10 (26 yds) Kickoff: W.Lutz kicks 65 yards from DEN 35 to KC 0. T.Thornton pushed ob at KC 26 for 26 yards (J.Skinner). [special_teams]
+- Q4 6:41 (24 yds) Punt:  M.Araiza punts 59 yards to DEN 21, Center-J.Winchester. M.Mims ran ob at DEN 45 for 24 yards (L.Chenal). [special_teams]
+- Q4 8:11 (-5 yds) Penalty: PENALTY on KC-N.Gray, False Start, 5 yards, enforced at KC 12 - No Play. [nullified]
+
+**DEN Reconciliation Clues**
+
+- Excluded non-zero-yard plays (up to 15 shown):
+- Q1 0:49 (25 yds) Kickoff: H.Butker kicks 39 yards from KC 35 to DEN 26, short of landing zone.PENALTY on KC-H.Butker, Kickoff Short of Landing Zone, placed at DEN 40. [special_teams]
+- Q1 4:53 (24 yds) Field Goal Good: W.Lutz 24 yard field goal is GOOD, Center-M.Fraboni, Holder-J.Crawshaw. [special_teams]
+- Q1 7:36 (29 yds) Field Goal Good: W.Lutz 29 yard field goal is GOOD, Center-M.Fraboni, Holder-J.Crawshaw. [special_teams]
+- Q2 0:37 (12 yds) Punt: J.Crawshaw punts 52 yards to KC 12, Center-M.Fraboni. N.Remigio to KC 24 for 12 yards (D.Key). [special_teams]
+- Q2 14:21 (7 yds) Punt:  J.Crawshaw punts 58 yards to KC 4, Center-M.Fraboni. N.Remigio to KC 11 for 7 yards (A.Prentice). [special_teams]
+- Q2 14:30 (-5 yds) Penalty: (Punt formation) PENALTY on DEN-M.Fraboni, False Start, 5 yards, enforced at DEN 43 - No Play. [nullified]
+- Q2 4:38 (28 yds) Kickoff: H.Butker kicks 64 yards from KC 35 to DEN 1. T.Badie to DEN 29 for 28 yards (C.Roland-Wallace; J.Cochrane). [special_teams]
+- Q3 0:49 (3 yds) Kickoff: H.Butker kicks 60 yards from KC 35 to DEN 5. T.Badie to DEN 33 for 28 yards (N.Williams).PENALTY on DEN-Q.Robinson, Offensive Holding, 10 yards, enforced at DEN 30. [special_teams]
+- Q4 0:00 (35 yds) Field Goal Good: W.Lutz 35 yard field goal is GOOD, Center-M.Fraboni, Holder-J.Crawshaw. [special_teams]
+- Q4 0:45 (-1 yds) Rush:  B.Nix kneels to KC 16 for -1 yards. [spike_kneel]
+- Q4 12:50 (38 yds) Field Goal Good:  W.Lutz 38 yard field goal is GOOD, Center-M.Fraboni, Holder-J.Crawshaw. [special_teams]
+- Q4 2:17 (-10 yds) Rush: R.Harvey right end to DEN 37 for 6 yards (B.Cook; J.Watson).PENALTY on DEN-A.Palczewski, Offensive Holding, 10 yards, enforced at DEN 31 - No Play. [nullified]
+- Q4 4:10 (54 yds) Field Goal Good: W.Lutz 54 yard field goal is GOOD, Center-M.Fraboni, Holder-J.Crawshaw. [special_teams]
+- Q4 8:18 (-5 yds) Penalty: (Shotgun) PENALTY on DEN-M.McGlinchey, False Start, 5 yards, enforced at DEN 36 - No Play. [nullified]
+- Q4 9:57 (26 yds) Kickoff: H.Butker kicks 63 yards from KC 35 to DEN 2. T.Badie to DEN 28 for 26 yards (J.Cochrane; J.Hicks). [special_teams]
+
+### 401772784 CLE @ LV (TOΔ max 0, YdsΔ max 20, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| CLE | 270 | 270 | +0 | 2 | 2 | +0 | 77 | 77 | +0 |
+| LV | 268 | 248 | -20 | 1 | 1 | +0 | 109 | 109 | +0 |
+
+**CLE Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q2 11:28 (18 yds) Pass Interception Return: (Shotgun) S.Sanders pass short left intended for J.Jeudy INTERCEPTED by C.Snowden [A.Butler] at CLV 44. C.Snowden to CLV 26 for 18 yards (J.Conklin; S.Sanders). [interception]
+- Q2 4:04 (0 yds) Fumble Recovery (Opponent): (Shotgun) S.Sanders pass deep right to J.Jeudy to LV 33 for 39 yards (J.Chinn) [M.Crosby]. FUMBLES (J.Chinn), touched at LV 30, RECOVERED by LV-E.Roberts at LV 24. [fumble]
+
+- Excluded non-zero-yard plays (up to 13 shown):
+- Q1 15:00 (28 yds) Kickoff: D.Carlson kicks 61 yards from LV 35 to CLV 4. D.Sampson to CLV 32 for 28 yards (A.Bachman; J.Rhattigan). [special_teams]
+- Q2 0:18 (-1 yds) Rush: S.Sanders kneels to CLV 8 for -1 yards. [spike_kneel]
+- Q2 1:47 (1 yds) Punt: C.Bojorquez punts 43 yards to LV 22, Center-R.Sunahara. A.Bachman to LV 23 for 1 yard (G.Delpit; R.Jenkins). [special_teams]
+- Q2 9:12 (28 yds) Kickoff: D.Carlson kicks 62 yards from LV 35 to CLV 3. M.Corley ran ob at CLV 36 for 33 yards (D.Richardson).PENALTY on LV-L.Johnson, Illegal Formation, 5 yards, enforced at CLV 36. [special_teams]
+- Q3 0:53 (15 yds) Penalty: (Shotgun) S.Sanders pass incomplete deep middle to J.Jeudy.PENALTY on LV-A.Butler, Roughing the Passer, 15 yards, enforced at CLV 22 - No Play.Penalty on CLV-H.Fannin, Illegal Shift, superseded. [nullified]
+- Q3 3:46 (9 yds) Punt: C.Bojorquez punts 44 yards to LV 26, Center-R.Sunahara. A.Bachman pushed ob at LV 35 for 9 yards (C.Edmonds). [special_teams]
+- Q3 4:13 (-5 yds) Penalty: (Shotgun) PENALTY on CLV-C.Robinson, False Start, 5 yards, enforced at CLV 35 - No Play. [nullified]
+- Q3 8:05 (-6 yds) Penalty: (Shotgun) S.Sanders pass short right to I.Bond to CLV 19 for 6 yards (I.Pola-Mao). ** Injury Update: LV-E.Roberts has returned to the game. PENALTY on CLV-C.Tillman, Offensive Pass Interference, 6 yards, enforced at CLV 13 - No Play.Penalty on CLV-C.Robinson, Ineligible Downfield Pass, declined. [nullified]
+- Q3 9:25 (-5 yds) Penalty: (Punt formation) PENALTY on CLV, Delay of Game, 5 yards, enforced at LV 41 - No Play. [nullified]
+- Q4 12:08 (53 yds) Field Goal Good: A.Szmyt 53 yard field goal is GOOD, Center-R.Sunahara, Holder-C.Bojorquez. [special_teams]
+- Q4 13:10 (-10 yds) Penalty: (Shotgun) S.Sanders pass incomplete short right [M.Crosby].PENALTY on CLV-J.Conklin, Offensive Holding, 10 yards, enforced at LV 21 - No Play. [nullified]
+- Q4 2:00 (5 yds) Penalty: PENALTY on LV-E.Roberts, Encroachment, 5 yards, enforced at LV 42 - No Play. [nullified]
+- Q4 5:11 (25 yds) Kickoff: D.Carlson kicks 62 yards from LV 35 to CLV 3. M.Corley to CLV 28 for 25 yards (D.Richardson; T.Eichenberg). [special_teams]
+
+**LV Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q4 2:16 (0 yds) Sack Opp Fumble Recovery: (No Huddle, Shotgun) G.Smith sacked at LV 49 for -8 yards (M.Garrett). FUMBLES (M.Garrett) [M.Garrett], RECOVERED by CLV-M.Collins at CLV 49. [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q2 1:04 (-12 yds) Fumble Recovery (Own): (No Huddle, Shotgun) G.Smith sacked at LV 46 for -10 yards (M.Garrett). FUMBLES (M.Garrett) [M.Garrett], recovered by LV-S.Forsythe at LV 44.
+
+- Excluded non-zero-yard plays (up to 16 shown):
+- Q1 0:48 (24 yds) Kickoff: A.Szmyt kicks 64 yards from CLV 35 to LV 1. D.Laube to LV 25 for 24 yards (M.Harden). [special_teams]
+- Q1 5:21 (-5 yds) Penalty: PENALTY on LV-D.Parham, False Start, 5 yards, enforced at LV 26 - No Play. [nullified]
+- Q1 9:27 (30 yds) Punt: A.Cole punts 54 yards to CLV 29, Center-J.Bobenmoyer. G.Larvadain to LV 27 for 44 yards (A.Cole).PENALTY on LV-A.Cole, Tripping, 14 yards, enforced at LV 27. [special_teams]
+- Q2 0:36 (-5 yds) Penalty: (No Huddle, Shotgun) PENALTY on LV-D.Glaze, False Start, 5 yards, enforced at LV 44 - No Play. [nullified]
+- Q2 11:33 (48 yds) Field Goal Missed: D.Carlson 48 yard field goal is No Good, Wide Left, Center-J.Bobenmoyer, Holder-A.Cole. [special_teams]
+- Q2 2:30 (8 yds) Punt: A.Cole punts 56 yards to CLV 20, Center-J.Bobenmoyer. G.Larvadain pushed ob at CLV 28 for 8 yards (T.Eichenberg). [special_teams]
+- Q2 4:16 (4 yds) Punt: A.Cole punts 50 yards to CLV 14, Center-J.Bobenmoyer. G.Larvadain to CLV 23 for 9 yards (J.Bobenmoyer).PENALTY on LV-T.Eichenberg, Ineligible Downfield Kick, 5 yards, enforced at CLV 23. [special_teams]
+- Q2 9:12 (41 yds) Field Goal Good: D.Carlson 41 yard field goal is GOOD, Center-J.Bobenmoyer, Holder-A.Cole. [special_teams]
+- Q3 15:00 (34 yds) Kickoff: A.Szmyt kicks 62 yards from CLV 35 to LV 3. R.Mostert to LV 37 for 34 yards (D.Ross). [special_teams]
+- Q3 1:08 (5 yds) Penalty: (Shotgun) G.Smith pass incomplete deep middle to B.Bowers.PENALTY on CLV-M.Graham, Defensive Offside, 5 yards, enforced at CLV 27 - No Play. [nullified]
+- Q3 8:18 (-10 yds) Punt: A.Cole punts 53 yards to CLV 23, Center-J.Bobenmoyer. G.Larvadain to CLV 28 for 5 yards (T.Eichenberg).PENALTY on CLV-M.Harden, Offensive Holding, 10 yards, enforced at CLV 23. [special_teams]
+- Q4 10:45 (-5 yds) Penalty: (Shotgun) PENALTY on LV-S.Forsythe, False Start, 5 yards, enforced at LV 24 - No Play. [nullified]
+- Q4 12:08 (-3 yds) Kickoff: A.Szmyt kicks 58 yards from CLV 35 to LV 7. R.Mostert to LV 35 for 28 yards (C.Schwesinger; T.Campbell).PENALTY on LV-T.Eichenberg, Offensive Holding, 10 yards, enforced at LV 28. [special_teams]
+- Q4 6:38 (-10 yds) Penalty: (Shotgun) G.Smith pass incomplete short left to T.Lockett.PENALTY on LV-T.Lockett, Offensive Pass Interference, 10 yards, enforced at CLV 13 - No Play. [nullified]
+- Q4 6:48 (21 yds) Penalty: (No Huddle, Shotgun) G.Smith pass incomplete deep right to T.Tucker.PENALTY on CLV-D.Ward, Defensive Pass Interference, 21 yards, enforced at CLV 34 - No Play. [nullified]
+- Q4 7:49 (15 yds) Penalty: (No Huddle, Shotgun) G.Smith pass incomplete short right to B.Bowers.PENALTY on CLV-C.Thomas, Roughing the Passer, 15 yards, enforced at LV 40 - No Play. [nullified]
+
+### 401772828 CAR @ JAX (TOΔ max 0, YdsΔ max 20, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| CAR | 255 | 255 | +0 | 3 | 3 | +0 | 35 | 35 | +0 |
+| JAX | 378 | 358 | -20 | 1 | 1 | +0 | 93 | 93 | +0 |
+
+**CAR Reconciliation Clues**
+
+- Windelta counted turnovers (3):
+- Q2 0:55 (0 yds) Fumble Recovery (Opponent): (Shotgun) B.Young scrambles up the middle to JAX 32 for 7 yards (F.Oluokun). FUMBLES (F.Oluokun), RECOVERED by JAX-J.Lewis at JAX 32. [fumble]
+- Q2 12:52 (0 yds) Pass Interception Return: B.Young pass short right intended for X.Legette INTERCEPTED by F.Oluokun (E.Murray) at CAR 35. F.Oluokun to CAR 35 for no gain (J.Sanders).The Replay Official reviewed the interception ruling, and the play was Upheld. The ruling on the field stands. [interception]
+- Q4 0:51 (0 yds) Pass Interception Return: (No Huddle, Shotgun) B.Young pass short middle intended for R.Dowdle INTERCEPTED by J.Lewis at CAR 48. J.Lewis to CAR 48 for no gain (R.Dowdle). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 5:08 (75 yds) Penalty: (Shotgun) B.Young pass short left intended for J.Sanders INTERCEPTED by A.Wingard [T.Walker] at JAX 25. A.Wingard for 75 yards, TOUCHDOWN NULLIFIED by Penalty.PENALTY on JAX-J.Lewis, Defensive Holding, 5 yards, enforced at JAX 32 - No Play.
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q1 0:36 (48 yds) Field Goal Good: R.Fitzgerald 48 yard field goal is GOOD, Center-J.Jansen, Holder-S.Martin. [special_teams]
+- Q1 8:15 (27 yds) Kickoff: C.Little kicks 63 yards from JAX 35 to CAR 2. T.Etienne to CAR 29 for 27 yards (J.Jones). [special_teams]
+- Q2 0:01 (-1 yds) Rush: B.Young kneels to CAR 19 for -1 yards. [spike_kneel]
+- Q2 1:49 (25 yds) Kickoff: C.Little kicks 64 yards from JAX 35 to CAR 1, out of bounds.PENALTY on JAX-C.Little, Kickoff Out of Bounds, placed at CAR 40. [special_teams]
+- Q2 1:49 (-5 yds) Penalty: (Shotgun) B.Young pass short left to T.McMillan to JAX 44 for 16 yards (T.Campbell).PENALTY on CAR-A.Corbett, Ineligible Downfield Pass, 5 yards, enforced at CAR 40 - No Play. [nullified]
+- Q2 8:32 (16 yds) Kickoff: C.Little kicks 59 yards from JAX 35 to CAR 6. T.Etienne to CAR 22 for 16 yards (D.Lloyd; R.Lane). [special_teams]
+- Q3 12:07 (26 yds) Penalty: (Shotgun) B.Young pass incomplete deep right to T.McMillan [D.Lloyd].PENALTY on JAX-J.Jones, Defensive Pass Interference, 26 yards, enforced at JAX 40 - No Play. [nullified]
+- Q3 15:00 (25 yds) Kickoff: C.Little kicks 38 yards from JAX 35 to CAR 27, short of landing zone.PENALTY on JAX-C.Little, Kickoff Short of Landing Zone, placed at CAR 40. [special_teams]
+- Q3 1:56 (-5 yds) Penalty: (Shotgun) PENALTY on CAR-Y.Nijman, False Start, 5 yards, enforced at JAX 38 - No Play. [nullified]
+- Q3 4:52 (7 yds) Punt: S.Martin punts 56 yards to JAX 7, Center-J.Jansen. P.Washington to JAX 20 for 13 yards (D.Richardson; B.Tremayne).Penalty on JAX-L.Allen, Offensive Holding, offsetting, enforced at JAX 14.Penalty on CAR-N.Scourton, Unnecessary Roughness, offsetting. [special_teams]
+- Q4 5:08 (75 yds) Penalty: (Shotgun) B.Young pass short left intended for J.Sanders INTERCEPTED by A.Wingard [T.Walker] at JAX 25. A.Wingard for 75 yards, TOUCHDOWN NULLIFIED by Penalty.PENALTY on JAX-J.Lewis, Defensive Holding, 5 yards, enforced at JAX 32 - No Play. [nullified]
+
+**JAX Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q3 2:12 (10 yds) Pass Interception Return: (Shotgun) T.Lawrence pass deep left intended for T.Hunter INTERCEPTED by Ja.Horn at JAX 48. Ja.Horn to JAX 38 for 10 yards (J.Mundt). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 4:47 (13 yds) Kickoff: S.Martin kicks onside 13 yards from CAR 35 to CAR 48. B.Strange (didn't try to advance) to CAR 48 for no gain.
+
+- Excluded non-zero-yard plays (up to 15 shown):
+- Q1 0:36 (12 yds) Kickoff: R.Fitzgerald kicks 59 yards from CAR 35 to JAX 6. B.Tuten MUFFS catch, and recovers at JAX 10. B.Tuten to JAX 22 for 12 yards (A.Evans). [special_teams]
+- Q1 11:38 (-10 yds) Penalty: T.Bigsby right tackle to CAR 28 for 7 yards (T.Moehrig).PENALTY on JAX-J.Mundt, Offensive Holding, 10 yards, enforced at CAR 35 - No Play. [nullified]
+- Q1 13:06 (-10 yds) Penalty: T.Etienne up the middle to JAX 45 for 4 yards (T.Wallace).PENALTY on JAX-R.Hainsey, Offensive Holding, 10 yards, enforced at JAX 41 - No Play. [nullified]
+- Q1 15:00 (20 yds) Kickoff: R.Fitzgerald kicks 57 yards from CAR 35 to JAX 8. T.Bigsby to JAX 28 for 20 yards (B.Tremayne). [special_teams]
+- Q1 8:15 (35 yds) Field Goal Good: C.Little 35 yard field goal is GOOD, Center-R.Matiscik, Holder-L.Cooke. [special_teams]
+- Q2 0:01 (47 yds) Field Goal Good: Cam Little 47 Yd Field Goal  [special_teams]
+- Q2 0:13 (-5 yds) Penalty: PENALTY on JAX, Delay of Game, 5 yards, enforced at CAR 47 - No Play. [nullified]
+- Q3 3:24 (-10 yds) Penalty:  T.Lawrence scrambles up the middle to JAX 28 for 5 yards (B.Brown).
+PENALTY on JAX-P.Mekari, Offensive Holding, 10 yards, enforced at JAX 23 - No Play. [nullified]
+- Q3 8:59 (-10 yds) Punt: L.Cooke punts 54 yards to CAR 37, Center-R.Matiscik. D.Moore to CAR 41 for 4 yards (An.Johnson).PENALTY on CAR-C.Thornton, Offensive Holding, 10 yards, enforced at CAR 37. [special_teams]
+- Q4 0:24 (-1 yds) Rush: T.Lawrence kneels to 50 for -1 yards. [spike_kneel]
+- Q4 0:44 (-1 yds) Rush: T.Lawrence kneels to CAR 49 for -1 yards. ** Injury Update: CAR-B.Brown has returned to the game. [spike_kneel]
+- Q4 1:57 (28 yds) Field Goal Good: C.Little 28 yard field goal is GOOD, Center-R.Matiscik, Holder-L.Cooke. [special_teams]
+- Q4 4:47 (13 yds) Kickoff: S.Martin kicks onside 13 yards from CAR 35 to CAR 48. B.Strange (didn't try to advance) to CAR 48 for no gain. [special_teams]
+- Q4 7:09 (36 yds) Field Goal Good: C.Little 36 yard field goal is GOOD, Center-R.Matiscik, Holder-L.Cooke. [special_teams]
+- Q4 7:59 (-5 yds) Penalty:  PENALTY on JAX-W.Little, False Start, 5 yards, enforced at CAR 18 - No Play. [nullified]
+
+### 401772838 ATL @ CAR (TOΔ max 0, YdsΔ max 20, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| ATL | 332 | 332 | +0 | 3 | 3 | +0 | 23 | 23 | +0 |
+| CAR | 224 | 204 | -20 | 1 | 1 | +0 | 55 | 55 | +0 |
+
+**ATL Reconciliation Clues**
+
+- Windelta counted turnovers (3):
+- Q3 11:39 (11 yds) Interception Return Touchdown: (Shotgun) M.Penix pass short left intended for B.Robinson INTERCEPTED by C.Smith-Wade at ATL 11. C.Smith-Wade for 11 yards, TOUCHDOWN.PENALTY on CAR, Unsportsmanlike Conduct, 15 yards, enforced between downs. R.Fitzgerald extra point is GOOD, Center-J.Jansen, Holder-S.Martin. [interception]
+- Q3 1:34 (54 yds) Pass Interception Return:  (Shotgun) M.Penix pass short left intended for R.McCloud INTERCEPTED by M.Jackson at CAR 16. M.Jackson to ATL 30 for 54 yards (R.McCloud). [interception]
+- Q4 0:37 (0 yds) Fumble Recovery (Opponent): (Shotgun) N.Carter up the middle to CAR 32 for 9 yards (C.Rozeboom, L.Ransom). FUMBLES (L.Ransom), RECOVERED by CAR-D.Richardson at CAR 29. D.Richardson to CAR 29 for no gain (M.Bergeron). [fumble]
+
+- Excluded non-zero-yard plays (up to 8 shown):
+- Q1 10:54 (49 yds) Field Goal Missed: J.Romo 49 yard field goal is No Good, Wide Right, Center-L.McCullough, Holder-B.Pinion. [special_teams]
+- Q1 15:00 (15 yds) Kickoff: R.Fitzgerald kicks 53 yards from CAR 35 to ATL 12. R.McCloud to ATL 27 for 15 yards (M.Njongmeta; B.Martin-Scott). [special_teams]
+- Q1 3:33 (55 yds) Field Goal Missed: J.Romo 55 yard field goal is No Good, Wide Left, Center-L.McCullough, Holder-B.Pinion. [special_teams]
+- Q1 5:18 (-5 yds) Penalty: PENALTY on ATL, Delay of Game, 5 yards, enforced at ATL 35 - No Play. [nullified]
+- Q1 6:44 (17 yds) Kickoff: R.Fitzgerald kicks 56 yards from CAR 35 to ATL 9. R.McCloud to ATL 26 for 17 yards (L.Ransom). [special_teams]
+- Q3 11:39 (-1 yds) Kickoff: R.Fitzgerald kicks 56 yards from CAR 35 to ATL 9. N.Carter MUFFS catch, and recovers at ATL 11. N.Carter to ATL 10 for -1 yards (B.Martin-Scott). [special_teams]
+- Q4 10:48 (8 yds) Kickoff: R.Fitzgerald kicks 63 yards from CAR 35 to ATL 2. N.Brooks to ATL 10 for 8 yards (T.Incoom, B.Tremayne). [special_teams]
+- Q4 3:41 (19 yds) Kickoff: R.Fitzgerald kicks 62 yards from CAR 35 to ATL 3. N.Brooks to ATL 22 for 19 yards (M.Njongmeta). [special_teams]
+
+**CAR Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q1 5:14 (0 yds) Muffed Punt Recovery (Opponent): B.Pinion punts 41 yards to CAR 29, Center-L.McCullough. T.Etienne MUFFS catch, RECOVERED by ATL-D.Hellams at CAR 33. [muffed_kick]
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q1 0:10 (-5 yds) Penalty: (Punt formation) PENALTY on CAR-A.Evans, False Start, 5 yards, enforced at ATL 42 - No Play. [nullified]
+- Q1 1:25 (-10 yds) Penalty: C.Hubbard left tackle to ATL 37 for no gain (L.London).PENALTY on CAR-C.Mays, Offensive Holding, 10 yards, enforced at ATL 37 - No Play. [nullified]
+- Q2 1:22 (-10 yds) Penalty: (Shotgun) B.Young scrambles left tackle to CAR 45 for 9 yards (D.Deablo).PENALTY on CAR-D.Lewis, Offensive Holding, 10 yards, enforced at CAR 36 - No Play. [nullified]
+- Q2 5:24 (57 yds) Field Goal Good: R.Fitzgerald 57 yard field goal is GOOD, Center-J.Jansen, Holder-S.Martin. [special_teams]
+- Q2 5:53 (-5 yds) Penalty: (Shotgun) PENALTY on CAR-T.Moton, False Start, 5 yards, enforced at ATL 34 - No Play. [nullified]
+- Q3 15:00 (21 yds) Kickoff: B.Pinion kicks 57 yards from ATL 35 to CAR 8. R.Dowdle to CAR 29 for 21 yards (D.Malone; J.Bertrand). [special_teams]
+- Q3 4:48 (35 yds) Field Goal Good:  R.Fitzgerald 35 yard field goal is GOOD, Center-J.Jansen, Holder-S.Martin. [special_teams]
+- Q3 5:57 (5 yds) Penalty: (Shotgun) PENALTY on ATL-J.Walker, Neutral Zone Infraction, 5 yards, enforced at ATL 15 - No Play. [nullified]
+- Q3 7:19 (13 yds) Penalty: (Shotgun) B.Young pass incomplete short left to T.McMillan.PENALTY on ATL-D.Alford, Defensive Pass Interference, 13 yards, enforced at ATL 31 - No Play. [nullified]
+- Q4 0:30 (-1 yds) Rush: A.Dalton kneels to CAR 28 for -1 yards. [spike_kneel]
+- Q4 3:41 (41 yds) Field Goal Good: R.Fitzgerald 41 yard field goal is GOOD, Center-J.Jansen, Holder-S.Martin. [special_teams]
+
+### 401772842 GB @ CLE (TOΔ max 0, YdsΔ max 20, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| GB | 230 | 210 | -20 | 1 | 1 | +0 | 75 | 75 | +0 |
+| CLE | 221 | 221 | +0 | 1 | 1 | +0 | 90 | 90 | +0 |
+
+**GB Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q4 3:18 (25 yds) Pass Interception Return: (Shotgun) J.Love pass short left intended for D.Wicks INTERCEPTED by G.Delpit at GB 29. G.Delpit pushed ob at GB 4 for 25 yards (S.Rhyan). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 0:27 (43 yds) Blocked Field Goal: B.McManus 43 yard field goal is BLOCKED (S.Harris), Center-M.Orzech, Holder-D.Whelan, RECOVERED by CLV-G.Newsome at CLV 47.
+
+- Excluded non-zero-yard plays (up to 17 shown):
+- Q1 0:07 (-5 yds) Penalty: (Shotgun) PENALTY on GB-J.Morgan, False Start, 5 yards, enforced at CLV 16 - No Play. [nullified]
+- Q2 0:04 (-1 yds) Rush: J.Love kneels to GB 8 for -1 yards. [spike_kneel]
+- Q2 10:16 (-5 yds) Penalty: PENALTY on GB-R.Walker, False Start, 5 yards, enforced at GB 21 - No Play. [nullified]
+- Q2 14:53 (39 yds) Field Goal Good: B.McManus 39 yard field goal is GOOD, Center-M.Orzech, Holder-D.Whelan. [special_teams]
+- Q2 2:10 (3 yds) Punt: D.Whelan punts 41 yards to CLV 17, Center-M.Orzech. D.Carter to CLV 20 for 3 yards (Z.Anderson; C.Brooks). [special_teams]
+- Q2 5:00 (-5 yds) Penalty: PENALTY on GB-M.Heath, False Start, 5 yards, enforced at CLV 38 - No Play. [nullified]
+- Q2 5:45 (4 yds) Penalty: (No Huddle, Shotgun) J.Love pass incomplete short left to R.Doubs.PENALTY on CLV-M.Garrett, Defensive Offside, 4 yards, enforced at GB 48 - No Play. [nullified]
+- Q2 9:40 (6 yds) Penalty: (No Huddle) J.Love sacked at GB 11 for -7 yards (C.Schwesinger).Green Bay challenged the too many players on field ruling, and the play was REVERSED.(No Huddle) J.Love sacked at GB 11 for -7 yards (C.Schwesinger).PENALTY on CLV, Defensive Too Many Men on Field, 6 yards, enforced at GB 18 - No Play. [nullified]
+- Q3 10:28 (-5 yds) Penalty: (Shotgun) J.Love pass short left to D.Wicks to GB 38 for 12 yards (R.Hickman; C.Schwesinger).PENALTY on GB-R.Walker, Ineligible Downfield Pass, 5 yards, enforced at GB 26 - No Play. [nullified]
+- Q3 13:35 (-5 yds) Penalty: (Shotgun) PENALTY on GB-J.Morgan, False Start, 5 yards, enforced at GB 35 - No Play. [nullified]
+- Q3 15:00 (23 yds) Kickoff: A.Szmyt kicks 62 yards from CLV 35 to GB 3. S.Williams to GB 26 for 23 yards (E.Mascarenas-Arnold). [special_teams]
+- Q4 0:27 (43 yds) Blocked Field Goal: B.McManus 43 yard field goal is BLOCKED (S.Harris), Center-M.Orzech, Holder-D.Whelan, RECOVERED by CLV-G.Newsome at CLV 47. [special_teams]
+- Q4 15:00 (7 yds) Punt: D.Whelan punts 59 yards to CLV 8, Center-M.Orzech. D.Carter to CLV 20 for 12 yards (I.McDuffie).PENALTY on GB-T.Hopper, Illegal Formation, 5 yards, enforced at CLV 20. [special_teams]
+- Q4 1:12 (-5 yds) Penalty: PENALTY on GB-R.Walker, False Start, 5 yards, enforced at CLV 22 - No Play. [nullified]
+- Q4 2:52 (20 yds) Penalty: (Shotgun) J.Love pass incomplete deep left to R.Doubs (M.Harden).PENALTY on CLV-M.Harden, Defensive Pass Interference, 20 yards, enforced at GB 40 - No Play. [nullified]
+- Q4 3:01 (35 yds) Kickoff: A.Szmyt kicks 60 yards from CLV 35 to GB 5. S.Williams to GB 40 for 35 yards (J.Tryon; D.McMillon). [special_teams]
+- Q4 3:38 (-4 yds) Kickoff: A.Szmyt kicks 57 yards from CLV 35 to GB 8. S.Williams pushed ob at GB 34 for 26 yards (C.Schwesinger, R.Jenkins).PENALTY on GB-L.Van Ness, Offensive Holding, 10 yards, enforced at GB 28.Penalty on GB-K.Enagbare, Offensive Holding, declined. [special_teams]
+
+**CLE Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q2 0:12 (0 yds) Pass Interception Return: (Shotgun) J.Flacco pass deep left intended for J.Jeudy INTERCEPTED by X.McKinney [L.Van Ness] at GB 9. X.McKinney ran ob at GB 9 for no gain. [interception]
+
+- Excluded non-zero-yard plays (up to 16 shown):
+- Q1 15:00 (28 yds) Kickoff: B.McManus kicks 67 yards from GB 35 to CLV -2. K.Davis to CLV 26 for 28 yards (Z.Anderson). [special_teams]
+- Q1 7:26 (3 yds) Punt: C.Bojorquez punts 40 yards to GB 33, Center-R.Sunahara. M.Golden to GB 36 for 3 yards (K.Davis; B.Whiteheart). [special_teams]
+- Q1 9:14 (-10 yds) Penalty: (Shotgun) J.Flacco pass short middle to D.Njoku to CLV 32 for 11 yards (Q.Walker; E.Williams).PENALTY on CLV-C.Lucas, Offensive Holding, 10 yards, enforced at CLV 21 - No Play. [nullified]
+- Q2 0:25 (-10 yds) Penalty: (No Huddle, Shotgun) J.Flacco pass short right to J.Ford to GB 33 for 8 yards (X.McKinney, E.Cooper).PENALTY on CLV-W.Teller, Offensive Holding, 10 yards, enforced at GB 41 - No Play. [nullified]
+- Q2 11:02 (5 yds) Punt: C.Bojorquez punts 45 yards to GB 7, Center-R.Sunahara. M.Golden ran ob at GB 12 for 5 yards (R.Jenkins). [special_teams]
+- Q3 1:19 (-15 yds) Punt: C.Bojorquez punts 54 yards to end zone, Center-R.Sunahara, Touchback.PENALTY on CLV-D.McMillon, Unnecessary Roughness, 15 yards, enforced at GB 20. [special_teams]
+- Q3 3:23 (27 yds) Kickoff: B.McManus kicks 66 yards from GB 35 to CLV -1. D.Carter to CLV 26 for 27 yards (N.Niemann). [special_teams]
+- Q4 0:00 (55 yds) Field Goal Good: A.Szmyt 55 yard field goal is GOOD, Center-R.Sunahara, Holder-C.Bojorquez.Penalty on GB-K.Nixon, Defensive Offside, declined. [special_teams]
+- Q4 0:21 (5 yds) Penalty: (Shotgun) PENALTY on GB-M.Parsons, Neutral Zone Infraction, 5 yards, enforced at CLV 47 - No Play. [nullified]
+- Q4 12:38 (5 yds) Penalty: (Shotgun) J.Flacco pass short right to H.Fannin to CLV 36 for 11 yards (Q.Walker, E.Cooper).PENALTY on GB-M.Parsons, Defensive Offside, 5 yards, enforced at CLV 25 - No Play. [nullified]
+- Q4 12:53 (-10 yds) Penalty: (Shotgun) J.Flacco pass deep right to C.Tillman ran ob at GB 29 for 36 yards.PENALTY on CLV-C.Tillman, Offensive Pass Interference, 10 yards, enforced at CLV 35 - No Play. [nullified]
+- Q4 3:08 (3 yds) Penalty: (Shotgun) J.Flacco pass incomplete short left to C.Tillman.PENALTY on GB-E.Williams, Defensive Pass Interference, 3 yards, enforced at GB 4 - No Play. [nullified]
+- Q4 3:38 (35 yds) Field Goal Good: A.Szmyt 35 yard field goal is GOOD, Center-R.Sunahara, Holder-C.Bojorquez. [special_teams]
+- Q4 4:40 (-15 yds) Penalty: A.Huntington and L.Wypler reported in as eligible.  Q.Judkins left tackle to GB 1 for no gain (I.McDuffie; Q.Walker).PENALTY on CLV-W.Teller, Chop Block, 15 yards, enforced at GB 1 - No Play. [nullified]
+- Q4 4:49 (2 yds) Penalty: (Shotgun) J.Flacco pass incomplete short middle to J.Jeudy.PENALTY on GB-K.Nixon, Defensive Pass Interference, 2 yards, enforced at GB 3 - No Play. [nullified]
+- Q4 6:06 (5 yds) Penalty: (Shotgun) J.Flacco pass incomplete short left to C.Tillman.PENALTY on GB-J.Bullard, Defensive Holding, 5 yards, enforced at GB 13 - No Play. [nullified]
+
+### 401772856 ARI @ IND (TOΔ max 0, YdsΔ max 20, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| ARI | 400 | 380 | -20 | 1 | 1 | +0 | 65 | 65 | +0 |
+| IND | 355 | 355 | +0 | 1 | 1 | +0 | 40 | 40 | +0 |
+
+**ARI Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q2 13:17 (9 yds) Pass Interception Return: (Shotgun) J.Brissett pass short right intended for Z.Jones INTERCEPTED by M.Blackmon at IND 4. M.Blackmon ran ob at IND 13 for 9 yards (Z.Knight). [interception]
+
+- Excluded non-zero-yard plays (up to 14 shown):
+- Q1 11:01 (-5 yds) Penalty: (Shotgun) PENALTY on ARZ-G.Dortch, False Start, 5 yards, enforced at ARZ 35 - No Play. [nullified]
+- Q2 14:12 (-15 yds) Punt: P.O'Donnell punts 49 yards to IND 47, Center-A.Brewer. A.Gould to IND 47 for no gain (K.Crawford).PENALTY on IND-C.Lammons, Unsportsmanlike Conduct, 15 yards, enforced at IND 47. [special_teams]
+- Q2 15:00 (-3 yds) Penalty: (Shotgun) PENALTY on ARZ-W.Hernandez, False Start, 3 yards, enforced at ARZ 7 - No Play. [nullified]
+- Q2 1:56 (40 yds) Field Goal Good:  C.Ryland 40 yard field goal is GOOD, Center-A.Brewer, Holder-P.O'Donnell. [special_teams]
+- Q2 4:03 (-15 yds) Pass Incompletion: (Shotgun) J.Brissett pass incomplete short right to Z.Jones (M.Blackmon).PENALTY on ARZ-Z.Jones, Face Mask, 15 yards, enforced at IND 24 - No Play. [nullified]
+- Q2 5:23 (5 yds) Penalty: (Shotgun) PENALTY on IND-S.Ebukam, Encroachment, 5 yards, enforced at IND 40 - No Play. [nullified]
+- Q2 7:51 (24 yds) Kickoff: M.Badgley kicks 59 yards from IND 35 to ARZ 6. G.Dortch to ARZ 30 for 24 yards (B.Johnson). [special_teams]
+- Q3 15:00 (36 yds) Kickoff: M.Badgley kicks 62 yards from IND 35 to ARZ 3. G.Dortch to ARZ 39 for 36 yards (B.Johnson). [special_teams]
+- Q3 4:22 (15 yds) Pass Incompletion: J.Brissett pass incomplete short right to E.Higgins [N.Cross].PENALTY on IND-Z.Franklin, Unnecessary Roughness, 15 yards, enforced at ARZ 34 - No Play. [nullified]
+- Q3 4:31 (30 yds) Kickoff: M.Badgley kicks 61 yards from IND 35 to ARZ 4. G.Dortch to ARZ 34 for 30 yards (R.Thomas). [special_teams]
+- Q4 13:05 (6 yds) Pass Reception: (Shotgun) K.Beachum reported in as eligible.  J.Brissett pass short right to G.Dortch to ARZ 46 for 6 yards (C.Lammons).PENALTY on ARZ-Ev.Brown, Ineligible Downfield Pass, 5 yards, enforced at ARZ 40 - No Play. [nullified]
+- Q4 13:12 (25 yds) Kickoff: M.Badgley kicks 43 yards from IND 35 to ARZ 22, short of landing zone. ** Injury Update: ARZ-Z.Knight has returned to the game. PENALTY on IND-M.Badgley, Kickoff Short of Landing Zone, placed at ARZ 40. [special_teams]
+- Q4 4:32 (12 yds) Kickoff: M.Badgley kicks 64 yards from IND 35 to ARZ 1. G.Dortch to ARZ 25 for 24 yards (B.Johnson).PENALTY on ARZ-O.Pappoe, Face Mask, 12 yards, enforced at ARZ 25. [special_teams]
+- Q4 9:31 (44 yds) Field Goal Good: C.Ryland 44 yard field goal is GOOD, Center-A.Brewer, Holder-P.O'Donnell. [special_teams]
+
+**IND Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q2 14:03 (9 yds) Pass Interception Return: D.Jones pass short left intended for M.Alie-Cox INTERCEPTED by Ma.Wilson at IND 36. Ma.Wilson to IND 27 for 9 yards (M.Alie-Cox). [interception]
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q1 1:42 (24 yds) Kickoff: C.Ryland kicks 60 yards from ARZ 35 to IND 5. A.Gould to IND 29 for 24 yards (S.Fehoko). [special_teams]
+- Q1 8:04 (12 yds) Punt: R.Sanchez punts 53 yards to ARZ 32, Center-L.Rhodes. G.Dortch ran ob at ARZ 44 for 12 yards (C.Muma). [special_teams]
+- Q2 0:36 (-5 yds) Penalty: (Shotgun) PENALTY on IND, Delay of Game, 5 yards, enforced at IND 48 - No Play. [nullified]
+- Q2 1:56 (26 yds) Kickoff: C.Ryland kicks 62 yards from ARZ 35 to IND 3. A.Gould to IND 29 for 26 yards (A.Davis-Gaither). [special_teams]
+- Q3 1:22 (26 yds) Kickoff: C.Ryland kicks 58 yards from ARZ 35 to IND 7. A.Gould to IND 33 for 26 yards (C.Simon). [special_teams]
+- Q3 4:31 (45 yds) Field Goal Good: M.Badgley 45 yard field goal is GOOD, Center-L.Rhodes, Holder-R.Sanchez. [special_teams]
+- Q3 8:39 (27 yds) Kickoff: C.Ryland kicks 61 yards from ARZ 35 to IND 4. A.Dulin to IND 31 for 27 yards (D.Hall). [special_teams]
+- Q4 0:40 (-1 yds) Rush: D.Jones kneels to IND 27 for -1 yards. [spike_kneel]
+- Q4 0:41 (-1 yds) Rush:  D.Jones kneels to IND 28 for -1 yards. [spike_kneel]
+- Q4 8:08 (15 yds) Rush: (Shotgun) J.Taylor left end pushed ob at ARZ 48 for -4 yards (J.Thompson).PENALTY on ARZ-Z.Collins, Face Mask, 15 yards, enforced at ARZ 44 - No Play. [nullified]
+- Q4 9:31 (32 yds) Kickoff: C.Ryland kicks 63 yards from ARZ 35 to IND 2. A.Dulin to IND 34 for 32 yards (D.Hall; A.Davis-Gaither). [special_teams]
+
+### 401772867 NYG @ PHI (TOΔ max 0, YdsΔ max 20, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| NYG | 246 | 226 | -20 | 0 | 0 | +0 | 54 | 54 | +0 |
+| PHI | 427 | 427 | +0 | 0 | 0 | +0 | 30 | 30 | +0 |
+
+**NYG Reconciliation Clues**
+
+- Excluded non-zero-yard plays (up to 14 shown):
+- Q1 14:03 (-5 yds) Rush: (No Huddle) C.Skattebo left guard to NYG 38 for 3 yards (J.Hunt).PENALTY on NYG-D.Bellinger, Offensive Offside, 5 yards, enforced at NYG 35 - No Play. [nullified]
+- Q1 14:43 (30 yds) Kickoff: J.Elliott kicks 64 yards from PHI 35 to NYG 1. G.Olszewski to NYG 31 for 30 yards (C.Latu). [special_teams]
+- Q2 0:21 (-1 yds) Rush: J.Dart kneels to NYG 34 for -1 yards. [spike_kneel]
+- Q2 11:38 (31 yds) Kickoff: J.Elliott kicks 65 yards from PHI 35 to NYG 0. G.Olszewski to NYG 31 for 31 yards (S.Brown). [special_teams]
+- Q2 2:53 (47 yds) Field Goal Good: G.Gano 47 yard field goal is GOOD, Center-C.Kreiter, Holder-J.Gillan. [special_teams]
+- Q2 8:01 (5 yds) Penalty: (Punt formation) PENALTY on PHI-C.Latu, Neutral Zone Infraction, 5 yards, enforced at NYG 42 - No Play. [nullified]
+- Q2 8:27 (-5 yds) Penalty: (Shotgun) PENALTY on NYG, Delay of Game, 5 yards, enforced at NYG 47 - No Play. [nullified]
+- Q3 0:19 (34 yds) Field Goal Good: G.Gano 34 yard field goal is GOOD, Center-C.Kreiter, Holder-J.Gillan. [special_teams]
+- Q3 13:22 (17 yds) Punt: J.Gillan punts 58 yards to PHI 7, Center-C.Kreiter. X.Gipson to PHI 24 for 17 yards (N.Hewitt). [special_teams]
+- Q3 15:00 (33 yds) Kickoff: J.Elliott kicks 63 yards from PHI 35 to NYG 2. G.Olszewski to NYG 35 for 33 yards (C.DeJean; K.Ringo). [special_teams]
+- Q3 3:49 (-5 yds) Penalty: (No Huddle, Shotgun) PENALTY on NYG-G.Van Roten, False Start, 5 yards, enforced at NYG 49 - No Play. [nullified]
+- Q3 7:03 (20 yds) Kickoff: J.Elliott kicks 60 yards from PHI 35 to NYG 5. D.Singletary to NYG 25 for 20 yards (W.Shipley). [special_teams]
+- Q4 11:17 (31 yds) Kickoff: J.Elliott kicks 63 yards from PHI 35 to NYG 2. D.Singletary to NYG 33 for 31 yards (W.Shipley). [special_teams]
+- Q4 9:46 (-10 yds) Pass Reception: (Shotgun) J.Dart pass deep right to D.Slayton for 68 yards, TOUCHDOWN NULLIFIED by Penalty.PENALTY on NYG-D.Slayton, Offensive Pass Interference, 10 yards, enforced at NYG 32 - No Play. [nullified]
+
+**PHI Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 2:44 (10 yds) Kickoff: J.Gillan kicks onside 10 yards from NYG 35 to NYG 45. D.Goedert (didn't try to advance) to NYG 45 for no gain.
+
+- Excluded non-zero-yard plays (up to 14 shown):
+- Q1 0:02 (-5 yds) Penalty: (No Huddle, Shotgun) PENALTY on PHI-L.Dickerson, False Start, 5 yards, enforced at NYG 41 - No Play. [nullified]
+- Q1 10:44 (15 yds) Pass Reception: J.Hurts pass short middle to D.Smith to NYG 37 for 15 yards (C.Flott).PENALTY on PHI-L.Johnson, Offensive Holding, 10 yards, enforced at PHI 48 - No Play. [nullified]
+- Q1 2:56 (41 yds) Kickoff: J.Gillan kicks 59 yards from NYG 35 to PHI 6. W.Shipley to PHI 47 for 41 yards (J.Gillan). [special_teams]
+- Q1 6:15 (58 yds) Field Goal Missed: J.Elliott 58 yard field goal is No Good, Hit Right Upright, Center-C.Adomitis, Holder-B.Mann. [special_teams]
+- Q1 6:33 (-5 yds) Penalty: (Shotgun) PENALTY on PHI-B.Toth, False Start, 5 yards, enforced at NYG 35 - No Play. [nullified]
+- Q2 0:26 (5 yds) Penalty: (No Huddle, Shotgun) PENALTY on NYG-K.Thibodeaux, Neutral Zone Infraction, 5 yards, enforced at NYG 11 - No Play. [nullified]
+- Q2 2:53 (32 yds) Kickoff: J.Gillan kicks 55 yards from NYG 35 to PHI 10. W.Shipley pushed ob at PHI 42 for 32 yards (V.Dimukeje). [special_teams]
+- Q3 0:19 (26 yds) Kickoff: J.Gillan kicks 63 yards from NYG 35 to PHI 2. W.Shipley to PHI 28 for 26 yards (N.Hewitt; D.Belton). [special_teams]
+- Q3 10:32 (-5 yds) Penalty: F.Johnson reported in as eligible.  PENALTY on PHI, Delay of Game, 5 yards, enforced at NYG 39 - No Play. [nullified]
+- Q3 7:03 (40 yds) Field Goal Good: J.Elliott 40 yard field goal is GOOD, Center-C.Adomitis, Holder-B.Mann. [special_teams]
+- Q3 9:26 (14 yds) Pass Incompletion: (Shotgun) J.Hurts pass incomplete short left to D.Cooper.PENALTY on NYG-K.Black, Defensive Pass Interference, 14 yards, enforced at NYG 40 - No Play. [nullified]
+- Q4 0:39 (-1 yds) Rush: T.McKee kneels to NYG 30 for -1 yards. [spike_kneel]
+- Q4 1:19 (-1 yds) Rush: T.McKee kneels to NYG 29 for -1 yards. [spike_kneel]
+- Q4 2:44 (10 yds) Kickoff: J.Gillan kicks onside 10 yards from NYG 35 to NYG 45. D.Goedert (didn't try to advance) to NYG 45 for no gain. [special_teams]
+
+### 401772870 DEN @ HOU (TOΔ max 0, YdsΔ max 20, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| DEN | 271 | 271 | +0 | 2 | 2 | +0 | 41 | 41 | +0 |
+| HOU | 268 | 248 | -20 | 0 | 0 | +0 | 29 | 29 | +0 |
+
+**DEN Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q2 0:46 (0 yds) Muffed Punt Recovery (Opponent): T.Townsend punts 42 yards to DEN 25, Center-A.Brinkman. M.Bandy MUFFS catch, RECOVERED by HST-J.Smith at DEN 30. [muffed_kick]
+- Q2 12:43 (0 yds) Pass Interception Return: (Shotgun) B.Nix pass deep left intended for C.Sutton INTERCEPTED by C.Bullock [D.Hunter] at HST 49. C.Bullock ran ob at HST 49 for no gain. [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q1 4:34 (0 yds) Blocked Field Goal: W.Lutz 51 yard field goal is BLOCKED (D.Autry), Center-M.Fraboni, Holder-J.Crawshaw.
+
+- Excluded non-zero-yard plays (up to 7 shown):
+- Q2 7:11 (26 yds) Kickoff: K.Fairbairn kicks 61 yards from HST 35 to DEN 4. R.Harvey to DEN 30 for 26 yards (J.Hansen; D.Taylor). [special_teams]
+- Q3 12:25 (45 yds) Punt: J.Crawshaw punts 55 yards to HST 8, Center-M.Fraboni. J.Noel pushed ob at DEN 47 for 45 yards (D.Tillman; J.Strnad). [special_teams]
+- Q3 15:00 (22 yds) Kickoff: K.Fairbairn kicks 63 yards from HST 35 to DEN 2. T.Badie to DEN 24 for 22 yards (D.Ogunbowale; B.Brooks). [special_teams]
+- Q3 7:07 (-4 yds) Punt: J.Crawshaw punts 51 yards to HST 18, Center-M.Fraboni. J.Noel ran ob at HST 29 for 11 yards (M.Fraboni). HST-D.Taylor was injured during the play. PENALTY on DEN-M.Fraboni, Unnecessary Roughness, 15 yards, enforced at HST 29. [special_teams]
+- Q3 9:18 (28 yds) Kickoff: K.Fairbairn kicks 61 yards from HST 35 to DEN 4. R.Harvey to DEN 32 for 28 yards (J.Hansen). [special_teams]
+- Q4 0:00 (34 yds) Field Goal Good: W.Lutz 34 yard field goal is GOOD, Center-M.Fraboni, Holder-J.Crawshaw.Penalty on HST-T.Smith, Defensive Offside, declined. [special_teams]
+- Q4 9:57 (-4 yds) Punt:  J.Crawshaw punts 58 yards to HST 20, Center-M.Fraboni. J.Noel pushed ob at HST 26 for 6 yards (J.Elliss).
+PENALTY on DEN-J.Skinner, Offensive Holding, 10 yards, enforced at HST 26. [special_teams]
+
+**HOU Reconciliation Clues**
+
+- Excluded non-zero-yard plays (up to 15 shown):
+- Q1 0:04 (23 yds) Field Goal Good: K.Fairbairn 23 yard field goal is GOOD, Center-A.Brinkman, Holder-T.Townsend. [special_teams]
+- Q1 0:24 (-4 yds) Penalty: (Run formation) B.Fisher reported in as eligible.  PENALTY on HST-A.Ersery, False Start, 4 yards, enforced at DEN 1 - No Play. [nullified]
+- Q1 15:00 (36 yds) Kickoff: W.Lutz kicks 65 yards from DEN 35 to HST 0. T.Smith to HST 36 for 36 yards (D.Key). [special_teams]
+- Q1 7:29 (51 yds) Field Goal Missed: K.Fairbairn 51 yard field goal is No Good, Wide Right, Center-A.Brinkman, Holder-T.Townsend. [special_teams]
+- Q2 0:00 (40 yds) Field Goal Good: K.Fairbairn 40 yard field goal is GOOD, Center-A.Brinkman, Holder-T.Townsend. ** Injury Update: DEN-Z.Allen has returned to the game. [special_teams]
+- Q2 13:43 (10 yds) Punt: T.Townsend punts 67 yards to DEN 4, Center-A.Brinkman. M.Bandy to DEN 14 for 10 yards (T.Smith; J.Hill). [special_teams]
+- Q2 1:52 (38 yds) Field Goal Good: K.Fairbairn 38 yard field goal is GOOD, Center-A.Brinkman, Holder-T.Townsend. [special_teams]
+- Q2 4:52 (25 yds) Kickoff: W.Lutz kicks 63 yards from DEN 35 to HST 2. B.Berrios to HST 27 for 25 yards (D.Tillman). [special_teams]
+- Q2 7:11 (41 yds) Field Goal Good: K.Fairbairn 41 yard field goal is GOOD, Center-A.Brinkman, Holder-T.Townsend. [special_teams]
+- Q2 8:41 (1 yds) Pass Reception: (Shotgun) D.Mills pass short middle to N.Collins ran ob at DEN 1 for 1 yard (B.Jones).PENALTY on HST-X.Hutchinson, Offensive Holding, 10 yards, enforced at DEN 2 - No Play. [nullified]
+- Q3 9:18 (41 yds) Field Goal Good: K.Fairbairn 41 yard field goal is GOOD, Center-A.Brinkman, Holder-T.Townsend. [special_teams]
+- Q4 10:53 (12 yds) Punt: T.Townsend punts 49 yards to DEN 8, Center-A.Brinkman. M.Bandy to DEN 20 for 12 yards (T.Smith; J.Smith). [special_teams]
+- Q4 11:02 (-5 yds) Penalty: (Shotgun) PENALTY on HST, Delay of Game, 5 yards, enforced at HST 48 - No Play. [nullified]
+- Q4 12:28 (24 yds) Kickoff: W.Lutz kicks 60 yards from DEN 35 to HST 5. B.Berrios to HST 29 for 24 yards (D.Key). [special_teams]
+- Q4 1:00 (8 yds) Punt:  T.Townsend punts 55 yards to DEN 28, Center-A.Brinkman. M.Bandy to DEN 36 for 8 yards (J.Hansen). [special_teams]
+
+### 401772875 NYG @ CHI (TOΔ max 0, YdsΔ max 20, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| NYG | 431 | 411 | -20 | 1 | 1 | +0 | 69 | 69 | +0 |
+| CHI | 391 | 391 | +0 | 0 | 0 | +0 | 25 | 25 | +0 |
+
+**NYG Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q3 5:14 (-1 yds) Fumble Recovery (Opponent): (Shotgun) J.Dart left end to CHI 21 for 7 yards (C.Gardner-Johnson). FUMBLES (C.Gardner-Johnson), RECOVERED by CHI-N.Wright at CHI 17. N.Wright to CHI 16 for -1 yards (D.Bellinger). [fumble]
+
+- Excluded non-zero-yard plays (up to 8 shown):
+- Q1 3:44 (13 yds) Punt: J.Gillan punts 54 yards to CHI 15, Center-C.Kreiter. D.Duvernay to CHI 28 for 13 yards (Z.Barnes). [special_teams]
+- Q2 0:03 (32 yds) Field Goal Good: Y.Koo 32 yard field goal is GOOD, Center-C.Kreiter, Holder-J.Gillan. [special_teams]
+- Q2 7:59 (15 yds) Penalty: J.Dart sacked at NYG 47 for -10 yards (A.Billings).PENALTY on CHI-N.Sewell, Roughing the Passer, 15 yards, enforced at CHI 43 - No Play. [nullified]
+- Q3 0:34 (-10 yds) Penalty: J.Dart pass short left to W.Robinson to NYG 23 for 3 yards (Ch.Williams).PENALTY on NYG-R.McCloud, Offensive Pass Interference, 10 yards, enforced at NYG 20 - No Play.Penalty on NYG-A.Thomas, Ineligible Downfield Pass, declined. [nullified]
+- Q3 15:00 (39 yds) Kickoff: C.Santos kicks 60 yards from CHI 35 to NYG 5. D.Banks to NYG 44 for 39 yards (T.Stevenson; J.Owens). [special_teams]
+- Q4 10:19 (19 yds) Field Goal Good: Y.Koo 19 yard field goal is GOOD, Center-C.Kreiter, Holder-J.Gillan.Penalty on CHI, Defensive Too Many Men on Field, declined. [special_teams]
+- Q4 7:58 (-5 yds) Penalty: (Shotgun) PENALTY on NYG-J.Runyan, False Start, 5 yards, enforced at CHI 38 - No Play. [nullified]
+- Q4 7:58 (-10 yds) Penalty: (Shotgun) T.Tracy right tackle to CHI 41 for 2 yards (J.Brisker).PENALTY on NYG-A.Schlottmann, Offensive Holding, 10 yards, enforced at CHI 43 - No Play. [nullified]
+
+**CHI Reconciliation Clues**
+
+- Excluded non-zero-yard plays (up to 12 shown):
+- Q1 15:00 (25 yds) Kickoff: J.Gillan kicks 64 yards from NYG 35 to CHI 1, out of bounds.PENALTY on NYG-J.Gillan, Kickoff Out of Bounds, placed at CHI 40. [special_teams]
+- Q1 8:45 (5 yds) Penalty: (Shotgun) C.Williams sacked at NYG 47 for -1 yards (sack split by D.Lawrence and A.Carter).PENALTY on NYG-C.Flott, Defensive Holding, 5 yards, enforced at NYG 46 - No Play. [nullified]
+- Q2 0:03 (25 yds) Kickoff: J.Gillan kicks 44 yards from NYG 35 to CHI 21, short of landing zone.PENALTY on NYG-J.Gillan, Kickoff Short of Landing Zone, placed at CHI 40. [special_teams]
+- Q2 0:03 (-1 yds) Rush: C.Williams kneels to CHI 39 for -1 yards. [spike_kneel]
+- Q2 3:55 (-5 yds) Penalty: (Shotgun) PENALTY on CHI-D.Wright, False Start, 5 yards, enforced at 50 - No Play. [nullified]
+- Q3 0:34 (22 yds) Field Goal Good: C.Santos 22 yard field goal is GOOD, Center-S.Daly, Holder-T.Taylor. [special_teams]
+- Q3 12:17 (23 yds) Kickoff: Y.Koo kicks 63 yards from NYG 35 to CHI 2. D.Duvernay to CHI 25 for 23 yards (D.Belton; R.Payton). [special_teams]
+- Q3 2:01 (19 yds) Penalty: C.Williams pass incomplete deep right to R.Odunze.PENALTY on NYG-D.Banks, Defensive Pass Interference, 19 yards, enforced at NYG 29 - No Play. [nullified]
+- Q3 3:40 (5 yds) Penalty: O.Trapilo reported in as eligible.  C.Williams sacked at CHI 36 for -1 yards (A.Carter).PENALTY on NYG-D.Banks, Illegal Contact, 5 yards, enforced at CHI 37 - No Play. [nullified]
+- Q4 0:38 (-1 yds) Rush:  C.Williams kneels to NYG 47 for -1 yards. [spike_kneel]
+- Q4 10:19 (23 yds) Kickoff: Y.Koo kicks 52 yards from NYG 35 to CHI 13. D.Duvernay to CHI 36 for 23 yards (J.Bernard-Converse; Y.Koo). [special_teams]
+- Q4 5:12 (5 yds) Penalty: (Shotgun) C.Williams pass incomplete deep middle to O.Zaccheaus.PENALTY on NYG-A.Phillips, Illegal Contact, 5 yards, enforced at CHI 46 - No Play. [nullified]
+
+### 401772881 HOU @ TEN (TOΔ max 0, YdsΔ max 20, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| HOU | 315 | 295 | -20 | 0 | 0 | +0 | 53 | 53 | +0 |
+| TEN | 229 | 211 | -18 | 1 | 1 | +0 | 62 | 62 | +0 |
+
+**HOU Reconciliation Clues**
+
+- Excluded non-zero-yard plays (up to 9 shown):
+- Q1 0:02 (-10 yds) Penalty: W.Marks left guard to 50 for 4 yards (C.Barton).PENALTY on HST-T.Brown, Offensive Holding, 10 yards, enforced at HST 46 - No Play. [nullified]
+- Q1 0:50 (23 yds) Kickoff: J.Slye kicks 55 yards from TEN 35 to HST 10. J.Noel pushed ob at HST 33 for 23 yards (D.Baker). [special_teams]
+- Q1 10:11 (31 yds) Penalty: M.Wright 31 yard field goal is No Good, Hit Right Upright, Center-A.Brinkman, Holder-T.Townsend.PENALTY on TEN-J.Simmons, Unnecessary Roughness, 7 yards, enforced at TEN 13 - No Play. [nullified]
+- Q1 15:00 (28 yds) Kickoff: J.Slye kicks 58 yards from TEN 35 to HST 7. J.Noel to HST 35 for 28 yards (K.Brooks; K.Winston). [special_teams]
+- Q3 1:32 (41 yds) Field Goal Good:  M.Wright 41 yard field goal is GOOD, Center-A.Brinkman, Holder-T.Townsend. [special_teams]
+- Q3 5:54 (14 yds) Penalty: D.Mills pass incomplete deep left to J.Higgins. ** Injury Update: HST-T.Howard has returned to the game. PENALTY on TEN-J.Armour-Davis, Defensive Pass Interference, 14 yards, enforced at HST 14 - No Play. [nullified]
+- Q4 0:00 (35 yds) Field Goal Good:  M.Wright 35 yard field goal is GOOD, Center-A.Brinkman, Holder-T.Townsend. [special_teams]
+- Q4 11:59 (43 yds) Field Goal Good: M.Wright 43 yard field goal is GOOD, Center-A.Brinkman, Holder-T.Townsend. [special_teams]
+- Q4 9:40 (1 yds) Punt: T.Townsend punts 45 yards to TEN 11, Center-A.Brinkman. M.Kinsey ran ob at TEN 12 for 1 yard. [special_teams]
+
+**TEN Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q4 13:37 (0 yds) Sack Opp Fumble Recovery: (Shotgun) C.Ward sacked at TEN 36 for -6 yards (W.Anderson). FUMBLES (W.Anderson) [W.Anderson], RECOVERED by HST-W.Anderson at TEN 34. [fumble]
+
+- Excluded non-zero-yard plays (up to 16 shown):
+- Q1 0:50 (56 yds) Field Goal Good: J.Slye 56 yard field goal is GOOD, Center-M.Cox, Holder-J.Hekker. [special_teams]
+- Q1 2:24 (-5 yds) Penalty: PENALTY on TEN-J.Latham, False Start, 5 yards, enforced at HST 33 - No Play. [nullified]
+- Q1 4:52 (-5 yds) Penalty: (Shotgun) PENALTY on TEN-L.Cushenberry, False Start, 5 yards, enforced at TEN 38 - No Play. [nullified]
+- Q1 5:15 (-5 yds) Penalty: (Shotgun) PENALTY on TEN-J.Latham, False Start, 5 yards, enforced at TEN 43 - No Play. [nullified]
+- Q2 0:20 (2 yds) Punt: J.Hekker punts 45 yards to HST 33, Center-M.Cox. J.Noel to HST 35 for 2 yards (K.Brooks). [special_teams]
+- Q2 10:00 (-10 yds) Punt: J.Hekker punts 52 yards to HST 24, Center-M.Cox. J.Noel pushed ob at HST 32 for 8 yards (M.Robinson).PENALTY on HST-T.Smith, Offensive Holding, 10 yards, enforced at HST 24. [special_teams]
+- Q2 10:29 (-5 yds) Penalty: (Shotgun) PENALTY on TEN-G.Helm, False Start, 5 yards, enforced at TEN 29 - No Play. [nullified]
+- Q2 1:56 (2 yds) Punt: J.Hekker punts 43 yards to HST 36, Center-M.Cox. J.Noel to HST 38 for 2 yards (K.Brooks). [special_teams]
+- Q3 10:45 (47 yds) Field Goal Good:  J.Slye 47 yard field goal is GOOD, Center-M.Cox, Holder-J.Hekker. [special_teams]
+- Q3 1:32 (25 yds) Kickoff: M.Wright kicks 64 yards from HST 35 to TEN 1. J.Chestnut to TEN 26 for 25 yards (D.Horton). [special_teams]
+- Q3 7:21 (24 yds) Kickoff: M.Wright kicks 59 yards from HST 35 to TEN 6. J.Chestnut to TEN 30 for 24 yards (D.Horton). [special_teams]
+- Q4 10:38 (11 yds) Punt: J.Hekker punts 54 yards to HST 27, Center-M.Cox. J.Noel pushed ob at HST 38 for 11 yards (D.Martin-Robinson). [special_teams]
+- Q4 2:02 (-5 yds) Penalty: (No Huddle, Shotgun) PENALTY on TEN-J.Latham, False Start, 5 yards, enforced at HST 32 - No Play. [nullified]
+- Q4 2:54 (18 yds) Pass Incompletion: (Shotgun) C.Ward pass incomplete deep right to V.Jefferson.PENALTY on HST-D.Stingley, Defensive Pass Interference, 18 yards, enforced at TEN 17 - No Play. [nullified]
+- Q4 7:23 (23 yds) Punt: J.Hekker punts 62 yards to HST 23, Center-M.Cox. J.Noel pushed ob at HST 46 for 23 yards (J.Bachie). [special_teams]
+- Q4 9:32 (-6 yds) Pass Incompletion: (Shotgun) C.Ward pass incomplete short right.PENALTY on TEN-J.Latham, Offensive Holding, 6 yards, enforced at TEN 12 - No Play. [nullified]
+
+### 401772901 LAR @ ARI (TOΔ max 0, YdsΔ max 20, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| LAR | 530 | 510 | -20 | 0 | 0 | +0 | 30 | 30 | +0 |
+| ARI | 314 | 314 | +0 | 1 | 1 | +0 | 42 | 42 | +0 |
+
+**LAR Reconciliation Clues**
+
+- Excluded non-zero-yard plays (up to 15 shown):
+- Q1 12:05 (30 yds) Kickoff: C.Ryland kicks 63 yards from ARZ 35 to LA 2. R.Rivers to LA 32 for 30 yards (C.Tindall; T.Sherfield). [special_teams]
+- Q1 7:40 (26 yds) Field Goal Good: H.Mevis 26 yard field goal is GOOD, Center-J.McQuaide, Holder-E.Evans. [special_teams]
+- Q2 0:49 (-5 yds) Penalty: (Shotgun) PENALTY on LA-A.Jackson, False Start, 5 yards, enforced at ARZ 44 - No Play. [nullified]
+- Q2 8:34 (30 yds) Kickoff: C.Ryland kicks 60 yards from ARZ 35 to LA 5. J.Whittington to LA 35 for 30 yards (E.Higgins; C.Tindall). [special_teams]
+- Q3 10:25 (7 yds) Penalty: M.Stafford pass incomplete short left to D.Allen.PENALTY on ARZ-J.Burch, Face Mask, 7 yards, enforced at ARZ 13 - No Play. [nullified]
+- Q3 12:28 (5 yds) Penalty: (Shotgun) M.Stafford pass incomplete deep right to D.Adams.PENALTY on ARZ-W.Johnson, Illegal Contact, 5 yards, enforced at ARZ 48 - No Play. [nullified]
+- Q3 15:00 (24 yds) Kickoff: C.Ryland kicks 63 yards from ARZ 35 to LA 2. J.Whittington to LA 26 for 24 yards (T.Sherfield). [special_teams]
+- Q3 1:43 (-5 yds) Penalty: (Shotgun) PENALTY on LA-T.Ferguson, False Start, 5 yards, enforced at LA 46 - No Play. [nullified]
+- Q3 4:23 (-10 yds) Punt: E.Evans punts 45 yards to end zone, Center-J.McQuaide, Touchback.PENALTY on ARZ-K.Clark, Offensive Holding, 10 yards, enforced at ARZ 20. [special_teams]
+- Q4 0:40 (-1 yds) Rush: J.Garoppolo kneels to LA 39 for -1 yards. [spike_kneel]
+- Q4 10:20 (-5 yds) Penalty: PENALTY on LA, Delay of Game, 5 yards, enforced at LA 46 - No Play. [nullified]
+- Q4 10:20 (-5 yds) Penalty: R.Rivers up the middle to LA 43 for 2 yards (D.Tomlinson).PENALTY on LA, Illegal Shift, 5 yards, enforced at LA 41 - No Play. [nullified]
+- Q4 11:08 (25 yds) Kickoff: C.Ryland kicks 34 yards from ARZ 35 to LA 31, short of landing zone.PENALTY on ARZ-C.Ryland, Kickoff Short of Landing Zone, placed at LA 40. [special_teams]
+- Q4 1:21 (-2 yds) Rush: J.Garoppolo kneels to LA 40 for -2 yards. [spike_kneel]
+- Q4 2:00 (-1 yds) Rush: J.Garoppolo kneels to LA 42 for -1 yards. [spike_kneel]
+
+**ARI Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q3 0:24 (0 yds) Pass Interception Return: (Shotgun) J.Brissett pass short right intended for M.Wilson INTERCEPTED by N.Landman at ARZ 31. N.Landman to ARZ 31 for no gain (M.Wilson). [interception]
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q1 0:45 (-10 yds) Penalty: Z.Knight up the middle to ARZ 25 for 3 yards (N.Landman).PENALTY on ARZ-J.Gaines, Offensive Holding, 10 yards, enforced at ARZ 22 - No Play. [nullified]
+- Q1 15:00 (33 yds) Kickoff: E.Evans kicks 65 yards from LA 35 to ARZ 0. J.Brooks to ARZ 33 for 33 yards (S.Dolac). [special_teams]
+- Q1 1:29 (21 yds) Kickoff: E.Evans kicks 68 yards from LA 35 to ARZ -3. J.Brooks to ARZ 18 for 21 yards (O.Speights). [special_teams]
+- Q1 5:08 (12 yds) Punt: M.Haack punts 57 yards to LA 14, Center-A.Brewer. X.Smith to LA 26 for 12 yards (O.Pappoe). [special_teams]
+- Q1 6:15 (-5 yds) Penalty: (Shotgun) PENALTY on ARZ-E.Higgins, False Start, 5 yards, enforced at ARZ 31 - No Play. [nullified]
+- Q2 0:01 (63 yds) Field Goal Missed: C.Ryland 63 yard field goal is No Good, Wide Right, Center-A.Brewer, Holder-M.Haack. [special_teams]
+- Q2 8:34 (38 yds) Field Goal Good: C.Ryland 38 yard field goal is GOOD, Center-A.Brewer, Holder-M.Haack. [special_teams]
+- Q3 0:12 (12 yds) Kickoff: E.Evans kicks 66 yards from LA 35 to ARZ -1. T.Sherfield MUFFS catch, recovered by ARZ-J.Brooks at ARZ 8. J.Brooks pushed ob at ARZ 20 for 12 yards (D.Kendrick). [special_teams]
+- Q3 3:32 (-5 yds) Penalty: (Shotgun) PENALTY on ARZ-P.Johnson, False Start, 5 yards, enforced at ARZ 14 - No Play. [nullified]
+- Q3 9:20 (13 yds) Punt: M.Haack punts 57 yards to LA 3, Center-A.Brewer. X.Smith to LA 16 for 13 yards (A.Brewer; P.Brown). [special_teams]
+- Q4 14:09 (21 yds) Punt: M.Haack punts 48 yards to LA 31, Center-A.Brewer. X.Smith pushed ob at ARZ 48 for 21 yards (C.Tindall). [special_teams]
+
+### 401772909 DET @ LAR (TOΔ max 0, YdsΔ max 20, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| DET | 396 | 376 | -20 | 0 | 0 | +0 | 25 | 25 | +0 |
+| LAR | 519 | 513 | -6 | 1 | 1 | +0 | 8 | 8 | +0 |
+
+**DET Reconciliation Clues**
+
+- Excluded non-zero-yard plays (up to 6 shown):
+- Q1 11:16 (43 yds) Field Goal Missed: J.Bates 43 yard field goal is No Good, Wide Left, Center-H.Hatten, Holder-J.Fox. [special_teams]
+- Q2 12:04 (24 yds) Field Goal Good: J.Bates 24 yard field goal is GOOD, Center-H.Hatten, Holder-J.Fox. [special_teams]
+- Q3 2:26 (13 yds) Kickoff: E.Evans kicks 56 yards from LA 35 to DET 9. T.Kennedy to DET 22 for 13 yards (T.Reeder). [special_teams]
+- Q3 8:33 (-10 yds) Penalty: J.Gibbs up the middle to DET 47 for 7 yards (K.Curl; P.Ford).PENALTY on DET-G.Ricci, Offensive Holding, 10 yards, enforced at DET 40 - No Play. [nullified]
+- Q4 2:50 (3 yds) Penalty: (Shotgun) J.Goff pass incomplete short left to A.St. Brown [J.Verse].PENALTY on LA-E.Forbes, Defensive Pass Interference, 3 yards, enforced at LA 4 - No Play. [nullified]
+- Q4 7:54 (48 yds) Field Goal Good: J.Bates 48 yard field goal is GOOD, Center-H.Hatten, Holder-J.Fox. [special_teams]
+
+**LAR Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q1 8:24 (58 yds) Pass Interception Return: (Shotgun) M.Stafford pass short right intended for C.Parkinson INTERCEPTED by A.Hutchinson at DET 25. A.Hutchinson to LA 17 for 58 yards (C.Parkinson). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q3 9:16 (0 yds) Fumble Recovery (Own): (Shotgun) M.Stafford to DET 32 for -6 yards. FUMBLES, and recovers at DET 38. M.Stafford pass incomplete short right to J.Whittington [A.Muhammad].
+
+- Excluded non-zero-yard plays (up to 12 shown):
+- Q1 6:33 (5 yds) Penalty: M.Stafford pass incomplete deep right to P.Nacua.PENALTY on DET-E.Hallett, Defensive Holding, 5 yards, enforced at LA 44 - No Play. [nullified]
+- Q1 8:07 (23 yds) Kickoff: J.Bates kicks 60 yards from DET 35 to LA 5. J.Whittington to LA 28 for 23 yards (S.Vaki). [special_teams]
+- Q2 0:00 (37 yds) Field Goal Good: H.Mevis 37 yard field goal is GOOD, Center-J.McQuaide, Holder-E.Evans. [special_teams]
+- Q2 0:30 (32 yds) Kickoff: J.Bates kicks 63 yards from DET 35 to LA 2. R.Rivers to LA 34 for 32 yards (K.Dorsey; G.Stuard). [special_teams]
+- Q2 12:04 (28 yds) Kickoff: J.Bates kicks 62 yards from DET 35 to LA 3. R.Rivers to LA 31 for 28 yards (T.Nowaske; D.Thomas). [special_teams]
+- Q2 3:21 (15 yds) Punt: E.Evans punts 50 yards to DET 5, Center-J.McQuaide. K.Raymond to DET 20 for 15 yards (B.Corum). [special_teams]
+- Q2 6:12 (23 yds) Kickoff: J.Bates kicks 60 yards from DET 35 to LA 5. J.Whittington to LA 28 for 23 yards (G.Stuard). [special_teams]
+- Q3 15:00 (25 yds) Kickoff: J.Bates kicks 57 yards from DET 35 to LA 8. J.Whittington to LA 33 for 25 yards (S.Vaki; A.Muhammad). [special_teams]
+- Q3 9:07 (44 yds) Field Goal Good: H.Mevis 44 yard field goal is GOOD, Center-J.McQuaide, Holder-E.Evans. [special_teams]
+- Q4 0:23 (-5 yds) Penalty: (Run formation) PENALTY on LA, Delay of Game, 5 yards, enforced at DET 47 - No Play. [nullified]
+- Q4 12:36 (8 yds) Punt: E.Evans punts 47 yards to DET 26, Center-J.McQuaide. T.Kennedy to DET 34 for 8 yards (R.Rivers). [special_teams]
+- Q4 7:54 (31 yds) Kickoff: J.Bates kicks 64 yards from DET 35 to LA 1. J.Whittington to LA 32 for 31 yards (T.Wheat). [special_teams]
+
+### 401772944 LV @ DEN (TOΔ max 0, YdsΔ max 20, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| LV | 188 | 168 | -20 | 1 | 1 | +0 | 83 | 83 | +0 |
+| DEN | 220 | 220 | +0 | 2 | 2 | +0 | 78 | 78 | +0 |
+
+**LV Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q3 5:34 (23 yds) Pass Interception Return:  (Shotgun) G.Smith pass short middle intended for A.Jeanty INTERCEPTED by D.Tillman at DEN 44. D.Tillman to LV 33 for 23 yards (M.Mayer). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 3 shown):
+- Q2 0:15 (-7 yds) Pass Reception: (Shotgun) G.Smith pass short left to A.Jeanty to LV 38 for -7 yards (D.Greenlaw) [N.Bonitto]. FUMBLES (D.Greenlaw), ball out of bounds at LV 39.
+- Q2 14:39 (0 yds) Fumble Recovery (Own): A.Cole to LV 11 for -13 yards. FUMBLES, and recovers at LV 11. A.Cole punts 43 yards to DEN 33, out of bounds.
+- Q3 1:37 (0 yds) Blocked Punt: A.Cole punt is BLOCKED by J.Skinner, Center-J.Bobenmoyer, RECOVERED by DEN-T.Badie at LV 12. T.Badie pushed ob at LV 12 for no gain (M.Mayer).
+
+- Excluded non-zero-yard plays (up to 8 shown):
+- Q1 11:03 (-5 yds) Penalty: (Shotgun) PENALTY on LV-M.Mayer, False Start, 5 yards, enforced at DEN 41 - No Play. [nullified]
+- Q2 2:00 (-1 yds) Punt: A.Cole punts 39 yards to DEN 28, Center-J.Bobenmoyer. M.Bandy to DEN 27 for -1 yards (J.Bobenmoyer; T.Eichenberg). [special_teams]
+- Q2 9:13 (-10 yds) Penalty: G.Smith pass short right to T.Tucker for 31 yards, TOUCHDOWN NULLIFIED by Penalty [D.Tillman].PENALTY on LV-D.Thornton, Offensive Pass Interference, 10 yards, enforced at DEN 31 - No Play. [nullified]
+- Q2 9:59 (5 yds) Penalty: (Shotgun) G.Smith pass incomplete short left to T.Tucker.PENALTY on DEN-J.Cooper, Defensive Offside, 5 yards, enforced at DEN 36 - No Play. [nullified]
+- Q3 0:05 (28 yds) Kickoff: W.Lutz kicks 62 yards from DEN 35 to LV 3. D.Laube to LV 31 for 28 yards (D.Key; J.Strnad). [special_teams]
+- Q4 13:56 (-5 yds) Punt: A.Cole punts 42 yards to DEN 28, Center-J.Bobenmoyer, out of bounds.PENALTY on LV-D.Richardson, Player Out of Bounds on Kick, 5 yards, enforced at DEN 28. [special_teams]
+- Q4 4:30 (48 yds) Field Goal Missed:  D.Carlson 48 yard field goal is No Good, Wide Right, Center-J.Bobenmoyer, Holder-A.Cole. [special_teams]
+- Q4 8:42 (-5 yds) Penalty: (Punt formation) PENALTY on LV-T.McCollum, False Start, 5 yards, enforced at DEN 43 - No Play. [nullified]
+
+**DEN Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q2 0:43 (26 yds) Pass Interception Return: (Shotgun) B.Nix pass deep middle intended for T.Franklin INTERCEPTED by K.Kelly at LV 10. K.Kelly to LV 36 for 26 yards (P.Bryant). [interception]
+- Q4 7:16 (0 yds) Pass Interception Return: (Shotgun) B.Nix pass deep left intended for T.Franklin INTERCEPTED by K.Kelly at DEN 45. K.Kelly to DEN 45 for no gain (T.Franklin). [interception]
+
+- Excluded non-zero-yard plays (up to 19 shown):
+- Q1 1:40 (-10 yds) Punt: J.Crawshaw punts 51 yards to LV 32, Center-M.Fraboni. A.Bachman to LV 42 for 10 yards (J.Skinner).PENALTY on LV-D.Holmes, Offensive Holding, 10 yards, enforced at LV 32. [special_teams]
+- Q1 3:02 (20 yds) Kickoff: D.Carlson kicks 65 yards from LV 35 to DEN 0. R.Harvey MUFFS catch, and recovers at DEN 0. R.Harvey to DEN 20 for 20 yards (C.Lindenberg). [special_teams]
+- Q2 0:58 (-5 yds) Penalty: (No Huddle, Shotgun) PENALTY on DEN-M.McGlinchey, False Start, 5 yards, enforced at DEN 38 - No Play. [nullified]
+- Q2 12:18 (-5 yds) Penalty: (No Huddle) PENALTY on DEN, Delay of Game, 5 yards, enforced at DEN 40 - No Play. [nullified]
+- Q2 14:31 (-10 yds) Penalty: (Shotgun) B.Nix pass incomplete short left to R.Harvey.PENALTY on DEN-M.Lewis, Offensive Holding, 10 yards, enforced at DEN 33 - No Play. [nullified]
+- Q2 1:27 (-10 yds) Penalty: (No Huddle, Shotgun) B.Nix pass short right to P.Bryant to DEN 47 for 13 yards (J.Chinn).PENALTY on DEN-P.Bryant, Offensive Pass Interference, 10 yards, enforced at DEN 34 - No Play. [nullified]
+- Q2 5:18 (-10 yds) Penalty: F.Crum reported in as eligible.  J.Dobbins right guard to LV 39 for 1 yard (E.Roberts; M.Crosby).PENALTY on DEN-A.Trautman, Offensive Holding, 10 yards, enforced at LV 40 - No Play. [nullified]
+- Q2 7:46 (-5 yds) Punt: J.Crawshaw punts 38 yards to DEN 48, Center-M.Fraboni, out of bounds.PENALTY on DEN-J.Skinner, Player Out of Bounds on Kick, 5 yards, enforced at DEN 48. [special_teams]
+- Q3 0:05 (32 yds) Field Goal Good: W.Lutz 32 yard field goal is GOOD, Center-M.Fraboni, Holder-J.Crawshaw. LV-T.McCollum was injured during the play. [special_teams]
+- Q3 14:03 (-10 yds) Punt: J.Crawshaw punts 54 yards to LV 39, Center-M.Fraboni. A.Bachman pushed ob at DEN 46 for 15 yards (D.Tillman).PENALTY on LV-T.McCollum, Offensive Holding, 10 yards, enforced at LV 39. [special_teams]
+- Q3 14:54 (-5 yds) Penalty: PENALTY on DEN-M.Lewis, False Start, 5 yards, enforced at DEN 9 - No Play. [nullified]
+- Q3 15:00 (7 yds) Kickoff: D.Carlson kicks 63 yards from LV 35 to DEN 2. R.Harvey to DEN 17 for 15 yards (T.Eichenberg).PENALTY on DEN-P.Bryant, Offensive Holding, 8 yards, enforced at DEN 17. [special_teams]
+- Q3 4:41 (-10 yds) Penalty: (Shotgun) B.Nix pass incomplete short right.PENALTY on DEN-T.Franklin, Offensive Pass Interference, 10 yards, enforced at LV 33 - No Play. [nullified]
+- Q3 5:39 (59 yds) Field Goal Missed:  W.Lutz 59 yard field goal is No Good, Short, Center-M.Fraboni, Holder-J.Crawshaw. [special_teams]
+- Q3 7:15 (-5 yds) Penalty: (Shotgun) PENALTY on DEN-L.Wattenberg, False Start, 5 yards, enforced at LV 38 - No Play. [nullified]
+- Q4 0:39 (-1 yds) Rush:  B.Nix kneels to LV 15 for -1 yards. [spike_kneel]
+- Q4 13:01 (-8 yds) Punt: J.Crawshaw punts 45 yards to LV 18, Center-M.Fraboni. A.Bachman to LV 21 for 3 yards (A.Prentice; A.Trautman). ** Injury Update: LV-T.McCollum has returned to the game. PENALTY on LV-D.Laube, Illegal Blindside Block, 10 yards, enforced at LV 20. [special_teams]
+- Q4 1:13 (-1 yds) Rush:  B.Nix kneels to LV 14 for -1 yards. [spike_kneel]
+- Q4 3:00 (5 yds) Penalty:  PENALTY on LV-M.Crosby, Encroachment, 5 yards, enforced at LV 35 - No Play. [nullified]
+
+### 401772948 ATL @ TB (TOΔ max 0, YdsΔ max 20, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| ATL | 476 | 456 | -20 | 1 | 1 | +0 | 125 | 125 | +0 |
+| TB | 338 | 338 | +0 | 1 | 1 | +0 | 25 | 25 | +0 |
+
+**ATL Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q3 0:15 (0 yds) Fumble Recovery (Opponent): (Shotgun) K.Cousins pass short middle to B.Robinson to ATL 22 for 7 yards (C.Izien). FUMBLES (C.Izien), RECOVERED by TB-J.Parrish at ATL 25. J.Parrish to ATL 25 for no gain (D.Sills). [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q4 1:44 (-8 yds) Fumble Recovery (Own): (Shotgun) K.Cousins sacked at ATL 39 for -8 yards (H.Reddick). FUMBLES (H.Reddick) [H.Reddick], and recovers at ATL 39.
+- Q4 5:11 (15 yds) Fumble Recovery (Own): (No Huddle, Shotgun) K.Cousins pass short right to D.Mooney to TB 9 for 16 yards (L.David; C.Izien). FUMBLES (L.David), touched at TB 9, recovered by ATL-R.Neuzil at TB 10.
+
+- Excluded non-zero-yard plays (up to 13 shown):
+- Q1 0:56 (-10 yds) Penalty: B.Robinson left end to TB 36 for 3 yards (L.Hall).PENALTY on ATL-J.Matthews, Offensive Holding, 10 yards, enforced at TB 39 - No Play. [nullified]
+- Q1 7:37 (-5 yds) Penalty: (Shotgun) ** Injury Update: TB-J.Dean has returned to the game.  PENALTY on ATL, Delay of Game, 5 yards, enforced at ATL 46 - No Play. [nullified]
+- Q1 8:03 (-5 yds) Penalty: (Shotgun) PENALTY on ATL-E.Wilkinson, False Start, 5 yards, enforced at TB 49 - No Play. [nullified]
+- Q2 12:19 (31 yds) Penalty: Z.Gonzalez 31 yard field goal is GOOD, NULLIFIED by Penalty, Center-L.McCullough, Holder-B.Pinion.PENALTY on TB-Z.McCollum, Defensive Offside, 5 yards, enforced at TB 13 - No Play. [nullified]
+- Q2 13:58 (-5 yds) Penalty: (No Huddle, Shotgun) PENALTY on ATL-C.Lindstrom, False Start, 5 yards, enforced at TB 24 - No Play. [nullified]
+- Q2 7:08 (-5 yds) Penalty: (Shotgun) PENALTY on ATL-B.Robinson, False Start, 5 yards, enforced at ATL 41 - No Play. [nullified]
+- Q2 9:04 (-5 yds) Penalty: PENALTY on ATL-K.Pitts, False Start, 5 yards, enforced at ATL 28 - No Play. [nullified]
+- Q3 11:43 (-10 yds) Punt:  B.Pinion punts 47 yards to end zone, Center-L.McCullough, Touchback.
+PENALTY on TB-J.Hayes, Offensive Holding, 10 yards, enforced at TB 20. [special_teams]
+- Q3 12:52 (-5 yds) Penalty: (Shotgun) PENALTY on ATL-K.Pitts, False Start, 5 yards, enforced at TB 48 - No Play. [nullified]
+- Q4 0:00 (43 yds) Field Goal Good: Z.Gonzalez 43 yard field goal is GOOD, Center-L.McCullough, Holder-B.Pinion. [special_teams]
+- Q4 0:30 (5 yds) Penalty: (No Huddle) K.Cousins spiked the ball to stop the clock.PENALTY on TB-V.Vea, Defensive Offside, 5 yards, enforced at TB 36 - No Play.Penalty on TB, Defensive Too Many Men on Field, declined. [nullified]
+- Q4 1:29 (-10 yds) Penalty: (No Huddle, Shotgun) K.Cousins pass incomplete deep left to D.Mooney (J.Dean).PENALTY on ATL-J.Matthews, Offensive Holding, 10 yards, enforced at ATL 39 - No Play. [nullified]
+- Q4 4:18 (-5 yds) Penalty: (Shotgun) PENALTY on ATL-D.Sills, False Start, 5 yards, enforced at TB 10 - No Play. [nullified]
+
+**TB Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q4 8:28 (0 yds) Pass Interception Return: (Shotgun) B.Mayfield pass short left intended for M.Evans INTERCEPTED by D.Alford at ATL 33. D.Alford to ATL 33 for no gain (M.Evans). [interception]
+
+- Excluded non-zero-yard plays (up to 15 shown):
+- Q1 15:00 (30 yds) Kickoff: Z.Gonzalez kicks 61 yards from ATL 35 to TB 4. K.Johnson to TB 34 for 30 yards (X.Watts; K.Hodge). [special_teams]
+- Q1 5:32 (5 yds) Penalty: (Shotgun) B.Mayfield sacked at TB 18 for -6 yards (K.Elliss).PENALTY on ATL-A.Terrell, Defensive Holding, 5 yards, enforced at TB 24 - No Play. [nullified]
+- Q2 0:00 (52 yds) Field Goal Good:  C.McLaughlin 52 yard field goal is GOOD, Center-E.Deckers, Holder-R.Dixon. [special_teams]
+- Q2 0:25 (15 yds) Penalty: (Shotgun) B.Mayfield pass incomplete short left to M.Evans.PENALTY on ATL-D.Alford, Face Mask, 15 yards, enforced at TB 26 - No Play. [nullified]
+- Q2 0:38 (15 yds) Kickoff: Z.Gonzalez kicks 58 yards from ATL 35 to TB 7. S.Tucker MUFFS catch, and recovers at TB 11. S.Tucker to TB 26 for 15 yards (X.Watts; M.Ford). [special_teams]
+- Q2 11:30 (5 yds) Penalty: C.Heck reported in as eligible.  B.Mayfield sacked at TB 23 for -6 yards (D.Onyemata).PENALTY on ATL-A.Terrell, Defensive Holding, 5 yards, enforced at TB 29 - No Play. [nullified]
+- Q2 2:04 (49 yds) Field Goal Good:  C.McLaughlin 49 yard field goal is GOOD, Center-E.Deckers, Holder-R.Dixon. [special_teams]
+- Q2 9:44 (10 yds) Punt:  R.Dixon punts 45 yards to ATL 19, Center-E.Deckers. D.Thompkins to ATL 29 for 10 yards (J.Gray; J.Hayes). [special_teams]
+- Q3 7:23 (4 yds) Penalty: S.Tucker left end to ATL 8 for no gain (K.Street).PENALTY on ATL-D.Deablo, Tripping, 4 yards, enforced at ATL 8 - No Play.Penalty on ATL-D.Deablo, Face Mask, declined. [nullified]
+- Q3 7:29 (5 yds) Penalty: (Shotgun) B.Mayfield pass incomplete short left to E.Egbuka.PENALTY on ATL-D.Alford, Illegal Contact, 5 yards, enforced at ATL 13 - No Play. [nullified]
+- Q3 8:22 (6 yds) Penalty: (Shotgun) B.Mayfield pass incomplete short left to E.Egbuka (A.Terrell).PENALTY on ATL-C.Bryant, Face Mask, 6 yards, enforced at ATL 12 - No Play. [nullified]
+- Q4 14:22 (10 yds) Penalty: (Shotgun) B.Mayfield pass incomplete short left to M.Evans.PENALTY on ATL-A.Terrell, Defensive Pass Interference, 10 yards, enforced at ATL 15 - No Play. [nullified]
+- Q4 2:00 (10 yds) Punt: R.Dixon punts 45 yards to ATL 20, Center-E.Deckers. D.Thompkins ran ob at ATL 30 for 10 yards (M.Watts). [special_teams]
+- Q4 3:34 (27 yds) Kickoff: Z.Gonzalez kicks 65 yards from ATL 35 to TB 0. S.Tucker pushed ob at TB 27 for 27 yards (C.Woerner). [special_teams]
+- Q4 9:37 (25 yds) Kickoff: Z.Gonzalez kicks 27 yards from ATL 35 to TB 38, short of landing zone.PENALTY on ATL-Z.Gonzalez, Kickoff Short of Landing Zone, placed at TB 40. [special_teams]
+
+### 401772744 NYG @ NO (TOΔ max 0, YdsΔ max 19, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| NYG | 335 | 316 | -19 | 5 | 5 | +0 | 95 | 95 | +0 |
+| NO | 332 | 322 | -10 | 0 | 0 | +0 | 43 | 43 | +0 |
+
+**NYG Reconciliation Clues**
+
+- Windelta counted turnovers (5):
+- Q2 1:13 (27 yds) Pass Reception:  (Shotgun) J.Dart pass short right to D.Slayton to NO 35 for 9 yards (D.Davis). FUMBLES (D.Davis), RECOVERED by NO-J.Sanker at NO 32. J.Sanker pushed ob at NYG 41 for 27 yards (D.Singletary). [fumble]
+- Q3 11:01 (0 yds) Sack Opp Fumble Recovery: (No Huddle) J.Dart sacked at NO 46 for -3 yards. FUMBLES, RECOVERED by NO-C.Jordan at NO 46. [fumble]
+- Q4 10:06 (0 yds) Pass Interception Return: (Shotgun) J.Dart pass deep right intended for J.Hyatt INTERCEPTED by K.McKinstry [P.Werner] at NO 5. K.McKinstry pushed ob at NO 5 for no gain (J.Hyatt). [interception]
+- Q4 14:47 (86 yds) Fumble Return Touchdown: (Shotgun) C.Skattebo up the middle to NO 13 for -1 yards (B.Bresee). FUMBLES (B.Bresee), RECOVERED by NO-J.Howden at NO 14. J.Howden for 86 yards, TOUCHDOWN. B.Grupe extra point is GOOD, Center-Z.Wood, Holder-K.Kroeger. [fumble]
+- Q4 5:11 (0 yds) Pass Interception Return: (Shotgun) J.Dart pass short right intended for B.Collins INTERCEPTED by K.McKinstry at NYG 45. K.McKinstry to NYG 45 for no gain (B.Collins). [interception]
+
+- Excluded non-zero-yard plays (up to 12 shown):
+- Q1 1:40 (30 yds) Kickoff: B.Grupe kicks 65 yards from NO 35 to NYG 0. G.Olszewski to NYG 30 for 30 yards (C.Rumph). [special_teams]
+- Q1 9:54 (3 yds) Pass Incompletion: (No Huddle, Shotgun) J.Dart pass incomplete short left to W.Robinson (K.McKinstry).PENALTY on NO-K.McKinstry, Defensive Pass Interference, 3 yards, enforced at NO 22 - No Play. [nullified]
+- Q2 2:42 (-5 yds) Penalty: (Shotgun) PENALTY on NYG, Delay of Game, 5 yards, enforced at NYG 48 - No Play. [nullified]
+- Q2 5:16 (21 yds) Kickoff: B.Grupe kicks 59 yards from NO 35 to NYG 6. G.Olszewski to NYG 27 for 21 yards (T.Burgess; E.Leota). [special_teams]
+- Q3 15:00 (34 yds) Kickoff: B.Grupe kicks 63 yards from NO 35 to NYG 2. G.Olszewski to NYG 36 for 34 yards (I.Stalbird). [special_teams]
+- Q3 6:55 (29 yds) Kickoff: B.Grupe kicks 63 yards from NO 35 to NYG 2. D.Banks to NYG 31 for 29 yards (C.Rumph). [special_teams]
+- Q4 0:49 (-5 yds) Penalty: (Shotgun) PENALTY on NYG-J.Eluemunor, False Start, 5 yards, enforced at NO 17 - No Play. [nullified]
+- Q4 0:49 (5 yds) Penalty: (Shotgun) PENALTY on NO-B.Bresee, Neutral Zone Infraction, 5 yards, enforced at NO 22 - No Play. [nullified]
+- Q4 12:09 (-5 yds) Penalty: (No Huddle, Shotgun) PENALTY on NYG-T.Johnson, False Start, 5 yards, enforced at NO 42 - No Play. [nullified]
+- Q4 14:47 (46 yds) Kickoff: B.Grupe kicks 64 yards from NO 35 to NYG 1. D.Banks to NYG 47 for 46 yards (B.Grupe). [special_teams]
+- Q4 1:56 (15 yds) Sack: (Shotgun) J.Dart sacked at NYG 26 for -10 yards (C.Granderson).PENALTY on NO-C.Granderson, Roughing the Passer, 15 yards, enforced at NYG 36 - No Play. [nullified]
+- Q4 5:24 (-10 yds) Pass Incompletion: (No Huddle, Shotgun) J.Dart pass incomplete short right to T.Johnson.PENALTY on NYG-J.Eluemunor, Offensive Holding, 10 yards, enforced at NYG 49 - No Play.Penalty on NYG, Illegal Shift, declined. [nullified]
+
+**NO Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q1 7:56 (6 yds) Pass Interception Return: (Shotgun) S.Rattler pass deep left intended for C.Olave INTERCEPTED by J.Holland [D.Alexander] at NO 47. J.Holland to NO 41 for 6 yards (R.Shaheed).PENALTY on NYG-D.Banks, Defensive Pass Interference, 25 yards, enforced at NO 25 - No Play.
+
+- Excluded non-zero-yard plays (up to 15 shown):
+- Q1 14:10 (-5 yds) Penalty: (Shotgun) PENALTY on NO-J.Johnson, False Start, 5 yards, enforced at NO 13 - No Play. [nullified]
+- Q1 15:00 (9 yds) Kickoff: J.Gillan kicks 65 yards from NYG 35 to NO 0. V.Jones to NO 9 for 9 yards (D.Belton; S.Bozeman). [special_teams]
+- Q1 1:40 (28 yds) Field Goal Good: B.Grupe 28 yard field goal is GOOD, Center-Z.Wood, Holder-K.Kroeger. [special_teams]
+- Q1 7:56 (6 yds) Pass Interception Return: (Shotgun) S.Rattler pass deep left intended for C.Olave INTERCEPTED by J.Holland [D.Alexander] at NO 47. J.Holland to NO 41 for 6 yards (R.Shaheed).PENALTY on NYG-D.Banks, Defensive Pass Interference, 25 yards, enforced at NO 25 - No Play. [turnover_return]
+- Q1 9:33 (-5 yds) Rush: (Shotgun) Direct snap to A.Kamara.  A.Kamara right tackle to NO 24 for 4 yards (D.Muasau).PENALTY on NO-R.Shaheed, Offensive Offside, 5 yards, enforced at NO 20 - No Play. [nullified]
+- Q2 0:00 (29 yds) Field Goal Good: B.Grupe 29 yard field goal is GOOD, Center-Z.Wood, Holder-K.Kroeger. [special_teams]
+- Q2 13:01 (18 yds) Kickoff: J.Gillan kicks 67 yards from NYG 35 to NO -2. K.Miller to NO 16 for 18 yards (B.Collins; N.Hewitt). [special_teams]
+- Q2 1:30 (52 yds) Field Goal Missed: B.Grupe 52 yard field goal is No Good, Wide Left, Center-Z.Wood, Holder-K.Kroeger. [special_teams]
+- Q2 1:55 (16 yds) Pass Incompletion: (Shotgun) S.Rattler pass incomplete deep right to C.Olave.PENALTY on NYG-P.Adebo, Defensive Pass Interference, 16 yards, enforced at NO 39 - No Play.Penalty on NYG-B.Okereke, Defensive Holding, declined. [nullified]
+- Q2 2:00 (19 yds) Pass Incompletion: (Shotgun) S.Rattler pass incomplete deep right to C.Olave.PENALTY on NYG-A.Phillips, Defensive Pass Interference, 19 yards, enforced at NO 20 - No Play. [nullified]
+- Q2 7:41 (53 yds) Field Goal Good: B.Grupe 53 yard field goal is GOOD, Center-Z.Wood, Holder-K.Kroeger. [special_teams]
+- Q3 6:55 (28 yds) Field Goal Good: B.Grupe 28 yard field goal is GOOD, Center-Z.Wood, Holder-K.Kroeger. [special_teams]
+- Q3 7:51 (-5 yds) Penalty: (Shotgun) PENALTY on NO-T.Simpkins, False Start, 5 yards, enforced at NYG 7 - No Play. [nullified]
+- Q4 0:40 (-1 yds) Rush: S.Rattler kneels to NO 16 for -1 yards. [spike_kneel]
+- Q4 2:00 (46 yds) Field Goal Missed: B.Grupe 46 yard field goal is No Good, Wide Right, Center-Z.Wood, Holder-K.Kroeger. [special_teams]
+
+### 401772793 IND @ JAX (TOΔ max 0, YdsΔ max 19, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| IND | 285 | 266 | -19 | 3 | 3 | +0 | 45 | 45 | +0 |
+| JAX | 350 | 350 | +0 | 1 | 1 | +0 | 64 | 64 | +0 |
+
+**IND Reconciliation Clues**
+
+- Windelta counted turnovers (3):
+- Q1 13:04 (6 yds) Pass Interception Return: (Shotgun) D.Jones pass short middle intended for M.Pittman INTERCEPTED by D.Lloyd at IND 27. D.Lloyd to IND 21 for 6 yards (J.Downs). [interception]
+- Q2 13:09 (0 yds) Fumble Recovery (Opponent): J.Taylor left end to IND 29 for 4 yards (D.Hamilton, E.Murray). FUMBLES (E.Murray), RECOVERED by JAX-J.Jones at IND 28. J.Jones to IND 28 for no gain (A.Pierce). [fumble]
+- Q4 13:02 (0 yds) Pass Interception Return: (Shotgun) R.Leonard pass short left intended for M.Pittman INTERCEPTED by G.Newsome at JAX 45. G.Newsome to JAX 45 for no gain (M.Pittman). [interception]
+
+- Excluded non-zero-yard plays (up to 17 shown):
+- Q1 0:43 (-15 yds) Penalty: (Shotgun) D.Jones pass short right to A.Pierce to IND 49 for 7 yards (G.Newsome). IND-D.Jones was injured during the play. PENALTY on IND-J.Taylor, Chop Block, 15 yards, enforced at IND 42 - No Play. [nullified]
+- Q1 10:39 (23 yds) Kickoff: C.Little kicks 64 yards from JAX 35 to IND 1. A.Gould to IND 24 for 23 yards (V.Miller). [special_teams]
+- Q1 1:30 (-5 yds) Penalty: (Shotgun) PENALTY on IND-B.Smith, False Start, 5 yards, enforced at IND 42 - No Play. [nullified]
+- Q1 2:27 (5 yds) Penalty: D.Jones sacked at IND 30 for -5 yards (D.Striggow).PENALTY on JAX-J.Lewis, Defensive Holding, 5 yards, enforced at IND 35 - No Play. [nullified]
+- Q2 0:02 (-1 yds) Rush: R.Leonard kneels to IND 29 for -1 yards. [spike_kneel]
+- Q2 0:07 (28 yds) Kickoff: C.Little kicks 63 yards from JAX 35 to IND 2. A.Gould to IND 30 for 28 yards (D.Gardeck; R.Lane). [special_teams]
+- Q2 12:52 (19 yds) Kickoff: C.Little kicks 58 yards from JAX 35 to IND 7. A.Abdullah MUFFS catch, and recovers at IND 8. A.Abdullah to IND 27 for 19 yards (D.Gardeck; Q.Morris). [special_teams]
+- Q2 15:00 (15 yds) Punt: R.Sanchez punts 54 yards to JAX 14, Center-L.Rhodes. A.Trammell to JAX 29 for 15 yards (A.Ajiake). IND-C.Lammons was injured during the play. [special_teams]
+- Q2 2:01 (5 yds) Penalty: (No Huddle) PENALTY on JAX-M.Smith, Neutral Zone Infraction, 5 yards, enforced at 50 - No Play. [nullified]
+- Q2 4:54 (28 yds) Field Goal Good: B.Grupe 28 yard field goal is GOOD, Center-L.Rhodes, Holder-R.Sanchez. [special_teams]
+- Q2 5:53 (13 yds) Penalty: (Shotgun) R.Leonard pass incomplete short left to A.Pierce.PENALTY on JAX-J.Jones, Defensive Pass Interference, 13 yards, enforced at JAX 25 - No Play. [nullified]
+- Q3 10:42 (-10 yds) Penalty: (Shotgun) R.Leonard pass deep right to M.Pittman for 16 yards, TOUCHDOWN NULLIFIED by Penalty [E.Murray].PENALTY on IND-M.Pittman, Offensive Pass Interference, 10 yards, enforced at JAX 16 - No Play. [nullified]
+- Q3 12:07 (16 yds) Penalty: R.Leonard pass incomplete deep right to A.Pierce.PENALTY on JAX-M.Brown, Defensive Pass Interference, 16 yards, enforced at JAX 36 - No Play. [nullified]
+- Q3 15:00 (15 yds) Kickoff: C.Little kicks 62 yards from JAX 35 to IND 3. A.Abdullah MUFFS catch, and recovers at IND 11. A.Abdullah to IND 26 for 15 yards (B.Green). [special_teams]
+- Q3 8:05 (-5 yds) Penalty: (Shotgun) R.Leonard pass deep right to A.Pierce to JAX 49 for 21 yards (M.Brown).PENALTY on IND-B.Raimann, Illegal Formation, 5 yards, enforced at IND 30 - No Play. [nullified]
+- Q3 9:57 (36 yds) Field Goal Good: B.Grupe 36 yard field goal is GOOD, Center-L.Rhodes, Holder-R.Sanchez. [special_teams]
+- Q4 14:05 (30 yds) Kickoff: C.Little kicks 60 yards from JAX 35 to IND 5. A.Abdullah to IND 35 for 30 yards (J.Jones; B.Green). [special_teams]
+
+**JAX Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q2 2:40 (1 yds) Fumble Recovery (Opponent): (Shotgun) B.Tuten left end to IND 46 for -1 yards (G.Stewart). FUMBLES (G.Stewart), RECOVERED by IND-G.Pratt at IND 46. G.Pratt to IND 47 for 1 yard (E.Cleveland; B.Strange). [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q1 4:32 (23 yds) Kickoff: B.Grupe kicks 62 yards from IND 35 to JAX 3. B.Tuten to JAX 26 for 23 yards (S.Olubi; J.Tuimoloau). FUMBLES (S.Olubi), recovered by JAX-B.Green at JAX 26. JAX-B.Green was injured during the play. JAX-B.Tuten was injured during the play.
+- Q4 6:57 (11 yds) Kickoff: R.Sanchez kicks onside 11 yards from IND 20 to IND 31, impetus ends at IND 35. D.Gardeck (didn't try to advance) to IND 31 for no gain.
+
+- Excluded non-zero-yard plays (up to 13 shown):
+- Q1 12:13 (-5 yds) Penalty: (Shotgun) PENALTY on JAX-B.Strange, False Start, 5 yards, enforced at IND 20 - No Play. [nullified]
+- Q1 15:00 (26 yds) Kickoff: B.Grupe kicks 65 yards from IND 35 to JAX 0. L.Allen to JAX 26 for 26 yards (J.Tuimoloau). [special_teams]
+- Q1 4:32 (23 yds) Kickoff: B.Grupe kicks 62 yards from IND 35 to JAX 3. B.Tuten to JAX 26 for 23 yards (S.Olubi; J.Tuimoloau). FUMBLES (S.Olubi), recovered by JAX-B.Green at JAX 26. JAX-B.Green was injured during the play. JAX-B.Tuten was injured during the play. [special_teams]
+- Q2 0:20 (-5 yds) Penalty: (Shotgun) PENALTY on JAX-P.Mekari, False Start, 5 yards, enforced at IND 2 - No Play. [nullified]
+- Q2 1:41 (-5 yds) Penalty: (Shotgun) PENALTY on JAX-T.Patrick, False Start, 5 yards, enforced at JAX 45 - No Play. [nullified]
+- Q2 4:54 (26 yds) Kickoff: B.Grupe kicks 62 yards from IND 35 to JAX 3. L.Allen to JAX 29 for 26 yards (L.Treadwell). ** Injury Update: JAX-B.Tuten has returned to the game. [special_teams]
+- Q3 9:57 (15 yds) Kickoff: B.Grupe kicks 58 yards from IND 35 to JAX 7. B.Tuten to JAX 22 for 15 yards (B.Johnson). [special_teams]
+- Q4 14:05 (35 yds) Field Goal Good: C.Little 35 yard field goal is GOOD, Center-R.Matiscik, Holder-L.Cooke. [special_teams]
+- Q4 15:00 (-10 yds) Penalty: (Shotgun) T.Lawrence pass short left to B.Strange for 16 yards, TOUCHDOWN NULLIFIED by Penalty.PENALTY on JAX-J.Meyers, Offensive Pass Interference, 10 yards, enforced at IND 16 - No Play. [nullified]
+- Q4 1:03 (-1 yds) Rush:  N.Mullens kneels to JAX 30 for -1 yards. [spike_kneel]
+- Q4 1:51 (23 yds) Kickoff: B.Grupe kicks 57 yards from IND 35 to JAX 8. B.Tuten to JAX 31 for 23 yards (J.Tuimoloau; A.Ogletree). [special_teams]
+- Q4 4:41 (48 yds) Field Goal Good:  C.Little 48 yard field goal is GOOD, Center-R.Matiscik, Holder-L.Cooke. [special_teams]
+- Q4 6:57 (11 yds) Kickoff: R.Sanchez kicks onside 11 yards from IND 20 to IND 31, impetus ends at IND 35. D.Gardeck (didn't try to advance) to IND 31 for no gain. [special_teams]
+
+### 401772848 JAX @ SF (TOΔ max 0, YdsΔ max 19, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| JAX | 325 | 306 | -19 | 0 | 0 | +0 | 90 | 90 | +0 |
+| SF | 389 | 385 | -4 | 4 | 4 | +0 | 54 | 54 | +0 |
+
+**JAX Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q3 4:55 (6 yds) Fumble Recovery (Own): (Shotgun) T.Lawrence pass short middle to T.Hunter to SF 26 for 5 yards (F.Warner). FUMBLES (F.Warner), touched at SF 27, recovered by JAX-L.Allen at SF 25.
+- Q3 8:18 (23 yds) Penalty: (Shotgun) T.Lawrence pass short middle intended for T.Hunter INTERCEPTED by U.Stout at JAX 35. U.Stout to JAX 12 for 23 yards (B.Thomas).PENALTY on SF-U.Stout, Defensive Pass Interference, 13 yards, enforced at JAX 23 - No Play.
+
+- Excluded non-zero-yard plays (up to 21 shown):
+- Q1 8:33 (5 yds) Penalty: PENALTY on SF-S.Okuayinonu, Neutral Zone Infraction, 5 yards, enforced at JAX 7 - No Play. [nullified]
+- Q2 0:00 (26 yds) Field Goal Good: C.Little 26 yard field goal is GOOD, Center-R.Matiscik, Holder-L.Cooke. [special_teams]
+- Q2 0:21 (-5 yds) Penalty: (Shotgun) PENALTY on JAX-C.Edoga, False Start, 5 yards, enforced at SF 14 - No Play. [nullified]
+- Q2 0:40 (54 yds) Kickoff: E.Pineiro kicks 66 yards from SF 35 to JAX -1. B.Tuten to SF 47 for 54 yards (C.Lucas). [special_teams]
+- Q2 12:06 (-5 yds) Penalty: (Shotgun) T.Lawrence pass incomplete short left to B.Strange.PENALTY on JAX-W.Little, Offensive Holding, 5 yards, enforced at JAX 9 - No Play. [nullified]
+- Q2 12:27 (-8 yds) Penalty: B.Tuten right tackle to JAX 19 for 2 yards (K.Davis; L.Gifford).PENALTY on JAX-A.Harrison, Offensive Holding, 8 yards, enforced at JAX 17 - No Play. [nullified]
+- Q2 2:37 (-15 yds) Punt: L.Cooke punts 46 yards to SF 26, Center-R.Matiscik, downed by JAX-R.Lane.PENALTY on JAX-R.Lane, Kick Catch Interference, 15 yards, enforced at SF 26. [special_teams]
+- Q2 8:33 (-5 yds) Penalty: PENALTY on JAX, Delay of Game, 5 yards, enforced at SF 45 - No Play. [nullified]
+- Q3 12:46 (16 yds) Punt: L.Cooke punts 50 yards to SF 11, Center-R.Matiscik. S.Moore to SF 27 for 16 yards (R.Matiscik). [special_teams]
+- Q3 12:55 (-5 yds) Penalty: (Run formation) C.Edoga reported in as eligible.  PENALTY on JAX-W.Little, False Start, 5 yards, enforced at JAX 44 - No Play. [nullified]
+- Q3 2:22 (87 yds) Punt Return Touchdown: T.Morstead punts 51 yards to JAX 13, Center-J.Weeks. P.Washington for 87 yards, TOUCHDOWN. TWO-POINT CONVERSION ATTEMPT. T.Lawrence pass to P.Washington is incomplete. ATTEMPT FAILS. [special_teams_return]
+- Q3 4:07 (44 yds) Field Goal Good: C.Little 44 yard field goal is GOOD, Center-R.Matiscik, Holder-L.Cooke. [special_teams]
+- Q3 5:25 (-10 yds) Penalty: T.Etienne left guard to SF 17 for 4 yards (F.Warner; J.Pinnock).PENALTY on JAX-B.Strange, Offensive Holding, 10 yards, enforced at SF 21 - No Play. [nullified]
+- Q3 8:18 (-5 yds) Penalty: (Shotgun) PENALTY on JAX-R.Hainsey, False Start, 5 yards, enforced at JAX 28 - No Play. [nullified]
+- Q3 8:18 (23 yds) Penalty: (Shotgun) T.Lawrence pass short middle intended for T.Hunter INTERCEPTED by U.Stout at JAX 35. U.Stout to JAX 12 for 23 yards (B.Thomas).PENALTY on SF-U.Stout, Defensive Pass Interference, 13 yards, enforced at JAX 23 - No Play. [nullified]
+- Q3 8:32 (25 yds) Kickoff: E.Pineiro kicks 62 yards from SF 35 to JAX 3. L.Allen to JAX 28 for 25 yards (B.Willis). [special_teams]
+- Q4 0:35 (-1 yds) Rush: T.Lawrence kneels to SF 39 for -1 yards. [spike_kneel]
+- Q4 1:16 (-2 yds) Rush: T.Lawrence kneels to SF 38 for -2 yards. [spike_kneel]
+- Q4 2:00 (-2 yds) Rush: T.Lawrence kneels to SF 36 for -2 yards. [spike_kneel]
+- Q4 3:35 (47 yds) Field Goal Missed: C.Little 47 yard field goal is No Good, Wide Right, Center-R.Matiscik, Holder-L.Cooke. [special_teams]
+- Q4 7:41 (9 yds) Kickoff: E.Pineiro kicks 60 yards from SF 35 to JAX 5. B.Tuten to JAX 29 for 24 yards (B.Willis).PENALTY on SF-C.Lucas, Unnecessary Roughness, 15 yards, enforced at JAX 29. [special_teams]
+
+**SF Reconciliation Clues**
+
+- Windelta counted turnovers (4):
+- Q2 13:10 (-10 yds) Pass Interception Return: B.Purdy pass deep middle intended for C.McCaffrey INTERCEPTED by D.Lloyd at JAX 21. D.Lloyd to JAX 27 for 6 yards (C.Colby).PENALTY on JAX-M.Smith, Unnecessary Roughness, 13 yards, enforced at JAX 27.The Replay Official reviewed the runner was not down by contact ruling, and the play was REVERSED.B.Purdy pass deep middle intended for C.McCaffrey INTERCEPTED by D.Lloyd at JAX 21. D.Lloyd to JAX 21 for no gain (C.McCaffrey).PENALTY on JAX-M.Smith, Unnecessary Roughness, 10 yards, enforced at JAX 21. [interception]
+- Q2 15:00 (0 yds) Fumble Recovery (Opponent): (Shotgun) B.Purdy pass short middle to L.Farrell to SF 46 for 11 yards (D.Gardeck) [D.Smoot]. FUMBLES (D.Gardeck), RECOVERED by JAX-A.Wingard at SF 48. [fumble]
+- Q3 6:14 (8 yds) Pass Interception Return: (Shotgun) B.Purdy pass deep middle intended for J.Jennings INTERCEPTED by D.Lloyd (M.Smith) at SF 36. D.Lloyd to SF 28 for 8 yards (J.Tonges; C.McKivitz). ** Injury Update: SF-J.Jennings has returned to the game. [interception]
+- Q4 2:52 (0 yds) Sack Opp Fumble Recovery: B.Purdy sacked at SF 43 for -7 yards (A.Armstead). FUMBLES (A.Armstead), RECOVERED by JAX-F.Oluokun at SF 47. JAX-D.Hamilton was injured during the play. [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q3 1:39 (11 yds) Fumble Recovery (Own): (Shotgun) B.Purdy pass short middle to C.McCaffrey to JAX 34 for 11 yards (A.Wingard, F.Oluokun). FUMBLES (F.Oluokun), and recovers at JAX 34.
+
+- Excluded non-zero-yard plays (up to 8 shown):
+- Q1 15:00 (29 yds) Kickoff: C.Little kicks 59 yards from JAX 35 to SF 6. S.Moore to SF 35 for 29 yards (J.Jones). [special_teams]
+- Q1 8:33 (26 yds) Field Goal Good: E.Pineiro 26 yard field goal is GOOD, Center-J.Weeks, Holder-T.Morstead. [special_teams]
+- Q2 0:40 (23 yds) Field Goal Good: E.Pineiro 23 yard field goal is GOOD, Center-J.Weeks, Holder-T.Morstead. [special_teams]
+- Q2 14:41 (25 yds) Kickoff: C.Little kicks 64 yards from JAX 35 to SF 1. S.Moore to SF 26 for 25 yards (Q.Morris). [special_teams]
+- Q2 1:30 (-6 yds) Penalty: (No Huddle, Shotgun) PENALTY on SF-J.Brendel, False Start, 6 yards, enforced at JAX 34 - No Play. [nullified]
+- Q2 5:01 (26 yds) Kickoff: C.Little kicks 66 yards from JAX 35 to SF -1. S.Moore to SF 25 for 26 yards (D.Gardeck). [special_teams]
+- Q3 9:23 (5 yds) Penalty: B.Purdy pass incomplete short left to K.Juszczyk (D.Gardeck).PENALTY on JAX-D.Gardeck, Defensive Holding, 5 yards, enforced at JAX 15 - No Play. [nullified]
+- Q3 9:26 (7 yds) Penalty: B.Purdy pass incomplete short left to J.Jennings.PENALTY on JAX-T.Campbell, Defensive Pass Interference, 7 yards, enforced at JAX 22 - No Play. [nullified]
+
+### 401772921 GB @ DAL (TOΔ max 0, YdsΔ max 19, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| GB | 489 | 470 | -19 | 1 | 1 | +0 | 53 | 53 | +0 |
+| DAL | 436 | 436 | +0 | 0 | 0 | +0 | 95 | 95 | +0 |
+
+**GB Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q2 0:21 (0 yds) Sack Opp Fumble Recovery: (Shotgun) J.Love sacked at GB 16 for -11 yards (J.Houston). FUMBLES (J.Houston), RECOVERED by DAL-J.Houston at GB 15. [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q2 10:37 (1 yds) Passing Touchdown: Romeo Doubs 1 Yd pass from Jordan Love (Brandon McManus PAT blocked)
+- Q2 14:42 (0 yds) Penalty: (No Huddle) J.Love pass short right intended for L.Musgrave INTERCEPTED by T.Diggs at DAL 28. T.Diggs ran ob at DAL 28 for no gain.PENALTY on DAL, Defensive Too Many Men on Field, 5 yards, enforced at DAL 37 - No Play.
+
+- Excluded non-zero-yard plays (up to 14 shown):
+- Q1 11:08 (-4 yds) Penalty: (No Huddle) PENALTY on GB-S.Rhyan, False Start, 4 yards, enforced at DAL 1 - No Play. [nullified]
+- Q1 15:00 (30 yds) Kickoff: B.Aubrey kicks 64 yards from DAL 35 to GB 1. B.Melton to GB 31 for 30 yards (J.Houston; J.Thomas). [special_teams]
+- Q1 4:23 (-5 yds) Penalty: (Shotgun) PENALTY on GB, Delay of Game, 5 yards, enforced at DAL 49 - No Play. [nullified]
+- Q2 0:09 (-1 yds) Rush: (Shotgun) J.Love kneels to GB 34 for -1 yards. [spike_kneel]
+- Q2 0:21 (-5 yds) Penalty: (Shotgun) PENALTY on GB-D.Kinnard, False Start, 5 yards, enforced at GB 32 - No Play. [nullified]
+- Q2 12:35 (-10 yds) Penalty: (Shotgun) J.Love pass short left to T.Kraft to DAL 16 for 4 yards (K.Elam).PENALTY on GB-D.Kinnard, Offensive Holding, 10 yards, enforced at DAL 20 - No Play. [nullified]
+- Q3 0:34 (30 yds) Kickoff: B.Aubrey kicks 65 yards from DAL 35 to GB 0. B.Melton to GB 30 for 30 yards (C.Goodwin). [special_teams]
+- Q3 10:38 (15 yds) Penalty: (Shotgun) J.Love sacked at GB 35 for -12 yards (S.Williams).PENALTY on DAL-S.Williams, Face Mask, 15 yards, enforced at GB 47 - No Play.Penalty on DAL-T.Diggs, Defensive Holding, declined. [nullified]
+- Q3 8:34 (3 yds) Rush: J.Jacobs up the middle to DAL 2 for 3 yards (J.Sanborn; M.Kneeland). [spike_kneel]
+- Q3 8:49 (-4 yds) Penalty: PENALTY on GB-E.Jenkins, False Start, 4 yards, enforced at DAL 1 - No Play. [nullified]
+- Q4 0:00 (53 yds) Field Goal Good: B.McManus 53 yard field goal is GOOD, Center-M.Orzech, Holder-D.Whelan. [special_teams]
+- Q4 0:43 (24 yds) Kickoff: B.Aubrey kicks 63 yards from DAL 35 to GB 2. S.Williams to GB 26 for 24 yards (M.Bell). [special_teams]
+- Q4 2:17 (15 yds) Penalty: J.Love pass incomplete short right to E.Wilson.PENALTY on DAL-M.Liufau, Unnecessary Roughness, 15 yards, enforced at DAL 44 - No Play. [nullified]
+- Q5 0:00 (34 yds) Field Goal Good:  B.McManus 34 yard field goal is GOOD, Center-M.Orzech, Holder-D.Whelan. [special_teams]
+
+**DAL Reconciliation Clues**
+
+- Excluded non-zero-yard plays (up to 14 shown):
+- Q1 10:02 (28 yds) Kickoff: B.McManus kicks 65 yards from GB 35 to DAL 0. K.Turpin pushed ob at DAL 28 for 28 yards (X.McKinney). [special_teams]
+- Q1 1:31 (-5 yds) Penalty: (Run formation) PENALTY on DAL, Delay of Game, 5 yards, enforced at DAL 31 - No Play. [nullified]
+- Q1 1:31 (9 yds) Punt: B.Anger punts 51 yards to GB 23, Center-T.Sieg. M.Golden ran ob at GB 32 for 9 yards (H.Luepke). [special_teams]
+- Q2 10:37 (-3 yds) Kickoff: B.McManus kicks 66 yards from GB 35 to DAL -1. K.Turpin to DAL 29 for 30 yards (J.Bullard).PENALTY on DAL-M.Liufau, Offensive Holding, 10 yards, enforced at DAL 22.Penalty on DAL-M.Bell, Illegal Block Above the Waist, declined. [special_teams]
+- Q2 8:42 (2 yds) Punt: B.Anger punts 46 yards to GB 38, Center-T.Sieg. M.Golden to GB 40 for 2 yards (M.Liufau). [special_teams]
+- Q2 9:54 (-5 yds) Penalty: (Shotgun) D.Prescott pass deep right to K.Turpin to DAL 38 for 23 yards (X.McKinney) [E.Cooper].PENALTY on DAL-N.Thomas, Illegal Formation, 5 yards, enforced at DAL 15 - No Play. [nullified]
+- Q3 12:43 (5 yds) Punt: B.Anger punts 42 yards to GB 19, Center-T.Sieg. R.Doubs ran ob at GB 24 for 5 yards (L.Schoonmaker). [special_teams]
+- Q3 13:46 (-5 yds) Penalty: (Shotgun) PENALTY on DAL-T.Smith, False Start, 5 yards, enforced at DAL 43 - No Play. [nullified]
+- Q3 15:00 (30 yds) Kickoff: B.McManus kicks 65 yards from GB 35 to DAL 0. K.Turpin to DAL 30 for 30 yards (E.Williams; Z.Anderson). [special_teams]
+- Q3 1:26 (-5 yds) Penalty: PENALTY on DAL-L.Schoonmaker, False Start, 5 yards, enforced at GB 12 - No Play. [nullified]
+- Q4 11:39 (20 yds) Kickoff: B.McManus kicks 62 yards from GB 35 to DAL 3. K.Turpin to DAL 23 for 20 yards (I.McDuffie). [special_teams]
+- Q4 1:45 (45 yds) Kickoff: B.McManus kicks 64 yards from GB 35 to DAL 1. K.Turpin to DAL 46 for 45 yards (B.McManus). [special_teams]
+- Q5 10:00 (2 yds) Kickoff: B.McManus kicks 64 yards from GB 35 to DAL 1. K.Turpin to DAL 42 for 41 yards (B.McManus).
+PENALTY on DAL-J.Houston, Offensive Holding, 10 yards, enforced at DAL 30. [special_teams]
+- Q5 4:40 (22 yds) Field Goal Good: B.Aubrey 22 yard field goal is GOOD, Center-T.Sieg, Holder-B.Anger. [special_teams]
+
+### 401772731 CIN @ MIN (TOΔ max 0, YdsΔ max 18, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| CIN | 171 | 173 | +2 | 5 | 5 | +0 | 45 | 45 | +0 |
+| MIN | 352 | 334 | -18 | 0 | 0 | +0 | 105 | 105 | +0 |
+
+**CIN Reconciliation Clues**
+
+- Windelta counted turnovers (5):
+- Q1 6:08 (87 yds) Interception Return Touchdown: (Shotgun) J.Browning pass deep right intended for C.Brown INTERCEPTED by I.Rodgers (H.Smith) [I.Pace] at MIN 13. I.Rodgers for 87 yards, TOUCHDOWN. W.Reichard extra point is GOOD, Center-A.DePaola, Holder-R.Wright. [interception]
+- Q2 0:28 (0 yds) Fumble Recovery (Opponent): (Shotgun) S.Perine left guard to CIN 35 for 5 yards (J.Redmond). FUMBLES (J.Redmond), touched at CIN 47, RECOVERED by MIN-J.Allen at CIN 47. [fumble]
+- Q2 1:31 (0 yds) Fumble Recovery (Opponent): (Shotgun) J.Browning pass short right to J.Chase to CIN 47 for 15 yards (I.Rodgers). FUMBLES (I.Rodgers), RECOVERED by MIN-J.Okudah at MIN 48. J.Okudah to MIN 48 for no gain (J.Chase).Penalty on CIN-T.Higgins, Illegal Motion, declined.Penalty on CIN-J.Browning, Illegal Forward Pass, declined. [fumble]
+- Q2 1:47 (66 yds) Fumble Return Touchdown: (Shotgun) J.Browning pass short right to N.Fant to MIN 32 for 4 yards (I.Rodgers). FUMBLES (I.Rodgers), RECOVERED by MIN-I.Rodgers at MIN 34. I.Rodgers for 66 yards, TOUCHDOWN. W.Reichard extra point is GOOD, Center-A.DePaola, Holder-R.Wright. [fumble]
+- Q3 3:55 (0 yds) Pass Interception Return: (Shotgun) J.Browning pass short middle intended for M.Gesicki INTERCEPTED by J.Metellus at MIN 32. J.Metellus to MIN 32 for no gain (M.Gesicki). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q1 7:08 (1 yds) Fumble Recovery (Own): C.Brown right guard to MIN 29 for 1 yard (E.Wilson). FUMBLES (E.Wilson), and recovers at MIN 29.
+- Q4 13:43 (6 yds) Fumble Recovery (Own): J.Browning pass short left to C.Grandy to MIN 23 for 6 yards (T.Jackson). FUMBLES (T.Jackson), recovered by CIN-C.Jones at MIN 23.
+
+- Excluded non-zero-yard plays (up to 18 shown):
+- Q1 11:28 (6 yds) Punt: R.Rehkow punts 51 yards to MIN 20, Center-W.Wagner. M.Price to MIN 26 for 6 yards (D.Ivey; B.Carter). [special_teams]
+- Q1 12:57 (16 yds) Kickoff: W.Reichard kicks 52 yards from MIN 35 to CIN 13. S.Perine to CIN 29 for 16 yards (J.Okudah). [special_teams]
+- Q1 3:59 (16 yds) Punt: R.Rehkow punts 55 yards to MIN 27, Center-W.Wagner. M.Price to MIN 43 for 16 yards (W.Wagner; S.Heyward). [special_teams]
+- Q1 6:08 (22 yds) Kickoff: W.Reichard kicks 62 yards from MIN 35 to CIN 3. C.Jones to CIN 25 for 22 yards (T.Thomas; I.Pace). [special_teams]
+- Q2 0:33 (27 yds) Kickoff: W.Reichard kicks 62 yards from MIN 35 to CIN 3. S.Perine to CIN 30 for 27 yards (I.Pace, C.Chambliss). [special_teams]
+- Q2 14:56 (-10 yds) Penalty: (Shotgun) J.Browning pass short right to J.Chase to CIN 36 for 16 yards (J.Okudah).PENALTY on CIN-D.Fairchild, Offensive Holding, 10 yards, enforced at CIN 20 - No Play. [nullified]
+- Q2 1:38 (5 yds) Penalty: (Shotgun) J.Browning pass short middle to M.Gesicki to CIN 36 for 9 yards (J.Metellus).PENALTY on MIN-J.Allen, Defensive Offside, 5 yards, enforced at CIN 27 - No Play. [nullified]
+- Q2 1:47 (21 yds) Kickoff: W.Reichard kicks 59 yards from MIN 35 to CIN 6. S.Perine to CIN 27 for 21 yards (I.Pace). [special_teams]
+- Q2 4:42 (45 yds) Field Goal Good:  E.McPherson 45 yard field goal is GOOD, Center-W.Wagner, Holder-R.Rehkow. [special_teams]
+- Q2 9:20 (24 yds) Kickoff: W.Reichard kicks 64 yards from MIN 35 to CIN 1. S.Perine to CIN 25 for 24 yards (I.Pace; T.Thomas). [special_teams]
+- Q3 0:17 (36 yds) Kickoff: W.Reichard kicks 61 yards from MIN 35 to CIN 4. C.Jones to CIN 40 for 36 yards (J.Okudah).Penalty on MIN-I.Pace, Illegal Formation, offsetting, enforced at MIN 35 - No Play.Penalty on CIN-C.Grandy, Illegal Block Above the Waist, offsetting.Penalty on CIN-C.Sample, Illegal Block Above the Waist, offsetting. [nullified]
+- Q3 12:55 (-9 yds) Punt: R.Rehkow punts 68 yards to MIN 5, Center-W.Wagner. M.Price to MIN 11 for 6 yards (O.Burks).PENALTY on CIN-P.Jules, Face Mask, 15 yards, enforced at MIN 11. [special_teams]
+- Q3 15:00 (17 yds) Kickoff: W.Reichard kicks 58 yards from MIN 35 to CIN 7. C.Jones to CIN 24 for 17 yards (C.Chambliss). [special_teams]
+- Q3 6:00 (22 yds) Kickoff: W.Reichard kicks 57 yards from MIN 35 to CIN 8. C.Jones to CIN 30 for 22 yards (T.Felton). [special_teams]
+- Q4 12:03 (14 yds) Penalty: (Shotgun) J.Browning pass incomplete short right to T.Higgins.PENALTY on MIN-D.McGlothern, Defensive Pass Interference, 14 yards, enforced at MIN 15 - No Play. [nullified]
+- Q4 12:30 (6 yds) Penalty: J.Browning up the middle to MIN 19 for 2 yards (J.Redmond; L.Rodriguez).PENALTY on MIN, Defensive Too Many Men on Field, 6 yards, enforced at MIN 21 - No Play. [nullified]
+- Q4 3:53 (11 yds) Punt: R.Rehkow punts 52 yards to MIN 33, Center-W.Wagner. M.Price to MIN 44 for 11 yards (P.Jules). [special_teams]
+- Q4 8:14 (29 yds) Punt: R.Rehkow punts 70 yards to MIN 14, Center-W.Wagner. M.Price to MIN 43 for 29 yards (T.Brooks). [special_teams]
+
+**MIN Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 11:07 (3 yds) Fumble Recovery (Own): Z.Scott left tackle to MIN 36 for 1 yard (O.Burks). FUMBLES (O.Burks), recovered by MIN-B.Brandel at MIN 38.
+
+- Excluded non-zero-yard plays (up to 14 shown):
+- Q1 10:02 (-5 yds) Penalty: (Shotgun) PENALTY on MIN-C.Darrisaw, False Start, 5 yards, enforced at MIN 32 - No Play. [nullified]
+- Q1 15:00 (28 yds) Kickoff: E.McPherson kicks 57 yards from CIN 35 to MIN 8. M.Price to MIN 36 for 28 yards (M.Wilson). [special_teams]
+- Q1 9:02 (9 yds) Punt: R.Wright punts 44 yards to CIN 39, Center-A.DePaola. C.Jones pushed ob at CIN 48 for 9 yards (B.Yurosek). [special_teams]
+- Q2 0:00 (62 yds) Field Goal Good: W.Reichard 62 yard field goal is GOOD, Center-A.DePaola, Holder-R.Wright. [special_teams]
+- Q2 0:20 (-5 yds) Penalty: (Shotgun) J.Jefferson pass short right to Z.Scott pushed ob at CIN 39 for 8 yards (L.Wilson).PENALTY on MIN-B.Brandel, Illegal Formation, 5 yards, enforced at CIN 47 - No Play. [nullified]
+- Q2 2:59 (-15 yds) Punt: R.Wright punts 46 yards to CIN 37, Center-A.DePaola, fair catch by C.Jones.PENALTY on MIN-T.Thomas, Fair Catch Interference, 15 yards, enforced at CIN 37. [special_teams]
+- Q2 3:54 (-5 yds) Penalty: (Shotgun) PENALTY on MIN-M.Jurgens, False Start, 5 yards, enforced at MIN 26 - No Play. [nullified]
+- Q2 4:37 (-5 yds) Penalty: (Shotgun) PENALTY on MIN-T.Hockenson, False Start, 5 yards, enforced at MIN 23 - No Play. [nullified]
+- Q2 4:42 (22 yds) Kickoff: E.McPherson kicks 64 yards from CIN 35 to MIN 1. M.Price to MIN 23 for 22 yards (T.Anderson; O.Burks). [special_teams]
+- Q2 9:20 (35 yds) Field Goal Good: W.Reichard 35 yard field goal is GOOD, Center-A.DePaola, Holder-R.Wright. [special_teams]
+- Q3 11:33 (-5 yds) Penalty: (No Huddle, Shotgun) PENALTY on MIN-D.Jackson, False Start, 5 yards, enforced at CIN 47 - No Play. [nullified]
+- Q3 9:52 (-10 yds) Penalty: J.Mason left end to CIN 35 for 5 yards (C.Sample, G.Stone).PENALTY on MIN-M.Jurgens, Offensive Holding, 10 yards, enforced at CIN 40 - No Play. [nullified]
+- Q4 11:12 (34 yds) Kickoff: E.McPherson kicks 64 yards from CIN 35 to MIN 1. T.Felton to MIN 35 for 34 yards (T.Brooks). [special_teams]
+- Q4 7:57 (-5 yds) Penalty: PENALTY on MIN-J.Huber, False Start, 5 yards, enforced at MIN 43 - No Play. [nullified]
+
+### 401772832 TEN @ DEN (TOΔ max 0, YdsΔ max 18, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| TEN | 133 | 124 | -9 | 2 | 2 | +0 | 131 | 131 | +0 |
+| DEN | 317 | 299 | -18 | 4 | 4 | +0 | 45 | 45 | +0 |
+
+**TEN Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q2 13:21 (0 yds) Fumble Recovery (Opponent): T.Pollard right guard to DEN 37 for 2 yards (J.Cooper, T.Hufanga). FUMBLES (T.Hufanga), RECOVERED by DEN-B.Jones at DEN 32. [fumble]
+- Q4 0:47 (0 yds) Sack Opp Fumble Recovery: (Shotgun) C.Ward sacked at TEN 25 for -11 yards (J.McMillian). FUMBLES (J.McMillian) [J.McMillian], RECOVERED by DEN-J.Barron at TEN 34. [fumble]
+
+- Excluded non-zero-yard plays (up to 15 shown):
+- Q1 11:58 (50 yds) Field Goal Good: J.Slye 50 yard field goal is GOOD, Center-M.Cox, Holder-J.Hekker. [special_teams]
+- Q1 7:24 (-10 yds) Penalty:  C.Ward scrambles left tackle to DEN 39 for 11 yards (A.Singleton).
+PENALTY on TEN-D.Moore, Offensive Holding, 10 yards, enforced at 50 - No Play. [nullified]
+- Q1 8:35 (25 yds) Kickoff: W.Lutz kicks 60 yards from DEN 35 to TEN 5. C.Dike to TEN 30 for 25 yards (D.Key). [special_teams]
+- Q2 0:02 (42 yds) Field Goal Good: J.Slye 42 yard field goal is GOOD, Center-M.Cox, Holder-J.Hekker. [special_teams]
+- Q2 0:16 (71 yds) Kickoff: W.Lutz kicks 60 yards from DEN 35 to TEN 5. C.Dike pushed ob at DEN 24 for 71 yards (J.Barron). [special_teams]
+- Q2 0:39 (17 yds) Punt: J.Hekker punts 54 yards to DEN 45, Center-M.Cox. M.Mims to TEN 38 for 17 yards (D.Martin-Robinson). [special_teams]
+- Q2 13:46 (-5 yds) Penalty: PENALTY on TEN-K.Zeitler, False Start, 5 yards, enforced at DEN 34 - No Play. [nullified]
+- Q2 2:16 (33 yds) Field Goal Good: J.Slye 33 yard field goal is GOOD, Center-M.Cox, Holder-J.Hekker. [special_teams]
+- Q2 9:42 (18 yds) Punt: J.Hekker punts 65 yards to DEN 18, Center-M.Cox. M.Mims pushed ob at DEN 36 for 18 yards (J.Hekker). [special_teams]
+- Q3 11:56 (35 yds) Field Goal Good:  J.Slye 35 yard field goal is GOOD, Center-M.Cox, Holder-J.Hekker. [special_teams]
+- Q3 2:34 (-5 yds) Penalty: (Punt formation) PENALTY on TEN, Delay of Game, 5 yards, enforced at TEN 31 - No Play. [nullified]
+- Q3 2:57 (-10 yds) Penalty: (Shotgun) C.Ward pass incomplete short right.PENALTY on TEN-J.Latham, Offensive Holding, 10 yards, enforced at TEN 41 - No Play.Penalty on TEN-D.Moore, Ineligible Downfield Pass, declined. [nullified]
+- Q3 4:17 (24 yds) Kickoff: W.Lutz kicks 59 yards from DEN 35 to TEN 6. C.Dike to TEN 30 for 24 yards (K.Abrams-Draine). [special_teams]
+- Q4 6:48 (12 yds) Punt: J.Hekker punts 48 yards to DEN 25, Center-M.Cox. M.Mims to DEN 37 for 12 yards (D.Martin-Robinson; J.Harrell). [special_teams]
+- Q4 7:37 (24 yds) Kickoff: W.Lutz kicks 59 yards from DEN 35 to TEN 6. C.Dike to TEN 30 for 24 yards (J.Elliss). [special_teams]
+
+**DEN Reconciliation Clues**
+
+- Windelta counted turnovers (4):
+- Q1 0:49 (0 yds) Pass Interception Return: (Shotgun) B.Nix pass deep left intended for C.Sutton INTERCEPTED by R.McCreary at TEN 46. R.McCreary to TEN 46 for no gain (C.Sutton). [interception]
+- Q2 7:10 (0 yds) Sack Opp Fumble Recovery: (Shotgun) B.Nix sacked at DEN 40 for -8 yards (J.Simmons). FUMBLES (J.Simmons) [J.Simmons], RECOVERED by TEN-S.Joseph at DEN 38. S.Joseph to DEN 38 for no gain (M.McGlinchey). [fumble]
+- Q3 14:16 (16 yds) Pass Interception Return: (Shotgun) B.Nix pass short right intended for T.Franklin INTERCEPTED by X.Woods [J.Simmons] at DEN 42. X.Woods ran ob at DEN 26 for 16 yards (Q.Meinerz; L.Wattenberg). [interception]
+- Q4 11:53 (0 yds) Muffed Punt Recovery (Opponent): J.Hekker punts 46 yards to DEN 20, Center-M.Cox. M.Mims MUFFS catch, RECOVERED by TEN-D.Mausi at DEN 24. [muffed_kick]
+
+- Excluded non-zero-yard plays (up to 16 shown):
+- Q1 1:13 (-10 yds) Penalty: (Shotgun) B.Nix pass deep right to C.Sutton to TEN 48 for 18 yards (D.Baker).PENALTY on DEN-B.Powers, Offensive Holding, 10 yards, enforced at DEN 34 - No Play. [nullified]
+- Q1 8:35 (39 yds) Field Goal Good:  W.Lutz 39 yard field goal is GOOD, Center-M.Fraboni, Holder-J.Crawshaw. [special_teams]
+- Q1 8:53 (5 yds) Penalty: (No Huddle, Shotgun) PENALTY on TEN-J.Simmons, Neutral Zone Infraction, 5 yards, enforced at TEN 21 - No Play. [nullified]
+- Q1 8:53 (-5 yds) Penalty: (Shotgun) PENALTY on DEN, Delay of Game, 5 yards, enforced at TEN 16 - No Play. [nullified]
+- Q2 0:02 (-1 yds) Rush: B.Nix kneels to DEN 34 for -1 yards. [spike_kneel]
+- Q2 0:27 (16 yds) Penalty: (Shotgun) B.Nix pass incomplete deep right to C.Sutton.PENALTY on TEN-J.Brownlee, Defensive Pass Interference, 16 yards, enforced at TEN 38 - No Play. [nullified]
+- Q2 1:38 (-5 yds) Penalty: (Shotgun) B.Nix pass short left to T.Badie to DEN 46 for 6 yards (J.Brownlee).PENALTY on DEN-L.Wattenberg, Ineligible Downfield Pass, 5 yards, enforced at DEN 40 - No Play. [nullified]
+- Q2 1:41 (5 yds) Penalty: (No Huddle, Shotgun) B.Nix pass incomplete short left to C.Sutton.PENALTY on TEN-J.Brownlee, Illegal Contact, 5 yards, enforced at DEN 35 - No Play. [nullified]
+- Q2 2:16 (28 yds) Kickoff: J.Slye kicks 66 yards from TEN 35 to DEN -1. M.Mims pushed ob at DEN 27 for 28 yards (J.Harrell). [special_teams]
+- Q3 10:53 (-10 yds) Penalty: (Shotgun) B.Nix pass short left to M.Mims pushed ob at TEN 33 for 6 yards (R.McCreary).PENALTY on DEN-T.Sherfield, Offensive Holding, 10 yards, enforced at TEN 39 - No Play. [nullified]
+- Q3 11:56 (26 yds) Kickoff: J.Slye kicks 64 yards from TEN 35 to DEN 1. M.Mims to DEN 32 for 31 yards (J.Harrell).PENALTY on TEN-J.Williams, Illegal Formation, 5 yards, enforced at DEN 32. [special_teams]
+- Q3 15:00 (23 yds) Kickoff: J.Slye kicks 65 yards from TEN 35 to DEN 0. M.Mims to DEN 23 for 23 yards (C.Gray). [special_teams]
+- Q3 4:17 (33 yds) Field Goal Good: W.Lutz 33 yard field goal is GOOD, Center-M.Fraboni, Holder-J.Crawshaw. [special_teams]
+- Q3 4:20 (-5 yds) Penalty: (Run formation) A.Palczewski reported in as eligible.  PENALTY on DEN, Delay of Game, 5 yards, enforced at TEN 10 - No Play. [nullified]
+- Q4 0:41 (-1 yds) Rush: B.Nix kneels to TEN 35 for -1 yards. [spike_kneel]
+- Q4 15:00 (3 yds) Punt: J.Crawshaw punts 46 yards to TEN 7, Center-M.Fraboni. C.Dike to TEN 19 for 12 yards (T.Sherfield).PENALTY on TEN-J.Williams, Unnecessary Roughness, 9 yards, enforced at TEN 19. [special_teams]
+
+### 401772855 LAR @ BAL (TOΔ max 0, YdsΔ max 18, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| LAR | 241 | 237 | -4 | 1 | 1 | +0 | 40 | 40 | +0 |
+| BAL | 296 | 278 | -18 | 3 | 3 | +0 | 80 | 80 | +0 |
+
+**LAR Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q1 1:29 (11 yds) Sack Opp Fumble Recovery: M.Stafford sacked at BLT 44 for -7 yards (J.Jenkins). FUMBLES (J.Jenkins) [J.Jenkins], touched at BLT 46, RECOVERED by BLT-J.Jenkins at BLT 48. J.Jenkins to LA 41 for 11 yards (S.Avila). [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q2 3:52 (0 yds) Fumble Recovery (Opponent): E.Evans punts 52 yards to BLT 31, Center-A.Ward. L.Wester to BLT 46 for 15 yards (T.Reeder). FUMBLES (T.Reeder), RECOVERED by LA-D.Allen at BLT 49.PENALTY on LA-S.Dolac, Ineligible Downfield Kick, 5 yards, enforced at LA 17 - No Play.
+- Q4 2:44 (-6 yds) Fumble Recovery (Own): M.Stafford FUMBLES (Aborted) at LA 21, recovered by LA-J.Whittington at LA 19. J.Whittington to LA 19 for no gain (B.Urban).
+
+- Excluded non-zero-yard plays (up to 10 shown):
+- Q1 2:27 (26 yds) Field Goal Missed: J.Karty 26 yard field goal is No Good, Hit Right Upright, Center-A.Ward, Holder-E.Evans. [special_teams]
+- Q1 7:22 (15 yds) Kickoff: T.Loop kicks 45 yards from BLT 35 to LA 20. X.Smith to LA 35 for 15 yards (R.Ali). [special_teams]
+- Q2 0:08 (-1 yds) Rush: M.Stafford kneels to LA 2 for -1 yards. [spike_kneel]
+- Q2 3:38 (35 yds) Punt: E.Evans punts 55 yards to BLT 33, Center-A.Ward. L.Wester pushed ob at LA 32 for 35 yards (E.Evans). [special_teams]
+- Q2 9:50 (36 yds) Field Goal Good: J.Karty 36 yard field goal is GOOD, Center-A.Ward, Holder-E.Evans. [special_teams]
+- Q3 0:02 (5 yds) Penalty: PENALTY on BLT-K.Van Noy, Neutral Zone Infraction, 5 yards, enforced at BLT 14 - No Play. [nullified]
+- Q3 15:00 (10 yds) Kickoff: T.Loop kicks 51 yards from BLT 35 to LA 14. X.Smith to LA 24 for 10 yards (K.Jackson). [special_teams]
+- Q3 1:05 (-10 yds) Rush: K.Williams right end to BLT 9 for 4 yards (T.Simpson; K.Van Noy).PENALTY on LA-J.Whittington, Offensive Holding, 10 yards, enforced at BLT 13 - No Play. [nullified]
+- Q3 1:10 (30 yds) Pass Incompletion: (No Huddle, Shotgun) M.Stafford pass incomplete deep right to D.Adams.PENALTY on BLT-N.Wiggins, Defensive Pass Interference, 30 yards, enforced at BLT 43 - No Play. [nullified]
+- Q4 0:23 (-1 yds) Rush:  M.Stafford kneels to BLT 43 for -1 yards. [spike_kneel]
+
+**BAL Reconciliation Clues**
+
+- Windelta counted turnovers (3):
+- Q1 1:34 (0 yds) Pass Interception Return: (Shotgun) C.Rush pass short middle intended for Z.Flowers INTERCEPTED by Q.Lake at BLT 37. Q.Lake to BLT 37 for no gain (Z.Flowers). [interception]
+- Q3 11:14 (20 yds) Fumble Recovery (Opponent): (Shotgun) C.Rush pass short right to Z.Flowers to BLT 36 for 10 yards (J.Verse; N.Landman). FUMBLES (J.Verse), RECOVERED by LA-Q.Lake at BLT 41. Q.Lake to BLT 21 for 20 yards (J.Noteboom). [fumble]
+- Q3 3:27 (0 yds) Fumble Recovery (Opponent): C.Rush FUMBLES (Aborted) at LA 31, RECOVERED by LA-T.Davis at LA 31. [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 10:07 (1 yds) Fumble Recovery (Own): (Shotgun) T.Huntley pass short right to I.Likely to LA 46 for 3 yards (E.Forbes). FUMBLES (E.Forbes), and recovers at LA 48. I.Likely to LA 48 for no gain (S.Dolac).
+
+- Excluded non-zero-yard plays (up to 12 shown):
+- Q1 11:02 (5 yds) Penalty: (Shotgun) PENALTY on LA-J.Verse, Encroachment, 5 yards, enforced at LA 32 - No Play. [nullified]
+- Q1 11:24 (5 yds) Penalty: (No Huddle, Shotgun) ** Injury Update: LA-K.Curl has returned to the game.  PENALTY on LA-J.Stewart, Neutral Zone Infraction, 5 yards, enforced at LA 37 - No Play. [nullified]
+- Q1 15:00 (19 yds) Kickoff: J.Karty kicks 56 yards from LA 35 to BLT 9. T.Wallace to BLT 28 for 19 yards (N.Hampton). [special_teams]
+- Q1 7:22 (37 yds) Field Goal Good: T.Loop 37 yard field goal is GOOD, Center-N.Moore, Holder-J.Stout. [special_teams]
+- Q1 8:27 (-10 yds) Rush: (Shotgun) C.Rush scrambles up the middle to LA 6 for 7 yards (N.Landman; K.Curl).PENALTY on BLT-R.Stanley, Offensive Holding, 10 yards, enforced at LA 13 - No Play. [nullified]
+- Q1 9:33 (-10 yds) Rush: (Shotgun) D.Henry left end to LA 6 for 5 yards (K.Curl; Q.Lake).PENALTY on BLT-D.Faalele, Offensive Holding, 10 yards, enforced at LA 11 - No Play. [nullified]
+- Q2 5:10 (-10 yds) Punt: J.Stout punts 53 yards to end zone, Center-N.Moore, Touchback.PENALTY on LA-J.McCollough, Offensive Holding, 10 yards, enforced at LA 20. [special_teams]
+- Q2 9:50 (17 yds) Kickoff: J.Karty kicks 63 yards from LA 35 to BLT 2. K.Mitchell to BLT 19 for 17 yards (S.Dolac). [special_teams]
+- Q3 11:46 (17 yds) Pass Reception: (Shotgun) C.Rush pass short middle to M.Andrews to LA 47 for 17 yards (D.Williams; K.Curl).PENALTY on BLT-M.Andrews, Offensive Pass Interference, 10 yards, enforced at BLT 36 - No Play. [nullified]
+- Q3 11:52 (25 yds) Kickoff: J.Karty kicks 54 yards from LA 35 to BLT 11. T.Wallace to BLT 36 for 25 yards (K.Kinchens). [special_teams]
+- Q3 8:59 (5 yds) Penalty: (Run formation) PENALTY on LA-K.Turner, Neutral Zone Infraction, 5 yards, enforced at BLT 29 - No Play. [nullified]
+- Q4 9:20 (-5 yds) Penalty: (Shotgun) PENALTY on BLT-D.Faalele, False Start, 5 yards, enforced at LA 48 - No Play. [nullified]
+
+### 401772869 TB @ NO (TOΔ max 0, YdsΔ max 18, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| TB | 212 | 210 | -2 | 1 | 1 | +0 | 25 | 25 | +0 |
+| NO | 275 | 257 | -18 | 4 | 4 | +0 | 40 | 40 | +0 |
+
+**TB Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q2 0:57 (-5 yds) Sack Opp Fumble Recovery: (Shotgun) B.Mayfield sacked at TB 40 for -11 yards (C.Young). FUMBLES (C.Young) [C.Young], touched at TB 42, RECOVERED by NO-C.Young at TB 40. C.Young to TB 45 for -5 yards (G.Barton). [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q1 1:19 (9 yds) Rush: S.Tucker left end to TB 29 for 9 yards (D.Davis; K.McKinstry). FUMBLES (D.Davis), ball out of bounds at TB 30.
+
+- Excluded non-zero-yard plays (up to 10 shown):
+- Q1 0:02 (5 yds) Penalty: PENALTY on NO-J.Bullard, Neutral Zone Infraction, 5 yards, enforced at TB 31 - No Play. [nullified]
+- Q1 10:07 (-5 yds) Penalty: (Shotgun) PENALTY on TB-T.Wirfs, False Start, 5 yards, enforced at TB 46 - No Play. [nullified]
+- Q2 0:01 (28 yds) Kickoff: B.Grupe kicks 66 yards from NO 35 to TB -1. S.Tucker to TB 27 for 28 yards (D.Stutsman). [special_teams]
+- Q2 1:58 (8 yds) Punt: R.Dixon punts 58 yards to NO 26, Center-E.Deckers. R.Shaheed to NO 34 for 8 yards (J.Hayes). [special_teams]
+- Q2 2:26 (-5 yds) Penalty: (Shotgun) PENALTY on TB-T.Wirfs, False Start, 5 yards, enforced at TB 21 - No Play. [nullified]
+- Q3 15:00 (22 yds) Kickoff: B.Grupe kicks 60 yards from NO 35 to TB 5. S.Tucker to TB 27 for 22 yards (T.Burgess). [special_teams]
+- Q3 4:02 (55 yds) Field Goal Good: C.McLaughlin 55 yard field goal is GOOD, Center-E.Deckers, Holder-R.Dixon. [special_teams]
+- Q3 5:21 (-10 yds) Rush: J.Williams left guard to NO 34 for no gain (D.Davis).PENALTY on TB-B.Bredeson, Offensive Holding, 10 yards, enforced at NO 34 - No Play. [nullified]
+- Q4 14:03 (52 yds) Field Goal Good: C.McLaughlin 52 yard field goal is GOOD, Center-E.Deckers, Holder-R.Dixon. [special_teams]
+- Q4 9:26 (54 yds) Field Goal Good: C.McLaughlin 54 yard field goal is GOOD, Center-E.Deckers, Holder-R.Dixon. [special_teams]
+
+**NO Reconciliation Clues**
+
+- Windelta counted turnovers (4):
+- Q1 12:25 (0 yds) Fumble Recovery (Opponent): (Shotgun) S.Rattler scrambles left guard to TB 34 for 7 yards (A.Nelson; S.Dennis). FUMBLES (A.Nelson), touched at TB 33, RECOVERED by TB-L.David at TB 32. [fumble]
+- Q2 1:48 (0 yds) Fumble Recovery (Opponent): (Shotgun) S.Rattler pass short left to R.Shaheed to NO 44 for 10 yards (J.Dean). FUMBLES (J.Dean), RECOVERED by TB-A.Winfield at NO 47. [fumble]
+- Q2 6:41 (3 yds) Interception Return Touchdown: (Shotgun) S.Rattler pass short right intended for F.Moreau INTERCEPTED by A.Nelson at NO 3. A.Nelson for 3 yards, TOUCHDOWN.Penalty on NO-K.Banks, Illegal Formation, declined. C.McLaughlin extra point is GOOD, Center-E.Deckers, Holder-R.Dixon. [interception]
+- Q3 1:33 (0 yds) Pass Interception Return: (No Huddle, Shotgun) T.Shough pass short right intended for C.Olave INTERCEPTED by A.Winfield at 50. A.Winfield to 50 for no gain (C.Olave). [interception]
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q1 15:00 (36 yds) Kickoff: C.McLaughlin kicks 64 yards from TB 35 to NO 1. M.Tipton pushed ob at NO 37 for 36 yards (D.Jones). [special_teams]
+- Q2 0:01 (48 yds) Field Goal Good: B.Grupe 48 yard field goal is GOOD, Center-Z.Wood, Holder-K.Kroeger. [special_teams]
+- Q2 6:41 (20 yds) Kickoff: C.McLaughlin kicks 66 yards from TB 35 to NO -1. D.Neal MUFFS catch, and recovers at NO 0. D.Neal to NO 20 for 20 yards (C.Izien). [special_teams]
+- Q3 10:08 (3 yds) Kickoff: C.McLaughlin kicks 52 yards from TB 35 to NO 13. D.Neal to NO 28 for 15 yards (J.Parrish).PENALTY on NO-D.Vele, Offensive Holding, 10 yards, enforced at NO 25. [special_teams]
+- Q3 4:02 (23 yds) Kickoff: C.McLaughlin kicks 58 yards from TB 35 to NO 7. D.Neal to NO 30 for 23 yards (C.Braswell). [special_teams]
+- Q3 8:31 (8 yds) Punt: K.Kroeger punts 55 yards to TB 37, Center-Z.Wood. K.Johnson to TB 45 for 8 yards (I.Stalbird). [special_teams]
+- Q3 9:06 (-7 yds) Rush: (No Huddle, Shotgun) S.Rattler scrambles up the middle to NO 24 for 9 yards (S.Dennis).PENALTY on NO-T.Penning, Offensive Holding, 7 yards, enforced at NO 15 - No Play. [nullified]
+- Q3 9:41 (-4 yds) Penalty: (Shotgun) PENALTY on NO, Delay of Game, 4 yards, enforced at NO 9 - No Play. [nullified]
+- Q4 14:03 (24 yds) Kickoff: C.McLaughlin kicks 65 yards from TB 35 to NO 0. D.Neal to NO 24 for 24 yards (J.Hayes; J.Bullock). [special_teams]
+- Q4 1:09 (5 yds) Penalty: (Shotgun) PENALTY on TB-C.Braswell, Neutral Zone Infraction, 5 yards, enforced at NO 40 - No Play. [nullified]
+- Q4 9:26 (27 yds) Kickoff: C.McLaughlin kicks 59 yards from TB 35 to NO 6. D.Neal to NO 33 for 27 yards (D.Jones). [special_teams]
+
+### 401772821 NYG @ NE (TOΔ max 0, YdsΔ max 17, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| NYG | 239 | 222 | -17 | 1 | 1 | +0 | 30 | 30 | +0 |
+| NE | 395 | 395 | +0 | 0 | 0 | +0 | 30 | 30 | +0 |
+
+**NYG Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q2 3:29 (21 yds) Kickoff: A.Borregales kicks 59 yards from NE 35 to NYG 6. G.Olszewski to NYG 27 for 21 yards (M.Mapu; C.Elliss). FUMBLES (M.Mapu), RECOVERED by NE-E.Ponder at NYG 27. NYG-G.Olszewski was injured during the play. [fumble]
+
+- Excluded non-zero-yard plays (up to 13 shown):
+- Q1 1:00 (34 yds) Kickoff: A.Borregales kicks 61 yards from NE 35 to NYG 4. D.Banks to NYG 38 for 34 yards (C.Murphy; A.Jennings). [special_teams]
+- Q1 3:49 (17 yds) Punt: J.Gillan punts 54 yards to NE 22, Center-C.Kreiter. M.Jones to NE 39 for 17 yards (N.Hewitt; Z.Barnes). [special_teams]
+- Q1 4:42 (-5 yds) Penalty: PENALTY on NYG-T.Johnson, False Start, 5 yards, enforced at NYG 32 - No Play. [nullified]
+- Q1 5:17 (19 yds) Kickoff: A.Borregales kicks 54 yards from NE 35 to NYG 11. G.Olszewski to NYG 30 for 19 yards (C.Elliss). [special_teams]
+- Q1 9:14 (14 yds) Kickoff: A.Borregales kicks 54 yards from NE 35 to NYG 11. G.Olszewski to NYG 25 for 14 yards (C.Elliss). [special_teams]
+- Q2 13:03 (15 yds) Penalty: (No Huddle, Shotgun) J.Dart pass incomplete deep right to T.Johnson (C.Woodson).PENALTY on NE-J.Hawkins, Unnecessary Roughness, 15 yards, enforced at NE 45 - No Play. [nullified]
+- Q2 1:13 (-5 yds) Penalty: (Run formation) PENALTY on NYG, Delay of Game, 5 yards, enforced at NYG 40 - No Play. [nullified]
+- Q2 1:48 (24 yds) Kickoff: A.Borregales kicks 58 yards from NE 35 to NYG 7. D.Singletary to NYG 31 for 24 yards (J.Tavai). [special_teams]
+- Q2 3:29 (21 yds) Kickoff: A.Borregales kicks 59 yards from NE 35 to NYG 6. G.Olszewski to NYG 27 for 21 yards (M.Mapu; C.Elliss). FUMBLES (M.Mapu), RECOVERED by NE-E.Ponder at NYG 27. NYG-G.Olszewski was injured during the play. [special_teams]
+- Q2 6:28 (-13 yds) Rush: (Field Goal formation) J.Gillan right end to NE 42 for -13 yards (J.Pharms). [special_teams]
+- Q2 7:41 (-5 yds) Penalty: (Shotgun) J.Dart pass short left to D.Singletary to NE 24 for 5 yards (C.Gonzalez).PENALTY on NYG-J.Runyan, Ineligible Downfield Pass, 5 yards, enforced at NE 29 - No Play. [nullified]
+- Q3 15:00 (30 yds) Kickoff: A.Borregales kicks 66 yards from NE 35 to NYG -1. D.Singletary to NYG 29 for 30 yards (C.Murphy; C.Elliss). [special_teams]
+- Q4 7:52 (13 yds) Punt: J.Gillan punts 49 yards to NE 24, Center-C.Kreiter. M.Jones to NE 37 for 13 yards (Z.Barnes; C.Golston). [special_teams]
+
+**NE Reconciliation Clues**
+
+- Excluded non-zero-yard plays (up to 13 shown):
+- Q1 15:00 (39 yds) Kickoff: Y.Koo kicks 57 yards from NYG 35 to NE 8. T.Jennings to NE 47 for 39 yards (J.Holland). [special_teams]
+- Q1 5:17 (94 yds) Punt Return Touchdown: Marcus Jones 94 Yd Punt Return (Andy Borregales Kick) [special_teams_return]
+- Q1 9:14 (22 yds) Field Goal Good:  A.Borregales 22 yard field goal is GOOD, Center-J.Ashby, Holder-B.Baringer. [special_teams]
+- Q2 0:00 (28 yds) Field Goal Good: A.Borregales 28 yard field goal is GOOD, Center-J.Ashby, Holder-B.Baringer. [special_teams]
+- Q2 12:46 (22 yds) Kickoff: Y.Koo kicks 62 yards from NYG 35 to NE 3. E.Chism to NE 25 for 22 yards (T.Fox; N.Hewitt). [special_teams]
+- Q2 1:48 (30 yds) Field Goal Good: A.Borregales 30 yard field goal is GOOD, Center-J.Ashby, Holder-B.Baringer. [special_teams]
+- Q2 4:37 (-10 yds) Penalty: (Shotgun) D.Maye pass short left to K.Boutte pushed ob at NYG 28 for 8 yards (P.Adebo).PENALTY on NE-B.Brown, Offensive Holding, 10 yards, enforced at NYG 36 - No Play. [nullified]
+- Q3 4:13 (45 yds) Field Goal Missed: A.Borregales 45 yard field goal is No Good, Wide Left, Center-J.Ashby, Holder-B.Baringer. [special_teams]
+- Q4 0:38 (-1 yds) Rush: D.Maye kneels to NE 39 for -1 yards. [spike_kneel]
+- Q4 10:52 (-5 yds) Penalty: (Punt formation) PENALTY on NE, Delay of Game, 5 yards, enforced at NYG 41 - No Play. [nullified]
+- Q4 14:54 (18 yds) Kickoff: Y.Koo kicks 60 yards from NYG 35 to NE 5. K.Williams to NE 23 for 18 yards (D.Belton). [special_teams]
+- Q4 1:08 (-2 yds) Rush: D.Maye kneels to NE 40 for -2 yards. [spike_kneel]
+- Q4 2:14 (23 yds) Field Goal Good: A.Borregales 23 yard field goal is GOOD, Center-J.Ashby, Holder-B.Baringer. [special_teams]
+
+### 401772789 BUF @ PIT (TOΔ max 0, YdsΔ max 16, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| BUF | 372 | 374 | +2 | 2 | 2 | +0 | 45 | 45 | +0 |
+| PIT | 166 | 150 | -16 | 2 | 2 | +0 | 67 | 67 | +0 |
+
+**BUF Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q1 11:17 (0 yds) Pass Interception Return: (Shotgun) J.Allen pass short right intended for G.Davis INTERCEPTED by B.Echols at PIT 35. B.Echols to PIT 35 for no gain (G.Davis). [interception]
+- Q2 10:40 (0 yds) Fumble Recovery (Opponent): J.Cook left end to BUF 42 for -3 yards (N.Herbig). FUMBLES (N.Herbig), touched at BUF 40, RECOVERED by PIT-P.Queen at BUF 39. [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q1 12:56 (1 yds) Fumble Recovery (Own): J.Cook right tackle to PIT 42 for 1 yard (Y.Black; T.Watt). FUMBLES (Y.Black), and recovers at PIT 42.
+
+- Excluded non-zero-yard plays (up to 9 shown):
+- Q1 0:15 (12 yds) Punt:  M.Wishnowsky punts 52 yards to PIT 29, Center-R.Ferguson. C.Austin ran ob at PIT 41 for 12 yards (R.Gilliam). [special_teams]
+- Q1 12:18 (-5 yds) Penalty: PENALTY on BUF-A.Anderson, False Start, 5 yards, enforced at PIT 42 - No Play. [nullified]
+- Q1 15:00 (21 yds) Kickoff: C.Boswell kicks 63 yards from PIT 35 to BUF 2. Ty.Johnson to BUF 23 for 21 yards (P.Wilson; C.Clark). [special_teams]
+- Q1 3:27 (-5 yds) Penalty: (Shotgun) PENALTY on BUF, Delay of Game, 5 yards, enforced at PIT 42 - No Play. [nullified]
+- Q1 4:22 (-5 yds) Penalty: (Shotgun) PENALTY on BUF-A.Anderson, False Start, 5 yards, enforced at PIT 44 - No Play. [nullified]
+- Q2 0:51 (27 yds) Field Goal Good: M.Prater 27 yard field goal is GOOD, Center-R.Ferguson, Holder-M.Wishnowsky. [special_teams]
+- Q2 0:55 (-5 yds) Penalty: (Shotgun) ** Injury Update: PIT-J.Pierre has returned to the game.  PENALTY on BUF-C.McGovern, False Start, 5 yards, enforced at PIT 4 - No Play. [nullified]
+- Q2 8:09 (15 yds) Kickoff: C.Boswell kicks 64 yards from PIT 20 to BUF 16. R.Davis to BUF 31 for 15 yards (J.Sawyer; C.Holcomb). [special_teams]
+- Q4 1:07 (37 yds) Field Goal Good: M.Prater 37 yard field goal is GOOD, Center-R.Ferguson, Holder-M.Wishnowsky. [special_teams]
+
+**PIT Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q3 13:22 (0 yds) Pass Interception Return: (Shotgun) S.Anderson reported in as eligible.  M.Rudolph pass deep left intended for D.Washington INTERCEPTED by C.Benford at BUF 44. C.Benford ran ob at BUF 44 for no gain. [interception]
+- Q3 14:44 (17 yds) Sack Opp Fumble Recovery: (Shotgun) S.Anderson reported in as eligible.  A.Rodgers sacked at PIT 17 for -9 yards (J.Bosa). FUMBLES (J.Bosa) [J.Bosa], RECOVERED by BUF-C.Benford at PIT 17. C.Benford for 17 yards, TOUCHDOWN. M.Prater extra point is GOOD, Center-R.Ferguson, Holder-M.Wishnowsky. [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 14:00 (-16 yds) Fumble Recovery (Own): (Shotgun) A.Rodgers Aborted. Z.Frazier FUMBLES at PIT 30, recovered by PIT-A.Rodgers at PIT 18.
+
+- Excluded non-zero-yard plays (up to 7 shown):
+- Q1 1:48 (-10 yds) Punt:  C.Waitman punts 51 yards to BUF 23, Center-C.Kuntz, fair catch by K.Shakir.
+PENALTY on BUF-S.Franklin, Offensive Holding, 10 yards, enforced at BUF 23. [special_teams]
+- Q2 0:51 (11 yds) Kickoff: M.Prater kicks 63 yards from BUF 35 to PIT 2. K.Williams to PIT 25 for 23 yards (J.Hancock; J.Andreessen).PENALTY on PIT-P.Wilson, Unnecessary Roughness, 12 yards, enforced at PIT 25. [special_teams]
+- Q3 14:44 (-3 yds) Kickoff: M.Prater kicks 63 yards from BUF 35 to PIT 2. K.Gainwell pushed ob at PIT 35 for 33 yards (J.Poyer).PENALTY on PIT-S.Castro, Offensive Holding, 10 yards, enforced at PIT 28. [special_teams]
+- Q3 15:00 (17 yds) Kickoff: M.Prater kicks 56 yards from BUF 35 to PIT 9. K.Williams to PIT 26 for 17 yards (J.Andreessen; J.Hancock). [special_teams]
+- Q3 8:49 (25 yds) Kickoff: M.Prater kicks 35 yards from 50 to PIT 15, out of bounds.PENALTY on BUF-M.Prater, Kickoff Out of Bounds, placed at PIT 25. [special_teams]
+- Q4 14:08 (25 yds) Kickoff: M.Prater kicks 56 yards from BUF 35 to PIT 9. K.Williams to PIT 34 for 25 yards (J.Andreessen; B.Spector). [special_teams]
+- Q4 1:07 (24 yds) Kickoff: M.Prater kicks 61 yards from BUF 35 to PIT 4. K.Williams to PIT 28 for 24 yards (J.Solomon). [special_teams]
+
+### 401772816 TB @ DET (TOΔ max 0, YdsΔ max 16, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| TB | 251 | 248 | -3 | 2 | 2 | +0 | 35 | 35 | +0 |
+| DET | 379 | 363 | -16 | 2 | 2 | +0 | 50 | 50 | +0 |
+
+**TB Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q2 1:52 (0 yds) Pass Interception Return: (Shotgun) B.Mayfield pass short middle to C.Otton to TB 48 for 3 yards (A.Maulet).The Replay Official reviewed the pass completion ruling, and the play was REVERSED.(Shotgun) B.Mayfield pass short middle intended for C.Otton INTERCEPTED by A.Maulet at TB 48. A.Maulet to TB 48 for no gain (C.Otton). [interception]
+- Q2 2:52 (0 yds) Fumble Recovery (Opponent): (Shotgun) B.Mayfield pass short middle to S.Shepard to TB 42 for 4 yards (A.Robertson). FUMBLES (A.Robertson), touched at TB 39, RECOVERED by DET-A.Hutchinson at TB 41. [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 7:53 (3 yds) Fumble Recovery (Own): (No Huddle, Shotgun) B.Mayfield sacked at DET 38 for -6 yards (sack split by T.Wheat and A.Muhammad). FUMBLES (T.Wheat) [A.Muhammad], touched at DET 30, recovered by TB-T.Wirfs at DET 29. ** Injury Update: DET-A.Maulet has returned to the game. Detroit challenged the loose ball recovery ruling, and the play was Upheld. The ruling on the field stands. (Timeout #1.)
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q1 11:59 (28 yds) Kickoff: J.Bates kicks 63 yards from DET 35 to TB 2. K.Johnson to DET 47 for 51 yards (P.O'Connor).PENALTY on TB-K.Merriweather, Offensive Holding, 10 yards, enforced at TB 25. [special_teams]
+- Q1 7:42 (-5 yds) Penalty: (Shotgun) PENALTY on TB-C.Otton, False Start, 5 yards, enforced at TB 40 - No Play. [nullified]
+- Q2 0:00 (53 yds) Field Goal Good: C.McLaughlin 53 yard field goal is GOOD, Center-E.Deckers, Holder-R.Dixon. [special_teams]
+- Q2 15:00 (23 yds) Pass Incompletion: B.Mayfield pass incomplete deep left to M.Evans.PENALTY on DET-R.Ya-Sin, Defensive Pass Interference, 23 yards, enforced at TB 17 - No Play.Penalty on DET-A.Robertson, Defensive Holding, declined. [nullified]
+- Q3 11:28 (-5 yds) Penalty: (Shotgun) PENALTY on TB-C.Heck, False Start, 5 yards, enforced at DET 35 - No Play. [nullified]
+- Q3 15:00 (23 yds) Kickoff: J.Bates kicks 55 yards from DET 35 to TB 10. K.Johnson to TB 33 for 23 yards (N.Whiteside). [special_teams]
+- Q3 2:59 (-5 yds) Punt: R.Dixon punts 47 yards to DET 25, Center-E.Deckers, out of bounds.PENALTY on TB-J.Hayes, Player Out of Bounds on Kick, 5 yards, enforced at DET 25. [special_teams]
+- Q3 4:39 (21 yds) Kickoff: J.Bates kicks 65 yards from DET 35 to TB 0. K.Johnson pushed ob at TB 21 for 21 yards (J.Saylors). [special_teams]
+- Q4 0:13 (-1 yds) Rush: (Shotgun) T.Bridgewater kneels to TB 20 for -1 yards. [spike_kneel]
+- Q4 10:18 (28 yds) Kickoff: J.Bates kicks 64 yards from DET 35 to TB 1. K.Johnson to TB 29 for 28 yards (G.Stuard; T.Wheat). [special_teams]
+- Q4 5:24 (3 yds) Pass Incompletion: (Shotgun) B.Mayfield pass incomplete deep right to S.Shepard.PENALTY on DET-A.Maulet, Defensive Pass Interference, 3 yards, enforced at DET 17 - No Play. [nullified]
+
+**DET Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q1 7:49 (0 yds) Sack Opp Fumble Recovery: (Shotgun) J.Goff sacked at TB 44 for -9 yards (Y.Diaby). FUMBLES (Y.Diaby) [Y.Diaby], RECOVERED by TB-E.Roberts at TB 40. [fumble]
+- Q2 0:28 (13 yds) Pass Interception Return: (Shotgun) J.Goff pass deep left intended for A.St. Brown INTERCEPTED by J.Dean [V.Vea] at TB 30. J.Dean to TB 43 for 13 yards (A.St. Brown). [interception]
+
+- Excluded non-zero-yard plays (up to 12 shown):
+- Q1 12:54 (5 yds) Pass Incompletion: (Shotgun) J.Goff pass incomplete short right to K.Raymond.PENALTY on TB-J.Parrish, Illegal Contact, 5 yards, enforced at TB 35 - No Play. [nullified]
+- Q1 15:00 (28 yds) Kickoff: C.McLaughlin kicks 62 yards from TB 35 to DET 3. J.Saylors to DET 31 for 28 yards (A.Nelson). [special_teams]
+- Q2 10:18 (10 yds) Punt: J.Fox punts 52 yards to TB 26, Center-H.Hatten. K.Johnson to TB 36 for 10 yards (H.Hatten; G.Stuard). [special_teams]
+- Q2 11:56 (-5 yds) Penalty: PENALTY on DET-P.Sewell, False Start, 5 yards, enforced at DET 27 - No Play. [nullified]
+- Q2 1:56 (54 yds) Field Goal Missed: J.Bates 54 yard field goal is No Good, Wide Left, Center-H.Hatten, Holder-J.Fox. [special_teams]
+- Q2 3:06 (13 yds) Punt: J.Fox punts 66 yards to TB 25, Center-H.Hatten. K.Johnson to TB 38 for 13 yards (T.Nowaske). [special_teams]
+- Q2 3:37 (14 yds) Pass Reception: (Shotgun) J.Goff pass short right to J.Williams ran ob at DET 31 for 14 yards.PENALTY on DET-J.Williams, Offensive Pass Interference, 8 yards, enforced at DET 17 - No Play. [nullified]
+- Q2 6:07 (5 yds) Pass Incompletion: (Shotgun) J.Goff pass incomplete short middle to K.Raymond [V.Vea]. ** Injury Update: TB-L.David has returned to the game. PENALTY on TB-J.Dean, Illegal Contact, 5 yards, enforced at DET 17 - No Play. [nullified]
+- Q2 7:35 (-5 yds) Penalty: PENALTY on DET-T.Decker, False Start, 5 yards, enforced at DET 13 - No Play. [nullified]
+- Q3 8:49 (26 yds) Kickoff: C.McLaughlin kicks 64 yards from TB 35 to DET 1. J.Saylors to DET 27 for 26 yards (J.Hayes; J.Parrish). [special_teams]
+- Q4 10:18 (58 yds) Field Goal Good: J.Bates 58 yard field goal is GOOD, Center-H.Hatten, Holder-J.Fox. [special_teams]
+- Q4 4:10 (11 yds) Punt: J.Fox punts 63 yards to TB 22, Center-H.Hatten. K.Johnson to TB 33 for 11 yards (T.Nowaske). [special_teams]
+
+### 401772860 CAR @ NYJ (TOΔ max 0, YdsΔ max 16, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| CAR | 302 | 286 | -16 | 0 | 0 | +0 | 45 | 45 | +0 |
+| NYJ | 220 | 204 | -16 | 2 | 2 | +0 | 26 | 26 | +0 |
+
+**CAR Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q1 11:02 (11 yds) Fumble Recovery (Own): (Shotgun) B.Young to CAR 45 for -5 yards. FUMBLES, and recovers at CAR 45. B.Young pass short right to T.McMillan to NYJ 39 for 11 yards (M.Moore).
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q1 5:42 (30 yds) Field Goal Good:  R.Fitzgerald 30 yard field goal is GOOD, Center-J.Jansen, Holder-S.Martin. [special_teams]
+- Q2 2:58 (-5 yds) Penalty: (Shotgun) PENALTY on CAR-I.Ekwonu, False Start, 5 yards, enforced at CAR 49 - No Play. [nullified]
+- Q2 6:19 (-4 yds) Punt: S.Martin punts 50 yards to NYJ 8, Center-J.Jansen. I.Williams to NYJ 13 for 5 yards (B.Tremayne).PENALTY on NYJ-J.Brownlee, Offensive Holding, 4 yards, enforced at NYJ 8. [special_teams]
+- Q2 8:59 (-5 yds) Penalty: (Punt formation) PENALTY on CAR-M.Njongmeta, False Start, 5 yards, enforced at NYJ 48 - No Play. [nullified]
+- Q3 10:40 (29 yds) Field Goal Good: R.Fitzgerald 29 yard field goal is GOOD, Center-J.Jansen, Holder-S.Martin. [special_teams]
+- Q3 15:00 (45 yds) Kickoff: N.Folk kicks 59 yards from NYJ 35 to CAR 6. T.Etienne ran ob at NYJ 49 for 45 yards (J.Sirmon). [special_teams]
+- Q4 0:39 (-1 yds) Rush: A.Dalton kneels to NYJ 24 for -1 yards. [spike_kneel]
+- Q4 1:20 (-1 yds) Rush: A.Dalton kneels to NYJ 23 for -1 yards. [spike_kneel]
+- Q4 4:51 (14 yds) Punt: S.Martin punts 52 yards to NYJ 14, Center-J.Jansen. I.Williams to NYJ 28 for 14 yards (J.Sanders). [special_teams]
+- Q4 5:43 (-5 yds) Penalty:  (Shotgun) PENALTY on CAR-C.Mays, False Start, 5 yards, enforced at CAR 33 - No Play. [nullified]
+- Q4 9:00 (-5 yds) Penalty: (Punt formation) PENALTY on CAR, Delay of Game, 5 yards, enforced at NYJ 38 - No Play. [nullified]
+
+**NYJ Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q3 0:40 (0 yds) Pass Interception Return: T.Taylor pass deep middle intended for J.Reynolds INTERCEPTED by Ja.Horn at CAR -7. Touchback. [interception]
+- Q4 4:34 (0 yds) Pass Interception Return:  (Shotgun) T.Taylor pass deep right intended for J.Reynolds INTERCEPTED by Ja.Horn at CAR 40. Ja.Horn to CAR 40 for no gain (J.Reynolds). [interception]
+
+- Excluded non-zero-yard plays (up to 12 shown):
+- Q1 15:00 (30 yds) Kickoff: R.Fitzgerald kicks 50 yards from CAR 35 to NYJ 15. I.Williams to NYJ 45 for 30 yards (B.Martin-Scott; B.Tremayne). [special_teams]
+- Q1 5:42 (19 yds) Kickoff: R.Fitzgerald kicks 58 yards from CAR 35 to NYJ 7. I.Williams to NYJ 26 for 19 yards (C.Cherelus). [special_teams]
+- Q2 11:02 (34 yds) Field Goal Good: N.Folk 34 yard field goal is GOOD, Center-T.Hennessy, Holder-A.McNamara. [special_teams]
+- Q2 11:56 (7 yds) Pass Reception: (Shotgun) T.Taylor pass short right to J.Reynolds ran ob at CAR 9 for 7 yards.PENALTY on NYJ, Illegal Shift, 5 yards, enforced at CAR 16 - No Play. [nullified]
+- Q2 1:11 (29 yds) Kickoff: R.Fitzgerald kicks 61 yards from CAR 35 to NYJ 4. K.Nwangwu to NYJ 33 for 29 yards (M.Njongmeta; B.Martin-Scott). [special_teams]
+- Q2 3:56 (15 yds) Punt: A.McNamara punts 56 yards to CAR 33, Center-T.Hennessy. T.Etienne pushed ob at CAR 48 for 15 yards (M.Moore). [special_teams]
+- Q2 4:40 (-4 yds) Penalty: (Shotgun) PENALTY on NYJ-J.Simpson, False Start, 4 yards, enforced at NYJ 8 - No Play. [nullified]
+- Q2 7:48 (11 yds) Punt: A.McNamara punts 47 yards to CAR 37, Center-T.Hennessy. T.Etienne to CAR 48 for 11 yards (J.Weston; J.Ruckert). [special_teams]
+- Q3 10:40 (22 yds) Kickoff: R.Fitzgerald kicks 54 yards from CAR 35 to NYJ 11. I.Williams to NYJ 33 for 22 yards (T.Incoom). [special_teams]
+- Q4 1:55 (9 yds) Punt: A.McNamara punts 52 yards to CAR 34, Center-T.Hennessy. T.Etienne pushed ob at CAR 43 for 9 yards (A.Beck). [special_teams]
+- Q4 6:26 (47 yds) Field Goal Good:  N.Folk 47 yard field goal is GOOD, Center-T.Hennessy, Holder-A.McNamara. [special_teams]
+- Q4 7:05 (-5 yds) Penalty: (No Huddle, Shotgun) PENALTY on NYJ-A.Membou, False Start, 5 yards, enforced at CAR 36 - No Play. [nullified]
+
+### 401772820 CAR @ SF (TOΔ max 0, YdsΔ max 15, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| CAR | 230 | 230 | +0 | 2 | 2 | +0 | 30 | 30 | +0 |
+| SF | 340 | 355 | +15 | 3 | 3 | +0 | 6 | 6 | +0 |
+
+**CAR Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q1 1:28 (0 yds) Pass Interception Return: J.Curhan reported in as eligible.  B.Young pass short right intended for M.Evans INTERCEPTED by J.Brown at SF -8. Touchback. [interception]
+- Q4 6:33 (4 yds) Pass Interception Return: (Shotgun) B.Young pass short middle intended for T.McMillan INTERCEPTED by J.Brown at SF 22. J.Brown to SF 26 for 4 yards (T.McMillan). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q3 15:00 (26 yds) Kickoff: M.Gay kicks 64 yards from SF 35 to CAR 1. T.Etienne to CAR 28 for 27 yards (N.Martin). FUMBLES (N.Martin), and recovers at CAR 27.
+
+- Excluded non-zero-yard plays (up to 8 shown):
+- Q1 5:40 (-10 yds) Penalty: (Shotgun) B.Young pass short left to T.Tremble to CAR 48 for 9 yards (M.Mustapha) [S.Okuayinonu].PENALTY on CAR-I.Ekwonu, Offensive Holding, 10 yards, enforced at CAR 39 - No Play. [nullified]
+- Q2 1:00 (25 yds) Kickoff: M.Gay kicks 65 yards from SF 35 to CAR 0. T.Etienne to CAR 25 for 25 yards (M.Sigle; S.Neal). [special_teams]
+- Q2 2:28 (25 yds) Field Goal Good: R.Fitzgerald 25 yard field goal is GOOD, Center-J.Jansen, Holder-S.Martin. [special_teams]
+- Q3 0:49 (1 yds) Penalty: R.Fitzgerald extra point is GOOD, Center-J.Jansen, Holder-S.Martin.PENALTY on SF-J.Elliott, Unnecessary Roughness, 1 yard, enforced at SF 15 - No Play. [nullified]
+- Q3 14:21 (-10 yds) Penalty: (Shotgun) B.Young scrambles left end ran ob at SF 49 for 7 yards (J.Elliott).PENALTY on CAR-M.Evans, Offensive Holding, 10 yards, enforced at CAR 44 - No Play. [nullified]
+- Q3 15:00 (26 yds) Kickoff: M.Gay kicks 64 yards from SF 35 to CAR 1. T.Etienne to CAR 28 for 27 yards (N.Martin). FUMBLES (N.Martin), and recovers at CAR 27. [special_teams]
+- Q3 4:42 (23 yds) Kickoff: M.Gay kicks 56 yards from SF 35 to CAR 9. T.Etienne to CAR 32 for 23 yards (L.Farrell). [special_teams]
+- Q4 2:47 (57 yds) Field Goal Missed: R.Fitzgerald 57 yard field goal is No Good, Short, Center-J.Jansen, Holder-S.Martin. [special_teams]
+
+**SF Reconciliation Clues**
+
+- Windelta counted turnovers (3):
+- Q1 3:40 (14 yds) Pass Interception Return: B.Purdy pass deep middle intended for J.Jennings INTERCEPTED by Ja.Horn at SF 30. Ja.Horn to SF 16 for 14 yards (K.Juszczyk). [interception]
+- Q2 6:27 (22 yds) Pass Interception Return: B.Purdy pass deep middle intended for R.Pearsall INTERCEPTED by Ja.Horn at CAR 45. Ja.Horn ran ob at SF 33 for 22 yards (C.McKivitz). [interception]
+- Q2 9:42 (0 yds) Pass Interception Return: (Shotgun) B.Purdy pass deep middle intended for R.Pearsall INTERCEPTED by M.Jackson at CAR -1. Touchback. [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q2 8:00 (16 yds) Fumble Recovery (Own): C.McCaffrey left tackle to SF 18 for 1 yard (P.Umanmielen). FUMBLES (P.Umanmielen), recovered by SF-C.McKivitz at SF 33.
+
+- Excluded non-zero-yard plays (up to 9 shown):
+- Q1 15:00 (16 yds) Kickoff: R.Fitzgerald kicks 53 yards from CAR 35 to SF 12. S.Moore to SF 28 for 16 yards (T.Incoom; L.Ransom). [special_teams]
+- Q2 1:00 (47 yds) Field Goal Good: M.Gay 47 yard field goal is GOOD, Center-J.Weeks, Holder-T.Morstead. [special_teams]
+- Q2 2:28 (43 yds) Kickoff: R.Fitzgerald kicks 62 yards from CAR 35 to SF 3. S.Moore to SF 46 for 43 yards (D.Richardson). [special_teams]
+- Q3 0:49 (21 yds) Kickoff: R.Fitzgerald kicks 56 yards from CAR 35 to SF 9. S.Moore to SF 30 for 21 yards (T.Gipson; B.Tremayne). [special_teams]
+- Q4 0:37 (-1 yds) Rush:  B.Purdy kneels to CAR 43 for -1 yards. [spike_kneel]
+- Q4 1:16 (-1 yds) Rush:  B.Purdy kneels to CAR 42 for -1 yards. [spike_kneel]
+- Q4 4:54 (6 yds) Punt: T.Morstead punts 40 yards to CAR 28, Center-J.Weeks. T.Etienne to CAR 34 for 6 yards (N.Martin). [special_teams]
+- Q4 5:38 (-5 yds) Penalty: PENALTY on SF, Delay of Game, 5 yards, enforced at SF 29 - No Play. [nullified]
+- Q4 9:21 (29 yds) Field Goal Good: M.Gay 29 yard field goal is GOOD, Center-J.Weeks, Holder-T.Morstead. [special_teams]
+
+### 401772880 CHI @ MIN (TOΔ max 0, YdsΔ max 15, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| CHI | 320 | 305 | -15 | 0 | 0 | +0 | 40 | 40 | +0 |
+| MIN | 265 | 265 | +0 | 2 | 2 | +0 | 15 | 15 | +0 |
+
+**CHI Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q1 2:05 (-15 yds) Fumble Recovery (Own): C.Williams FUMBLES (Aborted) at CHI 20, touched at CHI 21, recovered by CHI-R.Odunze at CHI 10.
+
+- Excluded non-zero-yard plays (up to 16 shown):
+- Q1 2:10 (22 yds) Kickoff: W.Reichard kicks 62 yards from MIN 35 to CHI 3. R.Johnson to CHI 25 for 22 yards (B.Richter). [special_teams]
+- Q1 6:34 (18 yds) Punt: T.Taylor punts 57 yards to MIN 22, Center-S.Daly. M.Price to MIN 40 for 18 yards (D.Hardy; S.Daly). [special_teams]
+- Q2 0:21 (18 yds) Punt: T.Taylor punts 50 yards to MIN 21, Center-S.Daly. M.Price to MIN 39 for 18 yards (D.Jackson; T.Homer). [special_teams]
+- Q2 0:35 (-5 yds) Penalty: (Shotgun) PENALTY on CHI-T.Benedet, False Start, 5 yards, enforced at CHI 20 - No Play. [nullified]
+- Q2 14:56 (-15 yds) Punt: T.Taylor punts 45 yards to MIN 12, Center-S.Daly, fair catch by M.Price.PENALTY on CHI-J.Blackwell, Fair Catch Interference, 15 yards, enforced at MIN 12. [special_teams]
+- Q2 2:00 (38 yds) Field Goal Good:  C.Santos 38 yard field goal is GOOD, Center-S.Daly, Holder-T.Taylor. [special_teams]
+- Q3 10:31 (54 yds) Field Goal Good: C.Santos 54 yard field goal is GOOD, Center-S.Daly, Holder-T.Taylor. [special_teams]
+- Q3 15:00 (30 yds) Kickoff: W.Reichard kicks 64 yards from MIN 35 to CHI 1. J.Blackwell to CHI 31 for 30 yards (C.Ham). [special_teams]
+- Q3 2:11 (33 yds) Field Goal Good: C.Santos 33 yard field goal is GOOD, Center-S.Daly, Holder-T.Taylor. [special_teams]
+- Q3 6:37 (-5 yds) Penalty: (Shotgun) C.Williams scrambles right end ran ob at CHI 33 for 11 yards (E.Wilson).PENALTY on CHI-R.Odunze, Illegal Formation, 5 yards, enforced at CHI 22 - No Play. [nullified]
+- Q4 0:00 (48 yds) Field Goal Good: C.Santos 48 yard field goal is GOOD, Center-S.Daly, Holder-T.Taylor. [special_teams]
+- Q4 0:50 (56 yds) Kickoff: W.Reichard kicks 61 yards from MIN 35 to CHI 4. D.Duvernay pushed ob at MIN 40 for 56 yards (E.Wilson). [special_teams]
+- Q4 13:28 (43 yds) Punt: T.Taylor punts 48 yards to MIN 33, Center-S.Daly. M.Price to CHI 24 for 43 yards (D.Hardy). [special_teams]
+- Q4 3:21 (-5 yds) Penalty: (Run formation) PENALTY on CHI, Delay of Game, 5 yards, enforced at MIN 43 - No Play. [nullified]
+- Q4 4:27 (-5 yds) Rush: K.Monangai right tackle to MIN 43 for 5 yards (E.Wilson; J.Redmond).PENALTY on CHI-D.Wright, Illegal Formation, 5 yards, enforced at MIN 48 - No Play. [nullified]
+- Q4 8:13 (45 yds) Field Goal Missed: C.Santos 45 yard field goal is No Good, Wide Left, Center-S.Daly, Holder-T.Taylor. [special_teams]
+
+**MIN Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q2 0:42 (0 yds) Pass Interception Return: (Shotgun) J.McCarthy pass deep left intended for J.Addison INTERCEPTED by N.Wright at CHI -4. Touchback. [interception]
+- Q2 3:45 (23 yds) Pass Interception Return: (Shotgun) J.McCarthy pass deep right intended for J.Jefferson INTERCEPTED by K.Byard [G.Jarrett] at MIN 48. K.Byard ran ob at MIN 25 for 23 yards (D.Jackson). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q2 0:10 (2 yds) Pass Reception: (Shotgun) J.McCarthy pass short right to J.Jefferson to MIN 41 for 2 yards. Lateral to A.Jones to MIN 41 for no gain (T.Stevenson). FUMBLES (T.Stevenson), and recovers at MIN 41.
+
+- Excluded non-zero-yard plays (up to 8 shown):
+- Q1 2:10 (31 yds) Field Goal Good: W.Reichard 31 yard field goal is GOOD, Center-A.DePaola, Holder-R.Wright. [special_teams]
+- Q2 0:49 (5 yds) Penalty: (Shotgun) J.McCarthy pass incomplete short middle to A.Jones (T.Edmunds) [M.Sweat].PENALTY on CHI-N.Sewell, Defensive Holding, 5 yards, enforced at CHI 35 - No Play. [nullified]
+- Q2 2:00 (28 yds) Kickoff: C.Santos kicks 59 yards from CHI 35 to MIN 6. M.Price to MIN 34 for 28 yards (A.Ogbongbemiga). [special_teams]
+- Q2 4:55 (20 yds) Kickoff: C.Santos kicks 65 yards from CHI 35 to MIN 0. M.Price to MIN 20 for 20 yards (E.Hicks; J.Blackwell). [special_teams]
+- Q3 1:14 (6 yds) Punt: R.Wright punts 56 yards to CHI 15, Center-A.DePaola. D.Duvernay pushed ob at CHI 21 for 6 yards (T.Thomas). [special_teams]
+- Q3 2:11 (19 yds) Kickoff: C.Santos kicks 63 yards from CHI 35 to MIN 2. M.Price to MIN 21 for 19 yards (R.Johnson). [special_teams]
+- Q3 7:28 (5 yds) Punt: R.Wright punts 52 yards to CHI 15, Center-A.DePaola. D.Duvernay to CHI 20 for 5 yards (T.Felton; T.Thomas). [special_teams]
+- Q3 7:55 (-5 yds) Penalty: (Shotgun) PENALTY on MIN-C.Darrisaw, False Start, 5 yards, enforced at MIN 38 - No Play. [nullified]
+
+### 401772918 BAL @ BUF (TOΔ max 0, YdsΔ max 15, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| BAL | 432 | 447 | +15 | 1 | 1 | +0 | 51 | 51 | +0 |
+| BUF | 497 | 497 | +0 | 0 | 0 | +0 | 38 | 38 | +0 |
+
+**BAL Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q4 3:10 (0 yds) Fumble Recovery (Opponent): B.Cleveland reported in as eligible.  D.Henry left tackle to BLT 38 for -3 yards (E.Oliver). FUMBLES (E.Oliver), touched at BLT 32, RECOVERED by BUF-T.Bernard at BLT 30. [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q2 1:46 (-15 yds) Fumble Recovery (Own): (Shotgun) J.Hill left tackle to BUF 23 for -6 yards (J.Bosa). FUMBLES (J.Bosa), and recovers at BUF 29. J.Hill to BUF 32 for -3 yards (T.Bernard).
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q1 11:19 (22 yds) Kickoff: M.Prater kicks 56 yards from BUF 35 to BLT 9. R.Ali to BLT 31 for 22 yards (J.Andreessen; J.Solomon). [special_teams]
+- Q1 3:38 (52 yds) Field Goal Good: T.Loop 52 yard field goal is GOOD, Center-N.Moore, Holder-J.Stout. [special_teams]
+- Q1 4:55 (-5 yds) Penalty: PENALTY on BLT-R.Rosengarten, False Start, 5 yards, enforced at BUF 14 - No Play. [nullified]
+- Q1 6:16 (5 yds) Penalty: (Shotgun) L.Jackson sacked at BUF 28 for -1 yards (sack split by G.Rousseau and D.Jones).PENALTY on BUF-D.Strong, Defensive Holding, 5 yards, enforced at BUF 27 - No Play. [nullified]
+- Q2 0:31 (49 yds) Field Goal Good: T.Loop 49 yard field goal is GOOD, Center-N.Moore, Holder-J.Stout. [special_teams]
+- Q2 2:50 (41 yds) Kickoff: M.Prater kicks 60 yards from BUF 35 to BLT 5. R.Ali to BLT 46 for 41 yards (D.Williams). [special_teams]
+- Q3 7:47 (26 yds) Kickoff: M.Prater kicks 58 yards from BUF 35 to BLT 7. R.Ali to BLT 33 for 26 yards (S.Thompson). [special_teams]
+- Q4 12:51 (30 yds) Kickoff: M.Prater kicks 60 yards from BUF 35 to BLT 5. R.Ali to BLT 35 for 30 yards (S.Franklin). [special_teams]
+- Q4 1:58 (24 yds) Kickoff: M.Prater kicks 58 yards from BUF 35 to BLT 7. R.Ali pushed ob at BLT 31 for 24 yards (D.Williams). [special_teams]
+- Q4 3:56 (24 yds) Kickoff: M.Prater kicks 61 yards from BUF 35 to BLT 4. R.Ali to BLT 28 for 24 yards (D.Williams). [special_teams]
+- Q4 7:56 (-5 yds) Penalty: (Shotgun) PENALTY on BLT-T.Wallace, False Start, 5 yards, enforced at BLT 37 - No Play. [nullified]
+
+**BUF Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q2 12:45 (0 yds) Pass Reception: (Shotgun) J.Allen pass short right to D.Kincaid to BUF 27 for no gain (K.Hamilton). FUMBLES (K.Hamilton), touched at BUF 28, ball out of bounds at BUF 28.
+- Q4 12:51 (2 yds) Rushing Touchdown: J.Allen scrambles right end for 2 yards, TOUCHDOWN. TWO-POINT CONVERSION ATTEMPT. J.Allen pass to D.Kincaid is intercepted. ATTEMPT FAILS. DEFENSIVE TWO-POINT ATTEMPT. K.Hamilton intercepted the try attempt. ATTEMPT FAILS.
+
+- Excluded non-zero-yard plays (up to 22 shown):
+- Q1 12:44 (5 yds) Penalty: (Shotgun) PENALTY on BLT-N.Madubuike, Neutral Zone Infraction, 5 yards, enforced at BLT 36 - No Play. [nullified]
+- Q1 15:00 (41 yds) Kickoff: T.Loop kicks 56 yards from BLT 35 to BUF 9. B.Codrington pushed ob at 50 for 41 yards (T.Loop). [special_teams]
+- Q1 3:38 (31 yds) Kickoff: T.Loop kicks 61 yards from BLT 35 to BUF 4. Ty.Johnson to BUF 35 for 31 yards (T.Wallace). [special_teams]
+- Q2 0:00 (43 yds) Field Goal Good: M.Prater 43 yard field goal is GOOD, Center-R.Ferguson, Holder-B.Robbins. [special_teams]
+- Q2 0:31 (23 yds) Kickoff: T.Loop kicks 61 yards from BLT 35 to BUF 4. Ty.Johnson to BUF 27 for 23 yards (R.Ali). [special_teams]
+- Q2 12:14 (6 yds) Punt:  B.Robbins punts 48 yards to BLT 25, Center-R.Ferguson. L.Wester to BLT 31 for 6 yards (C.Lewis). [special_teams]
+- Q2 13:35 (21 yds) Kickoff: T.Loop kicks 63 yards from BLT 35 to BUF 2. B.Codrington to BUF 23 for 21 yards (J.Hummel). [special_teams]
+- Q2 2:50 (25 yds) Field Goal Good: M.Prater 25 yard field goal is GOOD, Center-R.Ferguson, Holder-B.Robbins. [special_teams]
+- Q2 9:47 (29 yds) Kickoff: T.Loop kicks 64 yards from BLT 35 to BUF 1. B.Codrington pushed ob at BUF 30 for 29 yards (T.Tampa). [special_teams]
+- Q3 12:48 (25 yds) Kickoff: T.Loop kicks 35 yards from BLT 35 to BUF 30, short of landing zone.PENALTY on BLT-T.Loop, Kickoff Short of Landing Zone, placed at BUF 40. [special_teams]
+- Q3 1:09 (-1 yds) Kickoff: T.Loop kicks 62 yards from BLT 35 to BUF 3. B.Codrington pushed ob at BUF 35 for 32 yards (T.Tampa). ** Injury Update: BUF-B.Codrington has returned to the game. PENALTY on BUF-D.Williams, Offensive Holding, 10 yards, enforced at BUF 26. [special_teams]
+- Q3 5:32 (-8 yds) Penalty: (Shotgun) J.Allen scrambles left tackle to BUF 26 for 10 yards (M.Humphrey).PENALTY on BUF-S.Brown, Offensive Holding, 8 yards, enforced at BUF 16 - No Play. [nullified]
+- Q3 7:47 (1 yds) Penalty: M.Prater extra point is GOOD, Center-R.Ferguson, Holder-B.Robbins.
+PENALTY on BLT, Defensive Too Many Men on Field, 1 yard, enforced at BLT 15 - No Play. [nullified]
+- Q3 8:42 (27 yds) Penalty: (Shotgun) J.Allen pass incomplete deep right to J.Palmer.PENALTY on BLT-J.Alexander, Defensive Pass Interference, 27 yards, enforced at BLT 31 - No Play. [nullified]
+- Q4 0:00 (32 yds) Field Goal Good:  M.Prater 32 yard field goal is GOOD, Center-R.Ferguson, Holder-B.Robbins. [special_teams]
+- Q4 0:33 (-2 yds) Rush: J.Allen kneels to BLT 14 for -2 yards. [spike_kneel]
+- Q4 0:35 (-1 yds) Rush: J.Allen kneels to BLT 12 for -1 yards. [spike_kneel]
+- Q4 0:38 (-2 yds) Rush: J.Allen kneels to BLT 11 for -2 yards. [spike_kneel]
+- Q4 0:53 (-5 yds) Penalty: (Shotgun) PENALTY on BUF-D.Dawkins, False Start, 5 yards, enforced at BUF 39 - No Play. [nullified]
+- Q4 10:21 (-10 yds) Penalty: (No Huddle, Shotgun) R.Davis left tackle to BLT 48 for no gain (J.Alexander; M.Starks).PENALTY on BUF-D.Dawkins, Offensive Holding, 10 yards, enforced at BLT 48 - No Play. [nullified]
+- Q4 11:42 (25 yds) Kickoff: T.Loop kicks 62 yards from BLT 35 to BUF 3. B.Codrington to BUF 28 for 25 yards (T.Buchanan). [special_teams]
+- Q4 5:07 (8 yds) Penalty: (Shotgun) J.Allen pass incomplete short right to K.Coleman.PENALTY on BLT-N.Wiggins, Defensive Pass Interference, 8 yards, enforced at BLT 37 - No Play. [nullified]
+
+### 401772751 NE @ NO (TOΔ max 0, YdsΔ max 14, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| NE | 333 | 319 | -14 | 0 | 0 | +0 | 65 | 65 | +0 |
+| NO | 296 | 296 | +0 | 1 | 1 | +0 | 67 | 67 | +0 |
+
+**NE Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q2 5:54 (-14 yds) Fumble Recovery (Own): (Shotgun) D.Maye Aborted. G.Bradbury FUMBLES at NO 45, recovered by NE-D.Maye at NE 47.
+- Q4 7:29 (2 yds) Fumble Recovery (Own): D.Maye left guard to NO 41 for 1 yard (D.Godchaux). FUMBLES (D.Godchaux), and recovers at NO 40.
+
+- Excluded non-zero-yard plays (up to 19 shown):
+- Q1 2:30 (5 yds) Penalty: (Shotgun) T.Henderson left end to NO 43 for no gain (D.Godchaux; J.Bullard).PENALTY on NO-J.Bullard, Defensive Holding, 5 yards, enforced at NO 43 - No Play. [nullified]
+- Q1 3:17 (21 yds) Penalty: (Shotgun) D.Maye pass incomplete deep left to K.Williams.PENALTY on NO-Q.Riley, Defensive Pass Interference, 21 yards, enforced at NE 29 - No Play. [nullified]
+- Q1 3:32 (-10 yds) Penalty: (Shotgun) D.Maye pass deep right to D.Douglas for 61 yards, TOUCHDOWN NULLIFIED by Penalty.PENALTY on NE-S.Diggs, Offensive Pass Interference, 10 yards, enforced at NE 39 - No Play. [nullified]
+- Q1 5:05 (24 yds) Kickoff: B.Grupe kicks 58 yards from NO 35 to NE 7. E.Chism to NE 31 for 24 yards (C.Rumph; I.Stalbird). [special_teams]
+- Q2 1:51 (23 yds) Kickoff: B.Grupe kicks 61 yards from NO 35 to NE 4. E.Chism to NE 27 for 23 yards (J.Ford). [special_teams]
+- Q2 9:42 (28 yds) Kickoff: B.Grupe kicks 58 yards from NO 35 to NE 7. E.Chism to NE 35 for 28 yards (J.Sanker; J.Ford). [special_teams]
+- Q3 15:00 (12 yds) Kickoff: B.Grupe kicks 63 yards from NO 35 to NE 2. E.Chism to NE 29 for 27 yards (J.Howden).PENALTY on NO-C.Rumph, Face Mask, 15 yards, enforced at NE 29. [special_teams]
+- Q3 2:49 (-5 yds) Penalty: (Punt formation) PENALTY on NE-J.Ashby, False Start, 5 yards, enforced at NE 33 - No Play. [nullified]
+- Q3 2:49 (12 yds) Punt: B.Baringer punts 45 yards to NO 27, Center-J.Ashby. R.Shaheed ran ob at NO 39 for 12 yards (E.Ponder). [special_teams]
+- Q3 7:26 (24 yds) Field Goal Good:  A.Borregales 24 yard field goal is GOOD, Center-J.Ashby, Holder-B.Baringer. [special_teams]
+- Q3 8:36 (-5 yds) Penalty: (Shotgun) PENALTY on NE, Delay of Game, 5 yards, enforced at NO 4 - No Play. [nullified]
+- Q4 0:39 (-1 yds) Rush: D.Maye kneels to NE 47 for -1 yards. [spike_kneel]
+- Q4 10:15 (51 yds) Pass Reception: (Shotgun) D.Maye pass deep right to S.Diggs ran ob at NO 21 for 51 yards [N.Shepherd].PENALTY on NE-S.Diggs, Offensive Pass Interference, 10 yards, enforced at NE 28 - No Play. [nullified]
+- Q4 10:17 (-5 yds) Penalty: (Shotgun) PENALTY on NE-M.Moses, False Start, 5 yards, enforced at NE 33 - No Play. [nullified]
+- Q4 10:38 (8 yds) Pass Reception: (Shotgun) D.Maye pass short middle to M.Hollins ran ob at NE 46 for 8 yards (T.Burgess; A.Taylor).PENALTY on NE, Illegal Shift, 5 yards, enforced at NE 38 - No Play. [nullified]
+- Q4 13:41 (5 yds) Kickoff: B.Grupe kicks 62 yards from NO 35 to NE 3. E.Chism to NE 35 for 32 yards (I.Stalbird; D.Stutsman).PENALTY on NE-J.Tavai, Offensive Holding, 10 yards, enforced at NE 30. [special_teams]
+- Q4 1:18 (-1 yds) Rush: D.Maye kneels to NE 48 for -1 yards. [spike_kneel]
+- Q4 2:00 (-2 yds) Rush: D.Maye kneels to NE 49 for -2 yards. [spike_kneel]
+- Q4 9:41 (9 yds) Punt: B.Baringer punts 66 yards to NO 16, Center-J.Ashby. R.Shaheed to NO 25 for 9 yards (M.Mapu). [special_teams]
+
+**NO Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q4 8:50 (0 yds) Fumble Recovery (Opponent): (Shotgun) S.Rattler pass short middle to J.Johnson to 50 for 14 yards (R.Spillane; C.Elliss).New England challenged the runner was down by contact ruling, and the play was REVERSED.(Shotgun) S.Rattler pass short middle to J.Johnson to NO 49 for 13 yards (C.Elliss; R.Spillane). FUMBLES (C.Elliss), RECOVERED by NE-C.Woodson at NE 49. [fumble]
+
+- Excluded non-zero-yard plays (up to 17 shown):
+- Q1 0:33 (25 yds) Kickoff: A.Borregales kicks 44 yards from NE 35 to NO 21, short of landing zone.PENALTY on NE-A.Borregales, Kickoff Short of Landing Zone, placed at NO 40. [special_teams]
+- Q1 10:44 (5 yds) Penalty: (Shotgun) S.Rattler pass short left to K.Miller to NO 30 for 3 yards (C.Elliss; R.Spillane).PENALTY on NE-C.Gonzalez, Illegal Contact, 5 yards, enforced at NO 27 - No Play. [nullified]
+- Q1 10:52 (24 yds) Kickoff: A.Borregales kicks 62 yards from NE 35 to NO 3. M.Tipton to NO 27 for 24 yards (D.Pettus; B.Schooler). [special_teams]
+- Q1 12:50 (34 yds) Field Goal Good:  B.Grupe 34 yard field goal is GOOD, Center-Z.Wood, Holder-K.Kroeger. [special_teams]
+- Q1 15:00 (22 yds) Kickoff: A.Borregales kicks 62 yards from NE 35 to NO 3. M.Tipton to NO 25 for 22 yards (E.Ponder; C.Elliss). [special_teams]
+- Q1 5:05 (48 yds) Field Goal Good: B.Grupe 48 yard field goal is GOOD, Center-Z.Wood, Holder-K.Kroeger. [special_teams]
+- Q1 6:11 (23 yds) Pass Reception: (No Huddle, Shotgun) S.Rattler pass deep right to D.Vele to NE 4 for 23 yards (C.Gonzalez).PENALTY on NO-K.Banks, Offensive Holding, 10 yards, enforced at NE 27 - No Play. [nullified]
+- Q2 0:31 (14 yds) Penalty: PENALTY on NO-D.Godchaux, Encroachment, 14 yards, enforced at NO 15 - No Play. [nullified]
+- Q2 0:31 (24 yds) Kickoff: A.Borregales kicks 62 yards from NE 35 to NO 3. M.Tipton to NO 27 for 24 yards (B.Schooler). [special_teams]
+- Q2 1:51 (38 yds) Field Goal Good: B.Grupe 38 yard field goal is GOOD, Center-Z.Wood, Holder-K.Kroeger. [special_teams]
+- Q2 3:24 (1 yds) Pass Reception: (Shotgun) S.Rattler pass short right to C.Olave pushed ob at NE 30 for 1 yard (R.Spillane).PENALTY on NE-J.Tavai, Illegal Contact, 5 yards, enforced at NE 31 - No Play. [nullified]
+- Q3 0:54 (-5 yds) Penalty: (No Huddle, Shotgun) PENALTY on NO-E.McCoy, False Start, 5 yards, enforced at NE 37 - No Play. [nullified]
+- Q3 2:03 (5 yds) Pass Incompletion: (Shotgun) S.Rattler pass incomplete deep right to C.Olave. ** Injury Update: NE-M.Jones has returned to the game. PENALTY on NE-C.Davis, Defensive Holding, 5 yards, enforced at NO 42 - No Play. [nullified]
+- Q3 5:12 (-10 yds) Sack: S.Rattler sacked ob at NE 37 for 0 yards (J.Gibbens).PENALTY on NO-T.Penning, Offensive Holding, 10 yards, enforced at NE 37 - No Play. [nullified]
+- Q3 7:26 (19 yds) Kickoff: A.Borregales kicks 52 yards from NE 35 to NO 13. M.Tipton to NO 32 for 19 yards (B.Schooler). [special_teams]
+- Q4 13:41 (54 yds) Field Goal Good: B.Grupe 54 yard field goal is GOOD, Center-Z.Wood, Holder-K.Kroeger. [special_teams]
+- Q4 3:55 (6 yds) Punt: K.Kroeger punts 47 yards to NE 15, Center-Z.Wood. M.Jones to NE 21 for 6 yards (I.Stalbird). [special_teams]
+
+### 401772873 JAX @ LV (TOΔ max 0, YdsΔ max 14, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| JAX | 367 | 353 | -14 | 1 | 1 | +0 | 80 | 80 | +0 |
+| LV | 331 | 331 | +0 | 1 | 1 | +0 | 55 | 55 | +0 |
+
+**JAX Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q1 1:07 (0 yds) Pass Interception Return: (Shotgun) T.Lawrence pass short left intended for D.Brown INTERCEPTED by I.Pola-Mao at LV -1. Touchback. [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q1 7:35 (0 yds) Fumble Recovery (Own): C.Van Lanen reported in as eligible.  T.Etienne to LV 48 for -14 yards. FUMBLES, recovered by JAX-T.Lawrence at LV 49. T.Lawrence pass incomplete deep left to B.Thomas (I.Pola-Mao).
+
+- Excluded non-zero-yard plays (up to 15 shown):
+- Q1 13:35 (-10 yds) Punt: L.Cooke punts 32 yards to LV 24, Center-R.Matiscik, out of bounds.PENALTY on LV-D.Porter, Offensive Holding, 10 yards, enforced at LV 24. [special_teams]
+- Q1 15:00 (25 yds) Kickoff: D.Carlson kicks 44 yards from LV 35 to JAX 21, short of landing zone.PENALTY on LV-D.Carlson, Kickoff Short of Landing Zone, placed at JAX 40. [special_teams]
+- Q1 2:03 (-5 yds) Penalty: C.Van Lanen reported in as eligible.  PENALTY on JAX-C.Van Lanen, False Start, 5 yards, enforced at LV 1 - No Play. [nullified]
+- Q1 9:09 (-5 yds) Penalty: PENALTY on JAX-H.Long, False Start, 5 yards, enforced at JAX 43 - No Play. [nullified]
+- Q2 0:00 (68 yds) Field Goal Good: C.Little 68 yard field goal is GOOD, Center-R.Matiscik, Holder-L.Cooke. (Breaks NFL Record) [special_teams]
+- Q2 0:35 (30 yds) Kickoff: D.Carlson kicks 64 yards from LV 35 to JAX 1. B.Tuten to JAX 31 for 30 yards (C.Lindenberg). [special_teams]
+- Q2 6:33 (-5 yds) Penalty: (Shotgun) T.Lawrence pass short middle to P.Washington to LV 24 for 17 yards (D.White) [A.Butler].PENALTY on JAX-T.Lawrence, Illegal Motion, 5 yards, enforced at LV 41 - No Play. [nullified]
+- Q2 7:02 (-5 yds) Penalty: (Shotgun) T.Lawrence pass short right to P.Washington to LV 28 for 8 yards (J.Chinn).PENALTY on JAX-J.Mundt, Illegal Motion, 5 yards, enforced at LV 36 - No Play. [nullified]
+- Q2 8:47 (-10 yds) Penalty: (Shotgun) T.Lawrence pass deep middle to H.Long to LV 28 for 24 yards (I.Pola-Mao). JAX-H.Long was injured during the play. PENALTY on JAX-P.Mekari, Offensive Holding, 10 yards, enforced at JAX 48 - No Play. [nullified]
+- Q3 6:26 (24 yds) Kickoff: D.Carlson kicks 58 yards from LV 35 to JAX 7. D.Brown to JAX 31 for 24 yards (J.Bech). [special_teams]
+- Q3 9:53 (33 yds) Field Goal Good: C.Little 33 yard field goal is GOOD, Center-R.Matiscik, Holder-L.Cooke. [special_teams]
+- Q4 0:16 (48 yds) Field Goal Good: C.Little 48 yard field goal is GOOD, Center-R.Matiscik, Holder-L.Cooke. [special_teams]
+- Q4 1:52 (25 yds) Kickoff: D.Carlson kicks 62 yards from LV 35 to JAX 3. B.Tuten to JAX 28 for 25 yards (C.Lindenberg). [special_teams]
+- Q4 9:38 (22 yds) Kickoff: D.Carlson kicks 61 yards from LV 35 to JAX 4. D.Brown to JAX 26 for 22 yards (T.Eichenberg; J.Rhattigan). [special_teams]
+- Q5 10:00 (54 yds) Kickoff: D.Carlson kicks 63 yards from LV 35 to JAX 2. A.Trammell pushed ob at LV 44 for 54 yards (D.Carlson). [special_teams]
+
+**LV Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q3 14:13 (0 yds) Pass Interception Return: (Shotgun) G.Smith pass short right intended for M.Mayer INTERCEPTED by M.Brown at LV 32. M.Brown to LV 32 for no gain (M.Mayer). [interception]
+
+- Excluded non-zero-yard plays (up to 13 shown):
+- Q1 11:44 (-5 yds) Penalty: (Punt formation) PENALTY on LV-D.Richardson, False Start, 5 yards, enforced at LV 36 - No Play. [nullified]
+- Q1 11:44 (4 yds) Punt: A.Cole punts 56 yards to JAX 13, Center-J.Bobenmoyer. P.Washington to JAX 17 for 4 yards (M.Mayer). [special_teams]
+- Q2 2:00 (-5 yds) Rush: (Shotgun) A.Jeanty up the middle to JAX 34 for 3 yards (D.Hamilton).PENALTY on LV, Illegal Formation, 5 yards, enforced at JAX 37 - No Play. [nullified]
+- Q2 3:26 (12 yds) Penalty: (No Huddle, Shotgun) G.Smith pass incomplete short middle to B.Bowers.PENALTY on JAX-J.Jones, Defensive Pass Interference, 12 yards, enforced at LV 30 - No Play. [nullified]
+- Q3 15:00 (28 yds) Kickoff: C.Little kicks 64 yards from JAX 35 to LV 1. R.Mostert to LV 29 for 28 yards (D.Gardeck; B.Combs). [special_teams]
+- Q3 6:26 (24 yds) Field Goal Good: D.Carlson 24 yard field goal is GOOD, Center-J.Bobenmoyer, Holder-A.Cole.Penalty on LV-S.Forsythe, Unnecessary Roughness, offsetting.Penalty on JAX-T.Walker, Disqualification, offsetting. [special_teams]
+- Q3 6:56 (-5 yds) Penalty: A.Cappa reported in as eligible.  PENALTY on LV-A.Cappa, False Start, 5 yards, enforced at JAX 1 - No Play. [nullified]
+- Q3 9:53 (54 yds) Kickoff: C.Little kicks 62 yards from JAX 35 to LV 3. R.Mostert to JAX 43 for 54 yards (J.Kiser). [special_teams]
+- Q4 0:16 (32 yds) Kickoff: C.Little kicks 63 yards from JAX 35 to LV 2. R.Mostert to LV 34 for 32 yards (B.Combs; J.Kiser). [special_teams]
+- Q4 14:50 (30 yds) Kickoff: C.Little kicks 64 yards from JAX 35 to LV 1. D.Laube to LV 31 for 30 yards (Y.Abdullah). [special_teams]
+- Q4 4:06 (37 yds) Kickoff: C.Little kicks 64 yards from JAX 35 to LV 1. R.Mostert to LV 38 for 37 yards (D.Striggow). [special_teams]
+- Q5 0:35 (8 yds) Penalty: (Shotgun) G.Smith pass incomplete short left to T.Tucker [D.Hamilton].PENALTY on JAX-V.Miller, Defensive Pass Interference, 8 yards, enforced at JAX 9 - No Play. [nullified]
+- Q5 3:24 (51 yds) Kickoff: C.Little kicks 61 yards from JAX 35 to LV 4. R.Mostert to JAX 45 for 51 yards (J.Jones; C.Little). [special_teams]
+
+### 401772728 NE @ MIA (TOΔ max 0, YdsΔ max 13, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| NE | 333 | 320 | -13 | 0 | 0 | +0 | 75 | 75 | +0 |
+| MIA | 358 | 358 | +0 | 1 | 1 | +0 | 65 | 65 | +0 |
+
+**NE Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 8:57 (-13 yds) Fumble Recovery (Own): (Shotgun) D.Maye Aborted. G.Bradbury FUMBLES at NE 17, recovered by NE-D.Maye at NE 8.
+
+- Excluded non-zero-yard plays (up to 19 shown):
+- Q1 15:00 (26 yds) Kickoff: R.Patterson kicks 59 yards from MIA 35 to NE 6. A.Gibson to NE 32 for 26 yards (D.Trader). [special_teams]
+- Q1 7:16 (-5 yds) Penalty: PENALTY on NE-W.Campbell, False Start, 5 yards, enforced at NE 33 - No Play. [nullified]
+- Q2 0:31 (-1 yds) Rush: D.Maye kneels to NE 3 for -1 yards. [spike_kneel]
+- Q2 11:19 (19 yds) Kickoff: R.Patterson kicks 59 yards from MIA 35 to NE 6. A.Gibson to NE 25 for 19 yards (C.Goode; M.Fitzpatrick). [special_teams]
+- Q2 1:56 (22 yds) Field Goal Good: A.Borregales 22 yard field goal is GOOD, Center-J.Ashby, Holder-B.Baringer. [special_teams]
+- Q2 7:17 (-5 yds) Penalty: (Shotgun) PENALTY on NE-M.Moses, False Start, 5 yards, enforced at MIA 43 - No Play. [nullified]
+- Q2 8:04 (5 yds) Penalty: (Shotgun) D.Maye pass incomplete short right.PENALTY on MIA-J.Marshall, Illegal Contact, 5 yards, enforced at NE 47 - No Play. [nullified]
+- Q2 8:25 (-10 yds) Penalty: (Shotgun) D.Maye pass short middle to H.Henry to MIA 30 for 13 yards (D.Trader).PENALTY on NE-T.Henderson, Offensive Holding, 10 yards, enforced at MIA 43 - No Play. [nullified]
+- Q3 10:41 (-2 yds) Kickoff: R.Patterson kicks 56 yards from MIA 35 to NE 9. A.Gibson to NE 35 for 26 yards (K.Britt, C.Goode).PENALTY on NE-E.Ponder, Illegal Block Above the Waist, 10 yards, enforced at NE 27. [special_teams]
+- Q3 3:01 (-10 yds) Penalty: R.Stevenson right guard to NE 26 for 1 yard (M.Fitzpatrick).PENALTY on NE-J.Wilson, Offensive Holding, 10 yards, enforced at NE 25 - No Play. [nullified]
+- Q3 3:37 (-3 yds) Kickoff: R.Patterson kicks 56 yards from MIA 35 to NE 9. A.Gibson pushed ob at NE 34 for 25 yards (C.Goode).PENALTY on NE-T.Henderson, Offensive Holding, 10 yards, enforced at NE 27. [special_teams]
+- Q3 9:27 (19 yds) Punt: B.Baringer punts 71 yards to MIA 25, Center-J.Ashby. T.Hill to MIA 44 for 19 yards (M.Robinson). [special_teams]
+- Q3 9:41 (-5 yds) Penalty: B.Baringer punts 55 yards to MIA 36, Center-J.Ashby. T.Hill ran ob at MIA 41 for 5 yards (C.Woods).PENALTY on NE-J.Hawkins, Offensive Holding, 5 yards, enforced at NE 9 - No Play. [nullified]
+- Q4 0:27 (-1 yds) Rush:  (No Huddle) D.Maye kneels to NE 35 for -1 yards. [spike_kneel]
+- Q4 0:48 (-1 yds) Rush: D.Maye kneels to NE 36 for -1 yards. [spike_kneel]
+- Q4 10:03 (-5 yds) Penalty: T.Henderson right tackle to NE 26 for 2 yards (J.Jones).PENALTY on NE-H.Henry, Illegal Shift, 5 yards, enforced at NE 24 - No Play. [nullified]
+- Q4 12:07 (-5 yds) Penalty: (Shotgun) PENALTY on NE-M.Moses, False Start, 5 yards, enforced at NE 13 - No Play. [nullified]
+- Q4 1:47 (53 yds) Field Goal Good: A.Borregales 53 yard field goal is GOOD, Center-J.Ashby, Holder-B.Baringer. [special_teams]
+- Q4 1:52 (-5 yds) Penalty: (Shotgun) PENALTY on NE-M.Moses, False Start, 5 yards, enforced at MIA 30 - No Play. [nullified]
+
+**MIA Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q4 2:21 (20 yds) Pass Interception Return: (Shotgun) T.Tagovailoa pass short left intended for M.Washington INTERCEPTED by M.Mapu at NE 42. M.Mapu to MIA 38 for 20 yards (A.Brewer). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q1 8:16 (0 yds) Penalty: (Shotgun) T.Tagovailoa pass short middle intended for T.Hill INTERCEPTED by J.Hawkins at MIA 41. J.Hawkins to MIA 39 for 2 yards (J.Hill).Penalty on NE-K.Chaisson, Defensive Offside, offsetting, enforced at MIA 30 - No Play.Penalty on MIA-K.Smith, Offensive Holding, offsetting.
+
+- Excluded non-zero-yard plays (up to 21 shown):
+- Q1 0:49 (17 yds) Kickoff: A.Borregales kicks 65 yards from NE 35 to MIA 0. D.Eskridge to MIA 27 for 27 yards (B.Schooler; D.Pettus).PENALTY on MIA-K.Britt, Offensive Holding, 10 yards, enforced at MIA 27. [special_teams]
+- Q1 8:04 (8 yds) Punt: J.Bailey punts 48 yards to NE 22, Center-J.Cardona. M.Jones to NE 30 for 8 yards (E.Campbell). [special_teams]
+- Q1 9:29 (24 yds) Kickoff: A.Borregales kicks 64 yards from NE 35 to MIA 1. D.Eskridge to MIA 25 for 24 yards (C.Elliss). [special_teams]
+- Q2 0:33 (-5 yds) Penalty: PENALTY on MIA-P.Paul, False Start, 5 yards, enforced at NE 2 - No Play. [nullified]
+- Q2 1:56 (21 yds) Kickoff: A.Borregales kicks 63 yards from NE 35 to MIA 2. D.Eskridge to MIA 23 for 21 yards (C.Elliss). [special_teams]
+- Q3 0:06 (27 yds) Kickoff: A.Borregales kicks 61 yards from NE 35 to MIA 4. M.Washington to MIA 31 for 27 yards (J.Gibbens). ** Injury Update: NE-C.Woodson has returned to the game. [special_teams]
+- Q3 10:41 (40 yds) Field Goal Good: R.Patterson 40 yard field goal is GOOD, Center-J.Cardona, Holder-J.Bailey. [special_teams]
+- Q3 11:53 (-5 yds) Penalty: (Shotgun) T.Tagovailoa pass short left to M.Washington to NE 13 for 11 yards (J.Hawkins; A.Austin).PENALTY on MIA-M.Washington, Illegal Motion, 5 yards, enforced at NE 24 - No Play. [nullified]
+- Q3 14:15 (-10 yds) Penalty: T.Tagovailoa pass incomplete short right.PENALTY on MIA-J.Savaiinaea, Offensive Holding, 10 yards, enforced at MIA 36 - No Play. [nullified]
+- Q3 15:00 (21 yds) Kickoff: A.Borregales kicks 57 yards from NE 35 to MIA 8. M.Washington to MIA 29 for 21 yards (A.Jennings; C.Elliss). [special_teams]
+- Q3 3:37 (44 yds) Field Goal Good: R.Patterson 44 yard field goal is GOOD, Center-J.Cardona, Holder-J.Bailey. [special_teams]
+- Q3 6:02 (5 yds) Penalty: (Shotgun) T.Tagovailoa pass short left to J.Waddle to NE 25 for 4 yards (M.Jones).PENALTY on NE-H.Landry, Defensive Offside, 5 yards, enforced at NE 29 - No Play. [nullified]
+- Q3 6:13 (-10 yds) Penalty: (No Huddle, Shotgun) T.Tagovailoa pass short right to M.Washington pushed ob at NE 3 for 16 yards (C.Woodson). NE-C.Woodson was injured during the play. PENALTY on MIA-A.Brewer, Offensive Holding, 10 yards, enforced at NE 19 - No Play. [nullified]
+- Q4 1:09 (-5 yds) Penalty: (Shotgun) PENALTY on MIA-A.Brewer, False Start, 5 yards, enforced at NE 26 - No Play. [nullified]
+- Q4 1:09 (-5 yds) Penalty: PENALTY on MIA, Delay of Game, 5 yards, enforced at NE 31 - No Play. [nullified]
+- Q4 1:47 (25 yds) Kickoff: A.Borregales kicks 42 yards from NE 35 to MIA 23, short of landing zone.PENALTY on NE-A.Borregales, Kickoff Short of Landing Zone, placed at MIA 40. [special_teams]
+- Q4 3:14 (-5 yds) Penalty: (Shotgun) PENALTY on MIA-O.Gordon, False Start, 5 yards, enforced at MIA 42 - No Play. [nullified]
+- Q4 3:18 (-5 yds) Penalty: (Shotgun) PENALTY on MIA, Delay of Game, 5 yards, enforced at MIA 47 - No Play. [nullified]
+- Q4 7:06 (90 yds) Kickoff Return Touchdown: R.Patterson kicks 55 yards from MIA 35 to NE 10. A.Gibson for 90 yards, TOUCHDOWN. A.Borregales extra point is GOOD, Center-J.Ashby, Holder-B.Baringer. ** Injury Update: MIA-C.Robinson has returned to the game. [special_teams_return]
+- Q4 7:06 (8 yds) Kickoff: A.Borregales kicks 60 yards from NE 35 to MIA 5. D.Eskridge MUFFS catch, and recovers at MIA 5. D.Eskridge to MIA 13 for 8 yards (K.Dugger). [special_teams]
+- Q4 7:18 (74 yds) Punt Return Touchdown: B.Baringer punts 65 yards to MIA 26, Center-J.Ashby. M.Washington for 74 yards, TOUCHDOWN. R.Patterson extra point is GOOD, Center-J.Cardona, Holder-J.Bailey. [special_teams_return]
+
+### 401772787 HOU @ IND (TOΔ max 0, YdsΔ max 12, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| HOU | 364 | 352 | -12 | 1 | 1 | +0 | 85 | 85 | +0 |
+| IND | 281 | 279 | -2 | 0 | 0 | +0 | 33 | 33 | +0 |
+
+**HOU Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q2 10:11 (0 yds) Pass Interception Return: (Shotgun) C.Stroud pass deep right intended for X.Hutchinson INTERCEPTED by C.Bynum at HST 42. C.Bynum to HST 42 for no gain (X.Hutchinson). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q3 14:53 (0 yds) Fumble Recovery (Own): W.Marks right tackle to HST 25 for -2 yards (G.Pratt). FUMBLES (G.Pratt), and recovers at HST 27.
+
+- Excluded non-zero-yard plays (up to 14 shown):
+- Q1 0:36 (-8 yds) Penalty: B.Fisher reported in as eligible.  N.Chubb left tackle to HST 26 for 9 yards (A.Adebawore; C.Bynum).PENALTY on HST-A.Ersery, Offensive Holding, 8 yards, enforced at HST 17 - No Play. [nullified]
+- Q1 2:57 (5 yds) Punt: T.Townsend punts 44 yards to IND 18, Center-A.Brinkman. A.Gould to IND 23 for 5 yards (A.Speed). [special_teams]
+- Q1 5:34 (-5 yds) Penalty: C.Stroud pass short right to C.Kirk pushed ob at IND 47 for 21 yards (C.Bynum).PENALTY on HST, Illegal Formation, 5 yards, enforced at HST 32 - No Play. [nullified]
+- Q1 7:55 (23 yds) Field Goal Good: K.Fairbairn 23 yard field goal is GOOD, Center-A.Brinkman, Holder-T.Townsend. [special_teams]
+- Q1 9:15 (-5 yds) Penalty: (Shotgun) B.Fisher reported in as eligible. Direct snap to N.Chubb.  N.Chubb up the middle to IND 2 for 2 yards (A.Adebawore; G.Pratt).PENALTY on HST, Illegal Formation, 5 yards, enforced at IND 4 - No Play. [nullified]
+- Q1 9:30 (5 yds) Penalty: (Shotgun) C.Stroud pass incomplete short left [Z.Franklin].PENALTY on IND-J.Jones, Illegal Contact, 5 yards, enforced at IND 9 - No Play. [nullified]
+- Q2 14:22 (9 yds) Punt: T.Townsend punts 52 yards to IND 28, Center-A.Brinkman. A.Gould pushed ob at IND 37 for 9 yards (C.Stover). [special_teams]
+- Q2 8:41 (32 yds) Kickoff: M.Badgley kicks 64 yards from IND 35 to HST 1. T.Smith to HST 38 for 37 yards (G.Odum; C.Lammons).PENALTY on HST-A.Speed, Illegal Formation, 5 yards, enforced at HST 38. [special_teams]
+- Q3 15:00 (22 yds) Kickoff: M.Badgley kicks 60 yards from IND 35 to HST 5. J.Noel to HST 27 for 22 yards (A.Abdullah). [special_teams]
+- Q3 2:51 (29 yds) Kickoff: M.Badgley kicks 59 yards from IND 35 to HST 6. J.Noel to HST 35 for 29 yards (T.Goodson; B.Johnson). [special_teams]
+- Q3 6:47 (43 yds) Field Goal Good: K.Fairbairn 43 yard field goal is GOOD, Center-A.Brinkman, Holder-T.Townsend. [special_teams]
+- Q4 14:51 (8 yds) Penalty: (Shotgun) C.Stroud pass incomplete short middle to X.Hutchinson.PENALTY on IND-K.Moore, Defensive Pass Interference, 8 yards, enforced at IND 25 - No Play. [nullified]
+- Q4 15:00 (-5 yds) Penalty: PENALTY on HST-D.Schultz, False Start, 5 yards, enforced at IND 20 - No Play. [nullified]
+- Q4 8:40 (27 yds) Kickoff: M.Badgley kicks 62 yards from IND 35 to HST 3. J.Noel to HST 30 for 27 yards (B.Johnson; L.Treadwell). [special_teams]
+
+**IND Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q1 7:10 (1 yds) Fumble Recovery (Own): D.Jones FUMBLES (Aborted) at IND 32, and recovers at IND 31. D.Jones to IND 33 for 2 yards (W.Anderson).
+- Q2 10:19 (-2 yds) Fumble Recovery (Own): Direct snap to T.Warren.  T.Warren FUMBLES (Aborted) at HST 10, recovered by IND-J.Taylor at HST 11. J.Taylor to HST 11 for no gain (D.Barnett, K.Lassiter).
+
+- Excluded non-zero-yard plays (up to 10 shown):
+- Q1 14:17 (14 yds) Punt: R.Sanchez punts 45 yards to HST 18, Center-L.Rhodes. J.Noel pushed ob at HST 32 for 14 yards (B.Johnson). [special_teams]
+- Q1 5:48 (14 yds) Punt: R.Sanchez punts 55 yards to HST 18, Center-L.Rhodes. J.Noel to HST 32 for 14 yards (A.Ajiake; A.Ogletree). [special_teams]
+- Q1 7:55 (24 yds) Kickoff: K.Fairbairn kicks 62 yards from HST 35 to IND 3. A.Gould to IND 27 for 24 yards (E.Speed). [special_teams]
+- Q2 2:05 (-5 yds) Penalty: (Shotgun) PENALTY on IND, Delay of Game, 5 yards, enforced at HST 42 - No Play. [nullified]
+- Q2 5:08 (21 yds) Kickoff: K.Fairbairn kicks 63 yards from HST 35 to IND 2. A.Gould to IND 23 for 21 yards (J.Hansen; C.Harris). [special_teams]
+- Q3 3:00 (32 yds) Penalty: (Shotgun) D.Jones pass incomplete deep right to A.Pierce.PENALTY on HST-C.Bullock, Defensive Pass Interference, 32 yards, enforced at HST 44 - No Play. [nullified]
+- Q3 3:35 (-10 yds) Penalty: (Shotgun) D.Jones pass deep left to J.Downs to HST 12 for 22 yards (C.Bullock).PENALTY on IND-B.Raimann, Offensive Holding, 10 yards, enforced at HST 34 - No Play. [nullified]
+- Q3 6:47 (20 yds) Kickoff: K.Fairbairn kicks 64 yards from HST 35 to IND 1. A.Gould to IND 21 for 20 yards (D.Ogunbowale). [special_teams]
+- Q4 12:00 (15 yds) Penalty: (Shotgun) D.Jones pass incomplete deep left to A.Pierce (K.Lassiter).PENALTY on HST-T.Settle, Roughing the Passer, 15 yards, enforced at IND 37 - No Play. [nullified]
+- Q4 8:40 (42 yds) Field Goal Good: M.Badgley 42 yard field goal is GOOD, Center-L.Rhodes, Holder-R.Sanchez. [special_teams]
+
+### 401772723 HOU @ LAR (TOΔ max 0, YdsΔ max 11, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| HOU | 265 | 271 | +6 | 2 | 2 | +0 | 80 | 80 | +0 |
+| LAR | 296 | 285 | -11 | 1 | 1 | +0 | 60 | 60 | +0 |
+
+**HOU Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q3 8:30 (0 yds) Pass Interception Return: (Shotgun) C.Stroud pass deep right intended for J.Higgins INTERCEPTED by C.Durant at LA 41. C.Durant to LA 41 for no gain (J.Higgins). [interception]
+- Q4 1:51 (0 yds) Fumble Recovery (Opponent): (Shotgun) C.Stroud pass short right to D.Ogunbowale to LA 18 for 7 yards (N.Landman). FUMBLES (N.Landman), RECOVERED by LA-B.Fiske at LA 24. [fumble]
+
+- Excluded non-zero-yard plays (up to 15 shown):
+- Q1 12:59 (5 yds) Punt: T.Townsend punts 61 yards to LA 24, Center-A.Brinkman. X.Smith to LA 29 for 5 yards (J.Smith). [special_teams]
+- Q1 13:53 (-5 yds) Penalty: (Shotgun) PENALTY on HST, Delay of Game, 5 yards, enforced at HST 13 - No Play. [nullified]
+- Q1 15:00 (-10 yds) Penalty: (Shotgun) C.Stroud pass short right to D.Schultz to HST 26 for 6 yards (K.Kinchens).PENALTY on HST-C.Robinson, Offensive Holding, 10 yards, enforced at HST 20 - No Play. [nullified]
+- Q1 1:15 (51 yds) Field Goal Good:  K.Fairbairn 51 yard field goal is GOOD, Center-A.Brinkman, Holder-T.Townsend. [special_teams]
+- Q2 0:00 (53 yds) Field Goal Good: K.Fairbairn 53 yard field goal is GOOD, Center-A.Brinkman, Holder-T.Townsend. [special_teams]
+- Q2 0:20 (-5 yds) Penalty: (Shotgun) PENALTY on HST-D.Schultz, False Start, 5 yards, enforced at LA 49 - No Play. [nullified]
+- Q2 0:20 (5 yds) Penalty: (Shotgun) C.Stroud pass incomplete deep left to J.Watson.PENALTY on LA-Q.Lake, Defensive Holding, 5 yards, enforced at HST 46 - No Play. [nullified]
+- Q2 0:53 (11 yds) Kickoff: J.Karty kicks 53 yards from LA 35 to HST 12. T.Smith to HST 23 for 11 yards (S.Dolac). [special_teams]
+- Q2 4:47 (45 yds) Field Goal Good: K.Fairbairn 45 yard field goal is GOOD, Center-A.Brinkman, Holder-T.Townsend. [special_teams]
+- Q3 10:47 (-5 yds) Penalty: PENALTY on HST-L.Tomlinson, False Start, 5 yards, enforced at HST 37 - No Play. [nullified]
+- Q3 12:28 (-5 yds) Penalty: N.Chubb left tackle to HST 24 for 4 yards (P.Ford; N.Landman).PENALTY on HST-J.Higgins, Illegal Shift, 5 yards, enforced at HST 20 - No Play. [nullified]
+- Q3 3:59 (-15 yds) Penalty: (Shotgun) C.Stroud pass short right to D.Schultz to LA 43 for 5 yards (K.Kinchens).PENALTY on HST-B.Fisher, Face Mask, 15 yards, enforced at LA 48 - No Play. [nullified]
+- Q4 2:04 (15 yds) Penalty: (Shotgun) C.Stroud pass incomplete deep left to J.Noel (K.Kinchens).PENALTY on LA-K.Turner, Roughing the Passer, 15 yards, enforced at HST 44 - No Play. [nullified]
+- Q4 2:31 (-5 yds) Penalty: (No Huddle) N.Chubb up the middle to 50 for 5 yards (O.Speights; N.Landman).PENALTY on HST-C.Stover, Illegal Shift, 5 yards, enforced at HST 45 - No Play. [nullified]
+- Q4 9:26 (16 yds) Punt: T.Townsend punts 56 yards to LA 18, Center-A.Brinkman. X.Smith to LA 34 for 16 yards (D.Ogunbowale). [special_teams]
+
+**LAR Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q4 4:17 (0 yds) Fumble Recovery (Opponent): M.Stafford pass incomplete short middle to C.Parkinson (A.Al-Shaair).Houston challenged the incomplete pass ruling, and the play was REVERSED.M.Stafford pass short middle to C.Parkinson to HST 12 for no gain (A.Al-Shaair). FUMBLES (A.Al-Shaair), touched at HST 19, RECOVERED by HST-D.Hunter at HST 19. [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q2 11:05 (-18 yds) Fumble Recovery (Own): (Shotgun) M.Stafford FUMBLES (Aborted) at LA 20, and recovers at LA 11. M.Stafford to LA 7 for -4 yards (W.Anderson).
+
+- Excluded non-zero-yard plays (up to 12 shown):
+- Q1 1:15 (32 yds) Kickoff: K.Fairbairn kicks 62 yards from HST 35 to LA 3. J.Whittington pushed ob at HST 23 for 74 yards (K.Fairbairn).PENALTY on LA-T.Reeder, Offensive Holding, 10 yards, enforced at LA 35. [special_teams]
+- Q2 10:24 (10 yds) Punt: E.Evans punts 49 yards to HST 44, Center-A.Ward. J.Noel to LA 46 for 10 yards (S.Dolac; N.Hampton). [special_teams]
+- Q2 13:58 (-10 yds) Penalty: (No Huddle) M.Stafford pass short left to J.Whittington pushed ob at HST 6 for 34 yards (K.Lassiter).PENALTY on LA-T.Higbee, Offensive Holding, 10 yards, enforced at HST 40 - No Play. [nullified]
+- Q3 0:01 (5 yds) Penalty: PENALTY on HST-D.Taylor, Neutral Zone Infraction, 5 yards, enforced at LA 32 - No Play. [nullified]
+- Q3 12:36 (5 yds) Penalty: (Shotgun) M.Stafford pass incomplete short left to D.Adams.PENALTY on HST-D.Stingley, Illegal Use of Hands, 5 yards, enforced at HST 18 - No Play. [nullified]
+- Q3 15:00 (28 yds) Kickoff: K.Fairbairn kicks 61 yards from HST 35 to LA 4. J.Whittington to LA 32 for 28 yards (D.Taylor). [special_teams]
+- Q3 6:46 (10 yds) Punt: E.Evans punts 46 yards to HST 14, Center-A.Ward. J.Noel pushed ob at HST 24 for 10 yards (T.Reeder). [special_teams]
+- Q4 0:40 (-1 yds) Rush: M.Stafford kneels to LA 48 for -1 yards. [spike_kneel]
+- Q4 12:53 (5 yds) Penalty: (Shotgun) PENALTY on HST-E.Speed, Encroachment, 5 yards, enforced at HST 38 - No Play. [nullified]
+- Q4 14:18 (-5 yds) Penalty: PENALTY on LA-B.Limmer, False Start, 5 yards, enforced at HST 39 - No Play. [nullified]
+- Q4 1:19 (-1 yds) Rush:  M.Stafford kneels to LA 49 for -1 yards. [spike_kneel]
+- Q4 1:43 (-10 yds) Penalty:  K.Williams up the middle to LA 28 for 4 yards (S.Rankins).
+PENALTY on LA-D.Allen, Offensive Holding, 10 yards, enforced at LA 24 - No Play. [nullified]
+
+### 401772812 DET @ BAL (TOΔ max 0, YdsΔ max 11, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| DET | 426 | 417 | -9 | 0 | 0 | +0 | 68 | 68 | +0 |
+| BAL | 318 | 329 | +11 | 1 | 1 | +0 | 10 | 10 | +0 |
+
+**DET Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q1 5:35 (-9 yds) Fumble Recovery (Own): J.Goff FUMBLES (Aborted) at DET 23, recovered by DET-J.Gibbs at DET 22. J.Gibbs pushed ob at DET 23 for 1 yard (R.Smith).
+- Q4 0:29 (10 yds) Kickoff: T.Loop kicks onside 10 yards from BLT 35 to BLT 45. S.LaPorta (didn't try to advance) to BLT 45 for no gain.
+
+- Excluded non-zero-yard plays (up to 13 shown):
+- Q1 15:00 (22 yds) Kickoff: T.Loop kicks 54 yards from BLT 35 to DET 11. J.Saylors to DET 33 for 22 yards (J.Hummel; T.Wallace). [special_teams]
+- Q1 3:27 (11 yds) Punt: J.Fox punts 53 yards to BLT 16, Center-H.Hatten. L.Wester to BLT 27 for 11 yards (S.Vaki). [special_teams]
+- Q1 5:40 (29 yds) Kickoff: T.Loop kicks 62 yards from BLT 35 to DET 3. J.Saylors to DET 32 for 29 yards (R.Ali; S.Kane). [special_teams]
+- Q2 0:02 (67 yds) Field Goal Missed: J.Bates 67 yard field goal is No Good, Wide Left, Center-H.Hatten, Holder-J.Fox. [special_teams]
+- Q2 0:24 (30 yds) Kickoff: T.Loop kicks 62 yards from BLT 35 to DET 3. K.Raymond to DET 33 for 30 yards (T.Wallace). [special_teams]
+- Q2 1:24 (5 yds) Penalty: (Shotgun) J.Goff pass incomplete short left to J.Gibbs.PENALTY on BLT-M.Humphrey, Illegal Contact, 5 yards, enforced at DET 20 - No Play. [nullified]
+- Q3 8:51 (25 yds) Kickoff: T.Loop kicks 44 yards from BLT 35 to DET 21, short of landing zone.PENALTY on BLT-T.Loop, Kickoff Short of Landing Zone, placed at DET 40. [special_teams]
+- Q4 0:27 (-1 yds) Rush:  J.Goff kneels to BLT 46 for -1 yards. [spike_kneel]
+- Q4 0:29 (10 yds) Kickoff: T.Loop kicks onside 10 yards from BLT 35 to BLT 45. S.LaPorta (didn't try to advance) to BLT 45 for no gain. [special_teams]
+- Q4 6:35 (45 yds) Field Goal Good: J.Bates 45 yard field goal is GOOD, Center-H.Hatten, Holder-J.Fox. [special_teams]
+- Q4 7:48 (-15 yds) Penalty: D.Montgomery left tackle to BLT 5 for 8 yards (M.Starks; K.Hamilton).PENALTY on DET-C.Mahogany, Face Mask, 15 yards, enforced at BLT 13 - No Play. [nullified]
+- Q4 8:42 (10 yds) Punt: J.Fox punts 49 yards to BLT 11, Center-H.Hatten. L.Wester to BLT 21 for 10 yards (D.Thomas; R.Ya-Sin). [special_teams]
+- Q4 9:40 (29 yds) Kickoff: T.Loop kicks 59 yards from BLT 35 to DET 6. J.Saylors to DET 35 for 29 yards (T.Simpson; J.Higgins). [special_teams]
+
+**BAL Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q4 8:31 (3 yds) Fumble Recovery (Opponent): (Shotgun) D.Henry up the middle to BLT 21 for no gain (A.Hutchinson). FUMBLES (A.Hutchinson), touched at BLT 22, RECOVERED by DET-D.Reed at BLT 19. D.Reed to BLT 16 for 3 yards (L.Jackson). [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q2 1:30 (-18 yds) Fumble Recovery (Own): (Shotgun) L.Jackson sacked at DET 9 for -7 yards (J.Campbell). FUMBLES (J.Campbell), touched at DET 11, and recovers at DET 20.
+- Q4 0:29 (0 yds) Pass Interception Return: TWO-POINT CONVERSION ATTEMPT. L.Jackson pass to M.Andrews is incomplete. ATTEMPT FAILS.
+Penalty on DET-B.Branch, Defensive Holding, offsetting, enforced at DET 2 - No Play.
+Penalty on BLT-D.Faalele, Ineligible Downfield Pass, offsetting.
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q1 1:55 (-1 yds) Punt: J.Stout punts 63 yards to DET 3, Center-N.Moore. K.Raymond to DET 7 for 4 yards (T.Tampa).PENALTY on DET-D.Reed, Offensive Holding, 1 yard, enforced at DET 3. [special_teams]
+- Q1 8:36 (5 yds) Penalty: PENALTY on DET-A.Hutchinson, Neutral Zone Infraction, 5 yards, enforced at BLT 39 - No Play. [nullified]
+- Q2 0:32 (16 yds) Penalty: (Shotgun) L.Jackson pass incomplete deep left to D.Hopkins.PENALTY on DET-T.Arnold, Defensive Pass Interference, 16 yards, enforced at DET 19 - No Play. [nullified]
+- Q2 5:55 (43 yds) Kickoff: J.Bates kicks 59 yards from DET 35 to BLT 6. R.Ali to BLT 49 for 43 yards (J.Bates). [special_teams]
+- Q3 13:38 (6 yds) Penalty: PENALTY on DET-R.Lopez, Neutral Zone Infraction, 6 yards, enforced at BLT 36 - No Play. [nullified]
+- Q3 15:00 (26 yds) Kickoff: J.Bates kicks 64 yards from DET 35 to BLT 1. R.Ali to BLT 27 for 26 yards (G.Stuard; T.Nowaske). [special_teams]
+- Q3 5:13 (25 yds) Kickoff: J.Bates kicks 61 yards from DET 35 to BLT 4, out of bounds.PENALTY on DET-J.Bates, Kickoff Out of Bounds, placed at BLT 40. [special_teams]
+- Q4 12:57 (-5 yds) Penalty: PENALTY on BLT-C.Kolar, False Start, 5 yards, enforced at DET 31 - No Play. [nullified]
+- Q4 14:55 (15 yds) Kickoff: J.Bates kicks 52 yards from DET 35 to BLT 13. R.Ali to BLT 28 for 15 yards (R.Ya-Sin). [special_teams]
+- Q4 6:35 (21 yds) Kickoff: J.Bates kicks 55 yards from DET 35 to BLT 10. R.Ali to BLT 31 for 21 yards (P.O'Connor; D.Barnes). [special_teams]
+- Q4 9:40 (41 yds) Field Goal Good: T.Loop 41 yard field goal is GOOD, Center-N.Moore, Holder-J.Stout. [special_teams]
+
+### 401772861 NO @ CHI (TOΔ max 0, YdsΔ max 11, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| NO | 253 | 242 | -11 | 4 | 4 | +0 | 30 | 30 | +0 |
+| CHI | 386 | 381 | -5 | 1 | 1 | +0 | 92 | 92 | +0 |
+
+**NO Reconciliation Clues**
+
+- Windelta counted turnovers (4):
+- Q1 13:01 (0 yds) Sack Opp Fumble Recovery: (Shotgun) S.Rattler sacked at NO 23 for -2 yards (M.Sweat). FUMBLES (M.Sweat) [M.Sweat], RECOVERED by CHI-G.Dexter at NO 24. [fumble]
+- Q2 11:20 (38 yds) Pass Interception Return: (Shotgun) S.Rattler pass short middle intended for M.Tipton INTERCEPTED by N.Wright at CHI 32. N.Wright ran ob at NO 30 for 38 yards (S.Rattler). [interception]
+- Q3 2:45 (0 yds) Pass Interception Return: (Shotgun) S.Rattler pass deep left intended for R.Shaheed INTERCEPTED by K.Byard [J.Brisker] at CHI 12. K.Byard ran ob at CHI 12 for no gain. [interception]
+- Q4 4:29 (10 yds) Pass Interception Return: S.Rattler pass short middle intended for J.Stoll INTERCEPTED by T.Edmunds (T.Edwards) at CHI 22. T.Edmunds to CHI 32 for 10 yards (A.Kamara). [interception]
+
+- Excluded non-zero-yard plays (up to 12 shown):
+- Q1 3:00 (53 yds) Field Goal Missed: B.Grupe 53 yard field goal is No Good, Wide Right, Center-Z.Wood, Holder-K.Kroeger. [special_teams]
+- Q1 4:11 (-5 yds) Penalty: PENALTY on NO-R.Shaheed, False Start, 5 yards, enforced at CHI 32 - No Play. [nullified]
+- Q1 8:11 (8 yds) Punt: K.Kroeger punts 47 yards to CHI 16, Center-Z.Wood. D.Duvernay to CHI 24 for 8 yards (Z.Wood). [special_teams]
+- Q1 9:34 (23 yds) Kickoff: J.Moody kicks 55 yards from CHI 35 to NO 10. K.Miller to NO 33 for 23 yards (C.Jones). [special_teams]
+- Q2 12:08 (15 yds) Pass Incompletion: (Shotgun) S.Rattler pass incomplete short middle to B.Cooks (J.Brisker).PENALTY on CHI-J.Brisker, Roughing the Passer, 15 yards, enforced at NO 39 - No Play. [nullified]
+- Q2 13:23 (-5 yds) Rush: (Shotgun) S.Rattler right tackle to CHI 32 for 15 yards (K.Byard; T.Edmunds).PENALTY on NO, Illegal Formation, 5 yards, enforced at CHI 47 - No Play. [nullified]
+- Q2 14:06 (22 yds) Pass Incompletion: S.Rattler pass incomplete deep left to D.Vele.PENALTY on CHI-T.Edmunds, Defensive Pass Interference, 22 yards, enforced at NO 35 - No Play. [nullified]
+- Q2 2:51 (31 yds) Kickoff: J.Moody kicks 63 yards from CHI 35 to NO 2. D.Neal to NO 33 for 31 yards (J.Owens). [special_teams]
+- Q3 15:00 (5 yds) Kickoff: J.Moody kicks 50 yards from CHI 35 to NO 15. D.Neal to NO 35 for 20 yards (E.Hicks; C.Jones).PENALTY on NO-T.Burgess, Offensive Holding, 10 yards, enforced at NO 30. [special_teams]
+- Q3 4:07 (25 yds) Kickoff: J.Moody kicks 63 yards from CHI 35 to NO 2. M.Tipton to NO 27 for 25 yards (J.Blackwell; D.Hardy). [special_teams]
+- Q4 10:50 (10 yds) Punt: K.Kroeger punts 49 yards to CHI 24, Center-Z.Wood. D.Duvernay pushed ob at CHI 34 for 10 yards (J.Ford). [special_teams]
+- Q4 6:22 (22 yds) Kickoff: J.Moody kicks 63 yards from CHI 35 to NO 2. M.Tipton to NO 24 for 22 yards (J.Blackwell; T.Homer). [special_teams]
+
+**CHI Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q1 6:13 (0 yds) Pass Interception Return: (Shotgun) C.Williams pass short left intended for R.Odunze INTERCEPTED by Q.Riley at CHI 48. Q.Riley ran ob at CHI 48 for no gain. [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q1 10:26 (-3 yds) Fumble Recovery (Own): C.Williams FUMBLES (Aborted) at NO 9, recovered by CHI-D.Dalman at NO 9.
+- Q1 12:55 (-2 yds) Fumble Recovery (Own): (Shotgun) C.Williams FUMBLES (Aborted) at NO 29, and recovers at NO 29. C.Williams to NO 26 for 3 yards (K.McKinstry).
+
+- Excluded non-zero-yard plays (up to 15 shown):
+- Q1 14:22 (-5 yds) Penalty: (Shotgun) PENALTY on CHI-T.Benedet, False Start, 5 yards, enforced at CHI 40 - No Play. [nullified]
+- Q1 6:44 (15 yds) Pass Reception: (Shotgun) C.Williams pass short right to D.Swift ran ob at NO 42 for 15 yards.PENALTY on CHI-C.Loveland, Offensive Pass Interference, 10 yards, enforced at CHI 43 - No Play. [nullified]
+- Q1 9:34 (27 yds) Field Goal Good: J.Moody 27 yard field goal is GOOD, Center-S.Daly, Holder-T.Taylor. [special_teams]
+- Q2 0:22 (23 yds) Kickoff: B.Grupe kicks 61 yards from NO 35 to CHI 4. D.Duvernay to CHI 27 for 23 yards (J.Ford). [special_teams]
+- Q2 14:06 (39 yds) Field Goal Good: J.Moody 39 yard field goal is GOOD, Center-S.Daly, Holder-T.Taylor. [special_teams]
+- Q2 4:42 (-5 yds) Penalty: (No Huddle, Shotgun) PENALTY on CHI-C.Kmet, False Start, 5 yards, enforced at NO 10 - No Play. [nullified]
+- Q3 4:07 (24 yds) Field Goal Good: J.Moody 24 yard field goal is GOOD, Center-S.Daly, Holder-T.Taylor. [special_teams]
+- Q3 4:25 (-5 yds) Penalty: (Run formation) PENALTY on CHI-D.Dalman, False Start, 5 yards, enforced at NO 1 - No Play. [nullified]
+- Q3 7:34 (-5 yds) Penalty: PENALTY on CHI-T.Benedet, False Start, 5 yards, enforced at NO 17 - No Play. [nullified]
+- Q3 7:51 (5 yds) Penalty: (Shotgun) PENALTY on NO, Defensive Too Many Men on Field, 5 yards, enforced at NO 22 - No Play. [nullified]
+- Q3 9:40 (24 yds) Kickoff: B.Grupe kicks 61 yards from NO 35 to CHI 4. D.Duvernay to CHI 28 for 24 yards (J.Ford; J.Howden). [special_teams]
+- Q4 0:39 (-1 yds) Rush: C.Williams kneels to NO 20 for -1 yards. [spike_kneel]
+- Q4 1:19 (-1 yds) Rush: C.Williams kneels to NO 19 for -1 yards. [spike_kneel]
+- Q4 6:22 (33 yds) Field Goal Good: J.Moody 33 yard field goal is GOOD, Center-S.Daly, Holder-T.Taylor. [special_teams]
+- Q4 7:09 (-5 yds) Penalty: (Shotgun) PENALTY on CHI-C.Loveland, False Start, 5 yards, enforced at NO 14 - No Play. [nullified]
+
+### 401772929 TB @ LAR (TOΔ max 0, YdsΔ max 11, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| TB | 193 | 182 | -11 | 2 | 2 | +0 | 10 | 10 | +0 |
+| LAR | 333 | 333 | +0 | 0 | 0 | +0 | 32 | 32 | +0 |
+
+**TB Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q1 1:42 (50 yds) Interception Return Touchdown: (Shotgun) B.Mayfield pass short right intended for C.Otton INTERCEPTED by C.Durant at 50. C.Durant for 50 yards, TOUCHDOWN. H.Mevis extra point is GOOD, Center-J.McQuaide, Holder-E.Evans. [interception]
+- Q2 0:05 (31 yds) Pass Interception Return: (Shotgun) B.Mayfield pass deep left INTERCEPTED by E.Forbes at LA 21. E.Forbes pushed ob at TB 48 for 31 yards (C.Otton). TB-B.Mayfield was injured during the play. LA-E.Forbes was injured during the play. [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q2 0:18 (-11 yds) Fumble Recovery (Own): (Shotgun) B.Mayfield Aborted. G.Barton FUMBLES at TB 45, recovered by TB-B.Mayfield at TB 40.
+
+- Excluded non-zero-yard plays (up to 6 shown):
+- Q1 15:00 (28 yds) Kickoff: H.Mevis kicks 65 yards from LA 35 to TB 0. O.Wright to TB 28 for 28 yards (S.Dolac; T.Reeder). [special_teams]
+- Q2 0:29 (5 yds) Penalty: (Shotgun) B.Mayfield pass incomplete short right.PENALTY on LA-J.Wallace, Illegal Contact, 5 yards, enforced at TB 46 - No Play. [nullified]
+- Q2 3:10 (20 yds) Kickoff: E.Evans kicks 65 yards from LA 35 to TB 0. O.Wright to TB 20 for 20 yards (J.McCollough). [special_teams]
+- Q3 2:25 (8 yds) Punt: R.Dixon punts 55 yards to LA 28, Center-E.Deckers. K.Williams to LA 36 for 8 yards (J.Hayes). [special_teams]
+- Q4 12:26 (-10 yds) Penalty: (No Huddle, Shotgun) T.Bridgewater pass incomplete short right [J.Stewart].PENALTY on TB-L.Goedeke, Offensive Holding, 10 yards, enforced at LA 44 - No Play. [nullified]
+- Q4 13:27 (5 yds) Penalty: (Shotgun) T.Bridgewater sacked at TB 25 for -10 yards (B.Young).PENALTY on LA-J.Wallace, Defensive Holding, 5 yards, enforced at TB 35 - No Play. [nullified]
+
+**LAR Reconciliation Clues**
+
+- Excluded non-zero-yard plays (up to 5 shown):
+- Q2 1:02 (40 yds) Field Goal Good: H.Mevis 40 yard field goal is GOOD, Center-J.McQuaide, Holder-E.Evans. [special_teams]
+- Q3 15:00 (25 yds) Kickoff: C.McLaughlin kicks 37 yards from TB 35 to LA 28, short of landing zone.PENALTY on TB-C.McLaughlin, Kickoff Short of Landing Zone, placed at LA 40. [special_teams]
+- Q3 2:14 (-10 yds) Penalty: (Shotgun) M.Stafford pass short left to D.Adams ran ob at TB 38 for 26 yards (A.Winfield).PENALTY on LA-C.Shelton, Offensive Holding, 10 yards, enforced at LA 36 - No Play. [nullified]
+- Q4 13:35 (52 yds) Field Goal Good: H.Mevis 52 yard field goal is GOOD, Center-J.McQuaide, Holder-E.Evans. [special_teams]
+- Q4 2:00 (15 yds) Punt: E.Evans punts 51 yards to TB 14, Center-J.McQuaide. K.Johnson to TB 29 for 15 yards (T.Reeder; N.Hampton). [special_teams]
+
+### 401772725 JAX @ CIN (TOΔ max 0, YdsΔ max 10, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| JAX | 400 | 390 | -10 | 2 | 2 | +0 | 55 | 55 | +0 |
+| CIN | 350 | 350 | +0 | 3 | 3 | +0 | 29 | 29 | +0 |
+
+**JAX Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q1 4:57 (0 yds) Pass Interception Return: (Shotgun) T.Lawrence pass short left intended for T.Hunter INTERCEPTED by D.Hill [T.Hendrickson] at CIN -3. Touchback. [interception]
+- Q2 7:10 (4 yds) Pass Interception Return: (Shotgun) T.Lawrence pass deep middle intended for B.Thomas INTERCEPTED by J.Battle at JAX 34. J.Battle to JAX 30 for 4 yards (B.Thomas).Penalty on JAX, Illegal Shift, declined. [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q3 1:54 (1 yds) Fumble Recovery (Own): T.Lawrence FUMBLES (Aborted) at JAX 33, and recovers at JAX 32. T.Lawrence to JAX 35 for 3 yards (O.Burks).
+- Q4 0:01 (0 yds) Penalty: (No Huddle, Shotgun) T.Lawrence pass short right to P.Washington to JAX 30 for 5 yards. Lateral to T.Etienne to JAX 48 for 18 yards. FUMBLES, ball out of bounds at JAX 48.PENALTY on JAX-B.Strange, Offensive Offside, 0 yards, enforced at JAX 25 - No Play.
+
+- Excluded non-zero-yard plays (up to 8 shown):
+- Q1 0:07 (26 yds) Kickoff: E.McPherson kicks 66 yards from CIN 35 to JAX -1. B.Tuten to JAX 25 for 26 yards (O.Burks). [special_teams]
+- Q1 15:00 (32 yds) Kickoff: E.McPherson kicks 66 yards from CIN 35 to JAX -1. P.Washington to JAX 31 for 32 yards (D.Hill). [special_teams]
+- Q2 1:35 (42 yds) Field Goal Good: C.Little 42 yard field goal is GOOD, Center-R.Matiscik, Holder-L.Cooke. [special_teams]
+- Q3 11:05 (20 yds) Kickoff: E.McPherson kicks 66 yards from CIN 35 to JAX -1. P.Washington to JAX 19 for 20 yards (S.Perine; O.Burks). [special_teams]
+- Q3 2:39 (23 yds) Kickoff: E.McPherson kicks 63 yards from CIN 35 to JAX 2. P.Washington to JAX 25 for 23 yards (T.Anderson). [special_teams]
+- Q3 6:32 (-5 yds) Penalty: (Shotgun) PENALTY on JAX-P.Mekari, False Start, 5 yards, enforced at CIN 24 - No Play. [nullified]
+- Q3 9:30 (11 yds) Punt: L.Cooke punts 60 yards to CIN 12, Center-R.Matiscik. C.Jones to CIN 23 for 11 yards (Q.Morris). [special_teams]
+- Q4 11:43 (25 yds) Field Goal Good: C.Little 25 yard field goal is GOOD, Center-R.Matiscik, Holder-L.Cooke. [special_teams]
+
+**CIN Reconciliation Clues**
+
+- Windelta counted turnovers (3):
+- Q2 0:34 (12 yds) Pass Interception Return: (Shotgun) J.Browning pass deep right intended for A.Iosivas INTERCEPTED by E.Murray [T.Walker] at JAX 15. E.Murray to JAX 27 for 12 yards (J.Chase). [interception]
+- Q3 7:24 (39 yds) Pass Interception Return: (Shotgun) J.Browning pass deep right intended for M.Gesicki INTERCEPTED by A.Wingard [J.Hines-Allen] at JAX 31. A.Wingard to CIN 30 for 39 yards (A.Mims). [interception]
+- Q4 5:22 (22 yds) Pass Interception Return: (Shotgun) J.Browning pass short middle intended for A.Iosivas INTERCEPTED by D.Lloyd at CIN 34. D.Lloyd to CIN 12 for 22 yards (C.Brown). [interception]
+
+- Excluded non-zero-yard plays (up to 12 shown):
+- Q1 10:51 (21 yds) Kickoff: C.Little kicks 60 yards from JAX 35 to CIN 5. S.Perine to CIN 26 for 21 yards (Y.Abdullah; D.Lloyd). [special_teams]
+- Q1 9:27 (15 yds) Punt: R.Rehkow punts 63 yards to JAX 13, Center-W.Wagner. P.Washington to JAX 28 for 15 yards (T.Anderson; S.Heyward). [special_teams]
+- Q2 10:49 (5 yds) Penalty: (Shotgun) J.Burrow pass incomplete short left to C.Brown.PENALTY on JAX-T.Hunter, Illegal Contact, 5 yards, enforced at CIN 34 - No Play. [nullified]
+- Q2 10:54 (34 yds) Kickoff: C.Little kicks 65 yards from JAX 35 to CIN 0. S.Perine to CIN 34 for 34 yards (E.Murray). [special_teams]
+- Q2 1:35 (37 yds) Kickoff: C.Little kicks 62 yards from JAX 35 to CIN 3. S.Perine to CIN 40 for 37 yards (D.Lloyd). [special_teams]
+- Q2 3:28 (31 yds) Field Goal Good: E.McPherson 31 yard field goal is GOOD, Center-W.Wagner, Holder-R.Rehkow. [special_teams]
+- Q2 8:05 (4 yds) Punt: R.Rehkow punts 50 yards to JAX 9, Center-W.Wagner. P.Washington to JAX 13 for 4 yards (T.Brooks). ** Injury Update: JAX-J.Jones has returned to the game. [special_teams]
+- Q2 9:10 (-10 yds) Penalty: J.Burrow pass incomplete short middle.PENALTY on CIN-D.Sample, Offensive Holding, 10 yards, enforced at 50 - No Play. [nullified]
+- Q3 4:08 (18 yds) Kickoff: C.Little kicks 60 yards from JAX 35 to CIN 5. S.Perine to CIN 38 for 33 yards (R.Lane).PENALTY on JAX-Y.Abdullah, Unnecessary Roughness, 15 yards, enforced at CIN 38. [special_teams]
+- Q4 0:57 (-4 yds) Penalty: J.Browning up the middle to JAX 1 for no gain (J.Hines-Allen).PENALTY on CIN-D.Risner, Offensive Offside, 4 yards, enforced at JAX 1 - No Play. [nullified]
+- Q4 11:43 (29 yds) Kickoff: C.Little kicks 57 yards from JAX 35 to CIN 8. S.Perine to CIN 37 for 29 yards (D.Lloyd; An.Johnson). [special_teams]
+- Q4 1:54 (25 yds) Penalty: (Shotgun) J.Browning pass incomplete deep right to A.Iosivas (T.Hunter).PENALTY on JAX-T.Hunter, Defensive Pass Interference, 25 yards, enforced at CIN 33 - No Play. [nullified]
+
+### 401772729 DEN @ IND (TOΔ max 0, YdsΔ max 10, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| DEN | 324 | 314 | -10 | 1 | 1 | +0 | 83 | 83 | +0 |
+| IND | 473 | 473 | +0 | 0 | 0 | +0 | 68 | 68 | +0 |
+
+**DEN Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q4 11:33 (0 yds) Pass Interception Return: (Shotgun) B.Nix pass deep right intended for C.Sutton INTERCEPTED by C.Bynum at IND 9. C.Bynum to IND 9 for no gain (C.Sutton). [interception]
+
+- Excluded non-zero-yard plays (up to 16 shown):
+- Q1 11:51 (20 yds) Kickoff: S.Shrader kicks 49 yards from IND 35 to DEN 16. R.Harvey to DEN 36 for 20 yards (S.Olubi; A.Ogletree). [special_teams]
+- Q1 2:52 (4 yds) Punt: J.Crawshaw punts 47 yards to IND 11, Center-M.Fraboni. A.Gould to IND 15 for 4 yards (M.Fraboni; G.Wallow). [special_teams]
+- Q2 0:29 (-7 yds) Punt: J.Crawshaw punts 50 yards to IND 14, Center-M.Fraboni. A.Gould to IND 22 for 8 yards (D.Key).PENALTY on IND-D.Scott, Offensive Holding, 7 yards, enforced at IND 14. [special_teams]
+- Q2 14:12 (24 yds) Kickoff: S.Shrader kicks 56 yards from IND 35 to DEN 9. M.Mims to DEN 33 for 24 yards (J.Bachie; A.Adebawore). [special_teams]
+- Q2 1:31 (28 yds) Kickoff: S.Shrader kicks 61 yards from IND 35 to DEN 4. R.Harvey to DEN 32 for 28 yards (C.McGrone; J.Bachie). [special_teams]
+- Q2 3:49 (2 yds) Penalty: (Shotgun) B.Nix pass incomplete short left to C.Sutton.PENALTY on IND-X.Howard, Defensive Pass Interference, 2 yards, enforced at IND 3 - No Play. [nullified]
+- Q2 3:59 (3 yds) Penalty: B.Nix pass incomplete short left to L.Krull.PENALTY on IND-X.Howard, Defensive Holding, 3 yards, enforced at IND 6 - No Play. [nullified]
+- Q2 4:39 (6 yds) Penalty: (Shotgun) B.Nix pass incomplete short left to C.Sutton.PENALTY on IND-X.Howard, Defensive Pass Interference, 6 yards, enforced at IND 26 - No Play.PENALTY on IND, Unsportsmanlike Conduct, 10 yards, enforced between downs. [nullified]
+- Q3 15:00 (25 yds) Kickoff: S.Shrader kicks 39 yards from IND 35 to DEN 26, short of landing zone.PENALTY on IND, Kickoff Short of Landing Zone, placed at DEN 40. [special_teams]
+- Q3 4:54 (-5 yds) Penalty: (Shotgun) PENALTY on DEN-E.Engram, False Start, 5 yards, enforced at DEN 35 - No Play. [nullified]
+- Q3 5:42 (28 yds) Kickoff: S.Shrader kicks 58 yards from IND 35 to DEN 7. M.Mims to DEN 35 for 28 yards (C.Lammons). [special_teams]
+- Q4 13:02 (15 yds) Penalty: (Shotgun) B.Nix pass incomplete deep right.PENALTY on IND-T.Lewis, Roughing the Passer, 15 yards, enforced at 50 - No Play. [nullified]
+- Q4 3:19 (42 yds) Field Goal Missed: W.Lutz 42 yard field goal is No Good, Hit Right Upright, Center-M.Fraboni, Holder-J.Crawshaw. [special_teams]
+- Q4 4:47 (-15 yds) Penalty: A.Palczewski reported in as eligible.  J.Dobbins right end to IND 25 for no gain (Z.Franklin).PENALTY on DEN-A.Trautman, Face Mask, 15 yards, enforced at IND 25 - No Play. [nullified]
+- Q4 5:02 (-5 yds) Penalty:  PENALTY on DEN-J.Dobbins, Delay of Game, 5 yards, enforced at IND 20 - No Play. [nullified]
+- Q4 8:33 (22 yds) Kickoff: S.Shrader kicks 52 yards from IND 35 to DEN 13. R.Harvey to DEN 35 for 22 yards (C.Muma). [special_teams]
+
+**IND Reconciliation Clues**
+
+- Excluded non-zero-yard plays (up to 15 shown):
+- Q1 11:51 (29 yds) Field Goal Good: S.Shrader 29 yard field goal is GOOD, Center-L.Rhodes, Holder-R.Sanchez. [special_teams]
+- Q1 15:00 (24 yds) Kickoff: W.Lutz kicks 61 yards from DEN 35 to IND 4. A.Dulin to IND 28 for 24 yards (T.Badie; J.Skinner). [special_teams]
+- Q1 2:42 (23 yds) Penalty: (Shotgun) D.Jones pass incomplete deep right to A.Ogletree.PENALTY on DEN-P.Surtain, Defensive Pass Interference, 23 yards, enforced at IND 15 - No Play. [nullified]
+- Q1 4:19 (33 yds) Field Goal Good: S.Shrader 33 yard field goal is GOOD, Center-L.Rhodes, Holder-R.Sanchez. [special_teams]
+- Q1 8:24 (29 yds) Kickoff: W.Lutz kicks 64 yards from DEN 35 to IND 1. A.Gould to IND 30 for 29 yards (D.Key). [special_teams]
+- Q2 10:42 (24 yds) Kickoff: W.Lutz kicks 61 yards from DEN 35 to IND 4. A.Gould to IND 28 for 24 yards (D.Key). [special_teams]
+- Q2 3:03 (19 yds) Kickoff: W.Lutz kicks 65 yards from DEN 35 to IND 0. A.Gould to IND 24 for 24 yards (P.Locke).PENALTY on IND, Illegal Formation, 5 yards, enforced at IND 24. [special_teams]
+- Q2 9:14 (-5 yds) Penalty: (Shotgun) D.Jones pass short left to J.Taylor to IND 45 for 4 yards (A.Singleton).PENALTY on IND-A.Pierce, Illegal Shift, 5 yards, enforced at IND 41 - No Play. [nullified]
+- Q3 11:13 (39 yds) Kickoff: W.Lutz kicks 64 yards from DEN 35 to IND 1. A.Dulin to IND 40 for 39 yards (K.Abrams-Draine). [special_teams]
+- Q3 1:01 (-5 yds) Penalty: (No Huddle, Shotgun) PENALTY on IND-A.Pierce, False Start, 5 yards, enforced at IND 25 - No Play. [nullified]
+- Q3 5:42 (36 yds) Field Goal Good: S.Shrader 36 yard field goal is GOOD, Center-L.Rhodes, Holder-R.Sanchez. [special_teams]
+- Q3 7:13 (-10 yds) Penalty: (No Huddle, Shotgun) J.Taylor left end ran ob at DEN 4 for 2 yards (J.Barron).PENALTY on IND-B.Raimann, Offensive Holding, 10 yards, enforced at DEN 6 - No Play. [nullified]
+- Q4 0:00 (45 yds) Field Goal Good: S.Shrader 45 yard field goal is GOOD, Center-L.Rhodes, Holder-R.Sanchez. [special_teams]
+- Q4 0:03 (60 yds) Penalty: S.Shrader 60 yard field goal is No Good, Short, Center-L.Rhodes, Holder-R.Sanchez.PENALTY on DEN-D.Tillman, Leverage, 15 yards, enforced at DEN 42 - No Play. [nullified]
+- Q4 8:33 (28 yds) Field Goal Good: S.Shrader 28 yard field goal is GOOD, Center-L.Rhodes, Holder-R.Sanchez. [special_teams]
+
+### 401772741 BAL @ KC (TOΔ max 0, YdsΔ max 10, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| BAL | 360 | 358 | -2 | 2 | 2 | +0 | 56 | 56 | +0 |
+| KC | 382 | 372 | -10 | 0 | 0 | +0 | 40 | 40 | +0 |
+
+**BAL Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q1 1:50 (0 yds) Pass Interception Return: (Shotgun) L.Jackson pass deep right intended for M.Andrews INTERCEPTED by L.Chenal [N.Bolton] at KC 16. L.Chenal to KC 16 for no gain (M.Andrews). [interception]
+- Q2 1:27 (0 yds) Sack Opp Fumble Recovery: (Shotgun) L.Jackson sacked at BLT 42 for -2 yards. FUMBLES, RECOVERED by KC-D.Tranquill at BLT 47.Penalty on BLT-D.Faalele, Offensive Holding, declined. [fumble]
+
+- Excluded non-zero-yard plays (up to 14 shown):
+- Q1 15:00 (25 yds) Kickoff: H.Butker kicks 60 yards from KC 35 to BLT 5. J.Hill to BLT 30 for 25 yards (R.Tonyan). [special_teams]
+- Q1 2:43 (-5 yds) Penalty: (Shotgun) L.Jackson pass deep right to D.Hopkins ran ob at KC 42 for 17 yards.PENALTY on BLT-R.Rosengarten, Illegal Formation, 5 yards, enforced at BLT 41 - No Play. [nullified]
+- Q1 5:40 (21 yds) Kickoff: H.Butker kicks 60 yards from KC 35 to BLT 5. R.Ali to BLT 26 for 21 yards (C.McDonald). [special_teams]
+- Q2 0:00 (43 yds) Field Goal Good: T.Loop 43 yard field goal is GOOD, Center-N.Moore, Holder-J.Stout. [special_teams]
+- Q2 10:00 (-7 yds) Kickoff: H.Butker kicks 64 yards from KC 35 to BLT 1. J.Hill to BLT 28 for 27 yards (J.Cochrane).PENALTY on BLT-D.Walker, Offensive Holding, 10 yards, enforced at BLT 25. [special_teams]
+- Q2 4:00 (30 yds) Kickoff: H.Butker kicks 63 yards from KC 35 to BLT 2. J.Hill pushed ob at BLT 32 for 30 yards (N.Williams). [special_teams]
+- Q2 6:58 (15 yds) Punt:  J.Stout punts 50 yards to KC 29, Center-N.Moore. N.Remigio pushed ob at KC 44 for 15 yards (T.Simpson). [special_teams]
+- Q2 8:01 (-5 yds) Penalty: PENALTY on BLT, Delay of Game, 5 yards, enforced at BLT 31 - No Play. [nullified]
+- Q2 9:07 (-5 yds) Penalty: PENALTY on BLT, Delay of Game, 5 yards, enforced at BLT 26 - No Play. [nullified]
+- Q3 0:07 (5 yds) Penalty: (No Huddle) PENALTY on KC-C.Omenihu, Defensive Offside, 5 yards, enforced at BLT 20 - No Play. [nullified]
+- Q3 11:51 (26 yds) Kickoff: H.Butker kicks 61 yards from KC 35 to BLT 4. J.Hill to BLT 30 for 26 yards (J.Royals). [special_teams]
+- Q3 1:06 (10 yds) Kickoff: H.Butker kicks 63 yards from KC 35 to BLT 2. R.Ali MUFFS catch, and recovers at BLT 6. R.Ali to BLT 16 for 10 yards (C.Conner). [special_teams]
+- Q3 7:22 (32 yds) Field Goal Good: T.Loop 32 yard field goal is GOOD, Center-N.Moore, Holder-J.Stout. [special_teams]
+- Q4 13:15 (28 yds) Kickoff: H.Butker kicks 62 yards from KC 35 to BLT 3. J.Hill to BLT 31 for 28 yards (C.Conner). [special_teams]
+
+**KC Reconciliation Clues**
+
+- Excluded non-zero-yard plays (up to 13 shown):
+- Q1 5:40 (38 yds) Field Goal Good: H.Butker 38 yard field goal is GOOD, Center-J.Winchester, Holder-M.Araiza. [special_teams]
+- Q1 9:30 (15 yds) Penalty: (Shotgun) P.Mahomes pass short right to X.Worthy pushed ob at KC 32 for no gain (M.Humphrey).PENALTY on BLT-M.Humphrey, Face Mask, 15 yards, enforced at KC 32 - No Play. [nullified]
+- Q1 9:35 (30 yds) Kickoff: T.Loop kicks 63 yards from BLT 35 to KC 2. J.Royals to KC 32 for 30 yards (J.Hummel). [special_teams]
+- Q2 0:31 (56 yds) Field Goal Missed: H.Butker 56 yard field goal is No Good, Wide Left, Center-J.Winchester, Holder-M.Araiza. [special_teams]
+- Q2 10:00 (23 yds) Field Goal Good: H.Butker 23 yard field goal is GOOD, Center-J.Winchester, Holder-M.Araiza. [special_teams]
+- Q3 15:00 (34 yds) Kickoff: T.Loop kicks 64 yards from BLT 35 to KC 1. B.Smith to KC 35 for 34 yards (J.Hummel). [special_teams]
+- Q3 1:06 (31 yds) Field Goal Good: H.Butker 31 yard field goal is GOOD, Center-J.Winchester, Holder-M.Araiza. [special_teams]
+- Q3 2:29 (-5 yds) Penalty: (Shotgun) P.Mahomes pass short right to X.Worthy pushed ob at BLT 5 for 5 yards (K.Hamilton).PENALTY on KC, Illegal Formation, 5 yards, enforced at BLT 10 - No Play. [nullified]
+- Q3 7:22 (47 yds) Kickoff: T.Loop kicks 63 yards from BLT 35 to KC 2. N.Remigio pushed ob at KC 49 for 47 yards (K.Martin). [special_teams]
+- Q4 0:29 (-1 yds) Rush:  G.Minshew kneels to KC 24 for -1 yards. [spike_kneel]
+- Q4 1:02 (-2 yds) Rush:  G.Minshew kneels to KC 25 for -2 yards. [spike_kneel]
+- Q4 1:56 (21 yds) Kickoff: T.Loop kicks 64 yards from BLT 35 to KC 1. B.Smith to KC 22 for 21 yards (J.Hummel; J.Higgins). [special_teams]
+- Q4 5:01 (-10 yds) Penalty: B.Smith left end pushed ob at BLT 30 for 12 yards (C.Awuzie).PENALTY on KC-W.Morris, Offensive Holding, 10 yards, enforced at BLT 42 - No Play. [nullified]
+
+### 401772510 DAL @ PHI (TOΔ max 0, YdsΔ max 9, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| DAL | 307 | 316 | +9 | 1 | 1 | +0 | 42 | 42 | +0 |
+| PHI | 302 | 302 | +0 | 0 | 0 | +0 | 110 | 110 | +0 |
+
+**DAL Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q3 4:52 (-5 yds) Fumble Recovery (Opponent): M.Sanders left guard to PHI 10 for 1 yard (J.Campbell; B.Young). FUMBLES (J.Campbell), RECOVERED by PHI-Q.Mitchell at PHI 10. Q.Mitchell to PHI 16 for 6 yards (D.Prescott). [fumble]
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q1 0:58 (34 yds) Penalty: (Shotgun) D.Prescott pass incomplete deep right to G.Pickens (Q.Mitchell).PENALTY on PHI-Q.Mitchell, Defensive Pass Interference, 34 yards, enforced at PHI 46 - No Play. [nullified]
+- Q1 15:00 (27 yds) Kickoff: J.Elliott kicks 60 yards from PHI 35 to DAL 5. K.Turpin pushed ob at DAL 32 for 27 yards (K.Granson). PHI-B.VanSumeren was injured during the play. PENALTY on PHI-J.Carter, Disqualification, 15 yards, enforced at DAL 32. [special_teams]
+- Q1 2:14 (-10 yds) Penalty: (No Huddle, Shotgun) D.Prescott pass short left to M.Sanders to PHI 29 for 4 yards (R.Blankenship).PENALTY on DAL-T.Smith, Offensive Holding, 10 yards, enforced at PHI 33 - No Play. [nullified]
+- Q1 5:55 (22 yds) Kickoff: J.Elliott kicks 63 yards from PHI 35 to DAL 2. K.Turpin to DAL 24 for 22 yards (J.Uche; J.Trotter).PENALTY on DAL-M.Liufau, Unnecessary Roughness, 12 yards, enforced at DAL 24.Penalty on DAL-M.Bell, Unnecessary Roughness, declined. [special_teams]
+- Q2 0:00 (53 yds) Field Goal Good: B.Aubrey 53 yard field goal is GOOD, Center-T.Sieg, Holder-B.Anger. [special_teams]
+- Q2 0:44 (9 yds) Penalty: (Shotgun) D.Prescott pass incomplete short right to C.Lamb.PENALTY on PHI-J.Bennett, Defensive Pass Interference, 9 yards, enforced at DAL 12 - No Play. [nullified]
+- Q2 0:51 (9 yds) Kickoff: J.Elliott kicks 58 yards from PHI 35 to DAL 7. K.Turpin MUFFS catch, and recovers at DAL 3. K.Turpin to DAL 12 for 9 yards (S.Brown; J.Trotter). [special_teams]
+- Q2 2:34 (41 yds) Field Goal Good: B.Aubrey 41 yard field goal is GOOD, Center-T.Sieg, Holder-B.Anger. [special_teams]
+- Q2 6:46 (23 yds) Kickoff: J.Elliott kicks 57 yards from PHI 35 to DAL 8. K.Turpin to DAL 31 for 23 yards (S.Brown). [special_teams]
+- Q3 4:58 (12 yds) Penalty: (Shotgun) D.Prescott pass incomplete deep middle to J.Ferguson (R.Blankenship). ** Injury Update: PHI-S.Brown has returned to the game. PENALTY on PHI-R.Blankenship, Unnecessary Roughness, 12 yards, enforced at PHI 23 - No Play. [nullified]
+- Q3 8:30 (20 yds) Kickoff: J.Elliott kicks 56 yards from PHI 35 to DAL 9. J.Tolbert to DAL 29 for 20 yards (J.Metchie). [special_teams]
+
+**PHI Reconciliation Clues**
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q2 2:34 (12 yds) Kickoff: B.Aubrey kicks 61 yards from DAL 35 to PHI 4. W.Shipley MUFFS catch, and recovers at PHI 7. W.Shipley to PHI 19 for 12 yards (M.Liufau). [special_teams]
+- Q2 9:52 (4 yds) Rush: S.Barkley right end to DAL 25 for 4 yards (M.Kneeland). [spike_kneel]
+- Q3 10:02 (-8 yds) Sack: (Shotgun) J.Hurts sacked at DAL 44 for -8 yards (M.Kneeland). [spike_kneel]
+- Q3 15:00 (20 yds) Kickoff: B.Aubrey kicks 57 yards from DAL 35 to PHI 8. J.Metchie pushed ob at PHI 28 for 20 yards (D.Clark). [special_teams]
+- Q3 8:30 (58 yds) Field Goal Good: J.Elliott 58 yard field goal is GOOD, Center-C.Hughlett, Holder-B.Mann. [special_teams]
+- Q4 0:33 (-1 yds) Rush: J.Hurts kneels to DAL 36 for -1 yards. [spike_kneel]
+- Q4 0:49 (-1 yds) Rush: J.Hurts kneels to DAL 35 for -1 yards. [spike_kneel]
+- Q4 12:46 (5 yds) Penalty: (No Huddle, Shotgun) PENALTY on DAL, Defensive Too Many Men on Field, 5 yards, enforced at PHI 23 - No Play. [nullified]
+- Q4 14:03 (1 yds) Rush: (Shotgun) S.Barkley left guard to PHI 22 for 1 yard (M.Kneeland; S.Thomas). [spike_kneel]
+- Q4 1:29 (-1 yds) Rush: J.Hurts kneels to DAL 34 for -1 yards. [spike_kneel]
+- Q4 7:27 (-5 yds) Penalty: (No Huddle, Shotgun) PENALTY on PHI, Delay of Game, 5 yards, enforced at 50 - No Play. [nullified]
+
+### 401772717 CHI @ WSH (TOΔ max 0, YdsΔ max 9, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| CHI | 386 | 381 | -5 | 0 | 0 | +0 | 84 | 84 | +0 |
+| WSH | 329 | 320 | -9 | 3 | 3 | +0 | 40 | 40 | +0 |
+
+**CHI Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 15:00 (0 yds) Blocked Field Goal: J.Moody 48 yard field goal is BLOCKED (D.Payne), Center-S.Daly, Holder-T.Taylor, recovered by CHI-J.Moody at WAS 37.
+
+- Excluded non-zero-yard plays (up to 15 shown):
+- Q1 10:41 (47 yds) Field Goal Good: J.Moody 47 yard field goal is GOOD, Center-S.Daly, Holder-T.Taylor. [special_teams]
+- Q1 15:00 (26 yds) Kickoff: M.Gay kicks 61 yards from WAS 35 to CHI 4. D.Duvernay to CHI 30 for 26 yards (A.Hamilton). [special_teams]
+- Q1 2:27 (48 yds) Field Goal Good: J.Moody 48 yard field goal is GOOD, Center-S.Daly, Holder-T.Taylor. [special_teams]
+- Q1 3:39 (11 yds) Pass Reception: (Shotgun) C.Williams pass short right to C.Loveland to WAS 21 for 11 yards (F.Luvu; Q.Martin).PENALTY on CHI-C.Loveland, Offensive Pass Interference, 10 yards, enforced at WAS 32 - No Play. [nullified]
+- Q2 9:28 (23 yds) Kickoff: M.Gay kicks 62 yards from WAS 35 to CHI 3. D.Duvernay to CHI 26 for 23 yards (M.Sainristil; P.Butler). [special_teams]
+- Q3 11:48 (1 yds) Pass Reception: (Shotgun) C.Williams pass short right to K.Monangai to CHI 16 for 1 yard (Q.Martin; F.Luvu).PENALTY on WAS-M.Sainristil, Illegal Contact, 5 yards, enforced at CHI 15 - No Play. [nullified]
+- Q3 11:59 (2 yds) Kickoff: M.Gay kicks 62 yards from WAS 35 to CHI 3. D.Duvernay to CHI 27 for 24 yards (P.Butler).PENALTY on CHI-D.Robinson, Illegal Block Above the Waist, 10 yards, enforced at CHI 25. [special_teams]
+- Q3 2:56 (18 yds) Kickoff: M.Gay kicks 55 yards from WAS 40 to CHI 5. D.Duvernay to CHI 23 for 18 yards (J.Magee; C.Yankoff). [special_teams]
+- Q3 8:05 (41 yds) Field Goal Good: J.Moody 41 yard field goal is GOOD, Center-S.Daly, Holder-T.Taylor. [special_teams]
+- Q3 8:58 (-5 yds) Pass Reception: (Shotgun) C.Williams pass short left to R.Odunze for 11 yards, TOUCHDOWN NULLIFIED by Penalty.PENALTY on CHI-T.Benedet, Illegal Formation, 5 yards, enforced at WAS 11 - No Play. [nullified]
+- Q4 0:00 (38 yds) Field Goal Good: J.Moody 38 yard field goal is GOOD, Center-S.Daly, Holder-T.Taylor. [special_teams]
+- Q4 0:31 (-2 yds) Rush: C.Williams kneels to WAS 20 for -2 yards. [spike_kneel]
+- Q4 11:27 (26 yds) Kickoff: M.Gay kicks 62 yards from WAS 35 to CHI 3. D.Duvernay to CHI 34 for 31 yards (L.McCaffrey; A.Hamilton).PENALTY on WAS-C.Yankoff, Illegal Formation, 5 yards, enforced at CHI 34. [special_teams]
+- Q4 6:12 (9 yds) Punt: T.Taylor punts 53 yards to WAS 30, Center-S.Daly. J.Lane to WAS 39 for 9 yards (D.Jackson; J.Owens). [special_teams]
+- Q4 7:57 (11 yds) Pass Reception: C.Williams pass short right to C.Kmet pushed ob at CHI 20 for 11 yards (M.Sainristil).PENALTY on CHI-D.Moore, Offensive Offside, 4 yards, enforced at CHI 9 - No Play. [nullified]
+
+**WSH Reconciliation Clues**
+
+- Windelta counted turnovers (3):
+- Q1 2:13 (0 yds) Fumble Recovery (Opponent): (No Huddle, Shotgun) J.Croskey-Merritt left tackle to WAS 33 for -2 yards (M.Sweat). FUMBLES (M.Sweat), RECOVERED by CHI-K.Gordon at WAS 35. [fumble]
+- Q1 6:17 (32 yds) Pass Interception Return: (No Huddle, Shotgun) J.Daniels pass deep left intended for D.Samuel INTERCEPTED by J.Brisker at CHI 2. J.Brisker to CHI 34 for 32 yards (J.Daniels). [interception]
+- Q4 3:10 (0 yds) Fumble Recovery (Opponent): (Shotgun) T.Scott reported in as eligible.  J.Daniels FUMBLES (Aborted) at CHI 45, RECOVERED by CHI-N.Wright at CHI 44. [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q2 10:14 (0 yds) Fumble Recovery (Own): (No Huddle, Shotgun) J.Daniels sacked at CHI 29 for -7 yards. FUMBLES, and recovers at CHI 25. J.Daniels to CHI 22 for 3 yards (Ch.Williams).
+
+- Excluded non-zero-yard plays (up to 12 shown):
+- Q1 10:09 (-5 yds) Penalty: (No Huddle, Shotgun) PENALTY on WAS-L.Tunsil, False Start, 5 yards, enforced at WAS 38 - No Play. [nullified]
+- Q1 2:19 (5 yds) Pass Incompletion: (Shotgun) J.Daniels pass incomplete deep left to C.Moore (K.Byard).PENALTY on CHI-N.Wright, Illegal Contact, 5 yards, enforced at WAS 30 - No Play. [nullified]
+- Q1 2:27 (28 yds) Kickoff: J.Moody kicks 63 yards from CHI 35 to WAS 2. L.McCaffrey to WAS 30 for 28 yards (D.Hardy; E.Hicks). [special_teams]
+- Q1 8:41 (15 yds) Pass Incompletion: (No Huddle, Shotgun) J.Daniels pass incomplete short middle to D.Samuel.PENALTY on CHI-M.Sweat, Roughing the Passer, 15 yards, enforced at WAS 48 - No Play. [nullified]
+- Q2 0:19 (-1 yds) Rush: J.Daniels kneels to WAS 8 for -1 yards. [spike_kneel]
+- Q2 11:46 (15 yds) Pass Incompletion: (No Huddle, Shotgun) J.Daniels pass incomplete short right to Z.Ertz.PENALTY on CHI-N.Wright, Face Mask, 15 yards, enforced at CHI 48 - No Play. [nullified]
+- Q2 1:14 (50 yds) Field Goal Missed: M.Gay 50 yard field goal is No Good, Hit Left Upright, Center-T.Ott, Holder-T.Way. [special_teams]
+- Q3 11:59 (53 yds) Field Goal Good: M.Gay 53 yard field goal is GOOD, Center-T.Ott, Holder-T.Way. [special_teams]
+- Q3 15:00 (36 yds) Kickoff: J.Moody kicks 61 yards from CHI 35 to WAS 4. L.McCaffrey to WAS 40 for 36 yards (J.Owens; D.Hardy). [special_teams]
+- Q3 8:05 (14 yds) Kickoff: J.Moody kicks 60 yards from CHI 35 to WAS 5. L.McCaffrey pushed ob at WAS 45 for 40 yards (J.Owens).PENALTY on WAS-J.Magee, Illegal Blindside Block, 15 yards, enforced at WAS 31. [special_teams]
+- Q4 10:26 (37 yds) Kickoff: J.Moody kicks 62 yards from CHI 35 to WAS 3. L.McCaffrey to WAS 40 for 37 yards (R.Johnson). [special_teams]
+- Q4 8:52 (15 yds) Pass Incompletion: (No Huddle, Shotgun) J.Daniels pass incomplete short middle to Z.Ertz (T.Edwards).PENALTY on CHI-J.Brisker, Roughing the Passer, 15 yards, enforced at WAS 46 - No Play. [nullified]
+
+### 401772891 GB @ DET (TOΔ max 0, YdsΔ max 9, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| GB | 359 | 355 | -4 | 0 | 0 | +0 | 20 | 20 | +0 |
+| DET | 352 | 343 | -9 | 0 | 0 | +0 | 22 | 22 | +0 |
+
+**GB Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q2 6:00 (0 yds) Fumble Recovery (Own): (Shotgun) J.Love to GB 42 for -4 yards. FUMBLES, and recovers at GB 43. J.Love pass incomplete short left to M.Heath [T.Williams].
+- Q3 3:23 (4 yds) Fumble Recovery (Own): (Shotgun) J.Love pass short left to R.Doubs to DET 5 for 5 yards (D.Reed). FUMBLES (D.Reed), touched at DET 3, recovered by GB-R.Walker at DET 6.
+
+- Excluded non-zero-yard plays (up to 12 shown):
+- Q1 0:25 (5 yds) Penalty: (Shotgun) J.Love pass incomplete deep right to R.Doubs (D.Reed).PENALTY on DET-D.Reader, Defensive Offside, 5 yards, enforced at DET 34 - No Play. [nullified]
+- Q1 15:00 (6 yds) Kickoff: J.Bates kicks 54 yards from DET 35 to GB 11. B.Melton to GB 27 for 16 yards (J.Campbell).PENALTY on GB-K.Oladapo, Offensive Holding, 10 yards, enforced at GB 27. [special_teams]
+- Q1 6:47 (21 yds) Punt: D.Whelan punts 62 yards to DET 16, Center-M.Orzech. T.Kennedy to DET 37 for 21 yards (E.Williams; K.Welch). [special_teams]
+- Q1 9:12 (45 yds) Field Goal Good:  B.McManus 45 yard field goal is GOOD, Center-M.Orzech, Holder-D.Whelan. [special_teams]
+- Q2 0:16 (-1 yds) Rush: J.Love kneels to GB 25 for -1 yards. [spike_kneel]
+- Q2 0:25 (26 yds) Kickoff: J.Bates kicks 65 yards from DET 35 to GB 0. B.Melton pushed ob at GB 26 for 26 yards (K.Dorsey). [special_teams]
+- Q2 3:01 (4 yds) Penalty: (Shotgun) PENALTY on DET, Defensive Too Many Men on Field, 4 yards, enforced at DET 8 - No Play. [nullified]
+- Q2 7:54 (26 yds) Kickoff: J.Bates kicks 61 yards from DET 35 to GB 4. B.Melton to GB 30 for 26 yards (S.Vaki; T.Nowaske). [special_teams]
+- Q3 2:42 (3 yds) Penalty: (Shotgun) J.Love pass incomplete short left.PENALTY on DET-J.Campbell, Face Mask, 3 yards, enforced at DET 6 - No Play. [nullified]
+- Q3 7:25 (27 yds) Kickoff: J.Bates kicks 64 yards from DET 35 to GB 1. B.Melton pushed ob at GB 28 for 27 yards (S.Vaki). [special_teams]
+- Q4 0:32 (-1 yds) Rush: J.Love kneels to DET 31 for -1 yards. [spike_kneel]
+- Q4 1:09 (-1 yds) Rush: J.Love kneels to DET 30 for -1 yards. [spike_kneel]
+
+**DET Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q3 1:20 (-9 yds) Fumble Recovery (Own): D.Montgomery FUMBLES (Aborted) at DET 31, recovered by DET-J.Goff at DET 32.
+
+- Excluded non-zero-yard plays (up to 9 shown):
+- Q1 3:36 (2 yds) Punt: J.Fox punts 39 yards to GB 21, Center-H.Hatten. R.Doubs to GB 23 for 2 yards (K.Dorsey; D.Thomas). [special_teams]
+- Q1 5:16 (-5 yds) Penalty: D.Montgomery up the middle to GB 48 for 1 yard (C.Wooden).PENALTY on DET, Illegal Formation, 5 yards, enforced at GB 49 - No Play. [nullified]
+- Q2 2:00 (5 yds) Penalty: (Shotgun) PENALTY on GB-R.Gary, Neutral Zone Infraction, 5 yards, enforced at DET 35 - No Play. [nullified]
+- Q2 9:47 (-5 yds) Penalty: D.Skipper reported in as eligible.  D.Montgomery left guard to GB 8 for 1 yard (E.Williams; K.Enagbare).PENALTY on DET, Illegal Formation, 5 yards, enforced at GB 9 - No Play. [nullified]
+- Q3 10:31 (28 yds) Kickoff: B.McManus kicks 64 yards from GB 35 to DET 1. T.Kennedy to DET 29 for 28 yards (Z.Anderson). [special_teams]
+- Q3 15:00 (32 yds) Kickoff: B.McManus kicks 63 yards from GB 35 to DET 2. T.Kennedy to DET 34 for 32 yards (X.McKinney; C.Brooks). [special_teams]
+- Q3 1:44 (21 yds) Kickoff: B.McManus kicks 60 yards from GB 35 to DET 5. T.Kennedy to DET 26 for 21 yards (K.Oladapo). [special_teams]
+- Q4 2:59 (31 yds) Field Goal Good: J.Bates 31 yard field goal is GOOD, Center-H.Hatten, Holder-J.Fox. [special_teams]
+- Q4 7:15 (5 yds) Penalty: (Shotgun) J.Goff sacked at DET 25 for -8 yards (K.Enagbare).PENALTY on GB-K.Nixon, Illegal Contact, 5 yards, enforced at DET 33 - No Play. [nullified]
+
+### 401772907 TEN @ SF (TOΔ max 0, YdsΔ max 9, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| TEN | 306 | 306 | +0 | 0 | 0 | +0 | 57 | 57 | +0 |
+| SF | 430 | 421 | -9 | 1 | 1 | +0 | 30 | 30 | +0 |
+
+**TEN Reconciliation Clues**
+
+- Excluded non-zero-yard plays (up to 12 shown):
+- Q1 15:00 (27 yds) Kickoff: E.Pineiro kicks 62 yards from SF 35 to TEN 3. C.Dike to TEN 30 for 27 yards (C.Lucas; R.Beal). SF-C.Lucas was injured during the play. [special_teams]
+- Q1 1:22 (25 yds) Field Goal Good: J.Slye 25 yard field goal is GOOD, Center-M.Cox, Holder-J.Hekker. [special_teams]
+- Q1 7:48 (19 yds) Kickoff: E.Pineiro kicks 54 yards from SF 35 to TEN 11. C.Dike ran ob at TEN 30 for 19 yards (G.Wallow). ** Injury Update: SF-C.Lucas has returned to the game. [special_teams]
+- Q2 0:02 (50 yds) Field Goal Missed: J.Slye 50 yard field goal is No Good, Wide Right, Center-M.Cox, Holder-J.Hekker. [special_teams]
+- Q2 0:44 (5 yds) Penalty: (Shotgun) C.Ward pass short right to C.Okonkwo ran ob at TEN 48 for 6 yards [D.Winters].PENALTY on SF-U.Stout, Defensive Holding, 5 yards, enforced at TEN 42 - No Play. [nullified]
+- Q2 0:56 (25 yds) Kickoff: E.Pineiro kicks 58 yards from SF 35 to TEN 7, out of bounds.PENALTY on SF-E.Pineiro, Kickoff Out of Bounds, placed at TEN 40. [special_teams]
+- Q2 13:03 (21 yds) Kickoff: E.Pineiro kicks 54 yards from SF 35 to TEN 11. C.Dike ran ob at TEN 32 for 21 yards (J.Brown; G.Wallow). [special_teams]
+- Q2 8:15 (-10 yds) Penalty: T.Spears left tackle to SF 23 for 1 yard (K.Davis).PENALTY on TEN-O.Udoh, Offensive Holding, 10 yards, enforced at SF 24 - No Play.Penalty on TEN-G.Helm, Offensive Offside, declined. [nullified]
+- Q2 9:42 (-5 yds) Penalty: C.Ward pass short right to T.Pollard pushed ob at SF 36 for 10 yards (D.Winters).PENALTY on TEN-G.Helm, Offensive Offside, 5 yards, enforced at SF 46 - No Play. [nullified]
+- Q3 0:23 (18 yds) Punt: J.Hekker punts 44 yards to SF 26, Center-M.Cox. S.Moore to SF 44 for 18 yards (J.Bachie; J.Hekker). [special_teams]
+- Q3 1:33 (-11 yds) Penalty: T.Pollard right end pushed ob at TEN 46 for 5 yards (M.Mustapha).PENALTY on TEN-J.Latham, Illegal Block Above the Waist, 11 yards, enforced at TEN 41 - No Play. [nullified]
+- Q4 9:28 (23 yds) Kickoff: E.Pineiro kicks 52 yards from SF 35 to TEN 13. C.Dike to TEN 36 for 23 yards (R.Beal). [special_teams]
+
+**SF Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q4 14:54 (9 yds) Sack Opp Fumble Recovery: (Shotgun) B.Purdy sacked at SF 35 for -9 yards (J.Simmons). FUMBLES (J.Simmons), RECOVERED by TEN-K.Elam at TEN 47. K.Elam to SF 44 for 9 yards (C.McCaffrey).The Replay Official reviewed the fumble ruling, and the play was Upheld. The ruling on the field stands. [fumble]
+
+- Excluded non-zero-yard plays (up to 13 shown):
+- Q1 1:22 (22 yds) Kickoff: J.Slye kicks 57 yards from TEN 35 to SF 8. B.Robinson to SF 30 for 22 yards (J.Chestnut; D.Martin-Robinson). [special_teams]
+- Q2 0:56 (33 yds) Field Goal Good: E.Pineiro 33 yard field goal is GOOD, Center-J.Weeks, Holder-T.Morstead. [special_teams]
+- Q2 13:47 (7 yds) Penalty: B.Purdy pass incomplete short right to R.Pearsall.PENALTY on TEN-M.Harris, Defensive Pass Interference, 7 yards, enforced at TEN 8 - No Play. [nullified]
+- Q2 15:00 (-5 yds) Penalty: PENALTY on SF-R.Pearsall, False Start, 5 yards, enforced at TEN 33 - No Play. [nullified]
+- Q2 5:33 (9 yds) Penalty: B.Purdy pass incomplete short middle to R.Pearsall.PENALTY on TEN-D.Baker, Defensive Pass Interference, 9 yards, enforced at SF 49 - No Play. [nullified]
+- Q3 15:00 (31 yds) Kickoff: J.Slye kicks 63 yards from TEN 35 to SF 2. B.Robinson to SF 33 for 31 yards (J.Bachie; K.Mullings). [special_teams]
+- Q4 10:41 (-10 yds) Penalty: (Shotgun) B.Purdy pass short left to J.Jennings to TEN 8 for 10 yards (D.Baker).PENALTY on SF-D.Puni, Offensive Holding, 10 yards, enforced at TEN 18 - No Play. [nullified]
+- Q4 11:22 (51 yds) Penalty: E.Pineiro 51 yard field goal is No Good, Wide Right, Center-J.Weeks, Holder-T.Morstead.PENALTY on TEN-J.Simmons, Unnecessary Roughness, 15 yards, enforced at TEN 33 - No Play. [nullified]
+- Q4 12:03 (-5 yds) Penalty: (Shotgun) PENALTY on SF-S.Burford, False Start, 5 yards, enforced at TEN 40 - No Play. [nullified]
+- Q4 12:45 (-5 yds) Penalty: PENALTY on SF, Delay of Game, 5 yards, enforced at TEN 39 - No Play. [nullified]
+- Q4 14:16 (25 yds) Kickoff: J.Slye kicks 50 yards from TEN 35 to SF 15, out of bounds.PENALTY on TEN-J.Slye, Kickoff Out of Bounds, placed at SF 40. [special_teams]
+- Q4 1:10 (40 yds) Field Goal Good: E.Pineiro 40 yard field goal is GOOD, Center-J.Weeks, Holder-T.Morstead. [special_teams]
+- Q4 9:28 (37 yds) Field Goal Good: E.Pineiro 37 yard field goal is GOOD, Center-J.Weeks, Holder-T.Morstead. [special_teams]
+
+### 401772927 PIT @ LAC (TOΔ max 0, YdsΔ max 9, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| PIT | 221 | 230 | +9 | 3 | 3 | +0 | 29 | 29 | +0 |
+| LAC | 314 | 314 | +0 | 0 | 0 | +0 | 55 | 55 | +0 |
+
+**PIT Reconciliation Clues**
+
+- Windelta counted turnovers (3):
+- Q2 2:16 (10 yds) Pass Interception Return: (Shotgun) A.Rodgers pass deep middle intended for D.Metcalf INTERCEPTED by R.Mickens at PIT 48. R.Mickens to PIT 38 for 10 yards (K.Gainwell). [interception]
+- Q4 6:35 (0 yds) Muffed Punt Recovery (Opponent): J.Scott punts 31 yards to PIT 17, Center-J.Harris. K.Williams MUFFS catch, RECOVERED by LAC-D.Phillips at PIT 21. [muffed_kick]
+- Q4 8:48 (21 yds) Pass Interception Return: (Shotgun) A.Rodgers pass short left intended for C.Austin INTERCEPTED by D.Jackson at LAC 40. D.Jackson ran ob at PIT 39 for 21 yards (S.Anderson). [interception]
+
+- Excluded non-zero-yard plays (up to 10 shown):
+- Q1 10:25 (59 yds) Field Goal Good: C.Boswell 59 yard field goal is GOOD, Center-C.Kuntz, Holder-C.Waitman. [special_teams]
+- Q1 15:00 (25 yds) Kickoff: C.Dicker kicks 55 yards from LAC 35 to PIT 10, out of bounds.PENALTY on LAC-C.Dicker, Kickoff Out of Bounds, placed at PIT 40. [special_teams]
+- Q1 15:00 (-5 yds) Penalty: PENALTY on PIT-A.Peat, False Start, 5 yards, enforced at PIT 40 - No Play. [nullified]
+- Q2 13:14 (45 yds) Field Goal Missed: C.Boswell 45 yard field goal is No Good, Wide Right, Center-C.Kuntz, Holder-C.Waitman. [special_teams]
+- Q2 14:16 (-9 yds) Penalty: K.Johnson right guard to LAC 13 for 7 yards (D.Henley).PENALTY on PIT-T.Fautanu, Offensive Holding, 9 yards, enforced at LAC 20 - No Play. [nullified]
+- Q2 7:32 (25 yds) Kickoff: C.Dicker kicks 62 yards from LAC 35 to PIT 3. K.Gainwell pushed ob at PIT 28 for 25 yards (D.Phillips). [special_teams]
+- Q3 6:07 (-4 yds) Kickoff: C.Dicker kicks 60 yards from LAC 35 to PIT 5. K.Williams to PIT 34 for 29 yards (D.Phillips).PENALTY on PIT-T.Sermon, Offensive Holding, 10 yards, enforced at PIT 28. [special_teams]
+- Q3 8:48 (-5 yds) Punt: C.Waitman punts 45 yards to LAC 28, Center-C.Kuntz. D.Davis to LAC 36 for 8 yards (R.Wilson).PENALTY on LAC-M.Wax, Illegal Block Above the Waist, 10 yards, enforced at LAC 33. [special_teams]
+- Q4 8:53 (5 yds) Penalty: (No Huddle, Shotgun) A.Rodgers pass incomplete short right to K.Gainwell.PENALTY on LAC-C.Hart, Defensive Holding, 5 yards, enforced at PIT 42 - No Play. [nullified]
+- Q4 9:26 (36 yds) Kickoff: C.Dicker kicks 64 yards from LAC 35 to PIT 1. K.Gainwell MUFFS catch, and recovers at PIT 1. K.Gainwell to PIT 37 for 36 yards (D.Phillips). [special_teams]
+
+**LAC Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 2:57 (14 yds) Kickoff: C.Boswell kicks onside 14 yards from PIT 35 to PIT 49. K.Allen (didn't try to advance) to PIT 49 for no gain.
+
+- Excluded non-zero-yard plays (up to 16 shown):
+- Q1 10:25 (26 yds) Kickoff: C.Boswell kicks 60 yards from PIT 35 to LAC 5. T.Williams to LAC 31 for 26 yards (B.Skowronek). [special_teams]
+- Q1 3:22 (11 yds) Punt: J.Scott punts 55 yards to PIT 10, Center-J.Harris. K.Williams to PIT 21 for 11 yards (K.Williamson). [special_teams]
+- Q1 3:42 (-5 yds) Penalty: (Shotgun) PENALTY on LAC-A.Deculus, False Start, 5 yards, enforced at LAC 40 - No Play. [nullified]
+- Q1 5:09 (25 yds) Kickoff: C.Boswell kicks 71 yards from PIT 20 to LAC 9. D.Davis to LAC 34 for 25 yards (J.Thornhill). [special_teams]
+- Q2 4:30 (-10 yds) Penalty: (Shotgun) J.Herbert pass incomplete short right to O.Gadsden [A.Highsmith].PENALTY on LAC-B.Bozeman, Offensive Holding, 10 yards, enforced at LAC 33 - No Play. [nullified]
+- Q2 7:32 (32 yds) Field Goal Good: C.Dicker 32 yard field goal is GOOD, Center-J.Harris, Holder-J.Scott. [special_teams]
+- Q3 0:49 (55 yds) Field Goal Missed: C.Dicker 55 yard field goal is No Good, Hit Left Upright, Center-J.Harris, Holder-J.Scott. [special_teams]
+- Q3 14:54 (-5 yds) Penalty: (Shotgun) PENALTY on LAC-T.Fisk, False Start, 5 yards, enforced at LAC 33 - No Play. [nullified]
+- Q3 14:54 (5 yds) Penalty: (Shotgun) J.Herbert pass short middle to J.Herbert to LAC 24 for -4 yards (A.Highsmith).PENALTY on PIT-A.Highsmith, Defensive Offside, 5 yards, enforced at LAC 28 - No Play. [nullified]
+- Q3 15:00 (25 yds) Kickoff: C.Boswell kicks 57 yards from PIT 35 to LAC 8. T.Williams to LAC 33 for 25 yards (Co.Heyward; C.Bruener). [special_teams]
+- Q3 3:19 (-10 yds) Penalty: J.Patterson left guard to PIT 43 for 2 yards (Y.Black).PENALTY on LAC-M.Becton, Offensive Holding, 10 yards, enforced at PIT 45 - No Play. [nullified]
+- Q3 6:07 (59 yds) Field Goal Good: C.Dicker 59 yard field goal is GOOD, Center-J.Harris, Holder-J.Scott. [special_teams]
+- Q4 0:37 (-1 yds) Rush: J.Herbert kneels to PIT 39 for -1 yards. [spike_kneel]
+- Q4 2:57 (14 yds) Kickoff: C.Boswell kicks onside 14 yards from PIT 35 to PIT 49. K.Allen (didn't try to advance) to PIT 49 for no gain. [special_teams]
+- Q4 4:54 (42 yds) Field Goal Good: C.Dicker 42 yard field goal is GOOD, Center-J.Harris, Holder-J.Scott. [special_teams]
+- Q4 7:11 (-10 yds) Penalty: (Shotgun) K.Vidal left end to PIT 25 for 10 yards (Ca.Heyward).PENALTY on LAC-Z.Johnson, Offensive Holding, 10 yards, enforced at PIT 35 - No Play. [nullified]
+
+### 401772714 KC @ LAC (TOΔ max 0, YdsΔ max 8, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| KC | 347 | 347 | +0 | 0 | 0 | +0 | 71 | 71 | +0 |
+| LAC | 394 | 386 | -8 | 0 | 0 | +0 | 49 | 49 | +0 |
+
+**KC Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q2 8:52 (0 yds) Fumble Recovery (Own): (Shotgun) C.Humphrey to LAC 32 for no gain. FUMBLES, recovered by KC-P.Mahomes at LAC 36. P.Mahomes pass short right to M.Brown pushed ob at LAC 32 for no gain (E.Molden) [D.James].
+
+- Excluded non-zero-yard plays (up to 14 shown):
+- Q1 15:00 (4 yds) Kickoff: C.Dicker kicks 59 yards from LAC 35 to KC 6. T.Thornton pushed ob at KC 48 for 42 yards (B.St-Juste).PENALTY on KC-J.Williams, Offensive Holding, 10 yards, enforced at KC 34. [special_teams]
+- Q1 7:19 (-5 yds) Penalty: (Shotgun) PENALTY on KC-J.Simmons, False Start, 5 yards, enforced at LAC 43 - No Play. [nullified]
+- Q2 0:00 (59 yds) Field Goal Good: H.Butker 59 yard field goal is GOOD, Center-J.Winchester, Holder-M.Araiza. [special_teams]
+- Q2 0:17 (-5 yds) Penalty: (Shotgun) PENALTY on KC-J.Taylor, False Start, 5 yards, enforced at LAC 33 - No Play. [nullified]
+- Q2 0:17 (-5 yds) Penalty: (Shotgun) PENALTY on KC-J.Simmons, False Start, 5 yards, enforced at LAC 38 - No Play. [nullified]
+- Q2 0:45 (26 yds) Kickoff: C.Dicker kicks 62 yards from LAC 35 to KC 3. B.Smith to KC 29 for 26 yards (C.Murphy). [special_teams]
+- Q2 13:47 (34 yds) Kickoff: C.Dicker kicks 65 yards from LAC 35 to KC 0. N.Remigio to KC 34 for 34 yards (D.Phillips; B.St-Juste). [special_teams]
+- Q2 4:50 (35 yds) Field Goal Good: H.Butker 35 yard field goal is GOOD, Center-J.Winchester, Holder-M.Araiza. [special_teams]
+- Q2 8:13 (-10 yds) Penalty: (Shotgun) P.Mahomes scrambles right end to LAC 22 for 4 yards (T.Dye).PENALTY on KC-J.Taylor, Offensive Holding, 10 yards, enforced at LAC 26 - No Play. [nullified]
+- Q3 0:32 (37 yds) Kickoff: C.Dicker kicks 67 yards from LAC 35 to KC -2. B.Smith to KC 35 for 37 yards (D.Phillips; J.Taylor). [special_teams]
+- Q3 10:34 (-5 yds) Penalty: (Shotgun) PENALTY on KC-J.Taylor, False Start, 5 yards, enforced at LAC 41 - No Play. [nullified]
+- Q3 13:29 (-10 yds) Penalty: (Shotgun) I.Pacheco right guard to KC 30 for -1 yards (D.Henley).PENALTY on KC-J.Taylor, Offensive Holding, 10 yards, enforced at KC 31 - No Play. [nullified]
+- Q4 2:34 (27 yds) Field Goal Good: H.Butker 27 yard field goal is GOOD, Center-J.Winchester, Holder-M.Araiza. [special_teams]
+- Q4 5:02 (22 yds) Kickoff: C.Dicker kicks 59 yards from LAC 35 to KC 6. N.Remigio to KC 28 for 22 yards (K.Williamson; C.Murphy). [special_teams]
+
+**LAC Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q1 3:27 (13 yds) Pass Reception: (Shotgun) J.Herbert pass short right to T.Conklin to KC 46 for 33 yards (C.Conner). FUMBLES (C.Conner), touched at KC 46, ball out of bounds at KC 45.PENALTY on LAC-L.McConkey, Illegal Bat, 10 yards, enforced at KC 46.
+
+- Excluded non-zero-yard plays (up to 15 shown):
+- Q1 0:12 (-10 yds) Penalty: (Shotgun) J.Herbert scrambles right end pushed ob at KC 3 for 22 yards (N.Bolton).PENALTY on LAC-J.Salyer, Offensive Holding, 10 yards, enforced at KC 25 - No Play. [nullified]
+- Q1 0:42 (-10 yds) Penalty: O.Hampton left tackle to KC 9 for 6 yards (D.Nnadi; B.Cook).PENALTY on LAC-L.McConkey, Offensive Holding, 10 yards, enforced at KC 15 - No Play. [nullified]
+- Q1 4:40 (8 yds) Punt: J.Scott punts 56 yards to KC 34, Center-R.Lovato. N.Remigio to KC 42 for 8 yards (T.Dye; D.Phillips). [special_teams]
+- Q1 9:23 (5 yds) Penalty: (Shotgun) J.Herbert pass incomplete short right to T.Conklin.PENALTY on KC-G.Karlaftis, Defensive Offside, 5 yards, enforced at KC 10 - No Play. [nullified]
+- Q2 0:45 (36 yds) Field Goal Good: C.Dicker 36 yard field goal is GOOD, Center-R.Lovato, Holder-J.Scott. [special_teams]
+- Q2 0:59 (-5 yds) Penalty: (Shotgun) PENALTY on LAC, Delay of Game, 5 yards, enforced at KC 21 - No Play. [nullified]
+- Q2 13:47 (39 yds) Field Goal Good: C.Dicker 39 yard field goal is GOOD, Center-R.Lovato, Holder-J.Scott.Penalty on KC-J.Williams, Defensive Offside, declined. [special_teams]
+- Q3 14:08 (-1 yds) Punt: J.Scott punts 50 yards to KC 21, Center-R.Lovato. N.Remigio to KC 20 for -1 yards (J.Taylor). [special_teams]
+- Q3 15:00 (22 yds) Kickoff: H.Butker kicks 59 yards from KC 35 to LAC 6. H.Haskins to LAC 28 for 22 yards (C.McDonald; C.Conner). [special_teams]
+- Q3 5:18 (-5 yds) Penalty: PENALTY on LAC-M.Becton, False Start, 5 yards, enforced at LAC 39 - No Play. [nullified]
+- Q3 8:05 (25 yds) Kickoff: H.Butker kicks 64 yards from KC 35 to LAC 1. H.Haskins to LAC 26 for 25 yards (J.Cochrane; N.Williams). [special_teams]
+- Q4 0:38 (-1 yds) Rush:  J.Herbert kneels to LAC 49 for -1 yards. [spike_kneel]
+- Q4 12:04 (20 yds) Kickoff: H.Butker kicks 59 yards from KC 35 to LAC 6. H.Haskins to LAC 26 for 20 yards (N.Williams). [special_teams]
+- Q4 1:18 (-2 yds) Rush: J.Herbert kneels to 50 for -2 yards. [spike_kneel]
+- Q4 2:00 (-1 yds) Rush: J.Herbert kneels to KC 48 for -1 yards. [spike_kneel]
+
+### 401772874 NO @ LAR (TOΔ max 0, YdsΔ max 8, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| NO | 224 | 225 | +1 | 2 | 2 | +0 | 33 | 33 | +0 |
+| LAR | 438 | 430 | -8 | 0 | 0 | +0 | 32 | 32 | +0 |
+
+**NO Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q3 4:11 (0 yds) Fumble Recovery (Opponent): (No Huddle, Shotgun) A.Kamara up the middle to LA 47 for 3 yards (K.Curl, N.Landman). FUMBLES (N.Landman), RECOVERED by LA-K.Kinchens at LA 48. [fumble]
+- Q4 5:40 (7 yds) Pass Interception Return: (Shotgun) T.Shough pass short left intended for R.Shaheed INTERCEPTED by E.Forbes at LA 13. E.Forbes to LA 20 for 7 yards (R.Shaheed). [interception]
+
+- Excluded non-zero-yard plays (up to 5 shown):
+- Q1 15:00 (29 yds) Kickoff: J.Karty kicks 64 yards from LA 35 to NO 1. R.Shaheed to NO 30 for 29 yards (K.Kinchens). [special_teams]
+- Q1 5:04 (11 yds) Punt: K.Kroeger punts 40 yards to LA 31, Center-Z.Wood. X.Smith to LA 42 for 11 yards (Z.Wood; I.Yiadom). [special_teams]
+- Q2 0:18 (12 yds) Sack: (Shotgun) T.Shough sacked at LA 32 for -9 yards (B.Young).PENALTY on LA-B.Young, Roughing the Passer, 12 yards, enforced at LA 23 - No Play. [nullified]
+- Q2 7:50 (39 yds) Field Goal Good: B.Grupe 39 yard field goal is GOOD, Center-Z.Wood, Holder-K.Kroeger. [special_teams]
+- Q2 8:09 (-5 yds) Penalty: (Run formation) ** Injury Update: NO-C.Ruiz has returned to the game.  PENALTY on NO-K.Banks, False Start, 5 yards, enforced at LA 16 - No Play. [nullified]
+
+**LAR Reconciliation Clues**
+
+- Excluded non-zero-yard plays (up to 12 shown):
+- Q1 6:18 (-5 yds) Penalty: PENALTY on LA-K.Dotson, False Start, 5 yards, enforced at NO 15 - No Play. [nullified]
+- Q2 0:07 (-1 yds) Rush: M.Stafford kneels to LA 34 for -1 yards. [spike_kneel]
+- Q2 0:58 (39 yds) Field Goal Missed: J.Karty 39 yard field goal is No Good, Wide Right, Center-A.Ward, Holder-E.Evans. [special_teams]
+- Q2 11:36 (3 yds) Penalty: M.Stafford pass incomplete short left to D.Allen.PENALTY on NO-A.Taylor, Defensive Holding, 3 yards, enforced at NO 6 - No Play. [nullified]
+- Q2 14:14 (5 yds) Penalty: (Shotgun) M.Stafford pass incomplete short right to P.Nacua.PENALTY on NO-K.McKinstry, Defensive Pass Interference, 5 yards, enforced at NO 35 - No Play. [nullified]
+- Q2 1:16 (-22 yds) Pass Reception: M.Stafford pass short left to D.Allen for 14 yards, TOUCHDOWN NULLIFIED by Penalty.PENALTY on LA-D.Allen, Face Mask, 15 yards, enforced at NO 6. [nullified]
+- Q2 2:01 (5 yds) Penalty: (Shotgun) PENALTY on NO-C.Young, Neutral Zone Infraction, 5 yards, enforced at NO 28 - No Play. [nullified]
+- Q4 0:38 (-1 yds) Rush: M.Stafford kneels to NO 44 for -1 yards. [spike_kneel]
+- Q4 1:18 (-1 yds) Rush: M.Stafford kneels to NO 43 for -1 yards. [spike_kneel]
+- Q4 2:00 (-1 yds) Rush: M.Stafford kneels to NO 42 for -1 yards. [spike_kneel]
+- Q4 3:24 (15 yds) Penalty: K.Williams left end to LA 28 for -4 yards (C.Granderson).PENALTY on NO-C.Granderson, Face Mask, 15 yards, enforced at LA 32 - No Play. [nullified]
+- Q4 7:22 (9 yds) Punt: E.Evans punts 50 yards to NO 40, Center-A.Ward. R.Shaheed to NO 49 for 9 yards (D.Allen; X.Smith). [special_teams]
+
+### 401772920 KC @ NYG (TOΔ max 0, YdsΔ max 8, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| KC | 306 | 314 | +8 | 0 | 0 | +0 | 85 | 85 | +0 |
+| NYG | 281 | 281 | +0 | 2 | 2 | +0 | 82 | 82 | +0 |
+
+**KC Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q2 14:19 (-8 yds) Fumble Recovery (Own): P.Mahomes pass incomplete short left to I.Pacheco.New York Giants challenged the forward pass ruling, and the play was REVERSED.P.Mahomes sacked at KC 24 for -8 yards. FUMBLES, recovered by KC-I.Pacheco at KC 24.
+- Q2 1:34 (-15 yds) Fumble Recovery (Own): (Shotgun) P.Mahomes sacked at KC 15 for -7 yards (B.Burns). FUMBLES (B.Burns), touched at KC 12, and recovers at KC 7.
+
+- Excluded non-zero-yard plays (up to 18 shown):
+- Q1 3:45 (54 yds) Field Goal Good: H.Butker 54 yard field goal is GOOD, Center-J.Winchester, Holder-M.Araiza. [special_teams]
+- Q1 6:37 (20 yds) Pass Reception: (Shotgun) P.Mahomes pass short middle to N.Gray to NYG 35 for 20 yards (J.Holland).PENALTY on KC-J.Simmons, Offensive Holding, 10 yards, enforced at KC 45 - No Play. [nullified]
+- Q2 0:00 (28 yds) Field Goal Good: H.Butker 28 yard field goal is GOOD, Center-J.Winchester, Holder-M.Araiza. [special_teams]
+- Q2 0:23 (52 yds) Pass Incompletion: (Shotgun) P.Mahomes pass incomplete deep middle to M.Brown.PENALTY on NYG-A.Phillips, Defensive Pass Interference, 52 yards, enforced at KC 37 - No Play. [nullified]
+- Q2 0:27 (5 yds) Pass Incompletion: (Shotgun) P.Mahomes pass incomplete short middle to J.Smith-Schuster.PENALTY on NYG-A.Phillips, Illegal Contact, 5 yards, enforced at KC 32 - No Play. [nullified]
+- Q2 11:00 (-5 yds) Rush: (Shotgun) P.Mahomes scrambles up the middle to NYG 21 for 14 yards (T.Nubin).PENALTY on KC-J.Taylor, Illegal Formation, 5 yards, enforced at NYG 35 - No Play. [nullified]
+- Q2 14:04 (11 yds) Pass Reception: (Shotgun) P.Mahomes pass short middle to N.Gray to KC 35 for 11 yards (A.Phillips).PENALTY on NYG-A.Phillips, Illegal Contact, 5 yards, enforced at KC 24 - No Play. [nullified]
+- Q2 1:21 (-15 yds) Punt: M.Araiza punts 43 yards to NYG 44, Center-J.Winchester, downed by KC-J.Williams.PENALTY on KC-J.Williams, Kick Catch Interference, 15 yards, enforced at NYG 44. [special_teams]
+- Q2 1:44 (22 yds) Kickoff: J.Gillan kicks 65 yards from NYG 35 to KC 0. B.Smith to KC 22 for 22 yards (A.Green). [special_teams]
+- Q2 5:28 (40 yds) Field Goal Missed: H.Butker 40 yard field goal is No Good, Wide Right, Center-J.Winchester, Holder-M.Araiza. [special_teams]
+- Q2 9:48 (48 yds) Field Goal Good: H.Butker 48 yard field goal is GOOD, Center-J.Winchester, Holder-M.Araiza. [special_teams]
+- Q3 15:00 (23 yds) Kickoff: J.Gillan kicks 62 yards from NYG 35 to KC 3. N.Remigio to KC 26 for 23 yards (N.Hewitt). [special_teams]
+- Q3 1:19 (9 yds) Punt: M.Araiza punts 43 yards to NYG 11, Center-J.Winchester. G.Olszewski to NYG 20 for 9 yards (J.Winchester). [special_teams]
+- Q4 0:33 (-1 yds) Rush:  P.Mahomes kneels to NYG 48 for -1 yards. [spike_kneel]
+- Q4 10:12 (18 yds) Kickoff: J.Gillan kicks 60 yards from NYG 35 to KC 5. N.Remigio to KC 23 for 18 yards (N.Hewitt). [special_teams]
+- Q4 1:03 (-1 yds) Rush:  P.Mahomes kneels to NYG 47 for -1 yards. [spike_kneel]
+- Q4 1:42 (-1 yds) Rush:  P.Mahomes kneels to NYG 46 for -1 yards. [spike_kneel]
+- Q4 2:14 (8 yds) Punt: M.Araiza punts 53 yards to NYG 31, Center-J.Winchester. G.Olszewski to NYG 39 for 8 yards (J.Williams). [special_teams]
+
+**NYG Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q2 0:56 (0 yds) Pass Interception Return: (Shotgun) R.Wilson pass deep right intended for M.Nabers INTERCEPTED by J.Watson at KC -8. Touchback. [interception]
+- Q2 8:56 (23 yds) Pass Interception Return: (Shotgun) R.Wilson pass deep left intended for W.Robinson INTERCEPTED by C.Roland-Wallace at KC 30. C.Roland-Wallace ran ob at NYG 47 for 23 yards (M.Nabers). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q2 1:44 (13 yds) Rushing Touchdown: C.Skattebo right guard for 13 yards, TOUCHDOWN. J.Gillan extra point is Blocked (A.Gillotte), Center-C.Kreiter, Holder-G.Olszewski.
+- Q4 14:01 (0 yds) Fumble Recovery (Opponent): (Shotgun) R.Wilson pass short middle to W.Robinson to KC 33 for 12 yards (T.McDuffie). FUMBLES (T.McDuffie), RECOVERED by KC-C.Conner at KC 30.PENALTY on KC-T.McDuffie, Defensive Pass Interference, 5 yards, enforced at KC 45 - No Play.
+
+- Excluded non-zero-yard plays (up to 13 shown):
+- Q1 0:29 (-5 yds) Penalty:  (Shotgun) PENALTY on NYG, Delay of Game, 5 yards, enforced at KC 47 - No Play. [nullified]
+- Q1 15:00 (23 yds) Kickoff: H.Butker kicks 57 yards from KC 35 to NYG 8. D.Singletary to NYG 31 for 23 yards (C.Roland-Wallace; C.McDonald). [special_teams]
+- Q1 3:45 (33 yds) Kickoff: H.Butker kicks 62 yards from KC 35 to NYG 3. D.Singletary to NYG 36 for 33 yards (K.Knowles). [special_teams]
+- Q2 1:06 (15 yds) Pass Incompletion: (Shotgun) R.Wilson pass incomplete deep left to D.Slayton.PENALTY on KC-N.Williams, Face Mask, 15 yards, enforced at KC 41 - No Play. [nullified]
+- Q2 1:53 (5 yds) Rush: (Shotgun) C.Skattebo right guard to KC 19 for -1 yards (N.Bolton, D.Tranquill).PENALTY on KC-C.Jones, Defensive Holding, 5 yards, enforced at KC 18 - No Play. [nullified]
+- Q2 1:57 (15 yds) Pass Incompletion: (Shotgun) R.Wilson pass incomplete deep left to D.Slayton.PENALTY on KC-G.Karlaftis, Roughing the Passer, 15 yards, enforced at KC 33 - No Play. [nullified]
+- Q2 9:48 (19 yds) Kickoff: H.Butker kicks 58 yards from KC 35 to NYG 7. D.Singletary to NYG 26 for 19 yards (J.Bassa). [special_teams]
+- Q3 4:46 (4 yds) Punt: J.Gillan punts 33 yards to KC 15, Center-C.Kreiter. N.Remigio to KC 19 for 4 yards (A.Green). [special_teams]
+- Q3 8:22 (27 yds) Kickoff: H.Butker kicks 60 yards from KC 35 to NYG 5. D.Singletary to NYG 32 for 27 yards (C.Roland-Wallace; K.Knowles). [special_teams]
+- Q4 10:12 (25 yds) Field Goal Good: G.Gano 25 yard field goal is GOOD, Center-C.Kreiter, Holder-J.Gillan. ** Injury Update: NYG-G.Gano has returned to the game. [special_teams]
+- Q4 2:04 (-5 yds) Penalty: (Shotgun) PENALTY on NYG-J.Runyan, False Start, 5 yards, enforced at NYG 39 - No Play. [nullified]
+- Q4 4:32 (3 yds) Pass Reception: (No Huddle, Shotgun) R.Wilson pass short left to D.Singletary to KC 32 for 3 yards (D.Tranquill).PENALTY on NYG-D.Slayton, Illegal Shift, 5 yards, enforced at KC 35 - No Play. [nullified]
+- Q4 6:03 (32 yds) Kickoff: H.Butker kicks 60 yards from KC 35 to NYG 5. D.Singletary to NYG 37 for 32 yards (K.Knowles). [special_teams]
+
+### 401772636 ATL @ IND (TOΔ max 0, YdsΔ max 7, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| ATL | 290 | 297 | +7 | 1 | 1 | +0 | 35 | 35 | +0 |
+| IND | 519 | 526 | +7 | 2 | 2 | +0 | 56 | 56 | +0 |
+
+**ATL Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q1 9:24 (8 yds) Sack Opp Fumble Recovery: (Shotgun) M.Penix sacked at ATL 38 for -8 yards (C.Bynum). FUMBLES (C.Bynum), RECOVERED by IND-G.Pratt at ATL 31. G.Pratt to ATL 23 for 8 yards (T.Allgeier; E.Wilkinson). [fumble]
+
+- Excluded non-zero-yard plays (up to 14 shown):
+- Q1 5:19 (22 yds) Kickoff: M.Badgley kicks 60 yards from IND 35 to ATL 5. J.Agnew to ATL 27 for 22 yards (J.Jones). [special_teams]
+- Q1 6:42 (20 yds) Penalty: (Shotgun) M.Penix pass incomplete deep left to D.Mooney.PENALTY on IND-M.Blackmon, Defensive Pass Interference, 20 yards, enforced at IND 34 - No Play. [nullified]
+- Q1 8:36 (20 yds) Kickoff: M.Badgley kicks 66 yards from IND 35 to ATL -1. N.Brooks to ATL 19 for 20 yards (T.Goodson; A.Adebawore). [special_teams]
+- Q2 0:08 (-1 yds) Rush: M.Penix kneels to ATL 27 for -1 yards. [spike_kneel]
+- Q2 9:03 (-3 yds) Punt: B.Pinion punts 46 yards to IND 10, Center-L.McCullough. J.Downs to IND 28 for 18 yards (F.Franks).PENALTY on IND-A.Dulin, Offensive Holding, 6 yards, enforced at IND 13. [special_teams]
+- Q3 12:26 (43 yds) Field Goal Good: Z.Gonzalez 43 yard field goal is GOOD, Center-L.McCullough, Holder-B.Pinion. [special_teams]
+- Q3 15:00 (23 yds) Kickoff: M.Badgley kicks 57 yards from IND 35 to ATL 8. J.Agnew to ATL 31 for 23 yards (S.Olubi). [special_teams]
+- Q4 0:25 (15 yds) Kickoff: M.Badgley kicks 54 yards from IND 35 to ATL 11. J.Agnew to ATL 26 for 15 yards (L.Treadwell). [special_teams]
+- Q4 14:42 (24 yds) Punt: B.Pinion punts 43 yards to IND 29, Center-L.McCullough. J.Downs to ATL 47 for 24 yards (F.Franks). [special_teams]
+- Q4 6:02 (28 yds) Kickoff: M.Badgley kicks 64 yards from IND 35 to ATL 1. J.Agnew to ATL 29 for 28 yards (J.Jones). [special_teams]
+- Q4 9:00 (19 yds) Kickoff: M.Badgley kicks 61 yards from IND 35 to ATL 4. J.Agnew to ATL 23 for 19 yards (T.Goodson). [special_teams]
+- Q5 10:00 (28 yds) Kickoff: M.Badgley kicks 63 yards from IND 35 to ATL 2. J.Agnew to ATL 30 for 28 yards (A.Dulin). [special_teams]
+- Q5 7:37 (5 yds) Punt:  B.Pinion punts 40 yards to IND 38, Center-L.McCullough. J.Downs ran ob at IND 43 for 5 yards (K.Hodge). [special_teams]
+- Q5 9:10 (5 yds) Penalty: (No Huddle, Shotgun) M.Penix pass incomplete deep right to D.Mooney [N.Cross].PENALTY on IND-M.Blackmon, Illegal Contact, 5 yards, enforced at ATL 31 - No Play. [nullified]
+
+**IND Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q2 0:20 (-12 yds) Pass Interception Return: (Shotgun) D.Jones pass deep left intended for A.Pierce INTERCEPTED by J.Bates at ATL 40. J.Bates to ATL 43 for 3 yards (A.Pierce).PENALTY on ATL-J.Bates, Taunting, 15 yards, enforced at ATL 43. [interception]
+- Q3 10:28 (0 yds) Sack Opp Fumble Recovery: (Shotgun) D.Jones sacked at ATL 35 for -12 yards (J.Pearce). FUMBLES (J.Pearce) [J.Pearce], touched at ATL 41, RECOVERED by ATL-J.Walker at ATL 44. J.Walker to ATL 44 for no gain (J.Taylor). [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 3 shown):
+- Q1 13:43 (17 yds) Fumble Recovery (Own): D.Jones pass short right to J.Taylor to ATL 49 for 14 yards (J.Bates). FUMBLES (J.Bates), recovered by IND-T.Bortolini at ATL 46.
+- Q2 12:52 (-1 yds) Sack: (Shotgun) D.Jones sacked at ATL 40 for -1 yards (Z.Harrison). FUMBLES (Z.Harrison) [Z.Harrison], touched at ATL 40, ball out of bounds at ATL 38.
+- Q3 11:40 (-11 yds) Fumble Recovery (Own): (Shotgun) D.Jones sacked at ATL 30 for -10 yards (J.Walker). FUMBLES (J.Walker), and recovers at ATL 31.
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q1 0:26 (-5 yds) Penalty: (Shotgun) D.Jones pass short left to J.Downs to IND 33 for 7 yards (B.Bowman).PENALTY on IND-B.Raimann, Ineligible Downfield Pass, 5 yards, enforced at IND 26 - No Play. [nullified]
+- Q1 15:00 (20 yds) Kickoff: B.Pinion kicks 60 yards from ATL 35 to IND 5. A.Dulin to IND 25 for 20 yards (K.Hodge; F.Franks). [special_teams]
+- Q2 10:46 (53 yds) Field Goal Missed: M.Badgley 53 yard field goal is No Good, Short, Center-L.Rhodes, Holder-R.Sanchez. [special_teams]
+- Q2 3:25 (12 yds) Kickoff: B.Pinion kicks 61 yards from ATL 35 to IND 4. A.Abdullah pushed ob at IND 46 for 42 yards (M.Ford).PENALTY on IND-A.Ogletree, Offensive Holding, 10 yards, enforced at IND 24. [special_teams]
+- Q2 7:25 (-5 yds) Penalty: (Shotgun) PENALTY on IND-B.Smith, False Start, 5 yards, enforced at IND 16 - No Play. [nullified]
+- Q3 12:26 (50 yds) Kickoff: B.Pinion kicks 59 yards from ATL 35 to IND 6. A.Dulin to ATL 44 for 50 yards (D.Hellams). [special_teams]
+- Q3 7:49 (5 yds) Penalty: (Shotgun) D.Jones pass short right to M.Pittman to IND 33 for 6 yards (K.Taylor).PENALTY on ATL, Defensive Too Many Men on Field, 5 yards, enforced at IND 27 - No Play. [nullified]
+- Q4 0:25 (44 yds) Field Goal Good: M.Badgley 44 yard field goal is GOOD, Center-L.Rhodes, Holder-R.Sanchez. [special_teams]
+- Q4 10:20 (-5 yds) Penalty: PENALTY on IND, Delay of Game, 5 yards, enforced at ATL 15 - No Play. [nullified]
+- Q4 1:44 (49 yds) Kickoff: B.Pinion kicks 62 yards from ATL 35 to IND 3. A.Abdullah to ATL 48 for 49 yards (N.Brooks). [special_teams]
+- Q4 9:00 (34 yds) Field Goal Good: M.Badgley 34 yard field goal is GOOD, Center-L.Rhodes, Holder-R.Sanchez. [special_teams]
+
+### 401772854 DET @ CIN (TOΔ max 0, YdsΔ max 7, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| DET | 365 | 358 | -7 | 1 | 1 | +0 | 56 | 56 | +0 |
+| CIN | 322 | 329 | +7 | 3 | 3 | +0 | 30 | 30 | +0 |
+
+**DET Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q1 4:56 (0 yds) Sack Opp Fumble Recovery: (Shotgun) J.Goff sacked at CIN 39 for -7 yards (T.Hendrickson). FUMBLES (T.Hendrickson) [T.Hendrickson], touched at CIN 26, RECOVERED by CIN-L.Wilson at CIN 28.The Replay Official reviewed the fumble ruling, and the play was Upheld. The ruling on the field stands. [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q4 1:49 (-10 yds) Kickoff: R.Rehkow kicks onside 26 yards from CIN 20 to CIN 46, fair catch by A.St. Brown.PENALTY on CIN-R.Rehkow, Unsportsmanlike Conduct, 10 yards, enforced at CIN 20.
+- Q4 3:01 (5 yds) Kickoff: E.McPherson kicks onside 5 yards from CIN 35 to CIN 40, impetus ends at CIN 42. T.Harper (didn't try to advance) to CIN 40 for no gain.
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q1 15:00 (37 yds) Kickoff: E.McPherson kicks 60 yards from CIN 35 to DET 5. J.Saylors to DET 42 for 37 yards (J.Newton). [special_teams]
+- Q2 6:33 (-4 yds) Punt: J.Fox punts 47 yards to CIN 9, Center-H.Hatten, fair catch by C.Jones.PENALTY on CIN-J.Newton, Offensive Holding, 4 yards, enforced at CIN 9. [special_teams]
+- Q3 12:03 (-10 yds) Rush: J.Gibbs right guard to CIN 5 for 5 yards (J.Battle; T.Slaton).PENALTY on DET-G.Glasgow, Offensive Holding, 10 yards, enforced at CIN 10 - No Play. [nullified]
+- Q4 0:33 (-1 yds) Rush: J.Goff kneels to CIN 12 for -1 yards. [spike_kneel]
+- Q4 10:22 (27 yds) Kickoff: E.McPherson kicks 60 yards from CIN 35 to DET 5. J.Saylors to DET 32 for 27 yards (T.Anderson). [special_teams]
+- Q4 12:40 (6 yds) Punt: J.Fox punts 43 yards to CIN 24, Center-H.Hatten. C.Jones to CIN 30 for 6 yards (C.Reynolds; G.Stuard). [special_teams]
+- Q4 14:04 (-5 yds) Penalty: PENALTY on DET-J.Gibbs, False Start, 5 yards, enforced at DET 33 - No Play. [nullified]
+- Q4 14:51 (23 yds) Kickoff: E.McPherson kicks 61 yards from CIN 35 to DET 4. J.Saylors to DET 27 for 23 yards (S.Heyward). [special_teams]
+- Q4 1:05 (-1 yds) Rush: J.Goff kneels to CIN 11 for -1 yards. [spike_kneel]
+- Q4 1:49 (-10 yds) Kickoff: R.Rehkow kicks onside 26 yards from CIN 20 to CIN 46, fair catch by A.St. Brown.PENALTY on CIN-R.Rehkow, Unsportsmanlike Conduct, 10 yards, enforced at CIN 20. [special_teams]
+- Q4 3:01 (5 yds) Kickoff: E.McPherson kicks onside 5 yards from CIN 35 to CIN 40, impetus ends at CIN 42. T.Harper (didn't try to advance) to CIN 40 for no gain. [special_teams]
+
+**CIN Reconciliation Clues**
+
+- Windelta counted turnovers (3):
+- Q2 14:49 (2 yds) Pass Interception Return: (Shotgun) J.Browning pass deep left intended for J.Chase INTERCEPTED by A.Robertson at CIN 19. A.Robertson to CIN 17 for 2 yards (J.Chase). [interception]
+- Q2 5:21 (1 yds) Pass Interception Return: (Shotgun) J.Browning pass deep right intended for J.Chase INTERCEPTED by K.Joseph at CIN 46. K.Joseph to CIN 45 for 1 yard (J.Chase). [interception]
+- Q3 14:17 (14 yds) Pass Interception Return: (Shotgun) J.Browning pass short right intended for M.Gesicki INTERCEPTED by A.Anzalone at CIN 42. A.Anzalone pushed ob at CIN 28 for 14 yards (J.Chase). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q3 2:02 (4 yds) Fumble Recovery (Own): (Shotgun) J.Browning pass short right to C.Brown to DET 39 for 4 yards (R.Ya-Sin, J.Campbell). FUMBLES (J.Campbell), recovered by CIN-T.Higgins at DET 39. ** Injury Update: DET-B.Branch has returned to the game.
+- Q4 11:52 (-8 yds) Fumble Recovery (Own): J.Browning sacked at CIN 33 for -7 yards (A.Hutchinson). FUMBLES (A.Hutchinson) [A.Hutchinson], touched at CIN 33, recovered by CIN-O.Brown at CIN 32.
+
+- Excluded non-zero-yard plays (up to 15 shown):
+- Q1 10:50 (24 yds) Kickoff: J.Bates kicks 64 yards from DET 35 to CIN 1. C.Jones to CIN 25 for 24 yards (T.Nowaske). [special_teams]
+- Q1 3:31 (1 yds) Punt: R.Rehkow punts 57 yards to DET 9, Center-W.Wagner. K.Raymond to DET 23 for 14 yards (S.Perine). DET-K.Raymond was injured during the play. PENALTY on DET-G.Stuard, Illegal Block Above the Waist, 10 yards, enforced at DET 20. [special_teams]
+- Q1 8:59 (-5 yds) Penalty: (Shotgun) PENALTY on CIN-T.Karras, False Start, 5 yards, enforced at DET 38 - No Play. [nullified]
+- Q1 9:57 (5 yds) Sack: (Shotgun) J.Browning sacked at CIN 24 for -7 yards (A.Hutchinson).PENALTY on DET-A.Hutchinson, Defensive Offside, 5 yards, enforced at CIN 31 - No Play. [nullified]
+- Q2 0:00 (50 yds) Field Goal Good: E.McPherson 50 yard field goal is GOOD, Center-W.Wagner, Holder-R.Rehkow. [special_teams]
+- Q2 0:47 (-5 yds) Penalty: (Shotgun) PENALTY on CIN, Delay of Game, 5 yards, enforced at DET 37 - No Play. [nullified]
+- Q2 12:16 (19 yds) Kickoff: J.Bates kicks 65 yards from DET 35 to CIN 0. C.Jones to CIN 19 for 19 yards (T.Nowaske). [special_teams]
+- Q2 5:21 (-5 yds) Penalty: (Shotgun) PENALTY on CIN-O.Brown, False Start, 5 yards, enforced at CIN 12 - No Play. [nullified]
+- Q2 5:41 (5 yds) Safety: (Shotgun) J.Browning sacked in End Zone for -7 yards, SAFETY NULLIFIED by Penalty (sack split by A.Hutchinson and R.Lopez).PENALTY on DET-T.Arnold, Defensive Holding, 5 yards, enforced at CIN 7 - No Play. [nullified]
+- Q3 0:39 (4 yds) Pass Incompletion: (Shotgun) J.Browning pass incomplete short left to M.Gesicki.PENALTY on DET-A.Anzalone, Defensive Pass Interference, 4 yards, enforced at DET 34 - No Play. [nullified]
+- Q3 11:25 (24 yds) Kickoff: J.Bates kicks 61 yards from DET 35 to CIN 4. C.Jones pushed ob at CIN 28 for 24 yards (J.Saylors). [special_teams]
+- Q3 15:00 (26 yds) Kickoff: J.Bates kicks 64 yards from DET 35 to CIN 1. C.Jones to CIN 27 for 26 yards (C.Reynolds; D.Barnes). [special_teams]
+- Q3 2:47 (2 yds) Pass Incompletion: (Shotgun) J.Browning pass incomplete short left to J.Chase. DET-B.Branch was injured during the play. PENALTY on DET-T.Arnold, Defensive Pass Interference, 2 yards, enforced at DET 43 - No Play. [nullified]
+- Q3 5:43 (24 yds) Kickoff: J.Bates kicks 62 yards from DET 35 to CIN 3. C.Jones to CIN 27 for 24 yards (J.Saylors). [special_teams]
+- Q4 5:14 (37 yds) Kickoff: J.Bates kicks 65 yards from DET 35 to CIN 0. C.Jones to CIN 37 for 37 yards (P.O'Connor). ** Injury Update: DET-R.Ya-Sin has returned to the game. [special_teams]
+
+### 401772634 DEN @ NYJ (TOΔ max 0, YdsΔ max 6, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| DEN | 246 | 246 | +0 | 1 | 1 | +0 | 37 | 37 | +0 |
+| NYJ | 82 | 88 | +6 | 0 | 0 | +0 | 15 | 15 | +0 |
+
+**DEN Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q1 13:38 (0 yds) Fumble Recovery (Opponent): (Shotgun) B.Nix pass short right to T.Franklin to DEN 32 for 7 yards (J.Brownlee) [J.Sherwood]. FUMBLES (J.Brownlee), RECOVERED by NYJ-A.Cisco at DEN 37. [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 3:25 (-2 yds) Fumble Recovery (Own): (Shotgun) M.Mims up the middle to DEN 17 for -2 yards (B.Stephens, Q.Williams). FUMBLES (Q.Williams), and recovers at DEN 17.
+
+- Excluded non-zero-yard plays (up to 17 shown):
+- Q1 11:00 (34 yds) Kickoff: N.Folk kicks 61 yards from NYJ 35 to DEN 4. M.Mims to DEN 38 for 34 yards (A.Beck). [special_teams]
+- Q1 15:00 (17 yds) Kickoff: N.Folk kicks 60 yards from NYJ 35 to DEN 5. M.Mims to DEN 22 for 17 yards (Q.Stiggers). [special_teams]
+- Q1 3:33 (-10 yds) Penalty: (No Huddle, Shotgun) B.Nix pass short left to C.Sutton to NYJ 39 for 13 yards (A.Gardner).PENALTY on DEN-M.Peart, Offensive Holding, 10 yards, enforced at DEN 48 - No Play. [nullified]
+- Q1 4:55 (29 yds) Kickoff: N.Folk kicks 63 yards from NYJ 35 to DEN 2. M.Mims pushed ob at DEN 31 for 29 yards (M.Robinson). [special_teams]
+- Q1 7:03 (57 yds) Field Goal Good: W.Lutz 57 yard field goal is GOOD, Center-M.Fraboni, Holder-J.Crawshaw. [special_teams]
+- Q1 9:36 (-5 yds) Penalty: (Shotgun) A.Palczewski reported in as eligible.  PENALTY on DEN-M.Peart, False Start, 5 yards, enforced at NYJ 44 - No Play. [nullified]
+- Q2 4:49 (24 yds) Pass Reception: (Shotgun) B.Nix pass short left to T.Franklin to NYJ 19 for 24 yards (M.Moore; B.Stephens). ** Injury Update: NYJ-J.Tufele has returned to the game. PENALTY on DEN-M.Peart, Offensive Holding, 10 yards, enforced at NYJ 43 - No Play. [nullified]
+- Q2 5:04 (-4 yds) Penalty: PENALTY on DEN-P.Bryant, False Start, 4 yards, enforced at NYJ 39 - No Play. [nullified]
+- Q3 10:25 (24 yds) Kickoff: N.Folk kicks 66 yards from NYJ 35 to DEN -1. M.Mims to DEN 23 for 24 yards (S.Smartt). [special_teams]
+- Q3 1:15 (7 yds) Punt: J.Crawshaw punts 62 yards to NYJ 17, Center-M.Fraboni. I.Williams to NYJ 24 for 7 yards (J.Strnad). [special_teams]
+- Q3 4:56 (-8 yds) Penalty: (Shotgun) A.Palczewski reported in as eligible.  B.Nix pass incomplete deep right to T.Franklin.PENALTY on DEN-Q.Meinerz, Offensive Holding, 3 yards, enforced in End Zone, SAFETY - No Play.Penalty on DEN-T.Franklin, Offensive Pass Interference, declined. [nullified]
+- Q3 8:59 (12 yds) Punt: J.Crawshaw punts 41 yards to NYJ 30, Center-M.Fraboni. I.Williams to NYJ 42 for 12 yards (A.Prentice; D.Key). [special_teams]
+- Q4 0:39 (-1 yds) Rush: B.Nix kneels to NYJ 46 for -1 yards. [spike_kneel]
+- Q4 13:42 (-10 yds) Punt:  J.Crawshaw punts 51 yards to NYJ 20, Center-M.Fraboni. I.Williams to NYJ 39 for 19 yards (M.Fraboni).
+PENALTY on NYJ-J.Brownlee, Offensive Holding, 10 yards, enforced at NYJ 20. [special_teams]
+- Q4 1:09 (-1 yds) Rush: B.Nix kneels to NYJ 45 for -1 yards. [spike_kneel]
+- Q4 2:33 (13 yds) Punt: J.Crawshaw punts 59 yards to NYJ 30, Center-M.Fraboni. I.Williams pushed ob at NYJ 43 for 13 yards (P.Locke). [special_teams]
+- Q4 5:06 (27 yds) Field Goal Good: W.Lutz 27 yard field goal is GOOD, Center-M.Fraboni, Holder-J.Crawshaw. [special_teams]
+
+**NYJ Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 2:23 (7 yds) Fumble Recovery (Own): (Shotgun) J.Fields Aborted. J.Myers FUMBLES at NYJ 38, recovered by NYJ-B.Hall at NYJ 38. B.Hall to 50 for 12 yards (A.Singleton). ** Injury Update: NYJ-G.Wilson has returned to the game.
+
+- Excluded non-zero-yard plays (up to 13 shown):
+- Q1 11:00 (52 yds) Field Goal Good: N.Folk 52 yard field goal is GOOD, Center-T.Hennessy, Holder-A.McNamara. [special_teams]
+- Q1 12:47 (-5 yds) Penalty: (Shotgun) PENALTY on NYJ-J.Tippmann, False Start, 5 yards, enforced at DEN 35 - No Play. [nullified]
+- Q1 4:55 (41 yds) Field Goal Good: N.Folk 41 yard field goal is GOOD, Center-T.Hennessy, Holder-A.McNamara. [special_teams]
+- Q1 7:03 (72 yds) Kickoff: W.Lutz kicks 61 yards from DEN 35 to NYJ 4. K.Nwangwu pushed ob at DEN 24 for 72 yards (K.Abrams-Draine). [special_teams]
+- Q2 13:35 (5 yds) Punt: A.McNamara punts 53 yards to DEN 16, Center-T.Hennessy. M.Mims to DEN 21 for 5 yards (J.Ruckert; M.Moore). [special_teams]
+- Q2 15:00 (19 yds) Kickoff: W.Lutz kicks 58 yards from DEN 35 to NYJ 7. K.Nwangwu to NYJ 26 for 19 yards (K.Reid; D.Tillman). [special_teams]
+- Q2 1:04 (1 yds) Rush: (Punt formation) Direct snap to B.Hall.  B.Hall up the middle to NYJ 38 for 1 yard (K.Reid). [special_teams]
+- Q2 7:55 (6 yds) Punt: A.McNamara punts 53 yards to DEN 35, Center-T.Hennessy. M.Mims to DEN 41 for 6 yards (M.Moore). [special_teams]
+- Q2 8:33 (5 yds) Penalty: (Shotgun) PENALTY on DEN-N.Bonitto, Defensive Offside, 5 yards, enforced at NYJ 16 - No Play. [nullified]
+- Q3 10:25 (38 yds) Field Goal Good:  N.Folk 38 yard field goal is GOOD, Center-T.Hennessy, Holder-A.McNamara. [special_teams]
+- Q3 15:00 (31 yds) Kickoff: W.Lutz kicks 53 yards from DEN 35 to NYJ 12. I.Williams to NYJ 43 for 31 yards (P.Locke). [special_teams]
+- Q3 4:56 (22 yds) Kickoff: W.Lutz kicks 66 yards from DEN 20 to NYJ 14. K.Nwangwu to NYJ 36 for 22 yards (Q.Robinson). [special_teams]
+- Q4 5:06 (28 yds) Kickoff: W.Lutz kicks 60 yards from DEN 35 to NYJ 5. I.Williams to NYJ 33 for 28 yards (D.Key). [special_teams]
+
+### 401772719 MIA @ IND (TOΔ max 0, YdsΔ max 6, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| MIA | 211 | 205 | -6 | 3 | 3 | +0 | 15 | 15 | +0 |
+| IND | 418 | 418 | +0 | 0 | 0 | +0 | 45 | 45 | +0 |
+
+**MIA Reconciliation Clues**
+
+- Windelta counted turnovers (3):
+- Q1 8:21 (-1 yds) Pass Interception Return: (No Huddle, Shotgun) T.Tagovailoa pass deep right intended for T.Hill INTERCEPTED by C.Bynum at IND 17. C.Bynum to IND 31 for 14 yards (D.Achane).PENALTY on IND-Z.Franklin, Unnecessary Roughness, 15 yards, enforced at IND 31. [interception]
+- Q2 14:23 (2 yds) Sack Opp Fumble Recovery: (No Huddle, Shotgun) T.Tagovailoa sacked at MIA 38 for -6 yards (K.Moore). FUMBLES (K.Moore) [K.Moore], RECOVERED by IND-X.Howard at MIA 44. X.Howard to MIA 42 for 2 yards (J.Savaiinaea). [fumble]
+- Q3 11:30 (2 yds) Pass Interception Return: (Shotgun) T.Tagovailoa pass short right intended for M.Washington INTERCEPTED by L.Latu at IND 40. L.Latu pushed ob at IND 42 for 2 yards (D.Eskridge). [interception]
+
+- Excluded non-zero-yard plays (up to 8 shown):
+- Q1 10:37 (38 yds) Kickoff: S.Shrader kicks 58 yards from IND 35 to MIA 7. D.Eskridge pushed ob at MIA 45 for 38 yards (R.Thomas). [special_teams]
+- Q2 12:01 (14 yds) Kickoff: S.Shrader kicks 55 yards from IND 35 to MIA 10. M.Washington to MIA 24 for 14 yards (A.Ogletree). [special_teams]
+- Q2 14:54 (27 yds) Kickoff: S.Shrader kicks 54 yards from IND 35 to MIA 11. M.Washington to MIA 38 for 27 yards (J.Bachie; A.Ajiake). [special_teams]
+- Q3 15:00 (19 yds) Kickoff: S.Shrader kicks 52 yards from IND 35 to MIA 13. M.Washington to MIA 32 for 19 yards (A.Adebawore; J.Bachie). [special_teams]
+- Q3 7:30 (27 yds) Kickoff: S.Shrader kicks 67 yards from IND 35 to MIA -2. D.Eskridge to MIA 25 for 27 yards (A.Dulin). [special_teams]
+- Q4 10:14 (20 yds) Kickoff: S.Shrader kicks 50 yards from IND 35 to MIA 15. D.Eskridge to MIA 35 for 20 yards (S.Olubi). [special_teams]
+- Q4 2:23 (24 yds) Kickoff: S.Shrader kicks 55 yards from IND 35 to MIA 10. D.Eskridge to MIA 34 for 24 yards (A.Ajiake). [special_teams]
+- Q4 6:29 (-5 yds) Penalty: (Shotgun) PENALTY on MIA, Offensive Too Many Men on Field, 5 yards, enforced at IND 6 - No Play. [nullified]
+
+**IND Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 6:21 (16 yds) Kickoff: R.Patterson kicks onside 16 yards from MIA 35 to IND 49, impetus ends at MIA 48. K.Moore (didn't try to advance) to IND 49 for no gain.
+
+- Excluded non-zero-yard plays (up to 10 shown):
+- Q1 10:37 (24 yds) Field Goal Good: S.Shrader 24 yard field goal is GOOD, Center-L.Rhodes, Holder-R.Sanchez. [special_teams]
+- Q1 15:00 (27 yds) Kickoff: R.Patterson kicks 60 yards from MIA 35 to IND 5. A.Dulin to IND 32 for 27 yards (M.Fitzpatrick). [special_teams]
+- Q2 0:00 (35 yds) Field Goal Good:  S.Shrader 35 yard field goal is GOOD, Center-L.Rhodes, Holder-R.Sanchez. [special_teams]
+- Q2 4:16 (5 yds) Penalty: R.Sanchez punts 63 yards to MIA 6, Center-L.Rhodes. M.Washington to MIA 24 for 18 yards (S.Olubi; J.Bachie). IND-J.Jones was injured during the play. PENALTY on MIA-M.Judon, Running Into the Kicker, 5 yards, enforced at IND 31 - No Play. [nullified]
+- Q3 1:17 (-10 yds) Penalty: (Shotgun) D.Jones pass short left to T.Warren pushed ob at MIA 38 for 12 yards (D.Trader).PENALTY on IND-M.Alie-Cox, Offensive Holding, 10 yards, enforced at 50 - No Play. [nullified]
+- Q3 1:35 (-10 yds) Penalty: D.Giddens left tackle to MIA 37 for 3 yards (M.Fitzpatrick).PENALTY on IND-B.Raimann, Offensive Holding, 10 yards, enforced at MIA 40 - No Play.Penalty on IND-M.Pittman, Offensive Holding, declined. [nullified]
+- Q3 7:30 (28 yds) Field Goal Good: S.Shrader 28 yard field goal is GOOD, Center-L.Rhodes, Holder-R.Sanchez. [special_teams]
+- Q3 8:52 (-10 yds) Penalty: (Shotgun) J.Taylor left guard to MIA 3 for 1 yard (Z.Sieler; M.Fitzpatrick).PENALTY on IND-M.Goncalves, Offensive Holding, 10 yards, enforced at MIA 4 - No Play. [nullified]
+- Q4 2:23 (48 yds) Field Goal Good:  S.Shrader 48 yard field goal is GOOD, Center-L.Rhodes, Holder-R.Sanchez. [special_teams]
+- Q4 6:21 (16 yds) Kickoff: R.Patterson kicks onside 16 yards from MIA 35 to IND 49, impetus ends at MIA 48. K.Moore (didn't try to advance) to IND 49 for no gain. [special_teams]
+
+### 401772755 NE @ TEN (TOΔ max 0, YdsΔ max 6, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| NE | 387 | 387 | +0 | 0 | 0 | +0 | 36 | 36 | +0 |
+| TEN | 255 | 261 | +6 | 2 | 2 | +0 | 15 | 15 | +0 |
+
+**NE Reconciliation Clues**
+
+- Excluded non-zero-yard plays (up to 10 shown):
+- Q1 2:18 (15 yds) Punt: B.Baringer punts 43 yards to TEN 11, Center-J.Ashby. C.Dike pushed ob at TEN 26 for 15 yards (E.Ponder). [special_teams]
+- Q1 5:04 (24 yds) Kickoff: J.Slye kicks 65 yards from TEN 35 to NE 0. E.Chism pushed ob at NE 24 for 24 yards (K.Winston). [special_teams]
+- Q1 6:46 (36 yds) Field Goal Good: A.Borregales 36 yard field goal is GOOD, Center-J.Ashby, Holder-B.Baringer. [special_teams]
+- Q2 1:48 (25 yds) Kickoff: J.Slye kicks 60 yards from TEN 35 to NE 5, out of bounds.PENALTY on TEN-J.Slye, Kickoff Out of Bounds, placed at NE 40. [special_teams]
+- Q3 15:00 (3 yds) Kickoff: J.Slye kicks 59 yards from TEN 35 to NE 6. E.Chism to NE 25 for 19 yards (M.Kinsey; J.Chestnut).PENALTY on NE-E.Ponder, Illegal Block Above the Waist, 10 yards, enforced at NE 22. [special_teams]
+- Q3 3:17 (-5 yds) Penalty: (Punt formation) PENALTY on NE-J.Ashby, False Start, 5 yards, enforced at NE 31 - No Play. [nullified]
+- Q4 0:38 (-1 yds) Rush: J.Dobbs kneels to TEN 34 for -1 yards. [spike_kneel]
+- Q4 1:14 (-1 yds) Rush: J.Dobbs kneels to TEN 33 for -1 yards. [spike_kneel]
+- Q4 3:09 (-5 yds) Penalty: PENALTY on NE, Offensive Too Many Men on Field, 5 yards, enforced at TEN 34 - No Play. [nullified]
+- Q4 5:37 (-5 yds) Penalty: (Shotgun) PENALTY on NE-W.Campbell, False Start, 5 yards, enforced at NE 38 - No Play. [nullified]
+
+**TEN Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q3 7:20 (4 yds) Sack Opp Fumble Recovery: C.Ward sacked at TEN 10 for -13 yards. FUMBLES, RECOVERED by NE-K.Chaisson at TEN 4. K.Chaisson for 4 yards, TOUCHDOWN.Penalty on TEN-C.Dike, Offensive Holding, declined. A.Borregales extra point is GOOD, Center-J.Ashby, Holder-B.Baringer. [fumble]
+- Q4 3:46 (32 yds) Pass Interception Return: (No Huddle, Shotgun) C.Ward pass short right intended for C.Okonkwo INTERCEPTED by M.Jones at NE 25. M.Jones to TEN 43 for 32 yards (C.Okonkwo). [interception]
+
+- Excluded non-zero-yard plays (up to 8 shown):
+- Q1 12:20 (49 yds) Field Goal Good: J.Slye 49 yard field goal is GOOD, Center-M.Cox, Holder-J.Hekker. [special_teams]
+- Q1 6:46 (29 yds) Kickoff: A.Borregales kicks 53 yards from NE 35 to TEN 12. C.Dike pushed ob at TEN 41 for 29 yards (B.Schooler). [special_teams]
+- Q2 14:41 (-10 yds) Rush: (No Huddle, Shotgun) T.Spears right end to NE 43 for 1 yard (C.Elliss; C.Davis).PENALTY on TEN-J.Latham, Offensive Holding, 10 yards, enforced at NE 44 - No Play. [nullified]
+- Q2 1:48 (50 yds) Field Goal Good: J.Slye 50 yard field goal is GOOD, Center-M.Cox, Holder-J.Hekker. [special_teams]
+- Q2 1:55 (-5 yds) Penalty: (Shotgun) PENALTY on TEN-L.Cushenberry, False Start, 5 yards, enforced at NE 27 - No Play. [nullified]
+- Q2 5:34 (31 yds) Kickoff: A.Borregales kicks 60 yards from NE 35 to TEN 5. C.Dike pushed ob at TEN 36 for 31 yards (B.Schooler). [special_teams]
+- Q3 7:31 (24 yds) Kickoff: A.Borregales kicks 66 yards from NE 35 to TEN -1. C.Dike to TEN 23 for 24 yards (C.Elliss). [special_teams]
+- Q4 7:05 (11 yds) Pass Incompletion: (No Huddle, Shotgun) C.Ward pass incomplete short right to E.Ayomanor.PENALTY on NE-C.Davis, Defensive Pass Interference, 11 yards, enforced at TEN 47 - No Play. [nullified]
+
+### 401772767 SF @ NYG (TOΔ max 0, YdsΔ max 6, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| SF | 380 | 374 | -6 | 1 | 1 | +0 | 34 | 34 | +0 |
+| NYG | 296 | 296 | +0 | 0 | 0 | +0 | 23 | 23 | +0 |
+
+**SF Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q2 0:38 (-4 yds) Sack Opp Fumble Recovery: (Shotgun) M.Jones sacked at SF 17 for -11 yards (B.Burns). FUMBLES (B.Burns) [B.Burns], RECOVERED by NYG-A.Carter at SF 23. A.Carter to SF 27 for -4 yards (T.Williams). [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 1:21 (13 yds) Kickoff: J.Gillan kicks onside 13 yards from NYG 35 to NYG 48. J.Jennings (didn't try to advance) to NYG 48 for no gain.
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q1 10:50 (30 yds) Kickoff: J.Gillan kicks 63 yards from NYG 35 to SF 2. S.Moore to SF 32 for 30 yards (Z.Barnes). [special_teams]
+- Q1 1:07 (-5 yds) Penalty: (No Huddle) PENALTY on SF-C.McKivitz, False Start, 5 yards, enforced at SF 44 - No Play. [nullified]
+- Q2 0:15 (-1 yds) Rush: M.Jones kneels to SF 34 for -1 yards. [spike_kneel]
+- Q2 1:55 (54 yds) Field Goal Good: E.Pineiro 54 yard field goal is GOOD, Center-J.Weeks, Holder-T.Morstead. [special_teams]
+- Q3 15:00 (25 yds) Kickoff: J.Gillan kicks 33 yards from NYG 35 to SF 32, short of landing zone.PENALTY on NYG-J.Gillan, Kickoff Short of Landing Zone, placed at SF 40. [special_teams]
+- Q3 5:31 (-4 yds) Penalty: (Shotgun) Direct snap to K.Juszczyk.  K.Juszczyk up the middle to SF 34 for 1 yard (B.Burns).PENALTY on SF, Illegal Shift, 4 yards, enforced at SF 33 - No Play. [nullified]
+- Q3 6:42 (21 yds) Kickoff: J.Gillan kicks 62 yards from NYG 35 to SF 3. S.Moore to SF 24 for 21 yards (Z.Barnes; J.Bernard-Converse). [special_teams]
+- Q3 9:55 (33 yds) Field Goal Good: E.Pineiro 33 yard field goal is GOOD, Center-J.Weeks, Holder-T.Morstead. [special_teams]
+- Q4 0:29 (-1 yds) Rush:  A.Martinez kneels to NYG 36 for -1 yards. [spike_kneel]
+- Q4 1:21 (13 yds) Kickoff: J.Gillan kicks onside 13 yards from NYG 35 to NYG 48. J.Jennings (didn't try to advance) to NYG 48 for no gain. [special_teams]
+- Q4 7:52 (41 yds) Kickoff: J.Gillan kicks 66 yards from NYG 35 to SF -1. B.Robinson pushed ob at SF 40 for 41 yards (T.Nubin). [special_teams]
+
+**NYG Reconciliation Clues**
+
+- Excluded non-zero-yard plays (up to 16 shown):
+- Q1 11:33 (5 yds) Penalty: (Shotgun) PENALTY on SF-J.Elliott, Neutral Zone Infraction, 5 yards, enforced at SF 28 - No Play. [nullified]
+- Q1 15:00 (28 yds) Kickoff: E.Pineiro kicks 57 yards from SF 35 to NYG 8. G.Olszewski to NYG 36 for 28 yards (I.Guerendo; S.Neal). [special_teams]
+- Q1 4:16 (33 yds) Kickoff: E.Pineiro kicks 66 yards from SF 35 to NYG -1. J.Hyatt to NYG 32 for 33 yards (L.Gifford; D.Luter). [special_teams]
+- Q2 0:20 (45 yds) Field Goal Missed: G.Gano 45 yard field goal is No Good, Wide Left, Center-C.Kreiter, Holder-J.Gillan. [special_teams]
+- Q2 0:49 (11 yds) Punt: J.Gillan punts 52 yards to SF 17, Center-C.Kreiter. S.Moore to SF 28 for 11 yards (Z.Barnes). [special_teams]
+- Q2 10:33 (-5 yds) Penalty: (Shotgun) PENALTY on NYG-M.Mbow, False Start, 5 yards, enforced at NYG 48 - No Play. [nullified]
+- Q2 10:50 (-5 yds) Penalty: (Shotgun) PENALTY on NYG-J.Schmitz, False Start, 5 yards, enforced at SF 47 - No Play. [nullified]
+- Q2 13:08 (22 yds) Kickoff: E.Pineiro kicks 52 yards from SF 35 to NYG 13. G.Olszewski to NYG 35 for 22 yards (L.Farrell). [special_teams]
+- Q2 1:55 (20 yds) Kickoff: E.Pineiro kicks 57 yards from SF 35 to NYG 8. J.Hyatt to NYG 28 for 20 yards (L.Farrell). [special_teams]
+- Q2 3:42 (14 yds) Punt: J.Gillan punts 45 yards to SF 45, Center-C.Kreiter. S.Moore pushed ob at NYG 41 for 14 yards (D.Flannigan-Fowles). [special_teams]
+- Q3 1:42 (9 yds) Punt:  J.Gillan punts 44 yards to SF 15, Center-C.Kreiter. S.Moore to SF 24 for 9 yards (N.Jones; D.Belton). [special_teams]
+- Q3 6:42 (22 yds) Field Goal Good: G.Gano 22 yard field goal is GOOD, Center-C.Kreiter, Holder-J.Gillan. [special_teams]
+- Q3 9:55 (26 yds) Kickoff: E.Pineiro kicks 58 yards from SF 35 to NYG 7. J.Hyatt to NYG 33 for 26 yards (C.Robinson). [special_teams]
+- Q4 11:35 (32 yds) Kickoff: E.Pineiro kicks 62 yards from SF 35 to NYG 3. J.Hyatt to NYG 35 for 32 yards (L.Gifford; S.Neal). [special_teams]
+- Q4 4:13 (30 yds) Kickoff: E.Pineiro kicks 64 yards from SF 35 to NYG 1. G.Olszewski to NYG 31 for 30 yards (L.Gifford). [special_teams]
+- Q4 8:59 (5 yds) Penalty: (Shotgun) J.Dart up the middle to SF 13 for 1 yard (K.Davis).PENALTY on SF-M.Williams, Defensive Offside, 5 yards, enforced at SF 14 - No Play. [nullified]
+
+### 401772810 MIN @ CHI (TOΔ max 0, YdsΔ max 6, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| MIN | 254 | 254 | +0 | 1 | 1 | +0 | 50 | 50 | +0 |
+| CHI | 317 | 311 | -6 | 1 | 1 | +0 | 127 | 127 | +0 |
+
+**MIN Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q3 12:51 (74 yds) Interception Return Touchdown: (Shotgun) J.McCarthy pass short left intended for J.Jefferson INTERCEPTED by N.Wright at CHI 26. N.Wright for 74 yards, TOUCHDOWN. C.Santos extra point is GOOD, Center-S.Daly, Holder-T.Taylor. [interception]
+
+- Excluded non-zero-yard plays (up to 18 shown):
+- Q1 12:58 (22 yds) Punt: R.Wright punts 51 yards to CHI 17, Center-A.DePaola. D.Duvernay to CHI 39 for 22 yards (E.Wilson; A.DePaola). [special_teams]
+- Q1 15:00 (25 yds) Kickoff: C.Santos kicks 65 yards from CHI 35 to MIN 0. T.Chandler to MIN 25 for 25 yards (R.Hyppolite; C.Jones). [special_teams]
+- Q1 5:04 (7 yds) Punt:  R.Wright punts 54 yards to CHI 18, Center-A.DePaola. D.Duvernay to CHI 25 for 7 yards (D.Turner; T.Thomas). [special_teams]
+- Q1 7:04 (24 yds) Kickoff: C.Santos kicks 65 yards from CHI 35 to MIN 0. M.Price to MIN 24 for 24 yards (D.Hardy). [special_teams]
+- Q2 0:06 (59 yds) Field Goal Good:  W.Reichard 59 yard field goal is GOOD, Center-A.DePaola, Holder-R.Wright. [special_teams]
+- Q2 0:24 (25 yds) Kickoff: C.Santos kicks 59 yards from CHI 35 to MIN 6. M.Price to MIN 31 for 25 yards (J.Jones; D.Hardy). [special_teams]
+- Q2 12:48 (31 yds) Field Goal Good: W.Reichard 31 yard field goal is GOOD, Center-A.DePaola, Holder-R.Wright. [special_teams]
+- Q2 15:00 (42 yds) Penalty: (Shotgun) J.McCarthy pass incomplete deep left to A.Jones.PENALTY on CHI-N.Wright, Defensive Pass Interference, 42 yards, enforced at MIN 31 - No Play. [nullified]
+- Q2 4:39 (8 yds) Punt: R.Wright punts 51 yards to CHI 33, Center-A.DePaola. D.Duvernay to CHI 41 for 8 yards (T.Felton). [special_teams]
+- Q2 5:15 (-5 yds) Penalty: (Shotgun) PENALTY on MIN, Delay of Game, 5 yards, enforced at MIN 14 - No Play. [nullified]
+- Q2 5:52 (-10 yds) Penalty: J.Mason left guard to MIN 35 for 11 yards (K.Byard).PENALTY on MIN-J.Skule, Offensive Holding, 10 yards, enforced at MIN 24 - No Play. [nullified]
+- Q3 10:18 (-10 yds) Punt: R.Wright punts 52 yards to CHI 30, Center-A.DePaola. D.Duvernay pushed ob at CHI 36 for 6 yards (T.Felton).PENALTY on CHI-C.Jones, Offensive Holding, 10 yards, enforced at CHI 30. [special_teams]
+- Q3 11:17 (-5 yds) Penalty: (Shotgun) PENALTY on MIN, Delay of Game, 5 yards, enforced at MIN 25 - No Play. [nullified]
+- Q3 12:51 (26 yds) Kickoff: C.Santos kicks 63 yards from CHI 35 to MIN 2. T.Chandler to MIN 28 for 26 yards (J.Owens). [special_teams]
+- Q3 14:28 (15 yds) Penalty: J.McCarthy pass incomplete short right to J.Jefferson (M.Sweat).PENALTY on CHI-D.Odeyingbo, Roughing the Passer, 15 yards, enforced at CHI 49 - No Play. [nullified]
+- Q4 12:13 (1 yds) Penalty: TWO-POINT CONVERSION ATTEMPT. J.McCarthy pass to A.Thielen is incomplete. ATTEMPT FAILS.PENALTY on CHI-D.Odeyingbo, Illegal Use of Hands, 1 yard, enforced at CHI 2 - No Play. [nullified]
+- Q4 2:02 (33 yds) Kickoff: C.Santos kicks 72 yards from CHI 35 to MIN -7. T.Chandler to MIN 26 for 33 yards (R.Hyppolite). [special_teams]
+- Q4 9:57 (14 yds) Penalty: J.McCarthy pass incomplete deep left to J.Nailor [M.Sweat].PENALTY on CHI-T.Stevenson, Defensive Pass Interference, 14 yards, enforced at CHI 41 - No Play. [nullified]
+
+**CHI Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q4 0:05 (0 yds) Pass Reception: (Shotgun) C.Williams pass short right to R.Odunze to CHI 23 for 8 yards. Lateral to D.Moore to CHI 36 for 13 yards (J.Metellus, T.Thomas). FUMBLES (T.Thomas), touched at CHI 34, RECOVERED by MIN-J.Ward at CHI 35. MIN-J.Okudah was injured during the play. [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 0:09 (-5 yds) Penalty: (Shotgun) C.Williams Aborted. D.Dalman FUMBLES at CHI 16, recovered by CHI-D.Moore at CHI 16. D.Moore pushed ob at CHI 21 for 5 yards (I.Rodgers). ** Injury Update: CHI-D.Moore has returned to the game. PENALTY on CHI, Illegal Shift, 5 yards, enforced at CHI 20 - No Play.
+
+- Excluded non-zero-yard plays (up to 19 shown):
+- Q1 2:40 (-5 yds) Penalty: PENALTY on CHI-D.Wright, False Start, 5 yards, enforced at CHI 43 - No Play. [nullified]
+- Q2 0:06 (44 yds) Kickoff: W.Reichard kicks 59 yards from MIN 35 to CHI 6. L.Burden to 50 for 44 yards (J.Ward). [special_teams]
+- Q2 0:24 (42 yds) Field Goal Good: C.Santos 42 yard field goal is GOOD, Center-S.Daly, Holder-T.Taylor. [special_teams]
+- Q2 11:10 (-5 yds) Penalty: (Shotgun) PENALTY on CHI-D.Moore, False Start, 5 yards, enforced at MIN 30 - No Play. [nullified]
+- Q2 12:48 (29 yds) Kickoff: W.Reichard kicks 65 yards from MIN 35 to CHI 0. D.Duvernay pushed ob at CHI 34 for 34 yards (T.Felton).PENALTY on MIN-J.Ward, Illegal Formation, 5 yards, enforced at CHI 34. [special_teams]
+- Q2 3:43 (-5 yds) Penalty: PENALTY on CHI-J.Jackson, False Start, 5 yards, enforced at CHI 45 - No Play. [nullified]
+- Q2 6:03 (9 yds) Punt: T.Taylor punts 48 yards to MIN 15, Center-S.Daly. M.Price to MIN 24 for 9 yards (D.Hardy; J.Jones). [special_teams]
+- Q2 9:59 (-5 yds) Penalty: (Shotgun) PENALTY on CHI-J.Jackson, False Start, 5 yards, enforced at MIN 26 - No Play. [nullified]
+- Q3 0:49 (-10 yds) Penalty: C.Williams pass short left to D.Swift ran ob at MIN 12 for 12 yards (D.Turner).PENALTY on CHI-D.Wright, Offensive Holding, 10 yards, enforced at MIN 24 - No Play. [nullified]
+- Q3 14:41 (20 yds) Punt: T.Taylor punts 47 yards to MIN 31, Center-S.Daly. M.Price to CHI 49 for 20 yards (J.Owens). [special_teams]
+- Q3 15:00 (21 yds) Kickoff: W.Reichard kicks 64 yards from MIN 35 to CHI 1. D.Duvernay to CHI 22 for 21 yards (C.Chambliss). [special_teams]
+- Q3 1:49 (5 yds) Penalty: T.Benedet reported in as eligible.  PENALTY on MIN-J.Hargrave, Neutral Zone Infraction, 5 yards, enforced at MIN 34 - No Play. [nullified]
+- Q3 7:27 (17 yds) Punt: T.Taylor punts 51 yards to MIN 6, Center-S.Daly. M.Price to MIN 23 for 17 yards (E.Hicks). [special_teams]
+- Q4 0:09 (-5 yds) Penalty: (Shotgun) C.Williams Aborted. D.Dalman FUMBLES at CHI 16, recovered by CHI-D.Moore at CHI 16. D.Moore pushed ob at CHI 21 for 5 yards (I.Rodgers). ** Injury Update: CHI-D.Moore has returned to the game. PENALTY on CHI, Illegal Shift, 5 yards, enforced at CHI 20 - No Play. [nullified]
+- Q4 10:51 (22 yds) Punt: T.Taylor punts 56 yards to MIN 28, Center-S.Daly. M.Price to 50 for 22 yards (E.Hicks; S.Daly). [special_teams]
+- Q4 12:13 (26 yds) Kickoff: W.Reichard kicks 66 yards from MIN 35 to CHI -1. D.Duvernay to CHI 25 for 26 yards (E.Wilson). [special_teams]
+- Q4 15:00 (50 yds) Field Goal Missed:  C.Santos 50 yard field goal is No Good, Wide Right, Center-S.Daly, Holder-T.Taylor. [special_teams]
+- Q4 2:16 (15 yds) Penalty: (Shotgun) C.Williams pass incomplete short middle to D.Moore (J.Ward). CHI-D.Moore was injured during the play. PENALTY on MIN-I.Pace, Roughing the Passer, 15 yards, enforced at MIN 29 - No Play. [nullified]
+- Q4 2:21 (5 yds) Penalty: (Shotgun) C.Williams pass incomplete deep middle to R.Odunze [J.Hargrave].PENALTY on MIN-B.Murphy, Illegal Contact, 5 yards, enforced at MIN 34 - No Play. [nullified]
+
+### 401772811 LAC @ LV (TOΔ max 0, YdsΔ max 6, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| LAC | 317 | 311 | -6 | 1 | 1 | +0 | 33 | 33 | +0 |
+| LV | 218 | 222 | +4 | 3 | 3 | +0 | 47 | 47 | +0 |
+
+**LAC Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q4 3:51 (0 yds) Fumble Recovery (Opponent): J.Herbert FUMBLES (Aborted) at LV 33, RECOVERED by LV-A.Butler at LV 30. [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 8:14 (-6 yds) Fumble Recovery (Own): (Shotgun) J.Herbert FUMBLES (Aborted) at LAC 45, recovered by LAC-D.Davis at LAC 44. D.Davis to LAC 44 for no gain (K.Kelly).
+
+- Excluded non-zero-yard plays (up to 12 shown):
+- Q1 13:43 (38 yds) Field Goal Good:  C.Dicker 38 yard field goal is GOOD, Center-R.Lovato, Holder-J.Scott. [special_teams]
+- Q1 1:32 (5 yds) Penalty: O.Hampton right tackle to LV 8 for 4 yards (G.Pratt).PENALTY on LV, Defensive Too Many Men on Field, 5 yards, enforced at LV 12 - No Play. [nullified]
+- Q1 2:23 (-5 yds) Penalty: (Shotgun) J.Herbert pass short middle to L.McConkey to LV 18 for 10 yards (I.Pola-Mao) [M.Koonce].PENALTY on LAC-K.Lambert-Smith, Offensive Offside, 5 yards, enforced at LV 28 - No Play. [nullified]
+- Q1 8:51 (-5 yds) Penalty: (Shotgun) PENALTY on LAC-T.Pipkins, False Start, 5 yards, enforced at LAC 35 - No Play. [nullified]
+- Q1 9:02 (29 yds) Kickoff: D.Carlson kicks 59 yards from LV 35 to LAC 6. D.Davis to LAC 35 for 29 yards (D.Richardson). [special_teams]
+- Q2 9:54 (29 yds) Kickoff: D.Carlson kicks 62 yards from LV 35 to LAC 3. H.Haskins to LAC 32 for 29 yards (C.Lindenberg; B.Jackson). [special_teams]
+- Q3 15:00 (22 yds) Kickoff: D.Carlson kicks 61 yards from LV 35 to LAC 4. H.Haskins to LAC 26 for 22 yards (D.Laube). [special_teams]
+- Q3 7:30 (20 yds) Field Goal Good: C.Dicker 20 yard field goal is GOOD, Center-R.Lovato, Holder-J.Scott. [special_teams]
+- Q4 0:39 (-1 yds) Rush: J.Herbert kneels to LV 14 for -1 yards. [spike_kneel]
+- Q4 1:17 (-1 yds) Rush: J.Herbert kneels to LV 13 for -1 yards. [spike_kneel]
+- Q4 2:09 (-5 yds) Penalty: A.Deculus reported in as eligible.  N.Harris left guard to LV 11 for 8 yards (E.Stokes).PENALTY on LAC, Illegal Formation, 5 yards, enforced at LV 19 - No Play. [nullified]
+- Q4 4:36 (15 yds) Punt: J.Scott punts 56 yards to LV 18, Center-R.Lovato. T.Tucker to LV 33 for 15 yards (H.Haskins). [special_teams]
+
+**LV Reconciliation Clues**
+
+- Windelta counted turnovers (3):
+- Q1 14:53 (8 yds) Pass Interception Return: (Shotgun) G.Smith pass short right intended for T.Tucker INTERCEPTED by D.Henley (A.Gilman) at LV 33. D.Henley to LV 25 for 8 yards (M.Mayer). [interception]
+- Q2 1:14 (0 yds) Pass Interception Return: (Shotgun) G.Smith pass deep right intended for D.Thornton INTERCEPTED by T.Jefferson at LAC 1. T.Jefferson to LAC 1 for no gain (D.Thornton). [interception]
+- Q4 6:05 (0 yds) Pass Interception Return: (Shotgun) G.Smith pass deep middle intended for J.Meyers INTERCEPTED by D.Jackson (D.James) at LAC -7. Touchback. [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q2 10:40 (-9 yds) Fumble Recovery (Own): (Shotgun) J.Meredith to LAC 18 for -5 yards. FUMBLES, recovered by LV-G.Smith at LAC 19. G.Smith sacked at LAC 22 for -9 yards (J.Caldwell).
+
+- Excluded non-zero-yard plays (up to 13 shown):
+- Q1 10:41 (8 yds) Penalty: (Shotgun) G.Smith pass incomplete short left to J.Meyers.PENALTY on LAC-C.Hart, Defensive Pass Interference, 8 yards, enforced at LAC 37 - No Play. [nullified]
+- Q1 13:43 (22 yds) Kickoff: C.Dicker kicks 65 yards from LAC 35 to LV 0. Z.White to LV 22 for 22 yards (C.Murphy; M.Wax). [special_teams]
+- Q1 15:00 (25 yds) Kickoff: C.Dicker kicks 66 yards from LAC 35 to LV -1. Z.White to LV 24 for 25 yards (M.Wax). [special_teams]
+- Q1 5:45 (7 yds) Punt: A.Cole punts 60 yards to LAC 21, Center-J.Bobenmoyer. D.Davis pushed ob at LAC 28 for 7 yards (T.Eichenberg). [special_teams]
+- Q1 9:02 (54 yds) Field Goal Good:  D.Carlson 54 yard field goal is GOOD, Center-J.Bobenmoyer, Holder-A.Cole. [special_teams]
+- Q2 13:37 (-10 yds) Penalty: (No Huddle, Shotgun) G.Smith pass incomplete short middle to D.Thornton.PENALTY on LV-D.Parham, Offensive Holding, 10 yards, enforced at LAC 28 - No Play. [nullified]
+- Q2 15:00 (5 yds) Penalty: (Shotgun) G.Smith pass incomplete short right to T.Tucker (C.Hart) [N.Jones].PENALTY on LAC-D.Henley, Illegal Contact, 5 yards, enforced at LV 42 - No Play. [nullified]
+- Q2 1:51 (23 yds) Kickoff: C.Dicker kicks 60 yards from LAC 35 to LV 5. Z.White to LV 28 for 23 yards (H.Haskins). [special_teams]
+- Q2 9:54 (40 yds) Field Goal Good: D.Carlson 40 yard field goal is GOOD, Center-J.Bobenmoyer, Holder-A.Cole. [special_teams]
+- Q3 7:30 (-6 yds) Kickoff: C.Dicker kicks 56 yards from LAC 35 to LV 9. Z.White to LV 34 for 25 yards (C.Murphy).PENALTY on LV-I.Thomas, Offensive Holding, 10 yards, enforced at LV 30. [special_teams]
+- Q4 11:15 (37 yds) Field Goal Good: D.Carlson 37 yard field goal is GOOD, Center-J.Bobenmoyer, Holder-A.Cole. [special_teams]
+- Q4 12:36 (-10 yds) Penalty: (Shotgun) G.Smith scrambles left tackle to LAC 6 for 8 yards (A.Gilman).PENALTY on LV-D.Parham, Offensive Holding, 10 yards, enforced at LAC 14 - No Play. [nullified]
+- Q4 14:20 (5 yds) Penalty: (Shotgun) G.Smith pass incomplete deep right to D.Thornton (C.Hart).PENALTY on LAC-B.Dupree, Defensive Offside, 5 yards, enforced at LAC 28 - No Play. [nullified]
+
+### 401772819 DAL @ LV (TOΔ max 0, YdsΔ max 6, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| DAL | 381 | 375 | -6 | 1 | 1 | +0 | 50 | 50 | +0 |
+| LV | 236 | 237 | +1 | 1 | 1 | +0 | 40 | 40 | +0 |
+
+**DAL Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q1 9:20 (0 yds) Sack Opp Fumble Recovery: D.Prescott sacked at DAL 9 for -7 yards (M.Crosby). FUMBLES (M.Crosby) [M.Crosby], RECOVERED by LV-T.Hemingway at DAL 15. [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 11:39 (0 yds) Kickoff: A.Cole kicks onside 18 yards from LV 20 to LV 38, fair catch by G.Pickens.
+
+- Excluded non-zero-yard plays (up to 15 shown):
+- Q1 13:33 (7 yds) Punt: B.Anger punts 44 yards to LV 24, Center-T.Sieg. T.Tucker to LV 31 for 7 yards (B.Spann-Ford; A.Clark). [special_teams]
+- Q1 15:00 (19 yds) Kickoff: D.Carlson kicks 58 yards from LV 35 to DAL 7. K.Turpin to DAL 26 for 19 yards (C.Runyon). [special_teams]
+- Q1 2:02 (31 yds) Kickoff: D.Carlson kicks 64 yards from LV 35 to DAL 1. K.Turpin to DAL 32 for 31 yards (D.Richardson). [special_teams]
+- Q1 5:36 (50 yds) Field Goal Good:  B.Aubrey 50 yard field goal is GOOD, Center-T.Sieg, Holder-B.Anger. [special_teams]
+- Q1 7:55 (22 yds) Kickoff: D.Carlson kicks 56 yards from LV 35 to DAL 9. K.Turpin to DAL 31 for 22 yards (T.Eichenberg). [special_teams]
+- Q2 1:20 (-5 yds) Penalty: (Shotgun) PENALTY on DAL-T.Smith, False Start, 5 yards, enforced at LV 32 - No Play. [nullified]
+- Q2 2:00 (22 yds) Penalty: (Shotgun) D.Prescott pass incomplete deep left to C.Lamb [M.Crosby].PENALTY on LV-D.Holmes, Defensive Pass Interference, 22 yards, enforced at DAL 30 - No Play.Penalty on LV-M.Koonce, Unnecessary Roughness, declined. [nullified]
+- Q2 5:16 (-5 yds) Penalty: PENALTY on DAL-T.Bass, False Start, 5 yards, enforced at LV 15 - No Play. [nullified]
+- Q4 0:38 (-1 yds) Rush: D.Prescott kneels to LV 7 for -1 yards. [spike_kneel]
+- Q4 11:56 (-3 yds) Punt: B.Anger punts 49 yards to LV 5, Center-T.Sieg. T.Tucker to LV 2 for -3 yards (A.Clark; M.Liufau). [special_teams]
+- Q4 13:22 (39 yds) Kickoff: D.Carlson kicks 61 yards from LV 35 to DAL 4. K.Turpin pushed ob at DAL 43 for 39 yards (D.Richardson). [special_teams]
+- Q4 1:19 (-1 yds) Rush: D.Prescott kneels to LV 6 for -1 yards. [spike_kneel]
+- Q4 2:00 (-1 yds) Rush: D.Prescott kneels to LV 5 for -1 yards. [spike_kneel]
+- Q4 2:31 (3 yds) Penalty: D.Prescott kneels to LV 7 for -1 yards.PENALTY on LV, Defensive Too Many Men on Field, 3 yards, enforced at LV 6 - No Play. [nullified]
+- Q4 2:31 (-1 yds) Rush: D.Prescott kneels to LV 4 for -1 yards. [spike_kneel]
+
+**LV Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q2 2:35 (24 yds) Pass Interception Return: G.Smith pass deep right intended for B.Bowers INTERCEPTED by M.Bell (K.Murray) at DAL 7. M.Bell pushed ob at DAL 31 for 24 yards (T.Tucker). [interception]
+
+- Excluded non-zero-yard plays (up to 16 shown):
+- Q1 2:02 (45 yds) Field Goal Good: D.Carlson 45 yard field goal is GOOD, Center-J.Bobenmoyer, Holder-A.Cole. [special_teams]
+- Q1 5:36 (23 yds) Kickoff: B.Aubrey kicks 61 yards from DAL 35 to LV 4. R.Mostert to LV 27 for 23 yards (A.Clark; H.Luepke). [special_teams]
+- Q1 7:55 (35 yds) Field Goal Good:  D.Carlson 35 yard field goal is GOOD, Center-J.Bobenmoyer, Holder-A.Cole. [special_teams]
+- Q2 0:00 (38 yds) Field Goal Good:  D.Carlson 38 yard field goal is GOOD, Center-J.Bobenmoyer, Holder-A.Cole. [special_teams]
+- Q2 0:19 (5 yds) Penalty: (Shotgun) G.Smith pass incomplete short right to T.Lockett.PENALTY on DAL-J.Clowney, Defensive Offside, 5 yards, enforced at DAL 25 - No Play. [nullified]
+- Q2 0:58 (5 yds) Penalty: (No Huddle, Shotgun) G.Smith pass incomplete short left to T.Lockett (D.Bland).PENALTY on DAL-S.Revel, Defensive Holding, 5 yards, enforced at LV 34 - No Play. [nullified]
+- Q2 12:00 (-5 yds) Penalty: (Punt formation) PENALTY on LV, Delay of Game, 5 yards, enforced at LV 45 - No Play. [nullified]
+- Q2 12:00 (14 yds) Punt: A.Cole punts 53 yards to DAL 7, Center-J.Bobenmoyer. K.Turpin to DAL 21 for 14 yards (D.Porter; J.Bobenmoyer). [special_teams]
+- Q2 14:51 (19 yds) Kickoff: B.Aubrey kicks 53 yards from DAL 35 to LV 12. R.Mostert to LV 31 for 19 yards (C.Goodwin). [special_teams]
+- Q2 1:10 (25 yds) Kickoff: B.Aubrey kicks 55 yards from DAL 40 to LV 5. D.Laube to LV 30 for 25 yards (M.Davis; R.Steward). [special_teams]
+- Q2 5:16 (18 yds) Kickoff: B.Aubrey kicks 61 yards from DAL 35 to LV 4. D.Laube to LV 22 for 18 yards (M.Bell; S.James). [special_teams]
+- Q3 15:00 (24 yds) Kickoff: B.Aubrey kicks 57 yards from DAL 35 to LV 8. D.Laube to LV 32 for 24 yards (M.Liufau). [special_teams]
+- Q3 4:49 (-4 yds) Penalty: PENALTY on LV-S.Forsythe, False Start, 4 yards, enforced at LV 47 - No Play. [nullified]
+- Q3 6:19 (27 yds) Kickoff: B.Aubrey kicks 54 yards from DAL 35 to LV 11. D.Laube to LV 38 for 27 yards (M.Liufau; S.James). [special_teams]
+- Q4 0:36 (-1 yds) Rush: G.Smith kneels to LV 6 for -1 yards. [spike_kneel]
+- Q4 11:43 (-1 yds) Penalty: PENALTY on LV-D.Glaze, False Start, 1 yard, enforced at LV 2 - No Play. [nullified]
+
+### 401772933 MIN @ DAL (TOΔ max 0, YdsΔ max 6, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| MIN | 327 | 327 | +0 | 1 | 1 | +0 | 17 | 17 | +0 |
+| DAL | 423 | 417 | -6 | 0 | 0 | +0 | 58 | 58 | +0 |
+
+**MIN Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q1 14:09 (0 yds) Pass Interception Return: (Shotgun) J.McCarthy pass short right intended for J.Jefferson INTERCEPTED by Q.Williams (D.Wilson) at MIN 35. Q.Williams to MIN 35 for no gain (J.Oliver). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 0:19 (10 yds) Kickoff: B.Aubrey kicks onside 10 yards from DAL 35 to DAL 45. J.Oliver (didn't try to advance) to DAL 45 for no gain. ** Injury Update: MIN-I.Rodgers has returned to the game.
+
+- Excluded non-zero-yard plays (up to 13 shown):
+- Q1 15:00 (24 yds) Kickoff: B.Aubrey kicks 57 yards from DAL 35 to MIN 8. M.Price to MIN 32 for 24 yards (B.Spann-Ford; M.Bell). [special_teams]
+- Q1 8:23 (11 yds) Kickoff: B.Aubrey kicks 62 yards from DAL 35 to MIN 3. M.Price to MIN 14 for 11 yards (A.Clark). [special_teams]
+- Q2 0:03 (32 yds) Kickoff: B.Aubrey kicks 74 yards from DAL 35 to MIN -9. M.Price to MIN 23 for 32 yards (M.Bell; M.Liufau). [special_teams]
+- Q2 10:31 (-5 yds) Penalty: (Shotgun) J.McCarthy pass short middle to J.Jefferson for 3 yards, TOUCHDOWN NULLIFIED by Penalty [O.Odighizuwa].PENALTY on MIN, Illegal Formation, 5 yards, enforced at DAL 3 - No Play. [nullified]
+- Q2 14:52 (18 yds) Kickoff: B.Aubrey kicks 58 yards from DAL 35 to MIN 7. M.Price to MIN 25 for 18 yards (S.James). [special_teams]
+- Q2 1:48 (29 yds) Field Goal Good: W.Reichard 29 yard field goal is GOOD, Center-A.DePaola, Holder-R.Wright. [special_teams]
+- Q2 3:07 (10 yds) Penalty: A.Jones left tackle to DAL 14 for 7 yards (S.Thomas).PENALTY on DAL-C.Carson, Unnecessary Roughness, 10 yards, enforced at DAL 21 - No Play.Penalty on MIN-J.Nailor, Illegal Shift, superseded. [nullified]
+- Q3 11:14 (32 yds) Kickoff: B.Aubrey kicks 55 yards from DAL 35 to MIN 10. M.Price to MIN 42 for 32 yards (S.James). [special_teams]
+- Q3 1:23 (3 yds) Penalty: J.McCarthy pass incomplete short right.PENALTY on DAL-S.Revel, Illegal Contact, 3 yards, enforced at DAL 4 - No Play. [nullified]
+- Q3 4:50 (26 yds) Kickoff: B.Aubrey kicks 64 yards from DAL 35 to MIN 1. M.Price pushed ob at MIN 27 for 26 yards (B.Spann-Ford). [special_teams]
+- Q4 0:18 (-1 yds) Rush:  J.McCarthy kneels to DAL 46 for -1 yards. [spike_kneel]
+- Q4 0:19 (10 yds) Kickoff: B.Aubrey kicks onside 10 yards from DAL 35 to DAL 45. J.Oliver (didn't try to advance) to DAL 45 for no gain. ** Injury Update: MIN-I.Rodgers has returned to the game. [special_teams]
+- Q4 1:08 (53 yds) Field Goal Good:  W.Reichard 53 yard field goal is GOOD, Center-A.DePaola, Holder-R.Wright. [special_teams]
+
+**DAL Reconciliation Clues**
+
+- Excluded non-zero-yard plays (up to 16 shown):
+- Q1 12:41 (6 yds) Rush: (Field Goal formation) B.Aubrey right end to MIN 23 for 6 yards (I.Pace). [special_teams]
+- Q1 1:12 (12 yds) Penalty: C.Lamb left end to MIN 27 for -3 yards (I.Rodgers, J.Redmond).PENALTY on MIN-L.Rodriguez, Face Mask, 12 yards, enforced at MIN 24 - No Play. [nullified]
+- Q1 2:35 (26 yds) Kickoff: W.Reichard kicks 64 yards from MIN 35 to DAL 1. K.Turpin to DAL 27 for 26 yards (A.Keys; T.Thomas). [special_teams]
+- Q2 0:03 (37 yds) Field Goal Good: B.Aubrey 37 yard field goal is GOOD, Center-T.Sieg, Holder-B.Anger. [special_teams]
+- Q2 1:48 (25 yds) Kickoff: W.Reichard kicks 57 yards from MIN 35 to DAL 8, out of bounds.PENALTY on MIN-W.Reichard, Kickoff Out of Bounds, placed at DAL 40. [special_teams]
+- Q2 5:56 (51 yds) Field Goal Missed: B.Aubrey 51 yard field goal is No Good, Wide Right, Center-T.Sieg, Holder-B.Anger. [special_teams]
+- Q2 9:28 (38 yds) Kickoff: W.Reichard kicks 60 yards from MIN 35 to DAL 5. K.Turpin pushed ob at DAL 43 for 38 yards (T.Batty). [special_teams]
+- Q3 11:14 (26 yds) Field Goal Good:  B.Aubrey 26 yard field goal is GOOD, Center-T.Sieg, Holder-B.Anger. [special_teams]
+- Q3 15:00 (40 yds) Kickoff: W.Reichard kicks 63 yards from MIN 35 to DAL 2. K.Turpin ran ob at DAL 42 for 40 yards (W.Reichard). [special_teams]
+- Q3 4:50 (41 yds) Field Goal Good: B.Aubrey 41 yard field goal is GOOD, Center-T.Sieg, Holder-B.Anger. [special_teams]
+- Q3 5:04 (-5 yds) Penalty: (No Huddle, Shotgun) PENALTY on DAL, Delay of Game, 5 yards, enforced at MIN 18 - No Play. [nullified]
+- Q3 6:08 (-5 yds) Penalty: (Shotgun) PENALTY on DAL-N.Thomas, False Start, 5 yards, enforced at MIN 23 - No Play. [nullified]
+- Q4 0:19 (41 yds) Field Goal Good:  B.Aubrey 41 yard field goal is GOOD, Center-T.Sieg, Holder-B.Anger. [special_teams]
+- Q4 12:24 (59 yds) Field Goal Missed:  B.Aubrey 59 yard field goal is No Good, Wide Right, Center-T.Sieg, Holder-B.Anger. [special_teams]
+- Q4 6:30 (-10 yds) Penalty: (Shotgun) D.Prescott pass short left to M.Davis pushed ob at MIN 34 for 14 yards (E.Wilson).PENALTY on DAL-H.Adeniji, Offensive Holding, 10 yards, enforced at MIN 48 - No Play. [nullified]
+- Q4 9:12 (25 yds) Kickoff: W.Reichard kicks 65 yards from MIN 35 to DAL 0. K.Turpin ran ob at MIN 45 for 55 yards (W.Reichard).PENALTY on DAL-C.Goodwin, Offensive Holding, 10 yards, enforced at DAL 20. [special_teams]
+
+### 401772737 LAC @ NYG (TOΔ max 0, YdsΔ max 5, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| LAC | 338 | 338 | +0 | 2 | 2 | +0 | 107 | 107 | +0 |
+| NYG | 250 | 245 | -5 | 0 | 0 | +0 | 43 | 43 | +0 |
+
+**LAC Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q1 0:43 (37 yds) Pass Interception Return: (Shotgun) J.Herbert pass short right intended for T.Harris INTERCEPTED by D.Lawrence at LAC 40. D.Lawrence to LAC 3 for 37 yards (J.Herbert). [interception]
+- Q3 3:47 (56 yds) Pass Interception Return: (Shotgun) J.Herbert pass short right intended for L.McConkey INTERCEPTED by A.Phillips [B.Burns] at NYG 41. A.Phillips to LAC 3 for 56 yards (K.Allen).Penalty on LAC-T.Conklin, Offensive Pass Interference, declined. [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q2 0:38 (0 yds) Penalty: (Shotgun) B.Bozeman to NYG 45 for -4 yards. FUMBLES, recovered by LAC-J.Herbert at NYG 45. J.Herbert pass intended for K.Allen INTERCEPTED by D.Banks at NYG 18. D.Banks to NYG 18 for no gain (K.Allen).PENALTY on NYG-A.Carter, Defensive Offside, 5 yards, enforced at NYG 41 - No Play.
+
+- Excluded non-zero-yard plays (up to 14 shown):
+- Q1 15:00 (-5 yds) Penalty: PENALTY on LAC-T.Pipkins, False Start, 5 yards, enforced at LAC 35 - No Play. [nullified]
+- Q1 6:08 (5 yds) Penalty: (Shotgun) J.Herbert pass short left to T.Conklin to NYG 43 for 7 yards (T.Nubin).PENALTY on NYG-B.Okereke, Defensive Offside, 5 yards, enforced at 50 - No Play. [nullified]
+- Q1 8:23 (-10 yds) Penalty: O.Hampton right guard to LAC 40 for 5 yards (D.Muasau).PENALTY on LAC-Z.Johnson, Offensive Holding, 10 yards, enforced at LAC 35 - No Play. [nullified]
+- Q1 8:29 (5 yds) Penalty: (Shotgun) J.Herbert pass incomplete deep left to Q.Johnston (D.Lawrence).PENALTY on NYG-J.Holland, Illegal Contact, 5 yards, enforced at LAC 30 - No Play. [nullified]
+- Q1 9:20 (25 yds) Kickoff: J.McAtamney kicks 64 yards from NYG 35 to LAC 1. K.Vidal to LAC 26 for 25 yards (D.Belton; A.Green). [special_teams]
+- Q2 10:00 (-10 yds) Penalty: O.Hampton left end pushed ob at NYG 14 for 6 yards (J.Holland).PENALTY on LAC-L.McConkey, Illegal Block Above the Waist, 10 yards, enforced at NYG 20 - No Play. [nullified]
+- Q2 1:52 (23 yds) Kickoff: J.McAtamney kicks 63 yards from NYG 35 to LAC 2. K.Lambert-Smith to LAC 25 for 23 yards (T.Fox). [special_teams]
+- Q2 8:06 (43 yds) Field Goal Good: C.Dicker 43 yard field goal is GOOD, Center-R.Lovato, Holder-J.Scott.PENALTY on LAC-A.Deculus, Unnecessary Roughness, 15 yards, enforced between downs. [special_teams]
+- Q3 2:49 (25 yds) Kickoff: J.McAtamney kicks 56 yards from NYG 35 to LAC 9. K.Lambert-Smith to LAC 34 for 25 yards (D.Flannigan-Fowles). [special_teams]
+- Q3 7:05 (-3 yds) Punt: J.Scott punts 60 yards to NYG 7, Center-R.Lovato. G.Olszewski to NYG 22 for 15 yards (T.Tuipulotu).PENALTY on NYG-N.Jones, Offensive Holding, 3 yards, enforced at NYG 7.Penalty on NYG-S.Bozeman, Offensive Holding, declined. [special_teams]
+- Q3 7:58 (-5 yds) Penalty: (Shotgun) PENALTY on LAC-O.Gadsden, False Start, 5 yards, enforced at LAC 30 - No Play. [nullified]
+- Q3 8:18 (-5 yds) Penalty: (Shotgun) PENALTY on LAC-Z.Johnson, False Start, 5 yards, enforced at LAC 35 - No Play. [nullified]
+- Q4 3:03 (14 yds) Punt: J.Scott punts 58 yards to NYG 12, Center-R.Lovato. G.Olszewski to NYG 26 for 14 yards (H.Haskins). [special_teams]
+- Q4 4:35 (5 yds) Penalty: (Shotgun) J.Herbert pass incomplete deep middle to K.Lambert-Smith.PENALTY on NYG-D.Banks, Defensive Holding, 5 yards, enforced at LAC 40 - No Play. [nullified]
+
+**NYG Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q3 11:52 (-5 yds) Fumble Recovery (Own): (Shotgun) R.Wilson sacked at NYG 36 for -6 yards (T.Tuipulotu). FUMBLES (T.Tuipulotu) [T.Tuipulotu], and recovers at NYG 37.Penalty on NYG, Illegal Formation, declined.
+- Q3 6:12 (-4 yds) Fumble Recovery (Own): J.Dart FUMBLES (Aborted) at NYG 5, recovered by NYG-A.Thomas at NYG 1.
+
+- Excluded non-zero-yard plays (up to 18 shown):
+- Q1 0:33 (-5 yds) Penalty: (Shotgun) PENALTY on NYG-G.Van Roten, False Start, 5 yards, enforced at LAC 3 - No Play. [nullified]
+- Q1 13:12 (14 yds) Penalty: (No Huddle, Shotgun) J.Dart pass incomplete deep left to M.Nabers.PENALTY on LAC-T.Still, Defensive Pass Interference, 14 yards, enforced at NYG 16 - No Play. [nullified]
+- Q1 2:07 (11 yds) Punt: J.Gillan punts 58 yards to LAC 22, Center-C.Kreiter. T.Still to LAC 33 for 11 yards (D.Belton). [special_teams]
+- Q2 0:27 (22 yds) Kickoff: C.Dicker kicks 58 yards from LAC 35 to NYG 7. D.Singletary to NYG 29 for 22 yards (H.Haskins; T.Dye). [special_teams]
+- Q2 13:47 (22 yds) Field Goal Good: J.McAtamney 22 yard field goal is GOOD, Center-C.Kreiter, Holder-J.Gillan. [special_teams]
+- Q2 1:52 (31 yds) Field Goal Good: J.McAtamney 31 yard field goal is GOOD, Center-C.Kreiter, Holder-J.Gillan. [special_teams]
+- Q2 3:03 (12 yds) Penalty: (No Huddle, Shotgun) J.Dart pass incomplete deep middle to D.Slayton.PENALTY on LAC-D.Jackson, Defensive Pass Interference, 12 yards, enforced at LAC 24 - No Play. [nullified]
+- Q2 6:12 (-5 yds) Penalty: (Shotgun) PENALTY on NYG, Delay of Game, 5 yards, enforced at LAC 45 - No Play. [nullified]
+- Q2 6:18 (5 yds) Penalty: (Shotgun) J.Dart pass incomplete deep right to M.Nabers. NYG-M.Nabers was injured during the play. PENALTY on LAC-T.Dye, Defensive Offside, 5 yards, enforced at 50 - No Play. [nullified]
+- Q2 8:06 (33 yds) Kickoff: C.Dicker kicks 73 yards from LAC 20 to NYG 7. D.Banks to NYG 40 for 33 yards (M.Wax). [special_teams]
+- Q3 11:00 (-4 yds) Punt: J.Gillan punts 46 yards to LAC 9, Center-C.Kreiter. T.Still to LAC 15 for 6 yards (C.Manhertz; N.Hewitt).PENALTY on LAC-C.Hart, Offensive Holding, 4 yards, enforced at LAC 9. [special_teams]
+- Q3 12:22 (-10 yds) Penalty: (Shotgun) J.Dart scrambles right tackle to LAC 9 for 39 yards (C.Hart). NYG-J.Dart was injured during the play. PENALTY on NYG-J.Schmitz, Offensive Holding, 10 yards, enforced at LAC 48 - No Play. [nullified]
+- Q3 15:00 (21 yds) Kickoff: C.Dicker kicks 61 yards from LAC 35 to NYG 4. D.Banks to NYG 25 for 21 yards (D.Phillips; M.Wax). [special_teams]
+- Q3 1:27 (31 yds) Kickoff: C.Dicker kicks 57 yards from LAC 35 to NYG 8. D.Singletary pushed ob at NYG 39 for 31 yards (D.Phillips). [special_teams]
+- Q3 5:24 (11 yds) Punt: J.Gillan punts 69 yards to LAC 30, Center-C.Kreiter. T.Still to LAC 41 for 11 yards (D.Belton; N.Jones). [special_teams]
+- Q4 0:31 (3 yds) Punt: J.Gillan punts 40 yards to LAC 13, Center-C.Kreiter. T.Still to LAC 16 for 3 yards (C.Manhertz). [special_teams]
+- Q4 2:52 (5 yds) Penalty: C.Skattebo left tackle to NYG 30 for 4 yards (J.Eboigbe).PENALTY on LAC-D.Hand, Defensive Offside, 5 yards, enforced at NYG 26 - No Play. [nullified]
+- Q4 8:18 (6 yds) Penalty: (Shotgun) J.Dart right tackle to LAC 8 for 2 yards (T.Dye).PENALTY on LAC-D.James, Defensive Offside, 6 yards, enforced at LAC 10 - No Play. [nullified]
+
+### 401772739 WSH @ ATL (TOΔ max 0, YdsΔ max 5, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| WSH | 294 | 297 | +3 | 1 | 1 | +0 | 50 | 50 | +0 |
+| ATL | 435 | 440 | +5 | 1 | 1 | +0 | 45 | 45 | +0 |
+
+**WSH Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q3 6:55 (0 yds) Pass Interception Return: (No Huddle, Shotgun) M.Mariota pass deep right intended for J.Lane INTERCEPTED by X.Watts at ATL 1. X.Watts to ATL 1 for no gain (J.Lane).Penalty on WAS, Illegal Shift, declined.The Replay Official reviewed the touchback ruling, and the play was REVERSED.(No Huddle, Shotgun) M.Mariota pass deep right intended for J.Lane INTERCEPTED by X.Watts at ATL -5. Touchback.Penalty on WAS, Illegal Shift, declined. [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q2 14:20 (7 yds) Pass Reception: (No Huddle, Shotgun) M.Mariota pass short right to Z.Ertz to ATL 10 for 7 yards (B.Bowman). FUMBLES (B.Bowman), ball out of bounds at ATL 10.
+- Q2 6:53 (3 yds) Fumble Recovery (Own): (Shotgun) M.Mariota pass short right to D.Samuel to ATL 33 for 6 yards (D.Alford). FUMBLES (D.Alford), and recovers at ATL 36.
+
+- Excluded non-zero-yard plays (up to 15 shown):
+- Q1 0:49 (28 yds) Kickoff: B.Pinion kicks 63 yards from ATL 35 to WAS 2. L.McCaffrey to WAS 30 for 28 yards (J.Bertrand). [special_teams]
+- Q1 10:46 (29 yds) Kickoff: B.Pinion kicks 62 yards from ATL 35 to WAS 3. L.McCaffrey to WAS 32 for 29 yards (M.Ford; D.Malone). [special_teams]
+- Q2 5:24 (43 yds) Field Goal Good: M.Gay 43 yard field goal is GOOD, Center-T.Ott, Holder-T.Way. ** Injury Update: ATL-M.Ford has returned to the game. [special_teams]
+- Q2 8:27 (58 yds) Kickoff: B.Pinion kicks 64 yards from ATL 35 to WAS 1. L.McCaffrey to ATL 41 for 58 yards (F.Franks). ATL-M.Ford was injured during the play. [special_teams]
+- Q3 0:14 (20 yds) Kickoff: B.Pinion kicks 61 yards from ATL 35 to WAS 4. L.McCaffrey to WAS 34 for 30 yards (F.Franks; D.Malone).PENALTY on WAS-B.Sinnott, Offensive Holding, 10 yards, enforced at WAS 34. [special_teams]
+- Q3 10:12 (52 yds) Field Goal Good: M.Gay 52 yard field goal is GOOD, Center-T.Ott, Holder-T.Way. [special_teams]
+- Q3 10:42 (-5 yds) Penalty: (No Huddle, Shotgun) PENALTY on WAS-Z.Ertz, False Start, 5 yards, enforced at ATL 29 - No Play. [nullified]
+- Q3 14:05 (-10 yds) Penalty: (Shotgun) M.Mariota pass short right to L.McCaffrey to WAS 45 for 10 yards (D.Alford). ** Injury Update: ATL-X.Watts has returned to the game. PENALTY on WAS-L.McCaffrey, Offensive Pass Interference, 10 yards, enforced at WAS 35 - No Play. [nullified]
+- Q3 14:34 (-10 yds) Penalty: (No Huddle, Shotgun) M.Mariota pass deep right to J.Lane ran ob at ATL 23 for 32 yards.PENALTY on WAS-B.Sinnott, Offensive Holding, 10 yards, enforced at WAS 45 - No Play. [nullified]
+- Q3 15:00 (26 yds) Kickoff: B.Pinion kicks 62 yards from ATL 35 to WAS 3. L.McCaffrey to WAS 29 for 26 yards (X.Watts; M.Ford). ATL-X.Watts was injured during the play. [special_teams]
+- Q3 4:22 (41 yds) Field Goal Good: M.Gay 41 yard field goal is GOOD, Center-T.Ott, Holder-T.Way. [special_teams]
+- Q3 9:25 (28 yds) Kickoff: B.Pinion kicks 63 yards from ATL 35 to WAS 2. L.McCaffrey to WAS 30 for 28 yards (D.Malone). [special_teams]
+- Q4 14:15 (5 yds) Penalty: (No Huddle, Shotgun) M.Mariota pass incomplete short right.PENALTY on ATL-B.Bowman, Defensive Holding, 5 yards, enforced at WAS 36 - No Play. [nullified]
+- Q4 1:29 (42 yds) Field Goal Good: M.Gay 42 yard field goal is GOOD, Center-T.Ott, Holder-T.Way. [special_teams]
+- Q4 1:54 (25 yds) Penalty: (No Huddle, Shotgun) M.Mariota pass incomplete deep right to D.Samuel.PENALTY on ATL-D.Alford, Defensive Pass Interference, 25 yards, enforced at WAS 35 - No Play. [nullified]
+
+**ATL Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q3 5:25 (23 yds) Pass Interception Return: (Shotgun) M.Penix pass short right intended for D.London INTERCEPTED by M.Sainristil at ATL 48. M.Sainristil to ATL 25 for 23 yards (D.London). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 3 shown):
+- Q1 11:39 (-6 yds) Fumble Recovery (Own): (No Huddle, Shotgun) B.Robinson left guard to WAS 15 for -1 yards (D.Payne). FUMBLES (D.Payne), recovered by ATL-M.Penix at WAS 20.
+- Q3 10:12 (21 yds) Kickoff: M.Gay kicks 62 yards from WAS 35 to ATL 3. J.Agnew to ATL 24 for 21 yards (N.Bellore; C.Yankoff). FUMBLES (N.Bellore), and recovers at ATL 24.
+- Q4 1:29 (13 yds) Kickoff: M.Gay kicks onside 13 yards from WAS 35 to WAS 48. K.Pitts (didn't try to advance) to WAS 48 for no gain.
+
+- Excluded non-zero-yard plays (up to 15 shown):
+- Q1 10:46 (38 yds) Field Goal Good: J.Romo 38 yard field goal is GOOD, Center-L.McCullough, Holder-B.Pinion. [special_teams]
+- Q2 11:25 (30 yds) Kickoff: M.Gay kicks 53 yards from WAS 40 to ATL 7. R.McCloud to ATL 37 for 30 yards (Q.Martin). [special_teams]
+- Q2 11:31 (32 yds) Penalty: M.Gay kicks 52 yards from WAS 35 to ATL 13. N.Brooks to ATL 45 for 32 yards (Q.Martin; M.Sainristil). ATL-N.Brooks was injured during the play. PENALTY on ATL-F.Franks, Illegal Formation, 5 yards, enforced at WAS 35 - No Play. [nullified]
+- Q2 2:00 (-5 yds) Penalty: (Shotgun) PENALTY on ATL, Delay of Game, 5 yards, enforced at WAS 47 - No Play. [nullified]
+- Q2 3:08 (5 yds) Penalty: (Shotgun) M.Penix pass incomplete deep left to D.Mooney (Q.Martin).PENALTY on WAS-T.Amos, Defensive Holding, 5 yards, enforced at ATL 40 - No Play. [nullified]
+- Q2 5:24 (29 yds) Kickoff: M.Gay kicks 62 yards from WAS 35 to ATL 3. R.McCloud to ATL 32 for 29 yards (M.Sainristil; L.McCaffrey). ** Injury Update: ATL-F.Franks has returned to the game. [special_teams]
+- Q2 9:39 (-5 yds) Penalty: (Shotgun) PENALTY on ATL-R.McCloud, False Start, 5 yards, enforced at WAS 24 - No Play. [nullified]
+- Q3 10:12 (21 yds) Kickoff: M.Gay kicks 62 yards from WAS 35 to ATL 3. J.Agnew to ATL 24 for 21 yards (N.Bellore; C.Yankoff). FUMBLES (N.Bellore), and recovers at ATL 24. [special_teams]
+- Q3 4:22 (28 yds) Kickoff: M.Gay kicks 65 yards from WAS 35 to ATL 0. J.Agnew to ATL 28 for 28 yards (L.McCaffrey). [special_teams]
+- Q4 0:24 (-1 yds) Rush: M.Penix kneels to ATL 49 for -1 yards. [spike_kneel]
+- Q4 0:45 (-1 yds) Rush: M.Penix kneels to 50 for -1 yards. [spike_kneel]
+- Q4 1:27 (-1 yds) Rush: M.Penix kneels to WAS 49 for -1 yards. [spike_kneel]
+- Q4 1:29 (13 yds) Kickoff: M.Gay kicks onside 13 yards from WAS 35 to WAS 48. K.Pitts (didn't try to advance) to WAS 48 for no gain. [special_teams]
+- Q4 1:57 (26 yds) Field Goal Good: J.Romo 26 yard field goal is GOOD, Center-L.McCullough, Holder-B.Pinion. [special_teams]
+- Q4 8:48 (20 yds) Kickoff: M.Gay kicks 62 yards from WAS 35 to ATL 3. J.Agnew to ATL 23 for 20 yards (C.Yankoff; T.Owens). [special_teams]
+
+### 401772766 IND @ PIT (TOΔ max 0, YdsΔ max 5, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| IND | 368 | 363 | -5 | 6 | 6 | +0 | 53 | 53 | +0 |
+| PIT | 225 | 225 | +0 | 1 | 1 | +0 | 46 | 46 | +0 |
+
+**IND Reconciliation Clues**
+
+- Windelta counted turnovers (6):
+- Q1 6:03 (0 yds) Muffed Punt Recovery (Opponent): C.Waitman punts 56 yards to IND 22, Center-C.Kuntz. J.Downs MUFFS catch, RECOVERED by PIT-B.Echols at IND 11. [muffed_kick]
+- Q2 11:27 (0 yds) Sack Opp Fumble Recovery: (Shotgun) D.Jones sacked at PIT 45 for -7 yards (T.Watt). FUMBLES (T.Watt), RECOVERED by PIT-T.Watt at PIT 44. [fumble]
+- Q2 5:21 (17 yds) Pass Interception Return: (Shotgun) D.Jones pass short middle intended for J.Downs INTERCEPTED by P.Wilson at IND 31. P.Wilson to IND 14 for 17 yards (T.Bortolini). [interception]
+- Q3 3:15 (4 yds) Pass Interception Return: (No Huddle, Shotgun) D.Jones pass short left intended for M.Pittman INTERCEPTED by J.Sawyer (P.Wilson) at PIT 40. J.Sawyer to PIT 44 for 4 yards (D.Jones). [interception]
+- Q4 2:51 (0 yds) Pass Interception Return: (No Huddle, Shotgun) D.Jones pass deep right intended for A.Pierce INTERCEPTED by J.Porter at PIT 39. J.Porter to PIT 39 for no gain (A.Pierce). [interception]
+- Q4 8:04 (0 yds) Sack Opp Fumble Recovery: (No Huddle, Shotgun) D.Jones sacked at IND 33 for -8 yards (A.Highsmith). FUMBLES (A.Highsmith), RECOVERED by PIT-D.Harmon at IND 34. [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 11:33 (1 yds) Fumble Recovery (Own): (Shotgun) D.Jones scrambles up the middle to PIT 33 for 1 yard (N.Herbig, P.Queen). FUMBLES (P.Queen), recovered by IND-T.Warren at PIT 33.
+
+- Excluded non-zero-yard plays (up to 16 shown):
+- Q1 0:30 (3 yds) Rush: (Punt formation) Direct snap to R.Thomas.  R.Thomas up the middle to IND 28 for 3 yards (P.Wilson). [special_teams]
+- Q1 4:17 (-3 yds) Penalty: (Shotgun) D.Jones pass short right to A.Pierce ran ob at IND 17 for 12 yards. ** Injury Update: PIT-D.Slay has returned to the game. PENALTY on IND, Illegal Formation, 3 yards, enforced at IND 5 - No Play. [nullified]
+- Q2 14:13 (12 yds) Penalty: (Shotgun) D.Jones pass incomplete deep middle to M.Pittman.PENALTY on PIT-J.Porter, Defensive Pass Interference, 12 yards, enforced at IND 24 - No Play. [nullified]
+- Q2 15:00 (-5 yds) Pass Incompletion: (Shotgun) D.Jones pass incomplete deep left to T.Warren.PENALTY on IND-A.Pierce, Offensive Offside, 5 yards, enforced at IND 28 - No Play. [nullified]
+- Q2 3:33 (8 yds) Punt: R.Sanchez punts 53 yards to PIT 10, Center-L.Rhodes. K.Williams to PIT 18 for 8 yards (A.Adebawore; A.Dulin). [special_teams]
+- Q2 4:22 (27 yds) Kickoff: C.Boswell kicks 62 yards from PIT 35 to IND 3. A.Abdullah to IND 30 for 27 yards (B.Skowronek; T.Sermon). [special_teams]
+- Q2 6:09 (26 yds) Kickoff: C.Boswell kicks 66 yards from PIT 35 to IND -1. A.Abdullah to IND 25 for 26 yards (P.Wilson). [special_teams]
+- Q3 10:29 (15 yds) Punt: R.Sanchez punts 57 yards to PIT 5, Center-L.Rhodes. K.Williams ran ob at PIT 20 for 15 yards (L.Rhodes). [special_teams]
+- Q3 15:00 (26 yds) Kickoff: C.Boswell kicks 65 yards from PIT 35 to IND 0. A.Dulin to IND 26 for 26 yards (L.Nichols; B.Skowronek). [special_teams]
+- Q4 0:09 (53 yds) Field Goal Good:  M.Badgley 53 yard field goal is GOOD, Center-L.Rhodes, Holder-R.Sanchez. [special_teams]
+- Q4 0:25 (5 yds) Penalty: (No Huddle) D.Jones spiked the ball to stop the clock.PENALTY on PIT, Defensive Too Many Men on Field, 5 yards, enforced at 50 - No Play.Penalty on PIT-Ca.Heyward, Defensive Offside, declined. [nullified]
+- Q4 10:45 (52 yds) Field Goal Good: M.Badgley 52 yard field goal is GOOD, Center-L.Rhodes, Holder-R.Sanchez. [special_teams]
+- Q4 11:39 (10 yds) Penalty: D.Jones pass incomplete deep left to T.Warren.PENALTY on PIT-J.Porter, Defensive Pass Interference, 10 yards, enforced at PIT 44 - No Play. [nullified]
+- Q4 14:16 (25 yds) Kickoff: C.Boswell kicks 48 yards from 50 to IND 2, out of bounds.PENALTY on PIT-C.Boswell, Kickoff Out of Bounds, placed at IND 25. [special_teams]
+- Q4 6:45 (21 yds) Kickoff: C.Boswell kicks 67 yards from PIT 30 to IND 3. A.Abdullah to IND 24 for 21 yards (M.Harrison). [special_teams]
+- Q4 6:51 (21 yds) Kickoff: C.Boswell kicks 63 yards from PIT 35 to IND 2. A.Dulin to IND 23 for 21 yards (Co.Heyward).PENALTY on PIT-J.Sawyer, Illegal Formation, 5 yards, enforced at PIT 35 - No Play. [nullified]
+
+**PIT Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q4 3:42 (0 yds) Fumble Recovery (Opponent): A.Rodgers pass short left to R.Wilson to IND 33 for 4 yards (K.Moore; J.Jones). FUMBLES (K.Moore), RECOVERED by IND-C.Bynum at IND 24. [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q4 0:09 (13 yds) Kickoff: R.Sanchez kicks onside 13 yards from IND 35 to IND 48. D.Metcalf (didn't try to advance) to IND 48 for no gain.
+- Q4 4:30 (9 yds) Kickoff: R.Sanchez kicks onside 9 yards from IND 35 to IND 44. Co.Heyward (didn't try to advance) to IND 44 for no gain.
+
+- Excluded non-zero-yard plays (up to 13 shown):
+- Q1 13:32 (11 yds) Punt: C.Waitman punts 45 yards to IND 10, Center-C.Kuntz. J.Downs to IND 21 for 11 yards (B.Echols). [special_teams]
+- Q1 15:00 (30 yds) Kickoff: M.Badgley kicks 56 yards from IND 35 to PIT 9. K.Williams to PIT 39 for 30 yards (S.Olubi). [special_teams]
+- Q1 8:05 (22 yds) Kickoff: M.Badgley kicks 61 yards from IND 35 to PIT 4. K.Williams to PIT 26 for 22 yards (A.Ogletree). [special_teams]
+- Q2 0:00 (25 yds) Field Goal Good: C.Boswell 25 yard field goal is GOOD, Center-C.Kuntz, Holder-C.Waitman. [special_teams]
+- Q2 0:10 (-4 yds) Penalty: (Shotgun) PENALTY on PIT-C.Austin, False Start, 4 yards, enforced at IND 17 - No Play. [nullified]
+- Q2 11:21 (15 yds) Penalty: (Shotgun) A.Rodgers pass short right to K.Gainwell to PIT 43 for -1 yards (N.Gallimore).PENALTY on IND-N.Gallimore, Face Mask, 15 yards, enforced at PIT 44 - No Play. [nullified]
+- Q4 0:08 (-1 yds) Rush: A.Rodgers kneels to IND 49 for -1 yards. ** Injury Update: IND-J.Jones has returned to the game. [spike_kneel]
+- Q4 0:09 (13 yds) Kickoff: R.Sanchez kicks onside 13 yards from IND 35 to IND 48. D.Metcalf (didn't try to advance) to IND 48 for no gain. [special_teams]
+- Q4 10:45 (22 yds) Kickoff: M.Badgley kicks 58 yards from IND 35 to PIT 7. K.Williams to PIT 29 for 22 yards (A.Ogletree). [special_teams]
+- Q4 1:13 (-5 yds) Penalty: (Punt formation) PENALTY on PIT, Delay of Game, 5 yards, enforced at PIT 34 - No Play. [nullified]
+- Q4 4:30 (9 yds) Kickoff: R.Sanchez kicks onside 9 yards from IND 35 to IND 44. Co.Heyward (didn't try to advance) to IND 44 for no gain. [special_teams]
+- Q4 6:51 (46 yds) Field Goal Good:  C.Boswell 46 yard field goal is GOOD, Center-C.Kuntz, Holder-C.Waitman. [special_teams]
+- Q4 8:39 (12 yds) Punt:  C.Waitman punts 44 yards to IND 20, Center-C.Kuntz. J.Downs to IND 32 for 12 yards (B.Skowronek). [special_teams]
+
+### 401772770 JAX @ HOU (TOΔ max 0, YdsΔ max 5, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| JAX | 213 | 215 | +2 | 2 | 2 | +0 | 90 | 90 | +0 |
+| HOU | 412 | 407 | -5 | 2 | 2 | +0 | 80 | 80 | +0 |
+
+**JAX Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q2 0:17 (0 yds) Pass Interception Return: (Shotgun) T.Lawrence pass short middle intended for A.Trammell INTERCEPTED by D.Stingley at HST 45. D.Stingley to HST 45 for no gain (A.Trammell). [interception]
+- Q4 0:00 (32 yds) Sack Opp Fumble Recovery: (Shotgun) T.Lawrence sacked at JAX 30 for -5 yards (W.Anderson). FUMBLES (W.Anderson) [W.Anderson], RECOVERED by HST-S.Rankins at JAX 32. S.Rankins for 32 yards, TOUCHDOWN. [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q2 15:00 (-14 yds) Fumble Recovery (Own): C.Edoga reported in as eligible.  T.Lawrence sacked at JAX 36 for -10 yards (D.Hunter). FUMBLES (D.Hunter) [D.Hunter], touched at JAX 32, recovered by JAX-A.Harrison at JAX 32.
+
+- Excluded non-zero-yard plays (up to 21 shown):
+- Q1 11:04 (32 yds) Field Goal Good:  C.Little 32 yard field goal is GOOD, Center-R.Matiscik, Holder-L.Cooke. [special_teams]
+- Q1 13:13 (55 yds) Penalty:  C.Little 55 yard field goal is GOOD, NULLIFIED by Penalty, Center-R.Matiscik, Holder-L.Cooke.
+PENALTY on HST-D.Autry, Unnecessary Roughness, 15 yards, enforced at HST 37 - No Play. [nullified]
+- Q1 8:50 (-5 yds) Penalty: C.Edoga reported in as eligible.  PENALTY on JAX-C.Edoga, False Start, 5 yards, enforced at HST 2 - No Play. [nullified]
+- Q2 11:40 (73 yds) Punt Return Touchdown: T.Townsend punts 68 yards to JAX 27, Center-A.Brinkman. P.Washington for 73 yards, TOUCHDOWN. C.Little extra point is GOOD, Center-R.Matiscik, Holder-L.Cooke. [special_teams_return]
+- Q2 13:44 (8 yds) Punt:  L.Cooke punts 53 yards to HST 9, Center-R.Matiscik. J.Noel to HST 17 for 8 yards (Y.Abdullah). [special_teams]
+- Q2 1:08 (4 yds) Penalty: (Shotgun) T.Lawrence pass incomplete short middle to P.Washington.PENALTY on HST-D.Stingley, Defensive Pass Interference, 4 yards, enforced at JAX 36 - No Play. [nullified]
+- Q2 1:19 (33 yds) Kickoff: M.Wright kicks 62 yards from HST 35 to JAX 3. B.Tuten to JAX 36 for 33 yards (M.Bryant). JAX-B.Tuten was injured during the play. [special_teams]
+- Q2 4:02 (53 yds) Field Goal Good:  C.Little 53 yard field goal is GOOD, Center-R.Matiscik, Holder-L.Cooke. [special_teams]
+- Q2 5:03 (-5 yds) Penalty: (Shotgun) PENALTY on JAX-A.Harrison, False Start, 5 yards, enforced at HST 44 - No Play. [nullified]
+- Q2 6:05 (-5 yds) Penalty: (Shotgun) PENALTY on JAX-W.Little, False Start, 5 yards, enforced at HST 44 - No Play. [nullified]
+- Q2 6:51 (4 yds) Penalty: (Shotgun) T.Lawrence pass incomplete short middle to P.Washington (H.To'oTo'o).PENALTY on HST-H.To'oTo'o, Defensive Pass Interference, 4 yards, enforced at HST 43 - No Play. [nullified]
+- Q2 8:05 (17 yds) Kickoff: M.Wright kicks 56 yards from HST 35 to JAX 9. L.Allen to JAX 26 for 17 yards (E.Speed). [special_teams]
+- Q3 10:17 (33 yds) Field Goal Good: C.Little 33 yard field goal is GOOD, Center-R.Matiscik, Holder-L.Cooke. [special_teams]
+- Q3 12:15 (5 yds) Penalty: (Shotgun) T.Lawrence pass short right to B.Tuten to HST 25 for 1 yard (M.Bryant).PENALTY on HST-E.Speed, Illegal Contact, 5 yards, enforced at HST 26 - No Play. [nullified]
+- Q3 15:00 (20 yds) Kickoff: M.Wright kicks 59 yards from HST 35 to JAX 6. B.Tuten to JAX 26 for 20 yards (D.Arnette). ** Injury Update: JAX-B.Tuten has returned to the game. [special_teams]
+- Q3 1:43 (7 yds) Penalty: (Shotgun) T.Lawrence pass incomplete short left to L.Allen.PENALTY on HST-H.To'oTo'o, Defensive Pass Interference, 7 yards, enforced at HST 13 - No Play. [nullified]
+- Q3 6:45 (-10 yds) Penalty: T.Lawrence scrambles left end ran ob at HST 42 for 6 yards (D.Autry).PENALTY on JAX-C.Van Lanen, Offensive Holding, 10 yards, enforced at HST 48 - No Play. [nullified]
+- Q4 0:13 (-10 yds) Penalty: (Shotgun) T.Lawrence pass short right to P.Washington pushed ob at HST 43 for 12 yards (T.Smith).PENALTY on JAX-C.Edoga, Illegal Use of Hands, 10 yards, enforced at JAX 45 - No Play. [nullified]
+- Q4 0:31 (30 yds) Kickoff: M.Wright kicks 62 yards from HST 35 to JAX 3. B.Tuten pushed ob at JAX 33 for 30 yards (J.Hansen). [special_teams]
+- Q4 12:16 (7 yds) Kickoff: M.Wright kicks 59 yards from HST 35 to JAX 6. B.Tuten to JAX 25 for 19 yards (J.Hansen; E.Speed).PENALTY on JAX-B.Tuten, Unnecessary Roughness, 12 yards, enforced at JAX 25. [special_teams]
+- Q4 7:29 (41 yds) Kickoff: M.Wright kicks 61 yards from HST 35 to JAX 4. B.Tuten to JAX 45 for 41 yards (M.Bryant; T.Smith). [special_teams]
+
+**HOU Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q1 11:04 (17 yds) Kickoff: C.Little kicks 63 yards from JAX 35 to HST 2. T.Smith to HST 24 for 22 yards (V.Miller; T.Jones). FUMBLES (V.Miller), RECOVERED by JAX-D.Striggow at HST 19. [fumble]
+- Q1 14:10 (0 yds) Pass Interception Return: (Shotgun) D.Mills pass short right intended for C.Kirk INTERCEPTED by J.Jones at HST 40. J.Jones to HST 40 for no gain (C.Kirk). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q1 3:40 (-5 yds) Fumble Recovery (Own): (Shotgun) D.Mills FUMBLES (Aborted) at HST 43, recovered by HST-W.Marks at HST 43.
+- Q4 7:29 (7 yds) Passing Touchdown: (Shotgun) D.Mills pass short right to D.Schultz for 7 yards, TOUCHDOWN. TWO-POINT CONVERSION ATTEMPT. D.Mills pass to J.Higgins is intercepted. ATTEMPT FAILS.
+
+- Excluded non-zero-yard plays (up to 13 shown):
+- Q1 11:04 (17 yds) Kickoff: C.Little kicks 63 yards from JAX 35 to HST 2. T.Smith to HST 24 for 22 yards (V.Miller; T.Jones). FUMBLES (V.Miller), RECOVERED by JAX-D.Striggow at HST 19. [special_teams]
+- Q1 15:00 (22 yds) Kickoff: C.Little kicks 56 yards from JAX 35 to HST 9. D.Pierce to HST 31 for 22 yards (D.Gardeck). [special_teams]
+- Q1 2:18 (17 yds) Punt: T.Townsend punts 40 yards to JAX 11, Center-A.Brinkman. P.Washington to JAX 28 for 17 yards (E.Speed). [special_teams]
+- Q1 4:24 (-10 yds) Penalty: B.Fisher reported in as eligible.  W.Marks right end to JAX 36 for 5 yards (D.Lloyd). ** Injury Update: HST-W.Marks has returned to the game. PENALTY on HST-B.Fisher, Offensive Holding, 10 yards, enforced at JAX 41 - No Play. [nullified]
+- Q1 8:17 (32 yds) Kickoff: C.Little kicks 62 yards from JAX 35 to HST 3. B.Berrios to HST 35 for 32 yards (D.Gardeck). [special_teams]
+- Q2 0:04 (-5 yds) Penalty: (Shotgun) PENALTY on HST-T.Brown, False Start, 5 yards, enforced at HST 44 - No Play. [nullified]
+- Q2 12:38 (-5 yds) Penalty: (Shotgun) PENALTY on HST, Delay of Game, 5 yards, enforced at HST 19 - No Play. [nullified]
+- Q2 3:03 (15 yds) Penalty: (No Huddle, Shotgun) D.Mills sacked at JAX 41 for -6 yards (T.Walker).PENALTY on JAX-T.Walker, Roughing the Passer, 15 yards, enforced at JAX 35 - No Play. [nullified]
+- Q2 8:05 (23 yds) Field Goal Good: M.Wright 23 yard field goal is GOOD, Center-A.Brinkman, Holder-T.Townsend. [special_teams]
+- Q3 10:17 (-5 yds) Kickoff: C.Little kicks 65 yards from JAX 35 to end zone, Touchback to the HST 35.PENALTY on JAX-R.Lane, Illegal Formation, 5 yards, enforced at HST 35. [special_teams]
+- Q4 0:41 (-5 yds) Penalty: (Shotgun) PENALTY on HST-J.Patterson, False Start, 5 yards, enforced at JAX 9 - No Play. [nullified]
+- Q4 1:19 (-5 yds) Penalty: PENALTY on HST-T.Brown, False Start, 5 yards, enforced at JAX 2 - No Play. [nullified]
+- Q4 1:25 (23 yds) Penalty: (No Huddle, Shotgun) D.Mills pass incomplete deep right to C.Kirk (J.Jones).PENALTY on JAX-J.Jones, Defensive Pass Interference, 23 yards, enforced at JAX 25 - No Play. [nullified]
+
+### 401772773 ARI @ SEA (TOΔ max 0, YdsΔ max 5, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| ARI | 335 | 340 | +5 | 2 | 2 | +0 | 37 | 37 | +0 |
+| SEA | 372 | 369 | -3 | 3 | 3 | +0 | 20 | 20 | +0 |
+
+**ARI Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q1 9:22 (34 yds) Sack Opp Fumble Recovery: K.Beachum reported in as eligible.  J.Brissett sacked at ARZ 32 for -11 yards (T.Knight). FUMBLES (T.Knight) [T.Knight], RECOVERED by SEA-D.Lawrence at ARZ 34. D.Lawrence for 34 yards, TOUCHDOWN.The Replay Official reviewed the fumble ruling, and the play was Upheld. The ruling on the field stands. J.Myers extra point is GOOD, Center-C.Stoll, Holder-M.Dickson. [fumble]
+- Q2 14:08 (22 yds) Sack Opp Fumble Recovery: (Shotgun) J.Brissett sacked at ARZ 29 for -12 yards (T.Knight). FUMBLES (T.Knight) [T.Knight], RECOVERED by SEA-D.Lawrence at ARZ 22. D.Lawrence for 22 yards, TOUCHDOWN.The Replay Official reviewed the fumble ruling, and the play was Upheld. The ruling on the field stands. J.Myers extra point is GOOD, Center-C.Stoll, Holder-M.Dickson. [fumble]
+
+- Excluded non-zero-yard plays (up to 10 shown):
+- Q1 10:55 (15 yds) Kickoff: J.Myers kicks 60 yards from SEA 35 to ARZ 5. G.Dortch pushed ob at ARZ 30 for 25 yards (N.Pritchett).PENALTY on ARZ-K.Crawford, Offensive Holding, 10 yards, enforced at ARZ 30. [special_teams]
+- Q1 1:23 (27 yds) Kickoff: J.Myers kicks 63 yards from SEA 35 to ARZ 2. G.Dortch to ARZ 29 for 27 yards (P.O'Connell; B.Russell). [special_teams]
+- Q1 9:22 (16 yds) Kickoff: J.Myers kicks 57 yards from SEA 35 to ARZ 8. Z.Knight to ARZ 24 for 16 yards (C.Surratt). [special_teams]
+- Q2 14:04 (5 yds) Penalty: (Shotgun) J.Brissett pass short right to G.Dortch to ARZ 29 for 5 yards (T.Woolen; D.Thomas).PENALTY on SEA-D.Hall, Defensive Holding, 5 yards, enforced at ARZ 24 - No Play. [nullified]
+- Q2 14:08 (17 yds) Kickoff: J.Myers kicks 58 yards from SEA 35 to ARZ 7. Z.Knight to ARZ 24 for 17 yards (G.Holani). [special_teams]
+- Q2 1:37 (23 yds) Kickoff: J.Myers kicks 62 yards from SEA 35 to ARZ 3. Z.Knight to ARZ 26 for 23 yards (C.O'Toole). [special_teams]
+- Q2 3:27 (-5 yds) Penalty: J.Brissett pass short middle to T.McBride for 3 yards, TOUCHDOWN NULLIFIED by Penalty.PENALTY on ARZ-H.Froholdt, Ineligible Downfield Pass, 5 yards, enforced at SEA 3 - No Play. [nullified]
+- Q3 13:03 (-5 yds) Penalty: (Pass formation) PENALTY on ARZ-J.Williams, False Start, 5 yards, enforced at SEA 45 - No Play. [nullified]
+- Q3 15:00 (23 yds) Kickoff: J.Myers kicks 63 yards from SEA 35 to ARZ 2. Z.Knight to ARZ 25 for 23 yards (C.White). [special_teams]
+- Q4 11:54 (15 yds) Kickoff: J.Myers kicks 66 yards from SEA 35 to ARZ -1. E.Demercado MUFFS catch, recovered by ARZ-G.Dortch at ARZ 1. G.Dortch to ARZ 16 for 15 yards (B.Russell; P.O'Connell). [special_teams]
+
+**SEA Reconciliation Clues**
+
+- Windelta counted turnovers (3):
+- Q2 3:38 (0 yds) Fumble Recovery (Opponent): S.Darnold FUMBLES (Aborted) at SEA 2, RECOVERED by ARZ-Z.Collins at SEA 3. [fumble]
+- Q3 6:47 (2 yds) Sack Opp Fumble Recovery: (Shotgun) S.Darnold sacked at SEA 23 for -7 yards (J.Sweat). FUMBLES (J.Sweat), touched at SEA 26, RECOVERED by ARZ-J.Sweat at SEA 26. J.Sweat to SEA 24 for 2 yards (A.Lucas). [fumble]
+- Q3 9:48 (4 yds) Pass Interception Return: S.Darnold pass deep left intended for J.Smith-Njigba INTERCEPTED by D.Burke at SEA 23. D.Burke pushed ob at SEA 19 for 4 yards (R.Ouzts). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 3 shown):
+- Q2 2:50 (27 yds) Kickoff: C.Ryland kicks 63 yards from ARZ 35 to SEA 2. R.Shaheed to SEA 29 for 27 yards (K.Clark). FUMBLES (K.Clark), recovered by SEA-B.Russell at SEA 34. B.Russell to SEA 37 for 3 yards (E.Higgins).
+- Q4 4:03 (0 yds) Fumble Recovery (Own): D.Lock FUMBLES (Aborted) at SEA 29, touched at SEA 29, and recovers at SEA 30.
+- Q4 9:50 (10 yds) Kickoff: C.Ryland kicks onside 10 yards from ARZ 35 to ARZ 45. Z.Charbonnet (didn't try to advance) to ARZ 45 for no gain.
+
+- Excluded non-zero-yard plays (up to 16 shown):
+- Q1 15:00 (22 yds) Kickoff: C.Ryland kicks 52 yards from ARZ 35 to SEA 13. R.Shaheed to SEA 35 for 22 yards (A.Davis-Gaither; D.Taylor-Demerson). [special_teams]
+- Q1 2:52 (15 yds) Penalty: (Shotgun) S.Darnold pass incomplete deep right to J.Smith-Njigba. ARZ-G.Williams was injured during the play. PENALTY on ARZ-B.Baker, Unnecessary Roughness, 15 yards, enforced at ARZ 34 - No Play. [nullified]
+- Q2 0:23 (-1 yds) Rush: S.Darnold kneels to SEA 4 for -1 yards. [spike_kneel]
+- Q2 0:44 (-1 yds) Rush: S.Darnold kneels to SEA 5 for -1 yards. [spike_kneel]
+- Q2 1:37 (46 yds) Field Goal Good: J.Myers 46 yard field goal is GOOD, Center-C.Stoll, Holder-M.Dickson. [special_teams]
+- Q2 2:50 (27 yds) Kickoff: C.Ryland kicks 63 yards from ARZ 35 to SEA 2. R.Shaheed to SEA 29 for 27 yards (K.Clark). FUMBLES (K.Clark), recovered by SEA-B.Russell at SEA 34. B.Russell to SEA 37 for 3 yards (E.Higgins). [special_teams]
+- Q2 8:58 (-5 yds) Penalty: PENALTY on SEA-O.Oluwatimi, False Start, 5 yards, enforced at ARZ 1 - No Play. [nullified]
+- Q2 9:24 (2 yds) Penalty: (Shotgun) S.Darnold pass incomplete short right to J.Smith-Njigba (D.Burke).PENALTY on ARZ-D.Burke, Defensive Pass Interference, 2 yards, enforced at ARZ 3 - No Play. [nullified]
+- Q3 7:11 (-10 yds) Penalty: K.Walker left end to SEA 48 for 8 yards (B.Browning).PENALTY on SEA-N.Kallerup, Offensive Holding, 10 yards, enforced at SEA 40 - No Play. [nullified]
+- Q3 8:42 (18 yds) Kickoff: C.Ryland kicks 58 yards from ARZ 35 to SEA 7. R.Shaheed to SEA 25 for 18 yards (E.Higgins; S.Fehoko). [special_teams]
+- Q4 0:37 (-1 yds) Rush: D.Lock kneels to SEA 38 for -1 yards. [spike_kneel]
+- Q4 11:54 (32 yds) Field Goal Good: J.Myers 32 yard field goal is GOOD, Center-C.Stoll, Holder-M.Dickson. [special_teams]
+- Q4 1:18 (-1 yds) Rush:  D.Lock kneels to SEA 39 for -1 yards. [spike_kneel]
+- Q4 2:00 (-2 yds) Rush: D.Lock kneels to SEA 40 for -2 yards. [spike_kneel]
+- Q4 5:31 (34 yds) Field Goal Good: J.Myers 34 yard field goal is GOOD, Center-C.Stoll, Holder-M.Dickson. [special_teams]
+- Q4 9:50 (10 yds) Kickoff: C.Ryland kicks onside 10 yards from ARZ 35 to ARZ 45. Z.Charbonnet (didn't try to advance) to ARZ 45 for no gain. [special_teams]
+
+### 401772799 IND @ SEA (TOΔ max 0, YdsΔ max 5, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| IND | 220 | 215 | -5 | 1 | 1 | +0 | 14 | 14 | +0 |
+| SEA | 314 | 314 | +0 | 0 | 0 | +0 | 34 | 34 | +0 |
+
+**IND Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q4 0:11 (0 yds) Pass Interception Return: (Shotgun) P.Rivers pass deep middle intended for M.Pittman INTERCEPTED by C.Bryant (D.Witherspoon) at SEA 42. C.Bryant to SEA 42 for no gain. [interception]
+
+- Excluded non-zero-yard plays (up to 13 shown):
+- Q1 15:00 (26 yds) Kickoff: J.Myers kicks 63 yards from SEA 35 to IND 2. C.Owen to IND 28 for 26 yards (P.O'Connell). [special_teams]
+- Q1 3:40 (42 yds) Field Goal Good: B.Grupe 42 yard field goal is GOOD, Center-L.Rhodes, Holder-R.Sanchez. [special_teams]
+- Q2 10:03 (5 yds) Penalty: (Shotgun) J.Taylor up the middle to SEA 36 for 5 yards (B.Mafe).PENALTY on SEA-B.Mafe, Defensive Offside, 5 yards, enforced at SEA 41 - No Play. [nullified]
+- Q2 14:57 (6 yds) Punt: R.Sanchez punts 51 yards to SEA 9, Center-L.Rhodes. R.Shaheed to SEA 15 for 6 yards (T.Goodson). [special_teams]
+- Q2 8:26 (54 yds) Field Goal Good: B.Grupe 54 yard field goal is GOOD, Center-L.Rhodes, Holder-R.Sanchez. [special_teams]
+- Q2 8:43 (-4 yds) Penalty: (Run formation) PENALTY on IND-M.Goncalves, False Start, 4 yards, enforced at SEA 32 - No Play. [nullified]
+- Q2 9:44 (-5 yds) Penalty: (Shotgun) PENALTY on IND-J.Travis, False Start, 5 yards, enforced at SEA 36 - No Play. [nullified]
+- Q3 8:12 (-5 yds) Penalty: (Shotgun) PENALTY on IND, Delay of Game, 5 yards, enforced at SEA 49 - No Play. [nullified]
+- Q3 9:49 (44 yds) Kickoff: J.Myers kicks 64 yards from SEA 35 to IND 1. A.Abdullah pushed ob at IND 45 for 44 yards (D.Thomas). [special_teams]
+- Q4 0:18 (26 yds) Kickoff: J.Myers kicks 61 yards from SEA 35 to IND 4. C.Owen to IND 30 for 26 yards (E.Saubert). [special_teams]
+- Q4 0:47 (60 yds) Field Goal Good: B.Grupe 60 yard field goal is GOOD, Center-L.Rhodes, Holder-R.Sanchez. [special_teams]
+- Q4 12:01 (9 yds) Penalty: (Shotgun) P.Rivers pass incomplete short left to A.Pierce.PENALTY on SEA-J.Jobe, Defensive Pass Interference, 9 yards, enforced at IND 37 - No Play. [nullified]
+- Q4 2:27 (27 yds) Kickoff: J.Myers kicks 60 yards from SEA 35 to IND 5. A.Abdullah to IND 32 for 27 yards (N.Kallerup). [special_teams]
+
+**SEA Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q2 7:11 (0 yds) Rush: (Shotgun) S.Darnold scrambles left end to SEA 11 for 1 yard (N.Cross). FUMBLES (N.Cross), ball out of bounds at SEA 10.
+
+- Excluded non-zero-yard plays (up to 15 shown):
+- Q1 0:50 (47 yds) Field Goal Good: J.Myers 47 yard field goal is GOOD, Center-C.Stoll, Holder-M.Dickson. [special_teams]
+- Q1 3:40 (30 yds) Kickoff: B.Grupe kicks 57 yards from IND 35 to SEA 8. R.Shaheed to SEA 38 for 30 yards (A.Abdullah). [special_teams]
+- Q2 0:00 (52 yds) Field Goal Good: J.Myers 52 yard field goal is GOOD, Center-C.Stoll, Holder-M.Dickson. [special_teams]
+- Q2 14:43 (-5 yds) Penalty: (Shotgun) S.Darnold pass short middle to A.Barner to SEA 30 for 15 yards (Z.Franklin).PENALTY on SEA-A.Barner, Offensive Offside, 5 yards, enforced at SEA 15 - No Play. [nullified]
+- Q2 1:33 (18 yds) Kickoff: B.Grupe kicks 61 yards from IND 35 to SEA 4. R.Shaheed to SEA 22 for 18 yards (T.Goodson). [special_teams]
+- Q2 7:32 (-5 yds) Penalty: (Shotgun) PENALTY on SEA-C.Cross, False Start, 5 yards, enforced at SEA 15 - No Play. [nullified]
+- Q2 8:26 (4 yds) Kickoff: B.Grupe kicks 65 yards from IND 35 to SEA 0. R.Shaheed to SEA 42 for 42 yards (J.Tuimoloau; A.Ajiake).PENALTY on SEA-E.Saubert, Illegal Block Above the Waist, 10 yards, enforced at SEA 28. [special_teams]
+- Q3 15:00 (4 yds) Kickoff: B.Grupe kicks 63 yards from IND 35 to SEA 2. R.Shaheed to SEA 33 for 31 yards (J.Tuimoloau).Penalty on SEA-B.Russell, Offensive Holding, offsetting, enforced at SEA 29.Penalty on IND-J.Tuimoloau, Face Mask, offsetting. [special_teams]
+- Q3 5:55 (2 yds) Punt: M.Dickson punts 52 yards to IND 22, Center-C.Stoll. C.Owen to IND 24 for 2 yards (T.Okada). [special_teams]
+- Q3 9:49 (46 yds) Field Goal Good: J.Myers 46 yard field goal is GOOD, Center-C.Stoll, Holder-M.Dickson. [special_teams]
+- Q4 0:04 (-1 yds) Rush: S.Darnold kneels to SEA 41 for -1 yards. [spike_kneel]
+- Q4 0:18 (56 yds) Field Goal Good:  J.Myers 56 yard field goal is GOOD, Center-C.Stoll, Holder-M.Dickson. [special_teams]
+- Q4 0:47 (28 yds) Kickoff: B.Grupe kicks 56 yards from IND 35 to SEA 9. R.Shaheed to SEA 37 for 28 yards (J.Tuimoloau). [special_teams]
+- Q4 13:24 (32 yds) Field Goal Good:  J.Myers 32 yard field goal is GOOD, Center-C.Stoll, Holder-M.Dickson. [special_teams]
+- Q4 2:27 (30 yds) Field Goal Good: J.Myers 30 yard field goal is GOOD, Center-C.Stoll, Holder-M.Dickson. [special_teams]
+
+### 401772818 ARI @ DAL (TOΔ max 0, YdsΔ max 5, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| ARI | 340 | 338 | -2 | 0 | 0 | +0 | 10 | 10 | +0 |
+| DAL | 333 | 328 | -5 | 3 | 3 | +0 | 55 | 55 | +0 |
+
+**ARI Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q1 5:14 (-2 yds) Fumble Recovery (Own): J.Brissett FUMBLES (Aborted) at DAL 36, and recovers at DAL 36.
+- Q2 3:58 (0 yds) Blocked Punt Touchdown: Marshawn Kneeland Blocked Punt Recovery in End Zone (Brandon Aubrey Kick)
+
+- Excluded non-zero-yard plays (up to 12 shown):
+- Q1 3:38 (48 yds) Field Goal Good: C.Ryland 48 yard field goal is GOOD, Center-A.Brewer, Holder-P.O'Donnell. [special_teams]
+- Q1 7:36 (5 yds) Pass Incompletion: (Shotgun) J.Brissett pass incomplete deep left to T.McBride [J.Houston].PENALTY on DAL-M.Bell, Defensive Holding, 5 yards, enforced at 50 - No Play. [nullified]
+- Q2 3:58 (20 yds) Kickoff: B.Aubrey kicks 59 yards from DAL 35 to ARZ 6. G.Dortch pushed ob at ARZ 26 for 20 yards (C.Goodwin). [special_teams]
+- Q3 13:21 (-5 yds) Penalty: K.Beachum reported in as eligible.  Z.Knight up the middle to DAL 7 for no gain (D.Ezeiruaku; S.Thomas).PENALTY on ARZ, Illegal Formation, 5 yards, enforced at DAL 7 - No Play. [nullified]
+- Q3 15:00 (20 yds) Kickoff: B.Aubrey kicks 59 yards from DAL 35 to ARZ 6. G.Dortch to ARZ 26 for 20 yards (C.Goodwin). [special_teams]
+- Q3 2:31 (34 yds) Field Goal Good: C.Ryland 34 yard field goal is GOOD, Center-A.Brewer, Holder-P.O'Donnell. [special_teams]
+- Q3 7:15 (35 yds) Kickoff: B.Aubrey kicks 61 yards from DAL 35 to ARZ 4. G.Dortch to ARZ 39 for 35 yards (Z.Childress; P.Fant). [special_teams]
+- Q4 0:39 (-1 yds) Rush: J.Brissett kneels to ARZ 40 for -1 yards. [spike_kneel]
+- Q4 10:51 (27 yds) Kickoff: B.Aubrey kicks 59 yards from DAL 35 to ARZ 6. G.Dortch to ARZ 33 for 27 yards (M.Liufau). [special_teams]
+- Q4 12:59 (-10 yds) Punt: P.O'Donnell punts 47 yards to DAL 32, Center-A.Brewer, fair catch by K.Turpin.PENALTY on DAL-C.Carson, Offensive Holding, 10 yards, enforced at DAL 32. [special_teams]
+- Q4 7:20 (6 yds) Punt: P.O'Donnell punts 40 yards to DAL 31, Center-A.Brewer. K.Turpin pushed ob at DAL 37 for 6 yards (A.Davis-Gaither). [special_teams]
+- Q4 7:49 (-5 yds) Penalty: (Shotgun) PENALTY on ARZ-W.Hernandez, False Start, 5 yards, enforced at ARZ 35 - No Play. [nullified]
+
+**DAL Reconciliation Clues**
+
+- Windelta counted turnovers (3):
+- Q2 6:40 (1 yds) Fumble Recovery (Opponent): (Shotgun) D.Prescott pass short left to J.Ferguson to ARZ 32 for 10 yards (Ma.Wilson). FUMBLES (Ma.Wilson), touched at ARZ 26, RECOVERED by ARZ-B.Baker at ARZ 23. B.Baker to ARZ 24 for 1 yard (R.Flournoy; H.Luepke). [fumble]
+- Q4 1:29 (0 yds) Pass Interception Return: (Shotgun) D.Prescott pass deep right INTERCEPTED by D.Burke at ARZ 41. D.Burke to ARZ 41 for no gain (K.Turpin). [interception]
+- Q4 4:46 (0 yds) Fumble Recovery (Opponent): (Shotgun) D.Prescott pass short right to J.Williams to ARZ 39 for -2 yards (W.Johnson, C.Simon). FUMBLES (C.Simon), RECOVERED by ARZ-A.Davis-Gaither at ARZ 37. [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q4 11:43 (19 yds) Fumble Recovery (Own): (No Huddle, Shotgun) D.Prescott pass short left to G.Pickens to ARZ 27 for 16 yards (W.Johnson). FUMBLES (W.Johnson), and recovers at ARZ 24. ARZ-J.Thompson was injured during the play.
+- Q4 12:11 (22 yds) Fumble Recovery (Own): (No Huddle, Shotgun) D.Prescott pass short left to G.Pickens to 50 for 15 yards (G.Williams). FUMBLES (G.Williams), touched at ARZ 47, recovered by DAL-J.Williams at ARZ 43.
+
+- Excluded non-zero-yard plays (up to 12 shown):
+- Q1 15:00 (30 yds) Kickoff: C.Ryland kicks 61 yards from ARZ 35 to DAL 4. K.Turpin to DAL 34 for 30 yards (A.Davis-Gaither). [special_teams]
+- Q1 2:11 (-5 yds) Penalty: (Punt formation) PENALTY on DAL-C.Goodwin, False Start, 5 yards, enforced at DAL 16 - No Play. [nullified]
+- Q1 2:11 (5 yds) Punt: B.Anger punts 41 yards to ARZ 48, Center-T.Sieg. G.Dortch pushed ob at DAL 47 for 5 yards (B.Spann-Ford). [special_teams]
+- Q1 2:49 (-10 yds) Penalty: (Shotgun) D.Prescott pass short middle to C.Lamb to DAL 40 for 14 yards (B.Baker).PENALTY on DAL-T.Booker, Offensive Holding, 10 yards, enforced at DAL 26 - No Play. [nullified]
+- Q1 3:38 (20 yds) Kickoff: C.Ryland kicks 62 yards from ARZ 35 to DAL 3. K.Turpin to DAL 23 for 20 yards (E.Higgins). [special_teams]
+- Q2 0:02 (68 yds) Field Goal Missed: B.Aubrey 68 yard field goal is No Good, Wide Left, Center-T.Sieg, Holder-B.Anger. [special_teams]
+- Q2 0:49 (36 yds) Kickoff: C.Ryland kicks 63 yards from ARZ 35 to DAL 2. K.Turpin pushed ob at DAL 38 for 36 yards (D.Burke). [special_teams]
+- Q2 12:17 (24 yds) Kickoff: C.Ryland kicks 63 yards from ARZ 35 to DAL 2. K.Turpin to DAL 26 for 24 yards (S.Fehoko; O.Pappoe). [special_teams]
+- Q2 7:12 (8 yds) Pass Reception: (Shotgun) D.Prescott pass short right to G.Pickens to ARZ 24 for 8 yards (J.Thompson).PENALTY on DAL-J.Ferguson, Offensive Holding, 10 yards, enforced at ARZ 32 - No Play. [nullified]
+- Q3 12:48 (21 yds) Kickoff: C.Ryland kicks 59 yards from ARZ 35 to DAL 6. K.Turpin to DAL 27 for 21 yards (A.Davis-Gaither; C.Simon). [special_teams]
+- Q3 2:31 (20 yds) Kickoff: C.Ryland kicks 58 yards from ARZ 35 to DAL 7. K.Turpin pushed ob at DAL 27 for 20 yards (K.Clark). [special_teams]
+- Q3 7:15 (26 yds) Field Goal Good: B.Aubrey 26 yard field goal is GOOD, Center-T.Sieg, Holder-B.Anger. [special_teams]
+
+### 401772849 IND @ LAR (TOΔ max 0, YdsΔ max 5, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| IND | 333 | 332 | -1 | 3 | 3 | +0 | 88 | 88 | +0 |
+| LAR | 462 | 467 | +5 | 1 | 1 | +0 | 63 | 63 | +0 |
+
+**IND Reconciliation Clues**
+
+- Windelta counted turnovers (3):
+- Q1 12:55 (0 yds) Pass Interception Return: D.Jones pass deep right intended for A.Mitchell INTERCEPTED by K.Curl at LA 20. K.Curl to LA 20 for no gain (A.Mitchell). [interception]
+- Q3 11:44 (56 yds) Pass Reception: (Shotgun) D.Jones pass deep left to A.Mitchell to LA 1 for 75 yards [J.Verse]. FUMBLES, ball out of bounds in End Zone, Touchback. [fumble]
+- Q4 1:00 (0 yds) Pass Interception Return: (Shotgun) D.Jones pass deep left intended for M.Pittman INTERCEPTED by K.Curl at LA 44. K.Curl ran ob at LA 44 for no gain. [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 2:10 (-13 yds) Fumble Recovery (Own): (Shotgun) D.Jones sacked at IND 33 for -9 yards (J.Verse). FUMBLES (J.Verse), recovered by IND-B.Raimann at IND 29.
+
+- Excluded non-zero-yard plays (up to 15 shown):
+- Q1 15:00 (19 yds) Kickoff: J.Karty kicks 58 yards from LA 35 to IND 7. A.Gould to IND 26 for 19 yards (J.McCollough; O.Speights). [special_teams]
+- Q1 4:55 (52 yds) Field Goal Good: S.Shrader 52 yard field goal is GOOD, Center-L.Rhodes, Holder-R.Sanchez. [special_teams]
+- Q1 5:59 (-10 yds) Penalty: (Shotgun) D.Jones pass short middle to J.Taylor to LA 33 for no gain (J.Stewart; K.Curl).PENALTY on IND-B.Raimann, Offensive Holding, 10 yards, enforced at LA 33 - No Play. [nullified]
+- Q1 6:07 (-10 yds) Penalty: (Shotgun) D.Jones pass incomplete short left.PENALTY on IND-M.Pittman, Offensive Pass Interference, 10 yards, enforced at LA 23 - No Play. [nullified]
+- Q1 7:32 (38 yds) Kickoff: J.Karty kicks 55 yards from LA 35 to IND 10. A.Gould pushed ob at IND 48 for 38 yards (J.Karty). [special_teams]
+- Q2 0:07 (-1 yds) Rush: D.Jones kneels to IND 34 for -1 yards. [spike_kneel]
+- Q2 3:18 (-10 yds) Penalty: D.Jones pass incomplete short left.PENALTY on IND-D.Tucker, Offensive Holding, 10 yards, enforced at IND 44 - No Play. [nullified]
+- Q2 5:21 (16 yds) Kickoff: J.Karty kicks 57 yards from LA 35 to IND 8. A.Gould MUFFS catch, and recovers at IND 14. A.Gould to IND 30 for 16 yards (T.Reeder). [special_teams]
+- Q4 11:22 (-10 yds) Penalty: D.Jones pass short right to T.Warren to LA 5 for 12 yards (Q.Lake).PENALTY on IND-T.Warren, Offensive Pass Interference, 10 yards, enforced at LA 17 - No Play. [nullified]
+- Q4 1:00 (-5 yds) Penalty: (Shotgun) PENALTY on IND-Q.Nelson, False Start, 5 yards, enforced at IND 32 - No Play. [nullified]
+- Q4 1:33 (8 yds) Kickoff: J.Karty kicks 62 yards from LA 35 to IND 3. A.Gould to IND 21 for 18 yards (S.Dolac, X.Smith).PENALTY on IND-A.Ogletree, Offensive Holding, 10 yards, enforced at IND 21. [special_teams]
+- Q4 2:25 (-15 yds) Rush: J.Taylor left tackle for 53 yards, TOUCHDOWN NULLIFIED by Penalty.PENALTY on IND-A.Mitchell, Offensive Holding, 10 yards, enforced at LA 48. [nullified]
+- Q4 2:29 (-5 yds) Penalty: (Shotgun) PENALTY on IND-B.Raimann, False Start, 5 yards, enforced at IND 49 - No Play. [nullified]
+- Q4 2:29 (3 yds) Penalty: (Shotgun) D.Jones pass incomplete short right to J.Downs.PENALTY on LA-Q.Lake, Defensive Pass Interference, 3 yards, enforced at IND 44 - No Play. [nullified]
+- Q4 8:58 (38 yds) Field Goal Good: S.Shrader 38 yard field goal is GOOD, Center-L.Rhodes, Holder-R.Sanchez. [special_teams]
+
+**LAR Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q4 11:29 (0 yds) Fumble Recovery (Opponent): K.Williams up the middle to LA 22 for -5 yards (M.Hilton). FUMBLES (M.Hilton), RECOVERED by IND-A.Adebawore at LA 17. [fumble]
+
+- Excluded non-zero-yard plays (up to 16 shown):
+- Q1 4:55 (22 yds) Kickoff: S.Shrader kicks 61 yards from IND 35 to LA 4. J.Whittington to LA 26 for 22 yards (A.Ogletree; J.Edwards). [special_teams]
+- Q1 7:32 (42 yds) Field Goal Good:  J.Karty 42 yard field goal is GOOD, Center-A.Ward, Holder-E.Evans. [special_teams]
+- Q1 9:08 (-10 yds) Penalty: M.Stafford pass incomplete short left to K.Mumpfield.PENALTY on LA-T.Higbee, Offensive Holding, 10 yards, enforced at IND 25 - No Play. [nullified]
+- Q2 12:17 (23 yds) Kickoff: S.Shrader kicks 64 yards from IND 35 to LA 1. X.Smith to LA 24 for 23 yards (C.Muma). [special_teams]
+- Q2 5:21 (37 yds) Field Goal Good:  J.Karty 37 yard field goal is GOOD, Center-A.Ward, Holder-E.Evans. [special_teams]
+- Q2 7:51 (-10 yds) Penalty: K.Williams right tackle to IND 5 for 8 yards (D.Buckner).PENALTY on LA-X.Smith, Offensive Holding, 10 yards, enforced at IND 13 - No Play. [nullified]
+- Q3 15:00 (22 yds) Kickoff: S.Shrader kicks 62 yards from IND 35 to LA 3. J.Whittington to LA 30 for 27 yards (C.Muma; R.Thomas).PENALTY on IND, Illegal Formation, 5 yards, enforced at LA 30. [special_teams]
+- Q3 6:30 (16 yds) Punt: E.Evans punts 68 yards to IND 7, Center-A.Ward. A.Gould to IND 23 for 16 yards (S.Dolac). [special_teams]
+- Q3 9:43 (15 yds) Punt:  E.Evans punts 56 yards to IND 4, Center-A.Ward. A.Gould to IND 19 for 15 yards (O.Speights; A.Ward). [special_teams]
+- Q4 0:17 (-1 yds) Rush:  M.Stafford kneels to IND 47 for -1 yards. [spike_kneel]
+- Q4 0:43 (-1 yds) Rush: M.Stafford kneels to IND 46 for -1 yards. [spike_kneel]
+- Q4 11:34 (24 yds) Kickoff: S.Shrader kicks 62 yards from IND 35 to LA 3. X.Smith to LA 27 for 24 yards (S.Olubi). [special_teams]
+- Q4 5:18 (-5 yds) Penalty: M.Stafford pass short left to J.Whittington pushed ob at IND 15 for 2 yards (N.Cross).PENALTY on LA-K.Dotson, Ineligible Downfield Pass, 5 yards, enforced at IND 17 - No Play. [nullified]
+- Q4 5:23 (8 yds) Penalty: (No Huddle, Shotgun) M.Stafford pass incomplete deep left to T.Atwell.PENALTY on IND-M.Hilton, Defensive Pass Interference, 8 yards, enforced at IND 25 - No Play. [nullified]
+- Q4 6:21 (-10 yds) Penalty: (No Huddle, Shotgun) M.Stafford pass short right to D.Allen to IND 30 for 10 yards (N.Cross).PENALTY on LA-K.Dotson, Offensive Holding, 10 yards, enforced at IND 40 - No Play. [nullified]
+- Q4 8:58 (-7 yds) Kickoff: S.Shrader kicks 64 yards from IND 35 to LA 1. X.Smith to LA 30 for 29 yards (A.Ajiake).PENALTY on LA-J.Wallace, Offensive Holding, 10 yards, enforced at LA 27. [special_teams]
+
+### 401772859 TEN @ LV (TOΔ max 0, YdsΔ max 5, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| TEN | 225 | 230 | +5 | 3 | 3 | +0 | 34 | 34 | +0 |
+| LV | 226 | 226 | +0 | 1 | 1 | +0 | 27 | 27 | +0 |
+
+**TEN Reconciliation Clues**
+
+- Windelta counted turnovers (3):
+- Q2 0:16 (0 yds) Pass Interception Return: (Shotgun) C.Ward pass short left intended for C.Dike INTERCEPTED by D.White (J.Laulu) at LV 23. D.White to LV 23 for no gain (T.Spears). [interception]
+- Q2 6:12 (0 yds) Sack Opp Fumble Recovery: (Shotgun) C.Ward sacked at TEN 3 for -9 yards (D.White). FUMBLES (D.White) [D.White], RECOVERED by LV-T.Wilson at TEN 2. [fumble]
+- Q4 0:54 (0 yds) Sack Opp Fumble Recovery: (No Huddle, Shotgun) C.Ward sacked at TEN 43 for -11 yards. FUMBLES, RECOVERED by LV-T.Booker at TEN 39. [fumble]
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q1 1:45 (-5 yds) Penalty: (Shotgun) PENALTY on TEN-D.Moore, False Start, 5 yards, enforced at TEN 49 - No Play. [nullified]
+- Q1 4:07 (24 yds) Kickoff: D.Carlson kicks 57 yards from LV 35 to TEN 8. C.Dike to TEN 32 for 24 yards (J.Shorter; C.Lindenberg). [special_teams]
+- Q2 11:19 (18 yds) Punt: J.Hekker punts 49 yards to LV 27, Center-M.Cox. A.Bachman pushed ob at LV 45 for 18 yards (D.Mausi). [special_teams]
+- Q2 15:00 (25 yds) Punt: J.Hekker punts 47 yards to LV 10, Center-M.Cox. A.Bachman to LV 35 for 25 yards (J.Chestnut). [special_teams]
+- Q2 5:13 (28 yds) Kickoff: D.Carlson kicks 66 yards from LV 35 to TEN -1. C.Dike to TEN 27 for 28 yards (T.McCollum). [special_teams]
+- Q3 1:06 (46 yds) Field Goal Good: M.Wright 46 yard field goal is GOOD, Center-M.Cox, Holder-J.Hekker. [special_teams]
+- Q3 2:15 (-5 yds) Penalty: (Shotgun) PENALTY on TEN, Delay of Game, 5 yards, enforced at LV 27 - No Play. [nullified]
+- Q3 4:07 (4 yds) Pass Reception: (Shotgun) C.Ward pass short right to C.Dike to LV 21 for 3 yards (E.Roberts).PENALTY on LV-M.Crosby, Defensive Offside, 4 yards, enforced at LV 24 - No Play. [nullified]
+- Q3 7:04 (14 yds) Kickoff: D.Carlson kicks 58 yards from LV 35 to TEN 7. C.Dike to TEN 21 for 14 yards (D.Laube). [special_teams]
+- Q4 13:01 (4 yds) Punt: J.Hekker punts 53 yards to LV 26, Center-M.Cox. A.Bachman to LV 30 for 4 yards (J.Williams). [special_teams]
+- Q4 3:11 (3 yds) Pass Incompletion: (Shotgun) C.Ward pass incomplete short right to E.Ayomanor [J.Laulu].PENALTY on LV-E.Stokes, Defensive Pass Interference, 3 yards, enforced at LV 4 - No Play. [nullified]
+
+**LV Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q4 13:57 (1 yds) Pass Interception Return: G.Smith pass short left intended for M.Mayer INTERCEPTED by C.Barton [J.Simmons] at TEN 19. C.Barton to TEN 20 for 1 yard (M.Mayer). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 3:03 (6 yds) Kickoff: J.Hekker kicks onside 9 yards from TEN 35 to TEN 44. A.Bachman (didn't try to advance) pushed ob at TEN 41 for 3 yards.
+
+- Excluded non-zero-yard plays (up to 16 shown):
+- Q1 4:07 (50 yds) Field Goal Good: D.Carlson 50 yard field goal is GOOD, Center-J.Bobenmoyer, Holder-A.Cole. [special_teams]
+- Q1 4:26 (-5 yds) Penalty: (Field Goal formation) PENALTY on LV, Delay of Game, 5 yards, enforced at TEN 27 - No Play. [nullified]
+- Q2 0:05 (-1 yds) Rush: G.Smith kneels to LV 22 for -1 yards. [spike_kneel]
+- Q2 14:07 (5 yds) Pass Reception: (Shotgun) G.Smith pass short middle to M.Mayer to LV 43 for 7 yards (A.Hooker).PENALTY on TEN-J.Ward, Defensive Offside, 5 yards, enforced at LV 36 - No Play. [nullified]
+- Q2 2:00 (-5 yds) Penalty: (Shotgun) PENALTY on LV, Delay of Game, 5 yards, enforced at LV 47 - No Play. [nullified]
+- Q2 9:45 (5 yds) Sack: (Shotgun) G.Smith sacked at LV 28 for -13 yards (D.Jones).PENALTY on TEN-J.Armour-Davis, Illegal Contact, 5 yards, enforced at LV 41 - No Play. [nullified]
+- Q3 15:00 (29 yds) Kickoff: M.Wright kicks 64 yards from TEN 35 to LV 1. D.Laube to LV 30 for 29 yards (C.Gray). [special_teams]
+- Q3 1:06 (28 yds) Kickoff: M.Wright kicks 64 yards from TEN 35 to LV 1. D.Laube pushed ob at LV 29 for 28 yards (D.Baker). [special_teams]
+- Q3 7:28 (4 yds) Sack: (Shotgun) G.Smith sacked at TEN 15 for -8 yards (J.Ward).PENALTY on TEN-D.Jones, Face Mask, 4 yards, enforced at TEN 7 - No Play. [nullified]
+- Q4 0:31 (-1 yds) Rush: G.Smith kneels to TEN 41 for -1 yards. [spike_kneel]
+- Q4 0:47 (-1 yds) Rush: G.Smith kneels to TEN 40 for -1 yards. [spike_kneel]
+- Q4 10:42 (-5 yds) Penalty: (Shotgun) PENALTY on LV-A.Jeanty, False Start, 5 yards, enforced at TEN 49 - No Play. [nullified]
+- Q4 2:45 (-5 yds) Penalty: (Run formation) PENALTY on LV, Delay of Game, 5 yards, enforced at TEN 36 - No Play. [nullified]
+- Q4 3:03 (6 yds) Kickoff: J.Hekker kicks onside 9 yards from TEN 35 to TEN 44. A.Bachman (didn't try to advance) pushed ob at TEN 41 for 3 yards. [special_teams]
+- Q4 7:14 (29 yds) Field Goal Good: D.Carlson 29 yard field goal is GOOD, Center-J.Bobenmoyer, Holder-A.Cole. [special_teams]
+- Q4 8:24 (5 yds) Sack: (Shotgun) G.Smith sacked at TEN 15 for 0 yards (R.McCreary).PENALTY on TEN-J.Ward, Defensive Offside, 5 yards, enforced at TEN 15 - No Play. [nullified]
+
+### 401772872 CAR @ GB (TOΔ max 0, YdsΔ max 5, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| CAR | 265 | 260 | -5 | 1 | 1 | +0 | 39 | 39 | +0 |
+| GB | 369 | 369 | +0 | 2 | 2 | +0 | 42 | 42 | +0 |
+
+**CAR Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q2 13:00 (0 yds) Pass Interception Return: (Shotgun) B.Young pass deep right intended for X.Legette INTERCEPTED by X.McKinney at GB -8. Touchback. [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q2 14:24 (6 yds) Fumble Recovery (Own): B.Young sacked at GB 23 for -5 yards (X.McKinney). FUMBLES (X.McKinney) [X.McKinney], recovered by CAR-C.Hubbard at GB 20. C.Hubbard to GB 12 for 8 yards (K.Nixon).
+
+- Excluded non-zero-yard plays (up to 12 shown):
+- Q1 12:31 (6 yds) Punt: S.Martin punts 51 yards to GB 22, Center-J.Jansen. R.Doubs to GB 28 for 6 yards (B.Tremayne; M.Njongmeta). [special_teams]
+- Q1 12:51 (-9 yds) Penalty: Ji.Horn right end pushed ob at CAR 40 for 4 yards (X.McKinney).PENALTY on CAR-T.Tremble, Offensive Holding, 9 yards, enforced at CAR 36 - No Play. [nullified]
+- Q1 14:56 (-5 yds) Penalty: (Shotgun) PENALTY on CAR-C.Zavala, False Start, 5 yards, enforced at CAR 27 - No Play. [nullified]
+- Q1 15:00 (27 yds) Kickoff: B.McManus kicks 65 yards from GB 35 to CAR 0. T.Etienne to CAR 27 for 27 yards (E.Williams; Z.Anderson). [special_teams]
+- Q2 4:46 (5 yds) Pass Incompletion: B.Young pass incomplete short right to B.Tremayne.PENALTY on GB-K.Enagbare, Defensive Holding, 5 yards, enforced at GB 20 - No Play. [nullified]
+- Q2 7:47 (22 yds) Kickoff: B.McManus kicks 68 yards from GB 30 to CAR 2. T.Etienne to CAR 24 for 22 yards (T.Hopper). [special_teams]
+- Q2 7:53 (24 yds) Penalty: B.McManus kicks 65 yards from GB 35 to CAR 0. T.Etienne to CAR 24 for 24 yards (T.Hopper; K.Welch).PENALTY on GB-J.Bullard, Illegal Formation, 5 yards, enforced at GB 35 - No Play. [nullified]
+- Q3 2:19 (3 yds) Pass Incompletion: (Shotgun) B.Young pass incomplete short middle to X.Legette.PENALTY on GB-K.Nixon, Defensive Pass Interference, 3 yards, enforced at GB 4 - No Play. [nullified]
+- Q4 0:00 (49 yds) Field Goal Good: R.Fitzgerald 49 yard field goal is GOOD, Center-J.Jansen, Holder-S.Martin. [special_teams]
+- Q4 10:08 (-5 yds) Penalty: R.Dowdle left end ran ob at CAR 47 for 21 yards (X.McKinney).PENALTY on CAR, Illegal Formation, 5 yards, enforced at CAR 26 - No Play. [nullified]
+- Q4 2:32 (21 yds) Kickoff: B.McManus kicks 57 yards from GB 35 to CAR 8. T.Etienne ran ob at CAR 29 for 21 yards (A.Mosby). [special_teams]
+- Q4 8:52 (-5 yds) Penalty: (Shotgun) PENALTY on CAR-I.Ekwonu, False Start, 5 yards, enforced at CAR 24 - No Play. [nullified]
+
+**GB Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q1 6:42 (0 yds) Rush: S.Williams left end to CAR 15 for 1 yard (C.Rozeboom; Ja.Horn). FUMBLES (C.Rozeboom), RECOVERED by CAR-N.Scott at CAR 16. [fumble]
+- Q3 6:42 (36 yds) Pass Interception Return: J.Love pass deep middle intended for C.Watson INTERCEPTED by T.Moehrig [D.Brown] at CAR 26. T.Moehrig ran ob at GB 38 for 36 yards (E.Wilson). [interception]
+
+- Excluded non-zero-yard plays (up to 10 shown):
+- Q2 0:00 (27 yds) Field Goal Good: B.McManus 27 yard field goal is GOOD, Center-M.Orzech, Holder-D.Whelan. [special_teams]
+- Q2 1:04 (-10 yds) Rush: (No Huddle, Shotgun) J.Jacobs left tackle to CAR 45 for 3 yards (D.Brown; D.Wonnum).PENALTY on GB-E.Jenkins, Offensive Holding, 10 yards, enforced at CAR 48 - No Play. [nullified]
+- Q2 2:00 (-10 yds) Rush: (Shotgun) J.Jacobs up the middle to CAR 48 for 2 yards (T.Wharton; T.Moehrig).PENALTY on GB-S.Rhyan, Offensive Holding, 10 yards, enforced at 50 - No Play. [nullified]
+- Q2 2:22 (33 yds) Kickoff: R.Fitzgerald kicks 56 yards from CAR 35 to GB 9. S.Williams to GB 42 for 33 yards (A.Evans; D.Richardson). [special_teams]
+- Q2 7:53 (49 yds) Field Goal Good: B.McManus 49 yard field goal is GOOD, Center-M.Orzech, Holder-D.Whelan. [special_teams]
+- Q2 8:25 (-5 yds) Penalty: (Shotgun) PENALTY on GB-C.Watson, False Start, 5 yards, enforced at CAR 26 - No Play. [nullified]
+- Q2 9:33 (-4 yds) Penalty: PENALTY on GB-E.Jenkins, False Start, 4 yards, enforced at CAR 14 - No Play. [nullified]
+- Q3 10:38 (43 yds) Field Goal Missed: B.McManus 43 yard field goal is No Good, Wide Left, Center-M.Orzech, Holder-D.Whelan. [special_teams]
+- Q3 15:00 (19 yds) Kickoff: R.Fitzgerald kicks 52 yards from CAR 35 to GB 13. S.Williams pushed ob at GB 32 for 19 yards (L.Ransom). [special_teams]
+- Q3 2:12 (16 yds) Kickoff: R.Fitzgerald kicks 52 yards from CAR 35 to GB 13. S.Williams to GB 29 for 16 yards (T.Incoom). [special_teams]
+
+### 401772883 GB @ NYG (TOΔ max 0, YdsΔ max 5, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| GB | 296 | 291 | -5 | 0 | 0 | +0 | 48 | 48 | +0 |
+| NYG | 336 | 335 | -1 | 2 | 2 | +0 | 77 | 77 | +0 |
+
+**GB Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q1 9:06 (-1 yds) Pass Reception: (Shotgun) J.Love pass short left to L.Musgrave to NYG 47 for 1 yard (C.Flott). FUMBLES (C.Flott), touched at NYG 49, ball out of bounds at NYG 49.
+- Q2 0:38 (0 yds) Fumble Recovery (Own): (Shotgun) S.Rhyan to GB 33 for -5 yards. FUMBLES, recovered by GB-J.Love at GB 33. J.Love pass short right to L.Musgrave to GB 40 for 2 yards (D.Flannigan-Fowles). FUMBLES (D.Flannigan-Fowles), RECOVERED by NYG-D.Flannigan-Fowles at GB 41.The Replay Official reviewed the pass completion ruling, and the play was REVERSED.(Shotgun) S.Rhyan to GB 33 for -5 yards. FUMBLES, recovered by GB-J.Love at GB 33. J.Love pass incomplete short right to L.Musgrave (D.Flannigan-Fowles).
+
+- Excluded non-zero-yard plays (up to 8 shown):
+- Q1 10:28 (5 yds) Penalty: PENALTY on NYG-D.Lawrence, Encroachment, 5 yards, enforced at GB 25 - No Play. [nullified]
+- Q1 10:35 (14 yds) Kickoff: Y.Koo kicks 54 yards from NYG 35 to GB 11. B.Melton to GB 25 for 14 yards (D.Cambre). [special_teams]
+- Q1 3:26 (-10 yds) Penalty: D.Kinnard reported in as eligible.  J.Love pass incomplete short left to J.FitzPatrick.PENALTY on GB-R.Walker, Offensive Holding, 10 yards, enforced at NYG 34 - No Play. [nullified]
+- Q2 1:11 (23 yds) Kickoff: Y.Koo kicks 60 yards from NYG 35 to GB 5. B.Melton pushed ob at GB 28 for 23 yards (T.Fox). ** Injury Update: NYG-K.Black has returned to the game. [special_teams]
+- Q3 12:32 (35 yds) Penalty: (Shotgun) J.Love pass incomplete deep left to M.Golden. ** Injury Update: GB-Z.Tom has returned to the game. PENALTY on NYG-D.Belton, Defensive Pass Interference, 35 yards, enforced at NYG 38 - No Play. [nullified]
+- Q3 15:00 (33 yds) Kickoff: Y.Koo kicks 64 yards from NYG 35 to GB 1. S.Williams to GB 34 for 33 yards (Z.Barnes; D.Cambre). [special_teams]
+- Q4 0:21 (17 yds) Punt:  D.Whelan punts 61 yards to NYG 18, Center-M.Orzech. G.Olszewski to NYG 35 for 17 yards (M.Orzech). [special_teams]
+- Q4 5:04 (-10 yds) Rush: (Shotgun) E.Wilson left tackle to NYG 5 for 15 yards (J.Holland).PENALTY on GB-J.Whyle, Offensive Holding, 10 yards, enforced at NYG 20 - No Play. [nullified]
+
+**NYG Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q4 0:10 (0 yds) Sack Opp Fumble Recovery: J.Winston sacked at NYG 34 for -1 yards (M.Parsons). FUMBLES (M.Parsons), RECOVERED by GB-R.Gary at NYG 41. [fumble]
+- Q4 0:40 (0 yds) Pass Interception Return: (No Huddle, Shotgun) J.Winston pass deep left intended for J.Hyatt INTERCEPTED by E.Williams at GB -5. Touchback. [interception]
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q1 15:00 (35 yds) Kickoff: L.Havrisik kicks 65 yards from GB 35 to NYG 0. D.Banks to NYG 35 for 35 yards (E.Williams). [special_teams]
+- Q1 8:10 (-7 yds) Penalty: D.Singletary left guard to NYG 21 for 6 yards (I.McDuffie; Q.Walker).PENALTY on NYG-J.Runyan, Offensive Holding, 7 yards, enforced at NYG 15 - No Play.Penalty on NYG-I.Hodgins, Illegal Block Above the Waist, declined. [nullified]
+- Q2 0:20 (-1 yds) Rush: J.Winston kneels to NYG 27 for -1 yards. [spike_kneel]
+- Q2 12:37 (-10 yds) Punt: J.Gillan punts 44 yards to GB 26, Center-C.Kreiter. R.Doubs to GB 39 for 13 yards (Z.Barnes).PENALTY on GB-K.Enagbare, Offensive Holding, 10 yards, enforced at GB 26. [special_teams]
+- Q2 13:54 (20 yds) Kickoff: L.Havrisik kicks 62 yards from GB 35 to NYG 3. D.Banks to NYG 23 for 20 yards (A.Mosby). GB-A.Mosby was injured during the play. [special_teams]
+- Q2 1:11 (-15 yds) Penalty: Y.Koo extra point is GOOD, Center-C.Kreiter, Holder-J.Gillan.
+PENALTY on NYG-A.Schlottmann, Chop Block, 15 yards, enforced at GB 15 - No Play. [nullified]
+- Q2 2:00 (14 yds) Penalty: J.Winston pass incomplete short left to T.Johnson [C.Wooden].PENALTY on GB-I.McDuffie, Defensive Pass Interference, 14 yards, enforced at GB 15 - No Play. [nullified]
+- Q2 6:22 (-5 yds) Penalty: (Shotgun) PENALTY on NYG-J.Eluemunor, False Start, 5 yards, enforced at NYG 35 - No Play. [nullified]
+- Q2 7:39 (32 yds) Kickoff: L.Havrisik kicks 65 yards from GB 35 to NYG 0. D.Banks to NYG 32 for 32 yards (C.Brooks; Z.Anderson). ** Injury Update: GB-A.Mosby has returned to the game. [special_teams]
+- Q3 11:40 (21 yds) Kickoff: L.Havrisik kicks 59 yards from GB 35 to NYG 6. D.Banks to NYG 27 for 21 yards (A.Mosby). [special_teams]
+- Q4 10:16 (5 yds) Pass Reception: (Shotgun) J.Winston pass short middle to T.Tracy to GB 18 for 5 yards (N.Stackhouse).PENALTY on NYG-A.Thomas, Offensive Holding, 10 yards, enforced at GB 23 - No Play. [nullified]
+
+### 401772895 ARI @ TB (TOΔ max 0, YdsΔ max 5, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| ARI | 386 | 386 | +0 | 2 | 2 | +0 | 33 | 33 | +0 |
+| TB | 279 | 274 | -5 | 0 | 0 | +0 | 40 | 40 | +0 |
+
+**ARI Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q1 3:47 (5 yds) Pass Interception Return: (Shotgun) J.Brissett pass short middle intended for M.Wilson INTERCEPTED by A.Winfield (J.Dean) at TB 9. A.Winfield to TB 14 for 5 yards (Z.Knight; G.Dortch). [interception]
+- Q3 14:07 (0 yds) Fumble Recovery (Opponent): J.Fryar reported in as eligible.  Z.Knight up the middle to TB 43 for 2 yards (L.Hall). FUMBLES (L.Hall), RECOVERED by TB-T.Smith at TB 40. [fumble]
+
+- Excluded non-zero-yard plays (up to 9 shown):
+- Q2 0:00 (52 yds) Field Goal Good:  C.Ryland 52 yard field goal is GOOD, Center-A.Brewer, Holder-M.Haack. [special_teams]
+- Q2 13:26 (8 yds) Punt: M.Haack punts 48 yards to TB 22, Center-A.Brewer. K.Johnson to TB 30 for 8 yards (C.Tindall). [special_teams]
+- Q2 1:36 (18 yds) Kickoff: C.McLaughlin kicks 60 yards from TB 35 to ARZ 5. A.Baccellia to ARZ 23 for 18 yards (J.Hayes). [special_teams]
+- Q2 6:21 (15 yds) Punt: M.Haack punts 44 yards to TB 35, Center-A.Brewer. K.Johnson pushed ob at 50 for 15 yards (K.Crawford). [special_teams]
+- Q2 8:02 (30 yds) Kickoff: C.McLaughlin kicks 64 yards from TB 35 to ARZ 1. G.Dortch to ARZ 31 for 30 yards (S.Dennis). [special_teams]
+- Q3 15:00 (43 yds) Kickoff: C.McLaughlin kicks 66 yards from TB 35 to ARZ -1. A.Baccellia pushed ob at ARZ 42 for 43 yards (J.Parrish). [special_teams]
+- Q3 3:56 (27 yds) Kickoff: C.McLaughlin kicks 64 yards from TB 35 to ARZ 1. A.Baccellia to ARZ 28 for 27 yards (A.Nelson). [special_teams]
+- Q3 7:50 (43 yds) Field Goal Missed: C.Ryland 43 yard field goal is No Good, Wide Right, Center-A.Brewer, Holder-M.Haack. [special_teams]
+- Q4 8:58 (21 yds) Kickoff: C.McLaughlin kicks 59 yards from TB 35 to ARZ 6. A.Baccellia to ARZ 27 for 21 yards (R.Miller). ** Injury Update: ARZ-A.Baccellia has returned to the game. [special_teams]
+
+**TB Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q1 12:08 (-3 yds) Fumble Recovery (Own): (Shotgun) B.Mayfield sacked at TB 40 for -8 yards (J.Sweat). FUMBLES (J.Sweat), recovered by TB-R.White at TB 38. R.White to TB 45 for 7 yards (B.Baker, A.Davis-Gaither).
+
+- Excluded non-zero-yard plays (up to 17 shown):
+- Q1 0:27 (5 yds) Penalty: (Shotgun) PENALTY on ARZ-B.Browning, Neutral Zone Infraction, 5 yards, enforced at TB 24 - No Play. [nullified]
+- Q1 0:59 (-10 yds) Penalty: (Shotgun) B.Mayfield pass deep middle to E.Egbuka to ARZ 45 for 21 yards (B.Baker).PENALTY on TB-T.Wirfs, Offensive Holding, 10 yards, enforced at TB 34 - No Play. [nullified]
+- Q1 12:21 (-5 yds) Penalty: PENALTY on TB-P.Durham, False Start, 5 yards, enforced at ARZ 47 - No Play. [nullified]
+- Q1 13:28 (-5 yds) Penalty: (Shotgun) PENALTY on TB-L.Goedeke, False Start, 5 yards, enforced at TB 33 - No Play. [nullified]
+- Q1 15:00 (26 yds) Kickoff: C.Ryland kicks 64 yards from ARZ 35 to TB 1. K.Johnson to TB 27 for 26 yards (C.Tindall; B.Ojulari). [special_teams]
+- Q2 15:00 (1 yds) Punt: R.Dixon punts 56 yards to ARZ 22, Center-E.Deckers. G.Dortch ran ob at ARZ 23 for 1 yard (D.Culp). [special_teams]
+- Q2 1:52 (-10 yds) Penalty: B.Irving right end for 1 yard, TOUCHDOWN NULLIFIED by Penalty.PENALTY on TB-P.Durham, Offensive Holding, 10 yards, enforced at ARZ 1 - No Play. [nullified]
+- Q2 2:35 (-10 yds) Penalty: (Shotgun) B.Mayfield pass short right to R.White for 15 yards, TOUCHDOWN NULLIFIED by Penalty.PENALTY on TB-T.Johnson, Offensive Pass Interference, 10 yards, enforced at ARZ 15 - No Play. [nullified]
+- Q2 8:02 (25 yds) Field Goal Good: C.McLaughlin 25 yard field goal is GOOD, Center-E.Deckers, Holder-R.Dixon. [special_teams]
+- Q2 9:47 (5 yds) Penalty: PENALTY on ARZ-D.Stills, Encroachment, 5 yards, enforced at ARZ 45 - No Play. [nullified]
+- Q3 12:57 (-10 yds) Punt: R.Dixon punts 42 yards to ARZ 20, Center-E.Deckers, fair catch by G.Dortch.PENALTY on ARZ-K.Crawford, Offensive Holding, 10 yards, enforced at ARZ 20. [special_teams]
+- Q4 0:31 (-1 yds) Rush: B.Mayfield kneels to ARZ 20 for -1 yards. [spike_kneel]
+- Q4 0:51 (-1 yds) Rush: B.Mayfield kneels to ARZ 19 for -1 yards. [spike_kneel]
+- Q4 0:52 (-2 yds) Rush: B.Mayfield kneels to ARZ 18 for -2 yards. [spike_kneel]
+- Q4 2:00 (5 yds) Punt: R.Dixon punts 59 yards to ARZ 4, Center-E.Deckers. G.Dortch to ARZ 9 for 5 yards (M.Watts; J.Hayes). [special_teams]
+- Q4 4:58 (20 yds) Kickoff: C.Ryland kicks 64 yards from ARZ 35 to TB 1. K.Johnson to TB 21 for 20 yards (K.Crawford). [special_teams]
+- Q4 8:58 (57 yds) Field Goal Good: C.McLaughlin 57 yard field goal is GOOD, Center-E.Deckers, Holder-R.Dixon. [special_teams]
+
+### 401772815 BUF @ ATL (TOΔ max 0, YdsΔ max 4, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| BUF | 291 | 287 | -4 | 2 | 2 | +0 | 64 | 64 | +0 |
+| ATL | 443 | 443 | +0 | 0 | 0 | +0 | 35 | 35 | +0 |
+
+**BUF Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q2 0:15 (0 yds) Pass Interception Return: (Shotgun) J.Allen pass deep middle intended for K.Shakir INTERCEPTED by D.Alford at BUF 49. D.Alford to BUF 45 for 4 yards (D.Knox).The Replay Official reviewed the runner was not down by contact ruling, and the play was REVERSED.(Shotgun) J.Allen pass deep middle intended for K.Shakir INTERCEPTED by D.Alford at BUF 49. D.Alford to BUF 49 for no gain (K.Shakir). [interception]
+- Q4 0:51 (6 yds) Pass Interception Return: (Shotgun) J.Allen pass short left intended for K.Coleman INTERCEPTED by D.Malone (Z.Harrison) at ATL 7. D.Malone to ATL 13 for 6 yards. [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q2 9:13 (5 yds) Rush: (Shotgun) J.Allen scrambles left end to BUF 49 for 5 yards (K.Elliss). FUMBLES (K.Elliss), ball out of bounds at BUF 49.
+- Q4 11:08 (-4 yds) Fumble Recovery (Own): J.Allen FUMBLES (Aborted) at BUF 45, recovered by BUF-E.Moore at BUF 45. E.Moore to BUF 44 for -1 yards (J.Pearce).
+
+- Excluded non-zero-yard plays (up to 8 shown):
+- Q1 0:26 (25 yds) Kickoff: B.Pinion kicks 64 yards from ATL 35 to BUF 1. B.Codrington to BUF 26 for 25 yards (F.Franks). [special_teams]
+- Q1 12:15 (24 yds) Kickoff: B.Pinion kicks 62 yards from ATL 35 to BUF 3. B.Codrington to BUF 27 for 24 yards (K.Hodge). [special_teams]
+- Q1 9:25 (2 yds) Pass Reception: (Shotgun) J.Allen pass short right to K.Shakir to ATL 12 for 2 yards (D.Alford).PENALTY on BUF-T.Shavers, Offensive Holding, 10 yards, enforced at ATL 14 - No Play. [nullified]
+- Q2 11:09 (22 yds) Kickoff: B.Pinion kicks 65 yards from ATL 35 to BUF 0. B.Codrington to BUF 22 for 22 yards (J.Walker). [special_teams]
+- Q3 15:00 (19 yds) Kickoff: B.Pinion kicks 57 yards from ATL 35 to BUF 8. B.Codrington to BUF 27 for 19 yards (F.Franks). [special_teams]
+- Q3 3:23 (5 yds) Pass Incompletion: (Shotgun) J.Allen pass incomplete short right to Ty.Johnson.PENALTY on ATL-M.Hughes, Defensive Holding, 5 yards, enforced at BUF 41 - No Play. [nullified]
+- Q3 4:48 (5 yds) Pass Incompletion: J.Allen pass incomplete short right to K.Coleman [D.Onyemata].PENALTY on ATL-A.Terrell, Defensive Holding, 5 yards, enforced at BUF 30 - No Play. [nullified]
+- Q4 1:43 (24 yds) Kickoff: B.Pinion kicks 59 yards from ATL 35 to BUF 6. B.Codrington pushed ob at BUF 30 for 24 yards (K.Hodge). [special_teams]
+
+**ATL Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q1 14:55 (0 yds) Fumble Recovery (Opponent): (Shotgun) B.Robinson left guard to ATL 34 for 3 yards (D.Williams; S.Thompson). FUMBLES (D.Williams), RECOVERED by BUF-C.Benford at ATL 46.PENALTY on BUF-G.Rousseau, Defensive Offside, 5 yards, enforced at ATL 31 - No Play.
+- Q4 12:31 (0 yds) Blocked Field Goal: J.Romo 37 yard field goal is BLOCKED (G.Rousseau), Center-L.McCullough, Holder-B.Pinion, RECOVERED by BUF-J.Hancock at BUF 39.
+
+- Excluded non-zero-yard plays (up to 15 shown):
+- Q1 15:00 (25 yds) Kickoff: M.Prater kicks 59 yards from BUF 35 to ATL 6. J.Agnew to ATL 31 for 25 yards (D.Williams). [special_teams]
+- Q1 4:03 (-5 yds) Penalty: (Shotgun) PENALTY on ATL-K.Pitts, False Start, 5 yards, enforced at ATL 46 - No Play. [nullified]
+- Q1 4:06 (5 yds) Pass Incompletion: (Shotgun) M.Penix pass incomplete short left to K.Pitts.PENALTY on BUF-T.White, Defensive Pass Interference, 5 yards, enforced at ATL 41 - No Play. [nullified]
+- Q1 6:37 (11 yds) Punt: B.Pinion punts 50 yards to BUF 15, Center-L.McCullough. B.Codrington to BUF 26 for 11 yards (M.Ford; J.Woods). [special_teams]
+- Q1 7:55 (-5 yds) Penalty: (Shotgun) PENALTY on ATL-J.Matthews, False Start, 5 yards, enforced at ATL 42 - No Play. [nullified]
+- Q1 8:01 (7 yds) Kickoff: M.Prater kicks 60 yards from BUF 35 to ATL 5. J.Agnew to ATL 27 for 22 yards (J.Andreessen).PENALTY on BUF-S.Franklin, Unnecessary Roughness, 15 yards, enforced at ATL 27. [special_teams]
+- Q2 11:51 (5 yds) Sack: (Shotgun) M.Penix sacked at ATL 8 for -6 yards (J.Bosa).PENALTY on BUF-E.Oliver, Defensive Offside, 5 yards, enforced at ATL 14 - No Play. [nullified]
+- Q3 6:17 (-7 yds) Punt: B.Pinion punts 39 yards to BUF 27, Center-L.McCullough. B.Codrington to BUF 41 for 14 yards (T.Allgeier).PENALTY on BUF-C.Lewis, Offensive Holding, 10 yards, enforced at BUF 30. [special_teams]
+- Q3 9:23 (16 yds) Kickoff: M.Prater kicks 55 yards from BUF 35 to ATL 10. D.Thompkins to ATL 26 for 16 yards (J.Hancock). [special_teams]
+- Q4 0:41 (-1 yds) Rush: M.Penix kneels to ATL 12 for -1 yards. [spike_kneel]
+- Q4 14:16 (9 yds) Pass Incompletion: (Shotgun) M.Penix pass incomplete deep middle to C.Washington.PENALTY on BUF-C.Benford, Defensive Pass Interference, 9 yards, enforced at BUF 46 - No Play. [nullified]
+- Q4 1:43 (33 yds) Field Goal Good: J.Romo 33 yard field goal is GOOD, Center-L.McCullough, Holder-B.Pinion. [special_teams]
+- Q4 2:00 (5 yds) Penalty: PENALTY on BUF-J.Phillips, Encroachment, 5 yards, enforced at BUF 14 - No Play. [nullified]
+- Q4 5:30 (-5 yds) Penalty: (Shotgun) PENALTY on ATL-E.Wilkinson, False Start, 5 yards, enforced at ATL 29 - No Play. [nullified]
+- Q4 8:43 (7 yds) Punt: B.Pinion punts 51 yards to BUF 26, Center-L.McCullough. B.Codrington to BUF 33 for 7 yards (D.Hellams; K.Hodge). [special_teams]
+
+### 401772837 PHI @ KC (TOΔ max 0, YdsΔ max 4, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| PHI | 216 | 212 | -4 | 0 | 0 | +0 | 48 | 48 | +0 |
+| KC | 294 | 294 | +0 | 1 | 1 | +0 | 45 | 45 | +0 |
+
+**PHI Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q1 14:55 (-3 yds) Fumble Recovery (Own): (Shotgun) J.Hurts sacked at PHI 24 for -7 yards. FUMBLES, recovered by PHI-G.Calcaterra at PHI 26. G.Calcaterra to PHI 28 for 2 yards (L.Chenal).
+- Q4 3:00 (6 yds) Kickoff: H.Butker kicks onside 7 yards from KC 35 to KC 42. A.Brown (didn't try to advance) to KC 41 for 1 yard.
+
+- Excluded non-zero-yard plays (up to 16 shown):
+- Q1 12:20 (5 yds) Penalty: J.Hurts left guard to PHI 42 for 2 yards (T.McDuffie).PENALTY on KC-C.Omenihu, Defensive Offside, 5 yards, enforced at PHI 40 - No Play. [nullified]
+- Q1 13:25 (5 yds) Penalty: (Shotgun) PENALTY on KC-C.Jones, Neutral Zone Infraction, 5 yards, enforced at PHI 28 - No Play. [nullified]
+- Q1 15:00 (26 yds) Kickoff: H.Butker kicks 60 yards from KC 35 to PHI 5. J.Metchie to PHI 31 for 26 yards (J.Bassa). [special_teams]
+- Q1 8:36 (17 yds) Punt: B.Mann punts 60 yards to KC 18, Center-C.Hughlett. N.Remigio to KC 35 for 17 yards (K.Granson). [special_teams]
+- Q2 0:00 (58 yds) Field Goal Good: J.Elliott 58 yard field goal is GOOD, Center-C.Hughlett, Holder-B.Mann. [special_teams]
+- Q2 0:02 (-4 yds) Penalty: (Field Goal formation) PENALTY on PHI-C.Hughlett, False Start, 4 yards, enforced at KC 35 - No Play. [nullified]
+- Q2 10:55 (-5 yds) Penalty: (Shotgun) PENALTY on PHI-L.Dickerson, False Start, 5 yards, enforced at PHI 28 - No Play. [nullified]
+- Q2 11:42 (21 yds) Kickoff: H.Butker kicks 62 yards from KC 35 to PHI 3. J.Metchie to PHI 24 for 21 yards (K.Knowles). [special_teams]
+- Q2 2:44 (22 yds) Kickoff: H.Butker kicks 64 yards from KC 35 to PHI 1. J.Metchie to PHI 23 for 22 yards (J.Bassa). [special_teams]
+- Q2 8:36 (25 yds) Punt: B.Mann punts 70 yards to KC 6, Center-C.Hughlett. N.Remigio to KC 31 for 25 yards (J.Trotter). [special_teams]
+- Q2 9:44 (-10 yds) Penalty: (Shotgun) J.Hurts scrambles up the middle to PHI 34 for 5 yards (T.McDuffie).PENALTY on PHI-C.Jurgens, Offensive Holding, 10 yards, enforced at PHI 29 - No Play. [nullified]
+- Q3 11:28 (51 yds) Field Goal Good: J.Elliott 51 yard field goal is GOOD, Center-C.Hughlett, Holder-B.Mann. [special_teams]
+- Q3 8:00 (-5 yds) Penalty: (Shotgun) PENALTY on PHI-L.Johnson, False Start, 5 yards, enforced at PHI 38 - No Play. [nullified]
+- Q4 0:39 (-1 yds) Rush: J.Hurts kneels to KC 32 for -1 yards. [spike_kneel]
+- Q4 1:13 (-1 yds) Rush: J.Hurts kneels to KC 31 for -1 yards. [spike_kneel]
+- Q4 3:00 (6 yds) Kickoff: H.Butker kicks onside 7 yards from KC 35 to KC 42. A.Brown (didn't try to advance) to KC 41 for 1 yard. [special_teams]
+
+**KC Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q4 13:07 (41 yds) Pass Interception Return: (Shotgun) P.Mahomes pass short middle intended for T.Kelce INTERCEPTED by A.Mukuba [J.Carter] at PHI 0. A.Mukuba pushed ob at PHI 41 for 41 yards (J.Simmons). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q3 13:00 (-1 yds) Fumble Recovery (Own): M.Caliendo reported in as eligible.  K.Hunt right guard to KC 35 for -1 yards (J.Carter, N.Smith). FUMBLES (N.Smith), and recovers at KC 35.
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q1 0:46 (25 yds) Kickoff: J.Elliott kicks 59 yards from PHI 35 to KC 6. B.Smith to KC 31 for 25 yards (S.Brown; C.DeJean). [special_teams]
+- Q1 5:00 (58 yds) Field Goal Missed: H.Butker 58 yard field goal is No Good, Wide Right, Center-J.Winchester, Holder-M.Araiza. [special_teams]
+- Q1 5:38 (-5 yds) Penalty: (Shotgun) PENALTY on KC-K.Hunt, False Start, 5 yards, enforced at PHI 38 - No Play. [nullified]
+- Q2 11:42 (56 yds) Field Goal Good: H.Butker 56 yard field goal is GOOD, Center-J.Winchester, Holder-M.Araiza. [special_teams]
+- Q3 10:38 (-9 yds) Punt: M.Araiza punts 47 yards to PHI 19, Center-J.Winchester, fair catch by J.Dotson.PENALTY on PHI-S.Brown, Offensive Holding, 9 yards, enforced at PHI 19. [special_teams]
+- Q3 11:28 (21 yds) Kickoff: J.Elliott kicks 57 yards from PHI 35 to KC 8. N.Remigio to KC 29 for 21 yards (K.Granson). [special_teams]
+- Q3 15:00 (22 yds) Kickoff: J.Elliott kicks 60 yards from PHI 35 to KC 5. N.Remigio to KC 27 for 22 yards (K.Granson; K.Ringo). [special_teams]
+- Q4 3:14 (-10 yds) Penalty: (No Huddle, Shotgun) P.Mahomes scrambles right guard to PHI 35 for 4 yards (J.Campbell).PENALTY on KC-J.Taylor, Offensive Holding, 10 yards, enforced at PHI 39 - No Play. [nullified]
+- Q4 3:55 (15 yds) Penalty: (Shotgun) P.Mahomes pass incomplete deep left to M.Brown (Q.Mitchell).PENALTY on PHI-J.Campbell, Roughing the Passer, 15 yards, enforced at KC 25 - No Play. [nullified]
+- Q4 7:09 (14 yds) Punt: M.Araiza punts 69 yards to PHI 2, Center-J.Winchester. J.Dotson to PHI 16 for 14 yards (J.Winchester). [special_teams]
+- Q4 7:48 (27 yds) Kickoff: J.Elliott kicks 66 yards from PHI 35 to KC -1. B.Smith to KC 26 for 27 yards (K.Ringo). [special_teams]
+
+### 401772852 MIA @ CAR (TOΔ max 0, YdsΔ max 4, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| MIA | 248 | 248 | +0 | 0 | 0 | +0 | 64 | 64 | +0 |
+| CAR | 418 | 422 | +4 | 2 | 2 | +0 | 46 | 46 | +0 |
+
+**MIA Reconciliation Clues**
+
+- Excluded non-zero-yard plays (up to 9 shown):
+- Q1 15:00 (24 yds) Kickoff: R.Fitzgerald kicks 62 yards from CAR 35 to MIA 3. D.Eskridge to MIA 27 for 24 yards (B.Tremayne; D.Dallas). [special_teams]
+- Q1 9:03 (43 yds) Field Goal Good: R.Patterson 43 yard field goal is GOOD, Center-J.Cardona, Holder-J.Bailey. [special_teams]
+- Q2 14:01 (5 yds) Pass Reception: T.Tagovailoa pass short right to D.Achane to CAR 47 for 2 yards (T.Wallace).PENALTY on CAR-D.Brown, Defensive Offside, 5 yards, enforced at CAR 49 - No Play. [nullified]
+- Q2 3:24 (23 yds) Kickoff: R.Fitzgerald kicks 63 yards from CAR 35 to MIA 2. M.Washington to MIA 25 for 23 yards (T.Thomas; L.Ransom). [special_teams]
+- Q3 11:26 (19 yds) Pass Reception: (Shotgun) T.Tagovailoa pass short left to J.Waddle to MIA 41 for 19 yards (T.Moehrig; C.Rozeboom).PENALTY on MIA-C.Strange, Offensive Holding, 10 yards, enforced at MIA 22 - No Play. [nullified]
+- Q3 12:15 (20 yds) Kickoff: R.Fitzgerald kicks 60 yards from CAR 35 to MIA 5. M.Washington to MIA 25 for 20 yards (M.Njongmeta; D.Dallas). [special_teams]
+- Q4 13:29 (-5 yds) Punt: J.Bailey punts 43 yards to CAR 20, Center-J.Cardona, fair catch by D.Dallas.PENALTY on MIA-E.Bonner, Illegal Formation, 5 yards, enforced at CAR 20. [special_teams]
+- Q4 1:59 (15 yds) Kickoff: R.Fitzgerald kicks 58 yards from CAR 35 to MIA 7. M.Washington to MIA 22 for 15 yards (B.Martin-Scott). [special_teams]
+- Q4 6:10 (40 yds) Kickoff: R.Fitzgerald kicks 62 yards from CAR 35 to MIA 3. M.Washington to MIA 43 for 40 yards (R.Fitzgerald; K.Barnes). [special_teams]
+
+**CAR Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q1 6:37 (2 yds) Sack Opp Fumble Recovery: (Shotgun) B.Young sacked at MIA 36 for -6 yards (B.Chubb). FUMBLES (B.Chubb) [B.Chubb], RECOVERED by MIA-B.Chubb at MIA 40. B.Chubb to MIA 42 for 2 yards (T.Tremble). [fumble]
+- Q2 14:13 (7 yds) Pass Interception Return: B.Young pass deep middle intended for X.Legette INTERCEPTED by M.Fitzpatrick at MIA 44. M.Fitzpatrick to CAR 49 for 7 yards (R.Dowdle). [interception]
+
+- Excluded non-zero-yard plays (up to 23 shown):
+- Q1 7:35 (7 yds) Pass Reception: (Shotgun) B.Young pass short left to R.Dowdle to MIA 31 for 7 yards (M.Fitzpatrick).PENALTY on MIA-J.Jones, Defensive Holding, 5 yards, enforced at MIA 38 - No Play. [nullified]
+- Q1 9:03 (24 yds) Kickoff: R.Patterson kicks 58 yards from MIA 35 to CAR 7. D.Dallas to CAR 31 for 24 yards (M.Judon; M.Fitzpatrick). [special_teams]
+- Q2 0:00 (35 yds) Field Goal Good: R.Fitzgerald 35 yard field goal is GOOD, Center-J.Jansen, Holder-S.Martin. [special_teams]
+- Q2 0:07 (-5 yds) Penalty: (Shotgun) PENALTY on CAR-T.Moton, False Start, 5 yards, enforced at MIA 12 - No Play. [nullified]
+- Q2 0:28 (-6 yds) Penalty: (Shotgun) PENALTY on CAR-T.Tremble, False Start, 6 yards, enforced at MIA 24 - No Play. [nullified]
+- Q2 0:58 (-5 yds) Pass Incompletion: (Shotgun) B.Young pass incomplete short left to X.Legette.PENALTY on CAR-T.Moton, Illegal Formation, 5 yards, enforced at MIA 46 - No Play. [nullified]
+- Q2 10:07 (-5 yds) Penalty: PENALTY on CAR-X.Legette, False Start, 5 yards, enforced at CAR 35 - No Play. [nullified]
+- Q2 10:48 (19 yds) Kickoff: R.Patterson kicks 60 yards from MIA 35 to CAR 5. D.Dallas to CAR 24 for 19 yards (E.Campbell). [special_teams]
+- Q2 14:55 (24 yds) Kickoff: R.Patterson kicks 61 yards from MIA 35 to CAR 4. D.Dallas to CAR 28 for 24 yards (M.Judon). [special_teams]
+- Q3 0:15 (7 yds) Punt: S.Martin punts 45 yards to MIA 27, Center-J.Jansen. M.Washington to MIA 34 for 7 yards (N.Scott; K.Barnes). [special_teams]
+- Q3 12:15 (49 yds) Field Goal Good: R.Fitzgerald 49 yard field goal is GOOD, Center-J.Jansen, Holder-S.Martin. [special_teams]
+- Q3 14:01 (-5 yds) Penalty: (Shotgun) PENALTY on CAR, Delay of Game, 5 yards, enforced at MIA 17 - No Play. [nullified]
+- Q3 15:00 (23 yds) Kickoff: R.Patterson kicks 58 yards from MIA 35 to CAR 7. D.Dallas to CAR 30 for 23 yards (J.Brents). [special_teams]
+- Q3 7:08 (7 yds) Punt: S.Martin punts 55 yards to MIA 17, Center-J.Jansen. M.Washington to MIA 24 for 7 yards (N.Scott). [special_teams]
+- Q3 7:24 (-5 yds) Penalty: (Punt formation) PENALTY on CAR, Delay of Game, 5 yards, enforced at CAR 33 - No Play. [nullified]
+- Q4 0:26 (-1 yds) Rush:  B.Young kneels to CAR 39 for -1 yards. [spike_kneel]
+- Q4 0:50 (-2 yds) Rush: B.Young kneels to CAR 40 for -2 yards. [spike_kneel]
+- Q4 0:55 (10 yds) Pass Incompletion: (Shotgun) B.Young pass incomplete deep left to H.Renfrow.PENALTY on MIA-J.Jones, Defensive Pass Interference, 10 yards, enforced at CAR 32 - No Play. [nullified]
+- Q4 12:33 (15 yds) Punt: S.Martin punts 61 yards to MIA 10, Center-J.Jansen. M.Washington to MIA 25 for 15 yards (D.Dallas). [special_teams]
+- Q4 4:36 (4 yds) Kickoff: R.Patterson kicks 66 yards from MIA 30 to CAR 4. D.Dallas to CAR 31 for 27 yards (D.Trader; C.Goode).PENALTY on CAR-T.Incoom, Offensive Holding, 10 yards, enforced at CAR 27. [special_teams]
+- Q4 4:42 (20 yds) Kickoff: R.Patterson kicks 65 yards from MIA 35 to CAR 0. T.Etienne to CAR 20 for 20 yards (J.Brents).PENALTY on MIA-M.Fitzpatrick, Illegal Formation, 5 yards, enforced at MIA 35 - No Play. [nullified]
+- Q4 7:49 (5 yds) Pass Incompletion: B.Young pass incomplete short left to T.McMillan.PENALTY on MIA-J.Jones, Defensive Holding, 5 yards, enforced at MIA 13 - No Play. [nullified]
+- Q4 7:53 (14 yds) Pass Incompletion: B.Young pass incomplete short right [C.Robinson].PENALTY on MIA-C.Robinson, Hip Drop Tackle, 14 yards, enforced at MIA 27 - No Play. [nullified]
+
+### 401772882 CAR @ ATL (TOΔ max 0, YdsΔ max 4, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| CAR | 486 | 486 | +0 | 0 | 0 | +0 | 49 | 49 | +0 |
+| ATL | 348 | 352 | +4 | 1 | 1 | +0 | 44 | 44 | +0 |
+
+**CAR Reconciliation Clues**
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q1 5:57 (5 yds) Penalty: (Shotgun) B.Young scrambles left tackle to ATL 9 for 3 yards (R.Harrison).PENALTY on ATL-J.Pearce, Defensive Offside, 5 yards, enforced at ATL 12 - No Play. [nullified]
+- Q2 0:25 (29 yds) Field Goal Good: R.Fitzgerald 29 yard field goal is GOOD, Center-J.Jansen, Holder-S.Martin. [special_teams]
+- Q2 1:41 (26 yds) Kickoff: Z.Gonzalez kicks 60 yards from ATL 35 to CAR 5. T.Etienne to CAR 31 for 26 yards (R.Harrison). [special_teams]
+- Q2 7:18 (-5 yds) Penalty: (Shotgun) PENALTY on CAR-X.Legette, False Start, 5 yards, enforced at CAR 10 - No Play. [nullified]
+- Q2 7:52 (-10 yds) Penalty: R.Dowdle right end to CAR 23 for 3 yards (R.Harrison; J.Walker). ** Injury Update: CAR-B.Young has returned to the game. PENALTY on CAR-C.Zavala, Offensive Holding, 10 yards, enforced at CAR 20 - No Play. [nullified]
+- Q3 0:58 (34 yds) Field Goal Good: R.Fitzgerald 34 yard field goal is GOOD, Center-J.Jansen, Holder-S.Martin. [special_teams]
+- Q3 11:24 (-10 yds) Penalty: R.Dowdle left end to ATL 26 for 1 yard (L.London; D.Onyemata).PENALTY on CAR-J.Coker, Offensive Holding, 10 yards, enforced at ATL 27 - No Play. [nullified]
+- Q3 15:00 (26 yds) Kickoff: Z.Gonzalez kicks 59 yards from ATL 35 to CAR 6. C.Hubbard to CAR 32 for 26 yards (D.Hellams). [special_teams]
+- Q4 0:11 (-1 yds) Rush: B.Young kneels to CAR 27 for -1 yards. [spike_kneel]
+- Q4 0:16 (25 yds) Kickoff: Z.Gonzalez kicks 62 yards from ATL 35 to CAR 3. C.Hubbard to CAR 28 for 25 yards (J.Bertrand; K.Hodge). [special_teams]
+- Q5 5:10 (28 yds) Field Goal Good: R.Fitzgerald 28 yard field goal is GOOD, Center-J.Jansen, Holder-S.Martin. [special_teams]
+
+**ATL Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q3 12:04 (11 yds) Kickoff: R.Fitzgerald kicks 50 yards from CAR 35 to ATL 15. N.Brooks MUFFS catch, and recovers at ATL 16. N.Brooks to ATL 27 for 11 yards (B.Martin-Scott). FUMBLES (B.Martin-Scott), RECOVERED by CAR-P.Umanmielen at ATL 32. [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q1 13:43 (2 yds) Fumble Recovery (Own): (Shotgun) M.Penix pass short middle to D.Mooney to ATL 31 for 6 yards (C.Thornton). FUMBLES (C.Thornton), recovered by ATL-R.Neuzil at ATL 27.
+
+- Excluded non-zero-yard plays (up to 19 shown):
+- Q1 13:07 (9 yds) Punt: B.Pinion punts 55 yards to CAR 18, Center-L.McCullough. T.Etienne to CAR 27 for 9 yards (F.Franks). [special_teams]
+- Q1 14:55 (-10 yds) Penalty: (Shotgun) B.Robinson right tackle to ATL 35 for 4 yards (M.Jackson).PENALTY on ATL-E.Wilkinson, Offensive Holding, 10 yards, enforced at ATL 31 - No Play. [nullified]
+- Q1 15:00 (19 yds) Kickoff: R.Fitzgerald kicks 53 yards from CAR 35 to ATL 12. J.Agnew to ATL 31 for 19 yards (T.Incoom). [special_teams]
+- Q1 5:25 (23 yds) Kickoff: R.Fitzgerald kicks 63 yards from CAR 35 to ATL 2. N.Brooks to ATL 25 for 23 yards (P.Umanmielen). [special_teams]
+- Q2 0:25 (23 yds) Kickoff: R.Fitzgerald kicks 59 yards from CAR 35 to ATL 6. N.Brooks to ATL 29 for 23 yards (B.Martin-Scott). [special_teams]
+- Q2 10:59 (-10 yds) Penalty: (Shotgun) T.Allgeier left tackle to CAR 13 for 5 yards (M.Jackson).PENALTY on ATL-K.Pitts, Offensive Holding, 10 yards, enforced at CAR 18 - No Play.Penalty on ATL-D.London, Illegal Block Above the Waist, declined. [nullified]
+- Q2 12:13 (5 yds) Penalty: (No Huddle, Shotgun) B.Robinson left tackle to CAR 30 for -1 yards (N.Scourton, B.Brown).PENALTY on CAR-B.Brown, Defensive Holding, 5 yards, enforced at CAR 29 - No Play. [nullified]
+- Q2 1:52 (1 yds) Penalty: (Shotgun) M.Penix pass incomplete short right [A.Robinson].PENALTY on CAR-Ja.Horn, Defensive Holding, 1 yard, enforced at CAR 2 - No Play. [nullified]
+- Q2 2:09 (5 yds) Penalty: (Shotgun) M.Penix pass incomplete deep right to D.London.PENALTY on CAR-T.Moehrig, Illegal Use of Hands, 5 yards, enforced at CAR 37 - No Play. [nullified]
+- Q2 3:16 (-5 yds) Penalty: (Shotgun) PENALTY on ATL-C.Lindstrom, False Start, 5 yards, enforced at CAR 41 - No Play. [nullified]
+- Q3 0:58 (18 yds) Kickoff: R.Fitzgerald kicks 61 yards from CAR 35 to ATL 4. N.Brooks to ATL 22 for 18 yards (M.Njongmeta). [special_teams]
+- Q3 12:04 (11 yds) Kickoff: R.Fitzgerald kicks 50 yards from CAR 35 to ATL 15. N.Brooks MUFFS catch, and recovers at ATL 16. N.Brooks to ATL 27 for 11 yards (B.Martin-Scott). FUMBLES (B.Martin-Scott), RECOVERED by CAR-P.Umanmielen at ATL 32. [special_teams]
+- Q3 5:20 (5 yds) Penalty: (Punt formation) PENALTY on CAR-I.Mukuamu, Neutral Zone Infraction, 5 yards, enforced at ATL 22 - No Play. [nullified]
+- Q3 5:56 (-9 yds) Penalty: (No Huddle, Shotgun) B.Robinson right end to ATL 32 for 1 yard (A.Robinson; N.Scourton).PENALTY on ATL-C.Lindstrom, Offensive Holding, 9 yards, enforced at ATL 31 - No Play. [nullified]
+- Q4 0:16 (45 yds) Field Goal Good: Z.Gonzalez 45 yard field goal is GOOD, Center-L.McCullough, Holder-B.Pinion. [special_teams]
+- Q4 1:08 (39 yds) Kickoff: R.Fitzgerald kicks 59 yards from CAR 35 to ATL 6. J.Agnew to ATL 45 for 39 yards (C.Smith-Wade). [special_teams]
+- Q4 2:43 (52 yds) Field Goal Good: Z.Gonzalez 52 yard field goal is GOOD, Center-L.McCullough, Holder-B.Pinion. [special_teams]
+- Q4 9:05 (8 yds) Pass Incompletion: (Shotgun) K.Cousins pass incomplete short middle to D.London.PENALTY on CAR-Ja.Horn, Defensive Pass Interference, 8 yards, enforced at ATL 20 - No Play. [nullified]
+- Q5 9:28 (12 yds) Pass Reception: (No Huddle) K.Cousins pass short right to B.Robinson pushed ob at ATL 36 for 12 yards (C.Thornton).PENALTY on ATL-R.Neuzil, Ineligible Downfield Pass, 5 yards, enforced at ATL 24 - No Play. [nullified]
+
+### 401772902 CIN @ BUF (TOΔ max 0, YdsΔ max 4, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| CIN | 338 | 338 | +0 | 2 | 2 | +0 | 30 | 30 | +0 |
+| BUF | 416 | 412 | -4 | 1 | 1 | +0 | 68 | 68 | +0 |
+
+**CIN Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q4 5:19 (1 yds) Pass Interception Return: (Shotgun) J.Burrow pass short left intended for J.Chase INTERCEPTED by A.Epenesa (J.Phillips) at CIN 30. A.Epenesa to CIN 29 for 1 yard (D.Risner). [interception]
+- Q4 5:25 (63 yds) Interception Return Touchdown: J.Burrow pass short right intended for J.Chase INTERCEPTED by C.Benford at BUF 37. C.Benford for 63 yards, TOUCHDOWN. M.Prater extra point is GOOD, Center-R.Ferguson, Holder-M.Wishnowsky. ** Injury Update: CIN-J.Ossai has returned to the game. [interception]
+
+- Excluded non-zero-yard plays (up to 12 shown):
+- Q1 15:00 (30 yds) Kickoff: M.Prater kicks 62 yards from BUF 35 to CIN 3. C.Jones to CIN 33 for 30 yards (D.Williams). [special_teams]
+- Q1 1:54 (35 yds) Kickoff: M.Prater kicks 55 yards from BUF 35 to CIN 10. C.Jones pushed ob at CIN 45 for 35 yards (D.Williams; M.Prater). [special_teams]
+- Q2 1:11 (5 yds) Penalty: (Shotgun) J.Burrow pass incomplete short right to M.Gesicki [D.Jones]. ** Injury Update: CIN-T.Higgins has returned to the game. PENALTY on BUF-C.Lewis, Defensive Holding, 5 yards, enforced at CIN 44 - No Play. [nullified]
+- Q2 3:34 (33 yds) Penalty: (Shotgun) J.Burrow pass incomplete deep left to A.Iosivas (D.Walker) [D.Walker].PENALTY on BUF-Ta.Johnson, Defensive Pass Interference, 33 yards, enforced at BUF 43 - No Play. [nullified]
+- Q2 7:27 (24 yds) Kickoff: M.Prater kicks 58 yards from BUF 35 to CIN 7. S.Perine to CIN 31 for 24 yards (B.Spector). [special_teams]
+- Q3 0:46 (5 yds) Penalty: (Shotgun) J.Burrow pass incomplete deep right to J.Chase.PENALTY on BUF-Ta.Johnson, Defensive Holding, 5 yards, enforced at CIN 20 - No Play. [nullified]
+- Q3 8:20 (-5 yds) Penalty: (Punt formation) PENALTY on CIN-J.Giles-Harris, False Start, 5 yards, enforced at CIN 29 - No Play. [nullified]
+- Q3 8:20 (9 yds) Punt: R.Rehkow punts 57 yards to BUF 19, Center-W.Wagner. K.Shakir pushed ob at BUF 28 for 9 yards (J.Giles-Harris). [special_teams]
+- Q3 9:20 (25 yds) Kickoff: M.Prater kicks 63 yards from BUF 35 to CIN 2. S.Perine to CIN 27 for 25 yards (J.Poyer). [special_teams]
+- Q4 3:03 (29 yds) Kickoff: M.Prater kicks 60 yards from BUF 35 to CIN 5. C.Jones to CIN 34 for 29 yards (D.Williams; M.Prater). [special_teams]
+- Q4 5:25 (21 yds) Kickoff: M.Prater kicks 52 yards from BUF 35 to CIN 13. C.Jones to CIN 34 for 21 yards (J.Hancock). [special_teams]
+- Q4 7:33 (23 yds) Kickoff: M.Prater kicks 55 yards from BUF 35 to CIN 10. C.Jones to CIN 33 for 23 yards (R.Gilliam; J.Andreessen). [special_teams]
+
+**BUF Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q3 0:52 (0 yds) Fumble Recovery (Opponent): J.Cook left tackle to CIN 2 for no gain (D.Turner; J.Battle). FUMBLES (D.Turner), RECOVERED by CIN-O.Burks at CIN -3. Touchback. [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q3 3:57 (-16 yds) Rush: J.Cook up the middle for 24 yards, TOUCHDOWN NULLIFIED by Penalty.PENALTY on BUF-R.Van Demark, Offensive Holding, 10 yards, enforced at CIN 20.Cincinnati challenged the runner broke the plane ruling, and the play was REVERSED.J.Cook up the middle to CIN 1 for 23 yards (J.Ossai). FUMBLES (J.Ossai), ball out of bounds at CIN 1.PENALTY on BUF-R.Van Demark, Offensive Holding, 10 yards, enforced at CIN 20.
+
+- Excluded non-zero-yard plays (up to 15 shown):
+- Q1 1:54 (26 yds) Field Goal Good: M.Prater 26 yard field goal is GOOD, Center-R.Ferguson, Holder-M.Wishnowsky. [special_teams]
+- Q1 6:44 (19 yds) Kickoff: E.McPherson kicks 61 yards from CIN 35 to BUF 4. Ty.Johnson pushed ob at BUF 23 for 19 yards (D.Anthony; J.Giles-Harris). [special_teams]
+- Q2 0:10 (-1 yds) Rush: J.Allen kneels to BUF 25 for -1 yards. [spike_kneel]
+- Q2 13:33 (15 yds) Kickoff: E.McPherson kicks 50 yards from CIN 35 to BUF 15. R.Davis to BUF 30 for 15 yards (J.Giles-Harris). [special_teams]
+- Q2 1:21 (-5 yds) Penalty: (Shotgun) PENALTY on BUF-J.Cook, False Start, 5 yards, enforced at CIN 43 - No Play. [nullified]
+- Q2 3:18 (25 yds) Kickoff: E.McPherson kicks 58 yards from CIN 35 to BUF 7. R.Davis to BUF 32 for 25 yards (C.Johnson). [special_teams]
+- Q3 14:08 (19 yds) Penalty: J.Allen pass incomplete deep left to B.Cooks.PENALTY on CIN-D.Turner, Defensive Pass Interference, 19 yards, enforced at BUF 17 - No Play. [nullified]
+- Q3 15:00 (17 yds) Kickoff: E.McPherson kicks 57 yards from CIN 35 to BUF 8. R.Davis to BUF 25 for 17 yards (J.Giles-Harris). [special_teams]
+- Q3 2:59 (5 yds) Penalty: (Shotgun) J.Allen pass incomplete short left to Ty.Johnson.PENALTY on CIN-D.Hill, Illegal Use of Hands, 5 yards, enforced at CIN 22 - No Play. [nullified]
+- Q3 3:57 (-16 yds) Rush: J.Cook up the middle for 24 yards, TOUCHDOWN NULLIFIED by Penalty.PENALTY on BUF-R.Van Demark, Offensive Holding, 10 yards, enforced at CIN 20.Cincinnati challenged the runner broke the plane ruling, and the play was REVERSED.J.Cook up the middle to CIN 1 for 23 yards (J.Ossai). FUMBLES (J.Ossai), ball out of bounds at CIN 1.PENALTY on BUF-R.Van Demark, Offensive Holding, 10 yards, enforced at CIN 20. [nullified]
+- Q4 0:36 (-1 yds) Rush:  J.Allen kneels to BUF 40 for -1 yards. [spike_kneel]
+- Q4 1:06 (-1 yds) Rush:  J.Allen kneels to BUF 41 for -1 yards. [spike_kneel]
+- Q4 2:13 (27 yds) Kickoff: E.McPherson kicks 62 yards from CIN 35 to BUF 3. R.Davis to BUF 30 for 27 yards (C.Johnson). [special_teams]
+- Q4 5:11 (-10 yds) Penalty: J.Cook left guard to CIN 18 for 11 yards (B.Carter; G.Stone). CIN-G.Stone was injured during the play. PENALTY on BUF-R.Van Demark, Offensive Holding, 10 yards, enforced at CIN 29 - No Play. [nullified]
+- Q4 8:44 (27 yds) Kickoff: E.McPherson kicks 60 yards from CIN 35 to BUF 5. Ty.Johnson to BUF 32 for 27 yards (J.Battle; C.Johnson). [special_teams]
+
+### 401772904 CLE @ CHI (TOΔ max 0, YdsΔ max 4, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| CLE | 192 | 192 | +0 | 3 | 3 | +0 | 21 | 21 | +0 |
+| CHI | 361 | 357 | -4 | 0 | 0 | +0 | 25 | 25 | +0 |
+
+**CLE Reconciliation Clues**
+
+- Windelta counted turnovers (3):
+- Q3 5:52 (0 yds) Pass Interception Return: (Shotgun) S.Sanders pass deep right intended for J.Jeudy INTERCEPTED by J.Johnson [M.Sweat] at CHI 0. Touchback. [interception]
+- Q3 8:53 (0 yds) Pass Interception Return: S.Sanders pass short left intended for H.Fannin INTERCEPTED by D.Jackson at CLV 22. D.Jackson to CLV 22 for no gain (J.Jeudy). [interception]
+- Q4 9:10 (32 yds) Pass Interception Return: S.Sanders pass deep right intended for H.Fannin INTERCEPTED by C.Gardner-Johnson at CHI 46. C.Gardner-Johnson to CLV 22 for 32 yards (B.Bates). [interception]
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q1 11:29 (18 yds) Punt: C.Bojorquez punts 53 yards to CHI 40, Center-R.Sunahara. D.Duvernay to CLV 42 for 18 yards (R.Sunahara). [special_teams]
+- Q1 13:09 (-1 yds) Penalty: (Shotgun) PENALTY on CLV, Offensive Too Many Men on Field, 1 yard, enforced at CLV 2 - No Play. [nullified]
+- Q1 1:29 (18 yds) Kickoff: C.Santos kicks 60 yards from CHI 35 to CLV 5. M.Corley to CLV 23 for 18 yards (J.Reeves-Maybin). [special_teams]
+- Q1 7:28 (-5 yds) Penalty: (Shotgun) PENALTY on CLV, Delay of Game, 5 yards, enforced at CLV 30 - No Play. [nullified]
+- Q1 7:35 (27 yds) Kickoff: C.Santos kicks 62 yards from CHI 35 to CLV 3. M.Corley to CLV 30 for 27 yards (J.Reeves-Maybin). [special_teams]
+- Q2 1:10 (-5 yds) Penalty: (Shotgun) PENALTY on CLV-G.Larvadain, False Start, 5 yards, enforced at CLV 38 - No Play. [nullified]
+- Q3 10:03 (50 yds) Field Goal Good: A.Szmyt 50 yard field goal is GOOD, Center-R.Sunahara, Holder-C.Bojorquez. [special_teams]
+- Q3 14:13 (16 yds) Punt:  C.Bojorquez punts 49 yards to CHI 31, Center-R.Sunahara. D.Duvernay to CHI 47 for 16 yards (E.Mascarenas-Arnold). [special_teams]
+- Q3 8:39 (21 yds) Kickoff: C.Santos kicks 59 yards from CHI 35 to CLV 6. T.Williams to CLV 27 for 21 yards (J.Jones). [special_teams]
+- Q4 15:00 (11 yds) Punt: C.Bojorquez punts 52 yards to CHI 37, Center-R.Sunahara. D.Duvernay to CHI 48 for 11 yards (T.Avery; G.Delpit). [special_teams]
+- Q4 7:30 (20 yds) Kickoff: C.Santos kicks 56 yards from CHI 35 to CLV 9. T.Williams to CLV 29 for 20 yards (N.Sewell; B.Brown). [special_teams]
+
+**CHI Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 8:55 (-4 yds) Fumble Recovery (Own): (Shotgun) C.Williams FUMBLES (Aborted) at CLV 27, and recovers at CLV 26.
+
+- Excluded non-zero-yard plays (up to 12 shown):
+- Q1 10:39 (5 yds) Penalty: (Shotgun) C.Williams pass incomplete short middle.PENALTY on CLV-M.Garrett, Neutral Zone Infraction, 5 yards, enforced at CLV 41 - No Play. [nullified]
+- Q1 14:45 (-5 yds) Penalty: PENALTY on CHI-D.Moore, False Start, 5 yards, enforced at CLV 47 - No Play. [nullified]
+- Q1 15:00 (52 yds) Kickoff: A.Szmyt kicks 64 yards from CLV 35 to CHI 1. D.Duvernay pushed ob at CLV 47 for 52 yards (A.Szmyt). CHI-J.Jones was injured during the play. [special_teams]
+- Q2 13:33 (-10 yds) Penalty: D.Swift right end to CHI 42 for 14 yards (D.Bush).PENALTY on CHI-D.Smythe, Offensive Holding, 10 yards, enforced at CHI 28 - No Play. [nullified]
+- Q2 4:45 (35 yds) Field Goal Missed: C.Santos 35 yard field goal is No Good, Hit Right Upright, Center-S.Daly, Holder-T.Taylor. [special_teams]
+- Q3 10:03 (30 yds) Kickoff: A.Szmyt kicks 56 yards from CLV 35 to CHI 9. D.Duvernay pushed ob at CHI 39 for 30 yards (R.Jenkins). [special_teams]
+- Q3 4:34 (5 yds) Penalty: C.Williams pass short left to D.Duvernay ran ob at CHI 32 for 4 yards.PENALTY on CLV-S.Webb, Defensive Holding, 5 yards, enforced at CHI 28 - No Play.Penalty on CLV-M.Harden, Defensive Holding, declined. [nullified]
+- Q3 9:02 (1 yds) Punt: T.Taylor punts 41 yards to CLV 17, Center-S.Daly. G.Larvadain to CLV 17 for 0 yards (J.Blackwell). [special_teams]
+- Q3 9:57 (-5 yds) Penalty: PENALTY on CHI-O.Trapilo, False Start, 5 yards, enforced at CHI 39 - No Play. [nullified]
+- Q4 0:10 (-1 yds) Rush: C.Williams kneels to CHI 12 for -1 yards. ** Injury Update: CLV-S.Kamara has returned to the game. [spike_kneel]
+- Q4 12:47 (-5 yds) Penalty: (Shotgun) PENALTY on CHI-J.Jackson, False Start, 5 yards, enforced at CLV 41 - No Play. [nullified]
+- Q4 7:30 (41 yds) Field Goal Good: C.Santos 41 yard field goal is GOOD, Center-S.Daly, Holder-T.Taylor. [special_teams]
+
+### 401772630 PHI @ GB (TOΔ max 0, YdsΔ max 3, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| PHI | 294 | 294 | +0 | 1 | 1 | +0 | 61 | 61 | +0 |
+| GB | 261 | 258 | -3 | 2 | 2 | +0 | 20 | 20 | +0 |
+
+**PHI Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q1 0:59 (22 yds) Fumble Recovery (Opponent): (Shotgun) J.Hurts right tackle to GB 14 for 10 yards (X.McKinney, E.Cooper). FUMBLES (E.Cooper), RECOVERED by GB-K.Nixon at GB 14. K.Nixon pushed ob at GB 36 for 22 yards (L.Johnson). [fumble]
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q1 5:38 (-5 yds) Penalty: (Shotgun) PENALTY on PHI-J.Mailata, False Start, 5 yards, enforced at PHI 44 - No Play. [nullified]
+- Q2 12:40 (12 yds) Punt: B.Mann punts 66 yards to GB 10, Center-C.Adomitis. R.Doubs to GB 22 for 12 yards (J.Trotter; P.Johnson). [special_teams]
+- Q2 2:07 (10 yds) Punt: B.Mann punts 45 yards to GB 22, Center-C.Adomitis. R.Doubs to GB 32 for 10 yards (P.Johnson). [special_teams]
+- Q2 4:53 (-5 yds) Penalty: PENALTY on PHI-J.Mailata, False Start, 5 yards, enforced at PHI 40 - No Play. [nullified]
+- Q2 4:53 (-10 yds) Penalty: (Shotgun) S.Barkley right end pushed ob at GB 44 for 21 yards (K.Nixon).PENALTY on PHI-B.Toth, Offensive Holding, 10 yards, enforced at PHI 35 - No Play. [nullified]
+- Q2 4:58 (6 yds) Penalty: J.Hurts pass incomplete short left to D.Goedert.PENALTY on GB-E.Williams, Defensive Pass Interference, 6 yards, enforced at PHI 34 - No Play. [nullified]
+- Q3 10:03 (-5 yds) Penalty: (Shotgun) PENALTY on PHI, Delay of Game, 5 yards, enforced at GB 20 - No Play. [nullified]
+- Q3 15:00 (24 yds) Kickoff: B.McManus kicks 60 yards from GB 35 to PHI 5. W.Shipley to PHI 29 for 24 yards (K.Welch; I.McDuffie). [special_teams]
+- Q3 8:58 (39 yds) Field Goal Good: J.Elliott 39 yard field goal is GOOD, Center-C.Adomitis, Holder-B.Mann. [special_teams]
+- Q4 2:25 (-5 yds) Penalty: (Shotgun) PENALTY on PHI, Delay of Game, 5 yards, enforced at GB 43 - No Play. [nullified]
+- Q4 5:49 (27 yds) Kickoff: B.McManus kicks 64 yards from GB 35 to PHI 1. X.Gipson to PHI 28 for 27 yards (C.Brooks). [special_teams]
+
+**GB Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q2 0:31 (0 yds) Sack Opp Fumble Recovery: (Shotgun) J.Love sacked at PHI 36 for -9 yards (N.Dean). FUMBLES (N.Dean) [N.Dean], RECOVERED by PHI-J.Phillips at PHI 35. [fumble]
+- Q4 1:30 (0 yds) Fumble Recovery (Opponent): (No Huddle, Shotgun) J.Jacobs right end to GB 40 for -4 yards (J.Phillips, R.Blankenship). FUMBLES (R.Blankenship), RECOVERED by PHI-R.Blankenship at GB 39.Penalty on GB, Illegal Formation, declined. [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q1 0:49 (-3 yds) Fumble Recovery (Own): (Shotgun) J.Love FUMBLES (Aborted) at GB 32, touched at GB 33, and recovers at GB 33. ** Injury Update: PHI-Q.Mitchell has returned to the game.
+
+- Excluded non-zero-yard plays (up to 10 shown):
+- Q1 15:00 (33 yds) Kickoff: J.Elliott kicks 59 yards from PHI 35 to GB 6. S.Williams pushed ob at GB 39 for 33 yards (S.Mondon; J.Campbell). [special_teams]
+- Q2 15:00 (-4 yds) Penalty: (Run formation) D.Kinnard reported in as eligible.  PENALTY on GB-A.Banks, False Start, 4 yards, enforced at GB 45 - No Play. [nullified]
+- Q2 15:00 (18 yds) Punt: D.Whelan punts 56 yards to PHI 3, Center-M.Orzech. X.Gipson to PHI 21 for 18 yards (E.Williams; Z.Anderson). [special_teams]
+- Q2 6:48 (13 yds) Punt: D.Whelan punts 44 yards to PHI 13, Center-M.Orzech. X.Gipson to PHI 26 for 13 yards (T.Hopper; I.McDuffie). [special_teams]
+- Q2 8:52 (-5 yds) Penalty: (Shotgun) PENALTY on GB, Delay of Game, 5 yards, enforced at GB 46 - No Play. [nullified]
+- Q3 8:58 (20 yds) Kickoff: J.Elliott kicks 58 yards from PHI 35 to GB 7. B.Melton to GB 27 for 20 yards (K.Granson; J.Uche). [special_teams]
+- Q4 0:02 (64 yds) Field Goal Missed: B.McManus 64 yard field goal is No Good, Short, Center-M.Orzech, Holder-D.Whelan. [special_teams]
+- Q4 10:35 (24 yds) Kickoff: J.Elliott kicks 64 yards from PHI 35 to GB 1. S.Williams ran ob at GB 25 for 24 yards (K.Granson). ** Injury Update: PHI-P.Johnson has returned to the game. [special_teams]
+- Q4 13:33 (-5 yds) Penalty: D.Kinnard reported in as eligible.  J.Love pass deep right to C.Watson to PHI 13 for 22 yards (A.Mukuba).PENALTY on GB, Illegal Formation, 5 yards, enforced at PHI 35 - No Play. [nullified]
+- Q4 6:31 (21 yds) Penalty: (Shotgun) J.Love pass incomplete deep left to L.Musgrave.PENALTY on PHI-J.Campbell, Defensive Pass Interference, 21 yards, enforced at PHI 34 - No Play. [nullified]
+
+### 401772732 PIT @ NE (TOΔ max 0, YdsΔ max 3, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| PIT | 203 | 203 | +0 | 1 | 1 | +0 | 59 | 59 | +0 |
+| NE | 369 | 366 | -3 | 5 | 5 | +0 | 54 | 54 | +0 |
+
+**PIT Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q3 13:46 (37 yds) Pass Interception Return: (Shotgun) A.Rodgers pass short left intended for C.Austin INTERCEPTED by R.Spillane [K.Chaisson] at PIT 48. R.Spillane pushed ob at PIT 11 for 37 yards (D.Metcalf). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q1 3:51 (5 yds) Penalty: (Shotgun) A.Rodgers sacked at PIT 2 for -12 yards (M.Williams). FUMBLES (M.Williams) [M.Williams], recovered by PIT-J.Warren at PIT 5. J.Warren to PIT 10 for 5 yards (C.Barmore).PENALTY on NE-A.Austin, Defensive Holding, 5 yards, enforced at PIT 14 - No Play.
+- Q4 14:56 (0 yds) Pass Reception: A.Rodgers pass short right to J.Smith to PIT 35 for no gain (H.Landry). FUMBLES (H.Landry), touched at PIT 36, ball out of bounds at PIT 35.
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q1 13:18 (5 yds) Penalty: J.Warren left tackle to PIT 46 for no gain (K.Chaisson; C.Barmore).PENALTY on NE-K.Chaisson, Defensive Offside, 5 yards, enforced at PIT 46 - No Play. [nullified]
+- Q1 2:13 (-5 yds) Penalty: (Shotgun) PENALTY on PIT, Delay of Game, 5 yards, enforced at PIT 49 - No Play. [nullified]
+- Q1 3:51 (5 yds) Penalty: (Shotgun) A.Rodgers sacked at PIT 2 for -12 yards (M.Williams). FUMBLES (M.Williams) [M.Williams], recovered by PIT-J.Warren at PIT 5. J.Warren to PIT 10 for 5 yards (C.Barmore).PENALTY on NE-A.Austin, Defensive Holding, 5 yards, enforced at PIT 14 - No Play. [nullified]
+- Q1 8:32 (1 yds) Penalty: (Shotgun) A.Rodgers pass incomplete short right to D.Washington.PENALTY on NE-A.Austin, Defensive Pass Interference, 1 yard, enforced at NE 2 - No Play. [nullified]
+- Q2 0:07 (-1 yds) Rush: A.Rodgers kneels to PIT 19 for -1 yards. [spike_kneel]
+- Q2 9:01 (27 yds) Kickoff: A.Borregales kicks 58 yards from NE 35 to PIT 7. K.Gainwell to PIT 34 for 27 yards (B.Schooler). [special_teams]
+- Q3 11:35 (11 yds) Punt: C.Waitman punts 47 yards to NE 35, Center-C.Kuntz. M.Jones to NE 46 for 11 yards (J.Sawyer). [special_teams]
+- Q3 13:12 (-10 yds) Penalty: J.Warren up the middle to PIT 23 for 3 yards (M.Jones).PENALTY on PIT-Z.Frazier, Offensive Holding, 10 yards, enforced at PIT 20 - No Play. [nullified]
+- Q4 0:27 (-1 yds) Rush: A.Rodgers kneels to PIT 28 for -1 yards. [spike_kneel]
+- Q4 13:30 (18 yds) Penalty: (Shotgun) A.Rodgers pass incomplete deep right to D.Metcalf [H.Landry].PENALTY on NE-C.Davis, Defensive Pass Interference, 18 yards, enforced at PIT 37 - No Play. [nullified]
+- Q4 2:30 (-5 yds) Penalty: (Shotgun) PENALTY on PIT-T.Fautanu, False Start, 5 yards, enforced at NE 22 - No Play. [nullified]
+
+**NE Reconciliation Clues**
+
+- Windelta counted turnovers (5):
+- Q1 13:31 (-6 yds) Fumble Recovery (Opponent): R.Stevenson right guard to NE 39 for 3 yards (C.Holcomb). FUMBLES (C.Holcomb), RECOVERED by PIT-D.Slay at NE 48. D.Slay to PIT 46 for -6 yards (W.Campbell). [fumble]
+- Q2 0:12 (0 yds) Pass Interception Return: (Shotgun) D.Maye pass short left intended for K.Boutte INTERCEPTED by B.Echols (Ca.Heyward) at PIT -7. Touchback. [interception]
+- Q3 10:13 (0 yds) Fumble Recovery (Opponent): (Shotgun) A.Gibson up the middle to PIT 42 for 1 yard (T.Watt; J.Peppers). FUMBLES (T.Watt), RECOVERED by PIT-J.Peppers at PIT 43. [fumble]
+- Q3 13:17 (0 yds) Fumble Recovery (Opponent): R.Stevenson right guard to PIT 1 for 1 yard (Ca.Heyward). FUMBLES (Ca.Heyward), touched at PIT 0, RECOVERED by PIT-P.Wilson at PIT -1. Touchback. [fumble]
+- Q4 7:48 (0 yds) Sack Opp Fumble Recovery: (Shotgun) D.Maye sacked at PIT 39 for -6 yards (N.Herbig). FUMBLES (N.Herbig) [N.Herbig], touched at PIT 37, RECOVERED by PIT-T.Watt at PIT 38. T.Watt to PIT 38 for no gain (M.Onwenu). [fumble]
+
+- Excluded non-zero-yard plays (up to 9 shown):
+- Q1 13:36 (5 yds) Penalty: (Shotgun) D.Maye pass incomplete short right to H.Henry [T.Watt].PENALTY on PIT-P.Wilson, Illegal Contact, 5 yards, enforced at NE 31 - No Play. [nullified]
+- Q1 15:00 (26 yds) Kickoff: C.Boswell kicks 64 yards from PIT 35 to NE 1. A.Gibson to NE 27 for 26 yards (J.Sawyer; M.Killebrew). [special_teams]
+- Q1 5:21 (-10 yds) Punt: B.Baringer punts 59 yards to end zone, Center-J.Ashby, Touchback.PENALTY on PIT-B.Echols, Offensive Holding, 10 yards, enforced at PIT 20. [special_teams]
+- Q1 8:25 (22 yds) Kickoff: C.Boswell kicks 59 yards from PIT 35 to NE 6. T.Henderson to NE 28 for 22 yards (B.Skowronek; B.Echols). [special_teams]
+- Q2 0:22 (3 yds) Penalty: PENALTY on PIT-K.Benton, Encroachment, 3 yards, enforced at PIT 5 - No Play. [nullified]
+- Q2 13:49 (23 yds) Kickoff: C.Boswell kicks 65 yards from PIT 35 to NE 0. T.Henderson to NE 23 for 23 yards (P.Wilson). PIT-P.Wilson was injured during the play. [special_teams]
+- Q2 2:13 (-5 yds) Penalty: D.Maye pass short left to D.Douglas to PIT 18 for 17 yards (B.Echols).PENALTY on NE-M.Onwenu, Ineligible Downfield Pass, 5 yards, enforced at PIT 35 - No Play. [nullified]
+- Q2 9:09 (16 yds) Penalty: (Shotgun) D.Maye pass incomplete deep left to K.Boutte. ** Injury Update: PIT-P.Wilson has returned to the game. PENALTY on PIT-B.Echols, Defensive Pass Interference, 16 yards, enforced at PIT 21 - No Play. [nullified]
+- Q4 2:16 (23 yds) Kickoff: C.Boswell kicks 62 yards from PIT 35 to NE 3. T.Henderson to NE 26 for 23 yards (J.Sawyer). [special_teams]
+
+### 401772757 NYG @ DEN (TOΔ max 0, YdsΔ max 3, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| NYG | 387 | 387 | +0 | 1 | 1 | +0 | 36 | 36 | +0 |
+| DEN | 407 | 404 | -3 | 0 | 0 | +0 | 127 | 127 | +0 |
+
+**NYG Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q4 4:56 (21 yds) Pass Interception Return: (Shotgun) J.Dart pass short middle intended for T.Johnson INTERCEPTED by J.Strnad at NYG 40. J.Strnad to NYG 19 for 21 yards (J.Eluemunor). [interception]
+
+- Excluded non-zero-yard plays (up to 16 shown):
+- Q1 1:11 (17 yds) Punt:  J.Gillan punts 57 yards to DEN 15, Center-C.Kreiter. M.Mims to DEN 32 for 17 yards (T.Fidone). [special_teams]
+- Q1 7:29 (5 yds) Rush: (Shotgun) C.Skattebo right end to NYG 49 for -2 yards (Q.Robinson).PENALTY on DEN-Z.Allen, Defensive Holding, 5 yards, enforced at DEN 49 - No Play. [nullified]
+- Q1 7:38 (5 yds) Penalty: (No Huddle, Shotgun) J.Dart pass incomplete short right.PENALTY on DEN-P.Surtain, Defensive Offside, 5 yards, enforced at NYG 46 - No Play. [nullified]
+- Q2 12:11 (5 yds) Rush: (Shotgun) J.Dart scrambles right guard to DEN 15 for 3 yards (Z.Allen; J.Strnad).PENALTY on DEN-N.Bonitto, Defensive Offside, 5 yards, enforced at DEN 18 - No Play. [nullified]
+- Q2 2:00 (15 yds) Pass Incompletion: (Shotgun) J.Dart pass incomplete deep right to W.Robinson.PENALTY on DEN-J.McMillian, Defensive Pass Interference, 15 yards, enforced at NYG 2 - No Play. [nullified]
+- Q2 2:16 (-2 yds) Penalty: (Shotgun) PENALTY on NYG, Delay of Game, 2 yards, enforced at NYG 4 - No Play. [nullified]
+- Q2 9:12 (-5 yds) Penalty: (Shotgun) PENALTY on NYG-J.Eluemunor, False Start, 5 yards, enforced at DEN 8 - No Play. [nullified]
+- Q3 12:07 (3 yds) Pass Incompletion: (Shotgun) J.Dart pass incomplete short middle to W.Robinson.PENALTY on DEN-J.Barron, Defensive Pass Interference, 3 yards, enforced at NYG 12 - No Play. [nullified]
+- Q3 9:39 (5 yds) Pass Reception: (Shotgun) J.Dart pass short right to W.Robinson pushed ob at NYG 48 for 5 yards (P.Surtain).PENALTY on NYG, Illegal Shift, 5 yards, enforced at NYG 43 - No Play. [nullified]
+- Q4 0:49 (38 yds) Pass Incompletion: (Shotgun) J.Dart pass incomplete deep right to B.Collins.PENALTY on DEN-R.Moss, Defensive Pass Interference, 38 yards, enforced at DEN 40 - No Play.PENALTY on DEN, Unsportsmanlike Conduct, 1 yard, enforced between downs. [nullified]
+- Q4 10:22 (-5 yds) Penalty: (Shotgun) PENALTY on NYG, Delay of Game, 5 yards, enforced at DEN 36 - No Play. [nullified]
+- Q4 14:08 (27 yds) Kickoff: W.Lutz kicks 59 yards from DEN 35 to NYG 6. G.Olszewski to NYG 33 for 27 yards (J.Strnad; D.Tillman). [special_teams]
+- Q4 1:14 (-5 yds) Penalty: (Shotgun) PENALTY on NYG, Delay of Game, 5 yards, enforced at NYG 31 - No Play. [nullified]
+- Q4 2:51 (12 yds) Punt: J.Gillan punts 50 yards to DEN 20, Center-C.Kreiter. M.Mims pushed ob at DEN 32 for 12 yards (N.Hewitt). [special_teams]
+- Q4 3:51 (30 yds) Kickoff: W.Lutz kicks 67 yards from DEN 35 to NYG -2. G.Olszewski to NYG 28 for 30 yards (D.Key). [special_teams]
+- Q4 5:13 (28 yds) Kickoff: W.Lutz kicks 63 yards from DEN 35 to NYG 2. G.Olszewski pushed ob at NYG 30 for 28 yards (T.Badie). [special_teams]
+
+**DEN Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q3 7:02 (-1 yds) Fumble Recovery (Own): (Shotgun) B.Nix to DEN 8 for -4 yards. FUMBLES, and recovers at DEN 11.
+
+- Excluded non-zero-yard plays (up to 13 shown):
+- Q1 2:05 (10 yds) Punt:  J.Crawshaw punts 59 yards to NYG 17, Center-M.Fraboni. G.Olszewski to NYG 27 for 10 yards (D.Key). [special_teams]
+- Q2 0:43 (-5 yds) Pass Reception: (No Huddle, Shotgun) B.Nix pass short middle to T.Badie to DEN 34 for 9 yards (T.Nubin).PENALTY on DEN-T.Franklin, False Start, 5 yards, enforced at DEN 25 - No Play. [nullified]
+- Q2 14:57 (5 yds) Punt:  J.Crawshaw punts 51 yards to NYG 13, Center-M.Fraboni. G.Olszewski to NYG 18 for 5 yards (D.Key; A.Prentice). [special_teams]
+- Q3 15:00 (27 yds) Kickoff: J.Gillan kicks 65 yards from NYG 35 to DEN 0. T.Badie to DEN 27 for 27 yards (V.Dimukeje; Z.Barnes). [special_teams]
+- Q3 2:41 (18 yds) Kickoff: J.Gillan kicks 61 yards from NYG 35 to DEN 4. T.Badie to DEN 32 for 28 yards (Z.Barnes).PENALTY on DEN-J.Skinner, Offensive Holding, 10 yards, enforced at DEN 32. [special_teams]
+- Q3 6:15 (13 yds) Punt: J.Crawshaw punts 61 yards to NYG 28, Center-M.Fraboni. G.Olszewski to NYG 41 for 13 yards (J.Skinner). [special_teams]
+- Q4 0:00 (39 yds) Field Goal Good: W.Lutz 39 yard field goal is GOOD, Center-M.Fraboni, Holder-J.Crawshaw. [special_teams]
+- Q4 0:18 (5 yds) Penalty:  (No Huddle) PENALTY on NYG-B.Burns, Neutral Zone Infraction, 5 yards, enforced at NYG 48 - No Play. [nullified]
+- Q4 0:37 (19 yds) Kickoff: J.Gillan kicks 61 yards from NYG 35 to DEN 4. T.Badie to DEN 23 for 19 yards (B.Brade). [special_teams]
+- Q4 10:14 (22 yds) Kickoff: J.Gillan kicks 61 yards from NYG 35 to DEN 4. T.Badie to DEN 26 for 22 yards (B.Collins; A.Green). [special_teams]
+- Q4 4:15 (5 yds) Penalty: (No Huddle, Shotgun) PENALTY on NYG-K.Thibodeaux, Defensive Offside, 5 yards, enforced at NYG 14 - No Play. [nullified]
+- Q4 6:38 (4 yds) Pass Incompletion: (Shotgun) B.Nix pass incomplete short middle to P.Bryant.PENALTY on NYG-A.Phillips, Defensive Pass Interference, 4 yards, enforced at NYG 44 - No Play. [nullified]
+- Q4 8:09 (-10 yds) Sack: (No Huddle, Shotgun) B.Nix sacked at DEN 47 for -2 yards (A.Carter).PENALTY on DEN-G.Bolles, Offensive Holding, 10 yards, enforced at DEN 49 - No Play. [nullified]
+
+### 401772762 DAL @ DEN (TOΔ max 0, YdsΔ max 3, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| DAL | 339 | 342 | +3 | 2 | 2 | +0 | 80 | 80 | +0 |
+| DEN | 426 | 426 | +0 | 1 | 1 | +0 | 42 | 42 | +0 |
+
+**DAL Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q2 0:22 (0 yds) Pass Interception Return: (Shotgun) D.Prescott pass deep middle intended for J.Ferguson INTERCEPTED by J.Barron at DEN 22. J.Barron to DEN 22 for no gain (J.Ferguson). [interception]
+- Q4 10:31 (36 yds) Pass Interception Return: (Shotgun) D.Prescott pass short middle intended for C.Lamb INTERCEPTED by D.Tillman at DEN 9. D.Tillman to DEN 45 for 36 yards (H.Luepke). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q3 4:38 (0 yds) Fumble Recovery (Own): (Shotgun) J.Blue right tackle to DAL 43 for 3 yards (A.Singleton; E.Uwazurike). FUMBLES (A.Singleton), recovered by DAL-B.Hoffman at DAL 40.
+
+- Excluded non-zero-yard plays (up to 12 shown):
+- Q1 0:18 (-10 yds) Rush: (Shotgun) D.Prescott scrambles right end to DEN 36 for 6 yards (A.Singleton).PENALTY on DAL-T.Steele, Offensive Holding, 10 yards, enforced at DEN 42 - No Play. [nullified]
+- Q1 10:34 (24 yds) Field Goal Good:  B.Aubrey 24 yard field goal is GOOD, Center-T.Sieg, Holder-B.Anger. [special_teams]
+- Q1 10:39 (-5 yds) Penalty: PENALTY on DAL-B.Hoffman, False Start, 5 yards, enforced at DEN 1 - No Play. [nullified]
+- Q1 3:04 (33 yds) Kickoff: W.Lutz kicks 64 yards from DEN 35 to DAL 1. K.Turpin ran ob at DAL 34 for 33 yards (K.Abrams-Draine). [special_teams]
+- Q1 5:57 (13 yds) Punt: B.Anger punts 56 yards to DEN 25, Center-T.Sieg. M.Mims pushed ob at DEN 38 for 13 yards (M.Liufau; B.Spann-Ford). [special_teams]
+- Q1 7:34 (-5 yds) Penalty: PENALTY on DAL-T.Guyton, False Start, 5 yards, enforced at DAL 31 - No Play. [nullified]
+- Q1 8:13 (25 yds) Kickoff: W.Lutz kicks 63 yards from DEN 35 to DAL 2. K.Turpin pushed ob at DAL 27 for 25 yards (P.Bryant; J.Turner). [special_teams]
+- Q2 13:44 (5 yds) Rush: J.Blue left guard to DAL 44 for 3 yards (N.Bonitto; J.Strnad).PENALTY on DEN-J.Franklin-Myers, Defensive Offside, 5 yards, enforced at DAL 41 - No Play. [nullified]
+- Q2 2:25 (13 yds) Punt: B.Anger punts 56 yards to DEN 15, Center-T.Sieg. M.Mims ran ob at DEN 28 for 13 yards (L.Schoonmaker). [special_teams]
+- Q2 9:20 (-4 yds) Rush: (Shotgun) J.Blue right guard to DEN 9 for 2 yards (J.Elliss; E.Uwazurike).PENALTY on DAL, Illegal Formation, 4 yards, enforced at DEN 11 - No Play. [nullified]
+- Q3 4:44 (5 yds) Pass Incompletion: (Shotgun) D.Prescott pass incomplete short right to C.Lamb [J.Cooper].PENALTY on DEN-J.McMillian, Defensive Holding, 5 yards, enforced at DAL 35 - No Play. [nullified]
+- Q4 12:48 (28 yds) Kickoff: W.Lutz kicks 65 yards from DEN 35 to DAL 0. K.Turpin to DAL 28 for 28 yards (J.Skinner; P.Locke). DEN-P.Locke was injured during the play. [special_teams]
+
+**DEN Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q1 13:44 (7 yds) Pass Interception Return: (Shotgun) B.Nix pass short right intended for P.Bryant INTERCEPTED by T.Bridges at DAL 41. T.Bridges to DAL 48 for 7 yards (P.Bryant).Penalty on DEN-A.Palczewski, Ineligible Downfield Pass, declined. [interception]
+
+- Excluded non-zero-yard plays (up to 14 shown):
+- Q1 10:34 (21 yds) Kickoff: B.Aubrey kicks 60 yards from DAL 35 to DEN 5. M.Mims to DEN 26 for 21 yards (D.Clark). [special_teams]
+- Q1 15:00 (26 yds) Kickoff: B.Aubrey kicks 63 yards from DAL 35 to DEN 2. R.Harvey to DEN 28 for 26 yards (R.Steward). [special_teams]
+- Q1 3:35 (-10 yds) Rush: J.Dobbins right guard to DAL 14 for 1 yard (J.Clowney; S.Thomas).PENALTY on DEN-M.McGlinchey, Offensive Holding, 10 yards, enforced at DAL 15 - No Play. [nullified]
+- Q1 9:12 (5 yds) Penalty: (No Huddle, Shotgun) B.Nix pass incomplete short left to C.Sutton (D.Bland) [D.Fowler].PENALTY on DAL-J.Houston, Defensive Offside, 5 yards, enforced at DEN 29 - No Play. [nullified]
+- Q2 0:14 (-1 yds) Rush: B.Nix kneels to DEN 21 for -1 yards. [spike_kneel]
+- Q2 5:35 (1 yds) Penalty: C.Throckmorton reported in as eligible.  PENALTY on DAL-S.Thomas, Encroachment, 1 yard, enforced at DAL 2 - No Play. [nullified]
+- Q2 6:24 (32 yds) Pass Incompletion: (Shotgun) B.Nix pass incomplete deep middle to M.Mims.PENALTY on DAL-A.Clark, Defensive Pass Interference, 32 yards, enforced at DAL 45 - No Play. [nullified]
+- Q3 3:18 (1 yds) Rush: J.Dobbins left tackle to DEN 17 for 1 yard (M.Smith; M.Kneeland). [spike_kneel]
+- Q3 6:02 (42 yds) Field Goal Good:  W.Lutz 42 yard field goal is GOOD, Center-M.Fraboni, Holder-J.Crawshaw. [special_teams]
+- Q3 6:16 (-10 yds) Pass Reception: (Shotgun) B.Nix pass short right to C.Sutton for 14 yards, TOUCHDOWN NULLIFIED by Penalty.PENALTY on DEN-A.Trautman, Offensive Pass Interference, 10 yards, enforced at DAL 14 - No Play. [nullified]
+- Q3 8:10 (46 yds) Kickoff: B.Aubrey kicks 57 yards from DAL 35 to DEN 8. M.Mims to DAL 46 for 46 yards (R.Steward; D.Clark). [special_teams]
+- Q4 0:28 (-1 yds) Rush:  J.Stidham kneels to DEN 8 for -1 yards. [spike_kneel]
+- Q4 4:44 (26 yds) Kickoff: B.Aubrey kicks 62 yards from DAL 35 to DEN 3. M.Mims to DEN 29 for 26 yards (C.Ballentine; C.Goodwin). [special_teams]
+- Q4 7:33 (17 yds) Pass Incompletion: (Shotgun) B.Nix pass incomplete deep left to E.Engram [O.Odighizuwa].PENALTY on DAL-M.Bell, Defensive Pass Interference, 17 yards, enforced at DAL 22 - No Play. [nullified]
+
+### 401772763 ATL @ NE (TOΔ max 0, YdsΔ max 3, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| ATL | 288 | 288 | +0 | 0 | 0 | +0 | 40 | 40 | +0 |
+| NE | 331 | 334 | +3 | 2 | 2 | +0 | 15 | 15 | +0 |
+
+**ATL Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q1 14:12 (-4 yds) Fumble Recovery (Own): (Shotgun) M.Penix sacked at ATL 30 for -4 yards (K.Chaisson). FUMBLES (K.Chaisson) [K.Chaisson], and recovers at ATL 30.
+
+- Excluded non-zero-yard plays (up to 12 shown):
+- Q1 15:00 (26 yds) Kickoff: A.Borregales kicks 59 yards from NE 35 to ATL 6. N.Brooks to ATL 32 for 26 yards (C.Elliss; T.Jennings). [special_teams]
+- Q1 7:44 (25 yds) Kickoff: A.Borregales kicks 59 yards from NE 35 to ATL 6. N.Brooks to ATL 31 for 25 yards (M.Mapu). [special_teams]
+- Q2 2:30 (-10 yds) Penalty: (Shotgun) M.Penix pass short right to B.Robinson to NE 32 for no gain (H.Landry).PENALTY on ATL-D.London, Offensive Pass Interference, 10 yards, enforced at NE 32 - No Play. [nullified]
+- Q2 5:11 (24 yds) Kickoff: A.Borregales kicks 61 yards from NE 35 to ATL 4. J.Agnew to ATL 28 for 24 yards (E.Ponder). [special_teams]
+- Q2 8:52 (25 yds) Kickoff: A.Borregales kicks 60 yards from NE 35 to ATL 5. J.Agnew to ATL 30 for 25 yards (C.Elliss; T.Jennings). [special_teams]
+- Q3 4:02 (-5 yds) Penalty: (No Huddle, Shotgun) PENALTY on ATL-K.Pitts, False Start, 5 yards, enforced at 50 - No Play. [nullified]
+- Q3 5:34 (13 yds) Punt: B.Pinion punts 45 yards to NE 35, Center-L.McCullough. M.Jones to NE 48 for 13 yards (M.Ford). [special_teams]
+- Q3 6:26 (6 yds) Kickoff: A.Borregales kicks 59 yards from NE 35 to ATL 6. J.Agnew to ATL 32 for 26 yards (M.Mapu).PENALTY on ATL-J.Woods, Offensive Holding, 10 yards, enforced at ATL 26. [special_teams]
+- Q4 14:08 (38 yds) Field Goal Good:  J.Romo 38 yard field goal is GOOD, Center-L.McCullough, Holder-B.Pinion. [special_teams]
+- Q4 2:03 (2 yds) Punt: B.Pinion punts 42 yards to NE 16, Center-L.McCullough. M.Jones to NE 18 for 2 yards (F.Franks; K.Hodge). [special_teams]
+- Q4 2:22 (-5 yds) Penalty: (Shotgun) PENALTY on ATL-J.Matthews, False Start, 5 yards, enforced at ATL 32 - No Play. [nullified]
+- Q4 9:36 (5 yds) Pass Incompletion: (Shotgun) M.Penix pass incomplete deep right to D.Sills.PENALTY on NE-K.Chaisson, Illegal Use of Hands, 5 yards, enforced at ATL 15 - No Play. [nullified]
+
+**NE Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q2 0:32 (27 yds) Sack Opp Fumble Recovery: (Shotgun) D.Maye sacked at NE 38 for -12 yards (J.Walker). FUMBLES (J.Walker) [J.Walker], RECOVERED by ATL-J.Pearce at NE 33. J.Pearce to NE 6 for 27 yards (W.Campbell). [fumble]
+- Q3 4:46 (17 yds) Pass Interception Return: (Shotgun) D.Maye pass deep middle intended for H.Henry INTERCEPTED by J.Bates at ATL 32. J.Bates to ATL 49 for 17 yards (J.Westover). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q3 14:54 (-4 yds) Fumble Recovery (Own): (Shotgun) D.Maye sacked at NE 25 for -6 yards (L.London). FUMBLES (L.London), and recovers at NE 27.
+
+- Excluded non-zero-yard plays (up to 9 shown):
+- Q1 3:30 (15 yds) Punt: B.Baringer punts 57 yards to ATL 32, Center-J.Ashby. J.Agnew ran ob at ATL 47 for 15 yards (C.Elliss). [special_teams]
+- Q2 0:12 (-1 yds) Rush: D.Maye kneels to NE 34 for -1 yards. [spike_kneel]
+- Q3 15:00 (31 yds) Kickoff: B.Pinion kicks 65 yards from ATL 35 to NE 0. E.Chism to NE 31 for 31 yards (J.Bertrand). [special_teams]
+- Q3 6:26 (32 yds) Field Goal Good: A.Borregales 32 yard field goal is GOOD, Center-J.Ashby, Holder-B.Baringer. [special_teams]
+- Q4 0:33 (-1 yds) Rush:  D.Maye kneels to NE 38 for -1 yards. [spike_kneel]
+- Q4 0:58 (-1 yds) Rush:  D.Maye kneels to NE 39 for -1 yards. [spike_kneel]
+- Q4 14:08 (3 yds) Kickoff: B.Pinion kicks 62 yards from ATL 35 to NE 3. E.Chism to NE 35 for 32 yards (M.Ford).PENALTY on NE-J.Tavai, Offensive Holding, 10 yards, enforced at NE 32. [special_teams]
+- Q4 3:43 (13 yds) Punt: B.Baringer punts 61 yards to ATL 6, Center-J.Ashby. J.Agnew pushed ob at ATL 19 for 13 yards (J.Ashby). [special_teams]
+- Q4 4:40 (19 yds) Kickoff: B.Pinion kicks 55 yards from ATL 35 to NE 10. E.Chism to NE 29 for 19 yards (D.Malone). [special_teams]
+
+### 401772833 SF @ NO (TOΔ max 0, YdsΔ max 3, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| SF | 344 | 341 | -3 | 1 | 1 | +0 | 40 | 40 | +0 |
+| NO | 307 | 310 | +3 | 1 | 1 | +0 | 45 | 45 | +0 |
+
+**SF Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q3 12:29 (0 yds) Sack Opp Fumble Recovery: (Shotgun) M.Jones sacked at SF 44 for -8 yards (C.Rumph). FUMBLES (C.Rumph) [C.Rumph], RECOVERED by NO-D.Davis at SF 47. [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q2 12:07 (-5 yds) Fumble Recovery (Own): (Shotgun) M.Jones to NO 26 for -5 yards. FUMBLES, and recovers at NO 26.
+
+- Excluded non-zero-yard plays (up to 14 shown):
+- Q1 10:11 (10 yds) Penalty: (Shotgun) M.Jones pass incomplete short right to J.Jennings.PENALTY on NO-I.Yiadom, Defensive Pass Interference, 10 yards, enforced at SF 23 - No Play. [nullified]
+- Q1 12:58 (19 yds) Punt: T.Morstead punts 49 yards to NO 21, Center-J.Weeks. R.Shaheed pushed ob at NO 40 for 19 yards (D.Luter). [special_teams]
+- Q2 11:23 (44 yds) Field Goal Good: E.Pineiro 44 yard field goal is GOOD, Center-J.Weeks, Holder-T.Morstead. [special_teams]
+- Q2 1:14 (22 yds) Kickoff: B.Grupe kicks 64 yards from NO 35 to SF 1. I.Guerendo to SF 23 for 22 yards (Q.Riley). [special_teams]
+- Q2 6:58 (-6 yds) Punt: T.Morstead punts 48 yards to NO 22, Center-J.Weeks. R.Shaheed to NO 31 for 9 yards (T.Bethune).PENALTY on NO-I.Yiadom, Illegal Block Above the Waist, 10 yards, enforced at NO 26. [special_teams]
+- Q3 0:22 (-10 yds) Penalty: B.Robinson left tackle to NO 43 for 6 yards (P.Werner).PENALTY on SF-J.Tonges, Offensive Holding, 10 yards, enforced at NO 49 - No Play. [nullified]
+- Q3 14:20 (-5 yds) Penalty: (Shotgun) PENALTY on SF, Delay of Game, 5 yards, enforced at SF 42 - No Play. [nullified]
+- Q3 14:20 (5 yds) Penalty: (Shotgun) M.Jones pass incomplete deep right to R.Pearsall.PENALTY on NO-K.McKinstry, Illegal Use of Hands, 5 yards, enforced at SF 37 - No Play. [nullified]
+- Q3 15:00 (25 yds) Kickoff: B.Grupe kicks 41 yards from NO 35 to SF 24, short of landing zone.PENALTY on NO-B.Grupe, Kickoff Short of Landing Zone, placed at SF 40. [special_teams]
+- Q3 3:20 (46 yds) Field Goal Good: E.Pineiro 46 yard field goal is GOOD, Center-J.Weeks, Holder-T.Morstead. [special_teams]
+- Q3 7:11 (25 yds) Kickoff: B.Grupe kicks 67 yards from NO 35 to SF -2. I.Guerendo to SF 23 for 25 yards (D.Stutsman). [special_teams]
+- Q4 0:14 (-1 yds) Rush:  M.Jones kneels to NO 30 for -1 yards. [spike_kneel]
+- Q4 0:54 (-1 yds) Rush:  M.Jones kneels to NO 29 for -1 yards. [spike_kneel]
+- Q4 0:57 (-1 yds) Rush:  M.Jones kneels to NO 28 for -1 yards. [spike_kneel]
+
+**NO Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q3 1:44 (0 yds) Fumble Recovery (Opponent): S.Rattler pass short right to A.Kamara to SF 29 for 1 yard (J.Brown).San Francisco challenged the runner was down by contact ruling, and the play was REVERSED.S.Rattler pass short right to A.Kamara to SF 29 for 1 yard (J.Brown, F.Warner). FUMBLES (F.Warner), RECOVERED by SF-F.Warner at SF 32. [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 1:03 (-15 yds) Fumble Recovery (Own): (Shotgun) S.Rattler sacked at NO 34 for -8 yards (B.Huff). FUMBLES (B.Huff) [B.Huff], touched at NO 33, recovered by NO-C.Ruiz at NO 27.
+
+- Excluded non-zero-yard plays (up to 9 shown):
+- Q1 13:13 (40 yds) Field Goal Missed: B.Grupe 40 yard field goal is No Good, Wide Right, Center-Z.Wood, Holder-K.Kroeger. [special_teams]
+- Q1 14:27 (-5 yds) Penalty: S.Rattler pass short left to C.Olave to SF 49 for 11 yards (R.Green).PENALTY on NO-T.Fuaga, Ineligible Downfield Pass, 5 yards, enforced at NO 40 - No Play. [nullified]
+- Q1 2:43 (-10 yds) Penalty: (Shotgun) S.Rattler scrambles up the middle to NO 44 for 10 yards (M.Sigle).PENALTY on NO-E.McCoy, Offensive Holding, 10 yards, enforced at NO 34 - No Play. [nullified]
+- Q1 3:25 (34 yds) Kickoff: E.Pineiro kicks 67 yards from SF 35 to NO -2. K.Miller to NO 32 for 34 yards (L.Gifford; D.Luter). [special_teams]
+- Q2 11:23 (26 yds) Kickoff: E.Pineiro kicks 62 yards from SF 35 to NO 3. K.Miller to NO 29 for 26 yards (S.Neal; L.Gifford). SF-S.Neal was injured during the play. [special_teams]
+- Q2 9:17 (1 yds) Punt: K.Kroeger punts 52 yards to SF 18, Center-Z.Wood. S.Moore ran ob at SF 19 for 1 yard. [special_teams]
+- Q4 11:41 (5 yds) Penalty:  (Shotgun) S.Rattler pass incomplete deep left to C.Olave (U.Stout) [B.Huff].
+PENALTY on SF-U.Stout, Illegal Contact, 5 yards, enforced at NO 27 - No Play. [nullified]
+- Q4 12:18 (22 yds) Kickoff: E.Pineiro kicks 58 yards from SF 35 to NO 7. K.Miller to NO 29 for 22 yards (J.Brown; L.Gifford). [special_teams]
+- Q4 9:44 (5 yds) Penalty: (Shotgun) S.Rattler pass incomplete short right [Y.Gross-Matos].PENALTY on SF-M.Sigle, Defensive Holding, 5 yards, enforced at SF 47 - No Play. [nullified]
+
+### 401772853 WSH @ LAC (TOΔ max 0, YdsΔ max 3, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| WSH | 389 | 391 | +2 | 1 | 1 | +0 | 48 | 48 | +0 |
+| LAC | 336 | 339 | +3 | 2 | 2 | +0 | 85 | 85 | +0 |
+
+**WSH Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q4 15:00 (0 yds) Fumble Recovery (Opponent): (Shotgun) J.Croskey-Merritt up the middle to LAC 41 for -5 yards (T.Tart). FUMBLES (T.Tart), RECOVERED by LAC-T.Tart at LAC 43. [fumble]
+
+- Excluded non-zero-yard plays (up to 13 shown):
+- Q1 2:57 (12 yds) Kickoff: C.Dicker kicks 64 yards from LAC 35 to WAS 1. L.McCaffrey to WAS 26 for 25 yards (M.Wax; D.Phillips).PENALTY on WAS-T.Martin, Unnecessary Roughness, 13 yards, enforced at WAS 26. [special_teams]
+- Q1 9:49 (40 yds) Kickoff: C.Dicker kicks 63 yards from LAC 35 to WAS 2. L.McCaffrey to WAS 42 for 40 yards (C.Dicker; H.Haskins). [special_teams]
+- Q2 0:02 (29 yds) Field Goal Good:  M.Gay 29 yard field goal is GOOD, Center-T.Ott, Holder-T.Way. [special_teams]
+- Q2 0:50 (15 yds) Punt: T.Way punts 55 yards to LAC 43, Center-T.Ott. L.McConkey for 57 yards, TOUCHDOWN NULLIFIED by Penalty.PENALTY on LAC-M.Wax, Roughing the Kicker, 15 yards, enforced at WAS 2 - No Play. [nullified]
+- Q2 8:10 (-5 yds) Penalty: (No Huddle, Shotgun) PENALTY on WAS-J.McNichols, False Start, 5 yards, enforced at WAS 25 - No Play. [nullified]
+- Q3 13:53 (5 yds) Rush: (Shotgun) T.Scott reported in as eligible.  J.Croskey-Merritt right end pushed ob at WAS 44 for 4 yards (A.Gilman).PENALTY on LAC, Defensive Too Many Men on Field, 5 yards, enforced at WAS 40 - No Play. [nullified]
+- Q3 15:00 (27 yds) Kickoff: C.Dicker kicks 61 yards from LAC 35 to WAS 4. L.McCaffrey to WAS 31 for 27 yards (M.Wax; C.Hart). [special_teams]
+- Q3 5:49 (36 yds) Field Goal Good:  M.Gay 36 yard field goal is GOOD, Center-T.Ott, Holder-T.Way.
+Penalty on LAC-D.Phillips, Defensive Offside, declined. [special_teams]
+- Q3 5:58 (-5 yds) Penalty: (Shotgun) PENALTY on WAS, Delay of Game, 5 yards, enforced at LAC 13 - No Play. [nullified]
+- Q4 3:20 (17 yds) Pass Incompletion: (Shotgun) J.Daniels pass incomplete deep left to D.Samuel.PENALTY on LAC-T.Still, Defensive Pass Interference, 17 yards, enforced at WAS 45 - No Play. [nullified]
+- Q4 3:25 (-5 yds) Rush: T.Scott reported in as eligible.  J.Daniels scrambles right end ran ob at LAC 48 for 2 yards (B.Dupree).PENALTY on WAS, Illegal Formation, 5 yards, enforced at 50 - No Play. [nullified]
+- Q4 5:27 (-5 yds) Penalty: (No Huddle, Shotgun) T.Scott reported in as eligible.  PENALTY on WAS-T.Scott, False Start, 5 yards, enforced at WAS 29 - No Play. [nullified]
+- Q4 5:27 (10 yds) Pass Reception: (Shotgun) J.Daniels pass short left to D.Samuel to WAS 34 for 10 yards (E.Molden).PENALTY on WAS-L.Tunsil, Offensive Holding, 10 yards, enforced at WAS 24 - No Play.Penalty on WAS-C.Yankoff, Offensive Holding, declined. [nullified]
+
+**LAC Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q2 8:58 (0 yds) Fumble Recovery (Opponent): (Shotgun) J.Herbert pass short middle to Q.Johnston to WAS 23 for 19 yards (Q.Martin). FUMBLES (Q.Martin), RECOVERED by WAS-M.Lattimore at WAS 26. [fumble]
+- Q4 7:44 (0 yds) Pass Interception Return: (Shotgun) J.Herbert pass short middle intended for K.Allen INTERCEPTED by M.Sainristil (J.Newton) at WAS 1. M.Sainristil to WAS 1 for no gain (K.Allen). [interception]
+
+- Excluded non-zero-yard plays (up to 12 shown):
+- Q1 10:34 (29 yds) Field Goal Good: C.Dicker 29 yard field goal is GOOD, NULLIFIED by Penalty, Center-R.Lovato, Holder-J.Scott.PENALTY on WAS-M.Sainristil, Defensive Offside, 5 yards, enforced at WAS 11 - No Play. [nullified]
+- Q1 12:14 (-5 yds) Penalty: PENALTY on LAC-Q.Johnston, False Start, 5 yards, enforced at WAS 16 - No Play. [nullified]
+- Q1 15:00 (18 yds) Kickoff: M.Gay kicks 54 yards from WAS 40 to LAC 6. K.Lambert-Smith to LAC 24 for 18 yards (T.Martin). [special_teams]
+- Q1 2:57 (55 yds) Field Goal Good: C.Dicker 55 yard field goal is GOOD, Center-R.Lovato, Holder-J.Scott. [special_teams]
+- Q1 4:31 (-4 yds) Penalty: PENALTY on LAC-T.Pipkins, False Start, 4 yards, enforced at WAS 27 - No Play. [nullified]
+- Q2 0:02 (-1 yds) Rush: J.Herbert kneels to LAC 34 for -1 yards. [spike_kneel]
+- Q2 1:45 (-5 yds) Penalty: (Punt formation) PENALTY on LAC-B.St-Juste, False Start, 5 yards, enforced at LAC 44 - No Play. [nullified]
+- Q2 4:15 (25 yds) Kickoff: M.Gay kicks 58 yards from WAS 35 to LAC 7. K.Lambert-Smith to LAC 32 for 25 yards (C.Yankoff; T.Owens). [special_teams]
+- Q3 10:12 (23 yds) Pass Reception: (Shotgun) J.Herbert pass deep middle to Q.Johnston to LAC 42 for 23 yards (Q.Martin).PENALTY on LAC-T.Pipkins, Offensive Holding, 9 yards, enforced at LAC 19 - No Play. [nullified]
+- Q3 10:58 (23 yds) Kickoff: M.Gay kicks 60 yards from WAS 35 to LAC 5. K.Lambert-Smith to LAC 28 for 23 yards (M.Sainristil; A.Hamilton). [special_teams]
+- Q3 5:49 (22 yds) Kickoff: M.Gay kicks 64 yards from WAS 35 to LAC 1. K.Lambert-Smith to LAC 23 for 22 yards (M.Sainristil). [special_teams]
+- Q3 9:57 (31 yds) Pass Reception: (Shotgun) J.Herbert pass deep right to K.Allen to LAC 41 for 31 yards (T.Amos).PENALTY on LAC-T.Pipkins, Illegal Formation, 5 yards, enforced at LAC 10 - No Play. [nullified]
+
+### 401772887 MIN @ GB (TOΔ max 0, YdsΔ max 3, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| MIN | 145 | 142 | -3 | 3 | 3 | +0 | 29 | 29 | +0 |
+| GB | 288 | 288 | +0 | 0 | 0 | +0 | 10 | 10 | +0 |
+
+**MIN Reconciliation Clues**
+
+- Windelta counted turnovers (3):
+- Q3 11:49 (0 yds) Muffed Punt Recovery (Opponent): D.Whelan punts 42 yards to MIN 8, Center-M.Orzech. M.Price MUFFS catch, RECOVERED by GB-Z.Anderson at MIN 5. [muffed_kick]
+- Q4 3:43 (0 yds) Pass Interception Return: (No Huddle, Shotgun) J.McCarthy pass deep middle intended for J.Nailor INTERCEPTED by E.Williams at GB 37. E.Williams to GB 37 for no gain (J.Nailor). [interception]
+- Q4 7:36 (0 yds) Pass Interception Return: J.McCarthy pass short middle intended for J.Jefferson INTERCEPTED by I.McDuffie (R.Gary) at MIN 40. I.McDuffie to MIN 40 for no gain (A.Jones). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q1 7:13 (-3 yds) Fumble Recovery (Own): J.McCarthy FUMBLES (Aborted) at MIN 37, and recovers at MIN 36.
+
+- Excluded non-zero-yard plays (up to 9 shown):
+- Q1 12:53 (52 yds) Field Goal Good: W.Reichard 52 yard field goal is GOOD, Center-A.DePaola, Holder-R.Wright. [special_teams]
+- Q1 9:15 (26 yds) Kickoff: B.McManus kicks 63 yards from GB 35 to MIN 2. M.Price to MIN 28 for 26 yards (T.Hopper). [special_teams]
+- Q2 0:10 (59 yds) Field Goal Good: W.Reichard 59 yard field goal is GOOD, Center-A.DePaola, Holder-R.Wright. [special_teams]
+- Q2 2:25 (21 yds) Kickoff: B.McManus kicks 59 yards from GB 35 to MIN 6. T.Felton to MIN 27 for 21 yards (C.Brooks). [special_teams]
+- Q3 10:53 (29 yds) Kickoff: B.McManus kicks 60 yards from GB 35 to MIN 5. M.Price to MIN 34 for 29 yards (Z.Anderson). [special_teams]
+- Q3 2:17 (5 yds) Punt: R.Wright punts 59 yards to GB 40, Center-A.DePaola. R.Doubs to GB 45 for 5 yards (T.Jackson). [special_teams]
+- Q4 10:29 (16 yds) Punt: R.Wright punts 54 yards to GB 44, Center-A.DePaola. R.Doubs pushed ob at MIN 40 for 16 yards (T.Thomas). [special_teams]
+- Q4 11:18 (-5 yds) Penalty: (Shotgun) PENALTY on MIN-C.Darrisaw, False Start, 5 yards, enforced at MIN 17 - No Play. [nullified]
+- Q4 12:13 (18 yds) Kickoff: B.McManus kicks 64 yards from GB 35 to MIN 1. M.Price to MIN 19 for 18 yards (K.Oladapo). [special_teams]
+
+**GB Reconciliation Clues**
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q1 10:52 (24 yds) Penalty: (No Huddle, Shotgun) J.Love pass incomplete deep left to L.Musgrave.PENALTY on MIN-J.Metellus, Defensive Pass Interference, 24 yards, enforced at MIN 47 - No Play. [nullified]
+- Q1 12:53 (25 yds) Kickoff: W.Reichard kicks 60 yards from MIN 35 to GB 5. S.Williams to GB 30 for 25 yards (T.Batty). [special_teams]
+- Q1 1:16 (11 yds) Punt: D.Whelan punts 63 yards to MIN 13, Center-M.Orzech. M.Price to MIN 24 for 11 yards (Z.Anderson; T.Hopper). [special_teams]
+- Q1 2:03 (-5 yds) Penalty: PENALTY on GB-J.FitzPatrick, False Start, 5 yards, enforced at GB 33 - No Play. [nullified]
+- Q2 0:10 (-1 yds) Rush: J.Love kneels to GB 34 for -1 yards. [spike_kneel]
+- Q2 2:25 (32 yds) Field Goal Good: B.McManus 32 yard field goal is GOOD, Center-M.Orzech, Holder-D.Whelan. [special_teams]
+- Q3 15:00 (21 yds) Kickoff: W.Reichard kicks 58 yards from MIN 35 to GB 7. S.Williams to GB 28 for 21 yards (C.Chambliss). [special_teams]
+- Q4 0:35 (-1 yds) Rush: M.Willis kneels to MIN 39 for -1 yards. [spike_kneel]
+- Q4 12:13 (30 yds) Field Goal Good: B.McManus 30 yard field goal is GOOD, Center-M.Orzech, Holder-D.Whelan. [special_teams]
+- Q4 7:36 (40 yds) Field Goal Good: B.McManus 40 yard field goal is GOOD, Center-M.Orzech, Holder-D.Whelan. [special_teams]
+- Q4 9:35 (-5 yds) Penalty: PENALTY on GB-J.FitzPatrick, False Start, 5 yards, enforced at MIN 29 - No Play. [nullified]
+
+### 401772919 ATL @ MIN (TOΔ max 0, YdsΔ max 3, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| ATL | 326 | 326 | +0 | 1 | 1 | +0 | 29 | 29 | +0 |
+| MIN | 198 | 195 | -3 | 4 | 4 | +0 | 50 | 50 | +0 |
+
+**ATL Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q1 1:40 (9 yds) Fumble Recovery (Opponent): (Shotgun) M.Penix pass short right to D.London to MIN 30 for 18 yards (E.Wilson). FUMBLES (E.Wilson), RECOVERED by MIN-T.Jackson at MIN 23. T.Jackson to MIN 32 for 9 yards (D.London). [fumble]
+
+- Excluded non-zero-yard plays (up to 15 shown):
+- Q1 11:12 (38 yds) Field Goal Good: J.Romo 38 yard field goal is GOOD, Center-L.McCullough, Holder-B.Pinion. [special_teams]
+- Q1 11:27 (-5 yds) Penalty: (Run formation) PENALTY on ATL, Delay of Game, 5 yards, enforced at MIN 15 - No Play. [nullified]
+- Q1 12:16 (-5 yds) Penalty: (Shotgun) PENALTY on ATL-J.Matthews, False Start, 5 yards, enforced at MIN 18 - No Play. [nullified]
+- Q1 2:00 (-4 yds) Penalty: (Shotgun) PENALTY on ATL-K.Pitts, False Start, 4 yards, enforced at MIN 44 - No Play. [nullified]
+- Q1 4:35 (5 yds) Penalty: (Shotgun) M.Penix pass short right to T.Allgeier to ATL 31 for 3 yards (I.Rodgers).PENALTY on MIN-B.Murphy, Illegal Contact, 5 yards, enforced at ATL 28 - No Play. [nullified]
+- Q1 6:48 (29 yds) Field Goal Good: J.Romo 29 yard field goal is GOOD, Center-L.McCullough, Holder-B.Pinion. [special_teams]
+- Q2 0:25 (33 yds) Field Goal Good: J.Romo 33 yard field goal is GOOD, Center-L.McCullough, Holder-B.Pinion. [special_teams]
+- Q2 7:06 (21 yds) Kickoff: W.Reichard kicks 63 yards from MIN 35 to ATL 2. D.Alford MUFFS catch, and recovers at ATL 2. D.Alford to ATL 23 for 21 yards (I.Pace). [special_teams]
+- Q3 0:10 (6 yds) Punt: B.Pinion punts 45 yards to MIN 42, Center-L.McCullough. M.Price to MIN 48 for 6 yards (D.Hellams; J.Woods). [special_teams]
+- Q3 12:42 (-5 yds) Penalty: (Shotgun) PENALTY on ATL-E.Wilkinson, False Start, 5 yards, enforced at ATL 32 - No Play. [nullified]
+- Q3 6:17 (33 yds) Field Goal Good:  J.Romo 33 yard field goal is GOOD, Center-L.McCullough, Holder-B.Pinion. [special_teams]
+- Q4 0:20 (-1 yds) Rush: M.Penix kneels to MIN 45 for -1 yards. [spike_kneel]
+- Q4 11:16 (54 yds) Field Goal Good: J.Romo 54 yard field goal is GOOD, Center-L.McCullough, Holder-B.Pinion. [special_teams]
+- Q4 4:08 (5 yds) Penalty: (Run formation) PENALTY on MIN-J.Redmond, Neutral Zone Infraction, 5 yards, enforced at MIN 11 - No Play. [nullified]
+- Q4 7:29 (-10 yds) Penalty: (Shotgun) T.Allgeier right end to ATL 37 for 2 yards (I.Pace; E.Wilson).PENALTY on ATL-J.Matthews, Offensive Holding, 10 yards, enforced at ATL 35 - No Play. [nullified]
+
+**MIN Reconciliation Clues**
+
+- Windelta counted turnovers (4):
+- Q2 2:12 (0 yds) Pass Interception Return: J.McCarthy pass short right intended for J.Nailor INTERCEPTED by B.Bowman at MIN 38. B.Bowman to MIN 38 for no gain (J.Nailor). [interception]
+- Q4 0:28 (0 yds) Muffed Punt Recovery (Opponent): B.Pinion punts 46 yards to MIN 42, Center-L.McCullough. M.Price MUFFS catch, RECOVERED by ATL-M.Ford at MIN 44. [muffed_kick]
+- Q4 15:00 (0 yds) Sack Opp Fumble Recovery: (Shotgun) J.McCarthy sacked at MIN 40 for -8 yards (Z.Harrison). FUMBLES (Z.Harrison) [Z.Harrison], RECOVERED by ATL-D.Deablo at MIN 38. [fumble]
+- Q4 2:41 (0 yds) Pass Interception Return: (No Huddle, Shotgun) J.McCarthy pass deep right intended for J.Jefferson INTERCEPTED by X.Watts at ATL 3. X.Watts ran ob at ATL 3 for no gain.Penalty on MIN-A.Thielen, Illegal Shift, declined. [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q1 9:26 (0 yds) Fumble Recovery (Own): (No Huddle) J.McCarthy FUMBLES (Aborted) at MIN 36, and recovers at MIN 36. J.McCarthy to MIN 36 for no gain (K.Elliss).
+- Q2 8:39 (0 yds) Fumble Recovery (Own): J.McCarthy to ATL 7 for -5 yards. FUMBLES, and recovers at ATL 8. J.McCarthy pass incomplete short right to J.Jefferson [K.Elliss].
+
+- Excluded non-zero-yard plays (up to 13 shown):
+- Q1 11:12 (24 yds) Kickoff: B.Pinion kicks 62 yards from ATL 35 to MIN 3. M.Price to MIN 27 for 24 yards (D.Alford; D.Malone). [special_teams]
+- Q1 6:48 (15 yds) Kickoff: B.Pinion kicks 66 yards from ATL 35 to MIN -1. M.Price to MIN 24 for 25 yards (M.Ford).PENALTY on MIN-G.Murphy, Offensive Holding, 10 yards, enforced at MIN 24. [special_teams]
+- Q2 0:00 (51 yds) Field Goal Good: W.Reichard 51 yard field goal is GOOD, Center-A.DePaola, Holder-R.Wright. [special_teams]
+- Q2 0:25 (15 yds) Kickoff: B.Pinion kicks 60 yards from ATL 35 to MIN 5. M.Price to MIN 20 for 15 yards (J.Woods). [special_teams]
+- Q2 12:28 (-5 yds) Penalty: PENALTY on MIN-W.Fries, False Start, 5 yards, enforced at ATL 35 - No Play. [nullified]
+- Q2 7:06 (33 yds) Field Goal Good: W.Reichard 33 yard field goal is GOOD, Center-A.DePaola, Holder-R.Wright. [special_teams]
+- Q2 8:32 (-5 yds) Penalty: PENALTY on MIN, Delay of Game, 5 yards, enforced at ATL 2 - No Play. [nullified]
+- Q3 15:00 (19 yds) Kickoff: B.Pinion kicks 62 yards from ATL 35 to MIN 3. M.Price to MIN 22 for 19 yards (D.Alford). [special_teams]
+- Q3 2:01 (-5 yds) Penalty: (Shotgun) PENALTY on MIN-B.O'Neill, False Start, 5 yards, enforced at MIN 47 - No Play. [nullified]
+- Q3 3:21 (-10 yds) Penalty: J.Mason left end to ATL 41 for 18 yards (X.Watts).PENALTY on MIN-W.Rouse, Offensive Holding, 10 yards, enforced at MIN 41 - No Play. [nullified]
+- Q3 6:17 (32 yds) Kickoff: B.Pinion kicks 66 yards from ATL 35 to MIN -1. M.Price to MIN 31 for 32 yards (D.Hellams). [special_teams]
+- Q4 11:16 (20 yds) Kickoff: B.Pinion kicks 66 yards from ATL 35 to MIN -1. M.Price to MIN 19 for 20 yards (M.Ford; J.Woods). [special_teams]
+- Q4 3:22 (-5 yds) Kickoff: B.Pinion kicks 65 yards from ATL 35 to end zone, Touchback to the MIN 35.PENALTY on MIN-B.Yurosek, Illegal Formation, 5 yards, enforced at MIN 35. [special_teams]
+
+### 401772715 TB @ HOU (TOΔ max 0, YdsΔ max 2, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| TB | 360 | 358 | -2 | 0 | 0 | +0 | 45 | 45 | +0 |
+| HOU | 266 | 266 | +0 | 0 | 0 | +0 | 45 | 45 | +0 |
+
+**TB Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q4 6:23 (-10 yds) Blocked Punt: R.Dixon punt is BLOCKED by J.Johnson, Center-E.Deckers, RECOVERED by HST-J.Watson at TB 36. J.Watson to TB 35 for 1 yard (K.Merriweather).
+- Q4 7:04 (-3 yds) Fumble Recovery (Own): (Shotgun) B.Mayfield sacked at TB 43 for -5 yards (D.Hunter). FUMBLES (D.Hunter), recovered by TB-R.White at TB 45. TB-R.White was injured during the play.
+
+- Excluded non-zero-yard plays (up to 17 shown):
+- Q1 0:39 (5 yds) Penalty: (Shotgun) B.Mayfield pass short middle to B.Mayfield to TB 32 for -7 yards (W.Anderson).
+PENALTY on HST-D.Stingley, Illegal Use of Hands, 5 yards, enforced at TB 39 - No Play. [nullified]
+- Q1 3:25 (17 yds) Kickoff: K.Fairbairn kicks 59 yards from HST 35 to TB 6. K.Johnson to TB 23 for 17 yards (E.Speed). [special_teams]
+- Q1 8:23 (-10 yds) Penalty: (Shotgun) B.Mayfield pass deep left to M.Evans pushed ob at HST 1 for 19 yards (C.Bullock).
+PENALTY on TB-M.Evans, Offensive Pass Interference, 10 yards, enforced at HST 20 - No Play. [nullified]
+- Q2 12:03 (5 yds) Penalty: (Shotgun) B.Mayfield pass incomplete short middle to M.Evans.
+PENALTY on HST-W.Anderson, Defensive Offside, 5 yards, enforced at HST 34 - No Play. [nullified]
+- Q2 12:18 (-5 yds) Penalty: (Shotgun) B.Mayfield pass short left to E.Egbuka to HST 25 for 4 yards (D.Hunter).
+PENALTY on TB-C.Mauch, Ineligible Downfield Pass, 5 yards, enforced at HST 29 - No Play. [nullified]
+- Q2 2:54 (16 yds) Punt: R.Dixon punts 60 yards to HST 14, Center-E.Deckers. J.Noel pushed ob at HST 30 for 16 yards (R.Miller). [special_teams]
+- Q2 5:11 (5 yds) Penalty: (Shotgun) B.Mayfield sacked at TB 12 for -8 yards (S.Rankins).
+PENALTY on HST-D.Horton, Illegal Use of Hands, 5 yards, enforced at TB 20 - No Play. [nullified]
+- Q2 6:12 (-5 yds) Penalty: PENALTY on TB-C.Heck, False Start, 5 yards, enforced at TB 26 - No Play.
+Penalty on TB-G.Barton, False Start, declined. [nullified]
+- Q3 15:00 (26 yds) Kickoff: K.Fairbairn kicks 63 yards from HST 35 to TB 2. S.Tucker to TB 28 for 26 yards (D.Ogunbowale). [special_teams]
+- Q3 1:05 (38 yds) Field Goal Missed: C.McLaughlin 38 yard field goal is No Good, Hit Right Upright, Center-E.Deckers, Holder-R.Dixon. [special_teams]
+- Q3 5:49 (-2 yds) Punt: R.Dixon punts 44 yards to HST 35, Center-E.Deckers. J.Noel to HST 33 for -2 yards (C.Izien). [special_teams]
+- Q4 10:35 (15 yds) Penalty: B.Irving right guard to TB 5 for no gain (C.Harris).
+PENALTY on HST-C.Harris, Face Mask, 15 yards, enforced at TB 5 - No Play. [nullified]
+- Q4 2:10 (-9 yds) Kickoff: K.Fairbairn kicks 60 yards from HST 35 to TB 5. K.Johnson to TB 31 for 26 yards (M.Stewart; D.Ogunbowale).
+PENALTY on TB-A.Nelson, Offensive Holding, 10 yards, enforced at TB 30. [special_teams]
+- Q4 3:18 (53 yds) Punt: R.Dixon punts 50 yards to HST 21, Center-E.Deckers. J.Noel pushed ob at TB 26 for 53 yards (K.Merriweather). [special_teams]
+- Q4 6:23 (-10 yds) Blocked Punt: R.Dixon punt is BLOCKED by J.Johnson, Center-E.Deckers, RECOVERED by HST-J.Watson at TB 36. J.Watson to TB 35 for 1 yard (K.Merriweather). [special_teams]
+- Q4 8:13 (-5 yds) Penalty: PENALTY on TB-S.Shepard, False Start, 5 yards, enforced at TB 41 - No Play. [nullified]
+- Q4 8:35 (5 yds) Penalty: B.Mayfield pass short left to B.Irving to TB 35 for -1 yards (H.To'oTo'o).
+PENALTY on HST-K.Lassiter, Illegal Contact, 5 yards, enforced at TB 36 - No Play. [nullified]
+
+**HOU Reconciliation Clues**
+
+- Excluded non-zero-yard plays (up to 9 shown):
+- Q1 15:00 (34 yds) Kickoff: C.McLaughlin kicks 63 yards from TB 35 to HST 2. J.Noel pushed ob at HST 36 for 34 yards (D.Jones). [special_teams]
+- Q1 3:25 (35 yds) Field Goal Good: K.Fairbairn 35 yard field goal is GOOD, Center-A.Brinkman, Holder-T.Townsend. [special_teams]
+- Q1 4:40 (-10 yds) Penalty: N.Chubb left guard to TB 6 for 4 yards (T.Smith).
+PENALTY on HST-T.Howard, Offensive Holding, 10 yards, enforced at TB 10 - No Play. [nullified]
+- Q1 7:12 (27 yds) Kickoff: C.McLaughlin kicks 58 yards from TB 35 to HST 7. J.Noel ran ob at HST 34 for 27 yards (D.Jones). [special_teams]
+- Q2 9:41 (17 yds) Kickoff: C.McLaughlin kicks 60 yards from TB 35 to HST 5. J.Noel to HST 22 for 17 yards (J.Hayes; K.Merriweather). [special_teams]
+- Q3 0:24 (5 yds) Penalty: C.Stroud pass incomplete short middle.
+PENALTY on TB-B.Morrison, Illegal Contact, 5 yards, enforced at HST 35 - No Play. [nullified]
+- Q3 4:17 (6 yds) Punt: T.Townsend punts 57 yards to TB 15, Center-A.Brinkman. K.Johnson to TB 21 for 6 yards (J.Hansen). [special_teams]
+- Q4 0:06 (29 yds) Kickoff: C.McLaughlin kicks 61 yards from TB 35 to HST 4. T.Smith to HST 33 for 29 yards (J.Bullock). [special_teams]
+- Q4 5:22 (53 yds) Field Goal Good: K.Fairbairn 53 yard field goal is GOOD, Center-A.Brinkman, Holder-T.Townsend. [special_teams]
+
+### 401772724 LAR @ TEN (TOΔ max 0, YdsΔ max 2, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| LAR | 439 | 438 | -1 | 1 | 1 | +0 | 29 | 29 | +0 |
+| TEN | 252 | 254 | +2 | 1 | 1 | +0 | 62 | 62 | +0 |
+
+**LAR Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q2 0:32 (0 yds) Pass Interception Return: (Shotgun) M.Stafford pass short left intended for T.Atwell INTERCEPTED by C.Barton at LA 46. C.Barton ran ob at LA 46 for no gain. [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 3 shown):
+- Q2 7:37 (0 yds) Fumble Recovery (Own): M.Stafford to TEN 4 for -1 yards. FUMBLES, and recovers at TEN 6. M.Stafford pass incomplete short right to D.Adams (L.Sneed) [S.Joseph].
+- Q4 2:40 (6 yds) Kickoff: (Onside Kick formation) J.Hekker kicks onside 6 yards from TEN 35 to TEN 41. B.Corum (didn't try to advance) to TEN 41 for no gain.
+- Q4 6:45 (1 yds) Rushing Touchdown: B.Corum up the middle for 1 yard, TOUCHDOWN. J.Karty extra point is Blocked (A.Key), Center-A.Ward, Holder-E.Evans. DEFENSIVE TWO-POINT ATTEMPT. M.Harris recovered the blocked kick. ATTEMPT FAILS.
+
+- Excluded non-zero-yard plays (up to 14 shown):
+- Q1 10:19 (-5 yds) Penalty: (No Huddle) PENALTY on LA-T.Higbee, False Start, 5 yards, enforced at TEN 49 - No Play. [nullified]
+- Q1 11:24 (4 yds) Penalty: (Shotgun) M.Stafford pass incomplete short left to T.Atwell (X.Woods).PENALTY on TEN-D.Jones, Defensive Offside, 4 yards, enforced at LA 31 - No Play. [nullified]
+- Q2 0:38 (21 yds) Kickoff: J.Slye kicks 61 yards from TEN 35 to LA 4. B.Corum to LA 30 for 26 yards (M.Brown).PENALTY on TEN-J.Harrell, Illegal Formation, 5 yards, enforced at LA 30. [special_teams]
+- Q2 11:21 (24 yds) Kickoff: J.Slye kicks 64 yards from TEN 35 to LA 1. B.Corum to LA 25 for 24 yards (D.Mausi; C.Gray). [special_teams]
+- Q2 3:22 (1 yds) Punt: E.Evans punts 47 yards to TEN 43, Center-A.Ward. C.Dike for 57 yards, TOUCHDOWN NULLIFIED by Penalty.PENALTY on TEN-C.Gray, Illegal Blindside Block, 15 yards, enforced at LA 41. [nullified]
+- Q2 7:25 (21 yds) Field Goal Good: J.Karty 21 yard field goal is GOOD, Center-A.Ward, Holder-E.Evans. [special_teams]
+- Q3 3:32 (30 yds) Kickoff: J.Slye kicks 64 yards from TEN 35 to LA 1. B.Corum to LA 31 for 30 yards (J.Mims). [special_teams]
+- Q3 9:29 (21 yds) Field Goal Good: J.Karty 21 yard field goal is GOOD, Center-A.Ward, Holder-E.Evans. [special_teams]
+- Q4 0:35 (-5 yds) Penalty: (Field Goal formation) PENALTY on LA, Delay of Game, 5 yards, enforced at TEN 7 - No Play. [nullified]
+- Q4 12:07 (21 yds) Punt: E.Evans punts 47 yards to TEN 6, Center-A.Ward. C.Dike to TEN 27 for 21 yards (S.Dolac). [special_teams]
+- Q4 1:17 (-2 yds) Rush: M.Stafford kneels to TEN 7 for -2 yards. [spike_kneel]
+- Q4 2:00 (-4 yds) Rush: M.Stafford kneels to TEN 5 for -4 yards. [spike_kneel]
+- Q4 2:40 (6 yds) Kickoff: (Onside Kick formation) J.Hekker kicks onside 6 yards from TEN 35 to TEN 41. B.Corum (didn't try to advance) to TEN 41 for no gain. [special_teams]
+- Q4 6:54 (1 yds) Penalty: M.Stafford pass incomplete short right.PENALTY on TEN-L.Sneed, Defensive Holding, 1 yard, enforced at TEN 2 - No Play. [nullified]
+
+**TEN Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q4 11:15 (0 yds) Sack Opp Fumble Recovery: (Shotgun) C.Ward sacked at TEN 21 for -8 yards (B.Young). FUMBLES (B.Young) [B.Young], touched at TEN 19, RECOVERED by LA-N.Landman at TEN 21. [fumble]
+
+- Excluded non-zero-yard plays (up to 16 shown):
+- Q1 12:13 (14 yds) Punt: J.Hekker punts 57 yards to LA 14, Center-M.Cox. X.Smith to LA 28 for 14 yards (G.Helm). [special_teams]
+- Q1 14:01 (-5 yds) Penalty: (Shotgun) PENALTY on TEN-J.Ojukwu, False Start, 5 yards, enforced at TEN 28 - No Play. [nullified]
+- Q1 14:21 (-5 yds) Penalty: (Shotgun) C.Ward pass short right to C.Dike to TEN 39 for 6 yards (A.Witherspoon; K.Kinchens).PENALTY on TEN-K.Zeitler, Ineligible Downfield Pass, 5 yards, enforced at TEN 33 - No Play. [nullified]
+- Q1 15:00 (21 yds) Kickoff: J.Karty kicks 58 yards from LA 35 to TEN 7. C.Dike pushed ob at TEN 28 for 21 yards (C.Durant). [special_teams]
+- Q1 1:02 (5 yds) Penalty: (Shotgun) PENALTY on LA-K.Turner, Neutral Zone Infraction, 5 yards, enforced at TEN 43 - No Play. [nullified]
+- Q2 0:00 (37 yds) Field Goal Good: J.Slye 37 yard field goal is GOOD, Center-M.Cox, Holder-J.Hekker. [special_teams]
+- Q2 0:27 (14 yds) Penalty: (Shotgun) C.Ward pass incomplete short left to E.Ayomanor.PENALTY on LA-C.Durant, Defensive Pass Interference, 14 yards, enforced at LA 46 - No Play. [nullified]
+- Q2 11:21 (55 yds) Field Goal Good: J.Slye 55 yard field goal is GOOD, Center-M.Cox, Holder-J.Hekker. [special_teams]
+- Q2 4:42 (-5 yds) Penalty: (Shotgun) PENALTY on TEN-J.Ojukwu, False Start, 5 yards, enforced at LA 43 - No Play. [nullified]
+- Q2 7:25 (-2 yds) Kickoff: J.Karty kicks 61 yards from LA 35 to TEN 4. C.Dike ran ob at TEN 33 for 29 yards (S.Dolac).PENALTY on TEN-J.Williams, Offensive Holding, 10 yards, enforced at TEN 25. [special_teams]
+- Q3 1:17 (-1 yds) Kickoff: J.Karty kicks 56 yards from LA 35 to TEN 9. C.Dike MUFFS catch, and recovers at TEN 15. C.Dike to TEN 14 for -1 yards (T.Reeder). [special_teams]
+- Q3 3:32 (57 yds) Field Goal Good:  J.Slye 57 yard field goal is GOOD, Center-M.Cox, Holder-J.Hekker. [special_teams]
+- Q3 9:29 (21 yds) Kickoff: J.Karty kicks 60 yards from LA 35 to TEN 5. C.Dike pushed ob at TEN 26 for 21 yards (J.McCollough). [special_teams]
+- Q4 2:40 (35 yds) Field Goal Good: J.Slye 35 yard field goal is GOOD, Center-M.Cox, Holder-J.Hekker. [special_teams]
+- Q4 9:34 (-5 yds) Penalty: (Shotgun) PENALTY on TEN-B.Hance, False Start, 5 yards, enforced at TEN 24 - No Play. [nullified]
+- Q4 9:40 (21 yds) Kickoff: J.Karty kicks 62 yards from LA 35 to TEN 3. C.Dike to TEN 24 for 21 yards (X.Smith). [special_teams]
+
+### 401772727 BUF @ NYJ (TOΔ max 0, YdsΔ max 2, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| BUF | 403 | 405 | +2 | 0 | 0 | +0 | 69 | 69 | +0 |
+| NYJ | 154 | 154 | +0 | 1 | 1 | +0 | 35 | 35 | +0 |
+
+**BUF Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q3 2:04 (3 yds) Fumble Recovery (Own): J.Cook left guard to NYJ 16 for 1 yard (J.Briggs). FUMBLES (J.Briggs), recovered by BUF-S.Brown at NYJ 14.
+- Q4 3:28 (9 yds) Kickoff: N.Folk kicks onside 9 yards from NYJ 35 to NYJ 44. J.Andreessen (didn't try to advance) to NYJ 44 for no gain.
+
+- Excluded non-zero-yard plays (up to 15 shown):
+- Q1 5:01 (28 yds) Field Goal Good: M.Prater 28 yard field goal is GOOD, Center-R.Ferguson, Holder-C.Johnston. [special_teams]
+- Q1 8:58 (15 yds) Penalty: (Shotgun) J.Allen pass incomplete short right to K.Shakir (M.Carter).PENALTY on NYJ-M.Clemons, Roughing the Passer, 15 yards, enforced at NYJ 30 - No Play. [nullified]
+- Q2 0:10 (-1 yds) Rush: J.Allen kneels to BUF 9 for -1 yards. [spike_kneel]
+- Q2 14:02 (52 yds) Field Goal Good: M.Prater 52 yard field goal is GOOD, Center-R.Ferguson, Holder-C.Johnston. ** Injury Update: NYJ-F.Mauigoa has returned to the game. [special_teams]
+- Q2 14:57 (5 yds) Penalty: (Shotgun) J.Allen pass incomplete short left to D.Kincaid.PENALTY on NYJ-T.Adams, Defensive Holding, 5 yards, enforced at NYJ 42 - No Play. [nullified]
+- Q2 1:03 (-10 yds) Penalty: (Shotgun) J.Allen pass short left to K.Coleman ran ob at NYJ 22 for 16 yards.PENALTY on BUF-K.Coleman, Offensive Pass Interference, 10 yards, enforced at NYJ 38 - No Play. [nullified]
+- Q2 2:48 (-10 yds) Penalty: (Shotgun) R.Davis left tackle to BUF 44 for 3 yards (M.McCrary-Ball; Qu.Williams).PENALTY on BUF-J.Palmer, Offensive Holding, 10 yards, enforced at BUF 41 - No Play. [nullified]
+- Q2 4:21 (-4 yds) Kickoff: N.Folk kicks 57 yards from NYJ 35 to BUF 8. B.Codrington to BUF 41 for 33 yards (A.Thomas; F.Mauigoa). NYJ-F.Mauigoa was injured during the play. PENALTY on BUF-J.Solomon, Offensive Holding, 10 yards, enforced at BUF 35. [special_teams]
+- Q3 15:00 (20 yds) Kickoff: N.Folk kicks 64 yards from NYJ 35 to BUF 1. Ty.Johnson to BUF 21 for 20 yards (M.Moore; C.Jones). [special_teams]
+- Q3 9:01 (33 yds) Field Goal Good: M.Prater 33 yard field goal is GOOD, Center-R.Ferguson, Holder-C.Johnston. [special_teams]
+- Q4 0:35 (-1 yds) Rush:  M.Trubisky kneels to NYJ 37 for -1 yards. [spike_kneel]
+- Q4 1:17 (-1 yds) Rush: M.Trubisky kneels to NYJ 36 for -1 yards. [spike_kneel]
+- Q4 2:00 (-1 yds) Rush:  M.Trubisky kneels to NYJ 35 for -1 yards. [spike_kneel]
+- Q4 3:28 (9 yds) Kickoff: N.Folk kicks onside 9 yards from NYJ 35 to NYJ 44. J.Andreessen (didn't try to advance) to NYJ 44 for no gain. [special_teams]
+- Q4 6:50 (11 yds) Punt: C.Johnston punts 48 yards to NYJ 35, Center-R.Ferguson. I.Williams to NYJ 46 for 11 yards (R.Gilliam; D.Williams). [special_teams]
+
+**NYJ Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q1 7:24 (0 yds) Fumble Recovery (Opponent): J.Fields scrambles up the middle to NYJ 20 for 1 yard (J.Bosa; M.Milano). FUMBLES (J.Bosa), RECOVERED by BUF-A.Epenesa at NYJ 24. [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q4 10:34 (4 yds) Fumble Recovery (Own): (No Huddle, Shotgun) T.Taylor pass short right to G.Wilson to NYJ 48 for 5 yards (C.Lewis). FUMBLES (C.Lewis), and recovers at NYJ 47.
+- Q4 14:42 (-9 yds) Fumble Recovery (Own): (Shotgun) J.Fields sacked at NYJ 24 for -9 yards (J.Bosa). FUMBLES (J.Bosa) [J.Bosa], recovered by NYJ-M.Taylor at NYJ 24.
+
+- Excluded non-zero-yard plays (up to 12 shown):
+- Q1 13:37 (9 yds) Punt: A.McNamara punts 55 yards to BUF 10, Center-T.Hennessy. B.Codrington pushed ob at BUF 19 for 9 yards (M.McCrary-Ball; F.Mauigoa). [special_teams]
+- Q1 15:00 (26 yds) Kickoff: M.Prater kicks 55 yards from BUF 35 to NYJ 10. I.Davis to NYJ 36 for 26 yards (R.Gilliam; J.Andreessen). [special_teams]
+- Q1 5:01 (23 yds) Kickoff: M.Prater kicks 63 yards from BUF 35 to NYJ 2. I.Williams to NYJ 25 for 23 yards (S.Franklin). NYJ-F.Mauigoa was injured during the play. [special_teams]
+- Q1 7:29 (17 yds) Kickoff: M.Prater kicks 63 yards from BUF 35 to NYJ 2. I.Williams to NYJ 19 for 17 yards (S.Franklin). [special_teams]
+- Q2 11:54 (6 yds) Punt: A.McNamara punts 54 yards to BUF 21, Center-T.Hennessy. B.Codrington pushed ob at BUF 27 for 6 yards (M.McCrary-Ball; I.Oliver). [special_teams]
+- Q2 14:02 (27 yds) Kickoff: M.Prater kicks 60 yards from BUF 35 to NYJ 5. I.Davis to NYJ 32 for 27 yards (D.Hamlin). [special_teams]
+- Q2 4:21 (51 yds) Field Goal Good: N.Folk 51 yard field goal is GOOD, Center-T.Hennessy, Holder-A.McNamara. [special_teams]
+- Q2 8:50 (33 yds) Kickoff: M.Prater kicks 61 yards from BUF 35 to NYJ 4. I.Davis to NYJ 37 for 33 yards (K.Jenkins). [special_teams]
+- Q3 9:01 (20 yds) Kickoff: M.Prater kicks 66 yards from BUF 35 to NYJ -1. I.Davis to NYJ 19 for 20 yards (S.Franklin; K.Jenkins). [special_teams]
+- Q4 12:03 (-5 yds) Penalty: (Shotgun) PENALTY on NYJ-J.Tippmann, False Start, 5 yards, enforced at NYJ 15 - No Play. [nullified]
+- Q4 14:00 (7 yds) Punt: A.McNamara punts 44 yards to BUF 32, Center-T.Hennessy. B.Codrington pushed ob at BUF 39 for 7 yards (I.Oliver). [special_teams]
+- Q4 14:57 (28 yds) Kickoff: M.Prater kicks 60 yards from BUF 35 to NYJ 5. I.Davis to NYJ 33 for 28 yards (J.Andreessen). [special_teams]
+
+### 401772740 NO @ BUF (TOΔ max 0, YdsΔ max 2, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| NO | 298 | 296 | -2 | 1 | 1 | +0 | 41 | 41 | +0 |
+| BUF | 356 | 354 | -2 | 1 | 1 | +0 | 55 | 55 | +0 |
+
+**NO Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q2 1:31 (7 yds) Pass Interception Return: (Shotgun) C.Olave pass short right intended for S.Rattler INTERCEPTED by C.Bishop at BUF 1. C.Bishop pushed ob at BUF 14 for 13 yards (T.Fuaga).PENALTY on BUF-D.Williams, Illegal Blindside Block, 2 yards, enforced at BUF 5. [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 1:51 (-5 yds) Fumble Recovery (Own): (Shotgun) S.Rattler sacked at NO 31 for -8 yards (J.Bosa). FUMBLES (J.Bosa), touched at NO 33, recovered by NO-E.McCoy at NO 34.
+
+- Excluded non-zero-yard plays (up to 9 shown):
+- Q1 10:49 (30 yds) Kickoff: M.Prater kicks 64 yards from BUF 35 to NO 1. V.Jones to NO 31 for 30 yards (C.Lewis). [special_teams]
+- Q1 2:29 (-9 yds) Kickoff: M.Prater kicks 64 yards from BUF 35 to NO 1. V.Jones pushed ob at NO 24 for 23 yards (D.Strong).PENALTY on NO-U.Amadi, Offensive Holding, 10 yards, enforced at NO 23. [special_teams]
+- Q2 13:48 (6 yds) Punt: K.Kroeger punts 49 yards to BUF 7, Center-Z.Wood. K.Shakir pushed ob at BUF 13 for 6 yards (J.Howden). [special_teams]
+- Q2 5:31 (54 yds) Field Goal Good: B.Grupe 54 yard field goal is GOOD, Center-Z.Wood, Holder-K.Kroeger. [special_teams]
+- Q3 15:00 (26 yds) Kickoff: M.Prater kicks 59 yards from BUF 35 to NO 6. V.Jones to NO 32 for 26 yards (J.Andreessen; J.Hancock). [special_teams]
+- Q3 2:21 (5 yds) Penalty: (No Huddle) A.Kamara right guard to BUF 18 for 2 yards (D.Walker).PENALTY on BUF, Defensive Too Many Men on Field, 5 yards, enforced at BUF 20 - No Play. [nullified]
+- Q3 6:42 (30 yds) Kickoff: M.Prater kicks 60 yards from BUF 35 to NO 5. V.Jones to NO 35 for 30 yards (J.Andreessen; J.Solomon). [special_teams]
+- Q4 7:07 (21 yds) Kickoff: M.Prater kicks 65 yards from BUF 35 to NO 0. V.Jones to NO 26 for 26 yards (A.Epenesa).PENALTY on BUF-S.Thompson, Illegal Use of Hands, 5 yards, enforced at NO 26. [special_teams]
+- Q4 8:53 (35 yds) Field Goal Good: B.Grupe 35 yard field goal is GOOD, Center-Z.Wood, Holder-K.Kroeger. [special_teams]
+
+**BUF Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q2 12:52 (0 yds) Pass Interception Return: (Shotgun) J.Allen pass deep right intended for K.Coleman INTERCEPTED by J.Sanker [N.Shepherd] at BUF 49. J.Sanker to BUF 49 for no gain (K.Coleman). [interception]
+
+- Excluded non-zero-yard plays (up to 16 shown):
+- Q1 15:00 (13 yds) Kickoff: B.Grupe kicks 57 yards from NO 35 to BUF 8. Ty.Johnson to BUF 21 for 13 yards (D.Stutsman; V.Jones). [special_teams]
+- Q1 6:46 (31 yds) Kickoff: B.Grupe kicks 62 yards from NO 35 to BUF 3. C.Samuel to BUF 34 for 31 yards (C.Rumph). [special_teams]
+- Q2 1:22 (-2 yds) Penalty: J.Cook left guard to BUF 7 for 4 yards (A.Taylor).PENALTY on BUF-J.Palmer, Illegal Shift, 2 yards, enforced at BUF 3 - No Play. [nullified]
+- Q2 3:02 (10 yds) Punt: C.Johnston punts 43 yards to 50, Center-R.Ferguson. R.Shaheed to BUF 40 for 10 yards (J.Solomon; C.Lewis). [special_teams]
+- Q2 4:01 (-5 yds) Penalty: (Shotgun) PENALTY on BUF-D.Dawkins, False Start, 5 yards, enforced at BUF 21 - No Play. [nullified]
+- Q2 5:31 (26 yds) Kickoff: B.Grupe kicks 63 yards from NO 35 to BUF 2. C.Samuel to BUF 28 for 26 yards (D.Stutsman; V.Jones). [special_teams]
+- Q2 8:51 (-10 yds) Punt: C.Johnston punts 40 yards to NO 41, Center-R.Ferguson, fair catch by R.Shaheed.PENALTY on BUF-R.Ferguson, Offensive Holding, 10 yards, enforced at NO 41. [special_teams]
+- Q3 0:14 (25 yds) Kickoff: B.Grupe kicks 59 yards from NO 35 to BUF 6. C.Samuel to BUF 31 for 25 yards (C.Rumph). [special_teams]
+- Q3 10:43 (-10 yds) Penalty: (Shotgun) J.Allen pass short left to K.Shakir ran ob at BUF 49 for 3 yards (A.Taylor).PENALTY on BUF-T.Shavers, Offensive Pass Interference, 10 yards, enforced at BUF 46 - No Play. [nullified]
+- Q4 0:39 (-1 yds) Rush: J.Allen kneels to NO 37 for -1 yards. [spike_kneel]
+- Q4 1:03 (-1 yds) Rush: J.Allen kneels to NO 36 for -1 yards. [spike_kneel]
+- Q4 1:44 (-1 yds) Rush: J.Allen kneels to NO 35 for -1 yards. [spike_kneel]
+- Q4 2:09 (35 yds) Field Goal Good: M.Prater 35 yard field goal is GOOD, Center-R.Ferguson, Holder-C.Johnston. ** Injury Update: BUF-C.Johnston has returned to the game. [special_teams]
+- Q4 5:30 (-5 yds) Penalty: PENALTY on BUF-D.Edwards, False Start, 5 yards, enforced at BUF 45 - No Play. [nullified]
+- Q4 7:07 (-5 yds) Penalty:  PENALTY on BUF-R.Ferguson, False Start, 5 yards, enforced at NO 15 - No Play. [nullified]
+- Q4 8:53 (25 yds) Kickoff: B.Grupe kicks 43 yards from NO 35 to BUF 22, short of landing zone.
+PENALTY on NO-B.Grupe, Kickoff Short of Landing Zone, placed at BUF 40. [special_teams]
+
+### 401772753 LV @ KC (TOΔ max 0, YdsΔ max 2, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| LV | 95 | 93 | -2 | 1 | 1 | +0 | 58 | 58 | +0 |
+| KC | 434 | 435 | +1 | 0 | 0 | +0 | 38 | 38 | +0 |
+
+**LV Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q4 7:08 (0 yds) Fumble Recovery (Opponent): K.Pickett FUMBLES (Aborted) at LV 13, touched at LV 12, RECOVERED by KC-J.Tillery at LV 11. [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q1 5:58 (-2 yds) Fumble Recovery (Own): G.Smith FUMBLES (Aborted) at LV 34, and recovers at LV 33.
+
+- Excluded non-zero-yard plays (up to 12 shown):
+- Q1 13:00 (13 yds) Pass Reception: (Shotgun) G.Smith pass short middle to D.Thornton to KC 33 for 13 yards (J.Watson).PENALTY on LV-J.Powers-Johnson, Offensive Holding, 10 yards, enforced at KC 46 - No Play. [nullified]
+- Q1 15:00 (37 yds) Kickoff: H.Butker kicks 64 yards from KC 35 to LV 1. R.Mostert to LV 38 for 37 yards (N.Williams). [special_teams]
+- Q1 3:07 (11 yds) Punt: A.Cole punts 49 yards to KC 5, Center-J.Bobenmoyer. N.Remigio pushed ob at KC 16 for 11 yards (M.Koonce). [special_teams]
+- Q1 5:18 (5 yds) Sack: (Shotgun) G.Smith sacked at LV 24 for -9 yards (C.Omenihu).PENALTY on KC-T.McDuffie, Illegal Contact, 5 yards, enforced at LV 33 - No Play. [nullified]
+- Q2 6:44 (-3 yds) Punt: A.Cole punts 45 yards to KC 12, Center-J.Bobenmoyer. N.Remigio MUFFS catch, and recovers at KC 9. N.Remigio to KC 6 for -3 yards (I.Pola-Mao). [special_teams]
+- Q2 8:29 (-5 yds) Rush: A.Jeanty left tackle to LV 47 for 8 yards (N.Bolton; C.Roland-Wallace).PENALTY on LV-J.Bech, Offensive Offside, 5 yards, enforced at LV 39 - No Play. [nullified]
+- Q2 9:17 (36 yds) Kickoff: H.Butker kicks 64 yards from KC 35 to LV 1. R.Mostert to LV 37 for 36 yards (C.Roland-Wallace). [special_teams]
+- Q3 2:30 (12 yds) Pass Reception: G.Smith pass short left to D.Thornton to LV 47 for 12 yards (D.Tranquill). KC-O.Norman-Lott was injured during the play. PENALTY on LV-S.Forsythe, Unnecessary Roughness, 15 yards, enforced at LV 35 - No Play. [nullified]
+- Q3 2:36 (27 yds) Kickoff: H.Butker kicks 57 yards from KC 35 to LV 8. R.Mostert to LV 35 for 27 yards (C.McDonald). [special_teams]
+- Q3 7:09 (-13 yds) Punt: A.Cole punts 41 yards to KC 27, Center-J.Bobenmoyer, out of bounds.PENALTY on KC-N.Williams, Unnecessary Roughness, 13 yards, enforced at KC 27. [special_teams]
+- Q4 11:54 (7 yds) Punt: A.Cole punts 63 yards to KC 25, Center-J.Bobenmoyer. N.Remigio to KC 32 for 7 yards (J.Rhattigan). [special_teams]
+- Q4 12:35 (-10 yds) Rush: A.Jeanty right guard to LV 25 for 3 yards (J.Hicks; J.Cochrane).PENALTY on LV-A.Cappa, Offensive Holding, 10 yards, enforced at LV 22 - No Play. [nullified]
+
+**KC Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q3 12:11 (8 yds) Fumble Recovery (Own): (Shotgun) P.Mahomes pass short right to M.Brown to LV 39 for 7 yards (J.Chinn). FUMBLES (J.Chinn), touched at LV 40, recovered by KC-X.Worthy at LV 41. X.Worthy to LV 38 for 3 yards (J.Adams).
+
+- Excluded non-zero-yard plays (up to 10 shown):
+- Q1 6:08 (2 yds) Pass Incompletion: (Shotgun) P.Mahomes pass incomplete short left to J.Smith-Schuster.PENALTY on LV-K.Kelly, Defensive Holding, 2 yards, enforced at LV 4 - No Play. [nullified]
+- Q2 0:19 (3 yds) Pass Incompletion: (Shotgun) P.Mahomes pass incomplete short right to T.Thornton (J.Chinn) [J.Adams].PENALTY on LV-J.Chinn, Illegal Contact, 3 yards, enforced at LV 6 - No Play. [nullified]
+- Q2 12:33 (5 yds) Penalty: (Shotgun) P.Mahomes pass incomplete short left to N.Gray.PENALTY on LV-M.Crosby, Defensive Offside, 5 yards, enforced at LV 38 - No Play. [nullified]
+- Q2 9:50 (-5 yds) Penalty: PENALTY on KC-M.Caliendo, False Start, 5 yards, enforced at LV 3 - No Play. [nullified]
+- Q3 2:36 (38 yds) Field Goal Good: H.Butker 38 yard field goal is GOOD, Center-J.Winchester, Holder-M.Araiza. [special_teams]
+- Q4 0:38 (6 yds) Punt: M.Araiza punts 40 yards to LV 20, Center-J.Winchester. A.Bachman to LV 26 for 6 yards (J.Hicks; L.Chenal). [special_teams]
+- Q4 14:19 (-5 yds) Penalty: (Shotgun) PENALTY on KC-I.Pacheco, False Start, 5 yards, enforced at LV 37 - No Play. [nullified]
+- Q4 1:19 (-1 yds) Rush: G.Minshew kneels to KC 40 for -1 yards. [spike_kneel]
+- Q4 2:00 (-1 yds) Rush:  G.Minshew kneels to KC 41 for -1 yards. [spike_kneel]
+- Q4 2:36 (-1 yds) Rush: G.Minshew kneels to KC 42 for -1 yards. [spike_kneel]
+
+### 401772764 LAC @ TEN (TOΔ max 0, YdsΔ max 2, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| LAC | 343 | 343 | +0 | 1 | 1 | +0 | 20 | 20 | +0 |
+| TEN | 206 | 204 | -2 | 0 | 0 | +0 | 60 | 60 | +0 |
+
+**LAC Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q1 11:19 (24 yds) Interception Return Touchdown: (Shotgun) J.Herbert pass short right intended for K.Allen INTERCEPTED by C.Barton at LAC 24. C.Barton for 24 yards, TOUCHDOWN. J.Slye extra point is GOOD, Center-M.Cox, Holder-J.Hekker. [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q1 8:07 (3 yds) Fumble Recovery (Own): (Shotgun) K.Vidal right guard to TEN 2 for 3 yards (T.Sweat, C.Ravenell). FUMBLES (C.Ravenell), and recovers at TEN 2.
+
+- Excluded non-zero-yard plays (up to 10 shown):
+- Q1 11:19 (23 yds) Kickoff: J.Slye kicks 64 yards from TEN 35 to LAC 1. D.Davis to LAC 24 for 23 yards (D.Mausi). [special_teams]
+- Q1 2:55 (-15 yds) Penalty: J.Slye extra point is GOOD, Center-M.Cox, Holder-J.Hekker.
+PENALTY on TEN, Unnecessary Roughness, 15 yards, enforced at LAC 15 - No Play. [nullified]
+- Q2 0:20 (52 yds) Field Goal Good: C.Dicker 52 yard field goal is GOOD, Center-R.Lovato, Holder-J.Scott. [special_teams]
+- Q2 14:06 (27 yds) Field Goal Good:  C.Dicker 27 yard field goal is GOOD, Center-R.Lovato, Holder-J.Scott. [special_teams]
+- Q2 5:02 (19 yds) Kickoff: J.Slye kicks 64 yards from TEN 35 to LAC 1. K.Lambert-Smith to LAC 20 for 19 yards (D.Martin-Robinson). [special_teams]
+- Q3 0:21 (-5 yds) Penalty: (Shotgun) PENALTY on LAC-J.Salyer, False Start, 5 yards, enforced at TEN 12 - No Play. [nullified]
+- Q3 13:28 (20 yds) Punt: J.Scott punts 56 yards to TEN 8, Center-R.Lovato. C.Dike to TEN 28 for 20 yards (D.Henley). [special_teams]
+- Q3 15:00 (30 yds) Kickoff: J.Slye kicks 67 yards from TEN 35 to LAC -2. K.Lambert-Smith to LAC 28 for 30 yards (M.Kinsey). [special_teams]
+- Q4 0:29 (-1 yds) Rush: J.Herbert kneels to TEN 35 for -1 yards. [spike_kneel]
+- Q4 8:42 (11 yds) Punt: J.Scott punts 47 yards to TEN 30, Center-R.Lovato. C.Dike pushed ob at TEN 41 for 11 yards (D.Henley). [special_teams]
+
+**TEN Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q1 13:36 (-2 yds) Fumble Recovery (Own): C.Ward FUMBLES (Aborted) at TEN 43, recovered by TEN-T.Pollard at TEN 48.
+- Q2 0:08 (-8 yds) Fumble Recovery (Own): (Shotgun) C.Ward sacked at TEN 23 for -8 yards (T.Tuipulotu). FUMBLES (T.Tuipulotu) [T.Tuipulotu], recovered by TEN-J.Latham at TEN 23.
+
+- Excluded non-zero-yard plays (up to 15 shown):
+- Q1 15:00 (-2 yds) Kickoff: C.Dicker kicks 62 yards from LAC 35 to TEN 3. C.Dike pushed ob at TEN 40 for 37 yards (C.Dicker).PENALTY on TEN-J.Chestnut, Offensive Holding, 10 yards, enforced at TEN 32. [special_teams]
+- Q1 2:55 (67 yds) Punt Return Touchdown: Chimere Dike 67 Yd Punt Return (Joey Slye Kick) [special_teams_return]
+- Q1 7:17 (-5 yds) Rush: T.Pollard left end pushed ob at TEN 33 for 1 yard (D.Henley).PENALTY on TEN, Illegal Formation, 5 yards, enforced at TEN 32 - No Play. [nullified]
+- Q1 7:24 (31 yds) Kickoff: C.Dicker kicks 64 yards from LAC 35 to TEN 1. C.Dike to TEN 32 for 31 yards (J.Eboigbe). [special_teams]
+- Q2 0:20 (29 yds) Kickoff: C.Dicker kicks 63 yards from LAC 35 to TEN 2. C.Dike to TEN 31 for 29 yards (T.Dye). [special_teams]
+- Q2 12:28 (-5 yds) Penalty: (Shotgun) PENALTY on TEN-J.Latham, False Start, 5 yards, enforced at TEN 34 - No Play. [nullified]
+- Q2 12:50 (-10 yds) Rush: (Shotgun) Direct snap to T.Pollard.  T.Pollard right end to TEN 44 for no gain (J.Caldwell).PENALTY on TEN-E.Ayomanor, Offensive Holding, 10 yards, enforced at TEN 44 - No Play. [nullified]
+- Q2 2:31 (3 yds) Punt: J.Hekker punts 35 yards to LAC 23, Center-M.Cox. D.Davis pushed ob at LAC 26 for 3 yards (D.Mausi). [special_teams]
+- Q2 5:02 (49 yds) Field Goal Good: J.Slye 49 yard field goal is GOOD, Center-M.Cox, Holder-J.Hekker. [special_teams]
+- Q2 7:01 (-10 yds) Penalty: (Shotgun) C.Ward pass short left to T.Pollard to LAC 36 for 1 yard (D.Henley).PENALTY on TEN-P.Skoronski, Offensive Holding, 10 yards, enforced at LAC 37 - No Play. [nullified]
+- Q2 7:56 (-5 yds) Penalty: PENALTY on TEN-D.Moore, False Start, 5 yards, enforced at LAC 34 - No Play. [nullified]
+- Q2 8:37 (25 yds) Kickoff: C.Dicker kicks 55 yards from LAC 35 to TEN 10, out of bounds.PENALTY on LAC-C.Dicker, Kickoff Out of Bounds, placed at TEN 40. [special_teams]
+- Q4 11:02 (6 yds) Punt: J.Hekker punts 41 yards to LAC 34, Center-M.Cox. D.Davis to LAC 40 for 6 yards (D.Martin-Robinson; J.Chestnut). [special_teams]
+- Q4 12:58 (28 yds) Kickoff: C.Dicker kicks 63 yards from LAC 35 to TEN 2. C.Dike pushed ob at TEN 30 for 28 yards (C.Hart). [special_teams]
+- Q4 4:19 (37 yds) Field Goal Good: J.Slye 37 yard field goal is GOOD, Center-M.Cox, Holder-J.Hekker. [special_teams]
+
+### 401772777 BAL @ CLE (TOΔ max 0, YdsΔ max 2, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| BAL | 351 | 351 | +0 | 3 | 3 | +0 | 26 | 26 | +0 |
+| CLE | 187 | 189 | +2 | 1 | 1 | +0 | 41 | 41 | +0 |
+
+**BAL Reconciliation Clues**
+
+- Windelta counted turnovers (3):
+- Q2 10:26 (0 yds) Muffed Punt Recovery (Opponent): C.Bojorquez punts 47 yards to BLT 13, Center-R.Sunahara. L.Wester MUFFS catch, RECOVERED by CLV-G.Delpit at BLT 6. [muffed_kick]
+- Q2 7:43 (23 yds) Interception Return Touchdown: (Shotgun) L.Jackson pass short right intended for K.Mitchell INTERCEPTED by D.Bush at BLT 23. D.Bush for 23 yards, TOUCHDOWN. A.Szmyt extra point is GOOD, Center-R.Sunahara, Holder-C.Bojorquez. [interception]
+- Q3 4:37 (9 yds) Pass Interception Return: L.Jackson pass short right intended for C.Kolar INTERCEPTED by C.Schwesinger at CLV 14. C.Schwesinger to CLV 23 for 9 yards (P.Ricard). [interception]
+
+- Excluded non-zero-yard plays (up to 14 shown):
+- Q1 4:55 (25 yds) Field Goal Good: T.Loop 25 yard field goal is GOOD, Center-N.Moore, Holder-J.Stout. [special_teams]
+- Q2 0:35 (5 yds) Punt:  J.Stout punts 52 yards to CLV 6, Center-N.Moore. G.Larvadain to CLV 11 for 5 yards (K.Jackson). [special_teams]
+- Q2 0:58 (25 yds) Kickoff: A.Szmyt kicks 56 yards from CLV 35 to BLT 9. R.Ali to BLT 34 for 25 yards (C.Schwesinger; M.Harden). [special_teams]
+- Q2 15:00 (32 yds) Kickoff: A.Szmyt kicks 62 yards from CLV 35 to BLT 3. L.Wester to BLT 35 for 32 yards (M.Harden). [special_teams]
+- Q2 4:45 (2 yds) Penalty: (Shotgun) PENALTY on CLV-M.Collins, Neutral Zone Infraction, 2 yards, enforced at CLV 3 - No Play. [nullified]
+- Q2 7:43 (33 yds) Kickoff: A.Szmyt kicks 61 yards from CLV 35 to BLT 4. K.Mitchell ran ob at BLT 37 for 33 yards (G.Delpit). [special_teams]
+- Q2 8:44 (25 yds) Kickoff: A.Szmyt kicks 61 yards from CLV 35 to BLT 4. K.Mitchell to BLT 29 for 25 yards (D.McMillon). [special_teams]
+- Q3 12:54 (13 yds) Punt:  J.Stout punts 48 yards to CLV 12, Center-N.Moore. G.Larvadain to CLV 25 for 13 yards (C.Martin). [special_teams]
+- Q3 5:13 (-5 yds) Penalty: (Shotgun) PENALTY on BLT, Delay of Game, 5 yards, enforced at CLV 38 - No Play. [nullified]
+- Q3 6:27 (11 yds) Pass Reception: (Shotgun) L.Jackson pass short right to D.Hopkins to CLV 21 for 11 yards (C.Schwesinger).PENALTY on BLT-D.Henry, Offensive Holding, 11 yards, enforced at CLV 32 - No Play. [nullified]
+- Q4 0:27 (-1 yds) Rush: L.Jackson kneels to BLT 24 for -1 yards. [spike_kneel]
+- Q4 0:57 (-1 yds) Rush: L.Jackson kneels to BLT 25 for -1 yards. [spike_kneel]
+- Q4 14:06 (24 yds) Field Goal Good: T.Loop 24 yard field goal is GOOD, Center-N.Moore, Holder-J.Stout. [special_teams]
+- Q4 4:59 (44 yds) Field Goal Good:  T.Loop 44 yard field goal is GOOD, Center-N.Moore, Holder-J.Stout. [special_teams]
+
+**CLE Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q3 4:44 (14 yds) Pass Interception Return: (Shotgun) S.Sanders pass short right intended for J.Jeudy INTERCEPTED by N.Wiggins [K.Van Noy] at CLV 30. N.Wiggins pushed ob at CLV 16 for 14 yards (M.Corley). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q3 10:54 (-13 yds) Fumble Recovery (Own): (Shotgun) S.Sanders sacked at CLV 16 for -11 yards (K.Hamilton). FUMBLES (K.Hamilton) [K.Hamilton], recovered by CLV-W.Teller at CLV 14.
+
+- Excluded non-zero-yard plays (up to 12 shown):
+- Q1 0:00 (30 yds) Field Goal Good: A.Szmyt 30 yard field goal is GOOD, Center-R.Sunahara, Holder-C.Bojorquez. [special_teams]
+- Q1 12:47 (19 yds) Punt: C.Bojorquez punts 63 yards to BLT 2, Center-R.Sunahara. L.Wester to BLT 21 for 19 yards (D.McMillon; C.Edmonds). [special_teams]
+- Q1 13:06 (-4 yds) Rush: A.Huntington and T.Jenkins reported in as eligible.  Q.Judkins right guard to CLV 40 for 1 yard (R.Smith; M.Green).PENALTY on CLV-C.Robinson, Illegal Formation, 4 yards, enforced at CLV 39 - No Play. [nullified]
+- Q1 15:00 (19 yds) Kickoff: T.Loop kicks 54 yards from BLT 35 to CLV 11. D.Sampson to CLV 30 for 19 yards (R.Ali). [special_teams]
+- Q1 4:55 (29 yds) Kickoff: T.Loop kicks 61 yards from BLT 35 to CLV 4. M.Corley to CLV 33 for 29 yards (C.Martin; R.Ali). [special_teams]
+- Q2 0:58 (46 yds) Field Goal Good: A.Szmyt 46 yard field goal is GOOD, Center-R.Sunahara, Holder-C.Bojorquez. [special_teams]
+- Q2 4:17 (29 yds) Kickoff: T.Loop kicks 64 yards from BLT 35 to CLV 1. D.Sampson to CLV 30 for 29 yards (K.Martin). [special_teams]
+- Q2 8:44 (24 yds) Field Goal Good: A.Szmyt 24 yard field goal is GOOD, Center-R.Sunahara, Holder-C.Bojorquez. [special_teams]
+- Q3 12:04 (-10 yds) Rush: Q.Judkins left end to CLV 31 for 1 yard (D.Ojabo; T.Buchanan).PENALTY on CLV-E.Pocic, Offensive Holding, 10 yards, enforced at CLV 30 - No Play. [nullified]
+- Q3 1:11 (7 yds) Punt: C.Bojorquez punts 50 yards to BLT 25, Center-R.Sunahara. L.Wester to BLT 32 for 7 yards (R.Sunahara). [special_teams]
+- Q4 14:06 (17 yds) Kickoff: T.Loop kicks 50 yards from BLT 35 to CLV 15. M.Corley pushed ob at CLV 32 for 17 yards (T.Tampa). [special_teams]
+- Q4 4:59 (19 yds) Kickoff: T.Loop kicks 64 yards from BLT 35 to CLV 1. M.Corley to CLV 30 for 29 yards (J.Hummel; C.Martin). CLV-D.Jones was injured during the play. PENALTY on CLV-J.Baker, Offensive Holding, 10 yards, enforced at CLV 30. [special_teams]
+
+### 401772782 NYJ @ BAL (TOΔ max 0, YdsΔ max 2, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| NYJ | 282 | 283 | +1 | 2 | 2 | +0 | 81 | 81 | +0 |
+| BAL | 241 | 239 | -2 | 0 | 0 | +0 | 30 | 30 | +0 |
+
+**NYJ Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q4 0:13 (0 yds) Pass Interception Return: (No Huddle, Shotgun) T.Taylor pass deep right intended for A.Mitchell INTERCEPTED by T.Tampa at BLT 13. T.Tampa to BLT 13 for no gain (A.Mitchell). [interception]
+- Q4 6:58 (0 yds) Fumble Recovery (Opponent): (Shotgun) B.Hall right end to BLT 2 for 10 yards (M.Humphrey; D.Jones). FUMBLES (M.Humphrey), RECOVERED by BLT-A.Gilman at BLT 3. [fumble]
+
+- Excluded non-zero-yard plays (up to 10 shown):
+- Q1 15:00 (38 yds) Kickoff: T.Loop kicks 60 yards from BLT 35 to NYJ 5. I.Williams to NYJ 43 for 38 yards (J.Hummel). [special_teams]
+- Q1 4:16 (-5 yds) Penalty: (Run formation) PENALTY on NYJ, Delay of Game, 5 yards, enforced at BLT 42 - No Play. [nullified]
+- Q2 1:35 (26 yds) Kickoff: T.Loop kicks 52 yards from BLT 35 to NYJ 13. I.Williams to NYJ 39 for 26 yards (C.Martin; A.Oruwariye). [special_teams]
+- Q3 1:45 (-10 yds) Penalty: M.Mitchell reported in as eligible.  B.Hall left end pushed ob at BLT 44 for 5 yards (A.Gilman).PENALTY on NYJ-J.Simpson, Offensive Holding, 10 yards, enforced at BLT 49 - No Play. [nullified]
+- Q3 3:33 (25 yds) Kickoff: T.Loop kicks 44 yards from BLT 35 to NYJ 21, short of landing zone.PENALTY on BLT-T.Loop, Kickoff Short of Landing Zone, placed at NYJ 40.Penalty on BLT-D.Walker, Illegal Formation, declined. [special_teams]
+- Q3 8:49 (31 yds) Kickoff: T.Loop kicks 62 yards from BLT 35 to NYJ 3. I.Williams to NYJ 34 for 31 yards (T.Wallace). [special_teams]
+- Q4 0:41 (34 yds) Kickoff: T.Loop kicks 58 yards from BLT 35 to NYJ 7. K.Nwangwu to NYJ 41 for 34 yards (T.Buchanan). [special_teams]
+- Q4 14:41 (42 yds) Field Goal Good: N.Folk 42 yard field goal is GOOD, Center-T.Hennessy, Holder-A.McNamara. [special_teams]
+- Q4 8:04 (-10 yds) Penalty: (Shotgun) T.Taylor sacked at BLT 18 for -1 yards (K.Van Noy).PENALTY on NYJ-J.Tippmann, Offensive Holding, 10 yards, enforced at BLT 17 - No Play.Penalty on NYJ-A.Membou, Illegal Shift, declined. [nullified]
+- Q4 9:35 (27 yds) Kickoff: T.Loop kicks 59 yards from BLT 35 to NYJ 6. I.Williams to NYJ 33 for 27 yards (C.Martin; D.Walker). [special_teams]
+
+**BAL Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q3 9:29 (1 yds) Fumble Recovery (Own): L.Jackson to NYJ 4 for -1 yards. FUMBLES, and recovers at NYJ 5. L.Jackson to NYJ 7 for -2 yards. Handoff to D.Henry to NYJ 2 for 5 yards (M.Clemons).
+
+- Excluded non-zero-yard plays (up to 18 shown):
+- Q1 2:24 (2 yds) Punt: J.Stout punts 49 yards to NYJ 38, Center-N.Moore. I.Williams to NYJ 40 for 2 yards (T.Tampa). [special_teams]
+- Q1 9:49 (13 yds) Punt: J.Stout punts 56 yards to NYJ 8, Center-N.Moore. I.Williams to NYJ 21 for 13 yards (T.Tampa). [special_teams]
+- Q2 0:18 (-1 yds) Rush: L.Jackson kneels to BLT 19 for -1 yards. [spike_kneel]
+- Q2 10:45 (8 yds) Punt: J.Stout punts 74 yards to NYJ 13, Center-N.Moore. I.Williams to NYJ 21 for 8 yards (C.Kolar; T.Simpson). [special_teams]
+- Q2 12:35 (-10 yds) Penalty: (Shotgun) K.Mitchell left end to BLT 26 for 2 yards (I.Oliver; T.Adams).PENALTY on BLT-M.Andrews, Offensive Holding, 10 yards, enforced at BLT 24 - No Play. [nullified]
+- Q2 13:26 (5 yds) Penalty: (Shotgun) L.Jackson pass incomplete short left to T.Wallace.PENALTY on NYJ-A.Thomas, Defensive Holding, 5 yards, enforced at BLT 15 - No Play. [nullified]
+- Q2 1:35 (31 yds) Field Goal Good: T.Loop 31 yard field goal is GOOD, Center-N.Moore, Holder-J.Stout. [special_teams]
+- Q2 4:04 (34 yds) Kickoff: A.McNamara kicks 57 yards from NYJ 35 to BLT 8. K.Mitchell to BLT 42 for 34 yards (M.Walker). [special_teams]
+- Q3 14:43 (34 yds) Penalty: (Shotgun) L.Jackson pass incomplete deep right to M.Andrews.PENALTY on NYJ-I.Oliver, Defensive Pass Interference, 34 yards, enforced at BLT 21 - No Play. [nullified]
+- Q3 14:47 (-5 yds) Penalty: (Shotgun) PENALTY on BLT-R.Rosengarten, False Start, 5 yards, enforced at BLT 26 - No Play. [nullified]
+- Q3 15:00 (27 yds) Kickoff: A.McNamara kicks 63 yards from NYJ 35 to BLT 2. J.Hill MUFFS catch, and recovers at BLT -1. J.Hill to BLT 26 for 27 yards (M.McCrary-Ball). [special_teams]
+- Q3 5:05 (17 yds) Penalty: (Shotgun) L.Jackson pass incomplete deep right to Z.Flowers.PENALTY on NYJ-T.Adams, Defensive Pass Interference, 17 yards, enforced at NYJ 20 - No Play. [nullified]
+- Q4 0:05 (-1 yds) Rush: L.Jackson kneels to BLT 12 for -1 yards. [spike_kneel]
+- Q4 0:41 (27 yds) Field Goal Good: T.Loop 27 yard field goal is GOOD, Center-N.Moore, Holder-J.Stout. [special_teams]
+- Q4 0:45 (-5 yds) Penalty: (Shotgun) PENALTY on BLT-D.Faalele, False Start, 5 yards, enforced at NYJ 4 - No Play. [nullified]
+- Q4 14:41 (25 yds) Kickoff: A.McNamara kicks 65 yards from NYJ 35 to BLT 0. K.Mitchell to BLT 25 for 25 yards (K.King; I.Davis). [special_teams]
+- Q4 5:26 (-10 yds) Penalty: (Shotgun) K.Mitchell right tackle pushed ob at NYJ 42 for 35 yards (T.Adams).PENALTY on BLT-T.Linderbaum, Offensive Holding, 10 yards, enforced at BLT 23 - No Play. [nullified]
+- Q4 9:35 (35 yds) Field Goal Good: T.Loop 35 yard field goal is GOOD, Center-N.Moore, Holder-J.Stout. [special_teams]
+
+### 401772792 NO @ TB (TOΔ max 0, YdsΔ max 2, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| NO | 260 | 258 | -2 | 1 | 1 | +0 | 82 | 82 | +0 |
+| TB | 301 | 301 | +0 | 1 | 1 | +0 | 49 | 49 | +0 |
+
+**NO Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q2 11:20 (19 yds) Pass Interception Return: T.Shough pass deep right intended for C.Olave INTERCEPTED by Z.McCollum at TB 41. Z.McCollum pushed ob at NO 40 for 19 yards (D.Neal). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q1 0:57 (-3 yds) Fumble Recovery (Own): (Shotgun) T.Hill to NO 47 for -5 yards. FUMBLES, and recovers at NO 48. T.Hill to NO 49 for 1 yard.
+
+- Excluded non-zero-yard plays (up to 15 shown):
+- Q1 15:00 (54 yds) Kickoff: C.McLaughlin kicks 64 yards from TB 35 to NO 1. M.Tipton ran ob at TB 45 for 54 yards (R.Miller). [special_teams]
+- Q1 6:21 (-10 yds) Punt: K.Kroeger punts 48 yards to TB 30, Center-Z.Wood. K.Johnson pushed ob at TB 43 for 13 yards (T.Hill).PENALTY on TB-J.Hayes, Offensive Holding, 10 yards, enforced at TB 30. [special_teams]
+- Q1 7:57 (19 yds) Kickoff: C.McLaughlin kicks 61 yards from TB 35 to NO 4. D.Pettis pushed ob at NO 23 for 19 yards (J.Bullock). [special_teams]
+- Q2 11:39 (5 yds) Penalty: D.Neal right guard to NO 19 for 3 yards (L.David; S.Dennis).PENALTY on TB-L.Hall, Defensive Offside, 5 yards, enforced at NO 16 - No Play. [nullified]
+- Q2 13:45 (48 yds) Field Goal Missed: C.Smyth 48 yard field goal is No Good, Wide Left, Center-Z.Wood, Holder-K.Kroeger. [special_teams]
+- Q2 2:00 (-5 yds) Penalty: (Shotgun) PENALTY on NO-D.Radunz, False Start, 5 yards, enforced at TB 47 - No Play. [nullified]
+- Q2 2:00 (-5 yds) Penalty: (Shotgun) T.Shough pass short right to C.Olave to TB 42 for 10 yards (J.Parrish).PENALTY on NO-C.Olave, Illegal Shift, 5 yards, enforced at NO 48 - No Play. [nullified]
+- Q2 8:27 (-5 yds) Penalty: (Shotgun) PENALTY on NO-A.Richards, False Start, 5 yards, enforced at NO 30 - No Play. [nullified]
+- Q2 9:11 (23 yds) Kickoff: C.McLaughlin kicks 60 yards from TB 35 to NO 5. D.Pettis pushed ob at NO 28 for 23 yards (J.Parrish). [special_teams]
+- Q3 1:32 (30 yds) Field Goal Good: C.Smyth 30 yard field goal is GOOD, Center-Z.Wood, Holder-K.Kroeger. [special_teams]
+- Q3 1:54 (-4 yds) Penalty: (No Huddle, Shotgun) T.Shough pass short right to C.Olave to TB 5 for 3 yards (L.Hall).PENALTY on NO-C.Ruiz, Ineligible Downfield Pass, 4 yards, enforced at TB 8 - No Play. [nullified]
+- Q3 7:37 (21 yds) Kickoff: C.McLaughlin kicks 51 yards from TB 35 to NO 14. D.Pettis to NO 35 for 21 yards (J.Parrish). [special_teams]
+- Q4 0:40 (-1 yds) Rush:  T.Shough kneels to TB 32 for -1 yards. [spike_kneel]
+- Q4 1:21 (-2 yds) Rush:  T.Shough kneels to TB 31 for -2 yards. [spike_kneel]
+- Q4 4:54 (-4 yds) Kickoff: C.McLaughlin kicks 58 yards from TB 35 to NO 7. D.Pettis to NO 34 for 27 yards (M.Watts; J.Parrish).PENALTY on NO-C.Rumph, Offensive Holding, 10 yards, enforced at NO 28. [special_teams]
+
+**TB Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q3 12:54 (10 yds) Pass Interception Return: (Shotgun) B.Mayfield pass deep right intended for K.Johnson INTERCEPTED by A.Taylor at NO 43. A.Taylor to TB 47 for 10 yards (P.Durham). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q1 4:53 (0 yds) Penalty: (No Huddle, Shotgun) B.Mayfield pass short left intended for S.Shepard INTERCEPTED by J.Sanker (Q.Riley) at TB 40. J.Sanker to TB 40 for no gain (E.Egbuka).PENALTY on NO-Q.Riley, Defensive Pass Interference, 5 yards, enforced at TB 25 - No Play.
+
+- Excluded non-zero-yard plays (up to 12 shown):
+- Q1 10:59 (5 yds) Penalty: (Shotgun) PENALTY on NO-C.Young, Neutral Zone Infraction, 5 yards, enforced at TB 38 - No Play. [nullified]
+- Q1 12:24 (23 yds) Kickoff: C.Smyth kicks 55 yards from NO 35 to TB 10. K.Johnson to TB 33 for 23 yards (I.Yiadom). [special_teams]
+- Q1 3:16 (-5 yds) Penalty: B.Mayfield pass incomplete short left to T.Johnson.PENALTY on TB-B.Chukwuma, Ineligible Downfield Pass, 5 yards, enforced at TB 46 - No Play. [nullified]
+- Q1 6:10 (-5 yds) Penalty: PENALTY on TB-L.Goedeke, False Start, 5 yards, enforced at TB 20 - No Play. [nullified]
+- Q2 0:11 (-10 yds) Penalty: (Shotgun) B.Mayfield pass short left to E.Egbuka ran ob at NO 28 for 9 yards (A.Taylor).PENALTY on TB-E.Egbuka, Offensive Pass Interference, 10 yards, enforced at NO 37 - No Play. [nullified]
+- Q2 9:11 (41 yds) Field Goal Good:  C.McLaughlin 41 yard field goal is GOOD, Center-E.Deckers, Holder-R.Dixon. [special_teams]
+- Q3 10:01 (28 yds) Penalty: (Shotgun) B.Mayfield pass incomplete deep right to T.Johnson.PENALTY on NO-J.Sanker, Defensive Pass Interference, 28 yards, enforced at TB 35 - No Play. [nullified]
+- Q3 10:25 (-9 yds) Penalty: (No Huddle, Shotgun) S.Tucker up the middle to 50 for 6 yards (D.Davis; T.Burgess).PENALTY on TB-G.Barton, Offensive Holding, 9 yards, enforced at TB 44 - No Play. [nullified]
+- Q3 1:32 (16 yds) Kickoff: C.Smyth kicks 53 yards from NO 35 to TB 12. K.Johnson to TB 28 for 16 yards (D.Stutsman). [special_teams]
+- Q4 4:54 (37 yds) Field Goal Good: C.McLaughlin 37 yard field goal is GOOD, Center-E.Deckers, Holder-R.Dixon. [special_teams]
+- Q4 5:52 (-5 yds) Penalty: (Shotgun) PENALTY on TB-M.Jordan, False Start, 5 yards, enforced at NO 17 - No Play. [nullified]
+- Q4 8:26 (25 yds) Kickoff: C.Smyth kicks 33 yards from NO 35 to TB 32, short of landing zone.PENALTY on NO-C.Smyth, Kickoff Short of Landing Zone, placed at TB 40. [special_teams]
+
+### 401772831 SF @ SEA (TOΔ max 0, YdsΔ max 2, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| SF | 384 | 384 | +0 | 2 | 2 | +0 | 61 | 61 | +0 |
+| SEA | 230 | 228 | -2 | 2 | 2 | +0 | 30 | 30 | +0 |
+
+**SF Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q3 12:17 (7 yds) Pass Interception Return: B.Purdy pass deep middle intended for J.Jennings INTERCEPTED by E.Jones [D.Hall] at SEA 22. E.Jones to SEA 29 for 7 yards (C.McCaffrey; K.Juszczyk). [interception]
+- Q4 7:13 (0 yds) Pass Interception Return: (Shotgun) B.Purdy pass deep left intended for R.Pearsall INTERCEPTED by J.Jobe [J.Reed] at SEA 47. J.Jobe to SEA 47 for no gain (R.Pearsall).The Replay Official reviewed the runner was down by contact ruling, and the play was Upheld. The ruling on the field stands. [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q3 2:21 (36 yds) Blocked Field Goal: J.Moody 36 yard field goal is BLOCKED (J.Love), Center-J.Weeks, Holder-T.Morstead, RECOVERED by SEA-D.Lawrence at SEA 23. D.Lawrence to SEA 31 for 8 yards (C.McKivitz).
+
+- Excluded non-zero-yard plays (up to 13 shown):
+- Q1 5:23 (-5 yds) Penalty: PENALTY on SF-L.Farrell, False Start, 5 yards, enforced at SEA 10 - No Play. [nullified]
+- Q1 6:47 (15 yds) Penalty: (Shotgun) B.Purdy pass incomplete short left to R.Gage.PENALTY on SEA-L.Williams, Roughing the Passer, 15 yards, enforced at SEA 39 - No Play. [nullified]
+- Q2 0:02 (-1 yds) Rush: B.Purdy kneels to SF 34 for -1 yards. [spike_kneel]
+- Q2 12:15 (7 yds) Punt: T.Morstead punts 42 yards to SEA 18, Center-J.Weeks. T.Horton ran ob at SEA 30 for 12 yards (T.Bethune).PENALTY on SF-S.Neal, Player Out of Bounds on Kick, 5 yards, enforced at SEA 30. [special_teams]
+- Q2 1:00 (27 yds) Field Goal Missed: J.Moody 27 yard field goal is No Good, Hit Left Upright, Center-J.Weeks, Holder-T.Morstead. [special_teams]
+- Q3 15:00 (11 yds) Kickoff: J.Myers kicks 63 yards from SEA 35 to SF 2. I.Guerendo MUFFS catch, and recovers at SF 4. I.Guerendo to SF 20 for 16 yards (E.Saubert; D.Thomas).PENALTY on SEA-E.Saubert, Illegal Use of Hands, 5 yards, enforced at SF 20. [special_teams]
+- Q3 2:21 (36 yds) Blocked Field Goal: J.Moody 36 yard field goal is BLOCKED (J.Love), Center-J.Weeks, Holder-T.Morstead, RECOVERED by SEA-D.Lawrence at SEA 23. D.Lawrence to SEA 31 for 8 yards (C.McKivitz). [special_teams]
+- Q4 0:36 (-1 yds) Rush: B.Purdy kneels to SF 7 for -1 yards. [spike_kneel]
+- Q4 14:50 (5 yds) Penalty: B.Purdy pass incomplete deep left to R.Pearsall.PENALTY on SEA-J.Love, Illegal Contact, 5 yards, enforced at SF 34 - No Play. [nullified]
+- Q4 3:24 (24 yds) Kickoff: J.Myers kicks 57 yards from SEA 35 to SF 8. S.Moore to SF 32 for 24 yards (C.Bryant; G.Holani). [special_teams]
+- Q4 7:32 (-10 yds) Penalty: C.McCaffrey left tackle to SF 41 for 4 yards (B.Murphy).PENALTY on SF-T.Williams, Offensive Holding, 10 yards, enforced at SF 37 - No Play. [nullified]
+- Q4 9:42 (32 yds) Field Goal Good: J.Moody 32 yard field goal is GOOD, Center-J.Weeks, Holder-T.Morstead. [special_teams]
+- Q4 9:52 (-5 yds) Penalty: (Shotgun) PENALTY on SF-C.McKivitz, False Start, 5 yards, enforced at SEA 9 - No Play. [nullified]
+
+**SEA Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q4 0:42 (-8 yds) Sack Opp Fumble Recovery: (No Huddle, Shotgun) S.Darnold sacked at SF 16 for -7 yards (N.Bosa). FUMBLES (N.Bosa), touched at SF 13, RECOVERED by SF-N.Bosa at SF 16.PENALTY on SF-D.Lenoir, Unsportsmanlike Conduct, 8 yards, enforced at SF 16. [fumble]
+- Q4 15:00 (0 yds) Fumble Recovery (Opponent): (Shotgun) S.Darnold pass short left to J.Smith-Njigba to SF 43 for 2 yards (S.Okuayinonu). FUMBLES (S.Okuayinonu), RECOVERED by SF-M.Sigle at SF 34. [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 8:50 (2 yds) Pass Reception: (Shotgun) S.Darnold pass short right to J.Smith-Njigba to SEA 32 for 3 yards. FUMBLES, ball out of bounds at SEA 31.
+
+- Excluded non-zero-yard plays (up to 12 shown):
+- Q1 12:14 (-5 yds) Punt: M.Dickson punts 37 yards to SF 10, Center-C.Stoll, downed by SEA-E.Saubert.PENALTY on SF-J.Brown, Offensive Holding, 5 yards, enforced at SF 10. [special_teams]
+- Q1 12:19 (-5 yds) Penalty: (No Huddle, Shotgun) PENALTY on SEA, Delay of Game, 5 yards, enforced at SF 42 - No Play. [nullified]
+- Q1 3:43 (23 yds) Kickoff: J.Moody kicks 57 yards from SF 35 to SEA 8. C.White to SEA 31 for 23 yards (L.Gifford). [special_teams]
+- Q2 0:02 (48 yds) Field Goal Good: J.Myers 48 yard field goal is GOOD, Center-C.Stoll, Holder-M.Dickson. [special_teams]
+- Q2 11:16 (6 yds) Punt: M.Dickson punts 58 yards to SF 8, Center-C.Stoll. S.Moore to SF 14 for 6 yards (B.Russell, C.Surratt). [special_teams]
+- Q2 13:46 (3 yds) Penalty: (Shotgun) S.Darnold pass incomplete short left to C.Kupp [N.Bosa].PENALTY on SF-U.Stout, Defensive Pass Interference, 3 yards, enforced at SF 4 - No Play. [nullified]
+- Q2 6:14 (1 yds) Punt: M.Dickson punts 52 yards to SF 35, Center-C.Stoll. S.Moore MUFFS catch, and recovers at SF 33. S.Moore pushed ob at SF 34 for 1 yard (N.Pritchett). [special_teams]
+- Q3 10:46 (18 yds) Punt: M.Dickson punts 57 yards to SF 7, Center-C.Stoll. S.Moore to SF 25 for 18 yards (E.Saubert). [special_teams]
+- Q4 1:06 (5 yds) Penalty: (Shotgun) S.Darnold pass incomplete short left to K.Walker (D.Winters).PENALTY on SF-B.Huff, Defensive Offside, 5 yards, enforced at SF 14 - No Play. [nullified]
+- Q4 3:24 (37 yds) Field Goal Good: J.Myers 37 yard field goal is GOOD, Center-C.Stoll, Holder-M.Dickson. [special_teams]
+- Q4 8:21 (14 yds) Punt: M.Dickson punts 53 yards to SF 16, Center-C.Stoll. S.Moore pushed ob at SF 30 for 14 yards (A.Barner). [special_teams]
+- Q4 9:42 (36 yds) Kickoff: J.Moody kicks 64 yards from SF 35 to SEA 1. C.White to SEA 37 for 36 yards (C.Lucas). [special_teams]
+
+### 401772835 CHI @ DET (TOΔ max 0, YdsΔ max 2, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| CHI | 339 | 341 | +2 | 2 | 2 | +0 | 50 | 50 | +0 |
+| DET | 511 | 511 | +0 | 0 | 0 | +0 | 28 | 28 | +0 |
+
+**CHI Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q1 0:38 (2 yds) Fumble Recovery (Opponent): (Shotgun) D.Swift left end to DET 32 for 1 yard (B.Branch). FUMBLES (B.Branch), touched at DET 32, RECOVERED by DET-J.Campbell at DET 30. J.Campbell to DET 32 for 2 yards (J.Jackson). [fumble]
+- Q2 9:56 (0 yds) Pass Interception Return: (Shotgun) C.Williams pass deep right intended for O.Zaccheaus INTERCEPTED by K.Joseph at DET 33. K.Joseph ran ob at DET 33 for no gain. [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 3 shown):
+- Q2 10:14 (-15 yds) Penalty: (Shotgun) C.Williams pass short middle to R.Odunze to DET 43 for 5 yards (B.Branch). FUMBLES (B.Branch), touched at DET 44, recovered by CHI-D.Dalman at DET 42.PENALTY on CHI-B.Jones, Face Mask, 15 yards, enforced at DET 48 - No Play.
+- Q4 12:23 (0 yds) Penalty: (Shotgun) C.Williams pass short right intended for R.Odunze INTERCEPTED by T.Arnold at DET 14. T.Arnold to DET 14 for no gain (R.Odunze).PENALTY on DET-B.Branch, Roughing the Passer, 13 yards, enforced at DET 25 - No Play.
+- Q4 7:13 (1 yds) Fumble Recovery (Own): (Shotgun) T.Bagent FUMBLES (Aborted) at CHI 12, recovered by CHI-K.Monangai at CHI 10. K.Monangai to CHI 18 for 8 yards (J.Campbell; A.Hutchinson).
+
+- Excluded non-zero-yard plays (up to 16 shown):
+- Q1 10:35 (-5 yds) Penalty: (No Huddle, Shotgun) PENALTY on CHI-D.Wright, False Start, 5 yards, enforced at CHI 38 - No Play. [nullified]
+- Q1 12:13 (26 yds) Kickoff: J.Bates kicks 65 yards from DET 35 to CHI 0. D.Duvernay to CHI 26 for 26 yards (P.O'Connor; M.Rice). [special_teams]
+- Q1 2:39 (36 yds) Kickoff: J.Bates kicks 65 yards from DET 35 to CHI 0. L.Burden pushed ob at CHI 36 for 36 yards (D.Thomas). [special_teams]
+- Q1 5:13 (16 yds) Punt: T.Taylor punts 48 yards to DET 34, Center-S.Daly. K.Raymond to 50 for 16 yards (J.Owens; J.Jones). [special_teams]
+- Q2 0:02 (1 yds) Kickoff: J.Bates kicks 73 yards from DET 35 to CHI -8. L.Burden to CHI 24 for 32 yards (K.Dorsey).PENALTY on CHI-R.Hyppolite, Offensive Holding, 0 yards, enforced at CHI 23. [special_teams]
+- Q2 10:14 (-15 yds) Penalty: (Shotgun) C.Williams pass short middle to R.Odunze to DET 43 for 5 yards (B.Branch). FUMBLES (B.Branch), touched at DET 44, recovered by CHI-D.Dalman at DET 42.PENALTY on CHI-B.Jones, Face Mask, 15 yards, enforced at DET 48 - No Play. [nullified]
+- Q2 10:49 (-10 yds) Penalty: (Shotgun) C.Williams pass incomplete deep right to L.Burden.PENALTY on CHI-D.Dalman, Offensive Holding, 10 yards, enforced at DET 41 - No Play. [nullified]
+- Q2 4:48 (14 yds) Kickoff: J.Bates kicks 66 yards from DET 35 to CHI -1. D.Duvernay to CHI 28 for 29 yards (J.Saylors; P.O'Connor).PENALTY on DET-M.Rice, Unnecessary Roughness, 15 yards, enforced at CHI 28. [special_teams]
+- Q3 10:39 (27 yds) Kickoff: J.Bates kicks 61 yards from DET 35 to CHI 4. D.Duvernay to CHI 31 for 27 yards (M.Rice; G.Stuard). [special_teams]
+- Q3 13:52 (3 yds) Punt: T.Taylor punts 54 yards to DET 21, Center-S.Daly. K.Raymond to DET 24 for 3 yards (J.Blackwell). [special_teams]
+- Q3 14:55 (-5 yds) Penalty: (Shotgun) ** Injury Update: DET-M.Davenport has returned to the game.  PENALTY on CHI-D.Swift, False Start, 5 yards, enforced at CHI 24 - No Play. [nullified]
+- Q3 15:00 (22 yds) Kickoff: J.Bates kicks 63 yards from DET 35 to CHI 2. L.Burden to CHI 24 for 22 yards (Z.Cunningham; A.Muhammad). [special_teams]
+- Q3 5:47 (-15 yds) Penalty: (No Huddle, Shotgun) C.Williams scrambles right end ran ob at DET 44 for 10 yards (A.Anzalone).PENALTY on CHI-D.Wright, Chop Block, 15 yards, enforced at CHI 46 - No Play. [nullified]
+- Q3 6:22 (29 yds) Kickoff: J.Bates kicks 63 yards from DET 35 to CHI 2. L.Burden to CHI 31 for 29 yards (C.Reynolds). [special_teams]
+- Q4 14:56 (25 yds) Kickoff: J.Bates kicks 40 yards from DET 35 to CHI 25, short of landing zone.PENALTY on DET-J.Bates, Kickoff Short of Landing Zone, placed at CHI 40. [special_teams]
+- Q4 7:58 (15 yds) Kickoff: J.Bates kicks 63 yards from DET 35 to CHI 2. D.Duvernay to CHI 17 for 15 yards (J.Saylors). [special_teams]
+
+**DET Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 11:45 (8 yds) Kickoff: C.Santos kicks onside 17 yards from CHI 35 to DET 48, impetus ends at CHI 43. A.St. Brown (didn't try to advance) to DET 48 for no gain.PENALTY on CHI-R.Hyppolite, Illegal Touch Kick, 0 yards, enforced at CHI 43.
+
+- Excluded non-zero-yard plays (up to 8 shown):
+- Q1 15:00 (25 yds) Kickoff: C.Santos kicks 61 yards from CHI 35 to DET 4, out of bounds.PENALTY on CHI-C.Santos, Kickoff Out of Bounds, placed at DET 40. [special_teams]
+- Q1 8:30 (28 yds) Kickoff: C.Santos kicks 63 yards from CHI 35 to DET 2. G.Stuard to DET 30 for 28 yards (R.Johnson). [special_teams]
+- Q2 12:02 (55 yds) Field Goal Missed: G.Manu, K.Eguakun and P.O'Connor reported in as eligible.  J.Bates 55 yard field goal is No Good, Wide Left, Center-H.Hatten, Holder-J.Fox. [special_teams]
+- Q2 14:51 (6 yds) Punt: J.Fox punts 45 yards to CHI 22, Center-H.Hatten. D.Duvernay pushed ob at CHI 28 for 6 yards (J.Campbell). [special_teams]
+- Q2 1:55 (20 yds) Kickoff: C.Santos kicks 61 yards from CHI 35 to DET 4. G.Stuard to DET 24 for 20 yards (N.Sewell). [special_teams]
+- Q3 10:39 (34 yds) Field Goal Good: J.Bates 34 yard field goal is GOOD, Center-H.Hatten, Holder-J.Fox. [special_teams]
+- Q4 11:45 (8 yds) Kickoff: C.Santos kicks onside 17 yards from CHI 35 to DET 48, impetus ends at CHI 43. A.St. Brown (didn't try to advance) to DET 48 for no gain.PENALTY on CHI-R.Hyppolite, Illegal Touch Kick, 0 yards, enforced at CHI 43. [special_teams]
+- Q4 4:13 (10 yds) Punt: J.Fox punts 62 yards to CHI 5, Center-H.Hatten. D.Duvernay pushed ob at CHI 15 for 10 yards (Z.Cunningham). [special_teams]
+
+### 401772863 GB @ ARI (TOΔ max 0, YdsΔ max 2, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| GB | 262 | 260 | -2 | 0 | 0 | +0 | 94 | 94 | +0 |
+| ARI | 330 | 328 | -2 | 1 | 1 | +0 | 55 | 55 | +0 |
+
+**GB Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q3 2:20 (5 yds) Fumble Recovery (Own): (Shotgun) J.Love scrambles right end to ARZ 33 for 5 yards (A.Davis-Gaither; B.Baker). FUMBLES (A.Davis-Gaither), and recovers at ARZ 33.PENALTY on ARZ-W.Johnson, Illegal Use of Hands, 5 yards, enforced at ARZ 33.
+- Q4 8:57 (0 yds) Fumble Recovery (Own): J.Love to GB 14 for -2 yards. FUMBLES, and recovers at GB 14. J.Love pass incomplete short right.
+
+- Excluded non-zero-yard plays (up to 13 shown):
+- Q1 7:34 (22 yds) Kickoff: C.Ryland kicks 61 yards from ARZ 35 to GB 4. B.Melton to GB 26 for 22 yards (S.Fehoko). [special_teams]
+- Q2 0:00 (61 yds) Field Goal Good: L.Havrisik 61 yard field goal is GOOD, Center-M.Orzech, Holder-D.Whelan. [special_teams]
+- Q2 11:30 (5 yds) Pass Incompletion: J.Love pass incomplete deep left to T.Kraft.PENALTY on ARZ-W.Johnson, Defensive Holding, 5 yards, enforced at GB 43 - No Play. [nullified]
+- Q2 3:16 (13 yds) Punt: D.Whelan punts 59 yards to ARZ 16, Center-M.Orzech. G.Dortch pushed ob at ARZ 29 for 13 yards (C.Brooks). [special_teams]
+- Q2 5:02 (27 yds) Kickoff: C.Ryland kicks 60 yards from ARZ 35 to GB 5. S.Williams to GB 32 for 27 yards (E.Higgins). [special_teams]
+- Q2 9:06 (31 yds) Field Goal Good: L.Havrisik 31 yard field goal is GOOD, Center-M.Orzech, Holder-D.Whelan. [special_teams]
+- Q3 0:34 (10 yds) Pass Incompletion: (Shotgun) J.Love pass incomplete short right to E.Wilson.PENALTY on ARZ-D.Stills, Roughing the Passer, 10 yards, enforced at ARZ 21 - No Play. [nullified]
+- Q3 11:43 (-5 yds) Penalty: (Shotgun) PENALTY on GB-A.Banks, False Start, 5 yards, enforced at ARZ 44 - No Play. [nullified]
+- Q3 15:00 (22 yds) Kickoff: C.Ryland kicks 57 yards from ARZ 35 to GB 8. S.Williams to GB 30 for 22 yards (K.Clark). [special_teams]
+- Q3 1:00 (5 yds) Pass Reception: (Shotgun) J.Love pass short left to J.Jacobs to ARZ 11 for 5 yards (Ma.Wilson; M.Melton).PENALTY on GB-M.Heath, Offensive Offside, 5 yards, enforced at ARZ 16 - No Play. [nullified]
+- Q3 4:17 (23 yds) Kickoff: C.Ryland kicks 55 yards from ARZ 35 to GB 10. S.Williams to GB 33 for 23 yards (C.Simon). [special_teams]
+- Q4 0:06 (-1 yds) Rush:  J.Love kneels to GB 26 for -1 yards. [spike_kneel]
+- Q4 9:01 (3 yds) Kickoff: C.Ryland kicks 60 yards from ARZ 35 to GB 5. B.Melton to GB 29 for 24 yards (O.Pappoe).
+PENALTY on GB-K.Oladapo, Offensive Holding, 10 yards, enforced at GB 26. [special_teams]
+
+**ARI Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q3 11:51 (0 yds) Sack Opp Fumble Recovery: J.Brissett sacked at ARZ 42 for -4 yards (R.Gary). FUMBLES (R.Gary) [R.Gary], RECOVERED by GB-E.Williams at ARZ 44. [fumble]
+
+- Excluded non-zero-yard plays (up to 12 shown):
+- Q1 15:00 (24 yds) Kickoff: L.Havrisik kicks 62 yards from GB 35 to ARZ 3. X.Weaver to ARZ 27 for 24 yards (J.Bullard; E.Williams). [special_teams]
+- Q1 7:34 (32 yds) Field Goal Good: C.Ryland 32 yard field goal is GOOD, Center-A.Brewer, Holder-P.O'Donnell. [special_teams]
+- Q2 0:19 (5 yds) Penalty: (Shotgun) J.Brissett pass incomplete deep left to T.McBride.PENALTY on GB-M.Parsons, Defensive Offside, 5 yards, enforced at GB 20 - No Play. [nullified]
+- Q2 3:04 (-10 yds) Rush: Z.Knight right end to ARZ 27 for -2 yards (E.Cooper, J.Bullard).PENALTY on ARZ-T.McBride, Offensive Holding, 10 yards, enforced at ARZ 29 - No Play. [nullified]
+- Q2 5:02 (40 yds) Field Goal Good: C.Ryland 40 yard field goal is GOOD, Center-A.Brewer, Holder-P.O'Donnell. [special_teams]
+- Q2 8:24 (15 yds) Sack: J.Brissett sacked at ARZ 25 for 0 yards (M.Parsons).PENALTY on GB-M.Parsons, Hip Drop Tackle, 15 yards, enforced at ARZ 25 - No Play. [nullified]
+- Q2 9:06 (25 yds) Kickoff: L.Havrisik kicks 61 yards from GB 35 to ARZ 4. G.Dortch to ARZ 29 for 25 yards (N.Niemann; K.Oladapo). [special_teams]
+- Q3 11:57 (21 yds) Pass Incompletion: (Shotgun) J.Brissett pass incomplete deep right to M.Harrison.PENALTY on GB-E.Williams, Defensive Pass Interference, 21 yards, enforced at ARZ 25 - No Play. [nullified]
+- Q4 14:55 (24 yds) Kickoff: L.Havrisik kicks 64 yards from GB 35 to ARZ 1. G.Dortch to ARZ 40 for 39 yards (N.Niemann).PENALTY on GB-A.Mosby, Face Mask, 15 yards, enforced at ARZ 40. [special_teams]
+- Q4 1:04 (5 yds) Pass Incompletion: (No Huddle, Shotgun) J.Brissett pass incomplete short right to M.Harrison.PENALTY on GB-K.Nixon, Illegal Contact, 5 yards, enforced at GB 45 - No Play. [nullified]
+- Q4 1:50 (-10 yds) Pass Incompletion: (Shotgun) J.Brissett pass incomplete short right.PENALTY on ARZ-Ev.Brown, Offensive Holding, 10 yards, enforced at ARZ 35 - No Play. [nullified]
+- Q4 9:01 (39 yds) Field Goal Good: C.Ryland 39 yard field goal is GOOD, Center-A.Brewer, Holder-P.O'Donnell. [special_teams]
+
+### 401772871 MIN @ DET (TOΔ max 0, YdsΔ max 2, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| MIN | 258 | 256 | -2 | 1 | 1 | +0 | 56 | 56 | +0 |
+| DET | 305 | 305 | +0 | 1 | 1 | +0 | 76 | 76 | +0 |
+
+**MIN Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q2 0:51 (0 yds) Pass Interception Return: (Shotgun) J.McCarthy pass short left intended for J.Nailor INTERCEPTED by T.Arnold at DET 39. T.Arnold to DET 39 for no gain (J.Nailor).The Replay Official reviewed the interception ruling, and the play was Upheld. The ruling on the field stands. [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q2 1:54 (26 yds) Penalty: (Shotgun) J.McCarthy pass deep right intended for J.Addison INTERCEPTED by T.Harper (A.Hutchinson) [A.Hutchinson] at DET 23. T.Harper pushed ob at DET 49 for 26 yards (A.Jones).PENALTY on DET-A.Robertson, Illegal Contact, 5 yards, enforced at MIN 42 - No Play.
+- Q3 10:11 (-2 yds) Fumble Recovery (Own): J.McCarthy FUMBLES (Aborted) at DET 45, and recovers at DET 46. J.McCarthy to DET 46 for no gain (T.Williams).
+
+- Excluded non-zero-yard plays (up to 19 shown):
+- Q1 12:37 (61 yds) Kickoff: J.Bates kicks 62 yards from DET 35 to MIN 3. M.Price to DET 36 for 61 yards (J.Saylors; J.Bates). [special_teams]
+- Q2 0:21 (-1 yds) Rush: J.McCarthy kneels to MIN 10 for -1 yards. [spike_kneel]
+- Q2 14:08 (13 yds) Punt: R.Wright punts 44 yards to MIN 48, Center-A.DePaola. K.Raymond to MIN 35 for 13 yards (Z.Scott; B.Yurosek). [special_teams]
+- Q2 1:54 (26 yds) Penalty: (Shotgun) J.McCarthy pass deep right intended for J.Addison INTERCEPTED by T.Harper (A.Hutchinson) [A.Hutchinson] at DET 23. T.Harper pushed ob at DET 49 for 26 yards (A.Jones).PENALTY on DET-A.Robertson, Illegal Contact, 5 yards, enforced at MIN 42 - No Play. [nullified]
+- Q2 3:13 (-5 yds) Penalty: PENALTY on MIN-C.Darrisaw, False Start, 5 yards, enforced at MIN 25 - No Play. [nullified]
+- Q2 4:42 (50 yds) Field Goal Good:  W.Reichard 50 yard field goal is GOOD, Center-A.DePaola, Holder-R.Wright. [special_teams]
+- Q2 8:44 (-5 yds) Penalty: PENALTY on MIN-J.Nailor, False Start, 5 yards, enforced at MIN 27 - No Play. [nullified]
+- Q2 9:39 (27 yds) Kickoff: J.Bates kicks 65 yards from DET 35 to MIN 0. M.Price to MIN 27 for 27 yards (G.Stuard). [special_teams]
+- Q3 0:11 (64 yds) Kickoff: J.Bates kicks 64 yards from DET 35 to MIN 1. M.Price for 99 yards, TOUCHDOWN NULLIFIED by Penalty.PENALTY on MIN-T.Thomas, Offensive Holding, 10 yards, enforced at MIN 36. [nullified]
+- Q3 13:51 (5 yds) Penalty: J.Mason up the middle to MIN 39 for 1 yard (A.Hutchinson; J.Campbell).PENALTY on DET-A.McNeill, Defensive Offside, 5 yards, enforced at MIN 38 - No Play. [nullified]
+- Q3 15:00 (20 yds) Kickoff: J.Bates kicks 56 yards from DET 35 to MIN 9. M.Price to MIN 29 for 20 yards (T.Summers; S.Vaki). [special_teams]
+- Q3 9:26 (2 yds) Punt: R.Wright punts 39 yards to DET 7, Center-A.DePaola. K.Raymond to DET 9 for 2 yards (T.Thomas). [special_teams]
+- Q4 0:24 (-1 yds) Rush:  J.McCarthy kneels to MIN 40 for -1 yards. [spike_kneel]
+- Q4 0:56 (-2 yds) Rush: J.McCarthy kneels to MIN 41 for -2 yards. [spike_kneel]
+- Q4 13:16 (-15 yds) Punt:  R.Wright punts 51 yards to DET 25, Center-A.DePaola, out of bounds.
+PENALTY on MIN-T.Thomas, Unsportsmanlike Conduct, 15 yards, enforced at DET 25. [special_teams]
+- Q4 1:00 (-1 yds) Rush: J.McCarthy kneels to MIN 43 for -1 yards. [spike_kneel]
+- Q4 1:55 (21 yds) Kickoff: J.Bates kicks 63 yards from DET 35 to MIN 2. M.Price to MIN 23 for 21 yards (P.O'Connor; T.Wheat). [special_teams]
+- Q4 3:31 (20 yds) Field Goal Good: W.Reichard 20 yard field goal is GOOD, Center-A.DePaola, Holder-R.Wright. [special_teams]
+- Q4 5:37 (-10 yds) Penalty: (Shotgun) J.McCarthy scrambles left tackle to DET 16 for 5 yards (T.Harper; A.Anzalone).PENALTY on MIN-D.Jackson, Offensive Holding, 10 yards, enforced at DET 21 - No Play. [nullified]
+
+**DET Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q3 8:30 (-1 yds) Fumble Recovery (Opponent): (Shotgun) D.Montgomery left end to DET 17 for 11 yards (B.Cashman). FUMBLES (B.Cashman), RECOVERED by MIN-H.Smith at DET 34. H.Smith to DET 35 for -1 yards (J.Williams). [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 6:29 (0 yds) Blocked Field Goal: J.Bates 45 yard field goal is BLOCKED (L.Rodriguez), Center-H.Hatten, Holder-J.Fox, RECOVERED by MIN-I.Rodgers at MIN 33. I.Rodgers pushed ob at DET 26 for 41 yards (J.Fox).
+
+- Excluded non-zero-yard plays (up to 15 shown):
+- Q1 0:38 (-6 yds) Punt: J.Fox punts 43 yards to MIN 13, Center-H.Hatten, fair catch by M.Price.PENALTY on MIN-T.Felton, Offensive Holding, 6 yards, enforced at MIN 13. [special_teams]
+- Q1 10:17 (26 yds) Kickoff: W.Reichard kicks 63 yards from MIN 35 to DET 2. J.Saylors to DET 28 for 26 yards (D.Turner). [special_teams]
+- Q1 15:00 (25 yds) Kickoff: W.Reichard kicks 62 yards from MIN 35 to DET 3. J.Saylors to DET 28 for 25 yards (I.Pace). [special_teams]
+- Q1 4:08 (26 yds) Kickoff: W.Reichard kicks 61 yards from MIN 35 to DET 4. J.Saylors to DET 30 for 26 yards (E.Wilson). [special_teams]
+- Q1 8:51 (-5 yds) Penalty: (Shotgun) PENALTY on DET-S.LaPorta, False Start, 5 yards, enforced at DET 28 - No Play. [nullified]
+- Q2 0:35 (7 yds) Punt: J.Fox punts 58 yards to MIN 4, Center-H.Hatten. M.Price to MIN 11 for 7 yards (S.Vaki). [special_teams]
+- Q2 4:42 (28 yds) Kickoff: W.Reichard kicks 64 yards from MIN 35 to DET 1. J.Saylors to DET 29 for 28 yards (D.Turner; T.Batty). [special_teams]
+- Q3 0:11 (41 yds) Field Goal Good:  J.Bates 41 yard field goal is GOOD, Center-H.Hatten, Holder-J.Fox. [special_teams]
+- Q3 2:44 (-10 yds) Pass Incompletion: J.Goff pass incomplete short right.PENALTY on DET-T.Ratledge, Offensive Holding, 10 yards, enforced at MIN 33 - No Play.Penalty on DET, Illegal Shift, declined. [nullified]
+- Q3 3:46 (-5 yds) Penalty: PENALTY on DET-B.Wright, False Start, 5 yards, enforced at MIN 30 - No Play. [nullified]
+- Q3 6:04 (39 yds) Kickoff: W.Reichard kicks 65 yards from MIN 35 to DET 0. J.Saylors to DET 39 for 39 yards (C.Chambliss). ** Injury Update: DET-T.Summers has returned to the game. [special_teams]
+- Q4 3:31 (26 yds) Kickoff: W.Reichard kicks 60 yards from MIN 35 to DET 5. J.Saylors to DET 31 for 26 yards (E.Wilson; J.Ward). [special_teams]
+- Q4 7:09 (-5 yds) Penalty: (Shotgun) PENALTY on DET-T.Decker, False Start, 5 yards, enforced at MIN 13 - No Play. [nullified]
+- Q4 8:11 (5 yds) Penalty: (Shotgun) PENALTY on MIN-J.Greenard, Neutral Zone Infraction, 5 yards, enforced at MIN 19 - No Play. [nullified]
+- Q4 9:54 (-10 yds) Rush: D.Montgomery up the middle to MIN 24 for no gain (B.Cashman).PENALTY on DET-J.Williams, Illegal Block Above the Waist, 10 yards, enforced at MIN 24 - No Play. [nullified]
+
+### 401772879 LAR @ SF (TOΔ max 0, YdsΔ max 2, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| LAR | 401 | 401 | +0 | 0 | 0 | +0 | 0 | 0 | +0 |
+| SF | 393 | 395 | +2 | 2 | 2 | +0 | 45 | 45 | +0 |
+
+**LAR Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 2:59 (8 yds) Kickoff: T.Morstead kicks onside 8 yards from SF 35 to SF 43. C.Parkinson (didn't try to advance) to SF 43 for no gain.
+
+- Excluded non-zero-yard plays (up to 12 shown):
+- Q1 15:00 (28 yds) Kickoff: E.Pineiro kicks 57 yards from SF 35 to LA 8. B.Corum to LA 36 for 28 yards (J.Brown; R.Beal). [special_teams]
+- Q1 8:54 (5 yds) Penalty: B.Corum left guard to LA 14 for no gain (J.Elliott; T.Bethune).PENALTY on SF-C.Ferrell, Defensive Offside, 5 yards, enforced at LA 14 - No Play. [nullified]
+- Q2 0:11 (-1 yds) Rush: M.Stafford kneels to LA 7 for -1 yards. [spike_kneel]
+- Q2 3:15 (27 yds) Kickoff: E.Pineiro kicks 62 yards from SF 35 to LA 3. B.Corum to LA 30 for 27 yards (L.Farrell; J.Brown). [special_teams]
+- Q2 6:57 (27 yds) Punt: E.Evans punts 48 yards to SF 37, Center-J.McQuaide. S.Moore to LA 36 for 27 yards (S.Dolac). [special_teams]
+- Q2 7:26 (5 yds) Penalty: (No Huddle, Shotgun) PENALTY on SF, Defensive Too Many Men on Field, 5 yards, enforced at LA 10 - No Play. [nullified]
+- Q3 9:33 (27 yds) Kickoff: E.Pineiro kicks 56 yards from SF 35 to LA 9. B.Corum to LA 36 for 27 yards (R.Beal; J.Brown). [special_teams]
+- Q4 0:39 (-1 yds) Rush: M.Stafford kneels to SF 19 for -1 yards. [spike_kneel]
+- Q4 12:29 (28 yds) Kickoff: E.Pineiro kicks 57 yards from SF 35 to LA 8. B.Corum to LA 36 for 28 yards (C.Robinson). [special_teams]
+- Q4 1:17 (-1 yds) Rush: M.Stafford kneels to SF 18 for -1 yards. [spike_kneel]
+- Q4 2:42 (5 yds) Penalty: (Run formation) PENALTY on SF-J.Elliott, Encroachment, 5 yards, enforced at SF 34 - No Play. [nullified]
+- Q4 2:59 (8 yds) Kickoff: T.Morstead kicks onside 8 yards from SF 35 to SF 43. C.Parkinson (didn't try to advance) to SF 43 for no gain. [special_teams]
+
+**SF Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q1 3:24 (13 yds) Fumble Recovery (Opponent): (Shotgun) M.Jones pass short left to J.Jennings to LA 26 for 13 yards (N.Landman; K.Curl) [Q.Lake]. FUMBLES (N.Landman), touched at LA 28, RECOVERED by LA-K.Kinchens at LA 28. K.Kinchens to LA 41 for 13 yards (S.Burford). [fumble]
+- Q4 8:36 (5 yds) Pass Interception Return: (Shotgun) M.Jones pass short right intended for C.McCaffrey INTERCEPTED by E.Forbes at SF 43. E.Forbes to SF 38 for 5 yards (G.Kittle). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q4 12:29 (9 yds) Passing Touchdown: M.Jones pass short left to L.Farrell for 9 yards, TOUCHDOWN. E.Pineiro extra point is Blocked (J.Verse), Center-J.Weeks, Holder-T.Morstead.
+- Q4 2:59 (13 yds) Passing Touchdown: (Shotgun) M.Jones pass short left to G.Kittle for 13 yards, TOUCHDOWN. TWO-POINT CONVERSION ATTEMPT. M.Jones pass to J.Jennings is intercepted. ATTEMPT FAILS.
+
+- Excluded non-zero-yard plays (up to 5 shown):
+- Q1 4:55 (-5 yds) Penalty: PENALTY on SF-J.Jennings, False Start, 5 yards, enforced at SF 38 - No Play. [nullified]
+- Q1 9:03 (5 yds) Punt: T.Morstead punts 48 yards to LA 9, Center-J.Weeks. X.Smith to LA 14 for 5 yards (S.Neal). [special_teams]
+- Q2 0:31 (-5 yds) Penalty: (Shotgun) PENALTY on SF, Delay of Game, 5 yards, enforced at 50 - No Play. [nullified]
+- Q3 2:39 (16 yds) Kickoff: E.Evans kicks 51 yards from LA 35 to SF 14. S.Moore to SF 30 for 16 yards (S.Dolac; J.Wallace). [special_teams]
+- Q4 3:43 (-5 yds) Penalty: (No Huddle, Shotgun) M.Jones pass incomplete short right to J.Jennings.PENALTY on SF, Illegal Formation, 5 yards, enforced at LA 12 - No Play. [nullified]
+
+### 401772930 CIN @ BAL (TOΔ max 0, YdsΔ max 2, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| CIN | 382 | 384 | +2 | 1 | 1 | +0 | 35 | 35 | +0 |
+| BAL | 346 | 347 | +1 | 5 | 5 | +0 | 53 | 53 | +0 |
+
+**CIN Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q4 5:06 (0 yds) Fumble Recovery (Opponent): (Shotgun) S.Perine right guard to BLT 14 for -2 yards (T.Jones). FUMBLES (T.Jones), RECOVERED by BLT-T.Jones at BLT 16. [fumble]
+
+- Excluded non-zero-yard plays (up to 17 shown):
+- Q1 0:17 (-5 yds) Penalty: (Shotgun) PENALTY on CIN-D.Risner, False Start, 5 yards, enforced at BLT 49 - No Play. [nullified]
+- Q1 12:21 (5 yds) Penalty: C.Brown left end to BLT 37 for -5 yards (M.Starks).PENALTY on BLT-B.Okoye, Defensive Holding, 5 yards, enforced at BLT 32 - No Play. [nullified]
+- Q1 15:00 (26 yds) Kickoff: T.Loop kicks 55 yards from BLT 35 to CIN 10. G.Brightwell to CIN 36 for 26 yards (T.Buchanan). [special_teams]
+- Q1 6:33 (16 yds) Kickoff: T.Loop kicks 51 yards from BLT 35 to CIN 14. G.Brightwell MUFFS catch, and recovers at CIN 17. G.Brightwell to CIN 33 for 16 yards (M.Starks; J.Hummel). [special_teams]
+- Q1 9:39 (31 yds) Field Goal Good: E.McPherson 31 yard field goal is GOOD, Center-W.Wagner, Holder-R.Rehkow. [special_teams]
+- Q2 0:10 (33 yds) Field Goal Good: E.McPherson 33 yard field goal is GOOD, Center-W.Wagner, Holder-R.Rehkow. [special_teams]
+- Q2 11:24 (42 yds) Field Goal Good:  E.McPherson 42 yard field goal is GOOD, Center-W.Wagner, Holder-R.Rehkow. [special_teams]
+- Q2 1:15 (-5 yds) Penalty: (No Huddle, Shotgun) PENALTY on CIN-O.Brown, False Start, 5 yards, enforced at CIN 32 - No Play. [nullified]
+- Q2 2:36 (24 yds) Field Goal Good:  E.McPherson 24 yard field goal is GOOD, Center-W.Wagner, Holder-R.Rehkow. [special_teams]
+- Q2 4:31 (-5 yds) Penalty: (Shotgun) PENALTY on CIN-O.Brown, False Start, 5 yards, enforced at BLT 20 - No Play. [nullified]
+- Q2 8:22 (-10 yds) Penalty: (Shotgun) C.Brown right end to CIN 23 for 3 yards (R.Smith).PENALTY on CIN-N.Fant, Offensive Holding, 10 yards, enforced at CIN 20 - No Play. [nullified]
+- Q3 3:59 (17 yds) Kickoff: T.Loop kicks 50 yards from BLT 35 to CIN 15. G.Brightwell to CIN 32 for 17 yards (K.Jackson). [special_teams]
+- Q3 9:51 (17 yds) Penalty: (Shotgun) J.Burrow pass incomplete deep right to M.Tinsley [K.Van Noy].PENALTY on BLT-T.Tampa, Defensive Pass Interference, 17 yards, enforced at BLT 43 - No Play. [nullified]
+- Q4 1:06 (41 yds) Field Goal Good: E.McPherson 41 yard field goal is GOOD, Center-W.Wagner, Holder-R.Rehkow. [special_teams]
+- Q4 2:43 (-5 yds) Penalty: (Shotgun) PENALTY on CIN, Delay of Game, 5 yards, enforced at BLT 24 - No Play. [nullified]
+- Q4 5:41 (5 yds) Penalty: PENALTY on BLT-D.Jones, Encroachment, 5 yards, enforced at BLT 21 - No Play. [nullified]
+- Q4 9:25 (52 yds) Field Goal Good: E.McPherson 52 yard field goal is GOOD, Center-W.Wagner, Holder-R.Rehkow. [special_teams]
+
+**BAL Reconciliation Clues**
+
+- Windelta counted turnovers (5):
+- Q1 3:36 (4 yds) Sack Opp Fumble Recovery: (Shotgun) L.Jackson sacked at BLT 6 for -9 yards (J.Ossai). FUMBLES (J.Ossai) [J.Ossai], RECOVERED by CIN-C.Johnson at BLT 6. C.Johnson to BLT 2 for 4 yards (L.Jackson). [fumble]
+- Q2 0:36 (0 yds) Sack Opp Fumble Recovery: (Shotgun) L.Jackson sacked at BLT 13 for -7 yards. FUMBLES, touched at BLT 15, RECOVERED by CIN-C.Johnson at BLT 19. [fumble]
+- Q2 8:32 (24 yds) Pass Reception: (Shotgun) L.Jackson pass short middle to I.Likely for 44 yards, TOUCHDOWN.The Replay Official reviewed the runner broke the plane ruling, and the play was REVERSED.(Shotgun) L.Jackson pass short middle to I.Likely to CIN 1 for 43 yards (J.Battle). FUMBLES (J.Battle), ball out of bounds in End Zone, Touchback. [fumble]
+- Q4 13:04 (39 yds) Pass Interception Return:  (Shotgun) L.Jackson pass short middle intended for M.Andrews INTERCEPTED by D.Knight (M.Murphy) at CIN 8. D.Knight to CIN 47 for 39 yards (E.Jones). [interception]
+- Q4 4:21 (7 yds) Fumble Recovery (Opponent): (No Huddle, Shotgun) L.Jackson pass short right to Z.Flowers to BLT 46 for 8 yards (J.Davis; B.Carter). FUMBLES (J.Davis), RECOVERED by CIN-D.Turner at BLT 43. D.Turner to BLT 36 for 7 yards (R.Ali). [fumble]
+
+- Excluded non-zero-yard plays (up to 14 shown):
+- Q1 1:45 (-1 yds) Penalty: (Punt formation) PENALTY on BLT-T.Simpson, False Start, 1 yard, enforced at BLT 2 - No Play. [nullified]
+- Q1 1:45 (9 yds) Punt: J.Stout punts 61 yards to CIN 38, Center-N.Moore. C.Jones to CIN 47 for 9 yards (T.Tampa). [special_teams]
+- Q1 9:39 (31 yds) Kickoff: E.McPherson kicks 65 yards from CIN 35 to BLT 0. K.Mitchell to BLT 31 for 31 yards (P.Jules). [special_teams]
+- Q2 0:04 (-1 yds) Rush: L.Jackson kneels to BLT 32 for -1 yards. [spike_kneel]
+- Q2 0:10 (32 yds) Kickoff: E.McPherson kicks 64 yards from CIN 35 to BLT 1. K.Mitchell to BLT 33 for 32 yards (I.Foskey). [special_teams]
+- Q2 11:24 (26 yds) Kickoff: E.McPherson kicks 60 yards from CIN 35 to BLT 5. R.Ali to BLT 31 for 26 yards (J.Battle). [special_teams]
+- Q2 2:00 (-10 yds) Penalty: (Shotgun) L.Jackson pass deep left to Z.Flowers for 36 yards, TOUCHDOWN NULLIFIED by Penalty.PENALTY on BLT-Z.Flowers, Offensive Pass Interference, 10 yards, enforced at CIN 36 - No Play. [nullified]
+- Q2 2:36 (28 yds) Kickoff: E.McPherson kicks 59 yards from CIN 35 to BLT 6. K.Mitchell to BLT 34 for 28 yards (T.Anderson). [special_teams]
+- Q3 0:15 (-10 yds) Penalty: D.Henry left tackle to BLT 41 for 6 yards (C.Johnson). CIN-C.Johnson was injured during the play. PENALTY on BLT-E.Jones, Offensive Holding, 10 yards, enforced at BLT 35 - No Play. [nullified]
+- Q3 12:57 (10 yds) Punt: J.Stout punts 43 yards to CIN 29, Center-N.Moore. M.Tinsley to CIN 39 for 10 yards (K.Jackson; C.Kolar). [special_teams]
+- Q3 15:00 (20 yds) Kickoff: E.McPherson kicks 63 yards from CIN 35 to BLT 2. R.Ali pushed ob at BLT 22 for 20 yards (P.Jules; D.Ivey). [special_teams]
+- Q3 7:22 (25 yds) Kickoff: E.McPherson kicks 58 yards from CIN 35 to BLT 7. R.Ali to BLT 32 for 25 yards (S.Perine; J.Battle). [special_teams]
+- Q4 8:05 (-5 yds) Penalty: (No Huddle, Shotgun) PENALTY on BLT-A.Vorhees, False Start, 5 yards, enforced at CIN 46 - No Play. [nullified]
+- Q4 8:43 (5 yds) Penalty: (No Huddle, Shotgun) L.Jackson pass incomplete short middle to I.Likely (J.Davis).PENALTY on CIN-J.Davis, Defensive Holding, 5 yards, enforced at BLT 42 - No Play. [nullified]
+
+### 401772937 MIA @ BUF (TOΔ max 0, YdsΔ max 2, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| MIA | 276 | 276 | +0 | 1 | 1 | +0 | 57 | 57 | +0 |
+| BUF | 360 | 358 | -2 | 0 | 0 | +0 | 35 | 35 | +0 |
+
+**MIA Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q4 3:06 (24 yds) Pass Interception Return: (Shotgun) T.Tagovailoa pass short right intended for J.Waddle INTERCEPTED by T.Bernard at BUF 17. T.Bernard pushed ob at BUF 41 for 24 yards (J.Waddle). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q1 3:12 (2 yds) Fumble Recovery (Own): (Shotgun) T.Tagovailoa FUMBLES (Aborted) at MIA 14, and recovers at MIA 14. T.Tagovailoa to MIA 22 for 8 yards (C.Lewis).
+
+- Excluded non-zero-yard plays (up to 8 shown):
+- Q1 11:55 (-5 yds) Penalty: T.Tagovailoa pass short left to M.Washington to BUF 8 for 10 yards (Z.Logue).PENALTY on MIA-K.Smith, Ineligible Downfield Pass, 5 yards, enforced at BUF 18 - No Play. [nullified]
+- Q1 15:00 (54 yds) Kickoff: M.Prater kicks 66 yards from BUF 35 to MIA -1. D.Eskridge pushed ob at BUF 47 for 54 yards (D.Strong). [special_teams]
+- Q1 2:37 (15 yds) Punt: J.Bailey punts 56 yards to BUF 22, Center-J.Cardona. B.Codrington to BUF 37 for 15 yards (K.Britt; C.Goode). [special_teams]
+- Q1 4:04 (-3 yds) Kickoff: M.Prater kicks 62 yards from BUF 35 to MIA 3. M.Washington to MIA 32 for 29 yards (A.Epenesa).PENALTY on MIA-K.Britt, Illegal Block Above the Waist, 10 yards, enforced at MIA 25. [special_teams]
+- Q2 11:54 (21 yds) Kickoff: M.Prater kicks 60 yards from BUF 35 to MIA 5. D.Eskridge to MIA 26 for 21 yards (K.Jenkins). [special_teams]
+- Q3 0:56 (-5 yds) Penalty: (Shotgun) T.Tagovailoa pass short right to J.Hill pushed ob at BUF 28 for 16 yards (C.Bishop).PENALTY on MIA-J.Savaiinaea, Ineligible Downfield Pass, 5 yards, enforced at BUF 44 - No Play. [nullified]
+- Q3 10:23 (26 yds) Kickoff: M.Prater kicks 62 yards from BUF 35 to MIA 3. M.Washington to MIA 29 for 26 yards (T.Shavers). [special_teams]
+- Q4 7:17 (29 yds) Kickoff: M.Prater kicks 57 yards from BUF 35 to MIA 8. D.Eskridge to MIA 37 for 29 yards (D.Strong; K.Jenkins). [special_teams]
+
+**BUF Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q2 0:02 (-2 yds) Fumble Recovery (Own): J.Allen FUMBLES (Aborted) at BUF 29, and recovers at BUF 28.
+
+- Excluded non-zero-yard plays (up to 10 shown):
+- Q1 8:25 (20 yds) Penalty: (Shotgun) J.Allen pass incomplete deep left to K.Coleman.PENALTY on MIA-J.Jones, Defensive Pass Interference, 20 yards, enforced at BUF 15 - No Play. [nullified]
+- Q1 8:31 (16 yds) Kickoff: R.Patterson kicks 66 yards from MIA 35 to BUF -1. B.Codrington pushed ob at BUF 30 for 31 yards (M.Fitzpatrick).PENALTY on BUF-A.Epenesa, Unnecessary Roughness, 15 yards, enforced at BUF 30. [special_teams]
+- Q2 0:08 (33 yds) Kickoff: R.Patterson kicks 68 yards from MIA 35 to BUF -3. B.Codrington to BUF 30 for 33 yards (N.Westbrook-Ikhine). [special_teams]
+- Q2 6:07 (39 yds) Field Goal Missed: M.Prater 39 yard field goal is No Good, Wide Left, Center-R.Ferguson, Holder-C.Johnston. [special_teams]
+- Q3 12:41 (-10 yds) Penalty: (No Huddle, Shotgun) J.Allen pass incomplete short right to J.Palmer (J.Brooks).PENALTY on BUF-D.Dawkins, Offensive Holding, 10 yards, enforced at MIA 29 - No Play. [nullified]
+- Q3 15:00 (31 yds) Kickoff: R.Patterson kicks 57 yards from MIA 35 to BUF 8. B.Codrington to BUF 39 for 31 yards (J.Colbert). [special_teams]
+- Q3 3:12 (11 yds) Punt: C.Johnston punts 47 yards to MIA 22, Center-R.Ferguson. M.Washington to MIA 33 for 11 yards (Ty.Johnson; R.Davis). [special_teams]
+- Q3 6:43 (11 yds) Punt: C.Johnston punts 48 yards to MIA 25, Center-R.Ferguson. M.Washington to MIA 36 for 11 yards (Ty.Johnson). [special_teams]
+- Q4 0:22 (48 yds) Field Goal Good: M.Prater 48 yard field goal is GOOD, Center-R.Ferguson, Holder-C.Johnston. [special_teams]
+- Q4 3:00 (-10 yds) Penalty: E.Moore right end to MIA 49 for 10 yards (M.Fitzpatrick).PENALTY on BUF-D.Kincaid, Offensive Holding, 10 yards, enforced at BUF 41 - No Play. [nullified]
+
+### 401772942 MIN @ LAC (TOΔ max 0, YdsΔ max 2, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| MIN | 164 | 162 | -2 | 1 | 1 | +0 | 66 | 66 | +0 |
+| LAC | 419 | 419 | +0 | 1 | 1 | +0 | 46 | 46 | +0 |
+
+**MIN Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q4 12:02 (15 yds) Pass Interception Return: (No Huddle) C.Wentz pass deep right intended for J.Jefferson INTERCEPTED by R.Mickens at LAC 33. R.Mickens to LAC 48 for 15 yards (J.Mason; B.Brandel). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q3 7:49 (-4 yds) Fumble Recovery (Own): (Shotgun) C.Wentz sacked at MIN 32 for -6 yards (K.Mack). FUMBLES (K.Mack) [K.Mack], and recovers at MIN 34.
+
+- Excluded non-zero-yard plays (up to 13 shown):
+- Q1 15:00 (20 yds) Kickoff: C.Dicker kicks 65 yards from LAC 35 to MIN 0. M.Price pushed ob at MIN 46 for 46 yards (C.Dicker).PENALTY on MIN-T.Batty, Offensive Holding, 10 yards, enforced at MIN 26. [special_teams]
+- Q1 4:01 (15 yds) Kickoff: C.Dicker kicks 62 yards from LAC 35 to MIN 3. M.Price to MIN 23 for 20 yards (M.Wax).PENALTY on MIN-I.Pace, Illegal Formation, 5 yards, enforced at MIN 23. [special_teams]
+- Q2 0:03 (53 yds) Field Goal Missed:  W.Reichard 53 yard field goal is No Good, Short, Center-A.DePaola, Holder-R.Wright. [special_teams]
+- Q2 0:45 (24 yds) Kickoff: C.Dicker kicks 24 yards from LAC 35 to MIN 41, short of landing zone.PENALTY on LAC-C.Dicker, Kickoff Short of Landing Zone, placed at MIN 41. [special_teams]
+- Q2 13:08 (25 yds) Kickoff: C.Dicker kicks 60 yards from LAC 35 to MIN 5. M.Price to MIN 30 for 25 yards (K.Williamson). [special_teams]
+- Q2 4:12 (-6 yds) Punt: R.Wright punts 41 yards to LAC 12, Center-A.DePaola. D.Davis to LAC 22 for 10 yards (I.Pace).PENALTY on LAC-J.Taylor, Offensive Holding, 6 yards, enforced at LAC 12. [special_teams]
+- Q2 6:06 (-10 yds) Rush: J.Mason up the middle to MIN 43 for 4 yards (D.Perryman).PENALTY on MIN-D.Jackson, Offensive Holding, 10 yards, enforced at MIN 39 - No Play. [nullified]
+- Q2 8:55 (54 yds) Field Goal Good: W.Reichard 54 yard field goal is GOOD, Center-A.DePaola, Holder-R.Wright. [special_teams]
+- Q3 10:01 (9 yds) Kickoff: C.Dicker kicks 66 yards from LAC 35 to MIN -1. M.Price to MIN 41 for 42 yards (J.Taylor).PENALTY on MIN-T.Batty, Offensive Holding, 10 yards, enforced at MIN 32. [special_teams]
+- Q3 4:46 (5 yds) Sack: (Shotgun) C.Wentz sacked at LAC 17 for -8 yards (D.Henley).PENALTY on LAC-B.St-Juste, Illegal Contact, 5 yards, enforced at LAC 9 - No Play. [nullified]
+- Q3 4:49 (32 yds) Field Goal Good:  W.Reichard 32 yard field goal is GOOD, NULLIFIED by Penalty, Center-A.DePaola, Holder-R.Wright.
+PENALTY on LAC, Defensive Too Many Men on Field, 5 yards, enforced at LAC 14 - No Play. [nullified]
+- Q4 12:42 (31 yds) Kickoff: C.Dicker kicks 65 yards from LAC 35 to MIN 0. M.Price pushed ob at MIN 31 for 31 yards (J.Taylor). [special_teams]
+- Q4 1:52 (5 yds) Penalty: (No Huddle, Shotgun) PENALTY on LAC-N.Jones, Encroachment, 5 yards, enforced at MIN 40 - No Play. [nullified]
+
+**LAC Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q3 7:03 (0 yds) Pass Interception Return: (Shotgun) J.Herbert pass short middle intended for L.McConkey INTERCEPTED by J.Metellus (J.Redmond) at LAC 26. J.Metellus to LAC 26 for no gain (L.McConkey). [interception]
+
+- Excluded non-zero-yard plays (up to 12 shown):
+- Q1 2:12 (5 yds) Penalty: J.Herbert pass incomplete deep left to L.McConkey.PENALTY on MIN-J.Greenard, Defensive Offside, 5 yards, enforced at LAC 41 - No Play. [nullified]
+- Q2 6:10 (49 yds) Field Goal Missed: C.Dicker 49 yard field goal is No Good, Wide Left, Center-R.Lovato, Holder-J.Scott. [special_teams]
+- Q2 8:55 (24 yds) Kickoff: W.Reichard kicks 64 yards from MIN 35 to LAC 1. D.Davis to LAC 25 for 24 yards (B.Richter). [special_teams]
+- Q3 10:01 (43 yds) Field Goal Good: C.Dicker 43 yard field goal is GOOD, Center-R.Lovato, Holder-J.Scott. [special_teams]
+- Q3 15:00 (28 yds) Kickoff: W.Reichard kicks 60 yards from MIN 35 to LAC 5. D.Davis to LAC 33 for 28 yards (J.Okudah; A.Keys). [special_teams]
+- Q3 3:00 (-5 yds) Penalty: PENALTY on LAC-J.Alt, False Start, 5 yards, enforced at MIN 44 - No Play. [nullified]
+- Q3 4:36 (23 yds) Kickoff: W.Reichard kicks 61 yards from MIN 35 to LAC 4. D.Davis to LAC 27 for 23 yards (E.Wilson). [special_teams]
+- Q4 12:48 (-5 yds) Penalty: PENALTY on LAC-B.Hart, False Start, 5 yards, enforced at MIN 1 - No Play. [nullified]
+- Q4 12:59 (1 yds) Penalty: PENALTY on MIN, Defensive Too Many Men on Field, 1 yard, enforced at MIN 2 - No Play. [nullified]
+- Q4 1:56 (45 yds) Field Goal Good: C.Dicker 45 yard field goal is GOOD, Center-R.Lovato, Holder-J.Scott. [special_teams]
+- Q4 7:01 (34 yds) Field Goal Good: C.Dicker 34 yard field goal is GOOD, Center-R.Lovato, Holder-J.Scott. [special_teams]
+- Q4 9:44 (16 yds) Rush: K.Vidal right tackle to MIN 40 for -3 yards (J.Redmond, J.Metellus).PENALTY on MIN-J.Metellus, Face Mask, 16 yards, enforced at MIN 37 - No Play. [nullified]
+
+### 401772947 DAL @ DET (TOΔ max 0, YdsΔ max 2, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| DAL | 417 | 419 | +2 | 3 | 3 | +0 | 76 | 76 | +0 |
+| DET | 408 | 408 | +0 | 0 | 0 | +0 | 50 | 50 | +0 |
+
+**DAL Reconciliation Clues**
+
+- Windelta counted turnovers (3):
+- Q2 6:28 (0 yds) Fumble Recovery (Opponent): (Shotgun) D.Prescott pass short right to J.Ferguson to DET 49 for 4 yards (J.Campbell; A.Robertson). FUMBLES (J.Campbell), touched at 50, RECOVERED by DET-B.Branch at DET 47. [fumble]
+- Q3 14:55 (23 yds) Pass Interception Return: (Shotgun) D.Prescott pass short left intended for G.Pickens INTERCEPTED by D.Barnes (A.Robertson) at DAL 37. D.Barnes ran ob at DAL 14 for 23 yards (D.Prescott). [interception]
+- Q4 1:18 (0 yds) Pass Interception Return: (Shotgun) D.Prescott pass short middle intended for R.Flournoy INTERCEPTED by D.Reed (D.Thomas) at DET 14. D.Reed to DET 14 for no gain (R.Flournoy). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q2 7:43 (-16 yds) Fumble Recovery (Own): D.Prescott sacked at DAL 43 for -15 yards (A.McNeill). FUMBLES (A.McNeill) [A.McNeill], recovered by DAL-J.Ferguson at DAL 42.
+- Q3 11:56 (7 yds) Fumble Recovery (Own): (Shotgun) D.Prescott pass short right to G.Pickens to DET 2 for 7 yards (A.Maddox; R.Ya-Sin). FUMBLES (A.Maddox), recovered by DAL-T.Smith at DET 2.
+
+- Excluded non-zero-yard plays (up to 17 shown):
+- Q1 10:46 (27 yds) Kickoff: J.Bates kicks 60 yards from DET 35 to DAL 5. K.Turpin to DAL 32 for 27 yards (S.Vaki). [special_teams]
+- Q1 2:14 (23 yds) Kickoff: J.Bates kicks 58 yards from DET 35 to DAL 7. K.Turpin to DAL 30 for 23 yards (S.Vaki; T.Nowaske). [special_teams]
+- Q1 5:36 (21 yds) Punt: B.Anger punts 62 yards to DET 37, Center-T.Sieg. T.Kennedy to DAL 42 for 21 yards (M.Davis; M.Liufau). [special_teams]
+- Q1 8:07 (57 yds) Field Goal Good: B.Aubrey 57 yard field goal is GOOD, Center-T.Sieg, Holder-B.Anger. [special_teams]
+- Q2 0:50 (55 yds) Field Goal Good: B.Aubrey 55 yard field goal is GOOD, Center-T.Sieg, Holder-B.Anger. [special_teams]
+- Q2 1:25 (-15 yds) Penalty: (Shotgun) D.Prescott pass short left to G.Pickens to DET 34 for 9 yards (R.Ya-Sin).PENALTY on DAL-G.Pickens, Face Mask, 15 yards, enforced at DET 43 - No Play. [nullified]
+- Q2 4:27 (10 yds) Kickoff: J.Bates kicks 57 yards from DET 35 to DAL 8. K.Turpin to 50 for 42 yards (T.Nowaske).PENALTY on DAL-S.James, Offensive Holding, 10 yards, enforced at DAL 30. [special_teams]
+- Q2 9:23 (42 yds) Field Goal Good: B.Aubrey 42 yard field goal is GOOD, Center-T.Sieg, Holder-B.Anger. [special_teams]
+- Q3 12:52 (5 yds) Penalty: (Shotgun) D.Prescott pass incomplete deep right to G.Pickens.PENALTY on DET-D.Reed, Defensive Holding, 5 yards, enforced at DET 19 - No Play. [nullified]
+- Q3 15:00 (25 yds) Kickoff: J.Bates kicks 60 yards from DET 35 to DAL 5. K.Turpin to DAL 30 for 25 yards (D.Thomas). [special_teams]
+- Q3 2:49 (63 yds) Field Goal Good: B.Aubrey 63 yard field goal is GOOD, Center-T.Sieg, Holder-B.Anger. [special_teams]
+- Q3 3:27 (-10 yds) Penalty: (Shotgun) D.Prescott pass short right to R.Flournoy to DET 12 for 23 yards (D.Reed).PENALTY on DAL-G.Pickens, Offensive Pass Interference, 10 yards, enforced at DET 35 - No Play. [nullified]
+- Q3 4:10 (-10 yds) Penalty: (Shotgun) D.Prescott pass incomplete short left to K.Turpin.PENALTY on DAL-N.Thomas, Offensive Holding, 10 yards, enforced at DET 35 - No Play. [nullified]
+- Q4 11:50 (27 yds) Kickoff: J.Bates kicks 62 yards from DET 35 to DAL 3. K.Turpin to DAL 30 for 27 yards (T.Nowaske). [special_teams]
+- Q4 2:19 (26 yds) Kickoff: J.Bates kicks 60 yards from DET 35 to DAL 5. K.Turpin to DAL 31 for 26 yards (T.Wheat). [special_teams]
+- Q4 3:42 (29 yds) Field Goal Good: B.Aubrey 29 yard field goal is GOOD, Center-T.Sieg, Holder-B.Anger. [special_teams]
+- Q4 7:17 (26 yds) Kickoff: J.Bates kicks 58 yards from DET 35 to DAL 7. K.Turpin to DAL 33 for 26 yards (K.Dorsey). DET-S.Vaki was injured during the play. [special_teams]
+
+**DET Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q3 5:52 (0 yds) Blocked Field Goal: J.Bates 52 yard field goal is BLOCKED (S.Williams), Center-H.Hatten, Holder-J.Fox.
+
+- Excluded non-zero-yard plays (up to 22 shown):
+- Q1 10:46 (38 yds) Field Goal Good: J.Bates 38 yard field goal is GOOD, Center-H.Hatten, Holder-J.Fox. [special_teams]
+- Q1 15:00 (30 yds) Kickoff: B.Aubrey kicks 59 yards from DAL 35 to DET 6. J.Saylors to DET 36 for 30 yards (H.Luepke; M.Bell). [special_teams]
+- Q1 4:18 (-5 yds) Penalty: (Shotgun) D.Skipper reported in as eligible.  J.Goff pass incomplete short right to D.Skipper.PENALTY on DET, Illegal Shift, 5 yards, enforced at DAL 31 - No Play. [nullified]
+- Q1 7:19 (-4 yds) Punt: J.Fox punts 42 yards to DAL 9, Center-H.Hatten, fair catch by K.Turpin.PENALTY on DAL-T.Bridges, Offensive Holding, 4 yards, enforced at DAL 9.Penalty on DAL-K.Turpin, Invalid Fair Catch Signal, declined. [special_teams]
+- Q1 8:07 (40 yds) Kickoff: B.Aubrey kicks 58 yards from DAL 35 to DET 7. T.Kennedy to DET 47 for 40 yards (B.Aubrey). [special_teams]
+- Q2 0:00 (47 yds) Field Goal Good: J.Bates 47 yard field goal is GOOD, Center-H.Hatten, Holder-J.Fox. [special_teams]
+- Q2 0:13 (14 yds) Penalty: (Shotgun) J.Goff pass incomplete deep right to A.St. Brown.PENALTY on DAL-S.Revel, Defensive Pass Interference, 14 yards, enforced at DAL 43 - No Play. [nullified]
+- Q2 0:50 (26 yds) Kickoff: B.Aubrey kicks 65 yards from DAL 35 to DET 0. J.Saylors to DET 26 for 26 yards (C.Goodwin; S.James). [special_teams]
+- Q2 5:54 (-5 yds) Penalty: (Shotgun) PENALTY on DET-T.Ratledge, False Start, 5 yards, enforced at DET 37 - No Play. [nullified]
+- Q2 6:15 (-10 yds) Penalty: D.Skipper reported in as eligible.  J.Gibbs left end pushed ob at DET 49 for 2 yards (D.Overshown).PENALTY on DET-D.Skipper, Offensive Holding, 10 yards, enforced at DET 47 - No Play. [nullified]
+- Q2 9:12 (-5 yds) Penalty: (Shotgun) PENALTY on DET-M.Frazier, False Start, 5 yards, enforced at DET 29 - No Play. [nullified]
+- Q2 9:23 (27 yds) Kickoff: B.Aubrey kicks 63 yards from DAL 35 to DET 2. J.Saylors to DET 29 for 27 yards (B.Spann-Ford). [special_teams]
+- Q3 10:41 (29 yds) Kickoff: B.Aubrey kicks 62 yards from DAL 35 to DET 3. J.Saylors to DET 32 for 29 yards (S.James; H.Luepke). [special_teams]
+- Q3 1:22 (-5 yds) Penalty: J.Goff pass incomplete short right.PENALTY on DET, Illegal Formation, 5 yards, enforced at DET 45 - No Play. [nullified]
+- Q3 2:49 (29 yds) Kickoff: B.Aubrey kicks 62 yards from DAL 35 to DET 3. J.Saylors to DET 32 for 29 yards (M.Davis; S.James). [special_teams]
+- Q4 0:36 (-1 yds) Rush:  J.Goff kneels to DET 12 for -1 yards. [spike_kneel]
+- Q4 11:50 (46 yds) Field Goal Good:  J.Bates 46 yard field goal is GOOD, Center-H.Hatten, Holder-J.Fox. [special_teams]
+- Q4 13:56 (-10 yds) Penalty: (Shotgun) J.Goff pass incomplete deep left to I.TeSlaa.PENALTY on DET-T.Ratledge, Offensive Holding, 10 yards, enforced at DAL 29 - No Play. [nullified]
+- Q4 15:00 (-5 yds) Penalty: (Shotgun) PENALTY on DET-M.Frazier, False Start, 5 yards, enforced at DAL 45 - No Play. [nullified]
+- Q4 1:06 (-1 yds) Rush: J.Goff kneels to DET 13 for -1 yards. [spike_kneel]
+- Q4 3:42 (42 yds) Kickoff: B.Aubrey kicks 58 yards from DAL 35 to DET 7. T.Kennedy pushed ob at DET 49 for 42 yards (M.Liufau). ** Injury Update: DET-S.Vaki has returned to the game. [special_teams]
+- Q4 9:52 (38 yds) Kickoff: B.Aubrey kicks 62 yards from DAL 35 to DET 3. T.Kennedy to DET 41 for 38 yards (C.Goodwin). [special_teams]
+
+### 401772621 CHI @ PHI (TOΔ max 0, YdsΔ max 1, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| CHI | 425 | 425 | +0 | 1 | 1 | +0 | 35 | 35 | +0 |
+| PHI | 317 | 318 | +1 | 2 | 2 | +0 | 44 | 44 | +0 |
+
+**CHI Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q3 6:44 (11 yds) Pass Interception Return: C.Williams pass short left intended for K.Monangai INTERCEPTED by J.Hunt at CHI 47. J.Hunt to CHI 36 for 11 yards (C.Williams). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 3:10 (12 yds) Kickoff: J.Elliott kicks onside 12 yards from PHI 35 to PHI 47. R.Odunze (didn't try to advance) to PHI 47 for no gain.
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q1 15:00 (24 yds) Kickoff: J.Elliott kicks 56 yards from PHI 35 to CHI 9. J.Blackwell to CHI 33 for 24 yards (P.Johnson). [special_teams]
+- Q2 0:18 (-10 yds) Penalty: (Shotgun) C.Williams pass incomplete short right to C.Loveland (Z.Baun).PENALTY on CHI-D.Wright, Offensive Holding, 10 yards, enforced at CHI 43 - No Play. [nullified]
+- Q2 2:59 (9 yds) Punt: T.Taylor punts 49 yards to PHI 28, Center-S.Daly. B.Covey MUFFS catch, and recovers at PHI 26. B.Covey to PHI 35 for 9 yards (T.Homer). [special_teams]
+- Q2 6:44 (30 yds) Field Goal Good: C.Santos 30 yard field goal is GOOD, Center-S.Daly, Holder-T.Taylor. [special_teams]
+- Q3 12:27 (-5 yds) Penalty: (Punt formation) PENALTY on CHI-C.Jones, False Start, 5 yards, enforced at CHI 39 - No Play. [nullified]
+- Q3 2:41 (-5 yds) Penalty: PENALTY on CHI-J.Thuney, False Start, 5 yards, enforced at PHI 42 - No Play. [nullified]
+- Q3 7:25 (5 yds) Penalty: C.Williams pass incomplete short left to R.Odunze.PENALTY on PHI-N.Dean, Defensive Holding, 5 yards, enforced at CHI 41 - No Play. [nullified]
+- Q3 8:05 (34 yds) Kickoff: J.Elliott kicks 63 yards from PHI 35 to CHI 2. J.Blackwell to CHI 36 for 34 yards (K.Ringo). [special_teams]
+- Q4 0:09 (-1 yds) Rush:  C.Williams kneels to CHI 41 for -1 yards. [spike_kneel]
+- Q4 2:00 (4 yds) Penalty: PENALTY on PHI-J.Carter, Encroachment, 4 yards, enforced at PHI 31 - No Play. [nullified]
+- Q4 3:10 (12 yds) Kickoff: J.Elliott kicks onside 12 yards from PHI 35 to PHI 47. R.Odunze (didn't try to advance) to PHI 47 for no gain. [special_teams]
+
+**PHI Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q3 11:40 (0 yds) Pass Interception Return: (Shotgun) J.Hurts pass deep right intended for A.Brown INTERCEPTED by K.Byard at CHI 49. K.Byard ran ob at CHI 49 for no gain. [interception]
+- Q3 4:46 (0 yds) Fumble Recovery (Opponent): J.Hurts up the middle to CHI 11 for 1 yard (N.Wright). FUMBLES (N.Wright), RECOVERED by CHI-N.Wright at CHI 13. [fumble]
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q1 1:01 (-5 yds) Penalty: (No Huddle, Shotgun) PENALTY on PHI-L.Dickerson, False Start, 5 yards, enforced at PHI 44 - No Play. [nullified]
+- Q1 8:53 (-5 yds) Penalty: (Shotgun) PENALTY on PHI-A.Brown, False Start, 5 yards, enforced at PHI 30 - No Play. [nullified]
+- Q2 13:04 (44 yds) Field Goal Good: J.Elliott 44 yard field goal is GOOD, Center-C.Adomitis, Holder-B.Mann. [special_teams]
+- Q2 1:55 (-10 yds) Penalty: (Shotgun) J.Hurts pass short right to A.Brown ran ob at PHI 48 for 12 yards (J.Johnson).PENALTY on PHI-A.Brown, Offensive Pass Interference, 10 yards, enforced at PHI 36 - No Play. [nullified]
+- Q2 6:44 (23 yds) Kickoff: C.Santos kicks 58 yards from CHI 35 to PHI 7. W.Shipley to PHI 30 for 23 yards (J.Blackwell; D.Hardy). [special_teams]
+- Q3 14:00 (12 yds) Punt:  B.Mann punts 60 yards to CHI 12, Center-C.Adomitis. D.Duvernay to CHI 24 for 12 yards (K.Ringo). [special_teams]
+- Q3 15:00 (24 yds) Kickoff: C.Santos kicks 62 yards from CHI 35 to PHI 3. W.Shipley to PHI 27 for 24 yards (J.Jones; D.Hardy). [special_teams]
+- Q4 0:13 (52 yds) Field Goal Missed: J.Elliott 52 yard field goal is No Good, Wide Left, Center-C.Adomitis, Holder-B.Mann. [special_teams]
+- Q4 11:22 (-5 yds) Penalty: (Punt formation) PENALTY on PHI-C.Latu, False Start, 5 yards, enforced at PHI 28 - No Play. [nullified]
+- Q4 12:49 (22 yds) Kickoff: C.Santos kicks 66 yards from CHI 35 to PHI -1. B.Covey to PHI 21 for 22 yards (E.Hicks). [special_teams]
+- Q4 1:12 (-10 yds) Penalty: (Shotgun) J.Hurts scrambles right end ran ob at CHI 46 for 24 yards (N.McCloud).PENALTY on PHI-T.Steen, Offensive Holding, 10 yards, enforced at PHI 30 - No Play. [nullified]
+
+### 401772632 MIN @ PIT (TOΔ max 0, YdsΔ max 1, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| MIN | 372 | 372 | +0 | 2 | 2 | +0 | 82 | 82 | +0 |
+| PIT | 313 | 314 | +1 | 0 | 0 | +0 | 35 | 35 | +0 |
+
+**MIN Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q2 5:58 (-4 yds) Pass Interception Return: (Shotgun) C.Wentz pass short middle intended for J.Addison INTERCEPTED by D.Elliott (D.Harmon) at PIT 36. D.Elliott to PIT 32 for -4 yards (T.Hockenson). [interception]
+- Q3 5:22 (13 yds) Pass Interception Return: (Shotgun) C.Wentz pass short middle intended for Z.Scott INTERCEPTED by T.Watt at MIN 48. T.Watt to MIN 35 for 13 yards (Z.Scott). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q1 9:47 (7 yds) Rush: J.Mason left end to PIT 38 for 7 yards (C.Clark). FUMBLES (C.Clark), RECOVERED by PIT-J.Ramsey at PIT 38. J.Ramsey for 62 yards, TOUCHDOWN.The Replay Official reviewed the ball was inbounds ruling, and the play was REVERSED.J.Mason left end to PIT 38 for 7 yards (C.Clark). FUMBLES (C.Clark), ball out of bounds at PIT 38.
+- Q3 6:53 (-1 yds) Fumble Recovery (Own): C.Wentz sacked at MIN 48 for -8 yards (D.Elliott). FUMBLES (D.Elliott) [D.Elliott], touched at MIN 48, recovered by MIN-J.Oliver at PIT 45.
+
+- Excluded non-zero-yard plays (up to 15 shown):
+- Q1 0:55 (28 yds) Kickoff: C.Boswell kicks 63 yards from PIT 35 to MIN 2. T.Felton to MIN 30 for 28 yards (C.Bruener). [special_teams]
+- Q1 6:24 (41 yds) Field Goal Good: W.Reichard 41 yard field goal is GOOD, Center-A.DePaola, Holder-R.Wright. MIN-B.O'Neill was injured during the play. [special_teams]
+- Q1 8:10 (-5 yds) Penalty: C.Wentz pass short right to J.Jefferson to PIT 6 for 7 yards (J.Ramsey; J.Thornhill).PENALTY on MIN-W.Fries, Ineligible Downfield Pass, 5 yards, enforced at PIT 13 - No Play. [nullified]
+- Q2 0:12 (28 yds) Field Goal Good: W.Reichard 28 yard field goal is GOOD, Center-A.DePaola, Holder-R.Wright. [special_teams]
+- Q2 0:16 (5 yds) Penalty: (Field Goal formation) PENALTY on PIT-J.Ramsey, Defensive Offside, 5 yards, enforced at PIT 15 - No Play. [nullified]
+- Q2 12:16 (21 yds) Kickoff: C.Boswell kicks 60 yards from PIT 35 to MIN 5. T.Felton to MIN 26 for 21 yards (Co.Heyward; C.Holcomb). [special_teams]
+- Q2 13:42 (-6 yds) Penalty: (Shotgun) PENALTY on MIN-C.Darrisaw, False Start, 6 yards, enforced at PIT 44 - No Play. [nullified]
+- Q3 0:47 (12 yds) Punt: R.Wright punts 49 yards to PIT 42, Center-A.DePaola. C.Austin pushed ob at MIN 46 for 12 yards (B.Richter). [special_teams]
+- Q3 13:18 (-3 yds) Punt: R.Wright punts 48 yards to PIT 29, Center-A.DePaola. C.Austin to PIT 26 for -3 yards (T.Felton; T.Thomas). [special_teams]
+- Q3 15:00 (28 yds) Kickoff: C.Boswell kicks 61 yards from PIT 35 to MIN 4. M.Price to MIN 32 for 28 yards (C.Holcomb). ** Injury Update: MIN-J.Ward has returned to the game. [special_teams]
+- Q3 2:23 (25 yds) Kickoff: C.Boswell kicks 56 yards from PIT 35 to MIN 9. M.Price ran ob at PIT 37 for 54 yards (C.Boswell).PENALTY on MIN-T.Thomas, Offensive Holding, 10 yards, enforced at MIN 28. [special_teams]
+- Q4 0:14 (-5 yds) Penalty: (Shotgun) PENALTY on MIN, Delay of Game, 5 yards, enforced at MIN 37 - No Play. [nullified]
+- Q4 0:54 (5 yds) Penalty: (Shotgun) C.Wentz sacked at MIN 25 for 0 yards (N.Herbig).PENALTY on PIT-T.Watt, Defensive Offside, 5 yards, enforced at MIN 25 - No Play. [nullified]
+- Q4 0:58 (5 yds) Penalty: (Shotgun) C.Wentz pass incomplete short left to Z.Scott (B.Echols).PENALTY on PIT-P.Queen, Defensive Holding, 5 yards, enforced at MIN 20 - No Play. [nullified]
+- Q4 11:18 (28 yds) Kickoff: C.Boswell kicks 63 yards from PIT 35 to MIN 2. T.Felton to MIN 30 for 28 yards (B.Skowronek). [special_teams]
+
+**PIT Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 3 shown):
+- Q2 1:42 (30 yds) Blocked Field Goal: C.Boswell 30 yard field goal is BLOCKED (I.Rodgers), Center-C.Kuntz, Holder-C.Waitman, RECOVERED by MIN-I.Pace at MIN 9.
+- Q2 2:34 (16 yds) Fumble Recovery (Own): (Shotgun) A.Rodgers scrambles up the middle to MIN 20 for 11 yards (J.Greenard). FUMBLES (J.Greenard), recovered by PIT-B.Jones at MIN 21. B.Jones to MIN 15 for 6 yards (J.Hargrave).
+- Q4 2:08 (14 yds) Kickoff: W.Reichard kicks onside 14 yards from MIN 35 to MIN 49. R.Wilson (didn't try to advance) to MIN 49 for no gain.
+
+- Excluded non-zero-yard plays (up to 12 shown):
+- Q1 13:00 (13 yds) Punt: C.Waitman punts 54 yards to MIN 13, Center-C.Kuntz. M.Price to MIN 26 for 13 yards (J.Sawyer; B.Skowronek). [special_teams]
+- Q1 15:00 (26 yds) Kickoff: W.Reichard kicks 56 yards from MIN 35 to PIT 9. T.Sermon to PIT 35 for 26 yards (E.Williams). [special_teams]
+- Q1 6:24 (25 yds) Kickoff: W.Reichard kicks 61 yards from MIN 35 to PIT 4. T.Sermon to PIT 29 for 25 yards (E.Williams). [special_teams]
+- Q2 0:06 (-1 yds) Rush: A.Rodgers kneels to PIT 23 for -1 yards. [spike_kneel]
+- Q2 0:12 (24 yds) Kickoff: W.Reichard kicks 65 yards from MIN 35 to PIT 0. K.Gainwell to PIT 24 for 24 yards (K.King). MIN-J.Ward was injured during the play. [special_teams]
+- Q2 1:42 (30 yds) Blocked Field Goal: C.Boswell 30 yard field goal is BLOCKED (I.Rodgers), Center-C.Kuntz, Holder-C.Waitman, RECOVERED by MIN-I.Pace at MIN 9. [special_teams]
+- Q3 11:11 (-10 yds) Punt: C.Waitman punts 47 yards to MIN 20, Center-C.Kuntz. M.Price to MIN 20 for no gain (B.Skowronek).PENALTY on MIN-J.Ward, Illegal Block Above the Waist, 10 yards, enforced at MIN 20. [special_teams]
+- Q4 0:08 (-1 yds) Rush: A.Rodgers kneels to MIN 33 for -1 yards. [spike_kneel]
+- Q4 11:18 (33 yds) Field Goal Good: C.Boswell 33 yard field goal is GOOD, Center-C.Kuntz, Holder-C.Waitman. [special_teams]
+- Q4 1:08 (-5 yds) Penalty: (Run formation) PENALTY on PIT, Delay of Game, 5 yards, enforced at MIN 40 - No Play. [nullified]
+- Q4 2:08 (14 yds) Kickoff: W.Reichard kicks onside 14 yards from MIN 35 to MIN 49. R.Wilson (didn't try to advance) to MIN 49 for no gain. [special_teams]
+- Q4 7:50 (25 yds) Kickoff: W.Reichard kicks 55 yards from MIN 35 to PIT 10. K.Gainwell to PIT 35 for 25 yards (T.Thomas; E.Williams). [special_teams]
+
+### 401772750 LAC @ MIA (TOΔ max 0, YdsΔ max 1, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| LAC | 403 | 404 | +1 | 1 | 1 | +0 | 45 | 45 | +0 |
+| MIA | 341 | 341 | +0 | 3 | 3 | +0 | 45 | 45 | +0 |
+
+**LAC Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q1 4:22 (2 yds) Fumble Recovery (Opponent): (Shotgun) J.Herbert pass short right to O.Gadsden to MIA 49 for 8 yards (J.Brooks, R.Douglas). FUMBLES (R.Douglas), touched at 50, RECOVERED by MIA-J.Brooks at MIA 49. J.Brooks to LAC 49 for 2 yards (K.Allen). [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q1 8:41 (9 yds) Fumble Recovery (Own): (Shotgun) J.Herbert pass short left to K.Allen to MIA 17 for 9 yards (A.Davis; K.Britt). FUMBLES (A.Davis), and recovers at MIA 17.
+
+- Excluded non-zero-yard plays (up to 15 shown):
+- Q1 0:35 (31 yds) Field Goal Good: C.Dicker 31 yard field goal is GOOD, Center-R.Lovato, Holder-J.Scott. [special_teams]
+- Q1 4:03 (29 yds) Kickoff: R.Patterson kicks 62 yards from MIA 35 to LAC 3. N.Miller-Hines to LAC 32 for 29 yards (C.Goode). [special_teams]
+- Q1 7:52 (35 yds) Field Goal Good: C.Dicker 35 yard field goal is GOOD, Center-R.Lovato, Holder-J.Scott. [special_teams]
+- Q1 9:30 (58 yds) Penalty: C.Dicker 58 yard field goal is GOOD, NULLIFIED by Penalty, Center-R.Lovato, Holder-J.Scott.PENALTY on MIA-M.Butler, Unnecessary Roughness, 15 yards, enforced at MIA 40 - No Play. [nullified]
+- Q2 2:22 (-5 yds) Penalty:  (Shotgun) PENALTY on LAC-B.Hart, False Start, 5 yards, enforced at LAC 42 - No Play. [nullified]
+- Q2 2:35 (-5 yds) Penalty:  (Shotgun) PENALTY on LAC-A.Deculus, False Start, 5 yards, enforced at LAC 47 - No Play. [nullified]
+- Q2 4:30 (34 yds) Kickoff: R.Patterson kicks 64 yards from MIA 35 to LAC 1. K.Lambert-Smith to LAC 35 for 34 yards (J.Brents). [special_teams]
+- Q2 8:39 (29 yds) Field Goal Good:  C.Dicker 29 yard field goal is GOOD, Center-R.Lovato, Holder-J.Scott. [special_teams]
+- Q2 9:47 (-5 yds) Penalty: (Shotgun) PENALTY on LAC-B.Hart, False Start, 5 yards, enforced at MIA 13 - No Play. [nullified]
+- Q3 15:00 (28 yds) Kickoff: R.Patterson kicks 65 yards from MIA 35 to LAC 0. N.Miller-Hines to LAC 28 for 28 yards (J.Colbert; J.Brents). [special_teams]
+- Q3 8:55 (-5 yds) Penalty: PENALTY on LAC-K.Lambert-Smith, False Start, 5 yards, enforced at MIA 6 - No Play. [nullified]
+- Q4 0:05 (33 yds) Field Goal Good:  C.Dicker 33 yard field goal is GOOD, Center-R.Lovato, Holder-J.Scott. [special_teams]
+- Q4 0:46 (40 yds) Kickoff: R.Patterson kicks 64 yards from MIA 35 to LAC 1. N.Miller-Hines to LAC 41 for 40 yards (R.Patterson). [special_teams]
+- Q4 12:47 (35 yds) Field Goal Good: C.Dicker 35 yard field goal is GOOD, Center-R.Lovato, Holder-J.Scott. [special_teams]
+- Q4 6:30 (8 yds) Punt: J.Scott punts 55 yards to MIA 10, Center-R.Lovato. M.Washington to MIA 18 for 8 yards (J.Taylor). [special_teams]
+
+**MIA Reconciliation Clues**
+
+- Windelta counted turnovers (3):
+- Q1 14:15 (2 yds) Pass Interception Return: (Shotgun) T.Tagovailoa pass short middle intended for J.Waddle INTERCEPTED by T.Jefferson (T.Still) at LAC 39. T.Jefferson to LAC 41 for 2 yards (J.Hill; J.Waddle). [interception]
+- Q3 6:02 (0 yds) Pass Interception Return: (Shotgun) T.Tagovailoa pass short middle intended for D.Achane INTERCEPTED by B.St-Juste at MIA 37. B.St-Juste to MIA 37 for no gain (D.Achane). [interception]
+- Q4 0:05 (21 yds) Pass Interception Return: (Shotgun) T.Tagovailoa pass short right intended for N.Westbrook-Ikhine INTERCEPTED by D.James at MIA 40. D.James ran ob at MIA 19 for 21 yards. [interception]
+
+- Excluded non-zero-yard plays (up to 14 shown):
+- Q1 0:01 (5 yds) Penalty: (No Huddle) PENALTY on LAC-J.Caldwell, Neutral Zone Infraction, 5 yards, enforced at MIA 45 - No Play. [nullified]
+- Q1 0:35 (27 yds) Kickoff: C.Dicker kicks 63 yards from LAC 35 to MIA 2. D.Eskridge pushed ob at MIA 29 for 27 yards (J.Taylor). [special_teams]
+- Q1 15:00 (45 yds) Kickoff: C.Dicker kicks 64 yards from LAC 35 to MIA 1. M.Washington to MIA 46 for 45 yards (J.Eboigbe). [special_teams]
+- Q1 6:27 (11 yds) Punt: J.Bailey punts 54 yards to LAC 18, Center-J.Cardona. T.Still to LAC 29 for 11 yards (D.Eskridge; J.Cardona). [special_teams]
+- Q1 7:52 (24 yds) Kickoff: C.Dicker kicks 65 yards from LAC 35 to MIA 0. M.Washington to MIA 24 for 24 yards (J.Eboigbe). [special_teams]
+- Q2 0:00 (27 yds) Field Goal Good: R.Patterson 27 yard field goal is GOOD, Center-J.Cardona, Holder-J.Bailey. [special_teams]
+- Q2 0:40 (8 yds) Pass Reception: (Shotgun) T.Tagovailoa pass short right to D.Achane to LAC 9 for 8 yards (B.St-Juste).PENALTY on MIA-L.Borom, Illegal Use of Hands, 10 yards, enforced at LAC 17 - No Play. [nullified]
+- Q2 12:02 (57 yds) Field Goal Missed: R.Patterson 57 yard field goal is No Good, Wide Right, Center-J.Cardona, Holder-J.Bailey. [special_teams]
+- Q2 13:03 (15 yds) Pass Reception: (Shotgun) T.Tagovailoa pass short right to D.Waller to LAC 22 for 15 yards (E.Molden; D.Henley).PENALTY on MIA-A.Brewer, Offensive Holding, 10 yards, enforced at LAC 37 - No Play. [nullified]
+- Q2 4:30 (47 yds) Field Goal Good: R.Patterson 47 yard field goal is GOOD, Center-J.Cardona, Holder-J.Bailey. [special_teams]
+- Q3 3:55 (28 yds) Kickoff: C.Dicker kicks 63 yards from LAC 35 to MIA 2. M.Washington to MIA 30 for 28 yards (D.Phillips). [special_teams]
+- Q3 7:26 (24 yds) Kickoff: C.Dicker kicks 64 yards from LAC 35 to MIA 1. M.Washington to MIA 25 for 24 yards (J.Eboigbe). [special_teams]
+- Q4 11:57 (-10 yds) Pass Incompletion: (Shotgun) T.Tagovailoa pass incomplete short left to N.Westbrook-Ikhine (D.Henley).PENALTY on MIA-A.Brewer, Offensive Holding, 10 yards, enforced at MIA 35 - No Play. [nullified]
+- Q4 12:47 (32 yds) Kickoff: C.Dicker kicks 66 yards from LAC 35 to MIA -1. M.Washington to MIA 31 for 32 yards (D.Phillips; M.Wax). [special_teams]
+
+### 401772786 JAX @ TEN (TOΔ max 0, YdsΔ max 1, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| JAX | 272 | 272 | +0 | 0 | 0 | +0 | 98 | 98 | +0 |
+| TEN | 188 | 187 | -1 | 2 | 2 | +0 | 86 | 86 | +0 |
+
+**JAX Reconciliation Clues**
+
+- Excluded non-zero-yard plays (up to 21 shown):
+- Q1 11:13 (9 yds) Punt: L.Cooke punts 38 yards to TEN 11, Center-R.Matiscik. C.Dike pushed ob at TEN 20 for 9 yards (R.Matiscik). [special_teams]
+- Q1 14:53 (-5 yds) Penalty: T.Lawrence pass short right to T.Etienne to JAX 37 for 3 yards (T.Sweat).PENALTY on JAX-R.Hainsey, Ineligible Downfield Pass, 5 yards, enforced at JAX 34 - No Play. [nullified]
+- Q1 15:00 (32 yds) Kickoff: J.Slye kicks 63 yards from TEN 35 to JAX 2. B.Tuten to JAX 34 for 32 yards (J.Slye). [special_teams]
+- Q1 5:06 (-4 yds) Kickoff: J.Slye kicks 65 yards from TEN 35 to JAX 0. L.Allen to JAX 32 for 32 yards (D.Martin-Robinson).PENALTY on JAX-T.Patrick, Illegal Block Above the Waist, 10 yards, enforced at JAX 26. [special_teams]
+- Q2 0:00 (45 yds) Field Goal Good: C.Little 45 yard field goal is GOOD, Center-D.Hamilton, Holder-L.Cooke. [special_teams]
+- Q2 0:01 (15 yds) Penalty: (Shotgun) T.Lawrence pass incomplete short right.PENALTY on TEN-A.Key, Roughing the Passer, 15 yards, enforced at TEN 42 - No Play.Penalty on TEN-A.Key, Unnecessary Roughness, declined. [nullified]
+- Q2 11:04 (-5 yds) Penalty: (Punt formation) PENALTY on JAX-B.Combs, False Start, 5 yards, enforced at JAX 34 - No Play. [nullified]
+- Q2 14:54 (1 yds) Penalty: PENALTY on TEN-A.Key, Encroachment, 1 yard, enforced at TEN 15 - No Play. [nullified]
+- Q2 2:42 (5 yds) Punt: L.Cooke punts 42 yards to JAX 47, Center-D.Hamilton. C.Dike to JAX 42 for 5 yards (V.Miller; D.Hamilton). [special_teams]
+- Q2 2:46 (-5 yds) Penalty: (Punt formation) PENALTY on JAX-V.Miller, False Start, 5 yards, enforced at JAX 10 - No Play. [nullified]
+- Q2 5:19 (-10 yds) Penalty: T.Etienne right tackle to JAX 26 for 6 yards (A.Hooker).PENALTY on JAX-A.Harrison, Offensive Holding, 10 yards, enforced at JAX 20 - No Play. [nullified]
+- Q2 7:18 (2 yds) Punt: L.Cooke punts 33 yards to TEN 39, Center-D.Hamilton. C.Dike to TEN 41 for 2 yards (Q.Morris; An.Johnson). [special_teams]
+- Q2 9:12 (5 yds) Penalty: T.Lawrence pass short left to T.Patrick to JAX 28 for 8 yards (C.Barton) [J.Ward].PENALTY on TEN-J.Ward, Illegal Use of Hands, 5 yards, enforced at JAX 20 - No Play. [nullified]
+- Q3 10:23 (5 yds) Penalty: PENALTY on TEN-S.Joseph, Encroachment, 5 yards, enforced at TEN 42 - No Play. [nullified]
+- Q3 11:42 (-5 yds) Penalty: (Shotgun) PENALTY on JAX-C.Van Lanen, False Start, 5 yards, enforced at JAX 39 - No Play. [nullified]
+- Q3 1:02 (-10 yds) Penalty: T.Etienne up the middle to TEN 43 for 10 yards (K.Winston).PENALTY on JAX-J.Meyers, Offensive Holding, 10 yards, enforced at JAX 47 - No Play.Penalty on JAX-J.Meyers, Illegal Shift, declined. [nullified]
+- Q4 0:35 (-1 yds) Rush: N.Mullens kneels to TEN 49 for -1 yards. [spike_kneel]
+- Q4 11:40 (13 yds) Punt: L.Cooke punts 49 yards to TEN 22, Center-R.Matiscik. C.Dike to TEN 35 for 13 yards (J.Kiser; R.Matiscik).Penalty on TEN-M.Brown, Disqualification, offsetting.Penalty on JAX-L.Cooke, Unnecessary Roughness, offsetting.Penalty on JAX-R.Matiscik, Unnecessary Roughness, offsetting.Penalty on TEN-K.Elam, Unnecessary Roughness, offsetting. [special_teams]
+- Q4 14:22 (47 yds) Punt: L.Cooke punts 63 yards to TEN 15, Center-R.Matiscik. C.Dike to JAX 38 for 47 yards (L.Cooke). JAX-L.Cooke was injured during the play. [special_teams]
+- Q4 1:07 (-1 yds) Rush:  N.Mullens kneels to TEN 48 for -1 yards. [spike_kneel]
+- Q4 1:49 (-1 yds) Rush: N.Mullens kneels to TEN 47 for -1 yards. [spike_kneel]
+
+**TEN Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q1 1:04 (22 yds) Kickoff: C.Little kicks 52 yards from JAX 35 to TEN 13. C.Dike to TEN 38 for 25 yards (Q.Morris).Jacksonville challenged the runner was down by contact ruling, and the play was REVERSED.C.Little kicks 52 yards from JAX 35 to TEN 13. C.Dike to TEN 38 for 25 yards (Q.Morris, L.Allen). FUMBLES (L.Allen), RECOVERED by JAX-L.Allen at TEN 35. [fumble]
+- Q4 2:02 (0 yds) Fumble Recovery (Opponent): (Shotgun) C.Ward pass short left to T.Pollard to TEN 47 for 4 yards (V.Miller). FUMBLES (V.Miller), RECOVERED by JAX-R.Lane at TEN 46. [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q2 14:15 (0 yds) Fumble Recovery (Own): C.Ward sacked at TEN 28 for -2 yards (Au.Johnson). FUMBLES (Au.Johnson) [Au.Johnson], touched at TEN 30, recovered by TEN-P.Skoronski at TEN 30.
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q1 1:04 (22 yds) Kickoff: C.Little kicks 52 yards from JAX 35 to TEN 13. C.Dike to TEN 38 for 25 yards (Q.Morris).Jacksonville challenged the runner was down by contact ruling, and the play was REVERSED.C.Little kicks 52 yards from JAX 35 to TEN 13. C.Dike to TEN 38 for 25 yards (Q.Morris, L.Allen). FUMBLES (L.Allen), RECOVERED by JAX-L.Allen at TEN 35. [special_teams]
+- Q1 5:06 (28 yds) Field Goal Good:  J.Slye 28 yard field goal is GOOD, Center-M.Cox, Holder-J.Hekker. [special_teams]
+- Q2 0:35 (-5 yds) Penalty: (Shotgun) PENALTY on TEN, Delay of Game, 5 yards, enforced at JAX 29 - No Play. [nullified]
+- Q2 12:39 (4 yds) Punt: J.Hekker punts 55 yards to JAX 25, Center-M.Cox. P.Washington to JAX 39 for 14 yards (J.Chestnut).PENALTY on JAX-V.Miller, Illegal Block Above the Waist, 10 yards, enforced at JAX 39. [special_teams]
+- Q2 14:54 (25 yds) Kickoff: C.Little kicks 45 yards from 50 to TEN 5, out of bounds.PENALTY on JAX-C.Little, Kickoff Out of Bounds, placed at TEN 25. [special_teams]
+- Q2 5:53 (-5 yds) Penalty: (Shotgun) PENALTY on TEN-C.Okonkwo, False Start, 5 yards, enforced at TEN 48 - No Play. [nullified]
+- Q3 15:00 (-9 yds) Kickoff: C.Little kicks 60 yards from JAX 35 to TEN 5. C.Dike to TEN 30 for 25 yards (B.Green; D.Gardeck).PENALTY on TEN-J.Williams, Offensive Holding, 10 yards, enforced at TEN 29. [special_teams]
+- Q3 5:10 (-10 yds) Penalty: (Shotgun) C.Ward pass short left to T.Spears to JAX 48 for 6 yards (An.Johnson; F.Oluokun).PENALTY on TEN-C.Okonkwo, Offensive Holding, 10 yards, enforced at TEN 46 - No Play. [nullified]
+- Q3 5:58 (6 yds) Penalty: (Shotgun) C.Ward pass incomplete deep middle to C.Dike [J.Hines-Allen].PENALTY on JAX-J.Lewis, Defensive Holding, 6 yards, enforced at TEN 36 - No Play.Penalty on JAX-J.Jones, Illegal Contact, declined. [nullified]
+- Q3 6:45 (30 yds) Kickoff: C.Little kicks 63 yards from JAX 35 to TEN 2. C.Dike ran ob at TEN 32 for 30 yards (J.Jones). [special_teams]
+- Q4 11:02 (5 yds) Penalty: (No Huddle, Shotgun) C.Ward sacked at TEN 31 for -8 yards (A.Wingard).PENALTY on JAX-J.Hines-Allen, Illegal Contact, 5 yards, enforced at TEN 39 - No Play. [nullified]
+
+### 401772795 BUF @ NE (TOΔ max 0, YdsΔ max 1, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| BUF | 349 | 349 | +0 | 0 | 0 | +0 | 15 | 15 | +0 |
+| NE | 385 | 386 | +1 | 1 | 1 | +0 | 65 | 65 | +0 |
+
+**BUF Reconciliation Clues**
+
+- Excluded non-zero-yard plays (up to 13 shown):
+- Q1 0:25 (23 yds) Kickoff: A.Borregales kicks 58 yards from NE 35 to BUF 7. R.Davis to BUF 30 for 23 yards (D.Pettus; C.Elliss). [special_teams]
+- Q1 10:21 (45 yds) Kickoff: A.Borregales kicks 59 yards from NE 35 to BUF 6. R.Davis ran ob at NE 49 for 45 yards (C.Woods). [special_teams]
+- Q1 3:54 (3 yds) Punt: M.Wishnowsky punts 45 yards to NE 43, Center-R.Ferguson. M.Jones MUFFS catch, and recovers at NE 47. M.Jones to 50 for 3 yards (J.Solomon). [special_teams]
+- Q1 4:55 (-5 yds) Penalty: (Shotgun) PENALTY on BUF-J.Palmer, False Start, 5 yards, enforced at BUF 23 - No Play. [nullified]
+- Q2 5:53 (23 yds) Kickoff: A.Borregales kicks 60 yards from NE 35 to BUF 5. R.Davis to BUF 43 for 38 yards (C.Woodson; B.Schooler).PENALTY on NE-B.Schooler, Face Mask, 15 yards, enforced at BUF 43. [special_teams]
+- Q3 15:00 (58 yds) Kickoff: A.Borregales kicks 67 yards from NE 35 to BUF -2. R.Davis to NE 44 for 58 yards (C.Woodson). [special_teams]
+- Q3 5:04 (5 yds) Penalty: (Shotgun) J.Allen pass incomplete short middle to J.Palmer.PENALTY on NE-C.Woodson, Defensive Holding, 5 yards, enforced at NE 13 - No Play. [nullified]
+- Q4 0:37 (-1 yds) Rush: J.Allen kneels to NE 15 for -1 yards. [spike_kneel]
+- Q4 0:53 (-1 yds) Rush:  J.Allen kneels to NE 14 for -1 yards. [spike_kneel]
+- Q4 10:15 (-10 yds) Penalty: (Shotgun) J.Allen scrambles right tackle for 4 yards, TOUCHDOWN NULLIFIED by Penalty.PENALTY on BUF-O.Torrence, Offensive Holding, 10 yards, enforced at NE 4 - No Play. [nullified]
+- Q4 1:30 (-1 yds) Rush: J.Allen kneels to NE 13 for -1 yards. [spike_kneel]
+- Q4 2:54 (2 yds) Punt: M.Wishnowsky punts 50 yards to NE 15, Center-R.Ferguson. M.Jones to NE 17 for 2 yards (C.Lewis). [special_teams]
+- Q4 8:19 (15 yds) Penalty: (Shotgun) J.Allen pass incomplete short right to K.Coleman.PENALTY on NE-C.Davis, Defensive Pass Interference, 15 yards, enforced at NE 47 - No Play. [nullified]
+
+**NE Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q3 1:39 (0 yds) Pass Interception Return: (Shotgun) D.Maye pass deep right intended for M.Hollins INTERCEPTED by T.White at BUF 9. T.White to BUF 9 for no gain (M.Hollins). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q2 8:39 (4 yds) Pass Reception: D.Maye pass short right to M.Hollins to NE 27 for 5 yards (M.Milano). FUMBLES (M.Milano), ball out of bounds at NE 26.
+
+- Excluded non-zero-yard plays (up to 9 shown):
+- Q1 15:00 (26 yds) Kickoff: M.Prater kicks 64 yards from BUF 35 to NE 1. K.Williams to NE 27 for 26 yards (J.Andreessen). [special_teams]
+- Q2 0:00 (36 yds) Field Goal Good:  A.Borregales 36 yard field goal is GOOD, Center-J.Ashby, Holder-B.Baringer. [special_teams]
+- Q3 11:29 (24 yds) Kickoff: M.Prater kicks 63 yards from BUF 35 to NE 2. K.Williams to NE 26 for 24 yards (J.Solomon). [special_teams]
+- Q3 1:45 (-5 yds) Penalty: (Shotgun) PENALTY on NE-V.Lowe, False Start, 5 yards, enforced at BUF 43 - No Play. [nullified]
+- Q3 1:45 (-10 yds) Penalty: (Shotgun) D.Maye pass short right to H.Henry to BUF 37 for 11 yards (Ta.Johnson).PENALTY on NE-M.Onwenu, Offensive Holding, 10 yards, enforced at BUF 48 - No Play. [nullified]
+- Q3 3:49 (15 yds) Kickoff: M.Prater kicks 58 yards from BUF 35 to NE 7. K.Williams ran ob at BUF 46 for 47 yards (C.Lewis).PENALTY on NE-M.Mapu, Offensive Holding, 10 yards, enforced at NE 29. [special_teams]
+- Q3 9:29 (12 yds) Punt: B.Baringer punts 62 yards to BUF 18, Center-J.Ashby. K.Shakir ran ob at BUF 30 for 12 yards (M.Mapu). [special_teams]
+- Q4 5:19 (-5 yds) Penalty: (Punt formation) PENALTY on NE-J.Ashby, False Start, 5 yards, enforced at NE 25 - No Play. [nullified]
+- Q4 6:48 (25 yds) Kickoff: M.Prater kicks 63 yards from BUF 35 to NE 2. K.Williams pushed ob at NE 27 for 25 yards (R.Gilliam). [special_teams]
+
+### 401772858 DAL @ CAR (TOΔ max 0, YdsΔ max 1, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| DAL | 292 | 291 | -1 | 0 | 0 | +0 | 37 | 37 | +0 |
+| CAR | 410 | 411 | +1 | 1 | 1 | +0 | 57 | 57 | +0 |
+
+**DAL Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 10:15 (-1 yds) Fumble Recovery (Own): H.Adeniji reported in as eligible.  D.Prescott FUMBLES (Aborted) at CAR 9, touched at CAR 9, and recovers at CAR 9.
+
+- Excluded non-zero-yard plays (up to 13 shown):
+- Q1 15:00 (25 yds) Kickoff: R.Fitzgerald kicks 64 yards from CAR 35 to DAL 1. J.Blue ran ob at DAL 26 for 25 yards (M.Njongmeta). [special_teams]
+- Q1 1:26 (-5 yds) Penalty: PENALTY on DAL-T.Smith, False Start, 5 yards, enforced at CAR 8 - No Play. [nullified]
+- Q1 4:48 (23 yds) Field Goal Good: B.Aubrey 23 yard field goal is GOOD, Center-T.Sieg, Holder-B.Anger. [special_teams]
+- Q1 9:08 (17 yds) Kickoff: R.Fitzgerald kicks 55 yards from CAR 35 to DAL 10. J.Moreno-Cropper to DAL 27 for 17 yards (L.Ransom). [special_teams]
+- Q2 0:17 (-1 yds) Rush: D.Prescott kneels to DAL 19 for -1 yards. [spike_kneel]
+- Q2 11:29 (15 yds) Kickoff: R.Fitzgerald kicks 57 yards from CAR 35 to DAL 8. J.Blue to DAL 23 for 15 yards (B.Martin-Scott). [special_teams]
+- Q2 8:25 (12 yds) Pass Incompletion: (Shotgun) D.Prescott pass incomplete short middle to J.Ferguson (Ja.Horn).PENALTY on CAR-Ja.Horn, Defensive Pass Interference, 12 yards, enforced at DAL 35 - No Play. [nullified]
+- Q2 9:28 (-5 yds) Penalty: (Shotgun) PENALTY on DAL-J.Williams, False Start, 5 yards, enforced at DAL 36 - No Play. [nullified]
+- Q3 10:08 (-5 yds) Penalty: (Run formation) PENALTY on DAL, Delay of Game, 5 yards, enforced at DAL 40 - No Play. [nullified]
+- Q3 3:34 (15 yds) Pass Incompletion: (Shotgun) D.Prescott pass incomplete deep right to G.Pickens (N.Scott).PENALTY on CAR-C.Rozeboom, Roughing the Passer, 15 yards, enforced at DAL 43 - No Play. [nullified]
+- Q3 9:53 (-7 yds) Punt: B.Anger punts 51 yards to CAR 14, Center-T.Sieg. H.Renfrow to CAR 14 for no gain (A.Clark).PENALTY on CAR-L.Ransom, Illegal Blindside Block, 7 yards, enforced at CAR 14. [special_teams]
+- Q4 12:20 (21 yds) Kickoff: R.Fitzgerald kicks 56 yards from CAR 35 to DAL 9. J.Moreno-Cropper to DAL 30 for 21 yards (P.Umanmielen). [special_teams]
+- Q4 9:20 (28 yds) Field Goal Good: B.Aubrey 28 yard field goal is GOOD, Center-T.Sieg, Holder-B.Anger. [special_teams]
+
+**CAR Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q1 2:13 (8 yds) Pass Interception Return: (Shotgun) B.Young pass short left intended for T.McMillan INTERCEPTED by D.Wilson at CAR 46. D.Wilson ran ob at CAR 25 for 21 yards (I.Ekwonu).PENALTY on CAR-R.Dowdle, Unnecessary Roughness, 13 yards, enforced at CAR 25. [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q2 0:44 (-9 yds) Fumble Recovery (Own): (Shotgun) B.Young pass short middle to X.Legette to DAL 39 for -3 yards (R.Steward). FUMBLES (R.Steward), recovered by CAR-R.Dowdle at DAL 40. R.Dowdle to DAL 41 for -1 yards (D.Ezeiruaku). FUMBLES (D.Ezeiruaku), touched at DAL 41, recovered by CAR-X.Legette at DAL 45.
+
+- Excluded non-zero-yard plays (up to 18 shown):
+- Q1 9:08 (31 yds) Field Goal Good:  R.Fitzgerald 31 yard field goal is GOOD, Center-J.Jansen, Holder-S.Martin. [special_teams]
+- Q2 0:20 (55 yds) Field Goal Good: R.Fitzgerald 55 yard field goal is GOOD, Center-J.Jansen, Holder-S.Martin. [special_teams]
+- Q2 2:54 (5 yds) Pass Incompletion: (Shotgun) B.Young pass incomplete deep left to X.Legette.PENALTY on DAL-R.Steward, Defensive Holding, 5 yards, enforced at CAR 36 - No Play. [nullified]
+- Q2 3:34 (2 yds) Rush: (Shotgun) R.Dowdle up the middle to CAR 36 for 2 yards (D.Wilson; J.Houston). ** Injury Update: DAL-M.Kneeland has returned to the game. [spike_kneel]
+- Q2 3:39 (28 yds) Kickoff: B.Aubrey kicks 59 yards from DAL 35 to CAR 6. D.Dallas to CAR 34 for 28 yards (J.Houston). ** Injury Update: DAL-S.James has returned to the game. [special_teams]
+- Q3 5:38 (10 yds) Punt: S.Martin punts 51 yards to DAL 17, Center-J.Jansen. J.Moreno-Cropper MUFFS catch, and recovers at DAL 17. J.Moreno-Cropper to DAL 27 for 10 yards (T.Incoom). [special_teams]
+- Q3 6:53 (-5 yds) Penalty: (Shotgun) PENALTY on CAR-B.Christensen, False Start, 5 yards, enforced at CAR 28 - No Play. [nullified]
+- Q3 8:25 (5 yds) Penalty: PENALTY on DAL-J.Toia, Defensive Offside, 5 yards, enforced at CAR 22 - No Play. [nullified]
+- Q4 0:00 (33 yds) Field Goal Good:  R.Fitzgerald 33 yard field goal is GOOD, Center-J.Jansen, Holder-S.Martin. [special_teams]
+- Q4 0:31 (-1 yds) Rush: B.Young kneels to DAL 15 for -1 yards. [spike_kneel]
+- Q4 14:22 (4 yds) Rush: R.Dowdle up the middle to DAL 10 for 4 yards (M.Kneeland). [spike_kneel]
+- Q4 1:01 (-2 yds) Rush: B.Young kneels to DAL 14 for -2 yards. [spike_kneel]
+- Q4 3:20 (2 yds) Rush: (Shotgun) R.Dowdle left guard to DAL 40 for 2 yards (M.Kneeland; S.Thomas). [spike_kneel]
+- Q4 5:26 (12 yds) Pass Incompletion: (Shotgun) B.Young pass incomplete short left to X.Legette.PENALTY on DAL-K.Elam, Defensive Pass Interference, 12 yards, enforced at CAR 17 - No Play. [nullified]
+- Q4 6:07 (3 yds) Rush: (Shotgun) R.Dowdle up the middle to CAR 17 for 3 yards (M.Kneeland). [spike_kneel]
+- Q4 8:31 (9 yds) Punt: S.Martin punts 47 yards to DAL 37, Center-J.Jansen. J.Moreno-Cropper to DAL 46 for 9 yards (D.Dallas). [special_teams]
+- Q4 8:36 (-5 yds) Penalty: (Shotgun) PENALTY on CAR-R.Dowdle, False Start, 5 yards, enforced at CAR 21 - No Play. [nullified]
+- Q4 9:20 (12 yds) Kickoff: B.Aubrey kicks 59 yards from DAL 35 to CAR 6. T.Etienne to CAR 18 for 12 yards (P.Campbell; A.Clark). [special_teams]
+
+### 401772888 NYG @ DET (TOΔ max 0, YdsΔ max 1, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| NYG | 517 | 518 | +1 | 1 | 1 | +0 | 59 | 59 | +0 |
+| DET | 494 | 494 | +0 | 1 | 1 | +0 | 81 | 81 | +0 |
+
+**NYG Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q4 10:50 (0 yds) Pass Interception Return: J.Winston pass short right intended for W.Robinson INTERCEPTED by T.Harper at NYG 45. T.Harper to NYG 45 for no gain (W.Robinson). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q2 1:22 (3 yds) Pass Reception: (Shotgun) J.Winston pass short middle to W.Robinson to DET 25 for 4 yards (A.Robertson) [A.Hutchinson]. FUMBLES (A.Robertson), ball out of bounds at DET 26.
+
+- Excluded non-zero-yard plays (up to 14 shown):
+- Q1 0:00 (21 yds) Field Goal Good: Y.Koo 21 yard field goal is GOOD, Center-C.Kreiter, Holder-J.Gillan. [special_teams]
+- Q1 13:09 (5 yds) Penalty: (Shotgun) J.Winston pass incomplete short right to I.Hodgins.PENALTY on DET-A.Hutchinson, Defensive Offside, 5 yards, enforced at DET 44 - No Play. [nullified]
+- Q1 15:00 (25 yds) Kickoff: J.Bates kicks 60 yards from DET 35 to NYG 5. G.Olszewski to NYG 30 for 25 yards (M.Rodriguez). [special_teams]
+- Q2 0:38 (44 yds) Field Goal Good: Y.Koo 44 yard field goal is GOOD, Center-C.Kreiter, Holder-J.Gillan. [special_teams]
+- Q2 11:41 (28 yds) Kickoff: J.Bates kicks 62 yards from DET 35 to NYG 3. G.Olszewski to NYG 31 for 28 yards (T.Wheat). [special_teams]
+- Q2 2:00 (24 yds) Penalty: (Shotgun) J.Winston pass incomplete deep right to G.Olszewski.PENALTY on DET-R.Ya-Sin, Defensive Pass Interference, 24 yards, enforced at NYG 21 - No Play. [nullified]
+- Q2 2:16 (15 yds) Kickoff: J.Bates kicks 65 yards from DET 35 to NYG 0. E.Gray MUFFS catch, and recovers at NYG 3. E.Gray to NYG 18 for 15 yards (T.Nowaske; T.Wheat). [special_teams]
+- Q4 0:13 (-1 yds) Rush: J.Winston kneels to NYG 21 for -1 yards. [spike_kneel]
+- Q4 0:18 (-10 yds) Penalty: (Shotgun) J.Winston pass incomplete deep middle to I.Hodgins.PENALTY on NYG-J.Eluemunor, Illegal Use of Hands, 10 yards, enforced at NYG 32 - No Play. [nullified]
+- Q4 0:28 (28 yds) Kickoff: J.Bates kicks 61 yards from DET 35 to NYG 4. G.Olszewski to NYG 32 for 28 yards (T.Wheat). [special_teams]
+- Q4 6:08 (-10 yds) Penalty: (Shotgun) D.Singletary left tackle to DET 40 for 7 yards (B.Branch).PENALTY on NYG-A.Thomas, Offensive Holding, 10 yards, enforced at DET 47 - No Play. [nullified]
+- Q4 6:49 (8 yds) Penalty: (Shotgun) J.Winston pass incomplete deep right to T.Johnson.PENALTY on DET-B.Branch, Defensive Pass Interference, 8 yards, enforced at NYG 42 - No Play. [nullified]
+- Q4 9:02 (-5 yds) Penalty: PENALTY on NYG, Delay of Game, 5 yards, enforced at NYG 12 - No Play. [nullified]
+- Q5 9:42 (26 yds) Kickoff: J.Bates kicks 61 yards from DET 35 to NYG 4. E.Gray to NYG 30 for 26 yards (M.Rodriguez; T.Wheat). [special_teams]
+
+**DET Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q3 2:25 (3 yds) Pass Interception Return: (Shotgun) J.Goff pass short left intended for A.St. Brown INTERCEPTED by J.Holland at NYG 12. J.Holland to NYG 15 for 3 yards (A.St. Brown). [interception]
+
+- Excluded non-zero-yard plays (up to 14 shown):
+- Q1 8:20 (-5 yds) Penalty: (Punt formation) PENALTY on DET, Delay of Game, 5 yards, enforced at NYG 43 - No Play. [nullified]
+- Q2 0:00 (37 yds) Field Goal Good: J.Bates 37 yard field goal is GOOD, Center-H.Hatten, Holder-J.Fox. [special_teams]
+- Q2 0:38 (44 yds) Kickoff: Y.Koo kicks 66 yards from NYG 35 to DET -1. K.Raymond pushed ob at DET 43 for 44 yards (Y.Koo). [special_teams]
+- Q2 12:35 (14 yds) Penalty: (Shotgun) J.Goff pass incomplete short middle to A.St. Brown.PENALTY on NYG-D.Belton, Defensive Pass Interference, 14 yards, enforced at NYG 15 - No Play. [nullified]
+- Q2 15:00 (34 yds) Kickoff: Y.Koo kicks 64 yards from NYG 35 to DET 1. J.Saylors to DET 35 for 34 yards (S.Bozeman). [special_teams]
+- Q2 4:01 (5 yds) Penalty: (Shotgun) J.Gibbs right end pushed ob at DET 43 for 4 yards (K.Black).PENALTY on NYG-A.Carter, Defensive Offside, 5 yards, enforced at DET 39 - No Play. [nullified]
+- Q2 6:21 (-10 yds) Punt: J.Fox punts 46 yards to NYG 22, Center-H.Hatten. G.Olszewski to NYG 26 for 4 yards (R.Dwelley).PENALTY on NYG-Z.Barnes, Offensive Holding, 10 yards, enforced at NYG 22. [special_teams]
+- Q2 8:21 (27 yds) Kickoff: Y.Koo kicks 64 yards from NYG 35 to DET 1. J.Saylors to DET 28 for 27 yards (R.Payton; C.Golston). [special_teams]
+- Q3 12:03 (-5 yds) Penalty: (Shotgun) J.Goff pass short right to J.Williams pushed ob at NYG 10 for 36 yards (K.Black).PENALTY on DET-G.Glasgow, Ineligible Downfield Pass, 5 yards, enforced at NYG 46 - No Play. [nullified]
+- Q3 15:00 (23 yds) Kickoff: Y.Koo kicks 64 yards from NYG 35 to DET 1. J.Saylors to DET 24 for 23 yards (C.Golston). [special_teams]
+- Q4 0:28 (59 yds) Field Goal Good: J.Bates 59 yard field goal is GOOD, Center-H.Hatten, Holder-J.Fox. [special_teams]
+- Q4 12:16 (-8 yds) Kickoff: Y.Koo kicks 62 yards from NYG 35 to DET 3. J.Saylors to DET 31 for 28 yards (R.Payton).PENALTY on DET-G.Stuard, Offensive Holding, 10 yards, enforced at DET 29. [special_teams]
+- Q4 2:50 (-5 yds) Penalty: (Shotgun) J.Goff scrambles left end ran ob at DET 15 for 5 yards (N.Jones).PENALTY on DET-T.Decker, Offensive Holding, 5 yards, enforced at DET 10 - No Play. [nullified]
+- Q5 10:00 (29 yds) Kickoff: Y.Koo kicks 63 yards from NYG 35 to DET 2. J.Saylors to DET 31 for 29 yards (S.Bozeman; Z.Barnes). [special_teams]
+
+### 401772894 LAR @ CAR (TOΔ max 0, YdsΔ max 1, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| LAR | 379 | 378 | -1 | 3 | 3 | +0 | 5 | 5 | +0 |
+| CAR | 358 | 358 | +0 | 0 | 0 | +0 | 70 | 70 | +0 |
+
+**LAR Reconciliation Clues**
+
+- Windelta counted turnovers (3):
+- Q1 1:10 (48 yds) Interception Return Touchdown: (Shotgun) M.Stafford pass short left intended for P.Nacua INTERCEPTED by M.Jackson at LA 48. M.Jackson for 48 yards, TOUCHDOWN. R.Fitzgerald extra point is GOOD, Center-J.Jansen, Holder-S.Martin. [interception]
+- Q1 4:07 (0 yds) Pass Interception Return: (Shotgun) M.Stafford pass short middle intended for C.Parkinson INTERCEPTED by N.Scott (D.Brown) at CAR -4. Touchback. [interception]
+- Q4 2:34 (4 yds) Sack Opp Fumble Recovery: (Shotgun) M.Stafford sacked at CAR 31 for -9 yards (D.Brown). FUMBLES (D.Brown) [D.Brown], RECOVERED by CAR-D.Wonnum at CAR 30. D.Wonnum to CAR 49 for 19 yards (K.Mumpfield).PENALTY on CAR, Unsportsmanlike Conduct, 15 yards, enforced at CAR 49. [fumble]
+
+- Excluded non-zero-yard plays (up to 9 shown):
+- Q1 15:00 (31 yds) Kickoff: R.Fitzgerald kicks 61 yards from CAR 35 to LA 4. R.Rivers pushed ob at 50 for 46 yards (R.Fitzgerald).PENALTY on CAR-T.Incoom, Unnecessary Roughness, 15 yards, enforced at 50. [special_teams]
+- Q1 1:10 (13 yds) Kickoff: R.Fitzgerald kicks 52 yards from CAR 35 to LA 13. R.Rivers to LA 31 for 18 yards (I.Simmons; P.Umanmielen).
+PENALTY on CAR, Illegal Formation, 5 yards, enforced at LA 31. [special_teams]
+- Q1 7:38 (26 yds) Kickoff: R.Fitzgerald kicks 59 yards from CAR 35 to LA 6. R.Rivers to LA 32 for 26 yards (R.Rochell). [special_teams]
+- Q2 0:14 (-1 yds) Rush: M.Stafford kneels to LA 8 for -1 yards. [spike_kneel]
+- Q2 5:02 (5 yds) Penalty: K.Williams right tackle to LA 29 for 3 yards (B.Brown).PENALTY on CAR-T.Wharton, Defensive Offside, 5 yards, enforced at LA 26 - No Play. [nullified]
+- Q3 7:12 (5 yds) Punt: E.Evans punts 56 yards to CAR 19, Center-J.McQuaide. T.Etienne pushed ob at LA 46 for 35 yards (R.Rivers).PENALTY on CAR-T.Incoom, Offensive Holding, 10 yards, enforced at CAR 34. [special_teams]
+- Q3 8:48 (23 yds) Kickoff: R.Fitzgerald kicks 60 yards from CAR 35 to LA 5. R.Rivers to LA 28 for 23 yards (T.Incoom). [special_teams]
+- Q4 2:34 (-5 yds) Penalty:  (Shotgun) PENALTY on LA, Delay of Game, 5 yards, enforced at CAR 17 - No Play. [nullified]
+- Q4 6:34 (22 yds) Kickoff: R.Fitzgerald kicks 59 yards from CAR 35 to LA 6. R.Rivers to LA 28 for 22 yards (B.Tremayne). [special_teams]
+
+**CAR Reconciliation Clues**
+
+- Excluded non-zero-yard plays (up to 10 shown):
+- Q1 12:10 (22 yds) Kickoff: H.Mevis kicks 56 yards from LA 35 to CAR 9. T.Etienne to CAR 31 for 22 yards (T.Reeder). [special_teams]
+- Q2 12:46 (22 yds) Kickoff: H.Mevis kicks 61 yards from LA 35 to CAR 4. T.Etienne to CAR 26 for 22 yards (J.McCollough). [special_teams]
+- Q2 1:55 (27 yds) Kickoff: H.Mevis kicks 58 yards from LA 35 to CAR 7. T.Etienne to CAR 34 for 27 yards (N.Hampton). [special_teams]
+- Q2 5:33 (33 yds) Field Goal Good: R.Fitzgerald 33 yard field goal is GOOD, Center-J.Jansen, Holder-S.Martin. [special_teams]
+- Q2 8:07 (-10 yds) Penalty: (Shotgun) C.Hubbard left end to LA 11 for 7 yards (J.Wallace).PENALTY on CAR-M.Evans, Offensive Holding, 10 yards, enforced at LA 18 - No Play. [nullified]
+- Q3 15:00 (18 yds) Kickoff: E.Evans kicks 54 yards from LA 35 to CAR 11. T.Etienne to CAR 29 for 18 yards (N.Hampton). [special_teams]
+- Q4 0:38 (-2 yds) Rush:  B.Young kneels to CAR 45 for -2 yards. [spike_kneel]
+- Q4 15:00 (-10 yds) Penalty: C.Hubbard left end to LA 21 for 4 yards (E.Forbes; O.Speights).PENALTY on CAR-J.Sanders, Offensive Holding, 10 yards, enforced at LA 25 - No Play. [nullified]
+- Q4 1:20 (-1 yds) Rush:  B.Young kneels to CAR 47 for -1 yards. [spike_kneel]
+- Q4 2:00 (-1 yds) Rush:  B.Young kneels to CAR 48 for -1 yards. [spike_kneel]
+
+### 401772903 ARI @ HOU (TOΔ max 0, YdsΔ max 1, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| ARI | 307 | 307 | +0 | 2 | 2 | +0 | 34 | 34 | +0 |
+| HOU | 399 | 400 | +1 | 0 | 0 | +0 | 40 | 40 | +0 |
+
+**ARI Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q1 14:11 (27 yds) Kickoff: K.Fairbairn kicks 64 yards from HST 35 to ARZ 1. J.Brooks to ARZ 28 for 27 yards (J.Hill). FUMBLES (J.Hill), RECOVERED by HST-D.Ogunbowale at ARZ 28. D.Ogunbowale to ARZ 22 for 6 yards (C.Tindall). [fumble]
+- Q3 9:01 (0 yds) Pass Interception Return: (Shotgun) J.Brissett pass deep left intended for M.Wilson INTERCEPTED by K.Lassiter at HST -4. Touchback. [interception]
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q1 12:00 (22 yds) Kickoff: K.Fairbairn kicks 67 yards from HST 35 to ARZ -2. C.Kiner MUFFS catch, and recovers at ARZ 0. C.Kiner to ARZ 22 for 22 yards (C.Harris; J.Hansen). [special_teams]
+- Q1 14:11 (27 yds) Kickoff: K.Fairbairn kicks 64 yards from HST 35 to ARZ 1. J.Brooks to ARZ 28 for 27 yards (J.Hill). FUMBLES (J.Hill), RECOVERED by HST-D.Ogunbowale at ARZ 28. D.Ogunbowale to ARZ 22 for 6 yards (C.Tindall). [special_teams]
+- Q1 6:12 (27 yds) Kickoff: K.Fairbairn kicks 63 yards from HST 35 to ARZ 2. A.Baccellia to ARZ 29 for 27 yards (D.Clark). [special_teams]
+- Q2 1:44 (26 yds) Kickoff: K.Fairbairn kicks 62 yards from HST 35 to ARZ 3. A.Baccellia to ARZ 29 for 26 yards (D.Clark). ARZ-A.Baccellia was injured during the play. [special_teams]
+- Q2 7:37 (13 yds) Punt: M.Haack punts 56 yards to HST 8, Center-A.Brewer. J.Noel ran ob at HST 21 for 13 yards (Z.Collins). [special_teams]
+- Q2 9:01 (25 yds) Kickoff: K.Fairbairn kicks 61 yards from HST 35 to ARZ 4. J.Brooks to ARZ 29 for 25 yards (D.Clark; B.Brooks). [special_teams]
+- Q3 15:00 (26 yds) Kickoff: K.Fairbairn kicks 66 yards from HST 35 to ARZ -1. J.Brooks to ARZ 25 for 26 yards (J.Hansen). [special_teams]
+- Q3 4:35 (29 yds) Kickoff: K.Fairbairn kicks 65 yards from HST 35 to ARZ 0. J.Brooks to ARZ 29 for 29 yards (D.Clark; J.Ingram). [special_teams]
+- Q3 9:34 (-10 yds) Penalty: (Shotgun) J.Brissett scrambles right end pushed ob at HST 8 for 4 yards (A.Al-Shaair).PENALTY on ARZ-I.Adams, Offensive Holding, 10 yards, enforced at HST 12 - No Play. [nullified]
+- Q4 12:39 (5 yds) Penalty: (Shotgun) J.Brissett sacked at ARZ 27 for -5 yards (D.Hunter).PENALTY on HST-J.Pitre, Illegal Contact, 5 yards, enforced at ARZ 32 - No Play. [nullified]
+- Q4 13:34 (25 yds) Kickoff: K.Fairbairn kicks 63 yards from HST 35 to ARZ 2. J.Brooks to ARZ 27 for 25 yards (J.Hansen). [special_teams]
+
+**HOU Reconciliation Clues**
+
+- Turnover-keyword plays not counted as turnovers (up to 2 shown):
+- Q1 6:12 (1 yds) Fumble Return Touchdown: B.Fisher reported in as eligible.  C.Stroud FUMBLES (Aborted) at ARZ 2, recovered by HST-W.Marks at ARZ 7. W.Marks for 7 yards, TOUCHDOWN. K.Fairbairn extra point is GOOD, Center-A.Brinkman, Holder-T.Townsend.
+- Q2 0:02 (0 yds) Blocked Field Goal: K.Fairbairn 52 yard field goal is BLOCKED (C.Campbell), Center-A.Brinkman, Holder-T.Townsend.
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q1 12:00 (30 yds) Field Goal Good: K.Fairbairn 30 yard field goal is GOOD, Center-A.Brinkman, Holder-T.Townsend. [special_teams]
+- Q1 15:00 (39 yds) Kickoff: C.Ryland kicks 63 yards from ARZ 35 to HST 2. J.Noel pushed ob at HST 41 for 39 yards (D.Burke). [special_teams]
+- Q1 6:12 (1 yds) Fumble Return Touchdown: B.Fisher reported in as eligible.  C.Stroud FUMBLES (Aborted) at ARZ 2, recovered by HST-W.Marks at ARZ 7. W.Marks for 7 yards, TOUCHDOWN. K.Fairbairn extra point is GOOD, Center-A.Brinkman, Holder-T.Townsend. [turnover_return]
+- Q1 7:35 (24 yds) Penalty: C.Stroud pass incomplete deep right to D.Schultz (G.Williams). ** Injury Update: HST-W.Marks has returned to the game. PENALTY on ARZ-G.Williams, Defensive Pass Interference, 24 yards, enforced at ARZ 25 - No Play. [nullified]
+- Q2 11:18 (-10 yds) Penalty: B.Fisher reported in as eligible.  W.Marks left guard to ARZ 36 for 3 yards (B.Baker).PENALTY on HST-A.Ersery, Offensive Holding, 10 yards, enforced at ARZ 39 - No Play. [nullified]
+- Q2 13:41 (-5 yds) Penalty: C.Stroud pass short middle to N.Collins to ARZ 37 for 28 yards (B.Baker; D.Hall).PENALTY on HST-B.Fisher, Illegal Formation, 5 yards, enforced at HST 35 - No Play. [nullified]
+- Q2 1:44 (22 yds) Field Goal Good:  K.Fairbairn 22 yard field goal is GOOD, Center-A.Brinkman, Holder-T.Townsend. [special_teams]
+- Q2 9:01 (55 yds) Field Goal Good: K.Fairbairn 55 yard field goal is GOOD, Center-A.Brinkman, Holder-T.Townsend. [special_teams]
+- Q3 0:33 (69 yds) Kickoff: C.Ryland kicks 60 yards from ARZ 35 to HST 5. J.Noel to ARZ 26 for 69 yards (K.Clark). [special_teams]
+- Q3 6:22 (-5 yds) Penalty: Direct snap to C.Stover.  C.Stover right guard to ARZ 5 for 2 yards (O.Pappoe; D.Hall).PENALTY on HST-B.Fisher, Offensive Offside, 5 yards, enforced at ARZ 7 - No Play. [nullified]
+- Q4 13:34 (33 yds) Field Goal Good: K.Fairbairn 33 yard field goal is GOOD, Center-A.Brinkman, Holder-T.Townsend. [special_teams]
+
+### 401772922 NE @ BUF (TOΔ max 0, YdsΔ max 1, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| NE | 338 | 338 | +0 | 1 | 1 | +0 | 93 | 93 | +0 |
+| BUF | 363 | 364 | +1 | 3 | 3 | +0 | 90 | 90 | +0 |
+
+**NE Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q1 8:21 (0 yds) Fumble Recovery (Opponent): D.Maye pass short middle to R.Stevenson to BUF 40 for 7 yards (S.Thompson; M.Milano). FUMBLES (S.Thompson), RECOVERED by BUF-T.Bernard at BUF 38. [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q2 9:34 (24 yds) Kickoff: M.Prater kicks 63 yards from BUF 35 to NE 2. A.Gibson to NE 26 for 24 yards (C.Lewis). FUMBLES (C.Lewis), recovered by NE-T.Henderson at NE 28. NE-A.Gibson was injured during the play.
+
+- Excluded non-zero-yard plays (up to 12 shown):
+- Q1 0:56 (30 yds) Field Goal Good: A.Borregales 30 yard field goal is GOOD, Center-J.Ashby, Holder-B.Baringer. [special_teams]
+- Q1 15:00 (25 yds) Kickoff: M.Prater kicks 60 yards from BUF 35 to NE 5. A.Gibson to NE 30 for 25 yards (S.Franklin). [special_teams]
+- Q2 0:00 (19 yds) Field Goal Good: A.Borregales 19 yard field goal is GOOD, Center-J.Ashby, Holder-B.Baringer. [special_teams]
+- Q2 0:10 (-5 yds) Penalty: (Shotgun) PENALTY on NE-K.Boutte, False Start, 5 yards, enforced at BUF 7 - No Play. [nullified]
+- Q2 0:10 (11 yds) Pass Incompletion: (Shotgun) D.Maye pass incomplete short left to S.Diggs.PENALTY on BUF-T.White, Defensive Pass Interference, 11 yards, enforced at BUF 12 - No Play. [nullified]
+- Q2 9:34 (24 yds) Kickoff: M.Prater kicks 63 yards from BUF 35 to NE 2. A.Gibson to NE 26 for 24 yards (C.Lewis). FUMBLES (C.Lewis), recovered by NE-T.Henderson at NE 28. NE-A.Gibson was injured during the play. [special_teams]
+- Q3 7:58 (5 yds) Pass Incompletion: (Shotgun) D.Maye pass incomplete short right [A.Epenesa].PENALTY on BUF-C.Benford, Illegal Contact, 5 yards, enforced at BUF 42 - No Play. [nullified]
+- Q3 9:21 (23 yds) Kickoff: M.Prater kicks 62 yards from BUF 35 to NE 3. R.Stevenson to NE 26 for 23 yards (T.Shavers; J.Andreessen). [special_teams]
+- Q4 0:15 (52 yds) Field Goal Good: A.Borregales 52 yard field goal is GOOD, Center-J.Ashby, Holder-B.Baringer. [special_teams]
+- Q4 2:17 (23 yds) Kickoff: M.Prater kicks 59 yards from BUF 35 to NE 6. T.Henderson to NE 29 for 23 yards (R.Gilliam). [special_teams]
+- Q4 6:22 (-4 yds) Penalty: V.Lowe reported in as eligible.  PENALTY on NE-V.Lowe, False Start, 4 yards, enforced at NE 33 - No Play. [nullified]
+- Q4 7:37 (17 yds) Kickoff: M.Prater kicks 58 yards from BUF 35 to NE 7. R.Stevenson to NE 24 for 17 yards (R.Gilliam). [special_teams]
+
+**BUF Reconciliation Clues**
+
+- Windelta counted turnovers (3):
+- Q1 1:54 (0 yds) Fumble Recovery (Opponent): (Shotgun) J.Allen pass short left to K.Coleman to BUF 10 for 3 yards (R.Spillane). FUMBLES (R.Spillane), touched at BUF 9, RECOVERED by NE-J.Hawkins at BUF 11. [fumble]
+- Q1 8:25 (0 yds) Fumble Recovery (Opponent): J.Allen FUMBLES (Aborted) at 50, RECOVERED by NE-J.Farmer at BUF 47. [fumble]
+- Q3 2:58 (0 yds) Pass Interception Return: (Shotgun) J.Allen pass short middle intended for K.Shakir INTERCEPTED by M.Jones at NE 10. M.Jones to NE 10 for no gain (K.Shakir). [interception]
+
+- Excluded non-zero-yard plays (up to 16 shown):
+- Q1 0:10 (-5 yds) Penalty: (Shotgun) PENALTY on BUF-D.Dawkins, False Start, 5 yards, enforced at BUF 36 - No Play. [nullified]
+- Q1 0:56 (31 yds) Kickoff: A.Borregales kicks 63 yards from NE 35 to BUF 2. C.Samuel to BUF 33 for 31 yards (E.Ponder; J.Gibbens). [special_teams]
+- Q1 12:18 (-7 yds) Sack: (Shotgun) J.Allen sacked at BUF 14 for 0 yards (C.Elliss).PENALTY on BUF-C.McGovern, Offensive Holding, 7 yards, enforced at BUF 14 - No Play. [nullified]
+- Q1 2:17 (-7 yds) Rush: C.Samuel right tackle to BUF 20 for 6 yards (C.Elliss). NE-C.Davis was injured during the play. PENALTY on BUF-D.Kincaid, Offensive Holding, 7 yards, enforced at BUF 14 - No Play. [nullified]
+- Q1 6:24 (-5 yds) Punt: M.Wishnowsky punts 27 yards to NE 15, Center-R.Ferguson, out of bounds.PENALTY on BUF-S.Thompson, Illegal Formation, 5 yards, enforced at NE 15. [special_teams]
+- Q1 6:55 (-5 yds) Rush: Ty.Johnson left end to NE 29 for 8 yards (C.Woodson; J.Hawkins).PENALTY on BUF, Illegal Formation, 5 yards, enforced at NE 37 - No Play. [nullified]
+- Q2 5:00 (-10 yds) Rush: J.Cook left tackle pushed ob at BUF 36 for 4 yards (J.Gibbens).PENALTY on BUF-C.McGovern, Offensive Holding, 10 yards, enforced at BUF 32 - No Play. [nullified]
+- Q2 9:34 (31 yds) Field Goal Good: M.Prater 31 yard field goal is GOOD, Center-R.Ferguson, Holder-M.Wishnowsky. [special_teams]
+- Q3 11:36 (5 yds) Penalty: (Shotgun) PENALTY on NE-H.Landry, Neutral Zone Infraction, 5 yards, enforced at NE 32 - No Play. [nullified]
+- Q3 15:00 (19 yds) Kickoff: A.Borregales kicks 55 yards from NE 35 to BUF 10. Ty.Johnson to BUF 29 for 19 yards (J.Gibbens; D.Pettus). [special_teams]
+- Q3 3:22 (2 yds) Pass Reception: (Shotgun) J.Allen pass short right to D.Kincaid to NE 7 for 2 yards (H.Landry; R.Spillane).PENALTY on BUF-K.Shakir, Offensive Pass Interference, 10 yards, enforced at NE 9 - No Play. [nullified]
+- Q3 6:34 (24 yds) Kickoff: A.Borregales kicks 60 yards from NE 35 to BUF 5. Ty.Johnson to BUF 29 for 24 yards (C.Elliss). [special_teams]
+- Q4 0:15 (16 yds) Kickoff: A.Borregales kicks 63 yards from NE 35 to BUF 2. C.Samuel to BUF 28 for 26 yards (K.Dugger).PENALTY on BUF-J.Andreessen, Offensive Holding, 10 yards, enforced at BUF 28. [special_teams]
+- Q4 12:10 (27 yds) Kickoff: A.Borregales kicks 66 yards from NE 35 to BUF -1. C.Samuel to BUF 26 for 27 yards (C.Elliss; J.Gibbens). [special_teams]
+- Q4 2:17 (45 yds) Field Goal Good: M.Prater 45 yard field goal is GOOD, Center-R.Ferguson, Holder-M.Wishnowsky. [special_teams]
+- Q4 5:11 (19 yds) Pass Incompletion: (Shotgun) J.Allen pass incomplete deep left to J.Cook.PENALTY on NE-J.Gibbens, Defensive Pass Interference, 19 yards, enforced at BUF 24 - No Play. [nullified]
+
+### 401772924 ATL @ SF (TOΔ max 0, YdsΔ max 1, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| ATL | 292 | 291 | -1 | 1 | 1 | +0 | 43 | 43 | +0 |
+| SF | 324 | 324 | +0 | 1 | 1 | +0 | 25 | 25 | +0 |
+
+**ATL Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q2 1:32 (0 yds) Sack Opp Fumble Recovery: (Shotgun) M.Penix sacked at ATL 39 for -7 yards (B.Huff). FUMBLES (B.Huff) [B.Huff], RECOVERED by SF-A.Collins at ATL 40. [fumble]
+
+- Excluded non-zero-yard plays (up to 13 shown):
+- Q1 13:22 (8 yds) Punt: B.Pinion punts 61 yards to SF 8, Center-L.McCullough. S.Moore to SF 16 for 8 yards (J.Woods). [special_teams]
+- Q1 15:00 (22 yds) Kickoff: E.Pineiro kicks 65 yards from SF 35 to ATL 0. J.Agnew to ATL 22 for 22 yards (I.Guerendo). [special_teams]
+- Q1 2:11 (-5 yds) Pass Incompletion: (Shotgun) M.Penix pass incomplete deep left to T.Allgeier.PENALTY on ATL-R.Neuzil, Ineligible Downfield Pass, 5 yards, enforced at SF 33 - No Play. [nullified]
+- Q1 7:31 (27 yds) Pass Reception: (Shotgun) M.Penix pass deep left to K.Pitts to SF 41 for 27 yards (J.Brown).PENALTY on ATL-E.Wilkinson, Offensive Holding, 10 yards, enforced at ATL 32 - No Play. [nullified]
+- Q2 0:38 (5 yds) Kickoff: E.Pineiro kicks 51 yards from SF 35 to ATL 14. J.Agnew MUFFS catch, and recovers at ATL 16. J.Agnew to ATL 21 for 5 yards (M.Turner). [special_teams]
+- Q2 12:54 (38 yds) Field Goal Good: J.Romo 38 yard field goal is GOOD, Center-L.McCullough, Holder-B.Pinion. [special_teams]
+- Q2 1:48 (16 yds) Kickoff: E.Pineiro kicks 50 yards from SF 35 to ATL 15. N.Brooks to ATL 31 for 16 yards (C.Robinson). [special_teams]
+- Q2 9:03 (15 yds) Pass Incompletion: (Shotgun) M.Penix pass incomplete short right to D.Mooney (D.Lenoir).PENALTY on SF-D.Lenoir, Defensive Pass Interference, 15 yards, enforced at ATL 34 - No Play. [nullified]
+- Q3 10:09 (45 yds) Kickoff: E.Pineiro kicks 58 yards from SF 35 to ATL 7. J.Agnew to SF 48 for 45 yards (M.Turner). [special_teams]
+- Q3 1:11 (-5 yds) Penalty: (Shotgun) PENALTY on ATL, Delay of Game, 5 yards, enforced at SF 42 - No Play. [nullified]
+- Q3 4:18 (-5 yds) Pass Incompletion: (Shotgun) M.Penix pass incomplete deep left to D.Mooney.PENALTY on ATL-M.Bergeron, Ineligible Downfield Pass, 5 yards, enforced at ATL 33 - No Play. [nullified]
+- Q4 1:56 (5 yds) Sack: (Shotgun) M.Penix sacked at ATL 30 for -11 yards (T.Bethune).PENALTY on SF-D.Lenoir, Illegal Contact, 5 yards, enforced at ATL 41 - No Play. [nullified]
+- Q4 2:26 (18 yds) Kickoff: E.Pineiro kicks 60 yards from SF 35 to ATL 5. J.Agnew to ATL 23 for 18 yards (S.Neal; N.Martin). [special_teams]
+
+**SF Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q2 9:54 (16 yds) Pass Interception Return: M.Jones pass short middle intended for J.Jennings INTERCEPTED by K.Elliss at ATL 18. K.Elliss to ATL 34 for 16 yards (M.Jones). [interception]
+
+- Excluded non-zero-yard plays (up to 9 shown):
+- Q2 0:38 (55 yds) Field Goal Good: E.Pineiro 55 yard field goal is GOOD, Center-J.Weeks, Holder-T.Morstead. [special_teams]
+- Q3 10:09 (43 yds) Field Goal Good: E.Pineiro 43 yard field goal is GOOD, Center-J.Weeks, Holder-T.Morstead. [special_teams]
+- Q3 15:00 (29 yds) Kickoff: B.Pinion kicks 62 yards from ATL 35 to SF 3. S.Moore to SF 32 for 29 yards (J.Woods). [special_teams]
+- Q3 4:28 (13 yds) Punt: T.Morstead punts 48 yards to ATL 20, Center-J.Weeks. J.Agnew to ATL 33 for 13 yards (S.Neal; L.Farrell). [special_teams]
+- Q3 6:28 (24 yds) Kickoff: B.Pinion kicks 64 yards from ATL 35 to SF 1. S.Moore to SF 25 for 24 yards (K.Hodge). [special_teams]
+- Q4 0:36 (-1 yds) Rush: M.Jones kneels to ATL 28 for -1 yards. [spike_kneel]
+- Q4 12:58 (5 yds) Punt: T.Morstead punts 53 yards to ATL 12, Center-J.Weeks. J.Agnew to ATL 17 for 5 yards (M.Turner). [special_teams]
+- Q4 1:14 (-1 yds) Rush:  M.Jones kneels to ATL 27 for -1 yards. [spike_kneel]
+- Q4 4:05 (5 yds) Penalty: PENALTY on ATL, Defensive Too Many Men on Field, 5 yards, enforced at ATL 23 - No Play. [nullified]
+
+### 401772926 SEA @ WSH (TOΔ max 0, YdsΔ max 1, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| SEA | 418 | 417 | -1 | 1 | 1 | +0 | 44 | 44 | +0 |
+| WSH | 290 | 290 | +0 | 2 | 2 | +0 | 87 | 87 | +0 |
+
+**SEA Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q3 9:17 (0 yds) Pass Interception Return: (Shotgun) S.Darnold pass short middle intended for C.White INTERCEPTED by M.Sainristil at WAS 47. M.Sainristil to WAS 47 for no gain (C.White). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q1 7:16 (9 yds) Fumble Recovery (Own): (Shotgun) S.Darnold pass short middle to A.Barner to WAS 45 for 8 yards (F.Luvu). FUMBLES (F.Luvu), and recovers at WAS 44.
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q1 3:51 (10 yds) Penalty: S.Darnold pass incomplete short left to J.Smith-Njigba.PENALTY on WAS-M.Lattimore, Defensive Pass Interference, 10 yards, enforced at WAS 13 - No Play. [nullified]
+- Q1 4:48 (-4 yds) Penalty: PENALTY on SEA-C.Cross, False Start, 4 yards, enforced at WAS 23 - No Play. [nullified]
+- Q1 8:22 (-5 yds) Penalty: (Shotgun) PENALTY on SEA-A.Lucas, False Start, 5 yards, enforced at SEA 38 - No Play. [nullified]
+- Q1 9:30 (-15 yds) Penalty: S.Darnold pass short right to T.Horton ran ob at SEA 45 for 5 yards.PENALTY on SEA-R.Ouzts, Chop Block, 15 yards, enforced at SEA 40 - No Play. [nullified]
+- Q2 0:00 (41 yds) Field Goal Good:  J.Myers 41 yard field goal is GOOD, Center-C.Stoll, Holder-M.Dickson. [special_teams]
+- Q2 0:53 (21 yds) Kickoff: M.Gay kicks 62 yards from WAS 35 to SEA 3. G.Holani to SEA 24 for 21 yards (T.Owens). [special_teams]
+- Q3 10:50 (28 yds) Penalty: S.Darnold pass incomplete deep left to J.Smith-Njigba.PENALTY on WAS-J.Jones, Defensive Pass Interference, 28 yards, enforced at SEA 12 - No Play. [nullified]
+- Q3 13:30 (3 yds) Punt: M.Dickson punts 54 yards to WAS 18, Center-C.Stoll. J.Lane to WAS 21 for 3 yards (D.Thomas; C.Surratt). [special_teams]
+- Q3 15:00 (8 yds) Kickoff: M.Gay kicks 62 yards from WAS 35 to SEA 3. G.Holani MUFFS catch, touched at SEA 4, and recovers at SEA 11. G.Holani to SEA 19 for 8 yards (J.Reaves). [special_teams]
+- Q4 4:50 (12 yds) Punt: M.Dickson punts 58 yards to WAS 5, Center-C.Stoll. J.Lane to WAS 17 for 12 yards (Je.Reed; C.Stoll). [special_teams]
+- Q4 7:14 (29 yds) Kickoff: M.Gay kicks 66 yards from WAS 35 to SEA -1. C.White pushed ob at SEA 28 for 29 yards (J.Reaves). [special_teams]
+
+**WSH Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q2 12:55 (0 yds) Pass Interception Return: (No Huddle, Shotgun) J.Daniels pass short right intended for J.Lane INTERCEPTED by T.Okada [D.Witherspoon] at SEA 40. T.Okada pushed ob at SEA 40 for no gain (J.Lane). [interception]
+- Q2 8:52 (26 yds) Kickoff: J.Myers kicks 60 yards from SEA 40 to WAS 0. J.Lane to WAS 26 for 26 yards (B.Pili). FUMBLES (B.Pili), RECOVERED by SEA-C.O'Toole at WAS 26. [fumble]
+
+- Excluded non-zero-yard plays (up to 8 shown):
+- Q1 12:55 (-15 yds) Penalty: (No Huddle, Shotgun) J.Daniels pass short left to D.Samuel to WAS 44 for 3 yards (E.Jones).PENALTY on WAS-T.Biadasz, Illegal Blindside Block, 15 yards, enforced at WAS 41 - No Play. [nullified]
+- Q1 15:00 (19 yds) Kickoff: J.Myers kicks 58 yards from SEA 35 to WAS 7. L.McCaffrey to WAS 26 for 19 yards (M.Morris). [special_teams]
+- Q1 1:46 (5 yds) Penalty: (No Huddle, Shotgun) J.Daniels pass short left to Z.Ertz to WAS 32 for 4 yards (N.Emmanwori).PENALTY on SEA-N.Emmanwori, Defensive Holding, 5 yards, enforced at WAS 28 - No Play. [nullified]
+- Q2 13:14 (-15 yds) Penalty: (No Huddle, Shotgun) J.Daniels scrambles right end to SEA 34 for 6 yards (T.Woolen).PENALTY on WAS-C.Paul, Face Mask, 15 yards, enforced at SEA 40 - No Play. [nullified]
+- Q2 4:34 (30 yds) Kickoff: J.Myers kicks 64 yards from SEA 35 to WAS 1. D.Samuel to WAS 31 for 30 yards (C.Surratt; C.O'Toole). [special_teams]
+- Q2 7:06 (-5 yds) Penalty: (No Huddle, Shotgun) PENALTY on WAS-Z.Ertz, False Start, 5 yards, enforced at WAS 29 - No Play. [nullified]
+- Q2 8:52 (26 yds) Kickoff: J.Myers kicks 60 yards from SEA 40 to WAS 0. J.Lane to WAS 26 for 26 yards (B.Pili). FUMBLES (B.Pili), RECOVERED by SEA-C.O'Toole at WAS 26. [special_teams]
+- Q3 6:40 (-5 yds) Penalty: (No Huddle, Shotgun) PENALTY on WAS-Z.Ertz, False Start, 5 yards, enforced at SEA 40 - No Play. [nullified]
+
+### 401772931 DEN @ WSH (TOΔ max 0, YdsΔ max 1, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| DEN | 402 | 401 | -1 | 1 | 1 | +0 | 33 | 33 | +0 |
+| WSH | 419 | 419 | +0 | 1 | 1 | +0 | 35 | 35 | +0 |
+
+**DEN Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q4 14:13 (6 yds) Pass Interception Return: (Shotgun) B.Nix pass short middle intended for P.Bryant INTERCEPTED by B.Wagner at DEN 42. B.Wagner to DEN 36 for 6 yards (T.Franklin). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 11:08 (-6 yds) Fumble Recovery (Own): (No Huddle, Shotgun) B.Nix sacked at DEN 29 for -7 yards (F.Luvu). FUMBLES (F.Luvu) [F.Luvu], and recovers at DEN 30.
+
+- Excluded non-zero-yard plays (up to 8 shown):
+- Q1 10:28 (33 yds) Field Goal Good: W.Lutz 33 yard field goal is GOOD, Center-M.Fraboni, Holder-J.Crawshaw. [special_teams]
+- Q1 15:00 (26 yds) Kickoff: J.Moody kicks 65 yards from WAS 35 to DEN 0. M.Mims to DEN 26 for 26 yards (J.Reaves). [special_teams]
+- Q2 2:21 (27 yds) Kickoff: J.Moody kicks 56 yards from WAS 35 to DEN 9. T.Badie to DEN 36 for 27 yards (M.Sainristil). [special_teams]
+- Q2 7:51 (33 yds) Field Goal Good: W.Lutz 33 yard field goal is GOOD, Center-M.Fraboni, Holder-J.Crawshaw. [special_teams]
+- Q3 7:35 (-10 yds) Penalty: (Shotgun) B.Nix pass short right to P.Bryant to WAS 47 for 3 yards (Q.Martin).PENALTY on DEN-P.Bryant, Offensive Holding, 10 yards, enforced at 50 - No Play.Penalty on DEN-A.Trautman, Offensive Pass Interference, declined. [nullified]
+- Q3 9:58 (24 yds) Kickoff: J.Moody kicks 61 yards from WAS 35 to DEN 4. M.Mims to DEN 28 for 24 yards (K.Medrano). [special_teams]
+- Q4 12:37 (18 yds) Kickoff: J.Moody kicks 54 yards from WAS 35 to DEN 11. M.Mims to DEN 29 for 18 yards (K.Medrano; P.Butler). [special_teams]
+- Q5 10:00 (23 yds) Kickoff: J.Moody kicks 64 yards from WAS 35 to DEN 1. T.Badie to DEN 24 for 23 yards (A.Hamilton). [special_teams]
+
+**WSH Reconciliation Clues**
+
+- Windelta counted turnovers (1):
+- Q2 14:34 (27 yds) Pass Interception Return: (No Huddle, Shotgun) M.Mariota pass short left intended for C.Rodriguez INTERCEPTED by D.Greenlaw [D.Jones] at DEN 7. D.Greenlaw to DEN 34 for 27 yards (S.Cosmi; J.Bates). [interception]
+
+- Turnover-keyword plays not counted as turnovers (up to 3 shown):
+- Q2 0:23 (35 yds) Kickoff: W.Lutz kicks 65 yards from DEN 35 to WAS 0. D.Samuel to WAS 36 for 36 yards (D.Key; P.Locke). FUMBLES (D.Key), recovered by WAS-J.McNichols at WAS 35.
+- Q2 6:43 (-7 yds) Fumble Recovery (Own): (No Huddle, Shotgun) M.Mariota sacked at WAS 41 for -6 yards (N.Bonitto). FUMBLES (N.Bonitto) [N.Bonitto], touched at WAS 41, recovered by WAS-J.Bates at WAS 40.
+- Q5 5:29 (-1 yds) Penalty: (No Huddle, Shotgun) M.Mariota pass short right intended for J.McNichols INTERCEPTED by B.Jones (T.Hufanga) [J.Franklin-Myers] at DEN 37. B.Jones to DEN 36 for -1 yards (T.Biadasz).PENALTY on DEN-T.Hufanga, Defensive Pass Interference, 5 yards, enforced at DEN 41 - No Play.
+
+- Excluded non-zero-yard plays (up to 16 shown):
+- Q1 10:22 (15 yds) Kickoff: W.Lutz kicks 64 yards from DEN 30 to WAS 6. J.McNichols to WAS 21 for 15 yards (R.Taylor). [special_teams]
+- Q1 10:28 (10 yds) Penalty: W.Lutz kicks 65 yards from DEN 35 to WAS 0. D.Samuel to WAS 10 for 10 yards (J.Skinner).PENALTY on DEN-T.Badie, Illegal Formation, 5 yards, enforced at DEN 35 - No Play. [nullified]
+- Q1 6:11 (5 yds) Penalty: (No Huddle, Shotgun) M.Mariota pass incomplete deep middle to T.McLaurin.PENALTY on DEN-P.Surtain, Illegal Contact, 5 yards, enforced at DEN 46 - No Play. [nullified]
+- Q2 0:16 (-1 yds) Rush: M.Mariota kneels to WAS 34 for -1 yards. [spike_kneel]
+- Q2 0:23 (35 yds) Kickoff: W.Lutz kicks 65 yards from DEN 35 to WAS 0. D.Samuel to WAS 36 for 36 yards (D.Key; P.Locke). FUMBLES (D.Key), recovered by WAS-J.McNichols at WAS 35. [special_teams]
+- Q2 2:47 (-5 yds) Penalty: Direct snap to J.Croskey-Merritt.  J.Croskey-Merritt up the middle to DEN 12 for -1 yards (J.Cooper).PENALTY on WAS-B.Coleman, Illegal Formation, 5 yards, enforced at DEN 11 - No Play. [nullified]
+- Q2 7:51 (26 yds) Kickoff: W.Lutz kicks 62 yards from DEN 35 to WAS 3. D.Samuel to WAS 29 for 26 yards (A.Prentice). [special_teams]
+- Q3 15:00 (25 yds) Kickoff: W.Lutz kicks 62 yards from DEN 35 to WAS 3. D.Samuel to WAS 28 for 25 yards (D.Key). [special_teams]
+- Q3 1:23 (-5 yds) Penalty: (Shotgun) PENALTY on WAS-L.Tunsil, False Start, 5 yards, enforced at DEN 49 - No Play. [nullified]
+- Q3 3:59 (28 yds) Kickoff: W.Lutz kicks 62 yards from DEN 35 to WAS 3. D.Samuel to WAS 31 for 28 yards (D.Tillman; A.Prentice). [special_teams]
+- Q4 0:00 (32 yds) Field Goal Good: J.Moody 32 yard field goal is GOOD, Center-Z.Triner, Holder-T.Way. [special_teams]
+- Q4 12:37 (38 yds) Field Goal Good: J.Moody 38 yard field goal is GOOD, Center-Z.Triner, Holder-T.Way. [special_teams]
+- Q4 1:41 (-5 yds) Penalty: (No Huddle, Shotgun) PENALTY on WAS-T.McLaurin, False Start, 5 yards, enforced at DEN 49 - No Play. [nullified]
+- Q4 3:42 (10 yds) Punt: T.Way punts 56 yards to DEN 19, Center-Z.Triner. M.Mims to DEN 29 for 10 yards (K.Medrano; P.Butler). [special_teams]
+- Q5 4:04 (-10 yds) Penalty: (No Huddle, Shotgun) M.Mariota pass deep middle to T.McLaurin for 30 yards, TOUCHDOWN NULLIFIED by Penalty.PENALTY on WAS-J.Conerly, Offensive Holding, 10 yards, enforced at DEN 30 - No Play. [nullified]
+- Q5 5:29 (-1 yds) Penalty: (No Huddle, Shotgun) M.Mariota pass short right intended for J.McNichols INTERCEPTED by B.Jones (T.Hufanga) [J.Franklin-Myers] at DEN 37. B.Jones to DEN 36 for -1 yards (T.Biadasz).PENALTY on DEN-T.Hufanga, Defensive Pass Interference, 5 yards, enforced at DEN 41 - No Play. [nullified]
+
+### 401772939 SF @ LAR (TOΔ max 0, YdsΔ max 1, raw=cache)
+
+| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| SF | 407 | 407 | +0 | 0 | 0 | +0 | 44 | 44 | +0 |
+| LAR | 456 | 455 | -1 | 2 | 2 | +0 | 36 | 36 | +0 |
+
+**SF Reconciliation Clues**
+
+- Excluded non-zero-yard plays (up to 17 shown):
+- Q1 12:50 (-10 yds) Penalty: M.Jones pass incomplete short right.PENALTY on SF-C.McKivitz, Offensive Holding, 10 yards, enforced at LA 43 - No Play. [nullified]
+- Q1 13:43 (-5 yds) Penalty: PENALTY on SF-C.Colby, False Start, 5 yards, enforced at SF 47 - No Play. [nullified]
+- Q1 15:00 (1 yds) Kickoff: J.Karty kicks 49 yards from LA 35 to SF 16. S.Moore MUFFS catch, and recovers at SF 27. S.Moore to SF 28 for 1 yard (J.Wallace; S.Dolac). [special_teams]
+- Q2 0:00 (37 yds) Field Goal Good: E.Pineiro 37 yard field goal is GOOD, Center-J.Weeks, Holder-T.Morstead. [special_teams]
+- Q2 2:09 (16 yds) Kickoff: J.Karty kicks 52 yards from LA 35 to SF 13. S.Moore MUFFS catch, and recovers at SF 17. S.Moore to SF 33 for 16 yards (T.Reeder). [special_teams]
+- Q3 12:04 (6 yds) Penalty: (Shotgun) M.Jones pass incomplete short right to J.Tonges.PENALTY on LA-D.Williams, Defensive Pass Interference, 6 yards, enforced at SF 45 - No Play. [nullified]
+- Q3 3:40 (-5 yds) Penalty: ** Injury Update: SF-M.Jones has returned to the game.  PENALTY on SF-C.McKivitz, False Start, 5 yards, enforced at SF 27 - No Play. [nullified]
+- Q3 3:45 (18 yds) Kickoff: J.Karty kicks 56 yards from LA 35 to SF 9. I.Guerendo to SF 27 for 18 yards (S.Dolac; O.Speights). [special_teams]
+- Q3 6:33 (20 yds) Field Goal Good: E.Pineiro 20 yard field goal is GOOD, Center-J.Weeks, Holder-T.Morstead. [special_teams]
+- Q4 0:02 (38 yds) Kickoff: E.Evans kicks 71 yards from LA 35 to SF -6. S.Moore to SF 32 for 38 yards (J.Wallace). [special_teams]
+- Q4 0:53 (3 yds) Punt: T.Morstead punts 50 yards to LA 47, Center-J.Weeks. X.Smith pushed ob at SF 37 for 16 yards (S.Neal).PENALTY on LA-T.Brown, Offensive Holding, 10 yards, enforced at SF 40. [special_teams]
+- Q4 14:15 (6 yds) Punt: T.Morstead punts 50 yards to LA 6, Center-J.Weeks. X.Smith to LA 12 for 6 yards (I.Guerendo). [special_teams]
+- Q4 2:52 (59 yds) Field Goal Good: E.Pineiro 59 yard field goal is GOOD, Center-J.Weeks, Holder-T.Morstead. [special_teams]
+- Q4 3:48 (-5 yds) Penalty: M.Jones pass incomplete short right.PENALTY on SF-C.McKivitz, Ineligible Downfield Pass, 5 yards, enforced at LA 40 - No Play. [nullified]
+- Q4 9:19 (2 yds) Punt: T.Morstead punts 35 yards to LA 28, Center-J.Weeks. X.Smith to LA 30 for 2 yards (C.Robinson; L.Gifford). [special_teams]
+- Q5 10:00 (25 yds) Kickoff: J.Karty kicks 38 yards from LA 35 to SF 27, short of landing zone.PENALTY on LA-J.Karty, Kickoff Short of Landing Zone, placed at SF 40. [special_teams]
+- Q5 5:51 (41 yds) Field Goal Good: E.Pineiro 41 yard field goal is GOOD, Center-J.Weeks, Holder-T.Morstead. [special_teams]
+
+**LAR Reconciliation Clues**
+
+- Windelta counted turnovers (2):
+- Q2 8:56 (0 yds) Fumble Recovery (Opponent): M.Stafford FUMBLES (Aborted) at SF 31, touched at SF 30, RECOVERED by SF-T.Gipson at SF 30. [fumble]
+- Q4 1:07 (0 yds) Fumble Recovery (Opponent): K.Williams up the middle to SF 2 for 1 yard (A.Collins). FUMBLES (A.Collins), RECOVERED by SF-A.Collins at SF 1. [fumble]
+
+- Turnover-keyword plays not counted as turnovers (up to 1 shown):
+- Q4 10:39 (8 yds) Passing Touchdown: (Shotgun) M.Stafford pass short left to K.Williams for 8 yards, TOUCHDOWN. J.Karty extra point is Blocked (J.Elliott), Center-A.Ward, Holder-E.Evans.
+
+- Excluded non-zero-yard plays (up to 11 shown):
+- Q1 10:09 (20 yds) Kickoff: E.Pineiro kicks 52 yards from SF 35 to LA 13. X.Smith to LA 33 for 20 yards (L.Gifford). [special_teams]
+- Q2 13:44 (23 yds) Kickoff: E.Pineiro kicks 57 yards from SF 35 to LA 8. X.Smith to LA 31 for 23 yards (J.Brown; C.Lucas). [special_teams]
+- Q2 5:31 (5 yds) Penalty: (Shotgun) M.Stafford pass short right to P.Nacua to LA 24 for 3 yards (U.Stout).PENALTY on SF-D.Lenoir, Defensive Holding, 5 yards, enforced at LA 21 - No Play. [nullified]
+- Q2 6:11 (-5 yds) Penalty: (Shotgun) PENALTY on LA-A.Jackson, False Start, 5 yards, enforced at LA 15 - No Play. [nullified]
+- Q3 12:51 (53 yds) Field Goal Missed: J.Karty 53 yard field goal is No Good, Wide Right, Center-A.Ward, Holder-E.Evans. [special_teams]
+- Q3 15:00 (27 yds) Kickoff: E.Pineiro kicks 55 yards from SF 35 to LA 10. X.Smith to LA 37 for 27 yards (B.Willis). [special_teams]
+- Q3 6:33 (24 yds) Kickoff: E.Pineiro kicks 58 yards from SF 35 to LA 7. X.Smith to LA 31 for 24 yards (L.Gifford). [special_teams]
+- Q4 0:02 (48 yds) Field Goal Good: J.Karty 48 yard field goal is GOOD, Center-A.Ward, Holder-E.Evans. [special_teams]
+- Q4 12:01 (5 yds) Penalty: (No Huddle, Shotgun) M.Stafford pass incomplete short middle to K.Mumpfield (A.Collins) [T.Gipson].PENALTY on SF-D.Lenoir, Defensive Holding, 5 yards, enforced at LA 37 - No Play. [nullified]
+- Q4 2:01 (5 yds) Penalty: (No Huddle, Shotgun) M.Stafford pass incomplete short middle to D.Allen.PENALTY on SF-D.Lenoir, Defensive Holding, 5 yards, enforced at SF 36 - No Play.Penalty on SF-C.Lucas, Illegal Contact, declined. [nullified]
+- Q5 5:51 (28 yds) Kickoff: E.Pineiro kicks 60 yards from SF 35 to LA 5. X.Smith to LA 33 for 28 yards (L.Gifford). [special_teams]

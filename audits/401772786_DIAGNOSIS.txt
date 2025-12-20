@@ -1,0 +1,146 @@
+Fetching ESPN official stats for game 401772786...
+Fetching play-by-play data...
+
+================================================================================
+=== DIAGNOSTIC REPORT: JAX 25 @ TEN 3 (401772786) ===
+================================================================================
+
+ESPN Totals:
+  JAX: 272 yards, 0 turnovers
+  TEN: 188 yards, 2 turnovers
+
+game_compare Totals:
+  JAX: 241 yards (DELTA: -31 yards), 1 turnovers (DELTA: +1 turnovers)
+  TEN: 189 yards (DELTA: +1 yards), 1 turnovers (DELTA: -1 turnovers)
+
+================================================================================
+SECTION A: YARDAGE BY PLAY TYPE
+================================================================================
+
+JAX Offensive Plays (Counted toward Total Yards):
+  Rushing: 23 plays, 71 yards
+  Passing: 31 plays, 170 yards
+  Subtotal: 241 yards
+
+JAX Special Teams (NOT Counted toward Total Yards):
+  Kickoff: 2 plays, 28 yards
+  Punt: 9 plays, 66 yards
+  Field Goal: 1 plays, 45 yards
+
+TEN Offensive Plays (Counted toward Total Yards):
+  Rushing: 13 plays, 60 yards
+  Passing: 42 plays, 125 yards
+  Subtotal: 185 yards
+
+TEN Special Teams (NOT Counted toward Total Yards):
+  Punt Return: 2 plays, 0 yards
+  Kickoff: 4 plays, 68 yards
+  Punt: 5 plays, 4 yards
+  Field Goal: 1 plays, 28 yards
+
+================================================================================
+SECTION B: EXCLUDED PLAYS WITH YARDAGE
+================================================================================
+
+JAX Excluded Plays:
+  Q2 0:00 | Field Goal | +45 yards | Field Goal Good
+    "C.Little 45 yard field goal is GOOD, Center-D.Hamilton, Holder-L.Cooke."
+  Q1 15:00 | Kickoff | +32 yards | Kickoff
+    "J.Slye kicks 63 yards from TEN 35 to JAX 2. B.Tuten to JAX 34 for 32 yards (J.Slye)."
+  Q1 5:06 | Kickoff | -4 yards | Kickoff
+    "J.Slye kicks 65 yards from TEN 35 to JAX 0. L.Allen to JAX 32 for 32 yards (D.Martin-Robinson).PENALTY on JAX-T.Patrick, Illegal Block Above the Waist, 10 yards, enforced at JAX 26."
+  Q1 14:53 | Penalty (No Play) | -5 yards | Penalty
+    "T.Lawrence pass short right to T.Etienne to JAX 37 for 3 yards (T.Sweat).PENALTY on JAX-R.Hainsey, Ineligible Downfield Pass, 5 yards, enforced at JAX 34 - No Play."
+  Q2 14:54 | Penalty (No Play) | +1 yards | Penalty
+    "PENALTY on TEN-A.Key, Encroachment, 1 yard, enforced at TEN 15 - No Play."
+  Q2 9:12 | Penalty (No Play) | +5 yards | Penalty
+    "T.Lawrence pass short left to T.Patrick to JAX 28 for 8 yards (C.Barton) [J.Ward].PENALTY on TEN-J.Ward, Illegal Use of Hands, 5 yards, enforced at JAX 20 - No Play."
+  Q2 5:19 | Penalty (No Play) | -10 yards | Penalty
+    "T.Etienne right tackle to JAX 26 for 6 yards (A.Hooker).PENALTY on JAX-A.Harrison, Offensive Holding, 10 yards, enforced at JAX 20 - No Play."
+  Q3 11:42 | Penalty (No Play) | -5 yards | Penalty
+    "(Shotgun) PENALTY on JAX-C.Van Lanen, False Start, 5 yards, enforced at JAX 39 - No Play."
+  Q3 10:23 | Penalty (No Play) | +5 yards | Penalty
+    "PENALTY on TEN-S.Joseph, Encroachment, 5 yards, enforced at TEN 42 - No Play."
+  Q1 11:13 | Punt | +9 yards | Punt
+    "L.Cooke punts 38 yards to TEN 11, Center-R.Matiscik. C.Dike pushed ob at TEN 20 for 9 yards (R.Matiscik)."
+  Q2 11:04 | Punt | -5 yards | Penalty
+    "(Punt formation) PENALTY on JAX-B.Combs, False Start, 5 yards, enforced at JAX 34 - No Play."
+  Q2 7:18 | Punt | +2 yards | Punt
+    "L.Cooke punts 33 yards to TEN 39, Center-D.Hamilton. C.Dike to TEN 41 for 2 yards (Q.Morris; An.Johnson)."
+  Q2 2:46 | Punt | -5 yards | Penalty
+    "(Punt formation) PENALTY on JAX-V.Miller, False Start, 5 yards, enforced at JAX 10 - No Play."
+  Q2 2:42 | Punt | +5 yards | Punt
+    "L.Cooke punts 42 yards to JAX 47, Center-D.Hamilton. C.Dike to JAX 42 for 5 yards (V.Miller; D.Hamilton)."
+  Q4 14:22 | Punt | +47 yards | Punt
+    "L.Cooke punts 63 yards to TEN 15, Center-R.Matiscik. C.Dike to JAX 38 for 47 yards (L.Cooke). JAX-L.Cooke was injured during the play."
+  Q4 11:40 | Punt | +13 yards | Punt
+    "L.Cooke punts 49 yards to TEN 22, Center-R.Matiscik. C.Dike to TEN 35 for 13 yards (J.Kiser; R.Matiscik).Penalty on TEN-M.Brown, Disqualification, offsetting.Penalty on JAX-L.Cooke, Unnecessary Roughness, offsetting.Penalty on JAX-R.Matiscik, Unnecessary Roughness, offsetting.Penalty on TEN-K.Elam, Unnecessary Roughness, offsetting."
+  Q4 1:49 | Spike/Kneel | -1 yards | Rush
+    "N.Mullens kneels to TEN 47 for -1 yards."
+  Q4 1:07 | Spike/Kneel | -1 yards | Rush
+    " N.Mullens kneels to TEN 48 for -1 yards."
+  Q4 0:35 | Spike/Kneel | -1 yards | Rush
+    "N.Mullens kneels to TEN 49 for -1 yards."
+  Q2 0:01 | Unknown | +15 yards | Penalty
+    "(Shotgun) T.Lawrence pass incomplete short right.PENALTY on TEN-A.Key, Roughing the Passer, 15 yards, enforced at TEN 42 - No Play.Penalty on TEN-A.Key, Unnecessary Roughness, declined."
+  Q3 1:02 | Unknown | -10 yards | Penalty
+    "T.Etienne up the middle to TEN 43 for 10 yards (K.Winston).PENALTY on JAX-J.Meyers, Offensive Holding, 10 yards, enforced at JAX 47 - No Play.Penalty on JAX-J.Meyers, Illegal Shift, declined."
+
+TEN Excluded Plays:
+  Q1 5:06 | Field Goal | +28 yards | Field Goal Good
+    " J.Slye 28 yard field goal is GOOD, Center-M.Cox, Holder-J.Hekker."
+  Q1 1:04 | Kickoff | +22 yards | Kickoff
+    "C.Little kicks 52 yards from JAX 35 to TEN 13. C.Dike to TEN 38 for 25 yards (Q.Morris).Jacksonville challenged the runner was down by contact ruling, and the play was REVERSED.C.Little kicks 52 yards from JAX 35 to TEN 13. C.Dike to TEN 38 for 25 yards (Q.Morris, L.Allen). FUMBLES (L.Allen), RECOVERED by JAX-L.Allen at TEN 35."
+  Q2 14:54 | Kickoff | +25 yards | Kickoff
+    "C.Little kicks 45 yards from 50 to TEN 5, out of bounds.PENALTY on JAX-C.Little, Kickoff Out of Bounds, placed at TEN 25."
+  Q3 15:00 | Kickoff | -9 yards | Kickoff
+    "C.Little kicks 60 yards from JAX 35 to TEN 5. C.Dike to TEN 30 for 25 yards (B.Green; D.Gardeck).PENALTY on TEN-J.Williams, Offensive Holding, 10 yards, enforced at TEN 29."
+  Q3 6:45 | Kickoff | +30 yards | Kickoff
+    "C.Little kicks 63 yards from JAX 35 to TEN 2. C.Dike ran ob at TEN 32 for 30 yards (J.Jones)."
+  Q2 5:53 | Penalty (No Play) | -5 yards | Penalty
+    "(Shotgun) PENALTY on TEN-C.Okonkwo, False Start, 5 yards, enforced at TEN 48 - No Play."
+  Q2 0:35 | Penalty (No Play) | -5 yards | Penalty
+    "(Shotgun) PENALTY on TEN, Delay of Game, 5 yards, enforced at JAX 29 - No Play."
+  Q3 5:10 | Penalty (No Play) | -10 yards | Penalty
+    "(Shotgun) C.Ward pass short left to T.Spears to JAX 48 for 6 yards (An.Johnson; F.Oluokun).PENALTY on TEN-C.Okonkwo, Offensive Holding, 10 yards, enforced at TEN 46 - No Play."
+  Q4 11:02 | Penalty (No Play) | +5 yards | Penalty
+    "(No Huddle, Shotgun) C.Ward sacked at TEN 31 for -8 yards (A.Wingard).PENALTY on JAX-J.Hines-Allen, Illegal Contact, 5 yards, enforced at TEN 39 - No Play."
+  Q2 12:39 | Punt | +4 yards | Punt
+    "J.Hekker punts 55 yards to JAX 25, Center-M.Cox. P.Washington to JAX 39 for 14 yards (J.Chestnut).PENALTY on JAX-V.Miller, Illegal Block Above the Waist, 10 yards, enforced at JAX 39."
+  Q3 5:58 | Unknown | +6 yards | Penalty
+    "(Shotgun) C.Ward pass incomplete deep middle to C.Dike [J.Hines-Allen].PENALTY on JAX-J.Lewis, Defensive Holding, 6 yards, enforced at TEN 36 - No Play.Penalty on JAX-J.Jones, Illegal Contact, declined."
+
+================================================================================
+SECTION C: TURNOVERS DETECTED BY game_compare
+================================================================================
+
+JAX Turnovers (1 detected):
+  (none)
+
+TEN Turnovers (1 detected):
+  Q4 2:02 | "(Shotgun) C.Ward pass short left to T.Pollard to TEN 47 for 4 yards (V.Miller). FUMBLES (V.Miller), RECOVERED by JAX-R.Lane at TEN 46." | Reason: fumble lost
+
+================================================================================
+SECTION D: POTENTIAL MISSING TURNOVERS
+================================================================================
+
+Plays with turnover keywords NOT counted:
+
+TEN:
+  Q1 1:04 | "C.Little kicks 52 yards from JAX 35 to TEN 13. C.Dike to TEN 38 for 25 yards (Q.Morris).Jacksonville challenged the runner was down by contact ruling, and the play was REVERSED.C.Little kicks 52 yards from JAX 35 to TEN 13. C.Dike to TEN 38 for 25 yards (Q.Morris, L.Allen). FUMBLES (L.Allen), RECOVERED by JAX-L.Allen at TEN 35." | NOT COUNTED: fumble (overturned)
+  Q2 14:15 | "C.Ward sacked at TEN 28 for -2 yards (Au.Johnson). FUMBLES (Au.Johnson) [Au.Johnson], touched at TEN 30, recovered by TEN-P.Skoronski at TEN 30." | NOT COUNTED: fumble (own recovery)
+
+================================================================================
+SUMMARY
+================================================================================
+
+Yardage Gap Explanation:
+  JAX: -31 yards, likely from: Unknown source ?
+  TEN: +1 yards, likely from: Unknown source 
+
+Turnover Gap Explanation:
+  JAX: +1 turnovers - game_compare may have overcounted
+  TEN: -1 turnovers - game_compare may have missed 1 turnover(s)
+    Candidates to investigate: 2 play(s) with turnover keywords
+
+================================================================================

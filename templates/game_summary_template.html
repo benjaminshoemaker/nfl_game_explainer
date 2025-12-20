@@ -796,6 +796,25 @@
             line-height: 1;
         }
 
+        /* Team abbreviation labels - hidden on desktop, visible on mobile */
+        .team-abbr {
+            display: none;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            opacity: 0.6;
+        }
+
+        .team-abbr.away { color: var(--away-text); }
+        .team-abbr.home { color: var(--home-text); }
+
+        /* Mobile advantage indicator - hidden on desktop */
+        .mobile-advantage {
+            display: none;
+        }
+
         .stat-advantage.away .diamonds { color: var(--away-text); }
         .stat-advantage.home .diamonds { color: var(--home-text); }
 
@@ -1357,12 +1376,172 @@
                 justify-content: space-between;
             }
 
+            /* ==================== MOBILE ADVANCED STATS REDESIGN ==================== */
+
             .stat-row {
-                grid-template-columns: 50px 1fr 50px;
-                gap: 0.5rem;
+                display: grid !important;
+                grid-template-columns: 55px 1fr 55px !important;
+                grid-template-rows: auto auto auto !important;
+                align-items: center;
+                gap: 0.25rem 0.5rem;
+                padding: 1rem 0;
+                min-height: 88px;
             }
 
-            .stat-advantage { display: none; }
+            .stat-row.clickable {
+                margin: 0 -1rem;
+                padding: 1rem;
+                border-radius: 8px;
+            }
+
+            .stat-row.clickable:active {
+                background: var(--bg-hover);
+                transform: scale(0.99);
+            }
+
+            .stat-row.selected {
+                background: var(--bg-hover);
+                border-left: 3px solid var(--home-secondary);
+                padding-left: calc(1rem - 3px);
+            }
+
+            /* Hide desktop advantage indicators */
+            .stat-advantage, .stat-advantage-placeholder { display: none !important; }
+
+            /* Watermark repositioning for mobile - centered */
+            .stat-watermark {
+                font-size: clamp(2.5rem, 15vw, 4rem);
+                opacity: 0.06;
+                left: 50% !important;
+                right: auto !important;
+                transform: translate(-50%, -50%);
+            }
+
+            .stat-row.clickable .stat-watermark {
+                left: 50% !important;
+                right: auto !important;
+            }
+
+            /* Position away value in column 1, spanning rows 1-2 */
+            .stat-value-cell.away {
+                grid-column: 1 !important;
+                grid-row: 1 / 3 !important;
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 2px;
+            }
+
+            /* Position home value in column 3, spanning rows 1-2 */
+            .stat-value-cell.home {
+                grid-column: 3 !important;
+                grid-row: 1 / 3 !important;
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 2px;
+            }
+
+            /* Flatten stat-bar-container so children become grid items */
+            .stat-bar-container {
+                display: contents !important;
+            }
+
+            /* Label in column 2, row 1 */
+            .stat-label-row {
+                grid-column: 2 !important;
+                grid-row: 1 !important;
+                justify-content: center;
+            }
+
+            .stat-label {
+                font-size: 0.7rem;
+                justify-content: center;
+                text-align: center;
+                flex-wrap: wrap;
+            }
+
+            .stat-label .stat-name {
+                font-size: 0.75rem;
+            }
+
+            .stat-label .arrow {
+                display: none;
+            }
+
+            /* Bar in column 2, row 2 */
+            .stat-bar-track {
+                grid-column: 2 !important;
+                grid-row: 2 !important;
+                height: 8px;
+                border-radius: 4px;
+            }
+
+            .stat-bar-track::before {
+                top: -4px;
+                bottom: -4px;
+                width: 2px;
+                opacity: 0.5;
+            }
+
+            .stat-bar.away {
+                border-radius: 4px 0 0 4px;
+            }
+
+            .stat-bar.home {
+                border-radius: 0 4px 4px 0;
+            }
+
+            /* Show team abbreviations on mobile */
+            .team-abbr {
+                display: block !important;
+                order: -1;
+            }
+
+            .stat-number {
+                font-size: 1.5rem;
+            }
+
+            /* Mobile advantage indicator in column 2, row 3 */
+            .mobile-advantage {
+                grid-column: 2 !important;
+                grid-row: 3 !important;
+                display: flex !important;
+                justify-content: center;
+                padding-top: 0.25rem;
+            }
+
+            .mobile-advantage .diamonds {
+                font-size: 0.85rem;
+                letter-spacing: 0.12em;
+                text-shadow: 0 0 8px currentColor;
+            }
+
+            .mobile-advantage.away .diamonds {
+                color: var(--away-text);
+            }
+
+            .mobile-advantage.home .diamonds {
+                color: var(--home-text);
+            }
+
+            /* Winner highlighting on mobile */
+            .stat-row[data-winner="away"] .stat-value-cell.away .stat-number {
+                text-shadow: 0 0 12px var(--away-secondary);
+            }
+
+            .stat-row[data-winner="home"] .stat-value-cell.home .stat-number {
+                text-shadow: 0 0 12px var(--home-secondary);
+            }
+
+            .stat-row[data-winner="away"] .team-abbr.away,
+            .stat-row[data-winner="home"] .team-abbr.home {
+                opacity: 1;
+            }
 
             .factor-summary {
                 gap: 1.5rem;
@@ -1372,6 +1551,45 @@
         @media (max-width: 480px) {
             .hero {
                 min-height: 280px;
+            }
+
+            /* Even more compact on small phones */
+            .stat-row {
+                padding: 0.75rem 0;
+                min-height: 76px;
+                gap: 0.2rem 0.35rem;
+            }
+
+            .stat-row.clickable {
+                padding: 0.75rem 0.5rem;
+            }
+
+            .stat-number {
+                font-size: 1.3rem;
+            }
+
+            .team-abbr {
+                font-size: 0.6rem;
+            }
+
+            .stat-label .stat-name {
+                font-size: 0.7rem;
+            }
+
+            .stat-label .stat-desc {
+                font-size: 0.6rem;
+            }
+
+            .stat-bar-track {
+                height: 6px;
+            }
+
+            .stat-watermark {
+                font-size: clamp(2rem, 12vw, 3rem);
+            }
+
+            .mobile-advantage .diamonds {
+                font-size: 0.75rem;
             }
 
             .team-block {
@@ -1927,10 +2145,19 @@
                     ? `<span class="stat-watermark ${winner}">${winner === 'away' ? TEAMS.away.abbr : TEAMS.home.abbr}</span>`
                     : '';
 
+                // Build advantage indicator for mobile (centered below bar)
+                let mobileAdvantageHtml = '';
+                if (winner !== 'even') {
+                    const diamonds = getStrengthDiamonds(strength);
+                    const winnerTeam = winner === 'away' ? TEAMS.away.abbr : TEAMS.home.abbr;
+                    mobileAdvantageHtml = `<div class="mobile-advantage ${winner}"><span class="diamonds">${diamonds}</span></div>`;
+                }
+
                 html += `
                     <div class="stat-row ${clickableClass} ${selectedClass}" data-winner="${winner}" ${onClick}>
                         ${watermarkHtml}
                         <div class="stat-value-cell away">
+                            <span class="team-abbr away">${TEAMS.away.abbr}</span>
                             <span class="stat-number">${displayAway}</span>
                         </div>
                         ${awayAdvantageHtml}
@@ -1946,10 +2173,12 @@
                                 <div class="stat-bar away" style="width: ${pctAway}%"></div>
                                 <div class="stat-bar home" style="width: ${pctHome}%"></div>
                             </div>
+                            ${mobileAdvantageHtml}
                         </div>
                         ${homeAdvantageHtml}
                         <div class="stat-value-cell home">
                             <span class="stat-number">${displayHome}</span>
+                            <span class="team-abbr home">${TEAMS.home.abbr}</span>
                         </div>
                     </div>
                 `;

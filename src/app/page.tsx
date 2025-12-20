@@ -1,10 +1,33 @@
-import { ScoreboardResponse } from '@/types';
+import { ScoreboardResponse, SeasonType, WeekSelection } from '@/types';
 import { DirectoryClient } from './DirectoryClient';
+import { parseWeekParam } from '@/lib/weekUtils';
 
 // ESPN API URL for direct fetching (bypasses Python API for faster server-side render)
 const ESPN_SCOREBOARD_URL = 'https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard';
 
+// Playoff week labels
+const PLAYOFF_LABELS: Record<number, string> = {
+  1: 'Wild Card',
+  2: 'Divisional Round',
+  3: 'Conference Championship',
+  5: 'Super Bowl',
+};
+
 export const dynamic = 'force-dynamic';
+
+interface PageProps {
+  searchParams: Promise<{ week?: string }>;
+}
+
+const ESPN_REQUEST_HEADERS = {
+  // ESPN frequently blocks/behaves differently for non-browser UAs.
+  'user-agent':
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+  accept: 'application/json, text/plain, */*',
+  'accept-language': 'en-US,en;q=0.9',
+  referer: 'https://www.espn.com/',
+  origin: 'https://www.espn.com',
+};
 
 function transformEspnGame(event: Record<string, unknown>): ScoreboardResponse['games'][0] {
   const competition = ((event.competitions as unknown[]) || [{}])[0] as Record<string, unknown>;
@@ -47,22 +70,46 @@ function transformEspnGame(event: Record<string, unknown>): ScoreboardResponse['
   };
 }
 
-async function getScoreboard(): Promise<ScoreboardResponse | null> {
+function getWeekLabel(weekNumber: number, seasonType: SeasonType): string {
+  if (seasonType === 3) {
+    return PLAYOFF_LABELS[weekNumber] || `Playoff Week ${weekNumber}`;
+  }
+  return `Week ${weekNumber}`;
+}
+
+async function getScoreboard(weekSelection?: WeekSelection | null): Promise<ScoreboardResponse | null> {
   try {
+    const url = new URL(ESPN_SCOREBOARD_URL);
+    if (weekSelection) {
+      // Note: Don't pass 'season' param - ESPN API errors with explicit season but defaults to current season
+      url.searchParams.set('seasontype', String(weekSelection.seasonType));
+      url.searchParams.set('week', String(weekSelection.weekNumber));
+    }
+
     // Fetch directly from ESPN API for server-side rendering
     // This bypasses our Python API which can have issues with server-to-server calls on Vercel
-    const response = await fetch(ESPN_SCOREBOARD_URL, {
+    const response = await fetch(url.toString(), {
       next: { revalidate: 30 },
+      headers: ESPN_REQUEST_HEADERS,
     });
 
     if (!response.ok) {
-      console.error(`Failed to fetch ESPN scoreboard: ${response.status}`);
+      const responseText = await response.text().catch(() => '');
+      console.error('Failed to fetch ESPN scoreboard', {
+        status: response.status,
+        url: url.toString(),
+        responseText: responseText.slice(0, 500),
+      });
       return null;
     }
 
     const data = await response.json();
     const weekData = data.week || {};
+    const seasonData = data.season || {};
     const events = data.events || [];
+
+    const seasonType = (seasonData.type || 2) as SeasonType;
+    const weekNumber = weekData.number || 0;
 
     const games = events.map(transformEspnGame);
 
@@ -80,8 +127,9 @@ async function getScoreboard(): Promise<ScoreboardResponse | null> {
 
     return {
       week: {
-        number: weekData.number || 0,
-        label: `Week ${weekData.number || 0}`,
+        number: weekNumber,
+        label: getWeekLabel(weekNumber, seasonType),
+        seasonType,
       },
       games,
     };
@@ -122,8 +170,10 @@ function EmptyState() {
   );
 }
 
-export default async function Home() {
-  const scoreboard = await getScoreboard();
+export default async function Home({ searchParams }: PageProps) {
+  const params = await searchParams;
+  const weekSelection = parseWeekParam(params.week);
+  const scoreboard = await getScoreboard(weekSelection);
 
   if (!scoreboard || scoreboard.games.length === 0) {
     return <EmptyState />;

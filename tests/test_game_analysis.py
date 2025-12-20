@@ -39,3 +39,33 @@ def test_get_game_data_falls_back_to_playbyplay(monkeypatch):
     assert data == {"header": {"id": "fallback"}}
     assert any("summary" in url for url in calls)
     assert any("playbyplay" in url for url in calls)
+
+
+def test_derive_game_status_pregame_period_zero_is_pregame():
+    status, game_clock = ga._derive_game_status({
+        "type": {"state": "pre", "completed": False},
+        "period": 0,
+        "displayClock": "",
+    })
+    assert status == "pregame"
+    assert game_clock is None
+
+
+def test_derive_game_status_in_progress_uses_period_and_clock():
+    status, game_clock = ga._derive_game_status({
+        "type": {"state": "in", "completed": False},
+        "period": 1,
+        "displayClock": "15:00",
+    })
+    assert status == "in-progress"
+    assert game_clock == {"quarter": 1, "clock": "15:00", "displayValue": "Q1 15:00"}
+
+
+def test_derive_game_status_final_when_completed():
+    status, game_clock = ga._derive_game_status({
+        "type": {"state": "post", "completed": True},
+        "period": 4,
+        "displayClock": "0:00",
+    })
+    assert status == "final"
+    assert game_clock is None

@@ -401,6 +401,88 @@ def test_non_offensive_points_pick_six():
     assert details["2"]["Non-Offensive Scores"][0]["points"] == 7
 
 
+def test_non_offensive_points_uses_start_of_play_wp_filter():
+    """
+    Regression: scoring-play based Non-Offensive Points must respect the same start-of-play
+    WP threshold filter used for drive/play processing.
+    """
+    sample = {
+        "boxscore": {
+            "teams": [
+                {"team": {"id": "1", "abbreviation": "AAA"}, "statistics": []},
+                {"team": {"id": "2", "abbreviation": "BBB"}, "statistics": []},
+            ]
+        },
+        "header": {
+            "competitions": [
+                {
+                    "competitors": [
+                        {"id": "1", "score": "0", "homeAway": "home"},
+                        {"id": "2", "score": "8", "homeAway": "away"},
+                    ]
+                }
+            ]
+        },
+        "drives": {
+            "previous": [
+                {
+                    # Drive offense is AAA; BBB scores on punt return.
+                    "team": {"id": "1"},
+                    "plays": [
+                        {
+                            "id": "9",
+                            "text": "AAA run for 0 yards.",
+                            "type": {"text": "Rush"},
+                            "statYardage": 0,
+                            "start": {"down": 1, "distance": 10, "team": {"id": "1"}},
+                        },
+                        {
+                            "id": "10",
+                            "text": "AAA punts. BBB return TOUCHDOWN. TWO-POINT CONVERSION ATTEMPT SUCCEEDS.",
+                            "type": {"text": "Punt Return Touchdown"},
+                            "start": {"down": 4, "distance": 8, "team": {"id": "1"}},
+                            "team": {"abbreviation": "AAA", "id": "1"},
+                            "scoringPlay": True,
+                        },
+                    ],
+                }
+            ]
+        },
+        "scoringPlays": [
+            {
+                "id": "10",
+                "team": {"id": "2"},
+                "type": {"text": "Punt Return Touchdown"},
+                "text": "BBB Punt Return Touchdown + 2pt conversion",
+                "homeScore": 0,
+                "awayScore": 8,
+                "scoringType": {"name": "touchdown"},
+                "period": {"number": 4},
+                "clock": {"displayValue": "08:03"},
+            }
+        ],
+    }
+
+    # Probability map is end-of-play. The start-of-play for play 10 should be the end-of-play
+    # for play 9. Make play 9 end at 98% away WP so play 10 should be filtered out.
+    prob_map = {
+        "9": {"homeWinPercentage": 0.02, "awayWinPercentage": 0.98, "tiePercentage": 0.0},
+        "10": {"homeWinPercentage": 0.11, "awayWinPercentage": 0.89, "tiePercentage": 0.0},
+    }
+
+    df, details = gc.process_game_stats(
+        sample,
+        expanded=True,
+        probability_map=prob_map,
+        pregame_probabilities=(0.5, 0.5),
+        wp_threshold=0.975,
+    )
+    table = df.set_index("Team")
+    assert table.loc["BBB"]["Non-Offensive Points"] == 0
+    assert details["2"]["Non-Offensive Scores"] == []
+    assert details["2"]["Non-Offensive Points"] == []
+
+
 def test_is_competitive_play_logic():
     prob_map = {
         "1": {"homeWinPercentage": 0.98, "awayWinPercentage": 0.02},
@@ -586,21 +668,23 @@ def test_build_top_plays_by_wp_filters_and_sorts():
                 },
                 {
                     "team": {"id": "2"},
-                    "plays": [{"id": "3", "period": {"number": 4}, "clock": {"displayValue": "02:00"}, "text": "Late swing"}],
+                    "plays": [{"id": "3", "period": {"number": 5}, "clock": {"displayValue": "02:00"}, "text": "Overtime swing"}],
                 },
             ]
         },
     }
     probability_map = {
-        "1": {"homeWinPercentage": 0.8, "awayWinPercentage": 0.2},
-        "2": {"homeWinPercentage": 0.98, "awayWinPercentage": 0.02},
+        "1": {"homeWinPercentage": 0.98, "awayWinPercentage": 0.02},
+        # This play starts in blowout (prev home_wp=0.98) and should be filtered in regulation.
+        "2": {"homeWinPercentage": 0.99, "awayWinPercentage": 0.01},
+        # OT is always treated as competitive.
         "3": {"homeWinPercentage": 0.7, "awayWinPercentage": 0.3},
     }
 
     result = gc.build_top_plays_by_wp(game_data, probability_map, wp_threshold=0.975)
     lines = result.splitlines()
-    assert lines[0].startswith("30.0% | Q1 10:00 | AAA")
-    assert lines[1].startswith("28.0% | Q4 02:00 | BBB")
+    assert lines[0].startswith("48.0% | Q1 10:00 | AAA")
+    assert lines[1].startswith("29.0% | Q5 02:00 | BBB")
     assert len(lines) == 2
 
 
@@ -858,7 +942,7 @@ def test_points_per_trip_excludes_drives_without_40_entry():
     assert details["1"]["Points Per Trip (Inside 40)"] == []
 
 
-def test_penalty_details_capture_all_penalties():
+def test_penalty_details_exclude_declined_penalties():
     sample = {
         "boxscore": {
             "teams": [
@@ -880,17 +964,27 @@ def test_penalty_details_capture_all_penalties():
                             "period": {"number": 2},
                             "clock": {"displayValue": "05:00"},
                             "team": {"abbreviation": "AAA", "id": "1"},
-                            "penalty": {"yards": 10, "team": {"id": "1"}},
+                            "penalty": {"yards": 10, "team": {"id": "1"}, "status": {"slug": "accepted"}},
                         },
                         {
                             "id": "22",
-                            "text": "Declined penalty on BBB defense",
+                            "text": "Penalty on BBB defense, declined.",
                             "type": {"text": "Pass"},
                             "start": {"down": 2, "distance": 15, "yardsToEndzone": 50, "possessionText": "AAA 50"},
                             "period": {"number": 2},
                             "clock": {"displayValue": "04:30"},
                             "team": {"abbreviation": "AAA", "id": "1"},
                             "hasPenalty": True,
+                        },
+                        {
+                            "id": "23",
+                            "text": "Pass incomplete. PENALTY on BBB-Player, Roughing the Passer, 15 yards, enforced at AAA 50 - No Play. Penalty on BBB-Player, Unnecessary Roughness, declined.",
+                            "type": {"text": "Pass"},
+                            "start": {"down": 3, "distance": 10, "yardsToEndzone": 50, "possessionText": "AAA 50"},
+                            "period": {"number": 2},
+                            "clock": {"displayValue": "04:00"},
+                            "team": {"abbreviation": "AAA", "id": "1"},
+                            "penalty": {"yards": 15, "team": {"id": "2"}, "status": {"slug": "accepted"}},
                         },
                     ],
                 }
@@ -906,7 +1000,8 @@ def test_penalty_details_capture_all_penalties():
     assert penalties_offense[0]["yards"] == -10
     assert "holding" in penalties_offense[0]["text"]
     assert len(penalties_defense) == 1
-    assert penalties_defense[0]["yards"] is None or penalties_defense[0]["yards"] <= 0
+    assert penalties_defense[0]["yards"] == -15
+    assert "Roughing the Passer" in penalties_defense[0]["text"]
 
 
 def test_non_offensive_points_details_show_scoring_play():

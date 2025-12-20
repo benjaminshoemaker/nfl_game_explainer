@@ -12,17 +12,22 @@ interface GamePlaysProps {
   selectedCategory?: string;
 }
 
+type SortOption = 'chronological' | 'wp_impact';
+
 // Map of internal category keys to display labels
 const CATEGORY_OPTIONS = [
+  { key: 'All Plays', label: 'All Plays' },
   { key: 'Explosive Plays', label: 'Explosive Plays' },
   { key: 'Turnovers', label: 'Turnovers' },
   { key: 'Points Per Trip (Inside 40)', label: 'Points Per Trip' },
+  { key: 'Drive Starts', label: 'Drive Starts' },
   { key: 'Penalty Yards', label: 'Penalty Plays' },
   { key: 'Non-Offensive Points', label: 'Non-Offensive Points' },
 ];
 
 export function GamePlays({ expandedDetails, teamMeta, selectedCategory }: GamePlaysProps) {
-  const [activeCategory, setActiveCategory] = useState(selectedCategory || 'Explosive Plays');
+  const [activeCategory, setActiveCategory] = useState(selectedCategory || 'All Plays');
+  const [sortBy, setSortBy] = useState<SortOption>('chronological');
 
   // Update active category when selectedCategory changes from parent
   useEffect(() => {
@@ -33,17 +38,60 @@ export function GamePlays({ expandedDetails, teamMeta, selectedCategory }: GameP
 
   const away = teamMeta.find((t) => t.homeAway === 'away');
   const home = teamMeta.find((t) => t.homeAway === 'home');
+  const awayId = away?.id;
+  const homeId = home?.id;
+  const awayAbbr = away?.abbr;
+  const homeAbbr = home?.abbr;
 
   // Get available categories from the data
   const availableCategories = useMemo(() => {
-    return CATEGORY_OPTIONS.filter(opt => {
+    return CATEGORY_OPTIONS.filter((opt) => {
       const catData = expandedDetails[opt.key];
       return catData && (
-        (catData[away?.id || '']?.length || 0) +
-        (catData[home?.id || '']?.length || 0) > 0
+        (catData[awayId || '']?.length || 0) +
+        (catData[homeId || '']?.length || 0) > 0
       );
     });
-  }, [expandedDetails, away, home]);
+  }, [expandedDetails, awayId, homeId]);
+
+  // Get plays for current category - use team ID as key
+  const { awayPlays, homePlays } = useMemo(() => {
+    const currentCategoryData = expandedDetails[activeCategory] || {};
+    const awayValues = awayId ? currentCategoryData[awayId] : undefined;
+    const awayFallback = awayAbbr ? currentCategoryData[awayAbbr] : undefined;
+    const homeValues = homeId ? currentCategoryData[homeId] : undefined;
+    const homeFallback = homeAbbr ? currentCategoryData[homeAbbr] : undefined;
+
+    return {
+      awayPlays: awayValues || awayFallback || [],
+      homePlays: homeValues || homeFallback || [],
+    };
+  }, [expandedDetails, activeCategory, awayId, awayAbbr, homeId, homeAbbr]);
+
+  // Sort plays based on selected sort option
+  const sortedAwayPlays = useMemo(() => {
+    if (sortBy === 'chronological') {
+      return awayPlays;
+    }
+    // Sort by absolute WP delta (largest impact first)
+    return [...awayPlays].sort((a, b) => {
+      const aDelta = Math.abs(a.probability?.awayDelta || 0);
+      const bDelta = Math.abs(b.probability?.awayDelta || 0);
+      return bDelta - aDelta;
+    });
+  }, [awayPlays, sortBy]);
+
+  const sortedHomePlays = useMemo(() => {
+    if (sortBy === 'chronological') {
+      return homePlays;
+    }
+    // Sort by absolute WP delta (largest impact first)
+    return [...homePlays].sort((a, b) => {
+      const aDelta = Math.abs(a.probability?.homeDelta || 0);
+      const bDelta = Math.abs(b.probability?.homeDelta || 0);
+      return bDelta - aDelta;
+    });
+  }, [homePlays, sortBy]);
 
   if (!away || !home || availableCategories.length === 0) {
     return (
@@ -55,11 +103,6 @@ export function GamePlays({ expandedDetails, teamMeta, selectedCategory }: GameP
 
   const awayColors = getTeamColorVars(away.abbr);
   const homeColors = getTeamColorVars(home.abbr);
-
-  // Get plays for current category - use team ID as key
-  const currentCategoryData = expandedDetails[activeCategory] || {};
-  const awayPlays = currentCategoryData[away.id] || currentCategoryData[away.abbr] || [];
-  const homePlays = currentCategoryData[home.id] || currentCategoryData[home.abbr] || [];
 
   return (
     <div className="bg-bg-card rounded-2xl border border-border-subtle overflow-hidden">
@@ -82,23 +125,40 @@ export function GamePlays({ expandedDetails, teamMeta, selectedCategory }: GameP
           </h3>
         </div>
 
-        {/* Category dropdown */}
-        <select
-          value={activeCategory}
-          onChange={(e) => setActiveCategory(e.target.value)}
-          className="appearance-none bg-bg-elevated border border-border-medium rounded-lg px-4 py-2 pr-10 font-body text-sm font-semibold text-text-primary cursor-pointer transition-all duration-200 hover:border-text-muted focus:outline-none focus:border-text-muted"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")`,
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'right 0.75rem center',
-          }}
-        >
-          {CATEGORY_OPTIONS.map((opt) => (
-            <option key={opt.key} value={opt.key}>
-              {opt.label}
-            </option>
-          ))}
-        </select>
+        <div className="flex items-center gap-2">
+          {/* Sort dropdown */}
+          <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value as SortOption)}
+            className="appearance-none bg-bg-elevated border border-border-medium rounded-lg px-4 py-2 pr-10 font-body text-sm font-semibold text-text-primary cursor-pointer transition-all duration-200 hover:border-text-muted focus:outline-none focus:border-text-muted"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")`,
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'right 0.75rem center',
+            }}
+          >
+            <option value="chronological">By Time</option>
+            <option value="wp_impact">By WP Impact</option>
+          </select>
+
+          {/* Category dropdown */}
+          <select
+            value={activeCategory}
+            onChange={(e) => setActiveCategory(e.target.value)}
+            className="appearance-none bg-bg-elevated border border-border-medium rounded-lg px-4 py-2 pr-10 font-body text-sm font-semibold text-text-primary cursor-pointer transition-all duration-200 hover:border-text-muted focus:outline-none focus:border-text-muted"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")`,
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'right 0.75rem center',
+            }}
+          >
+            {CATEGORY_OPTIONS.map((opt) => (
+              <option key={opt.key} value={opt.key}>
+                {opt.label}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
       {/* Two-column plays grid */}
@@ -137,10 +197,13 @@ export function GamePlays({ expandedDetails, teamMeta, selectedCategory }: GameP
             </div>
 
             <PlayList
-              plays={awayPlays}
+              plays={sortedAwayPlays}
+              teamAbbr={away.abbr}
               teamSecondary={awayColors.secondary}
               teamTextColor={awayColors.text}
+              opponentTextColor={homeColors.text}
               side="away"
+              category={activeCategory}
             />
           </div>
 
@@ -177,10 +240,13 @@ export function GamePlays({ expandedDetails, teamMeta, selectedCategory }: GameP
             </div>
 
             <PlayList
-              plays={homePlays}
+              plays={sortedHomePlays}
+              teamAbbr={home.abbr}
               teamSecondary={homeColors.secondary}
               teamTextColor={homeColors.text}
+              opponentTextColor={awayColors.text}
               side="home"
+              category={activeCategory}
             />
           </div>
         </div>

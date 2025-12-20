@@ -5,13 +5,18 @@ Run with: python local_server.py
 APIs will be available at http://localhost:8000
 """
 
-from dotenv import load_dotenv
-load_dotenv('.env.local')
+try:
+    from dotenv import load_dotenv
+    load_dotenv('.env.local')
+except Exception:
+    # Optional dependency for local development only.
+    pass
 
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import json
 import sys
 import os
+from urllib.parse import urlparse, parse_qs
 
 # Add project root to path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -19,6 +24,26 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from api.lib.game_analysis import analyze_game
 from api.lib.ai_summary import generate_ai_summary, get_cached_summary
 from api.scoreboard import fetch_scoreboard, build_response
+
+def _parse_scoreboard_params(query):
+    week = query.get('week', [None])[0]
+    seasontype = query.get('seasontype', [None])[0]
+
+    if week is not None:
+        try:
+            week = int(week)
+        except ValueError:
+            week = None
+        if week is not None and week <= 0:
+            week = None
+
+    if seasontype is not None:
+        try:
+            seasontype = int(seasontype)
+        except ValueError:
+            seasontype = None
+
+    return week, seasontype
 
 class LocalAPIHandler(BaseHTTPRequestHandler):
     def _send_json(self, data, status=200):
@@ -36,7 +61,9 @@ class LocalAPIHandler(BaseHTTPRequestHandler):
         self.end_headers()
 
     def do_GET(self):
-        path = self.path.split('?')[0]
+        parsed = urlparse(self.path)
+        path = parsed.path
+        query = parse_qs(parsed.query)
 
         # Health check
         if path == '/api/health':
@@ -46,7 +73,8 @@ class LocalAPIHandler(BaseHTTPRequestHandler):
         # Scoreboard
         if path == '/api/scoreboard':
             try:
-                raw_data = fetch_scoreboard()
+                week, seasontype = _parse_scoreboard_params(query)
+                raw_data = fetch_scoreboard(week=week, seasontype=seasontype)
                 data = build_response(raw_data)
                 self._send_json(data)
             except Exception as e:

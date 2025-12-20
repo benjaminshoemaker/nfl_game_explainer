@@ -518,6 +518,128 @@ class TestProcessGameStats:
         assert len(details["1"]["Turnovers"]) == 1
         assert details["1"]["Turnovers"][0]["reason"] == "fumble"
 
+    def test_drive_starts_included_with_start_position_and_preceding_play_context(self):
+        sample = {
+            "boxscore": {
+                "teams": [
+                    {"team": {"id": "1", "abbreviation": "AAA"}},
+                    {"team": {"id": "2", "abbreviation": "BBB"}},
+                ]
+            },
+            "header": {
+                "competitions": [
+                    {
+                        "competitors": [
+                            {"id": "1", "score": "0", "homeAway": "home"},
+                            {"id": "2", "score": "0", "homeAway": "away"},
+                        ]
+                    }
+                ]
+            },
+            "drives": {
+                "previous": [
+                    {
+                        "team": {"id": "1"},
+                        "start": {"yardsToEndzone": 75, "yardLine": "AAA 25"},
+                        "plays": [
+                            {
+                                "id": "k1",
+                                "text": "Kicker kicks 65 yards to BBB 0. Return to BBB 25.",
+                                "type": {"text": "Kickoff"},
+                                "start": {"team": {"id": "1"}, "down": 0, "distance": 0, "yardsToEndzone": 75},
+                                "end": {"team": {"id": "1"}},
+                                "period": {"number": 1},
+                                "clock": {"displayValue": "15:00"},
+                                "team": {"abbreviation": "AAA", "id": "1"},
+                            },
+                            {
+                                "id": "p1",
+                                "text": "A punt 45 yards",
+                                "type": {"text": "Punt"},
+                                "start": {"team": {"id": "1"}, "down": 4, "distance": 10},
+                                "end": {"team": {"id": "2"}},
+                                "period": {"number": 1},
+                                "clock": {"displayValue": "14:20"},
+                                "team": {"abbreviation": "AAA", "id": "1"},
+                            },
+                        ],
+                    },
+                    {
+                        "team": {"id": "2"},
+                        "start": {"yardsToEndzone": 60, "yardLine": "BBB 40"},
+                        "plays": [
+                            {
+                                "id": "r1",
+                                "text": "Run for 5 yards",
+                                "type": {"text": "Rush"},
+                                "statYardage": 5,
+                                "start": {"team": {"id": "2"}, "down": 1, "distance": 10, "yardsToEndzone": 60},
+                                "end": {"team": {"id": "2"}},
+                                "period": {"number": 1},
+                                "clock": {"displayValue": "14:10"},
+                                "team": {"abbreviation": "BBB", "id": "2"},
+                            }
+                        ],
+                    },
+                ]
+            },
+            "scoringPlays": [],
+        }
+        _rows, details = process_game_stats(sample, expanded=True)
+        assert len(details["1"]["Drive Starts"]) == 1
+        assert details["1"]["Drive Starts"][0]["start_pos"] == "AAA 25"
+        assert "kick" in (details["1"]["Drive Starts"][0]["text"] or "").lower()
+
+        assert len(details["2"]["Drive Starts"]) == 1
+        assert details["2"]["Drive Starts"][0]["start_pos"] == "BBB 40"
+        assert "punt" in (details["2"]["Drive Starts"][0]["text"] or "").lower()
+        assert details["2"]["Drive Starts"][0]["clock"] == "14:10"
+
+    def test_interception_reversed_to_incompletion_not_counted_as_turnover(self):
+        text = (
+            "(Shotgun) QB pass intended for WR INTERCEPTED by BBB-Defender at AAA 40. "
+            "Return to AAA 40 for no gain. "
+            "The Replay Official reviewed the interception ruling, and the play was REVERSED."
+            "(Shotgun) QB pass incomplete short middle to WR."
+        )
+        sample = {
+            "boxscore": {
+                "teams": [
+                    {"team": {"id": "1", "abbreviation": "AAA"}},
+                    {"team": {"id": "2", "abbreviation": "BBB"}},
+                ]
+            },
+            "header": {
+                "competitions": [
+                    {"competitors": [{"id": "1", "score": "0"}, {"id": "2", "score": "0"}]}
+                ]
+            },
+            "drives": {
+                "previous": [
+                    {
+                        "team": {"id": "1"},
+                        "plays": [
+                            {
+                                "id": "1",
+                                "text": text,
+                                "type": {"text": "Pass Incompletion"},
+                                "start": {"team": {"id": "1"}},
+                                "end": {"team": {"id": "1"}},
+                                "team": {"abbreviation": "AAA", "id": "1"},
+                            }
+                        ],
+                    }
+                ]
+            },
+            "scoringPlays": [],
+        }
+        rows, details = process_game_stats(sample, expanded=True)
+        by_team = {row["Team"]: row for row in rows}
+        assert by_team["AAA"]["Turnovers"] == 0
+        assert by_team["BBB"]["Turnovers"] == 0
+        assert details["1"]["Turnovers"] == []
+        assert details["2"]["Turnovers"] == []
+
     def test_two_point_conversion_interception_not_counted_as_turnover(self):
         sample = {
             "boxscore": {
@@ -594,6 +716,329 @@ class TestProcessGameStats:
         assert by_team["AAA"]["Turnovers"] == 0
         assert len(details["2"]["Turnovers"]) == 1
         assert details["2"]["Turnovers"][0]["reason"] == "onside_kick_lost"
+
+    def test_kickoff_return_fumble_recovered_by_kicking_team_charges_receiving_turnover(self):
+        sample = {
+            "boxscore": {
+                "teams": [
+                    {"team": {"id": "1", "abbreviation": "AAA"}},
+                    {"team": {"id": "2", "abbreviation": "BBB"}},
+                ]
+            },
+            "header": {
+                "competitions": [
+                    {"competitors": [{"id": "1", "score": "0"}, {"id": "2", "score": "0"}]}
+                ]
+            },
+            "drives": {
+                "previous": [
+                    {
+                        # Kickoff drive attributed to the receiving team.
+                        "team": {"id": "2"},
+                        "plays": [
+                            {
+                                "id": "1",
+                                "text": "A.AAA kicks 65 yards to BBB 0. Returner to BBB 25. FUMBLES, RECOVERED by AAA-A.AAA at BBB 25.",
+                                "type": {"text": "Kickoff"},
+                                "start": {"team": {"id": "1"}},
+                                "end": {"team": {"id": "1"}},
+                                "team": {"abbreviation": "AAA", "id": "1"},
+                            }
+                        ],
+                    }
+                ]
+            },
+            "scoringPlays": [],
+        }
+        rows, details = process_game_stats(sample, expanded=True)
+        by_team = {row["Team"]: row for row in rows}
+        assert by_team["BBB"]["Turnovers"] == 1
+        assert by_team["AAA"]["Turnovers"] == 0
+        assert len(details["2"]["Turnovers"]) == 1
+        assert details["2"]["Turnovers"][0]["reason"] == "fumble"
+
+    def test_punt_return_fumble_recovered_by_return_team_is_not_a_turnover(self):
+        sample = {
+            "boxscore": {
+                "teams": [
+                    {"team": {"id": "1", "abbreviation": "AAA"}},
+                    {"team": {"id": "2", "abbreviation": "BBB"}},
+                ]
+            },
+            "header": {
+                "competitions": [
+                    {"competitors": [{"id": "1", "score": "0"}, {"id": "2", "score": "0"}]}
+                ]
+            },
+            "drives": {
+                "previous": [
+                    {
+                        "team": {"id": "1"},
+                        "plays": [
+                            {
+                                "id": "1",
+                                "text": "A.AAA punts 42 yards to BBB 36. Returner to BBB 38 for 2 yards. FUMBLES, and recovers at BBB 39.",
+                                "type": {"text": "Punt"},
+                                "start": {"team": {"id": "1"}},
+                                "end": {"team": {"id": "2"}},
+                                "team": {"abbreviation": "AAA", "id": "1"},
+                            }
+                        ],
+                    }
+                ]
+            },
+            "scoringPlays": [],
+        }
+        rows, details = process_game_stats(sample, expanded=True)
+        by_team = {row["Team"]: row for row in rows}
+        assert by_team["AAA"]["Turnovers"] == 0
+        assert by_team["BBB"]["Turnovers"] == 0
+        assert details["1"]["Turnovers"] == []
+        assert details["2"]["Turnovers"] == []
+
+    def test_interception_return_fumble_lost_counts_as_turnover_for_return_team(self):
+        sample = {
+            "boxscore": {
+                "teams": [
+                    {"team": {"id": "1", "abbreviation": "AAA"}},
+                    {"team": {"id": "2", "abbreviation": "BBB"}},
+                ]
+            },
+            "header": {
+                "competitions": [
+                    {"competitors": [{"id": "1", "score": "0"}, {"id": "2", "score": "0"}]}
+                ]
+            },
+            "drives": {
+                "previous": [
+                    {
+                        "team": {"id": "1"},
+                        "plays": [
+                            {
+                                "id": "1",
+                                "text": "QB pass INTERCEPTED by BBB at AAA 30. Return to AAA 20 for 10 yards. FUMBLES, RECOVERED by AAA at AAA 40.",
+                                "type": {"text": "Pass"},
+                                "start": {"team": {"id": "1"}},
+                                "end": {"team": {"id": "1"}},
+                                "team": {"abbreviation": "AAA", "id": "1"},
+                            }
+                        ],
+                    }
+                ]
+            },
+            "scoringPlays": [],
+        }
+        rows, details = process_game_stats(sample, expanded=True)
+        by_team = {row["Team"]: row for row in rows}
+        assert by_team["AAA"]["Turnovers"] == 1
+        assert by_team["BBB"]["Turnovers"] == 1
+        assert len(details["1"]["Turnovers"]) == 1
+        assert details["1"]["Turnovers"][0]["reason"] == "interception"
+        assert len(details["2"]["Turnovers"]) == 1
+        assert details["2"]["Turnovers"][0]["reason"] == "fumble"
+
+    def test_fumble_recovered_by_own_team_with_different_text_abbr_is_not_a_turnover(self):
+        sample = {
+            "boxscore": {
+                "teams": [
+                    {"team": {"id": "1", "abbreviation": "WSH"}},
+                    {"team": {"id": "2", "abbreviation": "DEN"}},
+                ]
+            },
+            "header": {
+                "competitions": [
+                    {"competitors": [{"id": "1", "score": "0"}, {"id": "2", "score": "0"}]}
+                ]
+            },
+            "drives": {
+                "previous": [
+                    {
+                        "team": {"id": "1"},
+                        "plays": [
+                            {
+                                "id": "1",
+                                "text": "QB sacked at WSH 41 for -6 yards. FUMBLES, recovered by WAS-Player at WSH 40.",
+                                "type": {"text": "Sack"},
+                                "start": {"team": {"id": "1"}},
+                                "end": {"team": {"id": "1"}},
+                                "team": {"abbreviation": "WSH", "id": "1"},
+                            }
+                        ],
+                    }
+                ]
+            },
+            "scoringPlays": [],
+        }
+        rows, details = process_game_stats(sample, expanded=True)
+        by_team = {row["Team"]: row for row in rows}
+        assert by_team["WSH"]["Turnovers"] == 0
+        assert by_team["DEN"]["Turnovers"] == 0
+        assert details["1"]["Turnovers"] == []
+
+    def test_intentional_grounding_penalty_does_not_affect_total_yards(self):
+        sample = {
+            "boxscore": {
+                "teams": [
+                    {"team": {"id": "1", "abbreviation": "AAA"}},
+                    {"team": {"id": "2", "abbreviation": "BBB"}},
+                ]
+            },
+            "header": {
+                "competitions": [
+                    {"competitors": [{"id": "1", "score": "0"}, {"id": "2", "score": "0"}]}
+                ]
+            },
+            "drives": {
+                "previous": [
+                    {
+                        "team": {"id": "1"},
+                        "plays": [
+                            {
+                                "id": "1",
+                                "text": "(Shotgun) QB pass incomplete. PENALTY on AAA-QB, Intentional Grounding, 17 yards, enforced at AAA 38.",
+                                "type": {"text": "Pass Incompletion"},
+                                "statYardage": -34,
+                                "start": {"team": {"id": "1"}, "yardsToEndzone": 62},
+                                "end": {"team": {"id": "1"}, "yardsToEndzone": 79},
+                                "penalty": {
+                                    "type": {"text": "Intentional Grounding", "slug": "intentional-grounding"},
+                                    "yards": 17,
+                                    "status": {"text": "Accepted", "slug": "accepted"},
+                                },
+                                "team": {"abbreviation": "AAA", "id": "1"},
+                            }
+                        ],
+                    }
+                ]
+            },
+            "scoringPlays": [],
+        }
+        rows, _details = process_game_stats(sample, expanded=False)
+        by_team = {row["Team"]: row for row in rows}
+        assert by_team["AAA"]["Total Yards"] == 0
+
+    def test_total_yards_include_kneels_but_ypp_excludes_them(self):
+        sample = {
+            "boxscore": {
+                "teams": [
+                    {"team": {"id": "1", "abbreviation": "AAA"}},
+                    {"team": {"id": "2", "abbreviation": "BBB"}},
+                ]
+            },
+            "header": {"competitions": [{"competitors": [{"id": "1", "score": "0"}, {"id": "2", "score": "0"}]}]},
+            "drives": {
+                "previous": [
+                    {
+                        "team": {"id": "1"},
+                        "plays": [
+                            {
+                                "id": "1",
+                                "text": "QB kneels to AAA 20 for -2 yards.",
+                                "type": {"text": "Rush"},
+                                "statYardage": -2,
+                                "start": {"team": {"id": "1"}, "down": 1, "distance": 10},
+                                "end": {"team": {"id": "1"}},
+                                "team": {"abbreviation": "AAA", "id": "1"},
+                            },
+                            {
+                                "id": "2",
+                                "text": "Run up the middle to AAA 24 for 4 yards.",
+                                "type": {"text": "Rush"},
+                                "statYardage": 4,
+                                "start": {"team": {"id": "1"}, "down": 1, "distance": 10},
+                                "end": {"team": {"id": "1"}},
+                                "team": {"abbreviation": "AAA", "id": "1"},
+                            },
+                            {
+                                "id": "3",
+                                "text": "QB spikes the ball to stop the clock.",
+                                "type": {"text": "Spike"},
+                                "statYardage": 0,
+                                "start": {"team": {"id": "1"}, "down": 2, "distance": 6},
+                                "end": {"team": {"id": "1"}},
+                                "team": {"abbreviation": "AAA", "id": "1"},
+                            },
+                        ],
+                    }
+                ]
+            },
+            "scoringPlays": [],
+        }
+
+        rows, _details = process_game_stats(sample, expanded=False, wp_threshold=1.0)
+        by_team = {row["Team"]: row for row in rows}
+        assert by_team["AAA"]["Total Yards"] == 2
+        assert by_team["AAA"]["Yards Per Play"] == 4.0
+
+    def test_fumble_own_recovery_uses_credited_yards_from_text(self):
+        sample = {
+            "boxscore": {
+                "teams": [
+                    {"team": {"id": "1", "abbreviation": "AAA"}},
+                    {"team": {"id": "2", "abbreviation": "BBB"}},
+                ]
+            },
+            "header": {"competitions": [{"competitors": [{"id": "1", "score": "0"}, {"id": "2", "score": "0"}]}]},
+            "drives": {
+                "previous": [
+                    {
+                        "team": {"id": "1"},
+                        "plays": [
+                            {
+                                "id": "1",
+                                "text": "Runner left end to AAA 31 for -3 yards. FUMBLES, recovered by AAA-Player at AAA 25.",
+                                "type": {"text": "Rush"},
+                                "statYardage": -9,
+                                "start": {"team": {"id": "1"}, "down": 1, "distance": 10},
+                                "end": {"team": {"id": "1"}},
+                                "team": {"abbreviation": "AAA", "id": "1"},
+                            }
+                        ],
+                    }
+                ]
+            },
+            "scoringPlays": [],
+        }
+        rows, _details = process_game_stats(sample, expanded=False, wp_threshold=1.0)
+        by_team = {row["Team"]: row for row in rows}
+        assert by_team["AAA"]["Turnovers"] == 0
+        assert by_team["AAA"]["Total Yards"] == -3
+        assert by_team["AAA"]["Yards Per Play"] == -3.0
+
+    def test_fumble_recovery_own_play_type_overrides_bad_end_team_for_turnovers(self):
+        sample = {
+            "boxscore": {
+                "teams": [
+                    {"team": {"id": "1", "abbreviation": "AAA"}},
+                    {"team": {"id": "2", "abbreviation": "BBB"}},
+                ]
+            },
+            "header": {"competitions": [{"competitors": [{"id": "1", "score": "0"}, {"id": "2", "score": "0"}]}]},
+            "drives": {
+                "previous": [
+                    {
+                        "team": {"id": "1"},
+                        "plays": [
+                            {
+                                "id": "1",
+                                "text": "Direct snap. AAA FUMBLES (Aborted) at BBB 10, recovered by AAA-Player at BBB 11.",
+                                "type": {"text": "Fumble Recovery (Own)"},
+                                "statYardage": -2,
+                                "start": {"team": {"id": "1"}, "down": 1, "distance": 10},
+                                # Some ESPN payloads report end.team as the opponent even on own recoveries.
+                                "end": {"team": {"id": "2"}},
+                                "team": {"abbreviation": "AAA", "id": "1"},
+                            }
+                        ],
+                    }
+                ]
+            },
+            "scoringPlays": [],
+        }
+        rows, details = process_game_stats(sample, expanded=True, wp_threshold=1.0)
+        by_team = {row["Team"]: row for row in rows}
+        assert by_team["AAA"]["Turnovers"] == 0
+        assert details["1"]["Turnovers"] == []
 
 
 # =============================================================================

@@ -1,0 +1,113 @@
+Fetching ESPN official stats for game 401772785...
+Fetching play-by-play data...
+
+================================================================================
+=== DIAGNOSTIC REPORT: SF 26 @ CLE 8 (401772785) ===
+================================================================================
+
+ESPN Totals:
+  SF: 252 yards, 0 turnovers
+  CLE: 253 yards, 2 turnovers
+
+game_compare Totals:
+  SF: 253 yards (DELTA: +1 yards), 1 turnovers (DELTA: +1 turnovers)
+  CLE: 253 yards (MATCH), 2 turnovers 
+
+================================================================================
+SECTION A: YARDAGE BY PLAY TYPE
+================================================================================
+
+SF Offensive Plays (Counted toward Total Yards):
+  Rushing: 31 plays, 90 yards
+  Passing: 32 plays, 163 yards
+  Subtotal: 253 yards
+
+SF Special Teams (NOT Counted toward Total Yards):
+  Kickoff: 2 plays, 24 yards
+  Punt: 5 plays, 3 yards
+  Field Goal: 2 plays, 56 yards
+
+CLE Offensive Plays (Counted toward Total Yards):
+  Rushing: 30 plays, 166 yards
+  Passing: 29 plays, 87 yards
+  Subtotal: 253 yards
+
+CLE Special Teams (NOT Counted toward Total Yards):
+  Kickoff: 5 plays, 73 yards
+  Punt: 4 plays, 69 yards
+
+================================================================================
+SECTION B: EXCLUDED PLAYS WITH YARDAGE
+================================================================================
+
+SF Excluded Plays:
+  Q2 0:00 | Field Goal | +25 yards | Field Goal Good
+    "M.Gay 25 yard field goal is GOOD, Center-J.Weeks, Holder-T.Morstead."
+  Q4 4:09 | Field Goal | +31 yards | Field Goal Good
+    "M.Gay 31 yard field goal is GOOD, Center-J.Weeks, Holder-T.Morstead."
+  Q1 15:00 | Kickoff | +24 yards | Kickoff
+    "A.Szmyt kicks 64 yards from CLV 35 to SF 1. S.Moore to SF 25 for 24 yards (G.Delpit; M.Diabate)."
+  Q2 9:04 | Penalty (No Play) | +5 yards | Penalty
+    "(Shotgun) B.Purdy pass short middle to G.Kittle to CLV 45 for 6 yards (G.Delpit) [M.Hall].PENALTY on CLV-R.Jenkins, Defensive Holding, 5 yards, enforced at SF 49 - No Play."
+  Q3 9:53 | Penalty (No Play) | -5 yards | Penalty
+    "(Shotgun) B.Purdy pass incomplete short left to K.Juszczyk.PENALTY on SF-T.Williams, Ineligible Downfield Pass, 5 yards, enforced at SF 44 - No Play."
+  Q4 6:04 | Penalty (No Play) | -5 yards | Penalty
+    "(Shotgun) PENALTY on SF-T.Williams, False Start, 5 yards, enforced at CLV 38 - No Play."
+  Q1 1:38 | Punt | +3 yards | Fumble Recovery (Own)
+    "T.Morstead punts 42 yards to CLV 36, Center-J.Weeks. G.Larvadain to CLV 38 for 2 yards (I.Guerendo; D.Luter). FUMBLES (I.Guerendo), and recovers at CLV 39."
+  Q4 0:16 | Spike/Kneel | -1 yards | Rush
+    "M.Jones kneels to SF 49 for -1 yards."
+
+CLE Excluded Plays:
+  Q1 8:12 | Kickoff | +26 yards | Kickoff
+    "M.Gay kicks 61 yards from SF 35 to CLV 4. M.Corley to CLV 30 for 26 yards (N.Martin)."
+  Q3 15:00 | Kickoff | +22 yards | Kickoff
+    "M.Gay kicks 60 yards from SF 35 to CLV 5. M.Corley to CLV 27 for 22 yards (J.Brown)."
+  Q4 11:05 | Kickoff | +25 yards | Kickoff
+    "M.Gay kicks 58 yards from SF 35 to CLV 7. M.Corley to CLV 32 for 25 yards (M.Sigle; L.Gifford)."
+  Q2 13:33 | Penalty (No Play) | -5 yards | Penalty
+    "(Shotgun) S.Sanders pass short right to J.Jeudy to SF 28 for 3 yards (D.Lenoir; U.Stout).PENALTY on CLV-J.Jeudy, Illegal Shift, 5 yards, enforced at SF 31 - No Play."
+  Q2 0:39 | Penalty (No Play) | +1 yards | Penalty
+    "PENALTY on SF, Defensive Too Many Men on Field, 1 yard, enforced at SF 15 - No Play."
+  Q4 9:25 | Penalty (No Play) | -10 yards | Penalty
+    "(Shotgun) S.Sanders sacked at SF 46 for -4 yards (K.Davis). CLV-S.Sanders was injured during the play. PENALTY on CLV-E.Pocic, Offensive Holding, 10 yards, enforced at SF 42 - No Play."
+  Q4 2:00 | Penalty (No Play) | -5 yards | Penalty
+    "(Shotgun) PENALTY on CLV-S.Sanders, False Start, 5 yards, enforced at SF 39 - No Play."
+  Q1 10:40 | Punt | +66 yards | Punt
+    " C.Bojorquez punts 48 yards to SF 18, Center-R.Sunahara. S.Moore pushed ob at CLV 16 for 66 yards (B.Whiteheart)."
+  Q3 12:21 | Punt | +1 yards | Punt
+    "C.Bojorquez punts 38 yards to SF 21, Center-R.Sunahara. S.Moore to SF 22 for 1 yard (B.Whiteheart; E.Mascarenas-Arnold)."
+  Q3 0:38 | Punt | +2 yards | Punt
+    " C.Bojorquez punts 43 yards to CLV 49, Center-R.Sunahara. S.Moore to CLV 47 for 2 yards (D.McMillon; C.Edmonds)."
+
+================================================================================
+SECTION C: TURNOVERS DETECTED BY game_compare
+================================================================================
+
+SF Turnovers (1 detected):
+  Q1 1:38 | "T.Morstead punts 42 yards to CLV 36, Center-J.Weeks. G.Larvadain to CLV 38 for 2 yards (I.Guerendo; D.Luter). FUMBLES (I.Guerendo), and recovers at CLV 39." | Reason: fumble lost
+
+CLE Turnovers (2 detected):
+  Q3 7:08 | "T.Jenkins reported in as eligible. Direct snap to H.Fannin.  H.Fannin FUMBLES (Aborted) at CLV 32, RECOVERED by SF-L.Gifford at CLV 32." | Reason: fumble lost
+  Q4 13:35 | "T.Morstead punts 32 yards to CLV 16, Center-J.Weeks. G.Larvadain MUFFS catch, RECOVERED by SF-D.Luter at CLV 18." | Reason: muffed kick
+
+================================================================================
+SECTION D: POTENTIAL MISSING TURNOVERS
+================================================================================
+
+Plays with turnover keywords NOT counted:
+  (none found)
+
+================================================================================
+SUMMARY
+================================================================================
+
+Yardage Gap Explanation:
+  SF: +1 yards, likely from: Unknown source 
+  CLE: MATCH - no yardage discrepancy
+
+Turnover Gap Explanation:
+  SF: +1 turnovers - game_compare may have overcounted
+  CLE: MATCH - no turnover discrepancy
+
+================================================================================

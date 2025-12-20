@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { GameResponse } from '@/types';
 import { Scoreboard } from '@/components/Scoreboard';
 import { AdvancedStats } from '@/components/AdvancedStats';
@@ -9,6 +9,7 @@ import { GamePlays } from '@/components/GamePlays';
 import { ViewToggle } from '@/components/ViewToggle';
 import { UpdateIndicator } from '@/components/UpdateIndicator';
 import { useAutoRefresh } from '@/hooks/useAutoRefresh';
+import { useWeekContext } from '@/contexts/WeekContext';
 
 interface GamePageClientProps {
   initialGameData: GameResponse;
@@ -22,8 +23,21 @@ export function GamePageClient({ initialGameData }: GamePageClientProps) {
   const [viewMode, setViewMode] = useState<ViewMode>('competitive');
   const [gameData, setGameData] = useState<GameResponse>(initialGameData);
   const [selectedCategory, setSelectedCategory] = useState<string>('Explosive Plays');
+  const { setGameWeek } = useWeekContext();
 
   const isLive = gameData.status === 'in-progress';
+
+  // Set the week in context when game data is available
+  useEffect(() => {
+    if (gameData.week && gameData.week.number > 0) {
+      setGameWeek({
+        weekNumber: gameData.week.number,
+        seasonType: gameData.week.seasonType,
+      });
+    } else {
+      setGameWeek(null);
+    }
+  }, [gameData.week, setGameWeek]);
 
   const fetchGameData = useCallback(async (): Promise<GameResponse> => {
     const response = await fetch(`/api/game/${gameData.gameId}`);
@@ -144,13 +158,15 @@ export function GamePageClient({ initialGameData }: GamePageClientProps) {
           />
         </div>
 
-        {/* AI Summary (falls back to analysis if no AI summary) */}
-        <div className="animate-fade-in-up delay-1">
-          <AISummary
-            summary={gameData.ai_summary || gameData.analysis || null}
-            isLoading={false}
-          />
-        </div>
+        {/* AI Summary (only after kickoff) */}
+        {gameData.status !== 'pregame' && (
+          <div className="animate-fade-in-up delay-1">
+            <AISummary
+              summary={gameData.ai_summary || gameData.analysis || null}
+              isLoading={false}
+            />
+          </div>
+        )}
 
         {/* View Toggle Bar */}
         <div className="animate-fade-in-up delay-2 flex items-center justify-between gap-4 bg-bg-card border border-border-subtle rounded-xl px-5 py-3">

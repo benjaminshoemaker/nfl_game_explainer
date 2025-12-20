@@ -1,0 +1,131 @@
+Fetching ESPN official stats for game 401772931...
+Fetching play-by-play data...
+
+================================================================================
+=== DIAGNOSTIC REPORT: DEN 27 @ WSH 26 (401772931) ===
+================================================================================
+
+ESPN Totals:
+  DEN: 402 yards, 1 turnovers
+  WSH: 419 yards, 1 turnovers
+
+game_compare Totals:
+  DEN: 402 yards (MATCH), 2 turnovers (DELTA: +1 turnovers)
+  WSH: 400 yards (DELTA: -19 yards), 2 turnovers (DELTA: +1 turnovers)
+
+================================================================================
+SECTION A: YARDAGE BY PLAY TYPE
+================================================================================
+
+DEN Offensive Plays (Counted toward Total Yards):
+  Rushing: 21 plays, 71 yards
+  Passing: 48 plays, 331 yards
+  Subtotal: 402 yards
+
+DEN Special Teams (NOT Counted toward Total Yards):
+  Punt Return: 1 plays, 0 yards
+  Kickoff: 5 plays, 118 yards
+  Punt: 4 plays, 0 yards
+  Field Goal: 2 plays, 66 yards
+
+WSH Offensive Plays (Counted toward Total Yards):
+  Rushing: 29 plays, 117 yards
+  Passing: 55 plays, 289 yards
+  Subtotal: 406 yards
+
+WSH Special Teams (NOT Counted toward Total Yards):
+  Kickoff: 6 plays, 129 yards
+  Punt: 3 plays, 10 yards
+  Field Goal: 2 plays, 70 yards
+
+================================================================================
+SECTION B: EXCLUDED PLAYS WITH YARDAGE
+================================================================================
+
+DEN Excluded Plays:
+  Q1 10:28 | Field Goal | +33 yards | Field Goal Good
+    "W.Lutz 33 yard field goal is GOOD, Center-M.Fraboni, Holder-J.Crawshaw."
+  Q2 7:51 | Field Goal | +33 yards | Field Goal Good
+    "W.Lutz 33 yard field goal is GOOD, Center-M.Fraboni, Holder-J.Crawshaw."
+  Q1 15:00 | Kickoff | +26 yards | Kickoff
+    "J.Moody kicks 65 yards from WAS 35 to DEN 0. M.Mims to DEN 26 for 26 yards (J.Reaves)."
+  Q2 2:21 | Kickoff | +27 yards | Kickoff
+    "J.Moody kicks 56 yards from WAS 35 to DEN 9. T.Badie to DEN 36 for 27 yards (M.Sainristil)."
+  Q3 9:58 | Kickoff | +24 yards | Kickoff
+    "J.Moody kicks 61 yards from WAS 35 to DEN 4. M.Mims to DEN 28 for 24 yards (K.Medrano)."
+  Q4 12:37 | Kickoff | +18 yards | Kickoff
+    "J.Moody kicks 54 yards from WAS 35 to DEN 11. M.Mims to DEN 29 for 18 yards (K.Medrano; P.Butler)."
+  Q5 10:00 | Kickoff | +23 yards | Kickoff
+    "J.Moody kicks 64 yards from WAS 35 to DEN 1. T.Badie to DEN 24 for 23 yards (A.Hamilton)."
+  Q3 7:35 | Unknown | -10 yards | Penalty
+    "(Shotgun) B.Nix pass short right to P.Bryant to WAS 47 for 3 yards (Q.Martin).PENALTY on DEN-P.Bryant, Offensive Holding, 10 yards, enforced at 50 - No Play.Penalty on DEN-A.Trautman, Offensive Pass Interference, declined."
+
+WSH Excluded Plays:
+  Q4 12:37 | Field Goal | +38 yards | Field Goal Good
+    "J.Moody 38 yard field goal is GOOD, Center-Z.Triner, Holder-T.Way."
+  Q4 0:00 | Field Goal | +32 yards | Field Goal Good
+    "J.Moody 32 yard field goal is GOOD, Center-Z.Triner, Holder-T.Way."
+  Q1 10:22 | Kickoff | +15 yards | Kickoff
+    "W.Lutz kicks 64 yards from DEN 30 to WAS 6. J.McNichols to WAS 21 for 15 yards (R.Taylor)."
+  Q2 7:51 | Kickoff | +26 yards | Kickoff
+    "W.Lutz kicks 62 yards from DEN 35 to WAS 3. D.Samuel to WAS 29 for 26 yards (A.Prentice)."
+  Q2 0:23 | Kickoff | +35 yards | Kickoff
+    "W.Lutz kicks 65 yards from DEN 35 to WAS 0. D.Samuel to WAS 36 for 36 yards (D.Key; P.Locke). FUMBLES (D.Key), recovered by WAS-J.McNichols at WAS 35."
+  Q3 15:00 | Kickoff | +25 yards | Kickoff
+    "W.Lutz kicks 62 yards from DEN 35 to WAS 3. D.Samuel to WAS 28 for 25 yards (D.Key)."
+  Q3 3:59 | Kickoff | +28 yards | Kickoff
+    "W.Lutz kicks 62 yards from DEN 35 to WAS 3. D.Samuel to WAS 31 for 28 yards (D.Tillman; A.Prentice)."
+  Q1 10:28 | Penalty (No Play) | +10 yards | Penalty
+    "W.Lutz kicks 65 yards from DEN 35 to WAS 0. D.Samuel to WAS 10 for 10 yards (J.Skinner).PENALTY on DEN-T.Badie, Illegal Formation, 5 yards, enforced at DEN 35 - No Play."
+  Q1 6:11 | Penalty (No Play) | +5 yards | Penalty
+    "(No Huddle, Shotgun) M.Mariota pass incomplete deep middle to T.McLaurin.PENALTY on DEN-P.Surtain, Illegal Contact, 5 yards, enforced at DEN 46 - No Play."
+  Q2 2:47 | Penalty (No Play) | -5 yards | Penalty
+    "Direct snap to J.Croskey-Merritt.  J.Croskey-Merritt up the middle to DEN 12 for -1 yards (J.Cooper).PENALTY on WAS-B.Coleman, Illegal Formation, 5 yards, enforced at DEN 11 - No Play."
+  Q3 1:23 | Penalty (No Play) | -5 yards | Penalty
+    "(Shotgun) PENALTY on WAS-L.Tunsil, False Start, 5 yards, enforced at DEN 49 - No Play."
+  Q4 1:41 | Penalty (No Play) | -5 yards | Penalty
+    "(No Huddle, Shotgun) PENALTY on WAS-T.McLaurin, False Start, 5 yards, enforced at DEN 49 - No Play."
+  Q5 5:29 | Penalty (No Play) | -1 yards | Penalty
+    "(No Huddle, Shotgun) M.Mariota pass short right intended for J.McNichols INTERCEPTED by B.Jones (T.Hufanga) [J.Franklin-Myers] at DEN 37. B.Jones to DEN 36 for -1 yards (T.Biadasz).PENALTY on DEN-T.Hufanga, Defensive Pass Interference, 5 yards, enforced at DEN 41 - No Play."
+  Q5 4:04 | Penalty (No Play) | -10 yards | Penalty
+    "(No Huddle, Shotgun) M.Mariota pass deep middle to T.McLaurin for 30 yards, TOUCHDOWN NULLIFIED by Penalty.PENALTY on WAS-J.Conerly, Offensive Holding, 10 yards, enforced at DEN 30 - No Play."
+  Q4 3:42 | Punt | +10 yards | Punt
+    "T.Way punts 56 yards to DEN 19, Center-Z.Triner. M.Mims to DEN 29 for 10 yards (K.Medrano; P.Butler)."
+  Q2 0:16 | Spike/Kneel | -1 yards | Rush
+    "M.Mariota kneels to WAS 34 for -1 yards."
+
+================================================================================
+SECTION C: TURNOVERS DETECTED BY game_compare
+================================================================================
+
+DEN Turnovers (2 detected):
+  Q4 14:13 | "(Shotgun) B.Nix pass short middle intended for P.Bryant INTERCEPTED by B.Wagner at DEN 42. B.Wagner to DEN 36 for 6 yards (T.Franklin)." | Reason: interception
+
+WSH Turnovers (2 detected):
+  Q2 14:34 | "(No Huddle, Shotgun) M.Mariota pass short left intended for C.Rodriguez INTERCEPTED by D.Greenlaw [D.Jones] at DEN 7. D.Greenlaw to DEN 34 for 27 yards (S.Cosmi; J.Bates)." | Reason: interception
+  Q2 6:43 | "(No Huddle, Shotgun) M.Mariota sacked at WAS 41 for -6 yards (N.Bonitto). FUMBLES (N.Bonitto) [N.Bonitto], touched at WAS 41, recovered by WAS-J.Bates at WAS 40." | Reason: fumble lost
+  Q2 0:23 | "W.Lutz kicks 65 yards from DEN 35 to WAS 0. D.Samuel to WAS 36 for 36 yards (D.Key; P.Locke). FUMBLES (D.Key), recovered by WAS-J.McNichols at WAS 35." | Reason: fumble lost
+  Q5 5:29 | "(No Huddle, Shotgun) M.Mariota pass short right intended for J.McNichols INTERCEPTED by B.Jones (T.Hufanga) [J.Franklin-Myers] at DEN 37. B.Jones to DEN 36 for -1 yards (T.Biadasz).PENALTY on DEN-T.Hufanga, Defensive Pass Interference, 5 yards, enforced at DEN 41 - No Play." | Reason: interception
+
+================================================================================
+SECTION D: POTENTIAL MISSING TURNOVERS
+================================================================================
+
+Plays with turnover keywords NOT counted:
+
+DEN:
+  Q4 11:08 | "(No Huddle, Shotgun) B.Nix sacked at DEN 29 for -7 yards (F.Luvu). FUMBLES (F.Luvu) [F.Luvu], and recovers at DEN 30." | NOT COUNTED: fumble (own recovery)
+
+================================================================================
+SUMMARY
+================================================================================
+
+Yardage Gap Explanation:
+  DEN: MATCH - no yardage discrepancy
+  WSH: -19 yards, likely from: Unknown source ?
+
+Turnover Gap Explanation:
+  DEN: +1 turnovers - game_compare may have overcounted
+  WSH: +1 turnovers - game_compare may have overcounted
+
+================================================================================

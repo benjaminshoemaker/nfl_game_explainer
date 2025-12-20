@@ -125,6 +125,36 @@ def classify_total_offense_play(play):
     return True, rush_hint, pass_hint
 
 
+_ENFORCED_AT_SPOT_RE = re.compile(r'\benforced at(?: the)?\s+([A-Z]{2,3})\s+(\d{1,2})\b', re.IGNORECASE)
+
+
+def _enforced_at_yards_to_endzone(event_text, offense_abbrev):
+    """
+    Parse 'enforced at XXX NN' and convert to yardsToEndzone (relative to the offense).
+
+    This lets us derive the offensive yards credited on accepted-penalty plays without
+    incorporating the penalty yardage into Total Yards.
+    """
+    if not event_text or not offense_abbrev:
+        return None
+    m = _ENFORCED_AT_SPOT_RE.search(event_text)
+    if not m:
+        return None
+    side = m.group(1).upper()
+    try:
+        yard = int(m.group(2))
+    except ValueError:
+        return None
+
+    if yard < 0 or yard > 50:
+        return None
+    if yard == 50:
+        return 50
+
+    off = offense_abbrev.upper()
+    return (100 - yard) if side == off else yard
+
+
 def yardline_to_coord(pos_text, team_abbr):
     """
     Convert a possessionText like 'SEA 24' into a 0-100 coordinate
@@ -289,28 +319,46 @@ def is_competitive_play(play, probability_map, wp_threshold=0.975, start_home_wp
     Competitive if:
     - Overtime period (period number >= 5)
     - No play id or no probability data (assume competitive)
-    - Both teams' win probability are below the threshold at play start
+    - The game is competitive at either the start OR end of the play:
+      max(home_wp, away_wp) < wp_threshold
 
-    Uses start_home_wp/start_away_wp (start-of-play) when provided.
-    Falls back to probability_map data when start probabilities not available.
+    Uses start_home_wp/start_away_wp (start-of-play) when provided and
+    probability_map (end-of-play) when available.
     """
     period = play.get('period', {}).get('number', 0)
     if period >= 5:
         return True
 
-    # Use start-of-play probabilities if provided (preferred)
-    if start_home_wp is not None and start_away_wp is not None:
-        return start_home_wp < wp_threshold and start_away_wp < wp_threshold
+    def _is_competitive_from_probs(home_wp, away_wp):
+        if home_wp is None or away_wp is None:
+            return None
+        try:
+            return max(float(home_wp), float(away_wp)) < wp_threshold
+        except (TypeError, ValueError):
+            return None
 
-    # Fall back to probability_map (end-of-play approximation)
+    start_competitive = None
+    if start_home_wp is not None and start_away_wp is not None:
+        start_competitive = _is_competitive_from_probs(start_home_wp, start_away_wp)
+
+    # probability_map entries are end-of-play; we use them to include plays that
+    # make a game competitive even if the start-of-play WP was non-competitive.
     play_id = play.get('id')
     prob = (probability_map or {}).get(str(play_id)) if play_id is not None else None
+    end_competitive = None
     if prob:
-        home_wp = prob.get('homeWinPercentage', 0.5)
-        away_wp = prob.get('awayWinPercentage', 0.5)
-        return home_wp < wp_threshold and away_wp < wp_threshold
+        end_competitive = _is_competitive_from_probs(
+            prob.get('homeWinPercentage', 0.5),
+            prob.get('awayWinPercentage', 0.5),
+        )
 
-    return True
+    if start_competitive is None and end_competitive is None:
+        return True
+    if start_competitive is None:
+        return bool(end_competitive)
+    if end_competitive is None:
+        return bool(start_competitive)
+    return bool(start_competitive or end_competitive)
 
 
 def process_game_stats(game_data, expanded=False, probability_map=None,
@@ -478,6 +526,7 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
                 'Points Per Trip (Inside 40)': [],
                 'Drive Starts': [],
                 'Penalty Yards': [],
+                'Total Yards Corrections': [],
                 'Non-Offensive Points': []
             }
 
@@ -937,6 +986,44 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
                         credited = _credited_yards_before_fumble(event_text)
                         if credited is not None:
                             total_yards = credited
+
+                # Accepted penalties: derive credited offensive yards from the enforcement spot when possible.
+                # This avoids counting the penalty yardage in total offense, while also protecting against
+                # ESPN payloads where statYardage is inconsistent with the described enforcement.
+                penalty_status_slug = (penalty_info.get('status') or {}).get('slug')
+                start_yte = (play.get('start') or {}).get('yardsToEndzone')
+                if (
+                    penalty_status_slug == 'accepted'
+                    and isinstance(start_yte, (int, float))
+                    and 'no play' not in event_text_lower
+                    and not interception
+                    and not fumble_phrase
+                ):
+                    start_team_id = ((play.get('start') or {}).get('team') or {}).get('id')
+                    end_team_id = ((play.get('end') or {}).get('team') or {}).get('id')
+                    if start_team_id is None or end_team_id is None or start_team_id == end_team_id:
+                        enforced_yte = _enforced_at_yards_to_endzone(event_text, offense_abbrev)
+                        if enforced_yte is not None:
+                            credited = int(start_yte - enforced_yte)
+                            if isinstance(total_yards, (int, float)):
+                                total_yards_int = int(total_yards)
+                            else:
+                                total_yards_int = total_yards
+                            if credited is not None and credited != total_yards_int:
+                                if expanded and team_id in details:
+                                    details[team_id]['Total Yards Corrections'].append({
+                                        'type': play_type,
+                                        'text': text,
+                                        'quarter': play.get('period', {}).get('number'),
+                                        'clock': play.get('clock', {}).get('displayValue'),
+                                        'statYardage': total_yards_int,
+                                        'startYardsToEndzone': start_yte,
+                                        'penaltyYards': (penalty_info or {}).get('yards'),
+                                        'enforcedAtYardsToEndzone': enforced_yte,
+                                        'correctedYards': credited,
+                                        'reason': 'accepted_penalty_enforcement_spot',
+                                    })
+                                total_yards = credited
 
                 stats[team_id]['Total Yards'] += total_yards
 

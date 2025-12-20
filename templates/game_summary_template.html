@@ -1668,10 +1668,10 @@
 
         <!-- View Toggle -->
         <div class="view-toggle-bar animate-fade-in-up delay-3">
-            <div class="view-note">
-                <span class="view-note-dot"></span>
-                <span id="wp-note">Stats reflect competitive plays only (WP < 97.5%)</span>
-            </div>
+	            <div class="view-note">
+	                <span class="view-note-dot"></span>
+	                <span id="wp-note">Stats reflect competitive plays only (WP < 97.5% at start or end)</span>
+	            </div>
             <div class="view-toggle-control">
                 <span class="view-toggle-label">View</span>
                 <select id="view-toggle" class="filter-select" onchange="toggleGameView(this.value)">
@@ -1908,10 +1908,10 @@
         function updateViewIndicator() {
             const noteEl = document.getElementById('wp-note');
             const threshold = gameData.wp_filter?.threshold || 0.975;
-            const desc = gameData.wp_filter?.description || `Stats reflect competitive plays only (WP < ${(threshold * 100).toFixed(1)}%)`;
-            if (noteEl) {
-                noteEl.textContent = showFullGame ? 'Showing full-game totals (no WP filter).' : desc;
-            }
+	            const desc = gameData.wp_filter?.description || `Stats reflect competitive plays only (WP < ${(threshold * 100).toFixed(1)}% at start or end)`;
+	            if (noteEl) {
+	                noteEl.textContent = showFullGame ? 'Showing full-game totals (no WP filter).' : desc;
+	            }
             const selector = document.getElementById('view-toggle');
             if (selector) selector.value = showFullGame ? 'full' : 'competitive';
         }

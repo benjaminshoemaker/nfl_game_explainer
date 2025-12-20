@@ -175,14 +175,14 @@ export function GamePageClient({ initialGameData }: GamePageClientProps) {
               className="w-2 h-2 rounded-full bg-positive flex-shrink-0"
               style={{ boxShadow: '0 0 8px var(--positive)' }}
             />
-            <span className="font-condensed text-xs text-text-secondary tracking-wide">
-              {viewMode === 'competitive'
-                ? (gameData.wp_filter?.description || 'Stats reflect competitive plays only (WP < 97.5%)')
-                : 'Showing full-game totals (no WP filter)'}
-            </span>
-          </div>
-          <ViewToggle
-            value={viewMode}
+	            <span className="font-condensed text-xs text-text-secondary tracking-wide">
+	              {viewMode === 'competitive'
+	                ? (gameData.wp_filter?.description || 'Stats reflect competitive plays only (WP < 97.5% at start or end)')
+	                : 'Showing full-game totals (no WP filter)'}
+	            </span>
+	          </div>
+	          <ViewToggle
+	            value={viewMode}
             onChange={setViewMode}
             showIndicator={false}
           />

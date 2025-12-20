@@ -361,8 +361,8 @@ class TestClassifyOffensePlay:
 # is_competitive_play tests
 # =============================================================================
 class TestIsCompetitivePlay:
-    def test_uses_start_probabilities_over_map(self):
-        # Start probabilities should take priority over probability_map
+    def test_uses_start_probabilities_when_competitive(self):
+        # If start-of-play is competitive, the play is competitive even if end-of-play is not.
         prob_map = {"1": {"homeWinPercentage": 0.99, "awayWinPercentage": 0.01}}
         play = {"id": "1", "period": {"number": 4}}
         # Start probs say competitive, map says not
@@ -410,6 +410,19 @@ class TestIsCompetitivePlay:
         # Start probs were competitive (IND 14.3%, SEA 85.7%)
         assert is_competitive_play(play, prob_map, wp_threshold=0.975,
                                    start_home_wp=0.857, start_away_wp=0.143) is True
+
+    def test_end_of_play_can_make_competitive(self):
+        # Start was non-competitive, but end becomes competitive -> treat as competitive.
+        prob_map = {"1": {"homeWinPercentage": 0.90, "awayWinPercentage": 0.10}}
+        play = {"id": "1", "period": {"number": 4}}
+        assert is_competitive_play(play, prob_map, wp_threshold=0.975,
+                                   start_home_wp=0.982, start_away_wp=0.018) is True
+
+    def test_noncompetitive_at_start_and_end(self):
+        prob_map = {"1": {"homeWinPercentage": 0.985, "awayWinPercentage": 0.015}}
+        play = {"id": "1", "period": {"number": 4}}
+        assert is_competitive_play(play, prob_map, wp_threshold=0.975,
+                                   start_home_wp=0.982, start_away_wp=0.018) is False
 
 
 # =============================================================================
@@ -916,6 +929,54 @@ class TestProcessGameStats:
         rows, _details = process_game_stats(sample, expanded=False)
         by_team = {row["Team"]: row for row in rows}
         assert by_team["AAA"]["Total Yards"] == 0
+
+    def test_total_yards_corrects_accepted_penalty_double_applied_signature(self):
+        sample = {
+            "boxscore": {
+                "teams": [
+                    {"team": {"id": "1", "abbreviation": "AAA"}},
+                    {"team": {"id": "2", "abbreviation": "BBB"}},
+                ]
+            },
+            "header": {
+                "competitions": [
+                    {"competitors": [{"id": "1", "score": "0"}, {"id": "2", "score": "0"}]}
+                ]
+            },
+            "drives": {
+                "previous": [
+                    {
+                        "team": {"id": "1"},
+                        "plays": [
+                            {
+                                "id": "1",
+                                "text": "Runner right end for 20 yards. PENALTY on AAA, Offensive Holding, 10 yards, enforced at AAA 40.",
+                                "type": {"text": "Rush"},
+                                # Observed ESPN bug signature: statYardage == net - penalty.
+                                # Here, start_yte=65, end_yte=70 => net=-5; penalty=10 => stat=-15.
+                                "statYardage": -15,
+                                "start": {"team": {"id": "1"}, "yardsToEndzone": 65, "down": 1, "distance": 10},
+                                "end": {"team": {"id": "1"}, "yardsToEndzone": 70},
+                                "penalty": {
+                                    "type": {"text": "Offensive Holding", "slug": "offensive-holding"},
+                                    "yards": 10,
+                                    "status": {"text": "Accepted", "slug": "accepted"},
+                                },
+                                "team": {"abbreviation": "AAA", "id": "1"},
+                            }
+                        ],
+                    }
+                ]
+            },
+            "scoringPlays": [],
+        }
+
+        rows, details = process_game_stats(sample, expanded=True, wp_threshold=1.0)
+        by_team = {row["Team"]: row for row in rows}
+        # Corrected yardage should be net + penalty = (-5) + 10 = +5.
+        assert by_team["AAA"]["Total Yards"] == 5
+        assert len(details["1"]["Total Yards Corrections"]) == 1
+        assert details["1"]["Total Yards Corrections"][0]["correctedYards"] == 5
 
     def test_total_yards_include_kneels_but_ypp_excludes_them(self):
         sample = {

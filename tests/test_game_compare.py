@@ -401,10 +401,10 @@ def test_non_offensive_points_pick_six():
     assert details["2"]["Non-Offensive Scores"][0]["points"] == 7
 
 
-def test_non_offensive_points_uses_start_of_play_wp_filter():
+def test_non_offensive_points_includes_plays_that_make_game_competitive():
     """
-    Regression: scoring-play based Non-Offensive Points must respect the same start-of-play
-    WP threshold filter used for drive/play processing.
+    Regression: scoring-play based Non-Offensive Points should include plays that
+    make the game competitive (competitive at start OR end of play).
     """
     sample = {
         "boxscore": {
@@ -463,8 +463,9 @@ def test_non_offensive_points_uses_start_of_play_wp_filter():
         ],
     }
 
-    # Probability map is end-of-play. The start-of-play for play 10 should be the end-of-play
-    # for play 9. Make play 9 end at 98% away WP so play 10 should be filtered out.
+    # Probability map is end-of-play. The start-of-play for play 10 is the end-of-play
+    # for play 9. Even though play 10 starts non-competitive, it ends competitive, so it
+    # should be included.
     prob_map = {
         "9": {"homeWinPercentage": 0.02, "awayWinPercentage": 0.98, "tiePercentage": 0.0},
         "10": {"homeWinPercentage": 0.11, "awayWinPercentage": 0.89, "tiePercentage": 0.0},
@@ -478,9 +479,8 @@ def test_non_offensive_points_uses_start_of_play_wp_filter():
         wp_threshold=0.975,
     )
     table = df.set_index("Team")
-    assert table.loc["BBB"]["Non-Offensive Points"] == 0
-    assert details["2"]["Non-Offensive Scores"] == []
-    assert details["2"]["Non-Offensive Points"] == []
+    assert table.loc["BBB"]["Non-Offensive Points"] == 8
+    assert len(details["2"]["Non-Offensive Scores"]) == 1
 
 
 def test_is_competitive_play_logic():

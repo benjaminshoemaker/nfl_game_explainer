@@ -214,7 +214,8 @@ def latest_play_from_v2(game_id):
 def build_top_plays_by_wp(game_data, probability_map, wp_threshold=0.975, limit=10):
     """
     Build a simple list of top plays by WP delta for the LLM.
-    Only includes competitive plays with ≥5% WP swing, sorted by impact.
+    Only includes plays that are competitive at the start OR end of the play,
+    with ≥5% WP swing, sorted by impact.
     """
     plays_with_delta = []
 
@@ -247,8 +248,10 @@ def build_top_plays_by_wp(game_data, probability_map, wp_threshold=0.975, limit=
             home_wp = prob.get('homeWinPercentage', 0.5)
             away_wp = prob.get('awayWinPercentage', 0.5)
 
-            # Skip non-competitive plays (unless OT)
-            if period < 5 and (start_home_wp >= wp_threshold or start_away_wp >= wp_threshold):
+            # Skip plays that are non-competitive at both start and end (unless OT)
+            start_max = max(start_home_wp, start_away_wp)
+            end_max = max(home_wp, away_wp)
+            if period < 5 and start_max >= wp_threshold and end_max >= wp_threshold:
                 prev_home_wp = home_wp
                 prev_away_wp = away_wp
                 continue
@@ -619,7 +622,7 @@ def main():
             "wp_filter": {
                 "enabled": True,
                 "threshold": args.wp_threshold,
-                "description": f"Stats reflect competitive plays only (WP < {args.wp_threshold * 100:.1f}%)",
+                "description": f"Stats reflect competitive plays only (WP < {args.wp_threshold * 100:.1f}% at start or end)",
             },
             "summary_table": df_filtered[SUMMARY_COLS].to_dict(orient="records"),
             "advanced_table": df_filtered[ADVANCED_COLS].to_dict(orient="records"),
@@ -630,7 +633,7 @@ def main():
             "team_meta": team_meta,
             "last_play": last_play_line,
             "game_status": game_status_label,
-            "is_final": game_is_final
+            "is_final": game_is_final,
         }
         ai_summary = generate_game_summary(payload, raw_data, prob_map, args.wp_threshold)
         payload["ai_summary"] = ai_summary

@@ -1,10 +1,14 @@
 'use client';
 
 import { useState, useCallback, useEffect, useRef } from 'react';
-import { ScoreboardResponse, ScoreboardGame } from '@/types';
+import { useRouter } from 'next/navigation';
+import { ScoreboardResponse, ScoreboardGame, WeekSelection } from '@/types';
 import { GameCard } from '@/components/GameCard';
+import { WeekPicker } from '@/components/WeekPicker';
 import { useAutoRefresh } from '@/hooks/useAutoRefresh';
 import { DirectoryLoading } from '@/components/LoadingStates';
+import { weekToUrlParam } from '@/lib/weekUtils';
+import { buildScoreboardUrl } from '@/lib/scoreboardUrl';
 
 interface DirectoryClientProps {
   initialData: ScoreboardResponse;
@@ -91,9 +95,28 @@ function sortGames(games: ScoreboardGame[]): ScoreboardGame[] {
 }
 
 export function DirectoryClient({ initialData }: DirectoryClientProps) {
+  const router = useRouter();
   const [scoreboard, setScoreboard] = useState<ScoreboardResponse>(initialData);
   const [changedGameIds, setChangedGameIds] = useState<Set<string>>(new Set());
   const prevScoresRef = useRef<Record<string, { home: number; away: number }>>({});
+
+  // Current week from scoreboard data
+  const currentWeek: WeekSelection = {
+    weekNumber: scoreboard.week.number,
+    seasonType: scoreboard.week.seasonType,
+  };
+  const { weekNumber, seasonType } = currentWeek;
+
+  const handleWeekChange = useCallback((week: WeekSelection) => {
+    const param = weekToUrlParam(week);
+    router.push(`/?week=${param}`);
+    router.refresh();
+  }, [router]);
+
+  // Update scoreboard when initialData changes (e.g., week picker navigation)
+  useEffect(() => {
+    setScoreboard(initialData);
+  }, [initialData]);
 
   // Store initial scores
   useEffect(() => {
@@ -110,12 +133,12 @@ export function DirectoryClient({ initialData }: DirectoryClientProps) {
   const hasActiveGames = scoreboard.games.some((g) => g.isActive);
 
   const fetchScoreboard = useCallback(async (): Promise<ScoreboardResponse> => {
-    const response = await fetch('/api/scoreboard');
+    const response = await fetch(buildScoreboardUrl({ weekNumber, seasonType }));
     if (!response.ok) {
       throw new Error('Failed to fetch scoreboard');
     }
     return response.json();
-  }, []);
+  }, [weekNumber, seasonType]);
 
   const handleRefreshSuccess = useCallback((data: ScoreboardResponse) => {
     // Detect score changes
@@ -160,7 +183,8 @@ export function DirectoryClient({ initialData }: DirectoryClientProps) {
         <h1 className="font-display text-4xl md:text-5xl tracking-wide text-text-primary mb-2">
           NFL {scoreboard.week.label}
         </h1>
-        <div className="flex items-center justify-center gap-4">
+        <div className="flex items-center justify-center gap-4 flex-wrap">
+          <WeekPicker currentWeek={currentWeek} onWeekChange={handleWeekChange} />
           <p className="font-condensed text-lg text-text-secondary uppercase tracking-wider">
             {sortedGames.length} Games
             {activeCount > 0 && (
@@ -215,7 +239,7 @@ export function DirectoryClient({ initialData }: DirectoryClientProps) {
                 : ''
             }`}
           >
-            <GameCard game={game} />
+            <GameCard game={game} week={currentWeek} />
           </div>
         ))}
       </div>

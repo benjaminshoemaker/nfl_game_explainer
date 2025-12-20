@@ -26,7 +26,7 @@ const STAT_CONFIGS: StatConfig[] = [
   { key: 'Success Rate', label: 'Success Rate', description: 'Play Success %', isPercentage: true },
   { key: 'Explosive Play Rate', label: 'Explosive Play Rate', description: 'Explosiveness', isPercentage: true, clickable: true, dataCategory: 'Explosive Plays' },
   { key: 'Points Per Trip (Inside 40)', label: 'Points Per Trip', description: 'Finishing Drives', clickable: true },
-  { key: 'Ave Start Field Pos', label: 'Ave Start Field Pos', description: 'Field Position' },
+  { key: 'Ave Start Field Pos', label: 'Ave Start Field Pos', description: 'Field Position', clickable: true, dataCategory: 'Drive Starts' },
   { key: 'Penalty Yards', label: 'Penalty Yards', description: 'Play Clean', invertBetter: true, clickable: true },
   { key: 'Non-Offensive Points', label: 'Non-Offensive Points', description: 'D/ST Points', clickable: true },
 ];

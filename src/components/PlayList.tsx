@@ -4,14 +4,27 @@ import { PlayDetail } from '@/types';
 
 interface PlayListProps {
   plays: PlayDetail[];
+  teamAbbr: string;
   teamSecondary: string;
   teamTextColor: string;
+  opponentTextColor: string;
   side: 'away' | 'home';
+  category?: string;
 }
 
 function formatWpDelta(delta: number): string {
   const sign = delta >= 0 ? '+' : '';
   return `${sign}${(delta * 100).toFixed(1)}%`;
+}
+
+function hexToRgba(hex: string, alpha: number): string | null {
+  const m = hex.trim().match(/^#([0-9a-fA-F]{6})$/);
+  if (!m) return null;
+  const value = m[1];
+  const r = parseInt(value.slice(0, 2), 16);
+  const g = parseInt(value.slice(2, 4), 16);
+  const b = parseInt(value.slice(4, 6), 16);
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
 function getWpDeltaClass(delta: number): { bg: string; text: string; isBig: boolean } {
@@ -100,7 +113,15 @@ function extractHeadline(text: string, type: string): string {
   return type.toUpperCase();
 }
 
-export function PlayList({ plays, teamSecondary, teamTextColor, side }: PlayListProps) {
+export function PlayList({
+  plays,
+  teamAbbr,
+  teamSecondary,
+  teamTextColor,
+  opponentTextColor,
+  side,
+  category,
+}: PlayListProps) {
   if (plays.length === 0) {
     return (
       <div className="py-8 px-4 text-center border border-dashed border-border-medium rounded-xl">
@@ -134,6 +155,29 @@ export function PlayList({ plays, teamSecondary, teamTextColor, side }: PlayList
 
         // Big play: significant yards or WP swing
         const isBigPlay = (play.yards && Math.abs(play.yards) >= 20) || Math.abs(wpDelta) > 0.15;
+        const isDriveStartsCategory = category === 'Drive Starts';
+        const isPenaltyCategory = category === 'Penalty Yards';
+        const showEndSpotInsteadOfYards = isDriveStartsCategory && Boolean(play.end_pos);
+
+        const formatEndSpot = (yardLine: unknown): { text: string; isOwn: boolean | null } => {
+          const raw = typeof yardLine === 'string' ? yardLine : String(yardLine ?? '');
+          const parts = raw.trim().split(/\s+/);
+          if (parts.length !== 2) return { text: raw, isOwn: null };
+          const sideAbbr = parts[0].toUpperCase();
+          const yard = parts[1];
+          const team = (teamAbbr || '').toUpperCase();
+          const label = sideAbbr === team ? 'Own' : 'Opp';
+          return { text: `${label} ${yard} Yard Line`, isOwn: sideAbbr === team };
+        };
+
+        const endSpot = showEndSpotInsteadOfYards ? formatEndSpot(play.end_pos) : null;
+        const endSpotAccent =
+          endSpot?.isOwn === null
+            ? null
+            : endSpot?.isOwn
+              ? teamTextColor
+              : opponentTextColor;
+        const endSpotBg = endSpotAccent ? hexToRgba(endSpotAccent, 0.18) : null;
 
         return (
           <div
@@ -188,6 +232,12 @@ export function PlayList({ plays, teamSecondary, teamTextColor, side }: PlayList
                     {play.clock}
                   </span>
                 )}
+                {/* End spot */}
+                {play.end_pos && (
+                  <span className="font-condensed text-xs text-text-muted uppercase tracking-wider">
+                    {play.end_pos}
+                  </span>
+                )}
               </div>
 
               {/* Play type badge */}
@@ -218,7 +268,7 @@ export function PlayList({ plays, teamSecondary, teamTextColor, side }: PlayList
             {/* Footer */}
             <div className="flex items-center justify-between flex-wrap gap-2">
               {/* Yards badge */}
-              {play.yards !== undefined && play.yards !== 0 && (
+              {play.yards !== undefined && play.yards !== 0 && !showEndSpotInsteadOfYards && (
                 <span
                   className="font-display text-sm px-3 py-1 rounded-md"
                   style={{
@@ -226,7 +276,22 @@ export function PlayList({ plays, teamSecondary, teamTextColor, side }: PlayList
                     color: play.yards > 0 ? 'var(--positive)' : 'var(--negative)',
                   }}
                 >
-                  {play.yards > 0 ? '+' : ''}{play.yards} YDS
+                  {isPenaltyCategory
+                    ? `${play.yards > 0 ? '+' : ''}${play.yards} yards`
+                    : `${play.yards > 0 ? '+' : ''}${play.yards} YDS`}
+                </span>
+              )}
+
+              {/* Drive Starts special-case: show end spot instead of +/- yards */}
+              {showEndSpotInsteadOfYards && (
+                <span
+                  className="font-display text-sm px-3 py-1 rounded-md"
+                  style={{
+                    background: endSpotBg ?? 'var(--bg-deep)',
+                    color: endSpotAccent ?? 'var(--text-secondary)',
+                  }}
+                >
+                  {endSpot?.text ?? String(play.end_pos)}
                 </span>
               )}
 

@@ -227,6 +227,7 @@ def build_top_plays_by_wp(game_data, probability_map, wp_threshold=0.975, limit=
             id_to_abbr[tid] = abbr
 
     prev_home_wp = 0.5
+    prev_away_wp = 0.5
     drives = game_data.get('drives', {}).get('previous', [])
 
     for drive in drives:
@@ -240,12 +241,16 @@ def build_top_plays_by_wp(game_data, probability_map, wp_threshold=0.975, limit=
             if not prob:
                 continue
 
+            start_home_wp = prev_home_wp
+            start_away_wp = prev_away_wp
+
             home_wp = prob.get('homeWinPercentage', 0.5)
             away_wp = prob.get('awayWinPercentage', 0.5)
 
             # Skip non-competitive plays (unless OT)
-            if period < 5 and (home_wp >= wp_threshold or away_wp >= wp_threshold):
+            if period < 5 and (start_home_wp >= wp_threshold or start_away_wp >= wp_threshold):
                 prev_home_wp = home_wp
+                prev_away_wp = away_wp
                 continue
 
             delta = abs(home_wp - prev_home_wp) * 100
@@ -260,6 +265,7 @@ def build_top_plays_by_wp(game_data, probability_map, wp_threshold=0.975, limit=
                 })
 
             prev_home_wp = home_wp
+            prev_away_wp = away_wp
 
     # Sort by delta descending, take top N
     plays_with_delta.sort(key=lambda x: x['delta'], reverse=True)

@@ -8,12 +8,20 @@ interface PageProps {
   }>;
 }
 
+function isLocalhost(host: string | null): boolean {
+  if (!host) return false;
+  const hostname = host.split(':')[0]?.toLowerCase();
+  return hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '::1';
+}
+
 function getRequestOrigin(): string {
   const h = headers();
   const forwardedProto = h.get('x-forwarded-proto');
   const forwardedHost = h.get('x-forwarded-host');
   const host = forwardedHost ?? h.get('host') ?? process.env.VERCEL_URL ?? 'localhost:3000';
-  const proto = forwardedProto ?? (process.env.NODE_ENV === 'development' ? 'http' : 'https');
+  const proto =
+    forwardedProto ??
+    (process.env.NODE_ENV === 'development' || isLocalhost(host) ? 'http' : 'https');
   return `${proto}://${host}`;
 }
 
@@ -59,7 +67,7 @@ async function getGameData(gameId: string): Promise<GameResponse | null> {
   }
 }
 
-function ErrorState({ gameId }: { gameId: string }) {
+function ErrorState({ gameId, showLocalHint }: { gameId: string; showLocalHint: boolean }) {
   return (
     <div className="min-h-screen bg-bg-deep flex items-center justify-center">
       <div className="text-center space-y-4 max-w-md px-4">
@@ -74,6 +82,12 @@ function ErrorState({ gameId }: { gameId: string }) {
         <p className="font-body text-text-secondary">
           Unable to load game data for ID: {gameId}
         </p>
+        {showLocalHint && (
+          <p className="font-body text-text-muted text-sm">
+            Local dev tip: this page needs the Python API. Run <code>python local_server.py</code> (port 8000) alongside{' '}
+            <code>npm run dev</code>, or use <code>vercel dev</code>.
+          </p>
+        )}
         <a
           href="/"
           className="inline-block px-6 py-2 bg-gold text-bg-deep font-condensed uppercase tracking-wider rounded-lg hover:bg-gold/90 transition-colors"
@@ -90,7 +104,9 @@ export default async function GamePage({ params }: PageProps) {
   const gameData = await getGameData(gameId);
 
   if (!gameData) {
-    return <ErrorState gameId={gameId} />;
+    const host = headers().get('host');
+    const showLocalHint = process.env.NODE_ENV === 'development' || isLocalhost(host);
+    return <ErrorState gameId={gameId} showLocalHint={showLocalHint} />;
   }
 
   return <GamePageClient initialGameData={gameData} />;

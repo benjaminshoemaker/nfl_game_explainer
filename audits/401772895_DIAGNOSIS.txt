@@ -1,0 +1,133 @@
+Fetching ESPN official stats for game 401772895...
+Fetching play-by-play data...
+
+================================================================================
+=== DIAGNOSTIC REPORT: ARI 17 @ TB 20 (401772895) ===
+================================================================================
+
+ESPN Totals:
+  ARI: 386 yards, 2 turnovers
+  TB: 279 yards, 0 turnovers
+
+game_compare Totals:
+  ARI: 360 yards (DELTA: -26 yards), 2 turnovers 
+  TB: 283 yards (DELTA: +4 yards), 0 turnovers 
+
+================================================================================
+SECTION A: YARDAGE BY PLAY TYPE
+================================================================================
+
+ARI Offensive Plays (Counted toward Total Yards):
+  Rushing: 16 plays, 77 yards
+  Passing: 44 plays, 281 yards
+  Subtotal: 358 yards
+
+ARI Special Teams (NOT Counted toward Total Yards):
+  Kickoff: 4 plays, 118 yards
+  Punt: 2 plays, 23 yards
+  Field Goal: 2 plays, 95 yards
+
+TB Offensive Plays (Counted toward Total Yards):
+  Rushing: 21 plays, 68 yards
+  Passing: 33 plays, 215 yards
+  Subtotal: 283 yards
+
+TB Special Teams (NOT Counted toward Total Yards):
+  Kickoff Return: 1 plays, 21 yards  <-- POSSIBLE MISSING YARDS
+  Kickoff: 3 plays, 46 yards
+  Punt: 5 plays, -4 yards
+  Field Goal: 2 plays, 82 yards
+
+================================================================================
+SECTION B: EXCLUDED PLAYS WITH YARDAGE
+================================================================================
+
+ARI Excluded Plays:
+  Q2 0:00 | Field Goal | +52 yards | Field Goal Good
+    " C.Ryland 52 yard field goal is GOOD, Center-A.Brewer, Holder-M.Haack."
+  Q3 7:50 | Field Goal | +43 yards | Field Goal Missed
+    "C.Ryland 43 yard field goal is No Good, Wide Right, Center-A.Brewer, Holder-M.Haack."
+  Q2 8:02 | Kickoff | +30 yards | Kickoff
+    "C.McLaughlin kicks 64 yards from TB 35 to ARZ 1. G.Dortch to ARZ 31 for 30 yards (S.Dennis)."
+  Q2 1:36 | Kickoff | +18 yards | Kickoff
+    "C.McLaughlin kicks 60 yards from TB 35 to ARZ 5. A.Baccellia to ARZ 23 for 18 yards (J.Hayes)."
+  Q3 15:00 | Kickoff | +43 yards | Kickoff
+    "C.McLaughlin kicks 66 yards from TB 35 to ARZ -1. A.Baccellia pushed ob at ARZ 42 for 43 yards (J.Parrish)."
+  Q3 3:56 | Kickoff | +27 yards | Kickoff
+    "C.McLaughlin kicks 64 yards from TB 35 to ARZ 1. A.Baccellia to ARZ 28 for 27 yards (A.Nelson)."
+  Q2 13:26 | Punt | +8 yards | Punt
+    "M.Haack punts 48 yards to TB 22, Center-A.Brewer. K.Johnson to TB 30 for 8 yards (C.Tindall)."
+  Q2 6:21 | Punt | +15 yards | Punt
+    "M.Haack punts 44 yards to TB 35, Center-A.Brewer. K.Johnson pushed ob at 50 for 15 yards (K.Crawford)."
+
+TB Excluded Plays:
+  Q2 8:02 | Field Goal | +25 yards | Field Goal Good
+    "C.McLaughlin 25 yard field goal is GOOD, Center-E.Deckers, Holder-R.Dixon."
+  Q4 8:58 | Field Goal | +57 yards | Field Goal Good
+    "C.McLaughlin 57 yard field goal is GOOD, Center-E.Deckers, Holder-R.Dixon."
+  Q1 15:00 | Kickoff | +26 yards | Kickoff
+    "C.Ryland kicks 64 yards from ARZ 35 to TB 1. K.Johnson to TB 27 for 26 yards (C.Tindall; B.Ojulari)."
+  Q4 4:58 | Kickoff | +20 yards | Kickoff
+    "C.Ryland kicks 64 yards from ARZ 35 to TB 1. K.Johnson to TB 21 for 20 yards (K.Crawford)."
+  Q4 8:58 | Kickoff Return | +21 yards | Kickoff
+    "C.McLaughlin kicks 59 yards from TB 35 to ARZ 6. A.Baccellia to ARZ 27 for 21 yards (R.Miller). ** Injury Update: ARZ-A.Baccellia has returned to the game."
+  Q1 13:28 | Penalty (No Play) | -5 yards | Penalty
+    "(Shotgun) PENALTY on TB-L.Goedeke, False Start, 5 yards, enforced at TB 33 - No Play."
+  Q1 12:21 | Penalty (No Play) | -5 yards | Penalty
+    "PENALTY on TB-P.Durham, False Start, 5 yards, enforced at ARZ 47 - No Play."
+  Q1 0:59 | Penalty (No Play) | -10 yards | Penalty
+    "(Shotgun) B.Mayfield pass deep middle to E.Egbuka to ARZ 45 for 21 yards (B.Baker).PENALTY on TB-T.Wirfs, Offensive Holding, 10 yards, enforced at TB 34 - No Play."
+  Q1 0:27 | Penalty (No Play) | +5 yards | Penalty
+    "(Shotgun) PENALTY on ARZ-B.Browning, Neutral Zone Infraction, 5 yards, enforced at TB 24 - No Play."
+  Q2 9:47 | Penalty (No Play) | +5 yards | Penalty
+    "PENALTY on ARZ-D.Stills, Encroachment, 5 yards, enforced at ARZ 45 - No Play."
+  Q2 2:35 | Penalty (No Play) | -10 yards | Penalty
+    "(Shotgun) B.Mayfield pass short right to R.White for 15 yards, TOUCHDOWN NULLIFIED by Penalty.PENALTY on TB-T.Johnson, Offensive Pass Interference, 10 yards, enforced at ARZ 15 - No Play."
+  Q2 1:52 | Penalty (No Play) | -10 yards | Penalty
+    "B.Irving right end for 1 yard, TOUCHDOWN NULLIFIED by Penalty.PENALTY on TB-P.Durham, Offensive Holding, 10 yards, enforced at ARZ 1 - No Play."
+  Q2 15:00 | Punt | +1 yards | Punt
+    "R.Dixon punts 56 yards to ARZ 22, Center-E.Deckers. G.Dortch ran ob at ARZ 23 for 1 yard (D.Culp)."
+  Q3 12:57 | Punt | -10 yards | Punt
+    "R.Dixon punts 42 yards to ARZ 20, Center-E.Deckers, fair catch by G.Dortch.PENALTY on ARZ-K.Crawford, Offensive Holding, 10 yards, enforced at ARZ 20."
+  Q4 2:00 | Punt | +5 yards | Punt
+    "R.Dixon punts 59 yards to ARZ 4, Center-E.Deckers. G.Dortch to ARZ 9 for 5 yards (M.Watts; J.Hayes)."
+  Q4 0:52 | Spike/Kneel | -2 yards | Rush
+    "B.Mayfield kneels to ARZ 18 for -2 yards."
+  Q4 0:51 | Spike/Kneel | -1 yards | Rush
+    "B.Mayfield kneels to ARZ 19 for -1 yards."
+  Q4 0:31 | Spike/Kneel | -1 yards | Rush
+    "B.Mayfield kneels to ARZ 20 for -1 yards."
+
+================================================================================
+SECTION C: TURNOVERS DETECTED BY game_compare
+================================================================================
+
+ARI Turnovers (2 detected):
+  Q1 3:47 | "(Shotgun) J.Brissett pass short middle intended for M.Wilson INTERCEPTED by A.Winfield (J.Dean) at TB 9. A.Winfield to TB 14 for 5 yards (Z.Knight; G.Dortch)." | Reason: interception
+  Q3 14:07 | "J.Fryar reported in as eligible.  Z.Knight up the middle to TB 43 for 2 yards (L.Hall). FUMBLES (L.Hall), RECOVERED by TB-T.Smith at TB 40." | Reason: fumble lost
+
+TB Turnovers (0 detected):
+  (none)
+
+================================================================================
+SECTION D: POTENTIAL MISSING TURNOVERS
+================================================================================
+
+Plays with turnover keywords NOT counted:
+
+TB:
+  Q1 12:08 | "(Shotgun) B.Mayfield sacked at TB 40 for -8 yards (J.Sweat). FUMBLES (J.Sweat), recovered by TB-R.White at TB 38. R.White to TB 45 for 7 yards (B.Baker, A.Davis-Gaither)." | NOT COUNTED: fumble (own recovery)
+
+================================================================================
+SUMMARY
+================================================================================
+
+Yardage Gap Explanation:
+  ARI: -26 yards, likely from: Unknown source ?
+  TB: +4 yards, likely from: Kickoff returns (21) ?
+
+Turnover Gap Explanation:
+  ARI: MATCH - no turnover discrepancy
+  TB: MATCH - no turnover discrepancy
+
+================================================================================

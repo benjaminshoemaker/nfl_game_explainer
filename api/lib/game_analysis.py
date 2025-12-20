@@ -24,12 +24,46 @@ from .nfl_core import (
     build_analysis_text,
 )
 
-
 def _decompress_response(data):
     """Decompress gzip data if needed, return raw data otherwise."""
     if data[:2] == b'\x1f\x8b':  # gzip magic bytes
         return gzip.decompress(data)
     return data
+
+
+def _derive_game_status(status_obj):
+    """
+    Derive API status and optional gameClock from ESPN competition status object.
+
+    ESPN uses `status.type.state`:
+      - "pre"  => pregame
+      - "in"   => in-progress
+      - "post" => final
+
+    Some pregame payloads have period=0; treat that as pregame (not "Q0").
+    """
+    status_obj = status_obj or {}
+    status_type = status_obj.get('type', {}) or {}
+
+    state = status_type.get('state')
+    completed = bool(status_type.get('completed', False))
+    period = status_obj.get('period', 0) or 0
+    clock = status_obj.get('displayClock', '') or ''
+
+    if state == 'post' or completed:
+        return "final", None
+
+    # Use explicit state when present, otherwise fall back to period>0.
+    if state == 'in' or (state is None and period > 0):
+        if period > 0:
+            if period <= 4:
+                label = f"Q{period} {clock}".strip()
+            else:
+                label = f"OT {clock}".strip() if clock else "OT"
+            return "in-progress", {"quarter": period, "clock": clock, "displayValue": label}
+        return "in-progress", None
+
+    return "pregame", None
 
 
 SUMMARY_COLS = ['Team', 'Score', 'Total Yards', 'Drives']
@@ -40,10 +74,12 @@ ADVANCED_COLS = [
     'Penalty Yards', 'Non-Offensive Points'
 ]
 EXPANDED_CATEGORIES = [
+    'All Plays',
     'Turnovers',
     'Explosive Plays',
     'Non-Offensive Scores',
     'Points Per Trip (Inside 40)',
+    'Drive Starts',
     'Penalty Yards',
     'Non-Offensive Points'
 ]
@@ -252,23 +288,22 @@ def analyze_game(game_id, wp_threshold=0.975):
     # Extract team metadata
     comps = raw_data.get('header', {}).get('competitions', [])
     team_meta = []
-    game_status_label = "Final"
-    game_is_final = True
+    game_is_final = False
     home_abbr = away_abbr = None
+    status = "pregame"
+    game_clock = None
+
+    # Extract week info from header
+    header = raw_data.get('header', {})
+    week_info = header.get('week', 0)
+    season_info = header.get('season', {})
+    season_type = season_info.get('type', 2) if isinstance(season_info, dict) else 2
 
     if comps:
         comp0 = comps[0]
         status_obj = comp0.get('status', {})
-        status_type = status_obj.get('type', {})
-        game_is_final = status_type.get('completed', False)
-
-        if not game_is_final:
-            period = status_obj.get('period', 0)
-            clock = status_obj.get('displayClock', '')
-            if period <= 4:
-                game_status_label = f"Q{period} {clock}".strip()
-            else:
-                game_status_label = f"OT {clock}".strip() if clock else "OT"
+        status, game_clock = _derive_game_status(status_obj)
+        game_is_final = status == "final"
 
         for comp in comp0.get('competitors', []):
             abbr = comp.get('team', {}).get('abbreviation')
@@ -283,14 +318,6 @@ def analyze_game(game_id, wp_threshold=0.975):
                 "name": display_name,
                 "homeAway": comp.get('homeAway')
             })
-
-    # Determine status for API response
-    if game_is_final:
-        status = "final"
-    elif game_status_label.startswith("Q") or game_status_label.startswith("OT"):
-        status = "in-progress"
-    else:
-        status = "pregame"
 
     # Slice details to only include expanded categories
     def slice_details(source):
@@ -308,21 +335,8 @@ def analyze_game(game_id, wp_threshold=0.975):
     # Build label
     label = f"{away_abbr}_at_{home_abbr}_{game_id}" if away_abbr and home_abbr else f"game_{game_id}"
 
-    # Extract game clock info
-    game_clock = None
-    if not game_is_final and comps:
-        status_obj = comps[0].get('status', {})
-        period = status_obj.get('period', 0)
-        clock = status_obj.get('displayClock', '')
-        if period > 0:
-            game_clock = {
-                "quarter": period,
-                "clock": clock,
-                "displayValue": game_status_label
-            }
-
-    # Get last play time for live games
-    last_play_time = get_last_play_time(raw_data) if not game_is_final else None
+    # Get last play time for live games display
+    last_play_time = get_last_play_time(raw_data)
 
     payload = {
         "gameId": game_id,
@@ -330,6 +344,10 @@ def analyze_game(game_id, wp_threshold=0.975):
         "status": status,
         "gameClock": game_clock,
         "lastPlayTime": last_play_time,
+        "week": {
+            "number": week_info,
+            "seasonType": season_type,
+        },
         "wp_filter": {
             "enabled": True,
             "threshold": wp_threshold,

@@ -258,6 +258,7 @@ class GameRecon:
     turnover_plays_by_team: Dict[str, List[PlayBlurb]]
     potential_turnover_keyword_plays: Dict[str, List[PlayBlurb]]
     excluded_yardage_plays: Dict[str, List[PlayBlurb]]
+    total_yards_corrections_by_team: Dict[str, List[str]]
 
     @property
     def max_abs_turnovers_delta(self) -> int:
@@ -589,7 +590,7 @@ def _build_play_blurb(play: Dict[str, Any], *, reason: Optional[str] = None) -> 
 def analyze_reconciliation_clues(
     raw_data: Dict[str, Any],
     details: Dict[str, Any],
-) -> Tuple[Dict[str, List[PlayBlurb]], Dict[str, List[PlayBlurb]], Dict[str, List[PlayBlurb]]]:
+) -> Tuple[Dict[str, List[PlayBlurb]], Dict[str, List[PlayBlurb]], Dict[str, List[PlayBlurb]], Dict[str, List[str]]]:
     id_to_abbr, _abbr_to_id = _team_id_maps(raw_data)
     drives = (raw_data.get("drives", {}) or {}).get("previous", []) or []
 
@@ -598,6 +599,7 @@ def analyze_reconciliation_clues(
 
     # 1) Windelta turnover plays (from expanded details)
     turnover_plays_by_team: Dict[str, List[PlayBlurb]] = {abbr: [] for abbr in team_abbrs}
+    total_yards_corrections_by_team: Dict[str, List[str]] = {abbr: [] for abbr in team_abbrs}
     for tid, cats in (details or {}).items():
         abbr = id_to_abbr.get(str(tid))
         if not abbr:
@@ -612,6 +614,17 @@ def analyze_reconciliation_clues(
                     yards=_parse_int(to_play.get("yards")),
                     reason=to_play.get("reason"),
                 )
+            )
+
+        for corr in (cats or {}).get("Total Yards Corrections", []) or []:
+            quarter = corr.get("quarter")
+            clock = corr.get("clock") or "?"
+            play_type = corr.get("type") or "Unknown"
+            stat_yards = corr.get("statYardage")
+            corrected = corr.get("correctedYards")
+            text = corr.get("text") or ""
+            total_yards_corrections_by_team.setdefault(abbr, []).append(
+                f"- Q{quarter or '?'} {clock} {play_type}: TotalYards {stat_yards!s} -> {corrected!s}: {text}"
             )
 
     # Build a coarse "already tracked" set by (quarter, clock, final_play_text).
@@ -675,7 +688,15 @@ def analyze_reconciliation_clues(
         for abbr in list(d.keys()):
             d[abbr] = sorted(d[abbr], key=sort_key)[:25]
 
-    return turnover_plays_by_team, potential_turnover_keyword_plays, excluded_yardage_plays
+    for abbr in list(total_yards_corrections_by_team.keys()):
+        total_yards_corrections_by_team[abbr] = total_yards_corrections_by_team[abbr][:25]
+
+    return (
+        turnover_plays_by_team,
+        potential_turnover_keyword_plays,
+        excluded_yardage_plays,
+        total_yards_corrections_by_team,
+    )
 
 
 def build_season_recon(
@@ -756,7 +777,9 @@ def build_season_recon(
             away_line = team_line(away, "away", home)
             home_line = team_line(home, "home", away)
 
-            turnover_plays_by_team, potential_keyword, excluded_yards = analyze_reconciliation_clues(raw_data, details)
+            turnover_plays_by_team, potential_keyword, excluded_yards, total_yards_corrections = analyze_reconciliation_clues(
+                raw_data, details
+            )
 
             recon.append(
                 GameRecon(
@@ -768,6 +791,7 @@ def build_season_recon(
                     turnover_plays_by_team=turnover_plays_by_team,
                     potential_turnover_keyword_plays=potential_keyword,
                     excluded_yardage_plays=excluded_yards,
+                    total_yards_corrections_by_team=total_yards_corrections,
                 )
             )
         except Exception as exc:
@@ -931,8 +955,9 @@ def write_markdown_report(path: Path, recon: Sequence[GameRecon], failures: Sequ
             to_plays = g.turnover_plays_by_team.get(team) or []
             kw_plays = g.potential_turnover_keyword_plays.get(team) or []
             ex_plays = g.excluded_yardage_plays.get(team) or []
+            ty_corr = g.total_yards_corrections_by_team.get(team) or []
 
-            if not to_plays and not kw_plays and not ex_plays:
+            if not to_plays and not kw_plays and not ex_plays and not ty_corr:
                 continue
 
             lines.append("")
@@ -955,6 +980,11 @@ def write_markdown_report(path: Path, recon: Sequence[GameRecon], failures: Sequ
                 lines.append(f"- Excluded non-zero-yard plays (up to {len(ex_plays)} shown):")
                 for p in ex_plays:
                     lines.append(p.format_line())
+
+            if ty_corr:
+                lines.append("")
+                lines.append(f"- Total-yards penalty corrections (up to {len(ty_corr)} shown):")
+                lines.extend(ty_corr)
 
     if failures:
         lines.append("")
@@ -1058,9 +1088,17 @@ def main() -> int:
             print(f"Failed to fetch season game IDs: {exc}", file=sys.stderr)
             return 1
 
-    out_ids = Path(args.out_ids or os.path.join("audits", f"season_{args.season}_game_ids.txt"))
-    write_game_ids_txt(out_ids, game_ids)
-    print(f"Wrote {len(game_ids)} game IDs to {out_ids}")
+    out_ids: Optional[Path] = None
+    if not args.ids_input:
+        out_ids = Path(args.out_ids or os.path.join("audits", f"season_{args.season}_game_ids.txt"))
+    elif args.out_ids:
+        out_ids = Path(args.out_ids)
+
+    if out_ids is not None:
+        write_game_ids_txt(out_ids, game_ids)
+        print(f"Wrote {len(game_ids)} game IDs to {out_ids}")
+    else:
+        print(f"Loaded {len(game_ids)} game IDs from {input_path}")
 
     espn_stats_cache_path = Path(args.espn_stats_cache) if args.espn_stats_cache else None
     if not espn_stats_cache_path:

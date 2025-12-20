@@ -101,6 +101,7 @@ def _game(game_id: str, away_to: int, home_to: int, away_yd: int, home_yd: int) 
         turnover_plays_by_team={},
         potential_turnover_keyword_plays={},
         excluded_yardage_plays={},
+        total_yards_corrections_by_team={},
     )
 
 
@@ -146,10 +147,13 @@ def test_analyze_reconciliation_clues_flags_excluded_return_yards_and_keyword_tu
         },
     }
 
-    turnover_plays, potential_keyword, excluded_yards = report.analyze_reconciliation_clues(raw_data, details={})
+    turnover_plays, potential_keyword, excluded_yards, total_yards_corrections = report.analyze_reconciliation_clues(
+        raw_data, details={}
+    )
 
     assert turnover_plays["AAA"] == []
     assert any("fumble" in (p.text or "").lower() for p in potential_keyword["AAA"])
+    assert total_yards_corrections["AAA"] == []
 
     # Return plays are attributed to the opponent by the heuristic.
     assert any(p.reason == "special_teams_return" for p in excluded_yards["BBB"])
@@ -257,6 +261,7 @@ def test_compute_aggregate_deltas_sums_and_percentages():
             turnover_plays_by_team={},
             potential_turnover_keyword_plays={},
             excluded_yardage_plays={},
+            total_yards_corrections_by_team={},
         )
     ]
 
@@ -321,6 +326,7 @@ def test_write_logic_recommendations_handles_pct_delta_none(tmp_path):
             turnover_plays_by_team={},
             potential_turnover_keyword_plays={},
             excluded_yardage_plays={},
+            total_yards_corrections_by_team={},
         )
     ]
 
@@ -381,3 +387,49 @@ def test_main_write_recommendations_flag_writes_file(tmp_path, monkeypatch):
     rc = report.main()
     assert rc == 0
     assert out_recs.exists()
+
+
+def test_main_ids_input_does_not_overwrite_default_out_ids(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    input_ids = tmp_path / "ids_in.txt"
+    input_ids.write_text("123\n")
+
+    default_out_ids = report.Path("audits") / "season_2025_game_ids.txt"
+    existing = "AAA\nBBB\n"
+    default_out_ids.parent.mkdir(parents=True, exist_ok=True)
+    default_out_ids.write_text(existing)
+
+    cache_dir = tmp_path / "pbp_cache"
+    cache_dir.mkdir()
+
+    fake_recon = _game("123", away_to=0, home_to=0, away_yd=0, home_yd=0)
+
+    monkeypatch.setattr(report, "build_season_recon", lambda *args, **kwargs: ([fake_recon], []))
+
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "compare_season_games_report.py",
+            "--season",
+            "2025",
+            "--ids-input",
+            str(input_ids),
+            "--source",
+            "cache",
+            "--cache-dir",
+            str(cache_dir),
+            "--out-team-csv",
+            str(tmp_path / "team.csv"),
+            "--out-game-csv",
+            str(tmp_path / "game.csv"),
+            "--out-md",
+            str(tmp_path / "report.md"),
+            "--espn-stats-cache",
+            str(tmp_path / "stats_cache.json"),
+        ],
+    )
+
+    rc = report.main()
+    assert rc == 0
+    assert default_out_ids.read_text() == existing

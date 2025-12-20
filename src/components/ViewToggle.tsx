@@ -41,11 +41,11 @@ export function ViewToggle({ value, onChange, showIndicator = true }: ViewToggle
       </div>
 
       {/* Filter indicator */}
-      {showIndicator && value === 'competitive' && (
-        <p className="font-condensed text-xs text-text-muted">
-          Stats reflect competitive plays only (WP &lt; 97.5%)
-        </p>
-      )}
-    </div>
-  );
+	      {showIndicator && value === 'competitive' && (
+	        <p className="font-condensed text-xs text-text-muted">
+	          Stats reflect competitive plays only (WP &lt; 97.5% at start or end)
+	        </p>
+	      )}
+	    </div>
+	  );
 }

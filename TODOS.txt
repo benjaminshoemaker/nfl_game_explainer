@@ -13,3 +13,7 @@ Follow-ups:
 - Add a game summary and halftime report for each game
 - Improve mobile game UI
 - Add a sorter to the Key Plays section
+- blog post explanations for games
+- edit special teams point logic to account for safeties and 2 point conversions
+- all plays sorted by WP option
+- improve logic for the LLM generation 

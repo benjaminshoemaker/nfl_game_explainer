@@ -39,12 +39,18 @@ htmlcov/
 .DS_Store
 .vscode/
 .idea/
+.claude/
 
 # Outputs
 game_summaries/
 game_stats.csv
 plays_wp_*.csv
 *.csv
+
+# Cache / debug
+pbp_cache/
+debug_summary_*.json
+audits/
 
 # Logs
 *.log

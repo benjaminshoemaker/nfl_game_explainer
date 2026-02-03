@@ -39,7 +39,7 @@ htmlcov/
 .DS_Store
 .vscode/
 .idea/
-.claude/
+.claude/settings.local.json
 
 # Outputs
 game_summaries/

@@ -9,8 +9,8 @@ from urllib.parse import urlparse, parse_qs
 ESPN_SCOREBOARD_URL = "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard"
 
 ESPN_REQUEST_HEADERS = {
-    # ESPN frequently blocks/behaves differently for non-browser UAs.
-    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    # Do not impersonate a browser here. ESPN rejects browser User-Agents from
+    # server-to-server clients while allowing the runtime's default User-Agent.
     "Accept": "application/json, text/plain, */*",
     "Accept-Language": "en-US,en;q=0.9",
     "Referer": "https://www.espn.com/",

@@ -24,6 +24,15 @@ from .nfl_core import (
     build_analysis_text,
 )
 
+ESPN_REQUEST_HEADERS = {
+    # ESPN currently rejects browser User-Agents from server-to-server clients.
+    # Let urllib supply its default User-Agent instead.
+    'Accept': 'application/json, text/plain, */*',
+    'Accept-Language': 'en-US,en;q=0.9',
+    'Referer': 'https://www.espn.com/',
+    'Origin': 'https://www.espn.com',
+}
+
 def _decompress_response(data):
     """Decompress gzip data if needed, return raw data otherwise."""
     if data[:2] == b'\x1f\x8b':  # gzip magic bytes
@@ -91,18 +100,10 @@ def get_game_data(game_id):
     summary_url = f"https://site.api.espn.com/apis/site/v2/sports/football/nfl/summary?event={game_id}"
     fallback_url = f"https://cdn.espn.com/core/nfl/playbyplay?xhr=1&gameId={game_id}"
 
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        'Accept': 'application/json, text/plain, */*',
-        'Accept-Language': 'en-US,en;q=0.9',
-        'Referer': 'https://www.espn.com/',
-        'Origin': 'https://www.espn.com',
-    }
-
     errors = []
 
     def fetch_json(url):
-        req = urllib.request.Request(url, headers=headers)
+        req = urllib.request.Request(url, headers=ESPN_REQUEST_HEADERS)
         with urllib.request.urlopen(req, timeout=15) as response:
             raw_data = _decompress_response(response.read())
             return json.loads(raw_data.decode())
@@ -140,14 +141,6 @@ def get_play_probabilities(game_id):
     Pull the v2 probabilities feed and map play_id -> probability payload.
     Returns a dict mapping play_id -> probability payload.
     """
-    # Full browser-like headers to avoid 401 errors from ESPN
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        'Accept': 'application/json, text/plain, */*',
-        'Accept-Language': 'en-US,en;q=0.9',
-        'Referer': 'https://www.espn.com/',
-        'Origin': 'https://www.espn.com',
-    }
     base = f"https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/{game_id}/competitions/{game_id}/probabilities"
     prob_map = {}
 
@@ -163,7 +156,7 @@ def get_play_probabilities(game_id):
     page_count = 1
     while page <= page_count:
         try:
-            req = urllib.request.Request(f"{base}?page={page}", headers=headers)
+            req = urllib.request.Request(f"{base}?page={page}", headers=ESPN_REQUEST_HEADERS)
             with urllib.request.urlopen(req, timeout=15) as resp:
                 raw_data = _decompress_response(resp.read())
                 data = json.loads(raw_data.decode())
@@ -191,18 +184,10 @@ def get_pregame_probabilities(game_id):
     Fetch pre-game win probabilities from ESPN summary winprobability array.
     Returns (home_wp, away_wp).
     """
-    # Full browser-like headers to avoid 401 errors from ESPN
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        'Accept': 'application/json, text/plain, */*',
-        'Accept-Language': 'en-US,en;q=0.9',
-        'Referer': 'https://www.espn.com/',
-        'Origin': 'https://www.espn.com',
-    }
     url = f"https://site.api.espn.com/apis/site/v2/sports/football/nfl/summary?event={game_id}"
 
     try:
-        req = urllib.request.Request(url, headers=headers)
+        req = urllib.request.Request(url, headers=ESPN_REQUEST_HEADERS)
         with urllib.request.urlopen(req, timeout=15) as resp:
             raw_data = _decompress_response(resp.read())
             data = json.loads(raw_data.decode()) or {}

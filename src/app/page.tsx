@@ -1,6 +1,7 @@
 import { ScoreboardResponse, SeasonType, WeekSelection } from '@/types';
 import { DirectoryClient } from './DirectoryClient';
 import { parseWeekParam } from '@/lib/weekUtils';
+import { ESPN_REQUEST_HEADERS } from '@/lib/espnRequest';
 
 // ESPN API URL for direct fetching (bypasses Python API for faster server-side render)
 const ESPN_SCOREBOARD_URL = 'https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard';
@@ -18,16 +19,6 @@ export const dynamic = 'force-dynamic';
 interface PageProps {
   searchParams: Promise<{ week?: string }>;
 }
-
-const ESPN_REQUEST_HEADERS = {
-  // ESPN frequently blocks/behaves differently for non-browser UAs.
-  'user-agent':
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-  accept: 'application/json, text/plain, */*',
-  'accept-language': 'en-US,en;q=0.9',
-  referer: 'https://www.espn.com/',
-  origin: 'https://www.espn.com',
-};
 
 function transformEspnGame(event: Record<string, unknown>): ScoreboardResponse['games'][0] {
   const competition = ((event.competitions as unknown[]) || [{}])[0] as Record<string, unknown>;

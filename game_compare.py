@@ -92,6 +92,10 @@ EXPANDED_CATEGORIES = [
     'Penalty Yards',
     'Non-Offensive Points'
 ]
+ESPN_REQUEST_HEADERS = {
+    'Accept': 'application/json, text/plain, */*',
+    'Accept-Language': 'en-US,en;q=0.9',
+}
 
 
 def parse_clock_to_seconds(display_value):
@@ -110,8 +114,7 @@ def get_game_data(game_id):
     import time
     cache_buster = int(time.time())
     url = f"https://cdn.espn.com/core/nfl/playbyplay?xhr=1&gameId={game_id}&cb={cache_buster}"
-    headers = {'User-Agent': 'Mozilla/5.0'}
-    response = requests.get(url, headers=headers)
+    response = requests.get(url, headers=ESPN_REQUEST_HEADERS)
     response.raise_for_status()
     data = response.json()
     return data.get('gamepackageJSON', {})
@@ -121,7 +124,6 @@ def get_play_probabilities(game_id):
     Pull the v2 probabilities feed and map play_id -> probability payload.
     Returns a dict mapping play_id -> probability payload.
     """
-    headers = {'User-Agent': 'Mozilla/5.0'}
     base = f"https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/{game_id}/competitions/{game_id}/probabilities"
     prob_map = {}
 
@@ -138,7 +140,7 @@ def get_play_probabilities(game_id):
     page_count = 1
     while page <= page_count:
         try:
-            resp = requests.get(f"{base}?page={page}", headers=headers, timeout=15)
+            resp = requests.get(f"{base}?page={page}", headers=ESPN_REQUEST_HEADERS, timeout=15)
             resp.raise_for_status()
             data = resp.json()
         except Exception:
@@ -166,11 +168,10 @@ def get_pregame_probabilities(game_id):
     Uses the first entry as the opening WP; returns (home_wp, away_wp).
     Falls back to (0.5, 0.5) if unavailable.
     """
-    headers = {'User-Agent': 'Mozilla/5.0'}
     url = f"https://site.api.espn.com/apis/site/v2/sports/football/nfl/summary?event={game_id}"
 
     try:
-        resp = requests.get(url, headers=headers, timeout=15)
+        resp = requests.get(url, headers=ESPN_REQUEST_HEADERS, timeout=15)
         resp.raise_for_status()
         data = resp.json() or {}
     except Exception:

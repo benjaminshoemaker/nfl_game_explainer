@@ -187,20 +187,26 @@ Key Plays:
 
 Write 2-3 sentences (max 280 chars) explaining {summary_focus}. Focus on turnovers, explosive plays, and efficiency. Be specific about what happened."""
 
-        response = client.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=[
+        model = os.environ.get("OPENAI_MODEL", "gpt-4o-mini")
+        completion_options = {
+            "model": model,
+            "messages": [
                 {
                     "role": "system",
                     "content": "You are an NFL analyst. Write extremely concise game summaries (max 280 characters). Focus on the key factors: turnovers, explosive plays, and efficiency. No hashtags or emojis."
                 },
                 {"role": "user", "content": user_prompt}
             ],
-            max_tokens=100,
-            temperature=0.7
-        )
+            "max_completion_tokens": 300 if model.startswith("gpt-5") else 100,
+        }
+        if model.startswith("gpt-5"):
+            completion_options["reasoning_effort"] = "minimal"
+
+        response = client.chat.completions.create(**completion_options)
 
         summary = response.choices[0].message.content.strip()
+        if not summary:
+            return None
 
         # Cache the result
         set_cached_summary(payload.get('gameId', ''), home_score, away_score, summary)

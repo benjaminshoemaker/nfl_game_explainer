@@ -3,7 +3,7 @@
   "outputDirectory": ".next",
   "functions": {
     "api/**/*.py": {
-      "maxDuration": 30
+      "maxDuration": 60
     }
   },
   "rewrites": [

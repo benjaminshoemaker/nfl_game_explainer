@@ -11,10 +11,9 @@ def _install_fake_openai(monkeypatch, recorder):
         def __init__(self, api_key=None):
             self.api_key = api_key
 
-            def create(model, messages, max_tokens, temperature):
+            def create(**kwargs):
                 recorder["calls"] = recorder.get("calls", 0) + 1
-                recorder["model"] = model
-                recorder["messages"] = messages
+                recorder.update(kwargs)
                 return SimpleNamespace(
                     choices=[
                         SimpleNamespace(message=SimpleNamespace(content="FAKE SUMMARY"))
@@ -31,6 +30,7 @@ def test_generate_ai_summary_uses_team_keyed_expanded_details(monkeypatch, tmp_p
     from api.lib import ai_summary
 
     monkeypatch.setenv("OPENAI_API_KEY", "test-key")
+    monkeypatch.setenv("OPENAI_MODEL", "gpt-5-test-summary-model")
     monkeypatch.setattr(ai_summary, "CACHE_DIR", str(tmp_path))
 
     recorder = {}
@@ -67,6 +67,9 @@ def test_generate_ai_summary_uses_team_keyed_expanded_details(monkeypatch, tmp_p
     summary = ai_summary.generate_ai_summary(payload, game_data={}, probability_map={})
     assert summary == "FAKE SUMMARY"
     assert recorder.get("calls") == 1
+    assert recorder["model"] == "gpt-5-test-summary-model"
+    assert recorder["max_completion_tokens"] == 300
+    assert recorder["reasoning_effort"] == "minimal"
 
     # Verify prompt includes key plays with team abbreviations (AAA/BBB), not team ids.
     user_prompt = recorder["messages"][1]["content"]
@@ -106,4 +109,3 @@ def test_generate_ai_summary_uses_cache(monkeypatch, tmp_path):
     # Second call should use cache and not call the model again.
     assert ai_summary.generate_ai_summary(payload, game_data={}, probability_map={}) == "FAKE SUMMARY"
     assert recorder.get("calls") == 1
-

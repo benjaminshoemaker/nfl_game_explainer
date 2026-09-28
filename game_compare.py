@@ -445,15 +445,19 @@ Status: {game_status}
 
 Write a concise summary (~280 chars) explaining {summary_focus}."""
 
-        response = client.chat.completions.create(
-            model="gpt-4o-mini",  # Update to gpt-5-mini when available
-            messages=[
+        model = os.environ.get("OPENAI_MODEL", "gpt-4o-mini")
+        completion_options = {
+            "model": model,
+            "messages": [
                 {"role": "system", "content": GAME_SUMMARY_SYSTEM_PROMPT},
                 {"role": "user", "content": user_prompt}
             ],
-            max_tokens=150,
-            temperature=0.7
-        )
+            "max_completion_tokens": 400 if model.startswith("gpt-5") else 150,
+        }
+        if model.startswith("gpt-5"):
+            completion_options["reasoning_effort"] = "minimal"
+
+        response = client.chat.completions.create(**completion_options)
 
         summary = response.choices[0].message.content.strip()
 

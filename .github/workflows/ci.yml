@@ -8,7 +8,7 @@ on:
 jobs:
   python:
     name: Python (pytest)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
@@ -24,7 +24,7 @@ jobs:
 
   node:
     name: Node (lint/typecheck/test/build)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7

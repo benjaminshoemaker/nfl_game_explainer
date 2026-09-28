@@ -1,5 +1,6 @@
 import { GameSidebarClient } from '@/components/GameSidebarClient';
 import { WeekProvider } from '@/contexts/WeekContext';
+import Link from 'next/link';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -19,7 +20,7 @@ export default function GameLayout({ children }: LayoutProps) {
           {/* Mobile header with back button */}
           <div className="lg:hidden sticky top-0 z-10 bg-bg-deep/95 backdrop-blur border-b border-border-subtle">
             <div className="flex items-center gap-3 px-4 py-3">
-              <a
+              <Link
                 href="/"
                 className="flex items-center gap-2 text-text-secondary hover:text-text-primary transition-colors"
               >
@@ -27,7 +28,7 @@ export default function GameLayout({ children }: LayoutProps) {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                 </svg>
                 <span className="font-condensed text-sm uppercase tracking-wider">All Games</span>
-              </a>
+              </Link>
             </div>
           </div>
 

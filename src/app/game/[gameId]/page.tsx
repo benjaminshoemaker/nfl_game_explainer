@@ -1,6 +1,7 @@
 import { GamePageClient } from './GamePageClient';
 import { GameResponse } from '@/types';
 import { headers } from 'next/headers';
+import Link from 'next/link';
 
 interface PageProps {
   params: Promise<{
@@ -14,8 +15,8 @@ function isLocalhost(host: string | null): boolean {
   return hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '::1';
 }
 
-function getRequestOrigin(): string {
-  const h = headers();
+async function getRequestOrigin(): Promise<string> {
+  const h = await headers();
   const forwardedProto = h.get('x-forwarded-proto');
   const forwardedHost = h.get('x-forwarded-host');
   const host = forwardedHost ?? h.get('host') ?? process.env.VERCEL_URL ?? 'localhost:3000';
@@ -33,7 +34,7 @@ async function getGameData(gameId: string): Promise<GameResponse | null> {
 
   try {
     // Prefer the request host over `VERCEL_URL` so we don't accidentally call a protected deployment URL.
-    const origin = getRequestOrigin();
+    const origin = await getRequestOrigin();
     const url = new URL(`/api/game/${gameId}`, origin);
 
     const response = await fetch(url, {
@@ -46,15 +47,16 @@ async function getGameData(gameId: string): Promise<GameResponse | null> {
 
     if (!response.ok) {
       const responseText = await response.text().catch(() => '');
+      const requestHeaders = await headers();
       console.error('Failed to fetch game data', {
         gameId,
         status: response.status,
         url: url.toString(),
         requestId,
         vercelUrl: process.env.VERCEL_URL,
-        host: headers().get('host'),
-        forwardedHost: headers().get('x-forwarded-host'),
-        forwardedProto: headers().get('x-forwarded-proto'),
+        host: requestHeaders.get('host'),
+        forwardedHost: requestHeaders.get('x-forwarded-host'),
+        forwardedProto: requestHeaders.get('x-forwarded-proto'),
         responseText: responseText.slice(0, 500),
       });
       return null;
@@ -88,12 +90,12 @@ function ErrorState({ gameId, showLocalHint }: { gameId: string; showLocalHint: 
             <code>npm run dev</code>, or use <code>vercel dev</code>.
           </p>
         )}
-        <a
+        <Link
           href="/"
           className="inline-block px-6 py-2 bg-gold text-bg-deep font-condensed uppercase tracking-wider rounded-lg hover:bg-gold/90 transition-colors"
         >
           Back to Games
-        </a>
+        </Link>
       </div>
     </div>
   );
@@ -104,7 +106,7 @@ export default async function GamePage({ params }: PageProps) {
   const gameData = await getGameData(gameId);
 
   if (!gameData) {
-    const host = headers().get('host');
+    const host = (await headers()).get('host');
     const showLocalHint = process.env.NODE_ENV === 'development' || isLocalhost(host);
     return <ErrorState gameId={gameId} showLocalHint={showLocalHint} />;
   }

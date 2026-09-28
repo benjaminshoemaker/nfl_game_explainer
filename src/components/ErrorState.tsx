@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+
 interface ErrorStateProps {
   title?: string;
   message?: string;
@@ -50,12 +52,12 @@ export function ErrorState({
             </button>
           )}
           {showHomeLink && (
-            <a
+            <Link
               href="/"
               className="px-6 py-2 border border-border-medium text-text-secondary font-condensed uppercase tracking-wider rounded-lg hover:border-border-strong hover:text-text-primary transition-colors"
             >
               Back to Games
-            </a>
+            </Link>
           )}
         </div>
       </div>

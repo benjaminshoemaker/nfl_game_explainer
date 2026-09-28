@@ -7,7 +7,9 @@ Follow-ups:
 - [DONE] Implement a check that checks the output from our script against the Team Stats display in ESPN, as a sanity check
 - [PARTIALLY DONE] Investigate and resolve output differences
 - [DONE] Add a week toggle to the main page
-- Add caching for completed games with numerators and denominators
+- Add persistent caching for completed games with separate competitive/full
+  stats and numerator/denominator provenance; do not enable the current
+  `api/lib/cache.py` prototype until those variants round-trip exactly.
 - Add summary for a team for the season for just their stats, with a time range picker + sparkles
 - Add a card export
 - Add a game summary and halftime report for each game

@@ -1,8 +1,11 @@
 """
 Caching layer for game analysis payloads.
 
-This module is used by `api/lib/game_analysis.py` to cache completed games so the
-web app can load quickly without re-fetching ESPN on every request.
+This is a disabled prototype for persistent completed-game caching. It is not
+connected to `api/lib/game_analysis.py`: the current cache schema does not
+preserve competitive and full-game stat variants separately, so enabling it
+would make those views diverge. Keep it disconnected until both variants and
+their numerator/denominator provenance round-trip exactly.
 """
 
 from __future__ import annotations

@@ -1,4 +1,16 @@
-# NFL Game Explainer: Live Dashboard Implementation Plan
+# NFL Game Explainer: Live Dashboard Implementation Plan (Historical)
+
+> Status reconciled September 27, 2026. The live dashboard described here has
+> been implemented and deployed. The original per-step checklists below are
+> retained as historical acceptance criteria; several remained unchecked even
+> after their code shipped and should not be used as the current status source.
+>
+> Current operational truth lives in `README.md`, source, automated tests, and
+> `.claude/verification-config.json`. The verified application includes the
+> directory and game pages, play lists, view toggle, sidebar, auto-refresh, AI
+> summaries, error/loading states, and responsive layouts. Production is hosted
+> on Vercel at `https://windelta.app`. The persistent-cache prototype remains
+> disabled because it does not preserve competitive and full-game stat variants.
 
 ## Overview
 

@@ -1,14 +1,14 @@
 {
   "commands": {
-    "test": "",
-    "lint": "",
-    "typecheck": "",
-    "build": "",
+    "test": ".venv/bin/python -m pytest tests/ -q && npm run test",
+    "lint": "npm run lint",
+    "typecheck": "npm run typecheck",
+    "build": "npm run build",
     "coverage": ""
   },
   "devServer": {
-    "command": "",
-    "url": "",
+    "command": "npm run dev",
+    "url": "http://localhost:3000",
     "startupSeconds": 10
   },
   "auth": {
@@ -25,5 +25,12 @@
     "headless": true,
     "timeout": 30000,
     "navigationTimeout": 60000
+  },
+  "deployment": {
+    "enabled": true,
+    "service": "vercel",
+    "waitForDeployment": true,
+    "deploymentTimeout": 300,
+    "tokenVar": "VERCEL_TOKEN"
   }
 }

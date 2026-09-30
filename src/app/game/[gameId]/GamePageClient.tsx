@@ -212,6 +212,7 @@ export function GamePageClient({ initialGameData, debugMode = false }: GamePageC
           <AdvancedStats
             stats={advancedStats}
             teamMeta={gameData.team_meta}
+            expandedDetails={rawExpandedDetails}
             onStatClick={handleStatClick}
             selectedCategory={selectedCategory}
           />

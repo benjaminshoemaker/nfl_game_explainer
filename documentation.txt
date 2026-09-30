@@ -120,6 +120,11 @@ CORE FIVE FACTORS (from Bill Connelly's framework)
    field goals or turn it over. This captures red zone efficiency plus the
    ability to convert good field position into points.
 
+   The dashboard also shows each qualifying trip's points (including zero-point
+   trips), the trip count, and total points from those trips for the selected
+   competitive or full-game scope. A touchdown that crosses the opponent's 40
+   on the scoring play counts as a trip reaching the 40.
+
 
 7. AVERAGE STARTING FIELD POSITION (Field Position)
    

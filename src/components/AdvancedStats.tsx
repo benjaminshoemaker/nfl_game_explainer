@@ -1,12 +1,14 @@
 'use client';
 
-import { AdvancedStats as AdvancedStatsType, TeamMeta } from '@/types';
+import { Fragment } from 'react';
+import { AdvancedStats as AdvancedStatsType, PlayDetail, TeamMeta } from '@/types';
 import { StatRow } from './StatRow';
 import { getTeamColorVars, parseStatValue, calculateStrength } from '@/lib/teamColors';
 
 interface AdvancedStatsProps {
   stats: AdvancedStatsType[];
   teamMeta: TeamMeta[];
+  expandedDetails?: Record<string, Record<string, PlayDetail[]>>;
   onStatClick?: (category: string) => void;
   selectedCategory?: string;
 }
@@ -32,6 +34,68 @@ const STAT_CONFIGS: StatConfig[] = [
   { key: 'Penalty Yards', label: 'Penalty Yards', description: 'Play Clean', invertBetter: true, clickable: true },
   { key: 'Non-Offensive Points', label: 'Non-Offensive Points', description: 'D/ST Points', clickable: true },
 ];
+
+const TRIP_CATEGORY = 'Points Per Trip (Inside 40)';
+
+function TripResultsRow({ abbr, trips }: { abbr: string; trips: PlayDetail[] }) {
+  const points = trips.map((trip) => trip.points);
+  const hasCompletePoints = points.every((value) => typeof value === 'number' && Number.isFinite(value));
+  const total = hasCompletePoints ? points.reduce<number>((sum, value) => sum + (value ?? 0), 0) : null;
+  const tripLabel = trips.length === 1 ? 'trip' : 'trips';
+
+  return (
+    <div className="grid grid-cols-[2.75rem_minmax(0,1fr)] gap-x-3 gap-y-1 py-1.5 md:grid-cols-[3.5rem_minmax(0,1fr)_auto] md:items-center">
+      <span className="font-condensed text-xs font-semibold tracking-wide text-text-secondary">{abbr}</span>
+      {trips.length > 0 ? (
+        <ol className="flex flex-wrap gap-1" aria-label={`${abbr} trips reaching opponent 40`}>
+          {trips.map((trip, index) => {
+            const value = trip.points;
+            const known = typeof value === 'number' && Number.isFinite(value);
+            const chipClass = !known || value === 0
+              ? 'bg-bg-hover text-text-secondary'
+              : value >= 6
+                ? 'bg-positive/15 text-positive'
+                : value === 3
+                  ? 'bg-gold/15 text-gold'
+                  : 'bg-bg-hover text-text-primary';
+            return (
+              <li
+                key={index}
+                className={`min-w-7 rounded px-1.5 py-0.5 text-center font-condensed text-sm font-semibold tabular-nums ${chipClass}`}
+                aria-label={known ? `Trip ${index + 1}: ${value} points` : `Trip ${index + 1}: points unavailable`}
+              >
+                {known ? value : '?'}
+              </li>
+            );
+          })}
+        </ol>
+      ) : <span className="font-condensed text-sm text-text-muted">No trips</span>}
+      <span className="col-start-2 font-condensed text-sm tabular-nums text-text-secondary md:col-start-3 md:text-right">
+        {trips.length} {tripLabel} · {total === null ? 'points unavailable' : `${total} pts`}
+      </span>
+    </div>
+  );
+}
+
+function PointsPerTripStrip({ awayAbbr, homeAbbr, awayTrips, homeTrips }: {
+  awayAbbr: string;
+  homeAbbr: string;
+  awayTrips: PlayDetail[];
+  homeTrips: PlayDetail[];
+}) {
+  return (
+    <div className="-mx-6 border-b border-border-subtle bg-bg-elevated/40 px-6 pb-3 pt-2">
+      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 font-condensed text-xs uppercase tracking-wide text-text-muted">
+        <span>Trips reaching opponent 40</span>
+        <span>7 TD · 3 FG · 0 no points</span>
+      </div>
+      <div className="mt-1">
+        <TripResultsRow abbr={awayAbbr} trips={awayTrips} />
+        <TripResultsRow abbr={homeAbbr} trips={homeTrips} />
+      </div>
+    </div>
+  );
+}
 
 function FactorPie({ awayCounts, evenCounts, homeCounts, awayColor, homeColor }: {
   awayCounts: number;
@@ -98,7 +162,7 @@ function FactorPie({ awayCounts, evenCounts, homeCounts, awayColor, homeColor }:
   );
 }
 
-export function AdvancedStats({ stats, teamMeta, onStatClick, selectedCategory }: AdvancedStatsProps) {
+export function AdvancedStats({ stats, teamMeta, expandedDetails, onStatClick, selectedCategory }: AdvancedStatsProps) {
   const away = teamMeta.find((t) => t.homeAway === 'away');
   const home = teamMeta.find((t) => t.homeAway === 'home');
 
@@ -111,6 +175,8 @@ export function AdvancedStats({ stats, teamMeta, onStatClick, selectedCategory }
 
   const awayColors = getTeamColorVars(away.abbr);
   const homeColors = getTeamColorVars(home.abbr);
+  const awayTrips = expandedDetails?.[away.id]?.[TRIP_CATEGORY];
+  const homeTrips = expandedDetails?.[home.id]?.[TRIP_CATEGORY];
 
   // Calculate factor counts
   let awayCounts = 0;
@@ -156,8 +222,8 @@ export function AdvancedStats({ stats, teamMeta, onStatClick, selectedCategory }
       {/* Stats */}
       <div className="px-6 py-2">
         {STAT_CONFIGS.map((config) => (
+          <Fragment key={config.key}>
           <StatRow
-            key={config.key}
             label={config.label}
             description={config.description}
             infoTooltip={config.infoTooltip}
@@ -177,6 +243,15 @@ export function AdvancedStats({ stats, teamMeta, onStatClick, selectedCategory }
             selected={selectedCategory === (config.dataCategory || config.key)}
             onClick={config.clickable && onStatClick ? () => onStatClick(config.dataCategory || config.key) : undefined}
           />
+          {config.key === TRIP_CATEGORY && awayTrips && homeTrips && (
+            <PointsPerTripStrip
+              awayAbbr={away.abbr}
+              homeAbbr={home.abbr}
+              awayTrips={awayTrips}
+              homeTrips={homeTrips}
+            />
+          )}
+          </Fragment>
         ))}
       </div>
 

@@ -260,7 +260,8 @@ def analyze_game(game_id, wp_threshold=0.975):
         expanded=True,
         probability_map=prob_map,
         pregame_probabilities=(pregame_home_wp, pregame_away_wp),
-        wp_threshold=wp_threshold
+        wp_threshold=wp_threshold,
+        penalty_yards_from_plays=bool(prob_map)
     )
     stats_full, details_full = process_game_stats(
         raw_data,
@@ -338,6 +339,16 @@ def analyze_game(game_id, wp_threshold=0.975):
 	            "threshold": wp_threshold,
 	            "description": f"Stats reflect competitive plays only (WP < {wp_threshold * 100:.1f}% at start or end)",
 	        },
+        "metric_scopes": {
+            "Penalty Yards": {
+                "competitive": (
+                    "When WP data is available, sums accepted ESPN play-level penalties in the selected scope; "
+                    "null when selected records lack usable yards or team attribution. Penalties absent from ESPN play-by-play are not counted."
+                    if prob_map else "Full-game box-score total; competitive scope unavailable without WP data."
+                ),
+                "full_game": "ESPN full-game box-score total",
+            },
+        },
 	        "team_meta": team_meta,
 	        "summary_table": summary_filtered,
 	        "advanced_table": advanced_filtered,

@@ -363,7 +363,8 @@ def is_competitive_play(play, probability_map, wp_threshold=0.975, start_home_wp
 
 
 def process_game_stats(game_data, expanded=False, probability_map=None,
-                       pregame_probabilities=None, wp_threshold=0.975):
+                       pregame_probabilities=None, wp_threshold=0.975,
+                       penalty_yards_from_plays=False):
     """
     Process game data and return stats as dict rows (not DataFrame).
     Returns (stats_rows, details) where stats_rows is a list of dicts.
@@ -548,7 +549,7 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
         team_stats = t.get('statistics', [])
         for stat in team_stats:
             stat_name = stat.get('name', '')
-            if stat_name == 'totalPenaltiesYards':
+            if stat_name == 'totalPenaltiesYards' and not penalty_yards_from_plays:
                 display_val = stat.get('displayValue', '')
                 if isinstance(display_val, str) and '-' in display_val:
                     parts = display_val.split('-')
@@ -705,7 +706,9 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
             # Handle penalty plays for expanded details
             penalty_info = play.get('penalty') or {}
             has_penalty_flag = bool(penalty_info) or play.get('hasPenalty') or 'penalty' in text_lower
-            if expanded and has_penalty_flag and not is_declined_only_penalty(text_lower, penalty_info):
+            if (expanded and has_penalty_flag
+                    and (not penalty_yards_from_plays or competitive)
+                    and not is_declined_only_penalty(text_lower, penalty_info)):
                 commit_team_id = penalty_info.get('team', {}).get('id')
                 if not commit_team_id:
                     for abbr_lower, tid in abbr_to_id.items():
@@ -731,6 +734,29 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
                     'end_pos': _end_pos_text(play),
                     'probability': probability_snapshot
                 })
+
+            # Accepted penalties count even when they nullify the underlying
+            # play. Apply the WP scope before the no-play filter below.
+            if penalty_yards_from_plays and competitive:
+                penalty_status = (penalty_info.get('status') or {}).get('slug')
+                if penalty_status == 'accepted':
+                    penalty_team_id = (penalty_info.get('team') or {}).get('id')
+                    if not penalty_team_id:
+                        for abbr_lower, tid in abbr_to_id.items():
+                            if f"penalty on {abbr_lower}" in text_lower:
+                                penalty_team_id = tid
+                                break
+                    if not penalty_team_id and 'on defense' in text_lower and opponent_id:
+                        penalty_team_id = opponent_id
+                    penalty_yards = penalty_info.get('yards')
+                    if (penalty_team_id not in stats
+                            or not isinstance(penalty_yards, (int, float))):
+                        for row in stats.values():
+                            row['Penalty Yards'] = None
+                    else:
+                        target = stats[penalty_team_id]
+                        if target['Penalty Yards'] is not None:
+                            target['Penalty Yards'] += abs(int(penalty_yards))
 
             if 'timeout' in play_type_lower or 'end of' in play_type_lower:
                 update_prev_wp(play)

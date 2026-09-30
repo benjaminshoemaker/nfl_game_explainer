@@ -24,6 +24,7 @@ from lib.nfl_core import (
     classify_offense_play,
     is_competitive_play,
     process_game_stats as _process_game_stats,
+    reconcile_final_boxscore,
     build_analysis_text,
 )
 
@@ -79,7 +80,8 @@ GAME_SUMMARY_SYSTEM_PROMPT = """You generate 280-character NFL game summaries th
 Shoot for ~280 characters. Brevity is key—if you can say it in fewer words, do. No hashtags or emojis."""
 SUMMARY_COLS = ['Team', 'Score', 'Total Yards', 'Drives']
 ADVANCED_COLS = [
-    'Team', 'Score', 'Turnovers', 'Total Yards', 'Yards Per Play',
+    'Team', 'Score', 'Turnovers', 'Total Yards',
+    'Official Yards Per Play (Full Game)', 'Adjusted Yards Per Play',
     'Success Rate', 'Explosive Plays', 'Explosive Play Rate',
     'Points Per Trip (Inside 40)', 'Ave Start Field Pos',
     'Penalty Yards', 'Non-Offensive Points'
@@ -549,6 +551,17 @@ def main():
             pregame_probabilities=(pregame_home_wp, pregame_away_wp),
             wp_threshold=1.0
         )
+        reconciled_full, source_gaps = reconcile_final_boxscore(
+            raw_data, df_full.to_dict(orient="records"), details_full
+        )
+        df_full = pd.DataFrame(reconciled_full)
+        if args.wp_threshold < 1.0:
+            df_filtered['Official Yards Per Play (Full Game)'] = None
+        else:
+            # A threshold of 1.0 requests the entire game, so its primary
+            # CLI table should match the reconciled full-game output.
+            df_filtered = df_full
+            details_filtered = details_full
         df = df_filtered
         details = details_filtered
 
@@ -635,6 +648,7 @@ def main():
             "advanced_table_full": df_full[ADVANCED_COLS].to_dict(orient="records"),
             "expanded_details": filtered_details,
             "expanded_details_full": filtered_details_full,
+            "source_gaps": source_gaps,
             "team_meta": team_meta,
             "last_play": last_play_line,
             "game_status": game_status_label,
@@ -659,6 +673,11 @@ def main():
 
         print("\n--- ADVANCED STATS ---")
         print(df_advanced_display)
+        if source_gaps:
+            print("\nESPN box-score totals differ from available play-by-play:")
+            for gap in source_gaps:
+                print(f"  {gap['team']}: yards {gap['yards_gap']:+d}, turnovers {gap['turnovers_gap']:+d}"
+                      " (box score minus parsed)")
         try:
             with open(json_path, "w") as f:
                 json.dump(payload, f, indent=2)

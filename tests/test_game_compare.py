@@ -241,7 +241,7 @@ def test_penalty_and_spike_excluded_from_rates():
     aaa = df.loc["AAA"]
     # Only the rush should count as a play; success rate from 1/1, YPP from 4 yards.
     assert aaa["Success Rate"] == 1.0
-    assert aaa["Yards Per Play"] == 4.0
+    assert aaa["Adjusted Yards Per Play"] == 4.0
 
 
 def test_html_advanced_metrics_payload_alignment():

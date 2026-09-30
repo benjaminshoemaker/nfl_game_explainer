@@ -1,6 +1,7 @@
 import json
 import os
 import sys
+import urllib.error
 
 import pytest
 
@@ -57,6 +58,16 @@ def test_fetch_season_game_ids_max_week_applies_to_regular_season_only():
     assert (2025, 2, 4) not in calls
     assert (2025, 3, 5) in calls
     assert ids[0] == "2-1"
+
+
+def test_fetch_season_game_ids_does_not_silently_drop_failed_week():
+    def fail_week(_season, _season_type, _week):
+        raise urllib.error.URLError("ESPN unavailable")
+
+    with pytest.raises(RuntimeError, match="regular season week 1"):
+        report.fetch_season_game_ids(
+            2025, season_types=(2,), max_week=1, fetch_week_ids=fail_week
+        )
 
 
 def _game(game_id: str, away_to: int, home_to: int, away_yd: int, home_yd: int) -> report.GameRecon:
@@ -218,6 +229,125 @@ def test_build_season_recon_updates_passed_espn_stats_cache(tmp_path, monkeypatc
     assert stats_cache["123"]["meta"] == {"away": "AAA", "home": "BBB"}
 
 
+def test_reconciliation_accounts_for_custom_onside_turnover(tmp_path, monkeypatch):
+    raw = {
+        "header": {"competitions": [{"competitors": [
+            {"homeAway": "away", "team": {"abbreviation": "AAA"}, "score": "7"},
+            {"homeAway": "home", "team": {"abbreviation": "BBB"}, "score": "10"},
+        ]}]},
+        "boxscore": {"teams": [
+            {"team": {"id": "1", "abbreviation": "AAA"}, "statistics": [
+                {"name": "totalYards", "displayValue": "200"},
+                {"name": "turnovers", "displayValue": "0"},
+                {"name": "totalPenaltiesYards", "displayValue": "0-0"},
+            ]},
+            {"team": {"id": "2", "abbreviation": "BBB"}, "statistics": [
+                {"name": "totalYards", "displayValue": "250"},
+                {"name": "turnovers", "displayValue": "0"},
+                {"name": "totalPenaltiesYards", "displayValue": "0-0"},
+            ]},
+        ]},
+        "drives": {"previous": []},
+    }
+    cache_dir = tmp_path / "cache"
+    cache_dir.mkdir()
+    (cache_dir / "123.json").write_text(json.dumps(raw))
+
+    def fake_process(*_args, **_kwargs):
+        return ([
+            {"Team": "AAA", "Total Yards": 200, "Turnovers": 1, "Penalty Yards": 0},
+            {"Team": "BBB", "Total Yards": 250, "Turnovers": 0, "Penalty Yards": 0},
+        ], {
+            "1": {"Turnovers": [{"reason": "onside_kick_lost", "text": "AAA kicks onside"}]},
+            "2": {"Turnovers": []},
+        })
+
+    monkeypatch.setattr(report, "process_game_stats", fake_process)
+    recon, failures = report.build_season_recon(
+        ["123"], source="cache", cache_dir=cache_dir, cache_write=False, espn_stats_cache={}
+    )
+    assert failures == []
+    away = recon[0].team_lines[0]
+    assert away.espn_turnovers == 0
+    assert away.onside_recoveries_against == 1
+    assert away.expected_turnovers == 1
+    assert away.turnovers_delta == 0
+    assert report.compute_aggregate_deltas(recon)["turnovers"]["delta"] == 0
+
+
+def test_reconciliation_reports_raw_parser_gap_not_display_correction(tmp_path, monkeypatch):
+    raw = {
+        "header": {"competitions": [{
+            "status": {"type": {"state": "post"}},
+            "competitors": [
+                {"homeAway": "away", "team": {"abbreviation": "TEN"}, "score": "22"},
+                {"homeAway": "home", "team": {"abbreviation": "ARI"}, "score": "21"},
+            ],
+        }]},
+        "boxscore": {"teams": [
+            {"team": {"id": "1", "abbreviation": "TEN"}, "statistics": [
+                {"name": "totalYards", "displayValue": "327"},
+                {"name": "turnovers", "displayValue": "2"},
+                {"name": "totalPenaltiesYards", "displayValue": "0-0"},
+            ]},
+            {"team": {"id": "2", "abbreviation": "ARI"}, "statistics": [
+                {"name": "totalYards", "displayValue": "360"},
+                {"name": "turnovers", "displayValue": "3"},
+                {"name": "totalPenaltiesYards", "displayValue": "0-0"},
+            ]},
+        ]},
+        "drives": {"previous": []},
+    }
+    cache_dir = tmp_path / "cache"
+    cache_dir.mkdir()
+    (cache_dir / "747.json").write_text(json.dumps(raw))
+
+    def parsed_stats(*_args, **_kwargs):
+        return ([
+            {"Team": "TEN", "Total Yards": 327, "Turnovers": 1, "Penalty Yards": 0},
+            {"Team": "ARI", "Total Yards": 362, "Turnovers": 2, "Penalty Yards": 0},
+        ], {"1": {"Turnovers": []}, "2": {"Turnovers": []}})
+
+    monkeypatch.setattr(report, "process_game_stats", parsed_stats)
+    recon, failures = report.build_season_recon(
+        ["747"], source="cache", cache_dir=cache_dir, cache_write=False, espn_stats_cache={}
+    )
+    assert failures == []
+    assert [line.turnovers_delta for line in recon[0].team_lines] == [-1, -1]
+    assert [line.yards_delta for line in recon[0].team_lines] == [0, 2]
+
+
+def test_build_season_recon_rejects_missing_official_stats_and_stale_extraction(tmp_path, monkeypatch):
+    raw = {
+        "header": {"competitions": [{"competitors": [
+            {"homeAway": "away", "team": {"abbreviation": "AAA"}, "score": "7"},
+            {"homeAway": "home", "team": {"abbreviation": "BBB"}, "score": "10"},
+        ]}]},
+        "boxscore": {"teams": [
+            {"team": {"id": "1", "abbreviation": "AAA"}, "statistics": []},
+            {"team": {"id": "2", "abbreviation": "BBB"}, "statistics": []},
+        ]},
+        "drives": {"previous": []},
+    }
+    cache_dir = tmp_path / "pbp_cache"
+    cache_dir.mkdir()
+    (cache_dir / "123.json").write_text(json.dumps(raw))
+    stale = {"123": {
+        "espn_stats": {"AAA": {"Total Yards": 100, "Turnovers": 0, "Penalty Yards": 0}},
+        "meta": {"away": "AAA", "home": "BBB"},
+    }}
+    monkeypatch.setattr(report, "process_game_stats", lambda *_args, **_kwargs: ([], {}))
+
+    recon, failures = report.build_season_recon(
+        ["123"], source="cache", cache_dir=cache_dir, cache_write=False,
+        espn_stats_cache=stale,
+    )
+    assert recon == []
+    assert len(failures) == 1
+    assert "missing official" in failures[0].lower()
+    assert stale["123"]["espn_stats"]["AAA"]["Total Yards"] is None
+
+
 def test_compute_aggregate_deltas_sums_and_percentages():
     away = report.TeamLine(
         game_id="1",
@@ -234,6 +364,9 @@ def test_compute_aggregate_deltas_sums_and_percentages():
         windelta_penalty_yards=55,
         penalty_yards_delta=5,
         windelta_source="test",
+        espn_offensive_plays=50,
+        windelta_offensive_plays=49,
+        offensive_plays_delta=-1,
     )
     home = report.TeamLine(
         game_id="1",
@@ -250,6 +383,9 @@ def test_compute_aggregate_deltas_sums_and_percentages():
         windelta_penalty_yards=20,
         penalty_yards_delta=0,
         windelta_source="test",
+        espn_offensive_plays=60,
+        windelta_offensive_plays=60,
+        offensive_plays_delta=0,
     )
     recon = [
         report.GameRecon(
@@ -270,6 +406,8 @@ def test_compute_aggregate_deltas_sums_and_percentages():
     assert agg["total_yards"]["windelta_sum"] == 300
     assert agg["total_yards"]["delta"] == 0
     assert agg["total_yards"]["pct_delta"] == 0.0
+    assert agg["offensive_plays"]["delta"] == -1
+    assert agg["offensive_plays"]["mismatch_rows"] == 1
 
     assert agg["turnovers"]["espn_sum"] == 2
     assert agg["turnovers"]["windelta_sum"] == 1
@@ -350,7 +488,8 @@ def test_main_write_recommendations_flag_writes_file(tmp_path, monkeypatch):
 
     fake_recon = _game("123", away_to=1, home_to=0, away_yd=7, home_yd=0)
 
-    def fake_build_season_recon(game_ids, *, source, cache_dir, cache_write, espn_stats_cache=None):
+    def fake_build_season_recon(game_ids, *, source, cache_dir, cache_write,
+                                espn_stats_cache=None, raw_payloads=None):
         return [fake_recon], []
 
     monkeypatch.setattr(report, "build_season_recon", fake_build_season_recon)

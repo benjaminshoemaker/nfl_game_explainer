@@ -66,7 +66,8 @@ export interface AdvancedStats {
   Score: number;
   Turnovers: number;
   'Total Yards': number;
-  'Yards Per Play': number;
+  'Official Yards Per Play (Full Game)'?: number | null;
+  'Adjusted Yards Per Play': number;
   'Success Rate': number;
   'Explosive Plays': number;
   'Explosive Play Rate': number;
@@ -129,6 +130,40 @@ export interface GameResponse {
   };
   analysis: string;
   ai_summary?: string | null;
+  source_gaps?: Array<{ team: string; yards_gap: number; turnovers_gap: number; plays_gap?: number }>;
+  debug?: GameDebugData;
+}
+
+export interface DebugPlayRow {
+  kind: 'play' | 'drive_end';
+  drive: number;
+  playId?: string | number | null;
+  team: string;
+  quarter?: number | null;
+  clock?: string | null;
+  type?: string | null;
+  text?: string | null;
+  down?: number | null;
+  distance?: number | null;
+  sourceYards?: number | null;
+  classification?: string;
+  competitive?: boolean;
+  excludedReason?: string | null;
+  startHomeWP?: number | null;
+  endHomeWP?: number | null;
+  statDeltas: Record<string, Record<string, number>>;
+  raw: Record<string, unknown>;
+}
+
+export interface GameDebugData {
+  statsCompetitive: Record<string, string | number | null>[];
+  statsFull: Record<string, string | number | null>[];
+  plays: DebugPlayRow[];
+  sources: {
+    espnSummary: Record<string, unknown>;
+    playProbabilities: Record<string, unknown>;
+    pregameProbabilities: { home: number; away: number };
+  };
 }
 
 // Component prop types

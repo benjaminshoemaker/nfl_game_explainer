@@ -16,8 +16,33 @@ Production: [https://windelta.app](https://windelta.app)
 - `game_compare.py`: original CLI report generator, retained for local analysis.
 - `tests/` and `src/**/*.test.*`: Python and frontend regression suites.
 
-The application has no database or authentication layer. ESPN is the primary
-data source, and OpenAI summaries are optional.
+The application has no database or authentication layer. ESPN is the reference
+for official box-score statistics, and OpenAI summaries are optional. The
+dashboard's "Turnovers" row is intentionally broader than ESPN's official
+turnover total: it also counts a kicking-team onside recovery against the
+receiving team, as its tooltip explains.
+Analysis outputs distinguish ESPN's full-game "Official Yards Per Play" from
+the app's "Adjusted Yards Per Play" based on selected offensive snaps.
+For completed games, full-game Total Yards and Turnovers use ESPN's box score
+(with the onside-recovery addition); competitive-play metrics remain calculated
+from the available plays. If ESPN's play feed cannot reproduce a final box-score
+total or official offensive-play count, the game page shows a source-gap notice.
+A matching yard total alone does not prove every snap is present. The underlying calculation is
+retained in debug output and the season reconciliation report.
+
+## Debugging a game
+
+Add `?debug=true` to a game URL, for example
+`/game/401772891?debug=true`. The debug view shows every calculated stat,
+the source plays and their contributions to calculation counters, and the
+underlying ESPN game and win-probability responses. The corresponding JSON is
+available at `/api/game/401772891?debug=true`. Debug data is fetched only when
+requested; the regular game view and API response remain smaller.
+
+The source-play table uses the full-game calculation pass and marks whether a
+play passes the competitive win-probability filter. Score comes from ESPN's
+game header, penalty totals from its box score, and non-offensive points from
+scoring plays.
 
 ## Local setup
 

@@ -3,6 +3,7 @@
 interface AISummaryProps {
   summary: string | null;
   isLoading?: boolean;
+  isGenerated?: boolean;
 }
 
 function SparkleIcon({ className }: { className?: string }) {
@@ -31,7 +32,7 @@ function LoadingSkeleton() {
   );
 }
 
-export function AISummary({ summary, isLoading = false }: AISummaryProps) {
+export function AISummary({ summary, isLoading = false, isGenerated = true }: AISummaryProps) {
   // Don't render if no summary and not loading
   if (!summary && !isLoading) {
     return null;
@@ -62,7 +63,7 @@ export function AISummary({ summary, isLoading = false }: AISummaryProps) {
             <SparkleIcon className="w-4 h-4 text-bg-deep" />
           </div>
           <span className="font-condensed text-xs font-semibold uppercase tracking-wider text-gold">
-            AI Game Summary
+            {isGenerated ? 'AI Game Summary' : 'Game Analysis'}
           </span>
         </div>
 

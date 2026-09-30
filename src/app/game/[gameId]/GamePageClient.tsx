@@ -10,22 +10,26 @@ import { ViewToggle } from '@/components/ViewToggle';
 import { UpdateIndicator } from '@/components/UpdateIndicator';
 import { useAutoRefresh } from '@/hooks/useAutoRefresh';
 import { useWeekContext } from '@/contexts/WeekContext';
+import { GameDebugView } from '@/components/GameDebugView';
 
 interface GamePageClientProps {
   initialGameData: GameResponse;
+  debugMode?: boolean;
 }
 
 type ViewMode = 'competitive' | 'full';
 
 const REFRESH_INTERVAL = 60000; // 60 seconds
 
-export function GamePageClient({ initialGameData }: GamePageClientProps) {
+export function GamePageClient({ initialGameData, debugMode = false }: GamePageClientProps) {
   const [viewMode, setViewMode] = useState<ViewMode>('competitive');
   const [gameData, setGameData] = useState<GameResponse>(initialGameData);
   const [selectedCategory, setSelectedCategory] = useState<string>('Explosive Plays');
   const { setGameWeek } = useWeekContext();
 
   const isLive = gameData.status === 'in-progress';
+  const wpFilterAvailable = gameData.wp_filter?.enabled !== false;
+  const effectiveViewMode: ViewMode = wpFilterAvailable ? viewMode : 'full';
 
   // Set the week in context when game data is available
   useEffect(() => {
@@ -40,12 +44,12 @@ export function GamePageClient({ initialGameData }: GamePageClientProps) {
   }, [gameData.week, setGameWeek]);
 
   const fetchGameData = useCallback(async (): Promise<GameResponse> => {
-    const response = await fetch(`/api/game/${gameData.gameId}`);
+    const response = await fetch(`/api/game/${gameData.gameId}${debugMode ? '?debug=true' : ''}`);
     if (!response.ok) {
       throw new Error('Failed to fetch game data');
     }
     return response.json();
-  }, [gameData.gameId]);
+  }, [gameData.gameId, debugMode]);
 
   const { isRefreshing, secondsSinceUpdate } = useAutoRefresh({
     fetchFn: fetchGameData,
@@ -53,6 +57,10 @@ export function GamePageClient({ initialGameData }: GamePageClientProps) {
     enabled: isLive,
     onSuccess: (data) => setGameData(data),
   });
+
+  if (debugMode) {
+    return <GameDebugView gameData={gameData} />;
+  }
 
   // Get home and away teams from team_meta
   const awayMeta = gameData.team_meta.find((t) => t.homeAway === 'away');
@@ -87,11 +95,11 @@ export function GamePageClient({ initialGameData }: GamePageClientProps) {
   };
 
   // Get the appropriate data based on view mode
-  const advancedStats = viewMode === 'competitive'
+  const advancedStats = effectiveViewMode === 'competitive'
     ? gameData.advanced_table
     : gameData.advanced_table_full;
 
-  const rawExpandedDetails = viewMode === 'competitive'
+  const rawExpandedDetails = effectiveViewMode === 'competitive'
     ? gameData.expanded_details
     : gameData.expanded_details_full;
 
@@ -164,7 +172,16 @@ export function GamePageClient({ initialGameData }: GamePageClientProps) {
             <AISummary
               summary={gameData.ai_summary || gameData.analysis || null}
               isLoading={false}
+              isGenerated={Boolean(gameData.ai_summary)}
             />
+          </div>
+        )}
+
+        {gameData.source_gaps && gameData.source_gaps.length > 0 && (
+          <div role="status" className="rounded-xl border border-amber-500/40 bg-amber-500/10 px-5 py-3 font-body text-sm text-text-secondary">
+            ESPN box-score totals or offensive-play counts differ from available play-by-play for{' '}
+            {gameData.source_gaps.map((gap) => gap.team).join(', ')}.
+            {' '}Full-game totals use ESPN; play-based metrics and competitive splits may be incomplete.
           </div>
         )}
 
@@ -176,16 +193,18 @@ export function GamePageClient({ initialGameData }: GamePageClientProps) {
               style={{ boxShadow: '0 0 8px var(--positive)' }}
             />
 	            <span className="font-condensed text-xs text-text-secondary tracking-wide">
-	              {viewMode === 'competitive'
+	              {effectiveViewMode === 'competitive' || !wpFilterAvailable
 	                ? (gameData.wp_filter?.description || 'Stats reflect competitive plays only (WP < 97.5% at start or end)')
 	                : 'Showing full-game totals (no WP filter)'}
 	            </span>
 	          </div>
-	          <ViewToggle
-	            value={viewMode}
-            onChange={setViewMode}
-            showIndicator={false}
-          />
+	          {wpFilterAvailable && (
+	            <ViewToggle
+	              value={viewMode}
+              onChange={setViewMode}
+              showIndicator={false}
+            />
+	          )}
         </div>
 
         {/* Advanced Stats */}

@@ -3,9 +3,12 @@ import os
 import sys
 import urllib.error
 
+import pytest
+
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "api")))
 
 from lib import game_analysis as ga
+from lib.nfl_core import process_game_stats
 
 
 class FakeResponse:
@@ -69,6 +72,78 @@ def test_derive_game_status_final_when_completed():
     })
     assert status == "final"
     assert game_clock is None
+
+
+def test_get_play_probabilities_rejects_partial_paginated_feed(monkeypatch):
+    def fake_urlopen(req, timeout=15):
+        if "page=2" in req.full_url:
+            raise urllib.error.URLError("second page unavailable")
+        return FakeResponse({
+            "pageCount": 2,
+            "items": [{"play": {"$ref": "https://example.com/plays/1"},
+                       "homeWinPercentage": 0.6, "awayWinPercentage": 0.4}],
+        })
+
+    monkeypatch.setattr(ga.urllib.request, "urlopen", fake_urlopen)
+    with pytest.raises(RuntimeError, match="page 2"):
+        ga.get_play_probabilities("401")
+
+
+def test_analyze_game_labels_missing_win_probability_as_unavailable(monkeypatch):
+    game = {
+        "boxscore": {"teams": [
+            {"team": {"id": "1", "abbreviation": "SEA"}, "statistics": []},
+            {"team": {"id": "2", "abbreviation": "LAR"}, "statistics": []},
+        ]},
+        "header": {"competitions": [{"competitors": [
+            {"id": "1", "score": "0", "homeAway": "home", "team": {"abbreviation": "SEA"}},
+            {"id": "2", "score": "0", "homeAway": "away", "team": {"abbreviation": "LAR"}},
+        ]}]},
+        "drives": {"previous": []},
+    }
+    monkeypatch.setattr(ga, "get_game_data", lambda _game_id: game)
+    monkeypatch.setattr(ga, "get_pregame_probabilities", lambda _game_id: (0.5, 0.5))
+    monkeypatch.setattr(ga, "get_play_probabilities", lambda _game_id: {})
+
+    payload = ga.analyze_game("401")
+    assert payload["wp_filter"]["enabled"] is False
+    assert "unavailable" in payload["wp_filter"]["description"].lower()
+    assert payload["advanced_table"] == payload["advanced_table_full"]
+
+
+def test_advanced_output_separates_full_game_official_and_adjusted_ypp(monkeypatch):
+    game = {
+        "boxscore": {"teams": [
+            {"team": {"id": "1", "abbreviation": "AAA"}, "statistics": [
+                {"name": "yardsPerPlay", "displayValue": "7.6"},
+            ]},
+            {"team": {"id": "2", "abbreviation": "BBB"}, "statistics": []},
+        ]},
+        "header": {"competitions": [{"competitors": [
+            {"id": "1", "score": "0", "homeAway": "away", "team": {"abbreviation": "AAA"}},
+            {"id": "2", "score": "0", "homeAway": "home", "team": {"abbreviation": "BBB"}},
+        ]}]},
+        "drives": {"previous": [{"team": {"id": "1"}, "plays": [{
+            "id": "1", "text": "Runner gains 5 yards", "type": {"text": "Rush"},
+            "statYardage": 5, "start": {"team": {"id": "1"}, "down": 1, "distance": 10},
+        }]}]},
+    }
+    monkeypatch.setattr(ga, "get_game_data", lambda _game_id: game)
+    monkeypatch.setattr(ga, "get_pregame_probabilities", lambda _game_id: (0.5, 0.5))
+    monkeypatch.setattr(ga, "get_play_probabilities", lambda _game_id: {
+        "1": {"homeWinPercentage": 0.5, "awayWinPercentage": 0.5},
+    })
+
+    payload = ga.analyze_game("123", debug=True)
+    full = next(row for row in payload["advanced_table_full"] if row["Team"] == "AAA")
+    competitive = next(row for row in payload["advanced_table"] if row["Team"] == "AAA")
+    assert full["Official Yards Per Play (Full Game)"] == 7.6
+    assert full["Adjusted Yards Per Play"] == 5.0
+    assert "Yards Per Play" not in full
+    assert "Official Yards Per Play (Full Game)" not in competitive
+    assert competitive["Adjusted Yards Per Play"] == 5.0
+    assert "Official Yards Per Play (Full Game)" not in payload["debug"]["statsCompetitive"][0]
+    assert payload["debug"]["statsFull"][0]["Official Yards Per Play (Full Game)"] == 7.6
 
 
 def test_competitive_penalty_yards_use_only_wp_selected_plays(monkeypatch):
@@ -150,3 +225,88 @@ def test_competitive_penalty_yards_are_unavailable_when_play_attribution_is_inco
     payload = ga.analyze_game("123")
     competitive = {row["Team"]: row for row in payload["advanced_table"]}
     assert competitive["AAA"]["Penalty Yards"] is None
+
+
+def test_final_api_uses_espn_totals_but_exposes_play_by_play_gaps(monkeypatch):
+    game = {
+        "boxscore": {"teams": [
+            {"team": {"id": "1", "abbreviation": "TEN"}, "statistics": [
+                {"name": "totalYards", "displayValue": "327"},
+                {"name": "turnovers", "displayValue": "2"},
+            ]},
+            {"team": {"id": "2", "abbreviation": "ARI"}, "statistics": [
+                {"name": "totalYards", "displayValue": "360"},
+                {"name": "turnovers", "displayValue": "3"},
+            ]},
+        ]},
+        "header": {"competitions": [{
+            "status": {"type": {"state": "post", "completed": True}},
+            "competitors": [
+                {"id": "1", "score": "0", "homeAway": "away", "team": {"abbreviation": "TEN"}},
+                {"id": "2", "score": "0", "homeAway": "home", "team": {"abbreviation": "ARI"}},
+            ],
+        }]},
+        "drives": {"previous": []},
+    }
+    monkeypatch.setattr(ga, "get_game_data", lambda _game_id: game)
+    monkeypatch.setattr(ga, "get_pregame_probabilities", lambda _game_id: (0.5, 0.5))
+    monkeypatch.setattr(ga, "get_play_probabilities", lambda _game_id: {})
+
+    payload = ga.analyze_game("401")
+    full = {row["Team"]: row for row in payload["advanced_table_full"]}
+    assert full["TEN"]["Total Yards"] == 327
+    assert full["TEN"]["Turnovers"] == 2
+    assert full["ARI"]["Total Yards"] == 360
+    assert full["ARI"]["Turnovers"] == 3
+    assert {gap["team"] for gap in payload["source_gaps"]} == {"TEN", "ARI"}
+    assert payload["source_gaps"][0]["turnovers_gap"] == 2
+
+
+def test_debug_rows_explain_play_contributions_and_skips():
+    game = {
+        "boxscore": {"teams": [
+            {"team": {"id": "1", "abbreviation": "SEA"}, "statistics": []},
+            {"team": {"id": "2", "abbreviation": "WAS"}, "statistics": []},
+        ]},
+        "header": {"competitions": [{"competitors": [
+            {"id": "1", "score": "0"}, {"id": "2", "score": "0"},
+        ]}]},
+        "drives": {"previous": [{
+            "team": {"id": "1"}, "start": {"yardsToEndzone": 75},
+            "plays": [
+                {"id": "10", "text": "Run up the middle for 5 yards", "type": {"text": "Rush"},
+                 "statYardage": 5, "start": {"down": 1, "distance": 10, "yardsToEndzone": 75}},
+                {"id": "11", "text": "Timeout Seattle", "type": {"text": "Timeout"}},
+            ],
+        }]},
+    }
+    debug_rows = []
+    rows, _ = process_game_stats(game, expanded=True, debug_rows=debug_rows)
+
+    assert rows[0]["Success Rate"] == 1.0
+    assert debug_rows[0]["statDeltas"]["SEA"]["Offensive Yards"] == 5
+    assert debug_rows[0]["statDeltas"]["SEA"]["Successful Plays"] == 1
+    assert debug_rows[0]["classification"] == "run"
+    assert debug_rows[0]["raw"]["id"] == "10"
+    assert debug_rows[1]["excludedReason"] == "timeout_or_period_end"
+    assert debug_rows[1]["statDeltas"] == {}
+
+
+def test_analyze_game_includes_raw_sources_only_when_debug_requested(monkeypatch):
+    game = {
+        "boxscore": {"teams": []},
+        "header": {"week": 1, "season": {"type": 2}, "competitions": []},
+        "drives": {"previous": []},
+    }
+    monkeypatch.setattr(ga, "get_game_data", lambda _game_id: game)
+    monkeypatch.setattr(ga, "get_pregame_probabilities", lambda _game_id: (0.6, 0.4))
+    monkeypatch.setattr(ga, "get_play_probabilities", lambda _game_id: {"p": {"homeWinPercentage": 0.7}})
+
+    normal = ga.analyze_game("401")
+    debug = ga.analyze_game("401", debug=True)
+
+    assert "debug" not in normal
+    assert debug["debug"]["sources"]["espnSummary"] == game
+    assert debug["debug"]["sources"]["playProbabilities"]["p"]["homeWinPercentage"] == 0.7
+    assert debug["debug"]["sources"]["pregameProbabilities"]["home"] == 0.6
+    assert debug["debug"]["plays"] == []

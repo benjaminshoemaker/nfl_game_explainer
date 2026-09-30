@@ -15,6 +15,7 @@ interface StatConfig {
   key: keyof AdvancedStatsType;
   label: string;
   description: string;
+  infoTooltip?: string;
   invertBetter?: boolean;
   isPercentage?: boolean;
   clickable?: boolean;
@@ -22,8 +23,9 @@ interface StatConfig {
 }
 
 const STAT_CONFIGS: StatConfig[] = [
-  { key: 'Turnovers', label: 'Turnovers', description: 'Margin', invertBetter: true, clickable: true },
+  { key: 'Turnovers', label: 'Turnovers', description: '', infoTooltip: 'includes onside kick recoveries', invertBetter: true, clickable: true },
   { key: 'Success Rate', label: 'Success Rate', description: 'Play Success %', isPercentage: true },
+  { key: 'Adjusted Yards Per Play', label: 'Adjusted Yards / Play', description: 'Offensive Efficiency', infoTooltip: 'Offensive yards per selected offensive play; excludes kneels and spikes.' },
   { key: 'Explosive Play Rate', label: 'Explosive Play Rate', description: 'Explosiveness', isPercentage: true, clickable: true, dataCategory: 'Explosive Plays' },
   { key: 'Points Per Trip (Inside 40)', label: 'Points Per Trip', description: 'Finishing Drives', clickable: true },
   { key: 'Ave Start Field Pos', label: 'Ave Start Field Pos', description: 'Field Position', clickable: true, dataCategory: 'Drive Starts' },
@@ -158,6 +160,7 @@ export function AdvancedStats({ stats, teamMeta, onStatClick, selectedCategory }
             key={config.key}
             label={config.label}
             description={config.description}
+            infoTooltip={config.infoTooltip}
             awayValue={awayStats[config.key] as number | string}
             homeValue={homeStats[config.key] as number | string}
             awayAbbr={away.abbr}

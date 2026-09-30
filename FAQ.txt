@@ -1,6 +1,6 @@
 Why Turnover on Downs is NOT included in Turnovers
 Q: Should turnover on downs be counted as a turnover?
-A: No. Turnover on downs is categorically different from interceptions and fumbles. The key distinction is whether the opponent gains an EXTRA possession:
+A: No. Turnover on downs is treated differently from interceptions, lost fumbles, muffed kicks, and an onside kick recovered by the kicking team. The dashboard counts the latter against the receiving team as a possession lost, even though ESPN's official turnover box score does not. The key distinction here is the unusual possession swing:
 
 Interception: Opponent gets an extra drive (you had 12 drives, they get 13)
 Fumble lost: Same—extra possession created
@@ -9,9 +9,9 @@ Turnover on downs: No extra possession. Your drive was ending anyway; you just c
 Turnover on downs is already captured by Field Position (opponent starts at the failed 4th down spot) and Finishing Drives (if inside the 40, you got 0 points for that trip). Adding it to Turnovers would double-count the field position impact while falsely implying a possession swing that didn't happen.
 Turnovers should be thought of as "extra possessions lost"—which TOD doesn't trigger.
 
-Why 8 Factors Instead of the Original 5
-Q: Bill Connelly's Five Factors are widely used. Why add three more?
-A: The original Five Factors (Efficiency, Explosiveness, Finishing Drives, Field Position, Turnovers) explain approximately 71-90% of variance in game outcomes. However, for a purely DESCRIPTIVE tool that explains "why did this team win THIS game," three gaps emerge:
+Why Additional Factors Beyond the Original 5
+Q: Bill Connelly's Five Factors are widely used. Why include additional game descriptors?
+A: The original Five Factors (Efficiency, Explosiveness, Finishing Drives, Field Position, Turnovers) are a useful framework. For a purely DESCRIPTIVE tool that explains "why did this team win THIS game," other descriptors are useful. The live dashboard shows eight rows, including both Success Rate and Adjusted Yards per Play for efficiency. Possessions remain available in analysis outputs but are not a dashboard row. The rows overlap and the factor count is not a weighted model of the result.
 
 Penalties: A team can "win" efficiency and explosiveness but have two TD-negating holding calls and a drive-extending DPI. Penalties are invisible in the original framework.
 Non-Offensive Points: A pick-6 only shows as +1 in turnover margin, but it's actually worth ~10+ points of swing (7 scored + the lost possession). Defensive/ST touchdowns and safeties are under-counted.

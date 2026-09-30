@@ -613,7 +613,8 @@ def build_payload_from_cache(meta: Dict[str, Any], stats: Dict[str, Any], plays:
         "Score",
         "Turnovers",
         "Total Yards",
-        "Yards Per Play",
+        "Official Yards Per Play (Full Game)",
+        "Adjusted Yards Per Play",
         "Success Rate",
         "Explosive Plays",
         "Explosive Play Rate",
@@ -624,7 +625,10 @@ def build_payload_from_cache(meta: Dict[str, Any], stats: Dict[str, Any], plays:
     ]
 
     summary_table = [{k: r.get(k) for k in summary_cols} for r in rows]
-    advanced_table = [{k: r.get(k) for k in advanced_cols} for r in rows]
+    advanced_table = [{
+        k: (r.get(k, r.get("Yards Per Play")) if k == "Adjusted Yards Per Play" else r.get(k))
+        for k in advanced_cols
+    } for r in rows]
 
     home = meta.get("home_team") or {}
     away = meta.get("away_team") or {}

@@ -21,6 +21,7 @@ from .nfl_core import (
     classify_offense_play,
     is_competitive_play,
     process_game_stats,
+    reconcile_final_boxscore,
     build_analysis_text,
 )
 
@@ -77,7 +78,8 @@ def _derive_game_status(status_obj):
 
 SUMMARY_COLS = ['Team', 'Score', 'Total Yards', 'Drives']
 ADVANCED_COLS = [
-    'Team', 'Score', 'Turnovers', 'Total Yards', 'Yards Per Play',
+    'Team', 'Score', 'Turnovers', 'Total Yards',
+    'Official Yards Per Play (Full Game)', 'Adjusted Yards Per Play',
     'Success Rate', 'Explosive Plays', 'Explosive Play Rate',
     'Points Per Trip (Inside 40)', 'Ave Start Field Pos',
     'Penalty Yards', 'Non-Offensive Points'
@@ -160,8 +162,8 @@ def get_play_probabilities(game_id):
             with urllib.request.urlopen(req, timeout=15) as resp:
                 raw_data = _decompress_response(resp.read())
                 data = json.loads(raw_data.decode())
-        except Exception:
-            break
+        except Exception as exc:
+            raise RuntimeError(f"Failed to fetch win probabilities for game {game_id}, page {page}") from exc
 
         items = data.get('items') or []
         for item in items:
@@ -240,7 +242,7 @@ def get_last_play_time(raw_data):
     return last_timestamp
 
 
-def analyze_game(game_id, wp_threshold=0.975):
+def analyze_game(game_id, wp_threshold=0.975, debug=False):
     """
     Main function to analyze a game and return full payload.
     This is the primary entry point for the API.
@@ -253,23 +255,32 @@ def analyze_game(game_id, wp_threshold=0.975):
         prob_map = get_play_probabilities(game_id)
     except Exception:
         prob_map = {}
+    wp_available = bool(prob_map)
 
-    # Process both filtered and full stats
-    stats_filtered, details_filtered = process_game_stats(
-        raw_data,
-        expanded=True,
-        probability_map=prob_map,
-        pregame_probabilities=(pregame_home_wp, pregame_away_wp),
-        wp_threshold=wp_threshold,
-        penalty_yards_from_plays=bool(prob_map)
-    )
+    # Always compute full-game totals. Without a complete WP feed, a purported
+    # competitive split would just be full-game data with a misleading label.
+    debug_rows = [] if debug else None
     stats_full, details_full = process_game_stats(
         raw_data,
         expanded=True,
         probability_map=prob_map,
         pregame_probabilities=(pregame_home_wp, pregame_away_wp),
-        wp_threshold=1.0
+        wp_threshold=1.0,
+        debug_rows=debug_rows,
+        debug_threshold=wp_threshold,
     )
+    stats_full, source_gaps = reconcile_final_boxscore(raw_data, stats_full, details_full)
+    if wp_available:
+        stats_filtered, details_filtered = process_game_stats(
+            raw_data,
+            expanded=True,
+            probability_map=prob_map,
+            pregame_probabilities=(pregame_home_wp, pregame_away_wp),
+            wp_threshold=wp_threshold,
+            penalty_yards_from_plays=True,
+        )
+    else:
+        stats_filtered, details_filtered = stats_full, details_full
 
     # Extract team metadata
     comps = raw_data.get('header', {}).get('competitions', [])
@@ -314,7 +325,9 @@ def analyze_game(game_id, wp_threshold=0.975):
 
     # Build summary and advanced tables
     summary_filtered = [{k: row[k] for k in SUMMARY_COLS if k in row} for row in stats_filtered]
-    advanced_filtered = [{k: row[k] for k in ADVANCED_COLS if k in row} for row in stats_filtered]
+    advanced_filtered = [{k: row[k] for k in ADVANCED_COLS
+                          if k in row and (not wp_available or k != 'Official Yards Per Play (Full Game)')}
+                         for row in stats_filtered]
     summary_full = [{k: row[k] for k in SUMMARY_COLS if k in row} for row in stats_full]
     advanced_full = [{k: row[k] for k in ADVANCED_COLS if k in row} for row in stats_full]
 
@@ -334,17 +347,22 @@ def analyze_game(game_id, wp_threshold=0.975):
             "number": week_info,
             "seasonType": season_type,
         },
-	        "wp_filter": {
-	            "enabled": True,
+        "wp_filter": {
+	            "enabled": wp_available,
 	            "threshold": wp_threshold,
-	            "description": f"Stats reflect competitive plays only (WP < {wp_threshold * 100:.1f}% at start or end)",
-	        },
+	            "description": (
+	                f"Competitive-play estimate (WP < {wp_threshold * 100:.1f}% at start or end; "
+	                f"{len(prob_map)} play probabilities available)"
+	                if wp_available else "Win probability unavailable; showing full-game totals"
+	            ),
+        },
         "metric_scopes": {
             "Penalty Yards": {
                 "competitive": (
-                    "When WP data is available, sums accepted ESPN play-level penalties in the selected scope; "
-                    "null when selected records lack usable yards or team attribution. Penalties absent from ESPN play-by-play are not counted."
-                    if prob_map else "Full-game box-score total; competitive scope unavailable without WP data."
+                    "Sum of accepted ESPN play-level penalties in the WP-selected scope; "
+                    "null when a penalty lacks usable yardage or team attribution. "
+                    "Penalties omitted from ESPN play-by-play cannot be counted."
+                    if wp_available else "Full-game box-score total; competitive scope unavailable without WP data."
                 ),
                 "full_game": "ESPN full-game box-score total",
             },
@@ -356,8 +374,28 @@ def analyze_game(game_id, wp_threshold=0.975):
         "advanced_table_full": advanced_full,
         "expanded_details": slice_details(details_filtered),
         "expanded_details_full": slice_details(details_full),
+        "source_gaps": source_gaps,
     }
 
     payload["analysis"] = build_analysis_text(payload)
+
+    if debug:
+        payload["debug"] = {
+            "statsCompetitive": (
+                [{k: v for k, v in row.items()
+                  if k != 'Official Yards Per Play (Full Game)'} for row in stats_filtered]
+                if wp_available else stats_filtered
+            ),
+            "statsFull": stats_full,
+            "plays": debug_rows,
+            "sources": {
+                "espnSummary": raw_data,
+                "playProbabilities": prob_map,
+                "pregameProbabilities": {
+                    "home": pregame_home_wp,
+                    "away": pregame_away_wp,
+                },
+            },
+        }
 
     return payload

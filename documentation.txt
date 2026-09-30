@@ -1,9 +1,19 @@
 GAME ANALYSIS DASHBOARD - STAT DOCUMENTATION
 ============================================
 
-This dashboard uses 8 factors to explain why one team won a football game.
-Together, these factors account for approximately 95%+ of game outcomes.
-
+This dashboard compares several descriptive factors to help explain a game's
+result. The factors are not a validated prediction model.
+The live dashboard displays eight rows: turnovers, success rate, adjusted
+yards per play, explosive play rate, points per trip inside 40, average start
+field position, penalty yards, and non-offensive points. Other metrics below are available in analysis
+outputs but are not additional dashboard rows. ESPN is the reference for
+official box-score statistics; explicitly noted derived metrics can differ.
+For completed games, displayed full-game Total Yards and Turnovers follow ESPN's
+box score (plus the documented onside-recovery addition). If available plays
+do not reproduce those totals or ESPN's offensive-play count, a source-gap
+notice appears. A matching yard total alone does not prove every snap is
+present. Play-derived
+factors and competitive-play splits can still be incomplete in that case.
 
 SPECIAL TEAMS METRICS
 --------------------
@@ -24,13 +34,15 @@ the kicking team. Kickoffs without a resulting opponent possession are omitted.
 CORE FIVE FACTORS (from Bill Connelly's framework)
 --------------------------------------------------
 
-1. TURNOVERS (Margin)
+1. TURNOVERS
    
-   What it measures: The difference in giveaways (interceptions + fumbles lost)
-   between the two teams.
+   What it measures: Each team's giveaways (interceptions, lost fumbles and
+   muffed kicks), plus onside kicks recovered by the kicking team charged to
+   the receiving team. The dashboard tooltip says "includes onside kick
+   recoveries". ESPN's official turnover total excludes that onside addition.
    
-   How to read it: Positive = fewer giveaways than opponent. A team with "+2"
-   forced two more turnovers than they committed.
+   How to read it: Lower is better. The dashboard shows each team's count,
+   not the difference; turnover margin is available separately in the analysis.
    
    Why it matters: Turnovers create possession asymmetry. If you turn it over
    twice and force none, your opponent gets 2 extra drives. Teams winning the
@@ -41,7 +53,13 @@ CORE FIVE FACTORS (from Bill Connelly's framework)
 
 2. YARDS PER PLAY (Efficiency)
    
-   What it measures: Total yards divided by total plays. A raw efficiency metric.
+   What it measures: Two explicitly named values are available in analysis
+   outputs. "Official Yards Per Play (Full Game)" is ESPN's box-score value.
+   "Adjusted Yards Per Play" is displayed in the dashboard: this app's
+   offensive yards divided by selected offensive plays (including aborted
+   snaps, excluding kneels and spikes).
+   The adjusted value can also reflect a competitive-play win-probability
+   filter; the official value is shown only for the full game.
    
    How to read it: Higher is better. NFL average is approximately 5.0-5.5 yards
    per play.
@@ -54,8 +72,8 @@ CORE FIVE FACTORS (from Bill Connelly's framework)
 3. SUCCESS RATE (Play Success %)
    
    What it measures: The percentage of plays that gain "enough" yards, defined as:
-   - 1st down: 50% of yards needed (5+ yards for 1st & 10)
-   - 2nd down: 70% of yards needed
+   - 1st down: 40% of yards needed (4+ yards for 1st & 10)
+   - 2nd down: 60% of yards needed
    - 3rd/4th down: 100% of yards needed (convert or gain first down)
    
    How to read it: Higher is better. Elite offenses exceed 45%; struggling
@@ -67,10 +85,10 @@ CORE FIVE FACTORS (from Bill Connelly's framework)
    Success Rate by avoiding negative plays.
 
 
-4. EXPLOSIVE PLAYS (10+ Yard Gains)
+4. EXPLOSIVE PLAYS (10+ Yard Runs, 20+ Yard Passes)
    
-   What it measures: Raw count of plays gaining 10+ yards (some definitions use
-   12+ for runs, 16+ for passes).
+   What it measures: Raw count of runs gaining 10+ yards and passes gaining
+   20+ yards.
    
    How to read it: Higher is better. This is a volume metric.
    
@@ -80,7 +98,8 @@ CORE FIVE FACTORS (from Bill Connelly's framework)
 
 5. EXPLOSIVE PLAY RATE (Explosiveness)
    
-   What it measures: Percentage of plays that go for 10+ yards.
+   What it measures: Percentage of selected offensive plays that are explosive
+   under the 10+ run / 20+ pass thresholds above.
    
    How to read it: Higher is better. Typically ranges from 8-15% for NFL teams.
    
@@ -164,8 +183,8 @@ ADDITIONAL FACTORS (addressing gaps in original framework)
 INTERPRETING THE DASHBOARD
 --------------------------
 
-Factor Count: The summary shows how many factors each team "won." Winning 5+ of 8
-factors almost always correlates with winning the game.
+Factor Count: The summary shows how many displayed factors each team "won."
+The count is descriptive; it is not a calibrated prediction of the winner.
 
 Strength Indicators: The diamond symbols show magnitude of advantage:
 - ◆◆◆ Dominant (>30% difference)

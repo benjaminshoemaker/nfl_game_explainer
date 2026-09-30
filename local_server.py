@@ -86,7 +86,7 @@ class LocalAPIHandler(BaseHTTPRequestHandler):
             game_id = path.split('/')[-1]
             if game_id.isdigit():
                 try:
-                    payload = analyze_game(game_id)
+                    payload = analyze_game(game_id, debug=query.get('debug', [''])[0] == 'true')
 
                     # Generate AI summary
                     summary_table = payload.get('summary_table', [])
@@ -105,7 +105,7 @@ class LocalAPIHandler(BaseHTTPRequestHandler):
                         away_score = away_summary.get('Score', 0)
 
                     # Check cache first
-                    cached_summary = get_cached_summary(game_id, home_score, away_score)
+                    cached_summary = get_cached_summary(game_id, home_score, away_score, payload)
 
                     if cached_summary:
                         payload['ai_summary'] = cached_summary

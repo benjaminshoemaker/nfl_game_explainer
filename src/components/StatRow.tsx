@@ -12,6 +12,7 @@ import {
 interface StatRowProps {
   label: string;
   description: string;
+  infoTooltip?: string;
   awayValue: number | string;
   homeValue: number | string;
   awayAbbr: string;
@@ -29,9 +30,32 @@ interface StatRowProps {
   onClick?: () => void;
 }
 
+function StatInfoTooltip({ text }: { text: string }) {
+  return (
+    <span className="group relative ml-1 inline-flex align-middle">
+      <button
+        type="button"
+        className="cursor-help text-text-muted normal-case focus-visible:outline focus-visible:outline-2"
+        title={text}
+        aria-label={text}
+        onClick={(event) => event.stopPropagation()}
+      >
+        ⓘ
+      </button>
+      <span
+        role="tooltip"
+        className="pointer-events-none invisible absolute left-0 top-full z-20 mt-1 w-44 rounded border border-border-subtle bg-bg-elevated px-2 py-1 text-left text-[10px] font-normal normal-case tracking-normal text-text-primary shadow-lg group-hover:visible group-focus-within:visible"
+      >
+        {text}
+      </span>
+    </span>
+  );
+}
+
 export function StatRow({
   label,
   description,
+  infoTooltip,
   awayValue,
   homeValue,
   awayAbbr,
@@ -95,7 +119,7 @@ export function StatRow({
       {/* Desktop Layout (md and up) */}
       <div
         className={`
-          hidden md:grid gap-3 py-5 border-b border-border-subtle last:border-b-0 relative overflow-hidden
+          hidden md:grid gap-3 py-5 border-b border-border-subtle last:border-b-0 relative overflow-visible
           transition-colors duration-200
           ${clickable ? 'cursor-pointer -mx-6 px-6 hover:bg-bg-hover' : ''}
           ${selected ? 'bg-bg-hover border-l-[3px] !pl-[calc(1.5rem-3px)]' : ''}
@@ -153,6 +177,7 @@ export function StatRow({
           <div className="flex justify-start">
             <span className="font-condensed text-xs font-semibold uppercase tracking-wider text-text-muted">
               <span className="text-text-primary">{label}</span>
+              {infoTooltip && <StatInfoTooltip text={infoTooltip} />}
               {description && <span className="text-text-muted ml-2">{description}</span>}
               {clickable && (
                 <svg
@@ -214,7 +239,7 @@ export function StatRow({
       {/* Mobile Layout (below md) */}
       <div
         className={`
-          md:hidden grid py-4 border-b border-border-subtle last:border-b-0 relative overflow-hidden
+          md:hidden grid py-4 border-b border-border-subtle last:border-b-0 relative overflow-visible
           transition-colors duration-200 min-h-[88px]
           ${clickable ? 'cursor-pointer -mx-4 px-4 active:bg-bg-hover' : ''}
           ${selected ? 'bg-bg-hover border-l-[3px] !pl-[calc(1rem-3px)]' : ''}
@@ -267,6 +292,7 @@ export function StatRow({
         >
           <span className="font-condensed text-[0.65rem] font-semibold uppercase tracking-wider text-center">
             <span className="text-text-primary">{label}</span>
+            {infoTooltip && <StatInfoTooltip text={infoTooltip} />}
             <span className="text-text-muted ml-1.5 text-[0.6rem]">{description}</span>
           </span>
         </div>

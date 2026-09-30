@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 """
-Generate a season-wide reconciliation report for windelta vs ESPN official stats.
+Generate a season-wide reconciliation report for windelta vs ESPN box scores.
 
 This script:
   1) Fetches all ESPN game IDs for a season and writes them to a txt file.
-  2) Runs the yards/turnovers comparison for every game.
+  2) Compares yards and turnovers for every game. The turnover baseline is
+     ESPN official giveaways plus successful opposing onside recoveries,
+     matching the dashboard's explicitly broader definition.
   3) Sorts games by priority: abs(turnovers delta) desc, then abs(yards delta) desc.
   4) Writes a comprehensive markdown report with suspected reconciliation work items.
 
@@ -123,7 +125,7 @@ def fetch_week_game_ids_core(season: int, season_type: int, week: int) -> List[s
 def fetch_season_game_ids(
     season: int,
     *,
-    season_types: Sequence[int] = (2, 3),
+    season_types: Sequence[int] = (2,),
     max_weeks_by_type: Optional[Dict[int, int]] = None,
     max_week: Optional[int] = None,
     fetch_week_ids: Optional[Callable[[int, int, int], List[str]]] = None,
@@ -139,8 +141,11 @@ def fetch_season_game_ids(
         for week in range(1, max_weeks + 1):
             try:
                 week_ids = fetch_week_ids(season, st, week)
-            except (urllib.error.URLError, urllib.error.HTTPError, json.JSONDecodeError):
-                week_ids = []
+            except (urllib.error.URLError, json.JSONDecodeError) as exc:
+                season_type_name = {1: "preseason", 2: "regular season", 3: "postseason"}.get(st, f"type {st}")
+                raise RuntimeError(f"Failed to fetch {season} {season_type_name} week {week}: {exc}") from exc
+            if st == 2 and not week_ids:
+                raise RuntimeError(f"No game IDs returned for {season} regular season week {week}")
             if not week_ids:
                 continue
             ids.extend(week_ids)
@@ -191,6 +196,7 @@ def extract_espn_official_team_stats(
         espn_by_abbr[abbr] = {
             "Score": away_score if abbr == away_abbr else home_score,
             "Total Yards": _parse_int(stats.get("totalYards")),
+            "Offensive Plays": _parse_int(stats.get("totalOffensivePlays")),
             "Turnovers": _parse_int(stats.get("turnovers")),
             "Penalty Yards": penalty_yards,
         }
@@ -229,6 +235,16 @@ class TeamLine:
     windelta_penalty_yards: Optional[int]
     penalty_yards_delta: Optional[int]
     windelta_source: str
+    onside_recoveries_against: int = 0
+    espn_offensive_plays: Optional[int] = None
+    windelta_offensive_plays: Optional[int] = None
+    offensive_plays_delta: Optional[int] = None
+
+    @property
+    def expected_turnovers(self) -> Optional[int]:
+        if self.espn_turnovers is None:
+            return None
+        return self.espn_turnovers + self.onside_recoveries_against
 
 
 @dataclass(frozen=True)
@@ -273,7 +289,8 @@ class GameRecon:
     @property
     def any_mismatch(self) -> bool:
         return any(
-            (l.yards_delta or 0) != 0 or (l.turnovers_delta or 0) != 0 or (l.penalty_yards_delta or 0) != 0
+            l.yards_delta is None or l.turnovers_delta is None or l.penalty_yards_delta is None
+            or l.yards_delta != 0 or l.turnovers_delta != 0 or l.penalty_yards_delta != 0
             for l in self.team_lines
         )
 
@@ -297,7 +314,8 @@ def _pct_delta(delta: Number, denom: Number) -> Optional[float]:
 def compute_aggregate_deltas(recon: Sequence[GameRecon]) -> Dict[str, Dict[str, Optional[Number]]]:
     """
     Aggregate totals across all team rows and compute overall percent deltas:
-      pct_delta = (sum(windelta) - sum(espn)) / sum(espn) * 100
+      pct_delta = (sum(windelta) - sum(reference)) / sum(reference) * 100
+    For turnovers, reference is ESPN giveaways plus onside recoveries against.
     """
     lines: List[TeamLine] = []
     for g in recon:
@@ -332,8 +350,12 @@ def compute_aggregate_deltas(recon: Sequence[GameRecon]) -> Dict[str, Dict[str, 
             **agg("espn_total_yards", "windelta_total_yards"),
             "mismatch_rows": mismatch_count("yards_delta"),
         },
+        "offensive_plays": {
+            **agg("espn_offensive_plays", "windelta_offensive_plays"),
+            "mismatch_rows": mismatch_count("offensive_plays_delta"),
+        },
         "turnovers": {
-            **agg("espn_turnovers", "windelta_turnovers"),
+            **agg("expected_turnovers", "windelta_turnovers"),
             "mismatch_rows": mismatch_count("turnovers_delta"),
         },
         "penalty_yards": {
@@ -360,8 +382,9 @@ def print_aggregate_report(recon: Sequence[GameRecon]) -> None:
 
     print("\n=== AGGREGATE DELTAS (windelta vs ESPN) ===")
     print(line("Total Yards", "total_yards"))
-    print(line("Turnovers", "turnovers"))
-    print(line("Penalty Yards", "penalty_yards"))
+    print(line("Offensive Plays", "offensive_plays"))
+    print(line("Turnovers (ESPN + onside recoveries)", "turnovers"))
+    print(line("Penalty Yards (source pass-through, not independent)", "penalty_yards"))
 
 
 _FOR_YARDS_RE = re.compile(r"\bfor (-?\d+) yards\b", re.IGNORECASE)
@@ -397,6 +420,7 @@ def write_logic_recommendations(
     *,
     season: int,
     cache_dir: Path,
+    raw_by_game: Optional[Dict[str, Dict[str, Any]]] = None,
 ) -> None:
     """
     Write a lightweight, data-driven recommendations report based on remaining mismatches.
@@ -421,15 +445,16 @@ def write_logic_recommendations(
     analyzed = 0
 
     # Build quick map: game_id -> raw payload.
-    raw_by_game: Dict[str, Dict[str, Any]] = {}
-    for g in recon:
-        cache_path = cache_dir / f"{g.game_id}.json"
-        if not cache_path.exists():
-            continue
-        try:
-            raw_by_game[g.game_id] = json.loads(cache_path.read_text())
-        except Exception:
-            continue
+    if raw_by_game is None:
+        raw_by_game = {}
+        for g in recon:
+            cache_path = cache_dir / f"{g.game_id}.json"
+            if not cache_path.exists():
+                continue
+            try:
+                raw_by_game[g.game_id] = json.loads(cache_path.read_text())
+            except Exception:
+                continue
 
     # Precompute team ids per game.
     abbr_to_id_by_game: Dict[str, Dict[str, str]] = {}
@@ -486,7 +511,7 @@ def write_logic_recommendations(
     out: List[str] = []
     out.append(f"# Season {season} Logic Recommendations (Auto)")
     out.append("")
-    out.append("Generated from cached `pbp_cache/*.json` plus `audits/season_*_team_comparison.csv`-equivalent data.")
+    out.append("Generated from the same raw game payloads as this reconciliation run.")
     out.append("")
     out.append("## Aggregate Percent Deltas")
     out.append("- Percent deltas are computed as `(sum(windelta) - sum(espn)) / sum(espn) * 100`.")
@@ -706,6 +731,7 @@ def build_season_recon(
     cache_dir: Path,
     cache_write: bool,
     espn_stats_cache: Optional[Dict[str, Any]] = None,
+    raw_payloads: Optional[Dict[str, Dict[str, Any]]] = None,
 ) -> Tuple[List[GameRecon], List[str]]:
     recon: List[GameRecon] = []
     failures: List[str] = []
@@ -715,21 +741,26 @@ def build_season_recon(
     for game_id in game_ids:
         try:
             raw_data, raw_source = load_raw_game_data(game_id, source=source, cache_dir=cache_dir)
+            if raw_payloads is not None:
+                raw_payloads[game_id] = raw_data
             if raw_source == "network" and cache_write:
                 cache_dir.mkdir(parents=True, exist_ok=True)
                 (cache_dir / f"{game_id}.json").write_text(json.dumps(raw_data))
 
-            cached = espn_stats_cache.get(game_id)
-            if isinstance(cached, dict) and isinstance(cached.get("espn_stats"), dict) and isinstance(cached.get("meta"), dict):
-                espn_stats = cached["espn_stats"]
-                meta = cached["meta"]
-            else:
-                espn_stats, meta = extract_espn_official_team_stats(raw_data)
-                espn_stats_cache[game_id] = {"espn_stats": espn_stats, "meta": meta}
+            # Derive the oracle from the exact raw payload used by the calculation.
+            # A previously extracted cache can belong to an older ESPN snapshot.
+            espn_stats, meta = extract_espn_official_team_stats(raw_data)
+            espn_stats_cache[game_id] = {"espn_stats": espn_stats, "meta": meta}
             away = meta.get("away") or ""
             home = meta.get("home") or ""
             if not (away and home):
                 raise ValueError("Missing away/home team abbreviations in payload")
+            for team in (away, home):
+                official = espn_stats.get(team) or {}
+                missing = [metric for metric in ("Score", "Total Yards", "Turnovers", "Penalty Yards")
+                           if official.get(metric) is None]
+                if missing:
+                    raise ValueError(f"Missing official {team} stats: {', '.join(missing)}")
 
             stats_rows, details = process_game_stats(
                 raw_data,
@@ -738,23 +769,41 @@ def build_season_recon(
                 pregame_probabilities=None,
                 wp_threshold=1.0,
             )
+            onside_by_abbr = {
+                team_data.get("team", {}).get("abbreviation"): sum(
+                    play.get("reason") == "onside_kick_lost"
+                    for play in (details.get(str(team_data.get("team", {}).get("id")), {})
+                                 .get("Turnovers", []) or [])
+                )
+                for team_data in raw_data.get("boxscore", {}).get("teams", [])
+            }
             windelta_stats: Dict[str, Dict[str, Optional[int]]] = {
                 row.get("Team"): {
                     "Total Yards": _parse_int(row.get("Total Yards")),
+                    "Offensive Plays": _parse_int(row.get("Calculated Offensive Plays")),
                     "Turnovers": _parse_int(row.get("Turnovers")),
                     "Penalty Yards": _parse_int(row.get("Penalty Yards")),
                 }
                 for row in stats_rows
                 if row.get("Team")
             }
+            for team in (away, home):
+                calculated = windelta_stats.get(team) or {}
+                missing = [metric for metric in ("Total Yards", "Turnovers", "Penalty Yards")
+                           if calculated.get(metric) is None]
+                if missing:
+                    raise ValueError(f"Missing windelta {team} stats: {', '.join(missing)}")
 
             def team_line(team: str, home_away: str, opponent: str) -> TeamLine:
                 e = espn_stats.get(team, {})
                 w = windelta_stats.get(team, {})
                 e_y = e.get("Total Yards")
                 w_y = w.get("Total Yards")
+                e_plays = e.get("Offensive Plays")
+                w_plays = w.get("Offensive Plays")
                 e_to = e.get("Turnovers")
                 w_to = w.get("Turnovers")
+                onside_against = onside_by_abbr.get(team, 0)
                 e_py = e.get("Penalty Yards")
                 w_py = w.get("Penalty Yards")
                 return TeamLine(
@@ -767,11 +816,15 @@ def build_season_recon(
                     yards_delta=(w_y - e_y) if (w_y is not None and e_y is not None) else None,
                     espn_turnovers=e_to,
                     windelta_turnovers=w_to,
-                    turnovers_delta=(w_to - e_to) if (w_to is not None and e_to is not None) else None,
+                    turnovers_delta=(w_to - e_to - onside_against) if (w_to is not None and e_to is not None) else None,
                     espn_penalty_yards=e_py,
                     windelta_penalty_yards=w_py,
                     penalty_yards_delta=(w_py - e_py) if (w_py is not None and e_py is not None) else None,
                     windelta_source=f"nfl_core.process_game_stats (full, wp_threshold=1.0, raw={raw_source})",
+                    onside_recoveries_against=onside_against,
+                    espn_offensive_plays=e_plays,
+                    windelta_offensive_plays=w_plays,
+                    offensive_plays_delta=(w_plays - e_plays) if (w_plays is not None and e_plays is not None) else None,
                 )
 
             away_line = team_line(away, "away", home)
@@ -814,7 +867,12 @@ def write_team_csv(path: Path, recon: Sequence[GameRecon]) -> None:
                     "espn_total_yards": line.espn_total_yards,
                     "windelta_total_yards": line.windelta_total_yards,
                     "yards_delta": line.yards_delta,
+                    "espn_offensive_plays": line.espn_offensive_plays,
+                    "windelta_offensive_plays": line.windelta_offensive_plays,
+                    "offensive_plays_delta": line.offensive_plays_delta,
                     "espn_turnovers": line.espn_turnovers,
+                    "onside_recoveries_against": line.onside_recoveries_against,
+                    "expected_turnovers": line.expected_turnovers,
                     "windelta_turnovers": line.windelta_turnovers,
                     "turnovers_delta": line.turnovers_delta,
                     "espn_penalty_yards": line.espn_penalty_yards,
@@ -898,14 +956,23 @@ def write_markdown_report(path: Path, recon: Sequence[GameRecon], failures: Sequ
     lines.append("")
     lines.append("## Summary")
     lines.append(f"- Games analyzed: {len(recon)}")
+    lines.append(f"- Games requested: {len(recon) + len(failures)}")
     lines.append(f"- Mismatch games: {len(mismatches)}")
     lines.append(f"- Games with turnover mismatches: {len(mismatch_turnovers)}")
     lines.append(f"- Games with yards mismatches: {len(mismatch_yards)}")
+    play_count_rows = sum(
+        line.offensive_plays_delta not in (None, 0)
+        for game in recon for line in game.team_lines
+    )
+    lines.append(f"- Team rows with offensive-play count mismatches: {play_count_rows}")
     lines.append(f"- Games with penalty-yards mismatches: {len(mismatch_penalties)}")
     if failures:
         lines.append(f"- Fetch/process failures: {len(failures)}")
+    lines.append("- Penalty Yards are copied from ESPN boxscore by the app; agreement is not independent validation.")
+    lines.append("- Offensive-play counts are a separate completeness check; count-only gaps do not alter the yards/turnovers mismatch-game total above.")
     lines.append("")
     lines.append("## Priority Sort")
+    lines.append("Turnover comparison baseline is ESPN official giveaways plus kicking-team onside recoveries against the receiving team; the latter is a custom dashboard definition.")
     lines.append("Sorted by `max(|turnovers_delta|) desc`, then `max(|yards_delta|) desc` per game.")
     lines.append("")
     lines.append("## Suggested Reconciliation Work Items (Heuristic)")
@@ -936,13 +1003,14 @@ def write_markdown_report(path: Path, recon: Sequence[GameRecon], failures: Sequ
             f"(TOΔ max {g.max_abs_turnovers_delta}, YdsΔ max {g.max_abs_yards_delta}, raw={g.raw_source})"
         )
         lines.append("")
-        lines.append("| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |")
-        lines.append("|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|")
+        lines.append("| Team | ESPN Yds | windelta Yds | Δ | ESPN TO | Onside + | Expected TO | windelta TO | Δ | ESPN PenYds | windelta PenYds | Δ |")
+        lines.append("|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|")
 
         def row(line: TeamLine) -> str:
             return (
                 f"| {line.team} | {_fmt_val(line.espn_total_yards)} | {_fmt_val(line.windelta_total_yards)}"
-                f" | {_fmt_delta(line.yards_delta)} | {_fmt_val(line.espn_turnovers)} | {_fmt_val(line.windelta_turnovers)}"
+                f" | {_fmt_delta(line.yards_delta)} | {_fmt_val(line.espn_turnovers)} | {line.onside_recoveries_against}"
+                f" | {_fmt_val(line.expected_turnovers)} | {_fmt_val(line.windelta_turnovers)}"
                 f" | {_fmt_delta(line.turnovers_delta)} | {_fmt_val(line.espn_penalty_yards)} | {_fmt_val(line.windelta_penalty_yards)}"
                 f" | {_fmt_delta(line.penalty_yards_delta)} |"
             )
@@ -1002,8 +1070,8 @@ def main() -> int:
     parser.add_argument("--season", type=int, default=2025, help="Season year (default: 2025).")
     parser.add_argument(
         "--season-types",
-        default="2,3",
-        help="Comma-separated season types to include (1=pre, 2=regular, 3=post). Default: 2,3",
+        default="2",
+        help="Comma-separated season types to include (1=pre, 2=regular, 3=post). Default: 2",
     )
     parser.add_argument(
         "--max-week",
@@ -1049,8 +1117,8 @@ def main() -> int:
     parser.add_argument(
         "--source",
         choices=["auto", "cache", "network"],
-        default="auto",
-        help="Where to load raw ESPN summary payloads (default: auto, uses pbp_cache first).",
+        default="network",
+        help="Where to load raw ESPN summary payloads (default: network for current data; auto uses cache first).",
     )
     parser.add_argument(
         "--cache-dir",
@@ -1065,7 +1133,7 @@ def main() -> int:
     parser.add_argument(
         "--espn-stats-cache",
         default=None,
-        help="Optional JSON file to persist extracted ESPN official team stats (used to avoid re-parsing when iterating).",
+        help="Optional JSON output file for official team stats extracted from each run's raw payload.",
     )
     args = parser.parse_args()
 
@@ -1104,11 +1172,7 @@ def main() -> int:
     if not espn_stats_cache_path:
         espn_stats_cache_path = Path(os.path.join("audits", f"season_{args.season}_espn_official_stats.json"))
     espn_stats_cache: Dict[str, Any] = {}
-    if espn_stats_cache_path.exists():
-        try:
-            espn_stats_cache = json.loads(espn_stats_cache_path.read_text())
-        except Exception:
-            espn_stats_cache = {}
+    raw_payloads: Dict[str, Dict[str, Any]] = {}
 
     cache_dir = (REPO_ROOT / args.cache_dir).resolve() if not os.path.isabs(args.cache_dir) else Path(args.cache_dir)
     recon, failures = build_season_recon(
@@ -1117,13 +1181,15 @@ def main() -> int:
         cache_dir=cache_dir,
         cache_write=args.cache_write,
         espn_stats_cache=espn_stats_cache,
+        raw_payloads=raw_payloads,
     )
 
     try:
         espn_stats_cache_path.parent.mkdir(parents=True, exist_ok=True)
         espn_stats_cache_path.write_text(json.dumps(espn_stats_cache, indent=2))
-    except Exception:
-        pass
+    except OSError as exc:
+        print(f"Failed to write official stats snapshot {espn_stats_cache_path}: {exc}", file=sys.stderr)
+        return 1
 
     # Sort for outputs.
     recon_sorted = sorted(recon, key=lambda x: x.priority_key())
@@ -1157,7 +1223,8 @@ def main() -> int:
         out_recs = Path(
             args.out_recommendations or os.path.join("audits", f"season_{args.season}_logic_recommendations.md")
         )
-        write_logic_recommendations(out_recs, recon_sorted, season=args.season, cache_dir=cache_dir)
+        write_logic_recommendations(out_recs, recon_sorted, season=args.season,
+                                    cache_dir=cache_dir, raw_by_game=raw_payloads)
         print(f"Wrote logic recommendations: {out_recs}")
 
     return 0 if not failures else 1

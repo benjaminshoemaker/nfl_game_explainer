@@ -7,6 +7,7 @@ interface PageProps {
   params: Promise<{
     gameId: string;
   }>;
+  searchParams: Promise<{ debug?: string | string[] }>;
 }
 
 function isLocalhost(host: string | null): boolean {
@@ -26,7 +27,7 @@ async function getRequestOrigin(): Promise<string> {
   return `${proto}://${host}`;
 }
 
-async function getGameData(gameId: string): Promise<GameResponse | null> {
+async function getGameData(gameId: string, debug: boolean): Promise<GameResponse | null> {
   const requestId =
     (globalThis.crypto && 'randomUUID' in globalThis.crypto && typeof globalThis.crypto.randomUUID === 'function')
       ? globalThis.crypto.randomUUID()
@@ -36,6 +37,7 @@ async function getGameData(gameId: string): Promise<GameResponse | null> {
     // Prefer the request host over `VERCEL_URL` so we don't accidentally call a protected deployment URL.
     const origin = await getRequestOrigin();
     const url = new URL(`/api/game/${gameId}`, origin);
+    if (debug) url.searchParams.set('debug', 'true');
 
     const response = await fetch(url, {
       // Revalidate every 30 seconds for live games
@@ -101,9 +103,10 @@ function ErrorState({ gameId, showLocalHint }: { gameId: string; showLocalHint: 
   );
 }
 
-export default async function GamePage({ params }: PageProps) {
+export default async function GamePage({ params, searchParams }: PageProps) {
   const { gameId } = await params;
-  const gameData = await getGameData(gameId);
+  const debug = (await searchParams).debug === 'true';
+  const gameData = await getGameData(gameId, debug);
 
   if (!gameData) {
     const host = (await headers()).get('host');
@@ -111,7 +114,7 @@ export default async function GamePage({ params }: PageProps) {
     return <ErrorState gameId={gameId} showLocalHint={showLocalHint} />;
   }
 
-  return <GamePageClient initialGameData={gameData} />;
+  return <GamePageClient initialGameData={gameData} debugMode={debug} />;
 }
 
 // Generate metadata for the page

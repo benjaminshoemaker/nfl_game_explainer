@@ -3,6 +3,7 @@ import json
 import sys
 import os
 import traceback
+from urllib.parse import urlparse, parse_qs
 
 # Add the parent directory to the path for imports
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -17,7 +18,9 @@ class handler(BaseHTTPRequestHandler):
 
         # Extract gameId from the path
         # Path will be like /api/game/401772896
-        path_parts = self.path.split('/')
+        parsed = urlparse(self.path)
+        debug = parse_qs(parsed.query).get('debug', [''])[0] == 'true'
+        path_parts = parsed.path.split('/')
         game_id = None
 
         for i, part in enumerate(path_parts):
@@ -41,7 +44,7 @@ class handler(BaseHTTPRequestHandler):
 
         try:
             # Analyze the game
-            payload = analyze_game(game_id)
+            payload = analyze_game(game_id, debug=debug)
 
             # Get scores for cache lookup
             summary_table = payload.get('summary_table', [])
@@ -60,7 +63,7 @@ class handler(BaseHTTPRequestHandler):
                 away_score = away_summary.get('Score', 0)
 
             # Check for cached AI summary first
-            cached_summary = get_cached_summary(game_id, home_score, away_score)
+            cached_summary = get_cached_summary(game_id, home_score, away_score, payload)
 
             if cached_summary:
                 payload['ai_summary'] = cached_summary

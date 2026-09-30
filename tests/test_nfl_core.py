@@ -218,6 +218,33 @@ class TestIsSpikeOrKneel:
 # =============================================================================
 # is_special_teams_play tests
 # =============================================================================
+def test_special_teams_metrics_use_net_punt_yards_and_kickoff_resulting_spot():
+    game = {
+        "boxscore": {"teams": [
+            {"team": {"id": "1", "abbreviation": "AAA"}},
+            {"team": {"id": "2", "abbreviation": "BBB"}},
+        ]},
+        "drives": {"previous": [{"team": {"id": "2"}, "plays": [
+            {"id": "ko", "type": {"text": "Kickoff"},
+             "text": "AAA kickoff to BBB 35, Touchback.", "statYardage": 0,
+             "start": {"team": {"id": "1"}, "yardLine": 35},
+             "end": {"team": {"id": "2"}, "yardsToEndzone": 65}},
+            {"id": "punt1", "type": {"text": "Punt"},
+             "text": "BBB punts 50 yards to AAA 14. Return to AAA 20 for 6 yards.",
+             "statYardage": 6, "start": {"team": {"id": "2"}}},
+            {"id": "punt2", "type": {"text": "Punt"},
+             "text": "BBB punts 45 yards to AAA 10, out of bounds.",
+             "statYardage": 0, "start": {"team": {"id": "2"}}},
+        ]}]},
+    }
+    rows, _ = process_game_stats(game, wp_threshold=1.0)
+    by_team = {row["Team"]: row for row in rows}
+
+    assert by_team["BBB"]["Net Punting"] == 44.5
+    assert by_team["AAA"]["Avg Opponent Kickoff Start"] == "Own 35"
+    assert by_team["BBB"]["Avg Opponent Kickoff Start"] == "—"
+
+
 class TestIsSpecialTeamsPlay:
     def test_punt(self):
         assert is_special_teams_play("punt for 45 yards", "punt") is True

@@ -174,9 +174,9 @@ def test_process_game_stats_basic():
                     "yards": 30,
                     "plays": [
                         {
-                            "text": "Punt",
+                            "text": "Punter punts 40 yards to BBB 20, Touchback.",
                             "type": {"text": "Punt"},
-                            "statYardage": 40,
+                            "statYardage": 0,
                             "start": {"down": 3, "distance": 5},
                             "team": {"abbreviation": "BBB", "id": "2"},
                         },
@@ -203,7 +203,7 @@ def test_process_game_stats_basic():
     assert aaa["Explosive Plays"] == 2
     assert aaa["Explosive Play Rate"] > 0
     assert bbb["Turnovers"] == 1
-    assert bbb["Net Punting"] == 40
+    assert bbb["Net Punting"] == 20
     assert aaa["Turnover Margin"] == 1
 
 

@@ -11,6 +11,7 @@ import re
 # ESPN replay notes are inconsistent about punctuation/spacing:
 # e.g. "play was REVERSED.(Shotgun) ..." or "play was REVERSED (Shotgun) ..."
 _REPLAY_DECISION_RE = re.compile(r"\b(?:reversed|overturned)\b[.:]?\s*", re.IGNORECASE)
+_PUNT_DISTANCE_RE = re.compile(r"\bpunts?\s+(\d+)\s+yards?\b", re.IGNORECASE)
 _YARDS_FOR_RE = re.compile(r"\bfor (-?\d+) yards\b", re.IGNORECASE)
 _YARDS_LOSS_RE = re.compile(r"\bfor loss of (\d+) yards\b", re.IGNORECASE)
 _RECOVERED_BY_ABBR_RE = re.compile(r"\brecovered by\s+([a-z]{2,4})\b", re.IGNORECASE)
@@ -510,8 +511,8 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
             'Drive Points': 0,
             'Punt Net Sum': 0,
             'Punt Plays': 0,
-            'Kick Net Sum': 0,
-            'Kick Plays': 0,
+            'Kickoff Opponent Start Sum': 0,
+            'Kickoff Count': 0,
             'ST Penalties': 0,
             'Penalty Yards': 0,
             'Penalty Count': 0,
@@ -1027,17 +1028,35 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
 
                 stats[team_id]['Total Yards'] += total_yards
 
-            # Special teams tracking (punts, kickoffs)
-            if 'punt' in play_type_lower and 'return' not in play_type_lower:
-                yards = play.get('statYardage', 0)
-                if isinstance(yards, (int, float)):
-                    stats[team_id]['Punt Net Sum'] += yards
+            # Net punting average follows the official box-score convention:
+            # gross punt distance less return yards and 20 yards per touchback.
+            # ESPN's statYardage on punt plays is return yardage, not punt distance.
+            if play_type_lower == 'punt':
+                punt_text = final_play_text(text)
+                distance_match = _PUNT_DISTANCE_RE.search(punt_text)
+                blocked = 'blocked' in punt_text.lower()
+                if distance_match or blocked:
+                    gross_yards = int(distance_match.group(1)) if distance_match else 0
+                    return_yards = play.get('statYardage', 0)
+                    if not isinstance(return_yards, (int, float)):
+                        return_yards = 0
+                    touchback = 'touchback' in punt_text.lower()
+                    stats[team_id]['Punt Net Sum'] += gross_yards - return_yards - (20 if touchback else 0)
                     stats[team_id]['Punt Plays'] += 1
+
+            # Kickoff quality is reported as the opponent's starting yard line,
+            # not a fabricated "net kickoff" distance. Attribute the result to
+            # the kicking team and use the post-penalty receiving spot.
             if 'kickoff' in play_type_lower and 'return' not in play_type_lower:
-                yards = play.get('statYardage', 0)
-                if isinstance(yards, (int, float)):
-                    stats[team_id]['Kick Net Sum'] += yards
-                    stats[team_id]['Kick Plays'] += 1
+                start = play.get('start') or {}
+                end = play.get('end') or {}
+                kicker_id = (start.get('team') or {}).get('id') or team_id
+                receiver_id = (end.get('team') or {}).get('id')
+                yte = end.get('yardsToEndzone')
+                if (kicker_id in stats and receiver_id and receiver_id != kicker_id
+                        and isinstance(yte, (int, float)) and 0 <= yte <= 100):
+                    stats[kicker_id]['Kickoff Opponent Start Sum'] += 100 - yte
+                    stats[kicker_id]['Kickoff Count'] += 1
 
             # Collect all meaningful plays for "All Plays" category
             if expanded:
@@ -1125,7 +1144,7 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
         drives_in_40 = max(d['Drives Inside 40'], 1)
         drives_total = max(d['Drives Count'], 1)
         punt_plays = max(d['Punt Plays'], 1)
-        kick_plays = max(d['Kick Plays'], 1)
+        kickoff_count = d['Kickoff Count']
 
         row = {
             'Team': d['Team'],
@@ -1142,7 +1161,7 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
             'Turnover Margin': turnover_margin.get(t_id, 0),
             'Points per Drive': round(d['Drive Points'] / drives_total, 2),
             'Net Punting': round(d['Punt Net Sum'] / punt_plays, 1) if d['Punt Plays'] > 0 else 0,
-            'Net Kickoff': round(d['Kick Net Sum'] / kick_plays, 1) if d['Kick Plays'] > 0 else 0,
+            'Avg Opponent Kickoff Start': f"Own {round(d['Kickoff Opponent Start Sum'] / kickoff_count)}" if kickoff_count > 0 else '—',
             'ST Penalties': d.get('ST Penalties', 0),
             'Penalty Yards': d.get('Penalty Yards', 0),
             'Non-Offensive Points': d.get('Non-Offensive Points', 0)

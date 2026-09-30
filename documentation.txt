@@ -5,6 +5,22 @@ This dashboard uses 8 factors to explain why one team won a football game.
 Together, these factors account for approximately 95%+ of game outcomes.
 
 
+SPECIAL TEAMS METRICS
+--------------------
+
+"Net Punting" is the average punt distance after subtracting punt-return yards
+and 20 yards for each touchback, divided by punts. Punt distances and return
+yards are separate in ESPN's play text/stat fields; the play's statYardage alone
+is not net punting.
+
+Kickoffs do not have a directly comparable standard "net kickoff" average.
+Analysis outputs report "Avg Opponent Kickoff Start": the average own-yardline
+where the receiving team's possession begins after the kicking team's kickoffs.
+This reflects the actual field-position result, including touchbacks and
+enforced kickoff penalties. Lower opponent starting yardlines are better for
+the kicking team. Kickoffs without a resulting opponent possession are omitted.
+
+
 CORE FIVE FACTORS (from Bill Connelly's framework)
 --------------------------------------------------
 

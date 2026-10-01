@@ -1,0 +1,5 @@
+# Research benchmark only; keep the deployed API requirements separate.
+duckdb>=1.4
+numpy>=2.0
+scikit-learn>=1.7
+xgboost>=3.0

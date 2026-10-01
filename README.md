@@ -122,8 +122,9 @@ is gitignored. Detailed metric definitions are maintained in
 
 The [2026 Week 3 ESPN EPA validation](EPA_GOAL.md) compares ESPN-derived
 play-level EPA with nflverse across 10 development games and 6 held-out games,
-including the Seahawks and Rams games. Offense and special teams each exceeded
-95% play coverage and 95% agreement within ±0.25 EPA in both samples. The
+including the Seahawks and Rams games. Offense, special teams, penalties,
+kneels, spikes, and two-point tries each exceeded 95% play coverage and 95%
+agreement within ±0.25 EPA in both samples. The
 [initial feasibility check](EPA_WEEK3_FEASIBILITY_2026-09-30.md) records the
 earlier restricted prototype. These are completed-game research results; EPA
 is not yet part of the live dashboard, and in-game latency remains untested.

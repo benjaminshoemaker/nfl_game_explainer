@@ -18,7 +18,10 @@ import numpy as np
 from sklearn.ensemble import HistGradientBoostingRegressor
 
 from api.lib.game_analysis import get_game_data
-from research.espn_epa import embedded_extra_point_epa, estimate_play_epa, possession_id
+from research.espn_epa import (
+    embedded_extra_point_epa, embedded_two_point_epa, estimate_play_epa,
+    possession_id,
+)
 from research.nflfastr_ep_model import load_model as load_nflfastr_model
 from research.nflfastr_ep_model import predict_ep as predict_nflfastr_ep
 
@@ -32,6 +35,7 @@ PARQUET_SHA256 = {
 }
 OUT = ROOT / "audits/epa_goal_benchmark.json"
 EPA_TOLERANCE = 0.25
+CATEGORIES = ("offense", "special_teams", "penalty", "kneel", "spike", "two_point")
 GAMES = {
     "401872950": "2026_03_CIN_PIT",
     "401872951": "2026_03_HOU_IND",
@@ -203,17 +207,27 @@ def eligible(row):
 
 
 def benchmark_category(row):
+    if row.get("two_point_attempt"):
+        return "two_point"
     if eligible(row):
         return "offense"
     if row["play_type"] in ("kickoff", "punt", "field_goal", "extra_point"):
         return "special_teams"
+    if row["play_type"] == "no_play" and re.search(
+        r"\bpenalty\b", row.get("description") or "", re.I
+    ):
+        return "penalty"
+    if row["play_type"] == "qb_kneel":
+        return "kneel"
+    if row["play_type"] == "qb_spike":
+        return "spike"
     return None
 
 
 def benchmark_result(rows, predicted):
     """Score coverage on every eligible row, including missing ESPN IDs."""
     by_category = {}
-    for category in ("offense", "special_teams"):
+    for category in CATEGORIES:
         selected = [r for r in rows if benchmark_category(r) == category and r["epa"] is not None]
         compared = [(r, predicted[r["play_id"]]) for r in selected if r["play_id"] in predicted]
         errors = [value - row["epa"] for row, value in compared]
@@ -240,9 +254,12 @@ def team_epa_summary(compared_plays):
         if category == "offense":
             assignments = ((row["reference_posteam"], "offense", 1),
                            (row["reference_defteam"], "defense", -1))
-        else:
+        elif category == "special_teams":
             assignments = ((row["reference_posteam"], "special_teams", 1),
                            (row["reference_defteam"], "special_teams", -1))
+        else:
+            assignments = ((row["reference_posteam"], category, 1),
+                           (row["reference_defteam"], f"{category}_defense", -1))
         for team, label, sign in assignments:
             bucket = result.setdefault(row["game_id"], {}).setdefault(team, {}).setdefault(
                 label, {"plays": 0, "espn_epa": 0.0, "nflverse_epa": 0.0,
@@ -328,6 +345,12 @@ def main():
         "and play_type='extra_point' and ep is not null",
         [str(PBP_2025)],
     ).fetchone()[0]
+    two_point_expected = conn.execute(
+        "select avg(ep) from read_parquet(?) "
+        "where season=2025 and season_type='REG' "
+        "and two_point_attempt and ep is not null",
+        [str(PBP_2025)],
+    ).fetchone()[0]
 
     refs = reference_rows(
         conn, PBP_2026,
@@ -405,16 +428,16 @@ def main():
                 benchmark_predictions[(ref_game_id, suffix)] = estimate
                 benchmark_teams[(ref_game_id, suffix)] = team_abbr.get(
                     possession_id(play, team_ids))
-        # The ESPN summary folds PATs into touchdown descriptions. Align each
-        # synthetic PAT with the later nflverse PAT ID only for scoring this
-        # benchmark; its EPA estimate uses ESPN text and 2025 expected points.
+        # ESPN folds PATs and two-point tries into touchdown descriptions.
+        # Align a synthetic estimate with the later nflverse ID only for
+        # evaluation; the result comes from ESPN text and 2025 expected points.
         ordered_espn = sorted(
             ((play_suffix(game_id, p), p) for p in plays
              if play_suffix(game_id, p) is not None),
             key=lambda pair: pair[0],
         )
         for ref in ref_by_id.values():
-            if ref["play_type"] != "extra_point":
+            if ref["play_type"] != "extra_point" and not ref["two_point_attempt"]:
                 continue
             preceding = [p for suffix, p in ordered_espn if suffix < ref["play_id"]]
             for candidate in reversed(preceding):
@@ -423,7 +446,11 @@ def main():
                                           (candidate.get("scoringType") or {}).get("name") != "touchdown"):
                     break
                 if (candidate.get("scoringType") or {}).get("name") == "touchdown":
-                    estimate = embedded_extra_point_epa(candidate, xp_expected)
+                    estimate = (
+                        embedded_two_point_epa(candidate, two_point_expected)
+                        if ref["two_point_attempt"] else
+                        embedded_extra_point_epa(candidate, xp_expected)
+                    )
                     if estimate is not None:
                         benchmark_predictions[(ref_game_id, ref["play_id"])] = estimate
                         scorer = str(((candidate.get("end") or {}).get("team") or {}).get("id") or "")
@@ -571,13 +598,15 @@ def main():
     report = {
         "benchmark": {
             "epa_tolerance": EPA_TOLERANCE,
-            "criteria": "at least 95% coverage and at least 95% of predicted plays within tolerance in each category; defense mirrors opponent offensive EPA",
-            "excluded_from_acceptance": {
-                "no_play_with_epa": sum(r["play_type"] == "no_play" and r["epa"] is not None
-                                        for r in benchmark_rows),
-                "two_point_attempt_with_epa": sum(bool(r["two_point_attempt"]) and
-                                                  r["epa"] is not None for r in benchmark_rows),
-            },
+            "criteria": "at least 95% coverage and at least 95% of predicted plays within tolerance in each football-play category; defense mirrors opponent offensive EPA",
+            "uncategorized_with_epa": sum(
+                benchmark_category(r) is None and r["epa"] is not None
+                for r in benchmark_rows
+            ),
+            "uncategorized_by_play_type": dict(Counter(
+                r["play_type"] or "<null>" for r in benchmark_rows
+                if benchmark_category(r) is None and r["epa"] is not None
+            )),
             "categories": benchmark,
             "by_game": game_benchmarks,
             "by_team": team_epa_summary(compared_plays),
@@ -590,13 +619,13 @@ def main():
                 and r["espn_posteam"] != r["reference_posteam"]
             ],
             "compared_plays": compared_plays,
-            "method_limit": "Completed-game comparison: non-scoring ESPN plays use the next eligible ESPN event; touchdown PATs are synthesized from their ESPN touchdown text and aligned to nflverse IDs only for evaluation",
+            "method_limit": "Completed-game comparison: non-scoring ESPN plays use the next eligible ESPN event; touchdown PATs and two-point tries are synthesized from ESPN touchdown text and aligned to nflverse IDs only for evaluation",
         },
         "data_sources": {"espn": "live summary responses fetched by app's get_game_data",
                          "espn_snapshot_sha256": espn_hashes,
                          "nflverse_2025": str(PBP_2025), "nflverse_2026": str(PBP_2026)},
         "sample": args.sample,
-        "model": "Benchmarked EPA uses the pinned published nflfastR EP XGBoost model on ESPN-derived states, a 2025-trained field-goal EP surrogate, and 2025 mean extra-point EP; legacy safe-subset diagnostics still use the six-feature surrogate",
+        "model": "Benchmarked EPA uses the pinned published nflfastR EP XGBoost model on ESPN-derived states, a 2025-trained field-goal EP surrogate, and 2025 mean extra-point and two-point EP; legacy safe-subset diagnostics still use the six-feature surrogate",
         "model_training_rows": len(train),
         "summary": {
             "offensive_plays": sum(g["nflverse_offensive_plays"] for g in games),

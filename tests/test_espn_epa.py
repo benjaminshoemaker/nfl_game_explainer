@@ -5,7 +5,10 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from research.espn_epa import embedded_extra_point_epa, estimate_play_epa, possession_id
+from research.espn_epa import (
+    embedded_extra_point_epa, embedded_two_point_epa, estimate_play_epa,
+    possession_id,
+)
 
 
 def play(team, ep, kind="Rush", period=1, scoring=None, scorer=None):
@@ -77,3 +80,13 @@ def test_extra_point_embedded_in_touchdown_text():
     assert abs(embedded_extra_point_epa(touchdown, 0.93) - 0.07) < 1e-9
     touchdown["text"] = "TOUCHDOWN. Extra point is NO GOOD."
     assert embedded_extra_point_epa(touchdown, 0.93) == -0.93
+
+
+def test_two_point_attempt_embedded_in_touchdown_text():
+    touchdown = play("A", 2, scoring="touchdown")
+    touchdown["text"] = "TOUCHDOWN. TWO-POINT CONVERSION ATTEMPT. Pass is complete. ATTEMPT SUCCEEDS."
+    assert embedded_two_point_epa(touchdown, 0.947) == 1.053
+    touchdown["text"] = "TOUCHDOWN. TWO-POINT CONVERSION ATTEMPT. Pass is incomplete. ATTEMPT FAILS."
+    assert embedded_two_point_epa(touchdown, 0.947) == -0.947
+    touchdown["text"] = "TOUCHDOWN. Extra point is GOOD."
+    assert embedded_two_point_epa(touchdown, 0.947) is None

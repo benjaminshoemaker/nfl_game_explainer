@@ -6,7 +6,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from research.epa_benchmark import (
-    GAMES, HOLDOUT_GAMES, benchmark_result, espn_state, team_epa_summary,
+    GAMES, HOLDOUT_GAMES, benchmark_result, benchmark_category, espn_state,
+    team_epa_summary,
 )
 
 
@@ -64,3 +65,52 @@ def test_special_teams_net_is_zero_sum():
     team = team_epa_summary(rows)["g"]
     assert team["SEA"]["special_teams"]["espn_epa"] == 0.8
     assert team["WAS"]["special_teams"]["espn_epa"] == -0.8
+
+
+def test_penalties_do_not_enter_special_teams_total():
+    rows = [{
+        "game_id": "g", "play_type": "no_play", "two_point_attempt": 0,
+        "description": "PENALTY on WAS, False Start - No Play.",
+        "reference_posteam": "WAS", "reference_defteam": "SEA",
+        "espn_estimate": -0.5, "reference_epa": -0.4, "error": -0.1,
+    }]
+    team = team_epa_summary(rows)["g"]
+    assert team["WAS"]["penalty"]["espn_epa"] == -0.5
+    assert team["SEA"]["penalty_defense"]["espn_epa"] == 0.5
+    assert "special_teams" not in team["WAS"]
+
+
+def test_every_football_play_type_has_a_benchmark_category():
+    expected = {
+        ("run", False, "rush"): "offense",
+        ("pass", False, "pass"): "offense",
+        ("kickoff", False, "kickoff"): "special_teams",
+        ("no_play", False, "PENALTY on SEA, False Start - No Play."): "penalty",
+        ("qb_kneel", False, "Quarterback kneels."): "kneel",
+        ("qb_spike", False, "Quarterback spiked the ball."): "spike",
+        ("pass", True, "TWO-POINT CONVERSION ATTEMPT."): "two_point",
+        ("no_play", False, "Timeout #1 by SEA."): None,
+        (None, False, "END QUARTER 1"): None,
+    }
+    for (play_type, two_point, description), category in expected.items():
+        row = {"play_type": play_type, "two_point_attempt": two_point,
+               "description": description}
+        assert benchmark_category(row) == category
+
+
+def test_expanded_benchmark_counts_missing_play_types():
+    rows = [
+        {"play_id": ("g", i), "play_type": typ, "two_point_attempt": two,
+         "description": desc, "epa": 0.5}
+        for i, typ, two, desc in [
+            (1, "no_play", False, "PENALTY on SEA, False Start - No Play."),
+            (2, "qb_kneel", False, "Quarterback kneels."),
+            (3, "qb_spike", False, "Quarterback spikes the ball."),
+            (4, "pass", True, "TWO-POINT CONVERSION ATTEMPT."),
+        ]
+    ]
+    result = benchmark_result(rows, {("g", 1): 0.6})
+    for category in ("penalty", "kneel", "spike", "two_point"):
+        assert result[category]["eligible"] == 1
+    assert result["penalty"]["predicted"] == 1
+    assert result["two_point"]["predicted"] == 0

@@ -66,6 +66,20 @@ def embedded_extra_point_epa(touchdown_play, expected_point):
     return None
 
 
+def embedded_two_point_epa(touchdown_play, expected_point):
+    """Value a two-point try recorded only in ESPN's touchdown text."""
+    if (touchdown_play.get("scoringType") or {}).get("name") != "touchdown":
+        return None
+    text = touchdown_play.get("text") or ""
+    if not re.search(r"two-point conversion attempt", text, re.I):
+        return None
+    if re.search(r"attempt succeeds", text, re.I):
+        return 2 - expected_point
+    if re.search(r"attempt fails", text, re.I):
+        return -expected_point
+    return None
+
+
 def estimate_play_epa(plays, position, team_ids, espn_state, predict,
                       predict_fg):
     play = plays[position]

@@ -4,7 +4,8 @@ This completed research exercise calculated play-level EPA from ESPN play data
 and compared completed-game results with nflverse. The development sample was
 ten 2026 Week 3 games, including SEA at Washington and the Rams at Denver;
 six other Week 3 games were held out for validation. The 95% coverage and
-accuracy targets below were met in both samples for offense and special teams.
+accuracy targets below were met in both samples for every football-play
+category, including penalties, kneels, spikes, and two-point tries.
 nflverse is the postgame comparison target, not an infallible play-state oracle.
 
 ## Acceptance criteria
@@ -24,8 +25,8 @@ nflverse is the postgame comparison target, not an infallible play-state oracle.
   development sample: ARI–SF, ATL–GB, BAL–DAL, CAR–CLE, KC–MIA, and LAC–BUF.
   Do not tune parser rules or model parameters against these games before the
   first held-out result is recorded.
-- Keep a separate count for nullified penalty (`no_play`) and two-point plays;
-  their nflverse treatment is not implied by the two categories above.
+- Evaluate penalty (`no_play`), kneel, spike, and two-point plays separately;
+  administrative `no_play` events and period markers are not football plays.
   Include scoring, possession changes, turnovers, and drive/half ends in the
   offensive denominator, and record any irreducible ESPN/reference conflicts.
 
@@ -46,6 +47,53 @@ no nflverse play states or outcomes.
 | Development (10 games) | Special teams | 266 | 266 | 264 (99.2%) | 0.013 |
 | Held out (6 games) | Offense | 761 | 761 | 755 (99.2%) | 0.015 |
 | Held out (6 games) | Special teams | 155 | 155 | 152 (98.1%) | 0.024 |
+
+### All football-play categories
+
+The expanded benchmark also evaluates the play types outside the original
+run/pass and special-teams goal. Every nflverse football-play row with non-null
+EPA in these six categories received an ESPN-derived estimate: **1,616/1,616**
+in development and **999/999** held out. Agreement within ±0.25 EPA was
+**1,606/1,616 (99.4%)** and **990/999 (99.1%)**, respectively. The category
+results are:
+
+| Sample | Added category | Eligible | Predicted | Within ±0.25 | Mean absolute error |
+|---|---|---:|---:|---:|---:|
+| Development | Penalty | 106 | 106 | 105 (99.1%) | 0.0081 |
+| Development | Kneel | 11 | 11 | 11 (100%) | 0 |
+| Development | Spike | 4 | 4 | 4 (100%) | 0.0031 |
+| Development | Two-point try | 6 | 6 | 6 (100%) | <0.0001 |
+| Held out | Penalty | 71 | 71 | 71 (100%) | 0.0085 |
+| Held out | Kneel | 6 | 6 | 6 (100%) | 0 |
+| Held out | Spike | 2 | 2 | 2 (100%) | 0.0008 |
+| Held out | Two-point try | 4 | 4 | 4 (100%) | <0.0001 |
+
+The penalty category contains 177 enforced or nullified penalty events. The
+other 126 nflverse `no_play` rows are administrative events, chiefly timeouts
+with zero EPA. Another 49 rows with null play type and zero EPA mark game starts,
+period ends, or other bookkeeping. These 175 administrative rows are reported
+as uncategorized, not included in football-play coverage. All 177 penalty,
+23 kneel/spike, and 10 two-point rows were included. ESPN has matching IDs
+for penalties, kneels, and spikes; its two-point attempts are folded into the
+touchdown description, so the benchmark creates synthetic values from that
+text and uses nflverse IDs only to align the comparison. The two-point EP
+baseline is the constant 0.947 in the pinned 2025 training release.
+
+The four first-quarter SEA–WAS penalties that were blank in the original
+comparison now have estimates (EPA from the penalized play's possession-team
+perspective):
+
+| Play ID | Penalty | ESPN estimate | nflverse |
+|---:|---|---:|---:|
+| `170` | SEA delay of game | -0.4484 | -0.4484 |
+| `681` | WAS false start | -0.6211 | -0.6211 |
+| `727` | SEA pass interference, benefiting WAS | +1.6655 | +1.6655 |
+| `783` | WAS illegal formation, nullifying a touchdown | -0.4663 | -0.4663 |
+
+The one added-category miss is a roughing-the-kicker penalty on CIN–PIT play
+`2625`: ESPN's structured `yardsToEndzone` is 41 at PIT 41, while its displayed
+spot indicates 59 yards to the end zone. The resulting estimate is 2.829 EPA
+versus nflverse's 3.611. The mismatch remains in the reported score.
 
 Scoring run/pass plays: **49/50** development and **31/32** held out within
 tolerance. Turnover run/pass plays: **27/27** development and **13/13** held
@@ -105,10 +153,9 @@ PYTHONPATH=. .venv/bin/python research/epa_benchmark.py --sample holdout
 ```
 
 The benchmark writes ignored JSON evidence and ESPN response snapshots under
-`audits/`; `--refresh-espn` replaces those snapshots. This validates completed
-game streams, including scoring and possession changes. It does **not** yet
-measure in-game update latency or put EPA in the live dashboard. Two-point
-tries and `no_play` penalties remain separately tracked rather than silently
-included in the run/pass and special-teams acceptance denominators: 6 two-point
-and 186 `no_play` rows with EPA in development, and 4 two-point and 117
-`no_play` rows with EPA held out.
+`audits/`; `--refresh-espn` replaces those snapshots. Per-play estimates and
+errors are in the JSON `benchmark.compared_plays` array. This validates
+completed-game streams, including scoring and possession changes. It does
+**not** yet measure in-game update latency or put EPA in the live dashboard.
+The kneel, spike, and two-point samples are small, so their 100% match rates
+should not be treated as broad-season validation.

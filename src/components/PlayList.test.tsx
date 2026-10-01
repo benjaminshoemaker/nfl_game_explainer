@@ -143,6 +143,35 @@ describe('PlayList', () => {
     expect(screen.queryByText('Own 20 Yard Line')).not.toBeInTheDocument();
   });
 
+  it('distinguishes zero charged kickoff yards from unresolved penalty yards', () => {
+    render(
+      <PlayList
+        plays={[
+          {
+            type: 'Kickoff', text: 'Kickoff out of bounds, placed at SEA 40.', yards: 0,
+            yardage_note: '0 penalty yards charged; ball placed at SEA 40',
+          },
+          {
+            type: 'Penalty', text: 'Penalty on SEA, enforcement unknown.', yards: null,
+            yardage_note: 'Penalty yards unavailable',
+            team_attribution_note: 'Committing team unavailable',
+          },
+        ]}
+        teamAbbr="SEA"
+        teamSecondary="#4DC3FF"
+        teamTextColor="#4DC3FF"
+        opponentTextColor="#FFA300"
+        side="away"
+        category="Penalty Yards"
+      />
+    );
+
+    expect(screen.getByText('0 penalty yards charged; ball placed at SEA 40')).toBeInTheDocument();
+    expect(screen.getByText('Penalty yards unavailable')).toBeInTheDocument();
+    expect(screen.getByText('Committing team unavailable')).toBeInTheDocument();
+    expect(screen.queryByText('null yards')).not.toBeInTheDocument();
+  });
+
   it('shows end spot and preserves yards for non-kickoff plays', () => {
     render(
       <PlayList

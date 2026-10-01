@@ -146,6 +146,13 @@ ADDITIONAL FACTORS (addressing gaps in original framework)
 8. PENALTIES (Yards)
    
    What it measures: Total penalty yards assessed against each team.
+   Full-game values use ESPN's box score. Competitive values sum accepted
+   play-level penalties in the selected win-probability scope. ESPN kickoff
+   placement fouls (out of bounds or short of the landing zone) count as
+   accepted penalties but charge zero penalty yards; their placement distance
+   is not penalty yardage. If another accepted penalty lacks reliable yards or
+   team attribution, the affected competitive total is unavailable, and the
+   drilldown identifies the unresolved play.
    
    How to read it: Lower is better. This is inverted from most stats.
    

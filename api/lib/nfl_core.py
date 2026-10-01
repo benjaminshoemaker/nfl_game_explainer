@@ -28,11 +28,40 @@ _TEAM_ABBR_ALIASES = {
     "la": "lar",
     "was": "wsh",
 }
+_PENALTY_ON_TEAM_RE = re.compile(r'\bpenalty on\s+([a-z]{2,4})(?=[\s,.-])', re.IGNORECASE)
+_KICKOFF_PLACEMENT_TYPES = {'kickoff-out-of-bounds', 'kickoff-short-of-landing-zone'}
+_PLACED_AT_RE = re.compile(r'\bplaced at\s+([a-z]{2,4}\s+\d+|midfield|50)\b', re.IGNORECASE)
 
 
 def _canonical_team_abbr(abbr):
     normalized = str(abbr or '').lower()
     return _TEAM_ABBR_ALIASES.get(normalized, normalized)
+
+
+def _penalty_team_id(penalty_info, text, abbr_to_id, opponent_id):
+    team_id = (penalty_info.get('team') or {}).get('id')
+    if team_id:
+        return team_id
+    match = _PENALTY_ON_TEAM_RE.search(text or '')
+    if match:
+        return abbr_to_id.get(_canonical_team_abbr(match.group(1)))
+    if 'on defense' in (text or '').lower():
+        return opponent_id
+    return None
+
+
+def _charged_penalty_yards(penalty_info, play):
+    """Return charged yards and a note; placement distance is not penalty yardage."""
+    yards = penalty_info.get('yards')
+    if isinstance(yards, (int, float)) and math.isfinite(yards):
+        return abs(int(yards)), None
+    penalty_type = (penalty_info.get('type') or {}).get('slug')
+    play_type = ((play.get('type') or {}).get('text') or '').lower()
+    placement = _PLACED_AT_RE.search(play.get('text') or '')
+    if (penalty_type in _KICKOFF_PLACEMENT_TYPES
+            and 'kickoff' in play_type and placement):
+        return 0, f"0 penalty yards charged; ball placed at {placement.group(1).upper()}"
+    return None, 'Penalty yards unavailable'
 
 
 def final_play_text(text):
@@ -1210,57 +1239,54 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
             # Handle penalty plays for expanded details
             penalty_info = play.get('penalty') or {}
             has_penalty_flag = bool(penalty_info) or play.get('hasPenalty') or 'penalty' in text_lower
+            penalty_team_id = _penalty_team_id(penalty_info, text, abbr_to_id, opponent_id)
+            charged_yards, yardage_note = _charged_penalty_yards(penalty_info, play)
             if (expanded and has_penalty_flag
                     and (not penalty_yards_from_plays or competitive)
                     and not is_declined_only_penalty(text_lower, penalty_info)):
-                commit_team_id = penalty_info.get('team', {}).get('id')
-                if not commit_team_id:
-                    for abbr_lower, tid in abbr_to_id.items():
-                        if f"penalty on {abbr_lower}" in text_lower:
-                            commit_team_id = tid
-                            break
-                if not commit_team_id:
-                    if 'on defense' in text_lower and opponent_id:
-                        commit_team_id = opponent_id
-                    else:
+                commit_team_id = penalty_team_id
+                attribution_note = None
+                if (penalty_yards_from_plays
+                        and (penalty_info.get('status') or {}).get('slug') == 'accepted'
+                        and commit_team_id not in details):
+                    # Both totals are unavailable when the committing team is
+                    # unknown; show the unresolved play in both drilldowns.
+                    detail_team_ids = list(details)
+                    attribution_note = 'Committing team unavailable'
+                else:
+                    if not commit_team_id:
+                        commit_team_id = opponent_id if 'on defense' in text_lower else team_id
+                    if commit_team_id not in details:
                         commit_team_id = team_id
-                yards_pen = penalty_info.get('yards')
-                if isinstance(yards_pen, (int, float)):
-                    yards_pen = -abs(yards_pen)
-                if commit_team_id not in details:
-                    commit_team_id = team_id
-                details[commit_team_id]['Penalty Yards'].append({
-                    'yards': yards_pen,
-                    'text': play.get('text', ''),
-                    'type': play_type,
-                    'quarter': play.get('period', {}).get('number'),
-                    'clock': play.get('clock', {}).get('displayValue'),
-                    'end_pos': _end_pos_text(play),
-                    'probability': probability_snapshot
-                })
+                    detail_team_ids = [commit_team_id]
+                yards_pen = -charged_yards if charged_yards is not None else None
+                for detail_team_id in detail_team_ids:
+                    details[detail_team_id]['Penalty Yards'].append({
+                        'yards': yards_pen,
+                        'yardage_note': yardage_note,
+                        'team_attribution_note': attribution_note,
+                        'text': play.get('text', ''),
+                        'type': play_type,
+                        'quarter': play.get('period', {}).get('number'),
+                        'clock': play.get('clock', {}).get('displayValue'),
+                        'end_pos': _end_pos_text(play),
+                        'probability': probability_snapshot
+                    })
 
             # Accepted penalties count even when they nullify the underlying
             # play. Apply the WP scope before the no-play filter below.
             if penalty_yards_from_plays and competitive:
                 penalty_status = (penalty_info.get('status') or {}).get('slug')
                 if penalty_status == 'accepted':
-                    penalty_team_id = (penalty_info.get('team') or {}).get('id')
-                    if not penalty_team_id:
-                        for abbr_lower, tid in abbr_to_id.items():
-                            if f"penalty on {abbr_lower}" in text_lower:
-                                penalty_team_id = tid
-                                break
-                    if not penalty_team_id and 'on defense' in text_lower and opponent_id:
-                        penalty_team_id = opponent_id
-                    penalty_yards = penalty_info.get('yards')
-                    if (penalty_team_id not in stats
-                            or not isinstance(penalty_yards, (int, float))):
+                    if penalty_team_id not in stats:
                         for row in stats.values():
                             row['Penalty Yards'] = None
                     else:
                         target = stats[penalty_team_id]
-                        if target['Penalty Yards'] is not None:
-                            target['Penalty Yards'] += abs(int(penalty_yards))
+                        if charged_yards is None:
+                            target['Penalty Yards'] = None
+                        elif target['Penalty Yards'] is not None:
+                            target['Penalty Yards'] += charged_yards
 
             if 'timeout' in play_type_lower or 'end of' in play_type_lower:
                 record_debug_play(play, drive_index, team_id, debug_before,

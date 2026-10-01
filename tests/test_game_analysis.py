@@ -225,6 +225,80 @@ def test_competitive_penalty_yards_are_unavailable_when_play_attribution_is_inco
     payload = ga.analyze_game("123")
     competitive = {row["Team"]: row for row in payload["advanced_table"]}
     assert competitive["AAA"]["Penalty Yards"] is None
+    assert competitive["BBB"]["Penalty Yards"] is None
+    for team_id in ("1", "2"):
+        entry = payload["expanded_details"][team_id]["Penalty Yards"][0]
+        assert entry["team_attribution_note"] == "Committing team unavailable"
+
+
+def test_competitive_penalties_resolve_was_alias_and_kickoff_placements(monkeypatch):
+    def penalty_play(pid, text, penalty_type, yards=None):
+        penalty = {"type": {"slug": penalty_type}, "status": {"slug": "accepted"}}
+        if yards is not None:
+            penalty["yards"] = yards
+        return {
+            "id": pid, "text": text, "type": {"text": "Kickoff" if "kickoff" in penalty_type else "Penalty"},
+            "start": {"team": {"id": "26"}, "down": 0}, "penalty": penalty,
+            "statYardage": 25 if "kickoff" in penalty_type else 0,
+        }
+
+    game = {
+        "boxscore": {"teams": [
+            {"team": {"id": "26", "abbreviation": "SEA"}, "statistics": [
+                {"name": "totalPenaltiesYards", "displayValue": "2-5"}]},
+            {"team": {"id": "28", "abbreviation": "WSH"}, "statistics": [
+                {"name": "totalPenaltiesYards", "displayValue": "2-5"}]},
+        ]},
+        "header": {"competitions": [{"competitors": [
+            {"id": "26", "score": "0", "homeAway": "away", "team": {"abbreviation": "SEA"}},
+            {"id": "28", "score": "0", "homeAway": "home", "team": {"abbreviation": "WSH"}},
+        ]}]},
+        "drives": {"previous": [{"team": {"id": "26"}, "plays": [
+            penalty_play("was-five", "PENALTY on WAS-J.Bates, False Start, 5 yards, enforced at WAS 47 - No Play.", "false-start", 5),
+            penalty_play("sea-five", "PENALTY on SEA-A.Barner, False Start, 5 yards, enforced at SEA 21 - No Play.", "false-start", 5),
+            penalty_play("was-kick", "Kick out of bounds.PENALTY on WAS-D.Stevens, Kickoff Out of Bounds, placed at SEA 40.", "kickoff-out-of-bounds"),
+            penalty_play("sea-kick", "Short kick.PENALTY on SEA-J.Myers, Kickoff Short of Landing Zone, placed at WAS 40.", "kickoff-short-of-landing-zone"),
+        ]}]},
+    }
+    monkeypatch.setattr(ga, "get_game_data", lambda _game_id: game)
+    monkeypatch.setattr(ga, "get_pregame_probabilities", lambda _game_id: (0.5, 0.5))
+    monkeypatch.setattr(ga, "get_play_probabilities", lambda _game_id: {
+        pid: {"homeWinPercentage": 0.5, "awayWinPercentage": 0.5}
+        for pid in ("was-five", "sea-five", "was-kick", "sea-kick")
+    })
+
+    payload = ga.analyze_game("401872955")
+    competitive = {row["Team"]: row for row in payload["advanced_table"]}
+    assert competitive["SEA"]["Penalty Yards"] == 5
+    assert competitive["WSH"]["Penalty Yards"] == 5
+    sea_details = payload["expanded_details"]["26"]["Penalty Yards"]
+    wsh_details = payload["expanded_details"]["28"]["Penalty Yards"]
+    assert [row["yards"] for row in sea_details] == [-5, 0]
+    assert [row["yards"] for row in wsh_details] == [-5, 0]
+    assert sea_details[1]["yardage_note"] == "0 penalty yards charged; ball placed at WAS 40"
+    assert wsh_details[1]["yardage_note"] == "0 penalty yards charged; ball placed at SEA 40"
+
+
+def test_unknown_penalty_yards_remain_explicit_and_null_only_own_team():
+    game = {
+        "boxscore": {"teams": [
+            {"team": {"id": "1", "abbreviation": "AAA"}},
+            {"team": {"id": "2", "abbreviation": "BBB"}},
+        ]},
+        "drives": {"previous": [{"team": {"id": "1"}, "plays": [{
+            "id": "unknown", "text": "PENALTY on AAA, unknown enforcement.",
+            "type": {"text": "Penalty"}, "start": {"team": {"id": "1"}, "down": 1},
+            "penalty": {"type": {"slug": "other"}, "status": {"slug": "accepted"}},
+        }]}]},
+    }
+    stats, details = process_game_stats(game, expanded=True, probability_map={
+        "unknown": {"homeWinPercentage": 0.5, "awayWinPercentage": 0.5},
+    }, penalty_yards_from_plays=True)
+    by_team = {row["Team"]: row for row in stats}
+    assert by_team["AAA"]["Penalty Yards"] is None
+    assert by_team["BBB"]["Penalty Yards"] == 0
+    assert details["1"]["Penalty Yards"][0]["yards"] is None
+    assert details["1"]["Penalty Yards"][0]["yardage_note"] == "Penalty yards unavailable"
 
 
 def test_final_api_uses_espn_totals_but_exposes_play_by_play_gaps(monkeypatch):

@@ -81,7 +81,9 @@ export interface AdvancedStats {
 export interface PlayDetail {
   type: string;
   text: string;
-  yards?: number;
+  yards?: number | null;
+  yardage_note?: string | null;
+  team_attribution_note?: string | null;
   points?: number;
   quarter?: number;
   clock?: string;

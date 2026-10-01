@@ -268,7 +268,7 @@ export function PlayList({
             {/* Footer */}
             <div className="flex items-center justify-between flex-wrap gap-2">
               {/* Yards badge */}
-              {play.yards !== undefined && play.yards !== 0 && !showEndSpotInsteadOfYards && (
+              {typeof play.yards === 'number' && play.yards !== 0 && !showEndSpotInsteadOfYards && (
                 <span
                   className="font-display text-sm px-3 py-1 rounded-md"
                   style={{
@@ -279,6 +279,18 @@ export function PlayList({
                   {isPenaltyCategory
                     ? `${play.yards > 0 ? '+' : ''}${play.yards} yards`
                     : `${play.yards > 0 ? '+' : ''}${play.yards} YDS`}
+                </span>
+              )}
+
+              {isPenaltyCategory && play.yardage_note && (
+                <span className="font-body text-xs text-text-secondary">
+                  {play.yardage_note}
+                </span>
+              )}
+
+              {isPenaltyCategory && play.team_attribution_note && (
+                <span className="font-body text-xs text-text-secondary">
+                  {play.team_attribution_note}
                 </span>
               )}
 

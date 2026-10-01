@@ -26,6 +26,7 @@ from lib.nfl_core import (
     process_game_stats as _process_game_stats,
     reconcile_final_boxscore,
     build_analysis_text,
+    boxscore_abbreviations_by_id,
 )
 
 load_dotenv('.env.local')
@@ -573,6 +574,7 @@ def main():
         team_meta = []
         game_status_label = "Final"
         game_is_final = True
+        boxscore_abbr_by_id = boxscore_abbreviations_by_id(raw_data)
         if comps:
             comp0 = comps[0]
             game_date_str = comp0.get('date', '')
@@ -587,7 +589,8 @@ def main():
                 else:
                     game_status_label = f"OT {clock}".strip() if clock else "OT"
             for comp in comp0.get('competitors', []):
-                abbr = comp.get('team', {}).get('abbreviation')
+                team_id = comp.get('id') or (comp.get('team') or {}).get('id')
+                abbr = boxscore_abbr_by_id.get(str(team_id)) or comp.get('team', {}).get('abbreviation')
                 display_name = comp.get('team', {}).get('displayName', abbr or "")
                 if comp.get('homeAway') == 'home':
                     home_abbr = abbr

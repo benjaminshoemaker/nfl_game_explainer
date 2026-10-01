@@ -14,6 +14,10 @@ do not reproduce those totals or ESPN's offensive-play count, a source-gap
 notice appears. A matching yard total alone does not prove every snap is
 present. Play-derived
 factors and competitive-play splits can still be incomplete in that case.
+ESPN play text can use older team abbreviations (CLV, HST, WAS, ARZ, BLT,
+LA, or JAC). Team IDs and one shared alias map align those names with the
+box score. Unknown penalty-team abbreviations make competitive penalty yards
+unavailable rather than assigning the penalty to a guessed team.
 
 SPECIAL TEAMS METRICS
 --------------------

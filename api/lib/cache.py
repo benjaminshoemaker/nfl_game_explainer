@@ -225,7 +225,10 @@ def build_cache_stats(stats_rows: List[Dict[str, Any]], _team_meta: List[Dict[st
 
 
 def build_cache_plays(raw_data: Dict, probability_map: Dict, pregame_probabilities: Tuple[float, float]) -> Dict[str, Any]:
-    from .nfl_core import calculate_success, classify_offense_play, final_play_text
+    from .nfl_core import (
+        _canonical_team_abbr, calculate_success, classify_offense_play,
+        final_play_text, normalize_position_text,
+    )
 
     drives = raw_data.get("drives", {}).get("previous", []) or []
     pregame_home_wp, pregame_away_wp = pregame_probabilities
@@ -243,21 +246,12 @@ def build_cache_plays(raw_data: Dict, probability_map: Dict, pregame_probabiliti
     plays_list: List[Dict[str, Any]] = []
     drive_starts: List[Dict[str, Any]] = []
 
-    def normalize_abbr(abbr: str, *, known: set[str]) -> str:
+    known_abbrs = {_canonical_team_abbr(abbr): abbr for abbr in id_to_abbr.values()}
+
+    def normalize_abbr(abbr: str) -> str:
         if not abbr:
             return ""
-        a = abbr.upper()
-        if a in known:
-            return a
-        aliases = {"LA": "LAR", "WAS": "WSH", "JAC": "JAX"}
-        mapped = aliases.get(a)
-        if mapped and mapped in known:
-            return mapped
-        if len(a) == 2:
-            matches = [k for k in known if k.startswith(a)]
-            if len(matches) == 1:
-                return matches[0]
-        return a
+        return known_abbrs.get(_canonical_team_abbr(abbr), "")
 
     def is_drive_boundary_noise(play_obj: Dict[str, Any]) -> bool:
         ptype = ((play_obj.get("type") or {}) or {}).get("text", "") or ""
@@ -271,8 +265,6 @@ def build_cache_plays(raw_data: Dict, probability_map: Dict, pregame_probabiliti
         txt = (play_obj.get("text") or "").lower()
         return ("kickoff" in ptype_lower) or ("kickoff" in txt) or ("punt" in ptype_lower) or ("onside" in txt)
 
-    known_abbrs = set(id_to_abbr.values())
-
     for drive_index, drive in enumerate(drives):
         drive_team_id = (drive.get("team") or {}).get("id")
         drive_team_abbr = id_to_abbr.get(str(drive_team_id), "")
@@ -283,6 +275,8 @@ def build_cache_plays(raw_data: Dict, probability_map: Dict, pregame_probabiliti
         drive_start_text = (drive.get("start") or {}).get("text")
         if not isinstance(drive_start_text, str) or not drive_start_text.strip():
             drive_start_text = None
+        if drive_start_text:
+            drive_start_text = normalize_position_text(drive_start_text, known_abbrs)
 
         drive_start_home_wp = prev_home_wp
         drive_start_away_wp = prev_away_wp
@@ -347,14 +341,15 @@ def build_cache_plays(raw_data: Dict, probability_map: Dict, pregame_probabiliti
 
             is_interception = (not is_two_point_conversion_attempt) and ("intercept" in event_text_lower)
             is_fumble_turnover = False
+            unresolved_team_abbr = None
             if (not is_two_point_conversion_attempt) and ("fumble" in event_text_lower) and ("recovered by" in event_text_lower):
                 m = re.search(r"recovered by\s+([a-z]{2,3})", event_text_lower, flags=re.IGNORECASE)
-                recovered_abbr = normalize_abbr(m.group(1), known=known_abbrs) if m else ""
-                offense_abbr = normalize_abbr(drive_team_abbr, known=known_abbrs)
+                recovered_abbr = normalize_abbr(m.group(1)) if m else ""
+                offense_abbr = normalize_abbr(drive_team_abbr)
                 if recovered_abbr and offense_abbr:
                     is_fumble_turnover = recovered_abbr != offense_abbr
                 else:
-                    is_fumble_turnover = True
+                    unresolved_team_abbr = m.group(1).upper() if m else "unknown"
 
             is_turnover = bool(is_interception or is_fumble_turnover)
 
@@ -370,7 +365,11 @@ def build_cache_plays(raw_data: Dict, probability_map: Dict, pregame_probabiliti
                     "clock": (play.get("clock") or {}).get("displayValue"),
                     "text": raw_text[:500],
                     "yards": yards,
-                    "end_pos": ((play.get("end") or {}) or {}).get("possessionText") or ((play.get("end") or {}) or {}).get("downDistanceText"),
+                    "end_pos": normalize_position_text(
+                        ((play.get("end") or {}) or {}).get("possessionText")
+                        or ((play.get("end") or {}) or {}).get("downDistanceText"),
+                        known_abbrs,
+                    ),
                     "start_home_wp": round(start_home_wp, 4) if start_home_wp is not None else None,
                     "start_away_wp": round(start_away_wp, 4) if start_away_wp is not None else None,
                     "home_wp": round(home_wp, 4) if isinstance(home_wp, (int, float)) else None,
@@ -381,6 +380,7 @@ def build_cache_plays(raw_data: Dict, probability_map: Dict, pregame_probabiliti
                     "is_pass": is_pass,
                     "is_successful": is_successful,
                     "is_turnover": is_turnover,
+                    "unresolved_team_abbr": unresolved_team_abbr,
                     "drive_team": drive_team_abbr,
                     "home_score": play.get("homeScore", 0),
                     "away_score": play.get("awayScore", 0),

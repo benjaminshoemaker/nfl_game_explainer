@@ -27,6 +27,7 @@ _TEAM_ABBR_ALIASES = {
     "hst": "hou",
     "la": "lar",
     "was": "wsh",
+    "jac": "jax",
 }
 _PENALTY_ON_TEAM_RE = re.compile(r'\bpenalty on\s+([a-z]{2,4})(?=[\s,.-])', re.IGNORECASE)
 _KICKOFF_PLACEMENT_TYPES = {'kickoff-out-of-bounds', 'kickoff-short-of-landing-zone'}
@@ -36,6 +37,30 @@ _PLACED_AT_RE = re.compile(r'\bplaced at\s+([a-z]{2,4}\s+\d+|midfield|50)\b', re
 def _canonical_team_abbr(abbr):
     normalized = str(abbr or '').lower()
     return _TEAM_ABBR_ALIASES.get(normalized, normalized)
+
+
+def normalize_position_text(pos_text, known_abbrs):
+    """Use a game's box-score abbreviations for a structured yard-line label.
+
+    Unknown team tokens have no safe own/opponent interpretation. Keep the raw
+    play description elsewhere, but omit that derived position label.
+    """
+    if not isinstance(pos_text, str):
+        return pos_text
+    match = re.fullmatch(r'\s*([a-z]{2,4})\s+(\d{1,2})\s*', pos_text, re.IGNORECASE)
+    if not match:
+        return pos_text
+    abbr = known_abbrs.get(_canonical_team_abbr(match.group(1)))
+    return f'{abbr} {match.group(2)}' if abbr else None
+
+
+def boxscore_abbreviations_by_id(game_data):
+    """Use ESPN's stable team IDs to align headers with box-score stat rows."""
+    return {
+        str(team['team']['id']): team['team']['abbreviation']
+        for team in (game_data.get('boxscore') or {}).get('teams', [])
+        if (team.get('team') or {}).get('id') and (team.get('team') or {}).get('abbreviation')
+    }
 
 
 def _penalty_team_id(penalty_info, text, abbr_to_id, opponent_id):
@@ -909,7 +934,8 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
         abbr = t.get('team', {}).get('abbreviation')
         if tid and abbr:
             id_to_abbr[tid] = abbr
-    abbr_to_id = {abbr.lower(): tid for tid, abbr in id_to_abbr.items()}
+    abbr_to_id = {_canonical_team_abbr(abbr): tid for tid, abbr in id_to_abbr.items()}
+    display_abbrs = {_canonical_team_abbr(abbr): abbr for abbr in id_to_abbr.values()}
 
     scoring_map = {}
     non_offensive_play_map = {}
@@ -1141,12 +1167,12 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
             return None
         pos_text = end.get('possessionText')
         if isinstance(pos_text, str) and pos_text.strip():
-            return pos_text.strip()
+            return normalize_position_text(pos_text.strip(), display_abbrs)
         down_dist = end.get('downDistanceText')
         if isinstance(down_dist, str):
             m = re.search(r"\bat\s+([A-Z]{2,3}\s+\d+)\b", down_dist)
             if m:
-                return m.group(1)
+                return normalize_position_text(m.group(1), display_abbrs)
         return None
 
     def _is_drive_boundary_noise(play_obj):
@@ -1183,6 +1209,8 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
             drive_start_pos_text = (drive.get('start', {}) or {}).get('yardLine')
         if not isinstance(drive_start_pos_text, str) or not drive_start_pos_text.strip():
             drive_start_pos_text = None
+        if drive_start_pos_text:
+            drive_start_pos_text = normalize_position_text(drive_start_pos_text, display_abbrs)
         drive_points_competitive = 0
         drive_crossed_40_competitive = False
         drive_started_competitive = False

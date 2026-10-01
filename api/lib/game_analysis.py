@@ -23,6 +23,7 @@ from .nfl_core import (
     process_game_stats,
     reconcile_final_boxscore,
     build_analysis_text,
+    boxscore_abbreviations_by_id,
 )
 
 ESPN_REQUEST_HEADERS = {
@@ -295,6 +296,7 @@ def analyze_game(game_id, wp_threshold=0.975, debug=False):
     week_info = header.get('week', 0)
     season_info = header.get('season', {})
     season_type = season_info.get('type', 2) if isinstance(season_info, dict) else 2
+    boxscore_abbr_by_id = boxscore_abbreviations_by_id(raw_data)
 
     if comps:
         comp0 = comps[0]
@@ -303,7 +305,8 @@ def analyze_game(game_id, wp_threshold=0.975, debug=False):
         game_is_final = status == "final"
 
         for comp in comp0.get('competitors', []):
-            abbr = comp.get('team', {}).get('abbreviation')
+            team_id = comp.get('id') or (comp.get('team') or {}).get('id')
+            abbr = boxscore_abbr_by_id.get(str(team_id)) or comp.get('team', {}).get('abbreviation')
             display_name = comp.get('team', {}).get('displayName', abbr or "")
             if comp.get('homeAway') == 'home':
                 home_abbr = abbr

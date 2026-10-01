@@ -11,6 +11,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "a
 from lib.nfl_core import (
     _split_drives_on_possession_change,
     _enforced_at_yards_to_endzone,
+    normalize_position_text,
     yardline_to_coord,
     calculate_success,
     any_stat_contains,
@@ -30,6 +31,7 @@ from lib.nfl_core import (
 @pytest.mark.parametrize("play_abbr, metadata_abbr", [
     ("CLV", "CLE"), ("BLT", "BAL"), ("HST", "HOU"),
     ("ARZ", "ARI"), ("WAS", "WSH"), ("LA", "LAR"),
+    ("JAC", "JAX"),
 ])
 def test_enforcement_spot_uses_espn_team_aliases(play_abbr, metadata_abbr):
     assert _enforced_at_yards_to_endzone(
@@ -38,10 +40,41 @@ def test_enforcement_spot_uses_espn_team_aliases(play_abbr, metadata_abbr):
     assert yardline_to_coord(f"{play_abbr} 23", metadata_abbr) == 23
 
 
+@pytest.mark.parametrize("play_abbr, metadata_abbr", [
+    ("CLV", "CLE"), ("BLT", "BAL"), ("HST", "HOU"),
+    ("ARZ", "ARI"), ("WAS", "WSH"), ("LA", "LAR"),
+    ("JAC", "JAX"),
+])
+def test_penalty_attribution_and_drilldown_use_espn_team_aliases(play_abbr, metadata_abbr):
+    game = {
+        "boxscore": {"teams": [
+            {"team": {"id": "1", "abbreviation": metadata_abbr}},
+            {"team": {"id": "2", "abbreviation": "OPP"}},
+        ]},
+        "drives": {"previous": [{"team": {"id": "2"}, "plays": [{
+            "id": "penalty", "text": f"PENALTY on {play_abbr}-Player, Holding, 5 yards, enforced at {play_abbr} 30 - No Play.",
+            "type": {"text": "Penalty"},
+            "start": {"team": {"id": "2"}, "down": 1},
+            "end": {"possessionText": f"{play_abbr} 35"},
+            "penalty": {"yards": 5, "status": {"slug": "accepted"}},
+        }]}]},
+    }
+    stats, details = process_game_stats(game, expanded=True, penalty_yards_from_plays=True)
+    by_team = {row["Team"]: row for row in stats}
+    assert by_team[metadata_abbr]["Penalty Yards"] == 5
+    assert by_team["OPP"]["Penalty Yards"] == 0
+    assert details["1"]["Penalty Yards"][0]["end_pos"] == f"{metadata_abbr} 35"
+    assert details["2"]["Penalty Yards"] == []
+
+
 def test_penalty_enforced_at_midfield_is_parsed():
     assert _enforced_at_yards_to_endzone(
         "PENALTY on PHI, Offensive Holding, 10 yards, enforced at 50.", "PHI"
     ) == 50
+
+
+def test_unknown_position_team_is_not_labeled_as_opponent():
+    assert normalize_position_text('XYZ 20', {'cle': 'CLE', 'car': 'CAR'}) is None
 
 
 def _turnovers_for_single_play(play, offense_abbr="AAA", defense_abbr="BBB"):

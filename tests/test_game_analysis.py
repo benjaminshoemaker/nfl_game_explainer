@@ -211,7 +211,7 @@ def test_competitive_penalty_yards_are_unavailable_when_play_attribution_is_inco
             {"id": "2", "score": "0", "homeAway": "home", "team": {"abbreviation": "BBB"}},
         ]}]},
         "drives": {"previous": [{"team": {"id": "1"}, "plays": [{
-            "id": "p1", "text": "Penalty accepted, 10 yards", "type": {"text": "Rush"},
+            "id": "p1", "text": "PENALTY on XYZ, 10 yards", "type": {"text": "Rush"},
             "statYardage": 0, "start": {"team": {"id": "1"}, "down": 1, "distance": 10},
             "penalty": {"yards": 10, "status": {"slug": "accepted"}},
         }]}]},
@@ -277,6 +277,27 @@ def test_competitive_penalties_resolve_was_alias_and_kickoff_placements(monkeypa
     assert [row["yards"] for row in wsh_details] == [-5, 0]
     assert sea_details[1]["yardage_note"] == "0 penalty yards charged; ball placed at WAS 40"
     assert wsh_details[1]["yardage_note"] == "0 penalty yards charged; ball placed at SEA 40"
+
+
+def test_game_metadata_uses_boxscore_abbreviation_for_same_team_id(monkeypatch):
+    game = {
+        "boxscore": {"teams": [
+            {"team": {"id": "5", "abbreviation": "CLE"}},
+            {"team": {"id": "29", "abbreviation": "CAR"}},
+        ]},
+        "header": {"competitions": [{"competitors": [
+            {"id": "5", "score": "0", "homeAway": "home", "team": {"abbreviation": "CLV", "displayName": "Cleveland Browns"}},
+            {"id": "29", "score": "0", "homeAway": "away", "team": {"abbreviation": "CAR", "displayName": "Carolina Panthers"}},
+        ]}]},
+        "drives": {"previous": []},
+    }
+    monkeypatch.setattr(ga, "get_game_data", lambda _game_id: game)
+    monkeypatch.setattr(ga, "get_pregame_probabilities", lambda _game_id: (0.5, 0.5))
+    monkeypatch.setattr(ga, "get_play_probabilities", lambda _game_id: {})
+
+    payload = ga.analyze_game("game")
+    assert [team["abbr"] for team in payload["team_meta"]] == ["CLE", "CAR"]
+    assert payload["label"] == "CAR_at_CLE_game"
 
 
 def test_unknown_penalty_yards_remain_explicit_and_null_only_own_team():

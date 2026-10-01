@@ -1,5 +1,11 @@
 # Live EPA from ESPN: 2026 Week 3 feasibility check
 
+This is the initial September 30 feasibility check. The subsequent
+[16-game validation](EPA_GOAL.md) reached the 95% play-level coverage and
+accuracy targets for offense and special teams. The recommendations below
+record what remained after this initial check; consult the validation report
+for the completed exercise and its remaining limits.
+
 ## Result
 
 ESPN supplies enough structured state to estimate expected points on ordinary

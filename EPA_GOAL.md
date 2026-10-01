@@ -1,9 +1,11 @@
-# ESPN EPA comparison goal
+# ESPN EPA validation: 2026 Week 3
 
-The active goal is to calculate play-level EPA from ESPN's live play stream and
-compare completed-game results with nflverse. The initial sample is ten 2026
-Week 3 games, including SEA at Washington and the Rams at Denver. nflverse is
-the postgame comparison target, not an infallible play-state oracle.
+This completed research exercise calculated play-level EPA from ESPN play data
+and compared completed-game results with nflverse. The development sample was
+ten 2026 Week 3 games, including SEA at Washington and the Rams at Denver;
+six other Week 3 games were held out for validation. The 95% coverage and
+accuracy targets below were met in both samples for offense and special teams.
+nflverse is the postgame comparison target, not an infallible play-state oracle.
 
 ## Acceptance criteria
 

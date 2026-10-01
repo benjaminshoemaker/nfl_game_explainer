@@ -9,6 +9,7 @@ import pytest
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "api")))
 
 from lib.nfl_core import (
+    _split_drives_on_possession_change,
     _enforced_at_yards_to_endzone,
     yardline_to_coord,
     calculate_success,
@@ -693,6 +694,57 @@ def test_mislabeled_drive_with_first_play_by_other_team_uses_play_possession():
     by_team = {row["Team"]: row for row in rows}
     assert by_team["CAR"]["Total Yards"] == 0
     assert by_team["NO"]["Total Yards"] == 8
+
+
+def test_average_start_field_position_uses_receiving_team_drive_spot_after_kickoff():
+    game = {
+        "boxscore": {"teams": [
+            {"team": {"id": "1", "abbreviation": "SEA"}},
+            {"team": {"id": "2", "abbreviation": "WSH"}},
+        ]},
+        "header": {"competitions": [{"competitors": [
+            {"id": "1", "score": "0"}, {"id": "2", "score": "0"},
+        ]}]},
+        "drives": {"previous": [{
+            "team": {"id": "1"},
+            "start": {"yardLine": "SEA 37"},
+            "plays": [{
+                "id": "kickoff", "type": {"text": "Kickoff"},
+                "text": "WSH kicks from SEA 35; return to SEA 37.",
+                "start": {"team": {"id": "2"}, "down": 0, "yardsToEndzone": 65},
+                "end": {"team": {"id": "1"}},
+            }, {
+                "id": "rush", "type": {"text": "Rush"}, "statYardage": 4,
+                "text": "Runner for 4 yards.",
+                "start": {"team": {"id": "1"}, "down": 1, "distance": 10,
+                          "yardsToEndzone": 63, "possessionText": "SEA 37"},
+                "end": {"team": {"id": "1"}},
+            }],
+        }]},
+    }
+    rows, _ = process_game_stats(game, wp_threshold=1.0)
+    sea = next(row for row in rows if row["Team"] == "SEA")
+    assert sea["Ave Start Field Pos"] == "Own 37"
+    assert sea["Drives"] == 1
+
+
+def test_timeout_appended_to_previous_drive_does_not_create_duplicate_drive():
+    drives = [{
+        "team": {"id": "1"},
+        "plays": [
+            {"type": {"text": "Punt"}, "start": {"team": {"id": "1"}, "down": 4}},
+            {"type": {"text": "Official Timeout"}, "text": "Official Timeout",
+             "start": {"team": {"id": "2"}, "down": 1}},
+        ],
+    }, {
+        "team": {"id": "2"},
+        "plays": [{"type": {"text": "Rush"},
+                   "start": {"team": {"id": "2"}, "down": 1}}],
+    }]
+
+    normalized = _split_drives_on_possession_change(drives)
+    assert len(normalized) == 2
+    assert [drive["plays"][0]["type"]["text"] for drive in normalized] == ["Punt", "Rush"]
 
 
 def test_score_only_defensive_fumble_return_does_not_credit_offensive_yards():

@@ -733,6 +733,13 @@ def is_competitive_play(play, probability_map, wp_threshold=0.975, start_home_wp
 def _split_drives_on_possession_change(drives):
     """ESPN sometimes keeps plays after a turnover in the former team's drive."""
     normalized = []
+
+    def is_boundary_noise(play):
+        play_type = ((play.get('type') or {}).get('text') or '').lower()
+        text = (play.get('text') or '').lower()
+        return ('timeout' in play_type or 'end of' in play_type
+                or 'end of' in text)
+
     for drive in drives:
         original_team = (drive.get('team') or {}).get('id')
         plays = drive.get('plays') or []
@@ -745,7 +752,10 @@ def _split_drives_on_possession_change(drives):
         segment_plays = []
 
         def append_segment():
-            if segment_plays:
+            # ESPN often appends the next team's Official Timeout to the end
+            # of the previous drive. Splitting that marker creates a fake
+            # one-play drive before the actual next drive record.
+            if segment_plays and any(not is_boundary_noise(play) for play in segment_plays):
                 normalized.append({
                     **drive,
                     'team': {'id': segment_team},
@@ -1130,6 +1140,15 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
         drive_plays = drive.get('plays', [])
         drive_first_play = drive_plays[0] if drive_plays else None
         drive_start_yte = drive.get('start', {}).get('yardsToEndzone', -1)
+        # ESPN's kickoff/punt play coordinates describe the kicking team. The
+        # drive start is the receiving offense's field position, so prefer its
+        # drive-level yard line when available.
+        drive_start = drive.get('start', {}) or {}
+        drive_start_yard_line = drive_start.get('text') or drive_start.get('yardLine')
+        if isinstance(drive_start_yard_line, str):
+            drive_start_coord = yardline_to_coord(drive_start_yard_line, id_to_abbr.get(team_id))
+            if drive_start_coord is not None:
+                drive_start_yte = 100 - drive_start_coord
         drive_start_pos_text = (drive.get('start', {}) or {}).get('text')
         if not isinstance(drive_start_pos_text, str) or not drive_start_pos_text.strip():
             drive_start_pos_text = (drive.get('start', {}) or {}).get('yardLine')
@@ -1178,9 +1197,9 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
             if not drive_first_play_checked:
                 drive_first_play_checked = True
                 drive_started_competitive = competitive
-                start_yte = play.get('start', {}).get('yardsToEndzone', -1)
+                start_yte = drive_start_yte
                 if start_yte == -1:
-                    start_yte = drive.get('start', {}).get('yardsToEndzone', -1)
+                    start_yte = play.get('start', {}).get('yardsToEndzone', -1)
                 if start_yte != -1:
                     drive_start_yte = start_yte
                 if drive_started_competitive and start_yte != -1:

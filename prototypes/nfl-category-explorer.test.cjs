@@ -49,12 +49,25 @@ test('WP sorting keeps the largest swing first', () => {
 });
 
 test('league context appears only for a top-ten weekly rank', () => {
-  assert.equal(fixture.week_wp_context.ranks['4018729554262'], 7);
-  assert.equal(fixture.week_wp_context.ranks['4018729554575'], 18);
-  const hasLeagueRank = play => tapeFacts(play, true).some(([label]) => label === 'League week WP rank');
-  assert.equal(hasLeagueRank(find('4018729554262')), true);
-  assert.equal(hasLeagueRank(find('4018729554575')), false);
-  assert.equal(hasLeagueRank(find('4018729553976')), false);
+  const pickSix = find('4018729554262');
+  assert.equal(fixture.live_week_wp_context.ranks[pickSix.play_id], 4);
+  assert.equal(fixture.week_wp_context.ranks[pickSix.play_id], 6);
+  assert.equal(fixture.historical_wp_context.at_least_threshold, 91);
+  assert.equal(fixture.historical_wp_context.eligible_plays, 30866);
+  const contextFact = play => tapeFacts(play).find(([label]) => /WP rank|WP rarity/.test(label));
+  vm.runInContext("tapeScope = 'early'", context);
+  assert.equal(vm.runInContext("tapePlays().some(play => play.play_id === '4018729554262')", context), false);
+  vm.runInContext("tapeScope = 'live'", context);
+  assert.equal(vm.runInContext("tapePlays().at(-1).play_id", context), pickSix.play_id);
+  assert.match(contextFact(pickSix)[0], /Provisional/);
+  assert.match(contextFact(pickSix)[1], /#4 of 1,411 eligible plays/);
+  assert.equal(contextFact(find('4018729554575')), undefined);
+  vm.runInContext("tapeScope = 'full'", context);
+  assert.match(contextFact(pickSix)[0], /Final/);
+  assert.match(contextFact(pickSix)[1], /#6 of 2,352 eligible plays/);
+  vm.runInContext("tapeScope = 'live'; data.live_week_wp_context.ranks = {}", context);
+  assert.equal(contextFact(pickSix)[0], 'Historical WP rarity');
+  fixture.live_week_wp_context.ranks = { [pickSix.play_id]: 4 };
 });
 
 test('success sequence shows the percentage on each team quarter line', () => {

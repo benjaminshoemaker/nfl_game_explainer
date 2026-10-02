@@ -13,8 +13,8 @@ const fixture = JSON.parse(readFileSync(path.join(directory, 'nfl-category-proto
 const context = vm.createContext({ fetch: () => new Promise(() => {}), fixture });
 vm.runInContext(script, context);
 vm.runInContext('data = fixture', context);
-const { tapeBeneficiary, tapeTypeGroup, tapeOutcomeMatch, tapeSorted, tapeFacts } =
-  vm.runInContext('({ tapeBeneficiary, tapeTypeGroup, tapeOutcomeMatch, tapeSorted, tapeFacts })', context);
+const { tapeBeneficiary, tapeTypeGroup, tapeOutcomeMatch, tapeSorted, tapeFacts, renderSuccessStrip, penaltyCategory } =
+  vm.runInContext('({ tapeBeneficiary, tapeTypeGroup, tapeOutcomeMatch, tapeSorted, tapeFacts, renderSuccessStrip, penaltyCategory })', context);
 const plays = fixture.all_plays;
 const find = id => plays.find(play => play.play_id === id);
 
@@ -54,4 +54,31 @@ test('league context appears only for a top-ten weekly rank', () => {
   assert.equal(hasLeagueRank(find('4018729554262')), true);
   assert.equal(hasLeagueRank(find('4018729554575')), false);
   assert.equal(hasLeagueRank(find('4018729553976')), false);
+});
+
+test('success sequence shows the percentage on each team quarter line', () => {
+  const markup = renderSuccessStrip();
+  for (const [team, quarter, count, percentage] of [
+    ['SEA', 1, '6/14', '42.9%'],
+    ['WSH', 1, '5/14', '35.7%'],
+    ['SEA', 4, '11/13', '84.6%'],
+    ['WSH', 4, '5/17', '29.4%'],
+  ]) {
+    assert.match(markup, new RegExp(`${team} Q${quarter}: [^\"]+${percentage.slice(0, -1)} percent`));
+    assert.ok(markup.includes(`${count} · ${percentage}`));
+  }
+  assert.ok(!html.includes('renderTurnoverStrip'), 'turnover visualization was removed');
+});
+
+test('penalty categories partition charged yards and retain zero-yard placement fouls', () => {
+  for (const [team, expected] of [
+    ['SEA', { 'Setup / procedure': 24, 'Coverage / contact': 14, 'Personal / conduct': 15, 'Kick placement': 0 }],
+    ['WSH', { 'Setup / procedure': 20, 'Coverage / contact': 7, 'Personal / conduct': 30, 'Kick placement': 0 }],
+  ]) {
+    const events = fixture.events['Penalty Yards'].filter(event => event.team === team);
+    const totals = Object.fromEntries(Object.keys(expected).map(category => [category, 0]));
+    for (const event of events) totals[penaltyCategory(event)] += Math.abs(event.yards);
+    assert.deepEqual(totals, expected);
+    assert.equal(events.filter(event => penaltyCategory(event) === 'Kick placement').length, 1);
+  }
 });

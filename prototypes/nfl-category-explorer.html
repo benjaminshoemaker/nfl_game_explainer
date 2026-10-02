@@ -38,13 +38,23 @@
     .detail.chart-collapsed{grid-template-columns:minmax(0,1fr)}
     .detail.chart-collapsed .detailbody{grid-column:1/-1;grid-row:3}
     .detail.chart-collapsed>.factorviz,.detail.chart-collapsed>.tripstrip,.detail.chart-collapsed>.fieldstrip{grid-column:1/-1;grid-row:2;border-right:0;border-bottom:1px solid var(--line)}
+    .detail.is-plays.has-chart .detailbody{grid-column:1/-1;grid-row:3;padding:24px 28px}
+    .detail.is-plays.has-chart>.factorviz,.detail.is-plays.has-chart>.tripstrip,.detail.is-plays.has-chart>.fieldstrip{grid-column:1/-1;grid-row:2;border-right:0;border-bottom:1px solid var(--line)}
+    .detail.is-plays .event{padding:16px 2px}
+    .detail.is-plays .eventfacts{gap:8px}
+    .eventhelp{margin:0 0 18px;color:var(--muted);font-size:11px}
+    .eventhelp summary{display:inline-block;cursor:pointer;color:var(--green);font-weight:800;list-style:none}
+    .eventhelp summary::-webkit-details-marker{display:none}
+    .eventhelp summary::after{content:' ▾'}
+    .eventhelp[open] summary::after{content:' ▴'}
+    .eventhelp p{max-width:760px;margin:7px 0 0;line-height:1.5}
     .viz-header{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 8px;align-items:center}
     .viz-header>:first-child{grid-column:1;grid-row:1}.viz-header>:nth-child(2){grid-column:1;grid-row:2}.viz-header .viz-toggle{grid-column:2;grid-row:1/3}
     .is-collapsed .viz-header{margin-bottom:0}
     .viz-toggle{border:1px solid #bfd5c7;border-radius:8px;background:#edf5ee;color:#205944;padding:5px 9px;font-size:11px;font-weight:850;min-height:32px;white-space:nowrap}
     .viz-toggle:hover{background:#e0eee4}.viz-content[hidden]{display:none}
     @media(max-width:870px){.workspace{grid-template-columns:1fr}}
-    @media(max-width:760px){.detail{display:flex;flex-direction:column}.detailtop{order:0}.detailbody{order:1;padding:17px 15px}.detail>.factorviz,.detail>.tripstrip,.detail>.fieldstrip{order:2;border-right:0;border-top:1px solid var(--line);padding:12px 15px}}
+    @media(max-width:760px){.detail{display:flex;flex-direction:column}.detailtop{order:0}.detailbody,.detail.is-plays.has-chart .detailbody{order:1;padding:17px 15px}.detail>.factorviz,.detail>.tripstrip,.detail>.fieldstrip{order:2;border-right:0;border-top:1px solid var(--line);padding:12px 15px}}
   </style>
 </head>
 <body>
@@ -82,7 +92,8 @@ const descriptions={
   'Penalty Yards':'Assessed yards charged to each team. Categories group related fouls; each penalty belongs to one category.',
   'Non-Offensive Points':'Defensive and special-teams scoring plays.'
 };
-let data,selected='Success Rate',mode='split',split='type',filter=null,visible=12;
+const EVENT_PAGE_SIZE=6;
+let data,selected='Success Rate',mode='split',split='type',filter=null,visible=EVENT_PAGE_SIZE;
 const chartVisibleByFactor={};
 const $=s=>document.querySelector(s);
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -109,7 +120,7 @@ function gap(id){
  return '—';
 }
 function renderRail(){ $('#categories').innerHTML=order.map((c,i)=>`<button type="button" class="category" role="tab" aria-selected="${selected===c.id}" data-category="${esc(c.id)}"><span class="index">${String(i+1).padStart(2,'0')}</span><span><span class="label">${esc(c.label)}</span><span class="sub">${esc(c.sub)}</span></span><span class="numbers"><b>${esc(fmt(c.id,byTeam('SEA')[c.metric]))}</b> · <em>${esc(fmt(c.id,byTeam('WSH')[c.metric]))}</em><small>${esc(gap(c.id))}</small></span></button>`).join('');document.querySelectorAll('[data-category]').forEach(b=>b.onclick=()=>selectCategory(b.dataset.category))}
-function selectCategory(id){selected=id;const c=order.find(x=>x.id===id);mode=c.default;split=c.tabs[0]?.[0]||null;filter=null;visible=12;renderRail();renderDetail()}
+function selectCategory(id){selected=id;const c=order.find(x=>x.id===id);mode=c.default;split=c.tabs[0]?.[0]||null;filter=null;visible=EVENT_PAGE_SIZE;renderRail();renderDetail()}
 function rawEvents(){if(selected==='Success Rate'||selected==='Adjusted Yards Per Play')return data.eligible_plays;if(selected==='Explosive Play Rate')return data.events['Explosive Plays']||[];return data.events[eventKey[selected]]||[]}
 function teamEvents(t){return rawEvents().filter(x=>x.team===t)}
 function source(e){let s=(e.type||'').toLowerCase();if(s==='drive start')return 'Unclassified';if(s.includes('kickoff'))return 'Kickoff';if(s.includes('punt')&&!s.includes('muff'))return 'Punt';if(s.includes('intercept')||s.includes('fumble')||s.includes('muff'))return 'Takeaway';if(s.includes('downs')||s.includes('incompletion'))return 'Turnover on downs';return 'Other'}
@@ -236,7 +247,7 @@ function renderEvents(){
  if(!events.length)return `<div class="empty">${selected==='Non-Offensive Points'?'No non-offensive scoring plays in this selection.':'No contributing events in this selection.'}</div>`;
  const unit=selected==='Points Per Trip (Inside 40)'||selected==='Ave Start Field Pos'?'drive':selected==='Penalty Yards'?'penalty event':'play';
  const puntNote=selected==='Ave Start Field Pos'?' Net punt distance runs from the punting spot to the receiving drive start, including returns, touchbacks, and field-position penalties reflected in that start.':'';
- return `<div class="listtop"><strong>${filter?esc(filter)+' · ':''}${events.length} ${unit}${events.length===1?'':'s'}</strong><span>Chronological</span></div><p class="eventnote">EPA is the completed-game ESPN-derived estimate for the listed team. Win probability change is also for that team; pp = percentage points.${puntNote}</p>${events.slice(0,visible).map(e=>playCard({team:e.team,quarter:e.quarter,clock:e.clock,type:playType(e),text:e.text,facts:playFacts(e)})).join('')}${events.length>visible?`<button class="loadmore" type="button" id="loadmore">Show more (${events.length-visible} remaining)</button>`:''}`;
+ return `<div class="listtop"><strong>${filter?esc(filter)+' · ':''}${events.length} ${unit}${events.length===1?'':'s'}</strong><span>Chronological</span></div><details class="eventhelp"><summary>About these numbers</summary><p>EPA is the completed-game ESPN-derived estimate for the listed team. Win probability change is also for that team; pp = percentage points.${puntNote}</p></details>${events.slice(0,visible).map(e=>playCard({team:e.team,quarter:e.quarter,clock:e.clock,type:playType(e),text:e.text,facts:playFacts(e)})).join('')}${events.length>visible?`<button class="loadmore" type="button" id="loadmore">Show more (${events.length-visible} remaining)</button>`:''}`;
 }
 function attachChartToggle(){
  const detail=$('#detail');
@@ -255,8 +266,9 @@ function attachChartToggle(){
  button.type='button';
  button.className='viz-toggle';
  button.setAttribute('aria-controls',content.id);
+ const chartKey=`${selected}:${mode}`;
  const setVisible=visible=>{
-  chartVisibleByFactor[selected]=visible;
+  chartVisibleByFactor[chartKey]=visible;
   content.hidden=!visible;
   visual.classList.toggle('is-collapsed',!visible);
   detail.classList.toggle('chart-collapsed',!visible);
@@ -265,15 +277,16 @@ function attachChartToggle(){
  };
  button.addEventListener('click',()=>setVisible(content.hidden));
  header.appendChild(button);
- setVisible(chartVisibleByFactor[selected]!==false);
+ setVisible(chartVisibleByFactor[chartKey]??(mode==='split'));
 }
 function renderDetail(){const c=order.find(x=>x.id===selected),cv=fmt(selected,byTeam('SEA')[c.metric]),pv=fmt(selected,byTeam('WSH')[c.metric]);let notice='';if(selected==='Success Rate'||selected==='Adjusted Yards Per Play'||selected==='Explosive Play Rate')notice='These splits use the available classified play rows and match the displayed derived metric. Washington’s play-derived yardage differs from the ESPN total by one yard.';if(selected==='Penalty Yards')notice='Totals sum accepted penalties charged to each team. The two kickoff placement fouls charged zero penalty yards; their placement is shown in the play details.';
  const actions=c.tabs.length?`<div class="controls"><div class="tabs" role="tablist" aria-label="${esc(c.label)} splits">${c.tabs.map(([id,label])=>`<button type="button" role="tab" aria-selected="${mode==='split'&&split===id}" data-tab="${id}">${esc(label)}</button>`).join('')}</div><button type="button" class="linkbutton" id="toggleMode">${mode==='split'?'See all contributing '+(selected==='Points Per Trip (Inside 40)'||selected==='Ave Start Field Pos'?'drives':'plays'):'← Back to splits'}</button></div>`:'';
  $('#detail').classList.toggle('hasviz',['Success Rate','Adjusted Yards Per Play','Explosive Play Rate'].includes(selected));
+ $('#detail').classList.toggle('is-plays',mode==='plays');
  $('#detail').classList.toggle('penaltycategory',selected==='Penalty Yards'&&mode==='split'&&split==='category');
  $('#detail').innerHTML=`<div class="detailtop"><div class="detailrow"><div><div class="eyebrow">Category ${String(order.indexOf(c)+1).padStart(2,'0')} of 08 · ${mode==='split'?'Breakdown':'All plays'}</div><h3>${esc(c.label)}</h3><p class="detailintro">${esc(descriptions[selected])}</p></div><div class="duo"><span class="pill c">SEA ${esc(cv)}</span><span class="pill p">WSH ${esc(pv)}</span></div></div></div>${selected==='Success Rate'?renderSuccessStrip():''}${selected==='Adjusted Yards Per Play'?renderYppStrip():''}${selected==='Explosive Play Rate'?renderExplosiveStrip():''}${selected==='Points Per Trip (Inside 40)'?renderTripStrip():''}${selected==='Ave Start Field Pos'?renderFieldStrip():''}<div class="detailbody">${notice?`<div class="notice">${esc(notice)}</div>`:''}${actions}${mode==='split'?renderSplits():renderEvents()}</div>`;
  attachChartToggle();
- document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{split=b.dataset.tab;filter=null;visible=12;renderDetail()});const toggle=$('#toggleMode');if(toggle)toggle.onclick=()=>{mode=mode==='split'?'plays':'split';filter=null;visible=12;renderDetail()};document.querySelectorAll('[data-group]').forEach(b=>b.onclick=()=>{filter=b.dataset.group;mode='plays';visible=12;renderDetail()});const more=$('#loadmore');if(more)more.onclick=()=>{visible+=12;renderDetail()};
+ document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{split=b.dataset.tab;filter=null;visible=EVENT_PAGE_SIZE;renderDetail()});const toggle=$('#toggleMode');if(toggle)toggle.onclick=()=>{mode=mode==='split'?'plays':'split';filter=null;visible=EVENT_PAGE_SIZE;renderDetail()};document.querySelectorAll('[data-group]').forEach(b=>b.onclick=()=>{filter=b.dataset.group;mode='plays';visible=EVENT_PAGE_SIZE;renderDetail()});const more=$('#loadmore');if(more)more.onclick=()=>{visible+=EVENT_PAGE_SIZE;renderDetail()};
 }
 let tapeScope='full',tapeQuarter='all',tapeTeam='all',tapeBenefiting='all',tapeType='all',tapeOutcome='all',tapeSort='game',tapeVisible=20,tapeFocus=null;
 const TAPE_WEEK_NOTABLE_RANK=10;

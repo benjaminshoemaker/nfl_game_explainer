@@ -120,3 +120,32 @@ test('chart toggle stays beside its chart and remembers each factor across split
   assert.equal(detail.classList.contains('has-chart'), false);
   dom.window.close();
 });
+
+test('all plays gives the play list room and starts with its chart folded', () => {
+  const dom = new JSDOM(html, { runScripts: 'outside-only' });
+  const { window } = dom;
+  window.fetch = () => new Promise(() => {});
+  window.fixture = fixture;
+  window.eval(`${script}\ndata = window.fixture; renderRail(); renderDetail();`);
+  const detail = window.document.querySelector('#detail');
+  window.document.querySelector('[data-category="Ave Start Field Pos"]').click();
+  assert.equal(detail.querySelector('.viz-toggle').getAttribute('aria-expanded'), 'true');
+
+  detail.querySelector('#toggleMode').click();
+  assert.ok(detail.classList.contains('is-plays'));
+  assert.ok(detail.classList.contains('chart-collapsed'));
+  assert.equal(detail.querySelector('.viz-toggle').textContent, 'Show chart');
+  assert.equal(detail.querySelectorAll('.detailbody > .event').length, 6);
+  assert.equal(detail.querySelector('.eventhelp').open, false);
+  detail.querySelector('#loadmore').click();
+  assert.equal(detail.querySelectorAll('.detailbody > .event').length, 12);
+
+  detail.querySelector('.viz-toggle').click();
+  assert.equal(detail.querySelector('.viz-toggle').getAttribute('aria-expanded'), 'true');
+  detail.querySelector('#toggleMode').click();
+  assert.ok(!detail.classList.contains('is-plays'));
+  assert.equal(detail.querySelector('.viz-toggle').getAttribute('aria-expanded'), 'true');
+  detail.querySelector('#toggleMode').click();
+  assert.equal(detail.querySelector('.viz-toggle').getAttribute('aria-expanded'), 'true');
+  dom.window.close();
+});

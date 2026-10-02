@@ -23,6 +23,28 @@
     .detail.penaltycategory{height:auto;min-height:635px}.detail.penaltycategory .detailbody{overflow:visible}
     @media(max-width:870px){.detail.hasviz{height:780px}}
     @media(max-width:600px){.factorviz{padding:12px 15px}.detail.hasviz{height:890px}.detail.penaltycategory{min-height:0}.explosivequarters{grid-template-columns:repeat(2,minmax(0,1fr))}.yppchart .quarterlabel{font-size:10px}.successblocks{gap:1px}}
+    /* Keep the breakdown beside its chart on desktop, with the chart control in its header. */
+    .workspace{grid-template-columns:minmax(255px,26%) minmax(0,1fr);align-items:start}
+    .detail,.detail.hasviz,.detail.penaltycategory{height:auto;min-height:0}
+    .detail{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-content:start}
+    .detailtop{grid-column:1/-1}
+    .detailbody{grid-column:2;grid-row:2;min-width:0;padding:16px;overflow:visible;flex:none}
+    .detail>.factorviz,.detail>.tripstrip,.detail>.fieldstrip{grid-column:1;grid-row:2;min-width:0;padding:16px;border-right:1px solid var(--line);border-bottom:0}
+    .detail:not(.has-chart) .detailbody{grid-column:1/-1}
+    .explosivequarters{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .factorvizhead{display:block}.factorvizhead span{display:block}
+    .triprow{grid-template-columns:35px minmax(0,1fr)}.tripsum{grid-column:2}
+    .split{gap:5px;grid-template-columns:minmax(60px,1.1fr) minmax(65px,1fr) minmax(65px,1fr) 10px}.split .stat{font-size:13px}.controls{flex-wrap:wrap}
+    .detail.chart-collapsed{grid-template-columns:minmax(0,1fr)}
+    .detail.chart-collapsed .detailbody{grid-column:1/-1;grid-row:3}
+    .detail.chart-collapsed>.factorviz,.detail.chart-collapsed>.tripstrip,.detail.chart-collapsed>.fieldstrip{grid-column:1/-1;grid-row:2;border-right:0;border-bottom:1px solid var(--line)}
+    .viz-header{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 8px;align-items:center}
+    .viz-header>:first-child{grid-column:1;grid-row:1}.viz-header>:nth-child(2){grid-column:1;grid-row:2}.viz-header .viz-toggle{grid-column:2;grid-row:1/3}
+    .is-collapsed .viz-header{margin-bottom:0}
+    .viz-toggle{border:1px solid #bfd5c7;border-radius:8px;background:#edf5ee;color:#205944;padding:5px 9px;font-size:11px;font-weight:850;min-height:32px;white-space:nowrap}
+    .viz-toggle:hover{background:#e0eee4}.viz-content[hidden]{display:none}
+    @media(max-width:870px){.workspace{grid-template-columns:1fr}}
+    @media(max-width:760px){.detail{display:flex;flex-direction:column}.detailtop{order:0}.detailbody{order:1;padding:17px 15px}.detail>.factorviz,.detail>.tripstrip,.detail>.fieldstrip{order:2;border-right:0;border-top:1px solid var(--line);padding:12px 15px}}
   </style>
 </head>
 <body>
@@ -61,6 +83,7 @@ const descriptions={
   'Non-Offensive Points':'Defensive and special-teams scoring plays.'
 };
 let data,selected='Success Rate',mode='split',split='type',filter=null,visible=12;
+const chartVisibleByFactor={};
 const $=s=>document.querySelector(s);
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function byTeam(t){return data.advanced_table.find(x=>x.Team===t)||{}}
@@ -215,11 +238,41 @@ function renderEvents(){
  const puntNote=selected==='Ave Start Field Pos'?' Net punt distance runs from the punting spot to the receiving drive start, including returns, touchbacks, and field-position penalties reflected in that start.':'';
  return `<div class="listtop"><strong>${filter?esc(filter)+' · ':''}${events.length} ${unit}${events.length===1?'':'s'}</strong><span>Chronological</span></div><p class="eventnote">EPA is the completed-game ESPN-derived estimate for the listed team. Win probability change is also for that team; pp = percentage points.${puntNote}</p>${events.slice(0,visible).map(e=>playCard({team:e.team,quarter:e.quarter,clock:e.clock,type:playType(e),text:e.text,facts:playFacts(e)})).join('')}${events.length>visible?`<button class="loadmore" type="button" id="loadmore">Show more (${events.length-visible} remaining)</button>`:''}`;
 }
+function attachChartToggle(){
+ const detail=$('#detail');
+ const visual=detail.querySelector(':scope > .factorviz, :scope > .tripstrip, :scope > .fieldstrip');
+ detail.classList.toggle('has-chart',Boolean(visual));
+ detail.classList.remove('chart-collapsed');
+ if(!visual)return;
+ const header=visual.querySelector(':scope > .factorvizhead, :scope > .tripstriphead, :scope > .fieldstriphead');
+ const content=document.createElement('div');
+ content.className='viz-content';
+ content.id='factor-visual-content';
+ for(const child of [...visual.children])if(child!==header)content.appendChild(child);
+ visual.appendChild(content);
+ header.classList.add('viz-header');
+ const button=document.createElement('button');
+ button.type='button';
+ button.className='viz-toggle';
+ button.setAttribute('aria-controls',content.id);
+ const setVisible=visible=>{
+  chartVisibleByFactor[selected]=visible;
+  content.hidden=!visible;
+  visual.classList.toggle('is-collapsed',!visible);
+  detail.classList.toggle('chart-collapsed',!visible);
+  button.setAttribute('aria-expanded',String(visible));
+  button.textContent=visible?'Hide chart':'Show chart';
+ };
+ button.addEventListener('click',()=>setVisible(content.hidden));
+ header.appendChild(button);
+ setVisible(chartVisibleByFactor[selected]!==false);
+}
 function renderDetail(){const c=order.find(x=>x.id===selected),cv=fmt(selected,byTeam('SEA')[c.metric]),pv=fmt(selected,byTeam('WSH')[c.metric]);let notice='';if(selected==='Success Rate'||selected==='Adjusted Yards Per Play'||selected==='Explosive Play Rate')notice='These splits use the available classified play rows and match the displayed derived metric. Washington’s play-derived yardage differs from the ESPN total by one yard.';if(selected==='Penalty Yards')notice='Totals sum accepted penalties charged to each team. The two kickoff placement fouls charged zero penalty yards; their placement is shown in the play details.';
  const actions=c.tabs.length?`<div class="controls"><div class="tabs" role="tablist" aria-label="${esc(c.label)} splits">${c.tabs.map(([id,label])=>`<button type="button" role="tab" aria-selected="${mode==='split'&&split===id}" data-tab="${id}">${esc(label)}</button>`).join('')}</div><button type="button" class="linkbutton" id="toggleMode">${mode==='split'?'See all contributing '+(selected==='Points Per Trip (Inside 40)'||selected==='Ave Start Field Pos'?'drives':'plays'):'← Back to splits'}</button></div>`:'';
  $('#detail').classList.toggle('hasviz',['Success Rate','Adjusted Yards Per Play','Explosive Play Rate'].includes(selected));
  $('#detail').classList.toggle('penaltycategory',selected==='Penalty Yards'&&mode==='split'&&split==='category');
  $('#detail').innerHTML=`<div class="detailtop"><div class="detailrow"><div><div class="eyebrow">Category ${String(order.indexOf(c)+1).padStart(2,'0')} of 08 · ${mode==='split'?'Breakdown':'All plays'}</div><h3>${esc(c.label)}</h3><p class="detailintro">${esc(descriptions[selected])}</p></div><div class="duo"><span class="pill c">SEA ${esc(cv)}</span><span class="pill p">WSH ${esc(pv)}</span></div></div></div>${selected==='Success Rate'?renderSuccessStrip():''}${selected==='Adjusted Yards Per Play'?renderYppStrip():''}${selected==='Explosive Play Rate'?renderExplosiveStrip():''}${selected==='Points Per Trip (Inside 40)'?renderTripStrip():''}${selected==='Ave Start Field Pos'?renderFieldStrip():''}<div class="detailbody">${notice?`<div class="notice">${esc(notice)}</div>`:''}${actions}${mode==='split'?renderSplits():renderEvents()}</div>`;
+ attachChartToggle();
  document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{split=b.dataset.tab;filter=null;visible=12;renderDetail()});const toggle=$('#toggleMode');if(toggle)toggle.onclick=()=>{mode=mode==='split'?'plays':'split';filter=null;visible=12;renderDetail()};document.querySelectorAll('[data-group]').forEach(b=>b.onclick=()=>{filter=b.dataset.group;mode='plays';visible=12;renderDetail()});const more=$('#loadmore');if(more)more.onclick=()=>{visible+=12;renderDetail()};
 }
 let tapeScope='full',tapeQuarter='all',tapeTeam='all',tapeBenefiting='all',tapeType='all',tapeOutcome='all',tapeSort='game',tapeVisible=20,tapeFocus=null;

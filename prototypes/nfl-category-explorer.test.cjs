@@ -3,6 +3,7 @@ const { readFileSync } = require('node:fs');
 const path = require('node:path');
 const test = require('node:test');
 const vm = require('node:vm');
+const { JSDOM } = require('jsdom');
 
 const directory = __dirname;
 const html = readFileSync(path.join(directory, 'nfl-category-explorer.html'), 'utf8');
@@ -81,4 +82,41 @@ test('penalty categories partition charged yards and retain zero-yard placement 
     assert.deepEqual(totals, expected);
     assert.equal(events.filter(event => penaltyCategory(event) === 'Kick placement').length, 1);
   }
+});
+
+test('chart toggle stays beside its chart and remembers each factor across split changes', () => {
+  const dom = new JSDOM(html, { runScripts: 'outside-only' });
+  const { window } = dom;
+  window.fetch = () => new Promise(() => {});
+  window.fixture = fixture;
+  window.eval(`${script}\ndata = window.fixture; renderRail(); renderDetail();`);
+  const detail = window.document.querySelector('#detail');
+  const toggle = () => detail.querySelector('.viz-toggle');
+  const select = factor => window.document.querySelector(`[data-category="${factor}"]`).click();
+
+  assert.ok(detail.classList.contains('has-chart'));
+  assert.ok(toggle().closest('.factorvizhead'));
+  assert.equal(toggle().getAttribute('aria-expanded'), 'true');
+  toggle().click();
+  assert.ok(detail.classList.contains('chart-collapsed'));
+  assert.equal(detail.querySelector('.viz-content').hidden, true);
+  assert.equal(toggle().textContent, 'Show chart');
+
+  detail.querySelector('[data-tab="down"]').click();
+  assert.ok(detail.classList.contains('chart-collapsed'));
+  select('Points Per Trip (Inside 40)');
+  assert.ok(toggle().closest('.tripstriphead'));
+  assert.equal(toggle().getAttribute('aria-expanded'), 'true');
+  select('Ave Start Field Pos');
+  assert.ok(toggle().closest('.fieldstriphead'));
+  select('Success Rate');
+  assert.equal(toggle().getAttribute('aria-expanded'), 'false');
+  toggle().click();
+  assert.equal(detail.querySelector('.viz-content').hidden, false);
+  assert.equal(toggle().textContent, 'Hide chart');
+
+  select('Penalty Yards');
+  assert.equal(toggle(), null);
+  assert.equal(detail.classList.contains('has-chart'), false);
+  dom.window.close();
 });

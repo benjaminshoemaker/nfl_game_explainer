@@ -4,6 +4,7 @@ import sys
 import urllib.error
 
 import pytest
+from pathlib import Path
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "api")))
 
@@ -72,6 +73,45 @@ def test_derive_game_status_final_when_completed():
     })
     assert status == "final"
     assert game_clock is None
+
+
+@pytest.mark.parametrize("name,detail,expected", [
+    ("STATUS_DELAYED", "Weather Delay", "delayed"),
+    ("STATUS_POSTPONED", "Postponed", "postponed"),
+    ("STATUS_CANCELED", "Canceled", "canceled"),
+])
+def test_derive_game_status_does_not_call_an_interrupted_game_final(name, detail, expected):
+    status, game_clock = ga._derive_game_status({
+        "type": {"state": "post", "name": name, "shortDetail": detail, "completed": False},
+        "period": 2,
+        "displayClock": "4:12",
+    })
+    assert status == expected
+    assert game_clock is None
+
+
+def test_live_one_play_checkpoint_returns_an_early_report(monkeypatch):
+    raw = json.loads((Path(__file__).resolve().parents[1] / 'pbp_cache' / '401772633.json').read_text())
+    competition = raw['header']['competitions'][0]
+    competition['status'] = {
+        'type': {'state': 'in', 'name': 'STATUS_IN_PROGRESS', 'shortDetail': 'Q1 14:55'},
+        'period': 1, 'displayClock': '14:55',
+    }
+    for competitor in competition['competitors']:
+        competitor['score'] = '0'
+    raw['drives']['previous'] = raw['drives']['previous'][:1]
+    raw['drives']['previous'][0]['plays'] = raw['drives']['previous'][0]['plays'][:1]
+    raw['drives']['current'] = None
+    monkeypatch.setattr(ga, 'get_game_data', lambda _game_id: raw)
+    monkeypatch.setattr(ga, 'get_pregame_probabilities', lambda _game_id: (0.5, 0.5))
+    monkeypatch.setattr(ga, 'get_play_probabilities', lambda _game_id: {})
+
+    report = ga.analyze_game('401772633')
+    assert report['status'] == 'in-progress'
+    assert report['statusDetail'] == 'Q1 14:55'
+    assert len(report['plays']) == 1
+    assert report['wp_filter']['enabled'] is False
+    assert {row['Score'] for row in report['summary_table_full']} == {0}
 
 
 def test_get_play_probabilities_rejects_partial_paginated_feed(monkeypatch):

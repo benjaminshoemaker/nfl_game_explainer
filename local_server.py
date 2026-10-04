@@ -76,7 +76,7 @@ class LocalAPIHandler(BaseHTTPRequestHandler):
                 week, seasontype = _parse_scoreboard_params(query)
                 raw_data = fetch_scoreboard(week=week, seasontype=seasontype)
                 data = build_response(raw_data)
-                self._send_json(data)
+                self._send_json(data, 503 if 'error' in data else 200)
             except Exception as e:
                 self._send_json({"error": str(e)}, 500)
             return

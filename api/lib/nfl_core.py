@@ -452,6 +452,12 @@ def yardline_to_coord(pos_text, team_abbr):
     return 100 - yard
 
 
+def format_field_position(own_goal_distance):
+    """Display a 0-100 field coordinate using the nearest team's goal line."""
+    yard = int(own_goal_distance)
+    return f"Opp {100 - yard}" if yard > 50 else f"Own {yard}"
+
+
 def calculate_success(down, distance, yards_gained):
     """
     Determine if a play was 'successful' based on standard analytics definition:
@@ -1000,6 +1006,7 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
         if expanded:
             details[t_id] = {
                 'All Plays': [],
+                'Offensive Plays': [],
                 'Turnovers': [],
                 'Explosive Plays': [],
                 'Non-Offensive Scores': [],
@@ -1099,6 +1106,7 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
             }
             if expanded:
                 details[scoring_team_id]['Non-Offensive Scores'].append({
+                    'source_play_id': str(play_id),
                     'type': sp.get('type', {}).get('text', ''),
                     'text': sp.get('text', ''),
                     'points': points,
@@ -1290,6 +1298,8 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
                 yards_pen = -charged_yards if charged_yards is not None else None
                 for detail_team_id in detail_team_ids:
                     details[detail_team_id]['Penalty Yards'].append({
+                        'source_play_id': str(play.get('id')),
+                        'penalty_type': (penalty_info.get('type') or {}).get('text'),
                         'yards': yards_pen,
                         'yardage_note': yardage_note,
                         'team_attribution_note': attribution_note,
@@ -1482,6 +1492,7 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
                         stats[t_event]['Turnovers'] += 1
                         if expanded:
                             details[t_event]['Turnovers'].append({
+                                'source_play_id': str(play.get('id')),
                                 'type': play_type,
                                 'text': text,
                                 'yards': play.get('statYardage', 0),
@@ -1508,6 +1519,7 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
                 target_team = non_off_entry.get('team_id')
                 if target_team in details:
                     details[target_team]['Non-Offensive Points'].append({
+                        'source_play_id': str(play_id),
                         'type': non_off_entry.get('type') or play_type,
                         'text': non_off_entry.get('text') or text,
                         'points': non_off_entry.get('points'),
@@ -1534,14 +1546,26 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
                 stats[team_id]['Offensive Yards'] += contribution.adjusted_yards
                 down = play.get('start', {}).get('down', 1)
                 dist = play.get('start', {}).get('distance', 10)
-                if calculate_success(down, dist, contribution.adjusted_yards):
+                successful = calculate_success(down, dist, contribution.adjusted_yards)
+                if successful:
                     stats[team_id]['Successful Plays'] += 1
+                if expanded:
+                    details[team_id]['Offensive Plays'].append({
+                        'source_play_id': str(play.get('id')),
+                        'type': 'Pass' if contribution.pass_dropback else 'Run',
+                        'text': text,
+                        'yards': contribution.adjusted_yards,
+                        'success': successful,
+                        'quarter': play.get('period', {}).get('number'),
+                        'clock': play.get('clock', {}).get('displayValue'),
+                    })
                 if ((contribution.run and not contribution.pass_dropback
                      and contribution.adjusted_yards >= 10)
                         or (contribution.pass_dropback and contribution.adjusted_yards >= 20)):
                     stats[team_id]['Explosive Plays'] += 1
                     if expanded:
                         details[team_id]['Explosive Plays'].append({
+                            'source_play_id': str(play.get('id')),
                             'yards': contribution.adjusted_yards,
                             'text': text,
                             'type': 'Run' if contribution.run else 'Pass',
@@ -1612,6 +1636,7 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
                 )
                 if is_meaningful:
                     play_entry = {
+                        'source_play_id': str(play.get('id')),
                         'type': play_type,
                         'text': text,
                         'yards': play.get('statYardage', 0),
@@ -1639,6 +1664,7 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
             stats[team_id]['Drive Points'] += drive_points_competitive
             if expanded and drive_crossed_40_competitive and drive_has_offensive_play and last_competitive_play:
                 details[team_id]['Points Per Trip (Inside 40)'].append({
+                    'source_play_id': str(last_competitive_play.get('id')),
                     'text': last_competitive_play.get('text', ''),
                     'type': last_competitive_play.get('type', {}).get('text', ''),
                     'yards': last_competitive_play.get('statYardage'),
@@ -1664,6 +1690,7 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
                             break
 
                 details[team_id]['Drive Starts'].append({
+                    'source_play_id': str(cause_play.get('id')) if cause_play else None,
                     'text': (cause_play.get('text', '') if cause_play else 'Start of game'),
                     'type': (cause_play.get('type', {}) or {}).get('text', 'Drive Start') if cause_play else 'Drive Start',
                     'yards': (cause_play.get('statYardage') if cause_play else None),
@@ -1717,7 +1744,7 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
             'Explosive Plays': d['Explosive Plays'],
             'Explosive Play Rate': round(d['Explosive Plays'] / plays, 3),
             'Points Per Trip (Inside 40)': round(d['Points Inside 40'] / drives_in_40, 2),
-            'Ave Start Field Pos': f"Own {int(d['Start Field Pos Sum'] / drives_total)}",
+            'Ave Start Field Pos': format_field_position(d['Start Field Pos Sum'] / drives_total),
             'Drives': d['Drives Count'],
             'Turnover Margin': turnover_margin.get(t_id, 0),
             'Points per Drive': round(d['Drive Points'] / drives_total, 2),

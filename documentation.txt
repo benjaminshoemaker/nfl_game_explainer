@@ -145,10 +145,13 @@ CORE FIVE FACTORS (from Bill Connelly's framework)
 7. AVERAGE STARTING FIELD POSITION (Field Position)
    
    What it measures: The average yard line where a team begins its offensive
-   drives. Expressed as "Own XX" (e.g., "Own 28").
+   drives. Expressed from the nearer goal line: "Own XX" on a team's half
+   (e.g., "Own 28") or "Opp XX" on the opponent's half (e.g., "Opp 32").
    
-   How to read it: Higher number is better. "Own 35" means starting at your 35,
-   which is better than "Own 22."
+   How to read it: A start closer to the opponent's goal is better. "Own 35"
+   is better than "Own 22." "Opp 32" is better still: it is 68 yards from
+   the offense's own goal line. On the opponent's half, smaller numbers are
+   better ("Opp 20" is better than "Opp 32").
    
    Why it matters: Field position compounds over a game. Starting at your 35 vs
    your 20 on every drive is a 15-yard advantage per possession. Over 12 drives,

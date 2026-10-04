@@ -760,6 +760,14 @@ def test_average_start_field_position_uses_receiving_team_drive_spot_after_kicko
     assert sea["Ave Start Field Pos"] == "Own 37"
     assert sea["Drives"] == 1
 
+    game["drives"]["previous"][0]["start"]["yardLine"] = "WSH 32"
+    game["drives"]["previous"][0]["plays"][1]["start"].update({
+        "yardsToEndzone": 32, "possessionText": "WSH 32",
+    })
+    rows, _ = process_game_stats(game, wp_threshold=1.0)
+    sea = next(row for row in rows if row["Team"] == "SEA")
+    assert sea["Ave Start Field Pos"] == "Opp 32"
+
 
 def test_timeout_appended_to_previous_drive_does_not_create_duplicate_drive():
     drives = [{

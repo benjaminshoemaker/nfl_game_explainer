@@ -60,10 +60,17 @@ def _derive_game_status(status_obj):
     status_type = status_obj.get('type', {}) or {}
 
     state = status_type.get('state')
+    marker = f"{status_type.get('name', '')} {status_type.get('shortDetail', '')}".lower()
     completed = bool(status_type.get('completed', False))
     period = status_obj.get('period', 0) or 0
     clock = status_obj.get('displayClock', '') or ''
 
+    if 'cancel' in marker or 'abandon' in marker:
+        return "canceled", None
+    if 'postpon' in marker or 'reschedul' in marker:
+        return "postponed", None
+    if 'delay' in marker or 'suspend' in marker or 'interrupt' in marker:
+        return "delayed", None
     if state == 'post' or completed:
         return "final", None
 
@@ -90,6 +97,7 @@ ADVANCED_COLS = [
 ]
 EXPANDED_CATEGORIES = [
     'All Plays',
+    'Offensive Plays',
     'Turnovers',
     'Explosive Plays',
     'Non-Offensive Scores',
@@ -353,6 +361,7 @@ def analyze_game(game_id, wp_threshold=0.975, debug=False):
         "gameId": game_id,
         "label": label,
         "status": status,
+        "statusDetail": ((comps[0].get('status') or {}).get('type') or {}).get('shortDetail') if comps else None,
         "gameClock": game_clock,
         "lastPlayTime": last_play_time,
         "week": {

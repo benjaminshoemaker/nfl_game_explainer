@@ -82,7 +82,14 @@ def transform_game(event):
 
     # Determine game status
     state = status_type.get("state", "pre")
-    if state == "in":
+    marker = f"{status_type.get('name', '')} {status_type.get('shortDetail', '')}".lower()
+    if "cancel" in marker or "abandon" in marker:
+        game_status = "canceled"
+    elif "postpon" in marker or "reschedul" in marker:
+        game_status = "postponed"
+    elif "delay" in marker or "suspend" in marker or "interrupt" in marker:
+        game_status = "delayed"
+    elif state == "in":
         game_status = "in-progress"
     elif state == "post":
         game_status = "final"
@@ -93,7 +100,7 @@ def transform_game(event):
     status_detail = status_type.get("shortDetail", "")
 
     # Get start time for pregame
-    start_time = event.get("date") if game_status == "pregame" else None
+    start_time = event.get("date") if game_status in ("pregame", "postponed") else None
 
     return {
         "gameId": event.get("id", ""),
@@ -102,7 +109,7 @@ def transform_game(event):
         "homeTeam": home_team,
         "awayTeam": away_team,
         "startTime": start_time,
-        "isActive": state == "in"
+        "isActive": game_status == "in-progress"
     }
 
 
@@ -134,12 +141,11 @@ def build_response(data):
 
     # Sort: in-progress first, then pregame by time, then final
     def sort_key(game):
-        if game["status"] == "in-progress":
-            return (0, "")
-        elif game["status"] == "pregame":
-            return (1, game.get("startTime", ""))
-        else:
-            return (2, "")
+        priority = {
+            "in-progress": 0, "delayed": 1, "pregame": 2,
+            "postponed": 3, "final": 4, "canceled": 5,
+        }
+        return (priority[game["status"]], game.get("startTime") or "")
 
     games.sort(key=sort_key)
 
@@ -181,7 +187,7 @@ class handler(BaseHTTPRequestHandler):
         response_data = build_response(raw_data)
 
         # Send response
-        self.send_response(200)
+        self.send_response(503 if "error" in response_data else 200)
         self.send_header('Content-type', 'application/json')
         self.send_header('Access-Control-Allow-Origin', '*')
         self.send_header('Cache-Control', 'public, max-age=30')

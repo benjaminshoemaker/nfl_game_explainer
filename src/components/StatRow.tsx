@@ -44,7 +44,7 @@ function StatInfoTooltip({ text }: { text: string }) {
       </button>
       <span
         role="tooltip"
-        className="pointer-events-none invisible absolute left-0 top-full z-20 mt-1 w-44 rounded border border-border-subtle bg-bg-elevated px-2 py-1 text-left text-[10px] font-normal normal-case tracking-normal text-text-primary shadow-lg group-hover:visible group-focus-within:visible"
+        className="pointer-events-none invisible absolute left-0 top-full z-20 mt-1 w-44 rounded border border-border-subtle bg-bg-elevated px-2 py-1 text-left text-xs font-normal normal-case tracking-normal text-text-primary shadow-lg group-hover:visible group-focus-within:visible"
       >
         {text}
       </span>
@@ -269,7 +269,7 @@ export function StatRow({
           style={{ gridColumn: 1, gridRow: '1 / 3' }}
         >
           <span
-            className="font-condensed text-[0.6rem] font-semibold uppercase tracking-wider mb-0.5"
+            className="font-condensed text-xs font-semibold uppercase tracking-wider mb-0.5"
             style={{ color: awayTextColor, opacity: winner === 'away' ? 1 : 0.6 }}
           >
             {awayAbbr}
@@ -290,10 +290,10 @@ export function StatRow({
           className="flex justify-center items-center relative z-[1]"
           style={{ gridColumn: 2, gridRow: 1 }}
         >
-          <span className="font-condensed text-[0.65rem] font-semibold uppercase tracking-wider text-center">
+          <span className="font-condensed text-xs font-semibold uppercase tracking-wider text-center">
             <span className="text-text-primary">{label}</span>
             {infoTooltip && <StatInfoTooltip text={infoTooltip} />}
-            <span className="text-text-muted ml-1.5 text-[0.6rem]">{description}</span>
+            <span className="text-text-muted ml-1.5 text-xs">{description}</span>
           </span>
         </div>
 
@@ -337,7 +337,7 @@ export function StatRow({
           style={{ gridColumn: 3, gridRow: '1 / 3' }}
         >
           <span
-            className="font-condensed text-[0.6rem] font-semibold uppercase tracking-wider mb-0.5"
+            className="font-condensed text-xs font-semibold uppercase tracking-wider mb-0.5"
             style={{ color: homeTextColor, opacity: winner === 'home' ? 1 : 0.6 }}
           >
             {homeAbbr}

@@ -20,7 +20,7 @@ function StatsTable({ title, rows }: {
       <h2 className="text-sm font-semibold">{title}</h2>
       {rows.length === 0 ? <p className="text-slate-600">No calculated rows.</p> : (
         <div className="min-w-0 border border-slate-300">
-          <table aria-label={title} className="w-full table-fixed border-collapse text-left text-[11px] leading-tight">
+          <table aria-label={title} className="w-full table-fixed border-collapse text-left text-xs leading-tight">
             <thead className="bg-slate-100 text-slate-700">
               <tr>
                 <th scope="col" className="w-1/2 border-b border-slate-300 px-2 py-1">Metric</th>
@@ -46,7 +46,7 @@ function RawJSON({ label, data }: { label: string; data: unknown }) {
   return (
     <details className="border border-slate-300 p-2">
       <summary className="cursor-pointer focus-visible:outline-2 focus-visible:outline-blue-600">{label}</summary>
-      <pre className="mt-2 max-h-[34rem] overflow-auto whitespace-pre-wrap break-all text-[11px] text-slate-700">
+      <pre className="mt-2 max-h-[34rem] overflow-auto whitespace-pre-wrap break-all text-xs text-slate-700">
         {JSON.stringify(data, null, 2)}
       </pre>
     </details>
@@ -101,7 +101,7 @@ export function GameDebugView({ gameData }: { gameData: GameResponse }) {
             <DebugGamePicker gameId={gameData.gameId} label={gameData.label} week={gameData.week} />
             <Link href={`/game/${gameData.gameId}`} className="text-blue-700 underline hover:text-blue-900">Game view</Link>
           </div>
-          <p className="text-[11px] text-slate-600">
+          <p className="text-xs text-slate-600">
             ESPN source data and the calculations currently used by this app. Competitive rows use the
             {' '}{gameData.wp_filter.threshold * 100}% win-probability cutoff; full-game rows do not.
             {' '}Success Rate uses 40% of yards to go on first down, 60% on second, and 100% on third or fourth.
@@ -119,7 +119,7 @@ export function GameDebugView({ gameData }: { gameData: GameResponse }) {
 
             <section className="min-w-0 space-y-1">
               <h2 className="text-sm font-semibold">Source plays and calculated contributions</h2>
-              <p className="text-[11px] text-slate-600">
+              <p className="text-xs text-slate-600">
                 Each row comes from an ESPN drive play. Contributions show changes to the calculation counters
                 in the full-game pass. Drive totals are finalized on separate rows. Score comes from the ESPN
                 game header, penalty yards from its box score, and non-offensive points from scoring plays.
@@ -127,7 +127,7 @@ export function GameDebugView({ gameData }: { gameData: GameResponse }) {
                 flags reflect the full-game calculation; — means not applicable.
               </p>
               <div className="min-w-0 border border-slate-300">
-                <table aria-label="Source plays and calculated contributions" className="block w-full text-left text-[11px] leading-snug lg:table lg:table-fixed lg:border-collapse">
+                <table aria-label="Source plays and calculated contributions" className="block w-full text-left text-xs leading-snug lg:table lg:table-fixed lg:border-collapse">
                   <colgroup>
                     <col className="lg:w-[4%]" />
                     <col className="lg:w-[7%]" />
@@ -179,7 +179,7 @@ export function GameDebugView({ gameData }: { gameData: GameResponse }) {
                               <div>Down / to go: {valueText(row.down)} / {valueText(row.distance)}</div>
                               <div>Competitive: {row.competitive === undefined ? '—' : row.competitive ? 'Yes' : 'No'}</div>
                               <div>Home WP: {valueText(row.startHomeWP)} → {valueText(row.endHomeWP)}</div>
-                              <pre className="max-h-96 max-w-full overflow-auto whitespace-pre-wrap break-all text-[11px]">{JSON.stringify(row.raw, null, 2)}</pre>
+                              <pre className="max-h-96 max-w-full overflow-auto whitespace-pre-wrap break-all text-xs">{JSON.stringify(row.raw, null, 2)}</pre>
                             </div>
                           </details>
                         </td>

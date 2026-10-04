@@ -7,6 +7,20 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    fontSize: {
+      xs: ['var(--type-caption)', { lineHeight: '1.35' }],
+      sm: ['var(--type-label)', { lineHeight: '1.4' }],
+      base: ['var(--type-body)', { lineHeight: 'var(--leading-body)' }],
+      lg: ['var(--type-subheading)', { lineHeight: '1.35' }],
+      xl: ['var(--type-heading-sm)', { lineHeight: '1.25' }],
+      '2xl': ['var(--type-heading-md)', { lineHeight: '1.2' }],
+      '3xl': ['var(--type-heading-lg)', { lineHeight: '1.15' }],
+      '4xl': ['var(--type-title)', { lineHeight: '1.1' }],
+      '5xl': ['var(--type-stat-xl)', { lineHeight: '1.05' }],
+      '6xl': ['var(--type-stat-2xl)', { lineHeight: '1.05' }],
+      '7xl': ['var(--type-stat-3xl)', { lineHeight: '1.05' }],
+      '8xl': ['var(--type-stat-4xl)', { lineHeight: '1.05' }],
+    },
     extend: {
       colors: {
         // Background colors
@@ -30,9 +44,10 @@ const config: Config = {
         'silver': '#aac3c6',
       },
       fontFamily: {
-        'display': ['Arial', 'Helvetica', 'sans-serif'],
-        'condensed': ['Arial', 'Helvetica', 'sans-serif'],
-        'body': ['Arial', 'Helvetica', 'sans-serif'],
+        'display': ['var(--font-family-ui)'],
+        'condensed': ['var(--font-family-ui)'],
+        'body': ['var(--font-family-ui)'],
+        'mono': ['var(--font-family-mono)'],
       },
       backgroundImage: {
         'grid-pattern': `

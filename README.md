@@ -60,6 +60,9 @@ npm install
 cp .env.example .env.local
 ```
 
+To run the Python test suite, install its additional benchmark dependencies with
+`pip install -r requirements-test.txt`.
+
 For the complete local web stack:
 
 ```bash

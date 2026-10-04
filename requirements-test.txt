@@ -1,0 +1,5 @@
+-r requirements.txt
+
+# Research benchmark modules imported by the Python test suite.
+duckdb==1.5.6
+scikit-learn==1.9.1

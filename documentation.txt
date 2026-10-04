@@ -19,21 +19,20 @@ LA, or JAC). Team IDs and one shared alias map align those names with the
 box score. When accepted penalty yardage or team attribution is unknown,
 known yards remain summed and the penalty-yard factor comparison is undecided.
 
-FACTOR BAR SCALE (PROVISIONAL)
-------------------------------
+FACTOR BAR SCALE
+----------------
 
 The winner's shaded value cell identifies the team leading a factor. The
-adjacent bar shows the absolute team-to-team gap divided by a provisional
-large-gap reference for that factor, capped at a full bar. A tie or unresolved
-comparison has no bar. This is a comparison of factor values, not a measure
-of the factor's causal impact or a win-probability contribution.
+adjacent bar shows the absolute team-to-team gap divided by the rounded
+historical large-gap reference for that factor and selected scope, capped at a
+full bar. A tie or unresolved comparison has no bar. Rate bars require 20
+eligible offensive plays per team; points per trip requires two qualifying
+trips per team; starting field position requires five drive starts per team.
+This compares factor values, not causal impact or win-probability contribution.
 
-Current illustrative references: 3 turnovers; 15 percentage points of
-success rate; 3 adjusted yards per play; 7 percentage points of explosive-play
-rate; 2 points per trip inside 40; 18 yards of starting field position;
-60 penalty yards; and 7 non-offensive points. The same placeholders currently
-apply to competitive and full-game views. They have not been historically
-backtested and must be replaced with scope-appropriate reference margins.
+The references come from completed regular-season games. They are also used
+during live games, where stage-specific calibration remains provisional. See
+FACTOR_BAR_CALIBRATION.md for values, sample, method, and limitations.
 
 PLAY EPA
 --------
@@ -186,8 +185,9 @@ ADDITIONAL FACTORS (addressing gaps in original framework)
    placement fouls (out of bounds or short of the landing zone) count as
    accepted penalties but charge zero penalty yards; their placement distance
    is not penalty yardage. If another accepted penalty lacks reliable yards or
-   team attribution, the affected competitive total is unavailable, and the
-   drilldown identifies the unresolved play.
+   team attribution, known assessed yards remain summed for each team, but
+   the factor comparison stays undecided. The drilldown identifies the
+   unresolved play.
    
    How to read it: Lower is better. This is inverted from most stats.
    

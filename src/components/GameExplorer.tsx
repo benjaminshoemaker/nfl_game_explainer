@@ -15,23 +15,37 @@ const FACTORS: Factor[] = [
   { id: 'Explosive Play Rate', label: 'Explosive-play rate', sub: '10+ run · 20+ pass', details: 'Runs of at least 10 yards or passes of at least 20, divided by eligible offensive plays.', tabs: [['type', 'Run / pass'], ['quarter', 'By quarter']], eventKey: 'Explosive Plays' },
   { id: 'Points Per Trip (Inside 40)', label: 'Points per trip', sub: 'Inside opponent 40', details: 'Points scored on each drive that reached the opponent’s 40-yard line.', tabs: [['outcome', 'Drive result'], ['quarter', 'By quarter']], eventKey: 'Points Per Trip (Inside 40)' },
   { id: 'Ave Start Field Pos', label: 'Starting field position', sub: 'Where drives began', details: 'Drive starts, measured from the offense’s goal line.', tabs: [['source', 'By source'], ['quarter', 'By quarter']], eventKey: 'Drive Starts' },
-  { id: 'Penalty Yards', label: 'Penalty yards', sub: 'Assessed yards', details: 'Accepted penalty yards charged to each team; unavailable yardage stays unresolved.', tabs: [['type', 'By type'], ['quarter', 'By quarter']], eventKey: 'Penalty Yards' },
+  { id: 'Penalty Yards', label: 'Penalty yards', sub: 'Assessed yards', details: 'Accepted penalty yards charged to each team; unknown yardage or team attribution stays unresolved.', tabs: [['type', 'By type'], ['quarter', 'By quarter']], eventKey: 'Penalty Yards' },
   { id: 'Non-Offensive Points', label: 'Non-offensive points', sub: 'Defense / special teams', details: 'Defensive and special teams scoring plays.', tabs: [], eventKey: 'Non-Offensive Points' },
 ];
-// Illustrative large-gap references. Replace with same-scope historical
-// 90th-percentile margins after replaying and validating completed games.
-const PROVISIONAL_FACTOR_GAPS: Record<string, { amount: number; label: string }> = {
-  Turnovers: { amount: 3, label: '3 turnovers' },
-  'Success Rate': { amount: .15, label: '15 pp' },
-  'Adjusted Yards Per Play': { amount: 3, label: '3 yd/play' },
-  'Explosive Play Rate': { amount: .07, label: '7 pp' },
-  'Points Per Trip (Inside 40)': { amount: 2, label: '2 pts/trip' },
-  'Ave Start Field Pos': { amount: 18, label: '18 yd' },
-  'Penalty Yards': { amount: 60, label: '60 yd' },
-  'Non-Offensive Points': { amount: 7, label: '7 pts' },
+// Rounded 90th-percentile nonzero gaps from the completed-game backtest.
+// Live-stage reference values still need validation against live snapshots.
+const FACTOR_GAP_REFERENCES: Record<'full' | 'competitive', Record<string, { amount: number; label: string }>> = {
+  full: {
+    Turnovers: { amount: 3, label: '3 turnovers' },
+    'Success Rate': { amount: .19, label: '19 pp' },
+    'Adjusted Yards Per Play': { amount: 2.75, label: '2.75 yd/play' },
+    'Explosive Play Rate': { amount: .11, label: '11 pp' },
+    'Points Per Trip (Inside 40)': { amount: 3.25, label: '3.25 pts/trip' },
+    'Ave Start Field Pos': { amount: 15, label: '15 yd' },
+    'Penalty Yards': { amount: 60, label: '60 yd' },
+    'Non-Offensive Points': { amount: 14, label: '14 pts' },
+  },
+  competitive: {
+    Turnovers: { amount: 3, label: '3 turnovers' },
+    'Success Rate': { amount: .20, label: '20 pp' },
+    'Adjusted Yards Per Play': { amount: 3.25, label: '3.25 yd/play' },
+    'Explosive Play Rate': { amount: .11, label: '11 pp' },
+    'Points Per Trip (Inside 40)': { amount: 3.75, label: '3.75 pts/trip' },
+    'Ave Start Field Pos': { amount: 14, label: '14 yd' },
+    'Penalty Yards': { amount: 55, label: '55 yd' },
+    'Non-Offensive Points': { amount: 7, label: '7 pts' },
+  },
 };
 type FactorResult = { leader: TeamMeta | null; result: string; state: 'lead' | 'tie' | 'pending'; barPercent: number | null; scaleDetail: string | null };
 type Event = PlayDetail & { teamId: string; team: string; down?: number | null };
+const unresolvedPenalty = (event: PlayDetail) => event.penalty_status === 'accepted'
+  && (event.yards == null || Boolean(event.team_attribution_note));
 const format = (factor: string, value: number | string | null | undefined) => {
   if (value === null || value === undefined) return '—';
   if (typeof value === 'string') return value;
@@ -129,7 +143,7 @@ export function GameExplorer({ game, scope, home, away }: { game: GameResponse; 
     return format(factorId, statFor(rows, team.abbr, factorId));
   };
   const unresolvedPenalties = (team: TeamMeta) => (details[team.id]?.['Penalty Yards'] || [])
-    .filter(event => event.penalty_status === 'accepted' && event.yards === null).length;
+    .filter(unresolvedPenalty).length;
   const factorComparison = (item: Factor): FactorResult => {
     if (factorValue(item.id, away) === '—' || factorValue(item.id, home) === '—') {
       return { leader: null, result: 'Comparison unavailable', state: 'pending', barPercent: null, scaleDetail: null };
@@ -158,11 +172,24 @@ export function GameExplorer({ game, scope, home, away }: { game: GameResponse; 
         : item.id === 'Points Per Trip (Inside 40)' ? `${difference.toFixed(2)} pts/trip`
           : item.id === 'Ave Start Field Pos' || item.id === 'Penalty Yards'
             ? `${difference} yd` : item.id === 'Non-Offensive Points' ? `${difference} pts` : `${difference} turnovers`;
-    const reference = PROVISIONAL_FACTOR_GAPS[item.id];
+    const sampleRequirement = item.id === 'Success Rate' || item.id === 'Adjusted Yards Per Play' || item.id === 'Explosive Play Rate'
+      ? { category: 'Offensive Plays', count: 20, description: '20 eligible offensive plays' }
+      : item.id === 'Points Per Trip (Inside 40)'
+        ? { category: 'Points Per Trip (Inside 40)', count: 2, description: '2 trips inside the opponent’s 40' }
+        : item.id === 'Ave Start Field Pos'
+          ? { category: 'Drive Starts', count: 5, description: '5 drive starts' } : null;
+    if (sampleRequirement && [away, home].some(team => (details[team.id]?.[sampleRequirement.category] || []).length < sampleRequirement.count)) {
+      return { leader, result: `${leader.abbr} · ${margin} ${lowerIsBetter ? 'fewer' : 'ahead'}`, state: 'lead',
+        barPercent: null, scaleDetail: `Bar appears after each team has ${sampleRequirement.description}` };
+    }
+    const reference = FACTOR_GAP_REFERENCES[scope][item.id];
     const barPercent = Math.min(100, Math.round(100 * difference / reference.amount));
+    const referenceContext = game.status === 'final' ? 'historical final-game' : 'completed-game';
     return {
       leader, result: `${leader.abbr} · ${margin} ${lowerIsBetter ? 'fewer' : 'ahead'}`, state: 'lead', barPercent,
-      scaleDetail: `${margin} ÷ ${reference.label} = ${barPercent}% of the provisional reference`,
+      scaleDetail: difference >= reference.amount
+        ? `${margin} meets or exceeds the ${reference.label} ${referenceContext} reference; bar capped at 100%`
+        : `${margin} ÷ ${reference.label} = ${barPercent}% of the ${referenceContext} reference`,
     };
   };
   const factorResults = FACTORS.map(item => factorComparison(item));
@@ -276,7 +303,9 @@ export function GameExplorer({ game, scope, home, away }: { game: GameResponse; 
       <section className={styles.workspace} id="game-factors" aria-label="Game factors and evidence">
         <div className={styles.rail} role="tablist" aria-label="Game factors"><div className={styles.railHeader}><strong>Game factors</strong><small>{away.abbr} · {home.abbr}</small></div>
           <div className={styles.factorSummary} aria-label="Factor wins"><strong>{away.abbr} {awayFactorWins} · {home.abbr} {homeFactorWins}</strong><small>{tiedFactors ? `${tiedFactors} tied` : ''}{tiedFactors && pendingFactors ? ' · ' : ''}{pendingFactors ? `${pendingFactors} undecided` : ''}</small></div>
-          <p className={styles.factorScaleNote}>Provisional scale · full bar = illustrative large gap for that factor.</p>
+          <p className={styles.factorScaleNote}>{game.status === 'final'
+            ? 'Full bar = large historical final-game gap for this factor and view.'
+            : 'Live bars use completed-game references; early gaps can look larger until live-stage calibration is validated.'}</p>
           {FACTORS.map((item, index) => <button className={styles.category} key={item.id} role="tab" aria-selected={item.id === selected} onClick={() => selectFactor(item)}>
             <span className={styles.factorTeamCell} data-winner={factorResults[index].leader?.id === away.id}><small>{away.abbr}</small><b>{factorValue(item.id, away)}{item.id === 'Penalty Yards' && unresolvedPenalties(away) ? ' known' : ''}</b></span>
             <span className={styles.factorCenter}><span className={styles.factorName}><span className={styles.index}>{String(index + 1).padStart(2, '0')}</span><strong>{item.label}</strong></span><small>{item.sub}</small>
@@ -289,7 +318,7 @@ export function GameExplorer({ game, scope, home, away }: { game: GameResponse; 
         <article className={styles.detail} aria-label={`${factor.label} details`}>
           <div className={styles.detailTop}><div><div className={styles.eyebrow}>Category {String(FACTORS.indexOf(factor) + 1).padStart(2, '0')} of 08</div><h3>{factor.label}</h3><p>{factor.details}</p></div>
             <div className={styles.pills}><span>{away.abbr} {factorValue(factor.id, away)}</span><span>{home.abbr} {factorValue(factor.id, home)}</span></div>
-            <p className={styles.scaleDetail}>{selectedFactorResult.scaleDetail ? `${selectedFactorResult.scaleDetail}. ` : 'No magnitude bar for a tie or unresolved comparison. '}Reference values are illustrative pending historical backtesting.</p></div>
+            <p className={styles.scaleDetail}>{selectedFactorResult.scaleDetail ? `${selectedFactorResult.scaleDetail}. ` : 'No magnitude bar for a tie or unresolved comparison. '}{game.status === 'final' ? 'References come from completed regular-season games.' : 'Live-stage calibration remains provisional.'}</p></div>
           {factor.id === 'Success Rate' && <div className={styles.visual}><strong>Were they staying on schedule?</strong><small>Each mark represents one eligible offensive play.</small>
             {[away, home].map(team => { const list = (details[team.id]?.['Offensive Plays'] || []); return <div className={styles.markRow} key={team.id}><b>{team.abbr}</b><div>{list.map((e, i) => <i key={i} className={e.success ? styles.hit : ''} title={`Q${e.quarter} ${e.clock}: ${e.success ? 'successful' : 'unsuccessful'}`} />)}</div><small>{list.filter(e => e.success).length}/{list.length}</small></div>; })}</div>}
           {factor.id === 'Points Per Trip (Inside 40)' && <div className={styles.visual}><strong>Points on each trip</strong>{[away, home].map(team => <div className={styles.tripRow} key={team.id}><b>{team.abbr}</b>{(details[team.id]?.['Points Per Trip (Inside 40)'] || []).map((e, i) => <span key={i} title={`Trip ${i + 1}: ${e.points ?? '?'} points`}>{e.points ?? '?'}</span>)}</div>)}</div>}
@@ -309,8 +338,8 @@ export function GameExplorer({ game, scope, home, away }: { game: GameResponse; 
                   return positions.length ? `${fieldPosition(positions.reduce((n, value) => n + value, 0) / positions.length)} · ${positions.length} starts` : '—';
                 }
                 if (factor.id === 'Penalty Yards') {
-                  const known = list.reduce((n, e) => n + Math.abs(e.yards || 0), 0);
-                  const unresolved = list.filter(e => e.penalty_status === 'accepted' && e.yards === null).length;
+                  const known = list.reduce((n, e) => n + (e.team_attribution_note ? 0 : Math.abs(e.yards || 0)), 0);
+                  const unresolved = list.filter(unresolvedPenalty).length;
                   return `${known} yd${unresolved ? ` known · ${unresolved} unresolved` : ''}`;
                 }
                 return `${list.length} plays`;

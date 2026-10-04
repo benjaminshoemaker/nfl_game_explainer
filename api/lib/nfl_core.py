@@ -1297,8 +1297,8 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
                 if (penalty_yards_from_plays
                         and (penalty_info.get('status') or {}).get('slug') == 'accepted'
                         and commit_team_id not in details):
-                    # Both totals are unavailable when the committing team is
-                    # unknown; show the unresolved play in both drilldowns.
+                    # The known totals remain, but neither team can be declared
+                    # the factor winner; show the unresolved play in both drilldowns.
                     detail_team_ids = list(details)
                     attribution_note = 'Committing team unavailable'
                 else:

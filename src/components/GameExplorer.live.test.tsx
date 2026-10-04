@@ -53,9 +53,9 @@ describe('live game play order', () => {
           'Ave Start Field Pos': 'Own 25', 'Penalty Yards': 58, 'Non-Offensive Points': 0 },
       ],
       expanded_details: {
-        [away.id]: { 'Offensive Plays': [{ type: 'Rush', text: 'run', yards: 5 }] },
+        [away.id]: { 'Offensive Plays': Array.from({ length: 20 }, () => ({ type: 'Rush', text: 'run', yards: 5 })) },
         [home.id]: {
-          'Offensive Plays': [{ type: 'Rush', text: 'run', yards: 4 }],
+          'Offensive Plays': Array.from({ length: 20 }, () => ({ type: 'Rush', text: 'run', yards: 4 })),
           'Penalty Yards': [{ type: 'Penalty', text: 'missing yards', yards: null, penalty_status: 'accepted' }],
         },
       },
@@ -65,17 +65,52 @@ describe('live game play order', () => {
     expect(screen.getByRole('tab', { name: /Turnovers/ })).toHaveTextContent('HOM · 2 turnovers fewer');
     expect(screen.getByRole('tab', { name: /Success rate/ })).toHaveTextContent('AWY · 10.0 pp ahead');
     expect(screen.getByRole('tab', { name: /Turnovers/ }).querySelector('span[style*="width"]')).toHaveStyle({ width: '67%' });
-    expect(screen.getByRole('tab', { name: /Success rate/ }).querySelector('span[style*="width"]')).toHaveStyle({ width: '67%' });
+    expect(screen.getByRole('tab', { name: /Success rate/ }).querySelector('span[style*="width"]')).toHaveStyle({ width: '50%' });
     expect(screen.getByRole('tab', { name: /Penalty yards/ })).toHaveTextContent('58 known');
     expect(screen.getByRole('tab', { name: /Penalty yards/ })).toHaveTextContent('Undecided · penalty yards unresolved');
     expect(screen.getByRole('tab', { name: /Penalty yards/ }).querySelector('span[style*="width"]')).toBeNull();
-    expect(screen.getByText(/10.0 pp ÷ 15 pp = 67% of the provisional reference/)).toBeInTheDocument();
-    expect(screen.getByText(/Provisional scale · full bar/)).toBeInTheDocument();
+    expect(screen.getByText(/10.0 pp ÷ 20 pp = 50% of the completed-game reference/)).toBeInTheDocument();
+    expect(screen.getByText(/Live bars use completed-game references/)).toBeInTheDocument();
 
     const resolved = { ...withFactors, expanded_details: { ...withFactors.expanded_details,
-      [home.id]: { 'Offensive Plays': [{ type: 'Rush', text: 'run', yards: 4 }], 'Penalty Yards': [] },
+      [home.id]: { 'Offensive Plays': Array.from({ length: 20 }, () => ({ type: 'Rush', text: 'run', yards: 4 })), 'Penalty Yards': [] },
     } } as GameResponse;
     rerender(<GameExplorer game={resolved} scope="competitive" away={away} home={home} />);
-    expect(screen.getByRole('tab', { name: /Penalty yards/ }).querySelector('span[style*="width"]')).toHaveStyle({ width: '70%' });
+    expect(screen.getByRole('tab', { name: /Penalty yards/ }).querySelector('span[style*="width"]')).toHaveStyle({ width: '76%' });
+
+    const unknownTeam = { ...resolved, expanded_details: { ...resolved.expanded_details,
+      [home.id]: { 'Offensive Plays': [{ type: 'Rush', text: 'run', yards: 4 }],
+        'Penalty Yards': [{ type: 'Penalty', text: 'unknown team', yards: -10,
+          penalty_status: 'accepted', team_attribution_note: 'Committing team unavailable' }] },
+    } } as GameResponse;
+    rerender(<GameExplorer game={unknownTeam} scope="competitive" away={away} home={home} />);
+    expect(screen.getByRole('tab', { name: /Penalty yards/ })).toHaveTextContent('Undecided · penalty yards unresolved');
+    expect(screen.getByRole('tab', { name: /Penalty yards/ }).querySelector('span[style*="width"]')).toBeNull();
+
+    const finalGame = { ...resolved, status: 'final',
+      advanced_table_full: resolved.advanced_table.map((row, index) => ({ ...row, 'Non-Offensive Points': index === 0 ? 7 : 0 })),
+      expanded_details_full: resolved.expanded_details,
+    } as GameResponse;
+    rerender(<GameExplorer game={finalGame} scope="full" away={away} home={home} />);
+    expect(screen.getByRole('tab', { name: /Success rate/ }).querySelector('span[style*="width"]')).toHaveStyle({ width: '53%' });
+    expect(screen.getByRole('tab', { name: /Non-offensive points/ }).querySelector('span[style*="width"]')).toHaveStyle({ width: '50%' });
+    expect(screen.getByText(/Full bar = large historical final-game gap/)).toBeInTheDocument();
+
+    const capped = { ...finalGame, advanced_table_full: finalGame.advanced_table_full.map((row, index) => ({
+      ...row, 'Non-Offensive Points': index === 0 ? 21 : 0,
+    })) } as GameResponse;
+    rerender(<GameExplorer game={capped} scope="full" away={away} home={home} />);
+    fireEvent.click(screen.getByRole('tab', { name: /Non-offensive points/ }));
+    expect(screen.getByRole('tab', { name: /Non-offensive points/ }).querySelector('span[style*="width"]')).toHaveStyle({ width: '100%' });
+    expect(screen.getByText(/21 pts meets or exceeds the 14 pts historical final-game reference; bar capped at 100%/)).toBeInTheDocument();
+
+    const lowSample = { ...finalGame, expanded_details_full: {
+      [away.id]: { 'Offensive Plays': [{ type: 'Rush', text: 'run', yards: 5 }] },
+      [home.id]: { 'Offensive Plays': [{ type: 'Rush', text: 'run', yards: 4 }] },
+    } } as GameResponse;
+    rerender(<GameExplorer game={lowSample} scope="full" away={away} home={home} />);
+    fireEvent.click(screen.getByRole('tab', { name: /Success rate/ }));
+    expect(screen.getByRole('tab', { name: /Success rate/ }).querySelector('span[style*="width"]')).toBeNull();
+    expect(screen.getByText(/Bar appears after each team has 20 eligible offensive plays/)).toBeInTheDocument();
   });
 });

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports -- This standalone Node test uses CommonJS. */
 const assert = require('node:assert/strict');
 const { readFileSync } = require('node:fs');
 const path = require('node:path');
@@ -11,11 +12,12 @@ const script = html.match(/<script>([\s\S]*?)<\/script>/)?.[1];
 assert.ok(script, 'prototype has an inline script');
 
 const fixture = JSON.parse(readFileSync(path.join(directory, 'nfl-category-prototype-data.json'), 'utf8'));
-const context = vm.createContext({ fetch: () => new Promise(() => {}), fixture });
+const playContextFixture = JSON.parse(readFileSync(path.join(directory, 'play-card-context.json'), 'utf8'));
+const context = vm.createContext({ fetch: () => new Promise(() => {}), fixture, playContextFixture });
 vm.runInContext(script, context);
-vm.runInContext('data = fixture', context);
-const { tapeBeneficiary, tapeTypeGroup, tapeOutcomeMatch, tapeSorted, tapeFacts, renderSuccessStrip, penaltyCategory } =
-  vm.runInContext('({ tapeBeneficiary, tapeTypeGroup, tapeOutcomeMatch, tapeSorted, tapeFacts, renderSuccessStrip, penaltyCategory })', context);
+vm.runInContext('setPrototypeData(fixture, playContextFixture)', context);
+const { tapeBeneficiary, tapeTypeGroup, tapeOutcomeMatch, tapeSorted, playCard, renderSuccessStrip, penaltyCategory } =
+  vm.runInContext('({ tapeBeneficiary, tapeTypeGroup, tapeOutcomeMatch, tapeSorted, playCard, renderSuccessStrip, penaltyCategory })', context);
 const plays = fixture.all_plays;
 const find = id => plays.find(play => play.play_id === id);
 
@@ -48,26 +50,97 @@ test('WP sorting keeps the largest swing first', () => {
   assert.equal(tapeSorted(plays)[0].play_id, '4018729554262');
 });
 
-test('league context appears only for a top-ten weekly rank', () => {
+test('one source play renders the same card in factors and both play lists', () => {
+  const dom = new JSDOM(html, { runScripts: 'outside-only' });
+  const { window } = dom;
+  window.fetch = () => new Promise(() => {});
+  window.Element.prototype.scrollIntoView = () => {};
+  window.fixture = fixture;
+  window.playContextFixture = playContextFixture;
+  window.eval(`${script}\nsetPrototypeData(window.fixture, window.playContextFixture); renderRail(); renderDetail(); renderTape();`);
+
+  window.document.querySelector('[data-tape-scope="full"]').click();
+  window.document.querySelector('[data-category="Non-Offensive Points"]').click();
+  const id = '4018729554262';
+  window.document.querySelector(`#impact-panel [data-impact-id="${id}"]`).click();
+  const factorCard = window.document.querySelector(`#detail .play-card[data-play-id="${id}"]`);
+  const impactCard = window.document.querySelector(`#impact-panel .play-card[data-play-id="${id}"]`);
+  const tapeCard = window.document.querySelector(`#all-plays-panel .play-card[data-play-id="${id}"]`);
+  assert.ok(factorCard && impactCard && tapeCard);
+  assert.equal(factorCard.outerHTML, impactCard.outerHTML);
+  assert.equal(impactCard.outerHTML, tapeCard.outerHTML);
+  assert.match(factorCard.textContent, /Score SEA 24 · WSH 27/);
+  assert.match(factorCard.textContent, /2nd and 15 from the WSH 49/);
+  assert.match(factorCard.textContent, /WSH \+34\.1 pp/);
+  assert.ok(!impactCard.querySelector('.taperank'), 'list rank sits outside the card');
+  assert.ok(!factorCard.querySelector('.context-rank'), 'unverified league rank is withheld');
+  dom.window.close();
+});
+
+test('drive, trip, and penalty facts surround the canonical source card', () => {
+  const dom = new JSDOM(html, { runScripts: 'outside-only' });
+  const { window } = dom;
+  window.fetch = () => new Promise(() => {});
+  window.fixture = fixture;
+  window.playContextFixture = playContextFixture;
+  window.eval(`${script}\nsetPrototypeData(window.fixture, window.playContextFixture); renderRail(); renderDetail();`);
+
+  window.document.querySelector('[data-category="Ave Start Field Pos"]').click();
+  window.document.querySelector('#toggleMode').click();
+  let entry = window.document.querySelector('#detail .play-entry');
+  assert.match(entry.querySelector('.entry-context').textContent, /SEA.*SEA 37/);
+  assert.equal(entry.querySelector('.play-card .team').textContent, 'WSH');
+  assert.ok(!entry.querySelector('.play-card').textContent.includes('Drive start'));
+
+  window.document.querySelector('[data-category="Penalty Yards"]').click();
+  window.document.querySelector('#toggleMode').click();
+  const penaltyEntry = [...window.document.querySelectorAll('#detail .play-entry')]
+    .find(row => row.textContent.includes('Defensive Pass Interference'));
+  assert.equal(penaltyEntry.querySelector('.play-card .team').textContent, 'WSH');
+  assert.match(penaltyEntry.querySelector('.play-card').textContent, /Defensive Pass Interference on SEA — 14-yard penalty; no play/);
+
+  window.document.querySelector('[data-category="Points Per Trip (Inside 40)"]').click();
+  window.document.querySelector('#toggleMode').click();
+  entry = window.document.querySelector('#detail .play-entry');
+  assert.match(entry.querySelector('.entry-context').textContent, /Trip result/);
+  assert.ok(!entry.querySelector('.play-card').textContent.includes('Trip result'));
+  dom.window.close();
+});
+
+test('every factor event resolves to a source-play card', () => {
+  const dom = new JSDOM(html, { runScripts: 'outside-only' });
+  const { window } = dom;
+  window.fetch = () => new Promise(() => {});
+  window.fixture = fixture;
+  window.playContextFixture = playContextFixture;
+  window.eval(`${script}\nsetPrototypeData(window.fixture, window.playContextFixture); renderRail(); renderDetail();`);
+  for (const category of ['Turnovers', 'Success Rate', 'Adjusted Yards Per Play', 'Explosive Play Rate', 'Points Per Trip (Inside 40)', 'Ave Start Field Pos', 'Penalty Yards', 'Non-Offensive Points']) {
+    window.document.querySelector(`[data-category="${category}"]`).click();
+    if (window.document.querySelector('#toggleMode')) window.document.querySelector('#toggleMode').click();
+    while (window.document.querySelector('#loadmore')) window.document.querySelector('#loadmore').click();
+    const expected = category === 'Success Rate' || category === 'Adjusted Yards Per Play'
+      ? fixture.eligible_plays.length
+      : fixture.events[({ 'Explosive Play Rate': 'Explosive Plays', 'Ave Start Field Pos': 'Drive Starts' })[category] || category].length;
+    assert.equal(window.document.querySelectorAll('#detail .play-entry .play-card').length, expected, category);
+    assert.equal(window.document.querySelectorAll('#detail .source-missing').length, 0, category);
+  }
+  dom.window.close();
+});
+
+test('play card shows WP endpoints only for large swings and withholds old rank labels', () => {
   const pickSix = find('4018729554262');
-  assert.equal(fixture.live_week_wp_context.ranks[pickSix.play_id], 4);
-  assert.equal(fixture.week_wp_context.ranks[pickSix.play_id], 6);
-  assert.equal(fixture.historical_wp_context.at_least_threshold, 91);
-  assert.equal(fixture.historical_wp_context.eligible_plays, 30866);
-  const contextFact = play => tapeFacts(play).find(([label]) => /WP rank|WP rarity/.test(label));
-  vm.runInContext("tapeScope = 'early'", context);
-  assert.equal(vm.runInContext("tapePlays().some(play => play.play_id === '4018729554262')", context), false);
-  vm.runInContext("tapeScope = 'live'", context);
-  assert.equal(vm.runInContext("tapePlays().at(-1).play_id", context), pickSix.play_id);
-  assert.match(contextFact(pickSix)[0], /Provisional/);
-  assert.match(contextFact(pickSix)[1], /#4 of 1,411 eligible plays/);
-  assert.equal(contextFact(find('4018729554575')), undefined);
-  vm.runInContext("tapeScope = 'full'", context);
-  assert.match(contextFact(pickSix)[0], /Final/);
-  assert.match(contextFact(pickSix)[1], /#6 of 2,352 eligible plays/);
-  vm.runInContext("tapeScope = 'live'; data.live_week_wp_context.ranks = {}", context);
-  assert.equal(contextFact(pickSix)[0], 'Historical WP rarity');
-  fixture.live_week_wp_context.ranks = { [pickSix.play_id]: 4 };
+  assert.match(playCard(pickSix), /63\.1% → 97\.2%/);
+  assert.doesNotMatch(playCard(pickSix), /WP rank|WP rarity/);
+  assert.doesNotMatch(playCard(plays.find(play => Math.abs(play.home_wp_delta) > 0 && Math.abs(play.home_wp_delta) < .01)), /% → .*%/);
+  assert.match(playCard(plays.find(play => play.home_wp_delta === .0002)), /WSH \+&lt;0\.1 pp/);
+  assert.doesNotMatch(playCard(plays.find(play => play.down_distance === ' & Goal')), /· and Goal/);
+});
+
+test('explicitly declined penalties remain visible without charged yardage', () => {
+  assert.match(playCard(find('4018729553362')), /Illegal Shift on WSH — declined/);
+  const multiple = playCard(find('4018729551100'));
+  assert.match(multiple, /Defensive Pass Interference on WSH — 2-yard penalty; no play/);
+  assert.match(multiple, /Illegal Use of Hands on WSH — declined/);
 });
 
 test('success sequence shows the percentage on each team quarter line', () => {
@@ -102,7 +175,8 @@ test('chart toggle stays beside its chart and remembers each factor across split
   const { window } = dom;
   window.fetch = () => new Promise(() => {});
   window.fixture = fixture;
-  window.eval(`${script}\ndata = window.fixture; renderRail(); renderDetail();`);
+  window.playContextFixture = playContextFixture;
+  window.eval(`${script}\nsetPrototypeData(window.fixture, window.playContextFixture); renderRail(); renderDetail();`);
   const detail = window.document.querySelector('#detail');
   const toggle = () => detail.querySelector('.viz-toggle');
   const select = factor => window.document.querySelector(`[data-category="${factor}"]`).click();
@@ -139,7 +213,8 @@ test('all plays gives the play list room and starts with its chart folded', () =
   const { window } = dom;
   window.fetch = () => new Promise(() => {});
   window.fixture = fixture;
-  window.eval(`${script}\ndata = window.fixture; renderRail(); renderDetail();`);
+  window.playContextFixture = playContextFixture;
+  window.eval(`${script}\nsetPrototypeData(window.fixture, window.playContextFixture); renderRail(); renderDetail();`);
   const detail = window.document.querySelector('#detail');
   window.document.querySelector('[data-category="Ave Start Field Pos"]').click();
   assert.equal(detail.querySelector('.viz-toggle').getAttribute('aria-expanded'), 'true');

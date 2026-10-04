@@ -369,18 +369,19 @@ def analyze_game(game_id, wp_threshold=0.975, debug=False):
             "seasonType": season_type,
         },
         "wp_filter": {
-	            "enabled": wp_available,
-	            "threshold": wp_threshold,
-	            "description": (
-	                f"Competitive-play estimate (WP < {wp_threshold * 100:.1f}% at start or end; "
-	                f"{len(prob_map)} play probabilities available)"
-	                if wp_available else "Win probability unavailable; showing full-game totals"
-	            ),
+            "enabled": wp_available,
+            "threshold": wp_threshold,
+            "description": (
+                f"Competitive scope through last play below {wp_threshold * 100:.1f}% WP at start/end; "
+                f"earlier plays included; {len(prob_map)} WP values available"
+                if wp_available else "Win probability unavailable; showing full-game totals"
+            ),
         },
         "metric_scopes": {
             "Penalty Yards": {
                 "competitive": (
-                    "Sum of accepted ESPN play-level penalties in the WP-selected scope; "
+                    "Sum of accepted ESPN play-level penalties through the latest competitive play; "
+                    "earlier plays remain included even when their individual WP is above the threshold. "
                     "kickoff placement fouls charge zero penalty yards. "
                     "Known yards remain summed when another penalty lacks usable yardage or team attribution; "
                     "unresolved penalties are identified in the drilldown. "

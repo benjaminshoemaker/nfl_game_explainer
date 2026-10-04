@@ -793,12 +793,11 @@ def is_competitive_play(play, probability_map, wp_threshold=0.975, start_home_wp
             prob.get('awayWinPercentage', 0.5),
         )
 
-    if start_competitive is None and end_competitive is None:
+    # Missing either boundary means this play cannot establish that the game
+    # was safely outside the competitive range. Keep it in scope so partial WP
+    # coverage cannot create a false noncompetitive tail.
+    if start_competitive is None or end_competitive is None:
         return True
-    if start_competitive is None:
-        return bool(end_competitive)
-    if end_competitive is None:
-        return bool(start_competitive)
     return bool(start_competitive or end_competitive)
 
 
@@ -914,6 +913,57 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
                     walk_home_wp = sanitize_prob(home_end, fallback=walk_home_wp)
                 if isinstance(away_end, (int, float)):
                     walk_away_wp = sanitize_prob(away_end, fallback=walk_away_wp)
+
+    # Competitive scope is a chronological game prefix, not a set of isolated
+    # plays. If the game returns to the competitive range after a blowout, all
+    # earlier plays become part of that history. Only the tail after the latest
+    # competitive state is excluded. Unknown WP is conservatively treated as
+    # competitive by is_competitive_play, so missing coverage never excludes a
+    # play by assumption.
+    ordered_plays = [play for drive in drives for play in drive.get('plays', [])]
+
+    def scope_map_through_last_competitive(threshold):
+        last_index = -1
+        for index, candidate in enumerate(ordered_plays):
+            play_type = ((candidate.get('type') or {}).get('text') or '').lower()
+            if any(marker in play_type for marker in (
+                    'timeout', 'two-minute warning', 'end of period',
+                    'end of game', 'end of half')):
+                continue
+            pid = candidate.get('id')
+            start_wps = start_wp_by_play_id.get(str(pid)) if pid is not None else None
+            start_home_wp, start_away_wp = start_wps or (None, None)
+            if is_competitive_play(
+                    candidate, probability_map, threshold,
+                    start_home_wp, start_away_wp):
+                last_index = index
+        by_object = {}
+        by_id = {}
+        for index, candidate in enumerate(ordered_plays):
+            in_scope = index <= last_index
+            by_object[id(candidate)] = in_scope
+            if candidate.get('id') is not None:
+                by_id[str(candidate['id'])] = in_scope
+        return by_object, by_id
+
+    competitive_scope_by_play, competitive_scope_by_id = scope_map_through_last_competitive(
+        wp_threshold
+    )
+    debug_scope_by_play, debug_scope_by_id = (
+        scope_map_through_last_competitive(debug_threshold)
+        if debug_rows is not None else ({}, {})
+    )
+
+    def scope_for_play(play, by_object, by_id):
+        if id(play) in by_object:
+            return by_object[id(play)]
+        pid = play.get('id')
+        # Scoring-play summaries are separate objects; align them by ESPN play ID.
+        # If ESPN provides an unmatched summary, retain the conservative fallback.
+        return by_id.get(str(pid), True) if pid is not None else True
+
+    def is_in_competitive_scope(play):
+        return scope_for_play(play, competitive_scope_by_play, competitive_scope_by_id)
 
     def lookup_probability_with_delta(play):
         pid = play.get('id')
@@ -1069,17 +1119,7 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
     # Non-Offensive Points
     for sp in scoring_plays:
         play_id = sp.get('id')
-        start_wps = start_wp_by_play_id.get(str(play_id)) if play_id is not None else None
-        if start_wps is not None:
-            competitive_scoring = is_competitive_play(
-                sp,
-                probability_map,
-                wp_threshold,
-                start_home_wp=start_wps[0],
-                start_away_wp=start_wps[1],
-            )
-        else:
-            competitive_scoring = is_competitive_play(sp, probability_map, wp_threshold)
+        competitive_scoring = is_in_competitive_scope(sp)
         if not competitive_scoring:
             continue
         scoring_team_id = sp.get('team', {}).get('id')
@@ -1170,9 +1210,7 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
             'distance': (play.get('start') or {}).get('distance'),
             'sourceYards': play.get('statYardage'),
             'classification': 'run' if is_run else 'pass' if is_pass else 'other',
-            'competitive': is_competitive_play(
-                play, probability_map, debug_threshold, start_home_wp, start_away_wp
-            ),
+            'competitive': scope_for_play(play, debug_scope_by_play, debug_scope_by_id),
             'excludedReason': excluded_reason,
             'startHomeWP': start_home_wp,
             'endHomeWP': end_wp.get('homeWinPercentage') if end_wp else None,
@@ -1268,7 +1306,7 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
             if len(id_to_abbr) == 2 and start_team_id in id_to_abbr:
                 opponent_id = next((tid for tid in id_to_abbr if tid != start_team_id), None)
 
-            competitive = is_competitive_play(play, probability_map, wp_threshold, prev_home_wp, prev_away_wp)
+            competitive = is_in_competitive_scope(play)
             probability_snapshot = lookup_probability_with_delta(play)
 
             if not drive_first_play_checked:

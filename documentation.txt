@@ -14,6 +14,13 @@ do not reproduce those totals or ESPN's offensive-play count, a source-gap
 notice appears. A matching yard total alone does not prove every snap is
 present. Play-derived
 factors and competitive-play splits can still be incomplete in that case.
+The Competitive scope includes every play from the start of the game through
+the latest play whose win probability is below the configured threshold at
+the start or end of the play. This keeps the full lead-up to a competitive
+game state in scope: if the game returns to the competitive range, previously
+excluded plays are added back. Only the trailing stretch after the latest
+competitive state is excluded. Plays with incomplete win-probability data are
+kept in scope conservatively.
 ESPN play text can use older team abbreviations (CLV, HST, WAS, ARZ, BLT,
 LA, or JAC). Team IDs and one shared alias map align those names with the
 box score. When accepted penalty yardage or team attribution is unknown,
@@ -181,7 +188,10 @@ ADDITIONAL FACTORS (addressing gaps in original framework)
    
    What it measures: Total penalty yards assessed against each team.
    Full-game values use ESPN's box score. Competitive values sum accepted
-   play-level penalties in the selected win-probability scope. ESPN kickoff
+   play-level penalties through the latest competitive play; all earlier
+   penalties stay in scope even if their individual win probability was above
+   the threshold. If the game returns to the competitive range, earlier
+   penalties are added back. ESPN kickoff
    placement fouls (out of bounds or short of the landing zone) count as
    accepted penalties but charge zero penalty yards; their placement distance
    is not penalty yardage. If another accepted penalty lacks reliable yards or

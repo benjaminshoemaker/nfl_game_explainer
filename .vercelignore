@@ -1,0 +1,11 @@
+# Local ESPN snapshots and generated analysis are not used by the live app.
+pbp_cache/
+audits/
+game_summaries/
+debug_*.json
+plays_wp_*.csv
+
+# Review and development artifacts do not belong in Python functions.
+tests/
+prototypes/
+research/

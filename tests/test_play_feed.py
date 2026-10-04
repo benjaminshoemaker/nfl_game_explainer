@@ -8,7 +8,7 @@ from api.lib.play_feed import build_play_feed
 
 
 def test_cached_game_feed_retains_source_context_and_scores():
-    raw = json.loads((ROOT / 'pbp_cache' / '401772633.json').read_text())
+    raw = json.loads((ROOT / 'tests' / 'fixtures' / '401772633.json').read_text())
     plays = build_play_feed(raw, {}, 0.5)
     assert len(plays) > 100
     assert len({play['id'] for play in plays}) == len(plays)
@@ -24,7 +24,7 @@ def test_cached_game_feed_retains_source_context_and_scores():
 
 
 def test_wp_requires_adjacent_measured_entries():
-    raw = json.loads((ROOT / 'pbp_cache' / '401772633.json').read_text())
+    raw = json.loads((ROOT / 'tests' / 'fixtures' / '401772633.json').read_text())
     first = raw['drives']['previous'][0]['plays'][0]['id']
     second = raw['drives']['previous'][0]['plays'][1]['id']
     third = raw['drives']['previous'][0]['plays'][2]['id']
@@ -64,7 +64,7 @@ def test_transient_score_regression_does_not_credit_following_kickoff():
 def test_api_factor_events_resolve_to_canonical_source_play(monkeypatch):
     from api.lib import game_analysis
 
-    raw = json.loads((ROOT / 'pbp_cache' / '401772633.json').read_text())
+    raw = json.loads((ROOT / 'tests' / 'fixtures' / '401772633.json').read_text())
     monkeypatch.setattr(game_analysis, 'get_game_data', lambda _game_id: raw)
     monkeypatch.setattr(game_analysis, 'get_pregame_probabilities', lambda _game_id: (.5, .5))
     monkeypatch.setattr(game_analysis, 'get_play_probabilities', lambda _game_id: {})

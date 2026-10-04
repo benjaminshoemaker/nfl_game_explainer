@@ -10,7 +10,7 @@ from api.lib.play_feed import build_play_feed
 
 
 def sample_game():
-    return json.loads((ROOT / 'pbp_cache' / '401772633.json').read_text())
+    return json.loads((ROOT / 'tests' / 'fixtures' / '401772633.json').read_text())
 
 
 def test_completed_game_epa_is_attached_to_canonical_plays():

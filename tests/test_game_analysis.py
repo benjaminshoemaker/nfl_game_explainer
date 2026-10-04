@@ -91,7 +91,7 @@ def test_derive_game_status_does_not_call_an_interrupted_game_final(name, detail
 
 
 def test_live_one_play_checkpoint_returns_an_early_report(monkeypatch):
-    raw = json.loads((Path(__file__).resolve().parents[1] / 'pbp_cache' / '401772633.json').read_text())
+    raw = json.loads((Path(__file__).resolve().parent / 'fixtures' / '401772633.json').read_text())
     competition = raw['header']['competitions'][0]
     competition['status'] = {
         'type': {'state': 'in', 'name': 'STATUS_IN_PROGRESS', 'shortDetail': 'Q1 14:55'},

@@ -7,7 +7,10 @@ import json
 import urllib.request
 import urllib.error
 import gzip
+import logging
 from urllib.parse import urlparse
+from .play_feed import build_play_feed
+from .epa import calculate_play_epa
 
 # Import shared core analytics functions
 from .nfl_core import (
@@ -340,6 +343,12 @@ def analyze_game(game_id, wp_threshold=0.975, debug=False):
     # Get last play time for live games display
     last_play_time = get_last_play_time(raw_data)
 
+    try:
+        play_epa = calculate_play_epa(raw_data, status)
+    except Exception:
+        logging.exception('EPA calculation failed for game %s', game_id)
+        play_epa = {}
+
     payload = {
         "gameId": game_id,
         "label": label,
@@ -378,6 +387,8 @@ def analyze_game(game_id, wp_threshold=0.975, debug=False):
         "advanced_table_full": advanced_full,
         "expanded_details": slice_details(details_filtered),
         "expanded_details_full": slice_details(details_full),
+        "plays": build_play_feed(raw_data, prob_map, pregame_home_wp,
+                                 play_epa),
         "source_gaps": source_gaps,
     }
 

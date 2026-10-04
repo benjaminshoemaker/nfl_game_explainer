@@ -423,6 +423,7 @@ def main():
                 continue
             estimate = estimate_play_epa(
                 plays, position, team_ids, espn_state, predict_exact, predict_fg,
+                period_ended=True,
             )
             if estimate is not None:
                 benchmark_predictions[(ref_game_id, suffix)] = estimate

@@ -19,6 +19,18 @@ LA, or JAC). Team IDs and one shared alias map align those names with the
 box score. Unknown penalty-team abbreviations make competitive penalty yards
 unavailable rather than assigning the penalty to a guessed team.
 
+PLAY EPA
+--------
+
+Play EPA estimates how many expected points a play added for the team listed
+on its card. It compares expected points before the play with points scored
+or the next ESPN possession state. For kickoffs, the model starts from the
+receiving team's perspective and the card reverses the sign to show the
+listed kicking team's perspective. A live play can remain unavailable until
+ESPN publishes a successor state. Plays with incomplete inputs or unsupported
+overtime states remain unavailable; no zero is imputed. The expected-points
+model is nflfastR's published model, with a separate 2025 field-goal baseline.
+
 SPECIAL TEAMS METRICS
 --------------------
 

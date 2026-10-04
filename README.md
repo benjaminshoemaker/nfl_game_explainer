@@ -118,7 +118,7 @@ Generated CSV, JSON, and HTML reports are written to `game_summaries/`, which
 is gitignored. Detailed metric definitions are maintained in
 `documentation.txt` and `FAQ.txt`.
 
-## EPA research
+## Play EPA
 
 The [2026 Week 3 ESPN EPA validation](EPA_GOAL.md) compares ESPN-derived
 play-level EPA with nflverse across 10 development games and 6 held-out games,
@@ -126,8 +126,12 @@ including the Seahawks and Rams games. Offense, special teams, penalties,
 kneels, spikes, and two-point tries each exceeded 95% play coverage and 95%
 agreement within ±0.25 EPA in both samples. The
 [initial feasibility check](EPA_WEEK3_FEASIBILITY_2026-09-30.md) records the
-earlier restricted prototype. These are completed-game research results; EPA
-is not yet part of the live dashboard, and in-game latency remains untested.
+earlier restricted prototype. The game API now estimates play EPA from ESPN
+play states with the bundled, checksum-pinned nflfastR expected-points model
+and a field-goal baseline trained on 2025 reference data. A live play may
+have no EPA until the next possession state arrives; unsupported or missing
+states stay null. The benchmark covers completed games; in-game latency and
+overtime EPA remain unvalidated.
 
 ## Data and cache behavior
 

@@ -80,6 +80,18 @@ def _charged_penalty_yards(penalty_info, play):
     yards = penalty_info.get('yards')
     if isinstance(yards, (int, float)) and math.isfinite(yards):
         return abs(int(yards)), None
+    # ESPN can omit structured yardage even when the accepted foul explicitly
+    # says "0 yards". Match that foul's type so a later declined foul cannot
+    # supply the value for the accepted one.
+    penalty_type_text = (penalty_info.get('type') or {}).get('text')
+    if (penalty_type_text
+            and (penalty_info.get('status') or {}).get('slug') == 'accepted'):
+        accepted_zero = re.search(
+            r'\bPENALTY on [^,]+,\s*' + re.escape(penalty_type_text) + r',\s*0 yards?\b',
+            play.get('text') or '', re.IGNORECASE,
+        )
+        if accepted_zero:
+            return 0, '0 penalty yards stated in ESPN play text'
     penalty_type = (penalty_info.get('type') or {}).get('slug')
     play_type = ((play.get('type') or {}).get('text') or '').lower()
     placement = _PLACED_AT_RE.search(play.get('text') or '')
@@ -1300,6 +1312,7 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
                     details[detail_team_id]['Penalty Yards'].append({
                         'source_play_id': str(play.get('id')),
                         'penalty_type': (penalty_info.get('type') or {}).get('text'),
+                        'penalty_status': (penalty_info.get('status') or {}).get('slug'),
                         'yards': yards_pen,
                         'yardage_note': yardage_note,
                         'team_attribution_note': attribution_note,
@@ -1315,16 +1328,8 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
             # play. Apply the WP scope before the no-play filter below.
             if penalty_yards_from_plays and competitive:
                 penalty_status = (penalty_info.get('status') or {}).get('slug')
-                if penalty_status == 'accepted':
-                    if penalty_team_id not in stats:
-                        for row in stats.values():
-                            row['Penalty Yards'] = None
-                    else:
-                        target = stats[penalty_team_id]
-                        if charged_yards is None:
-                            target['Penalty Yards'] = None
-                        elif target['Penalty Yards'] is not None:
-                            target['Penalty Yards'] += charged_yards
+                if penalty_status == 'accepted' and penalty_team_id in stats and charged_yards is not None:
+                    stats[penalty_team_id]['Penalty Yards'] += charged_yards
 
             if 'timeout' in play_type_lower or 'end of' in play_type_lower:
                 record_debug_play(play, drive_index, team_id, debug_before,

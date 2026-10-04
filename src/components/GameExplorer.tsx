@@ -81,7 +81,7 @@ function eventNote(event: Event, factor: string) {
   if (factor === 'Ave Start Field Pos') return `Drive start · ${event.team} at ${event.start_pos || event.end_pos || 'unknown spot'}`;
   if (factor === 'Success Rate') return `${event.success ? 'Successful' : 'Unsuccessful'} play · ${event.yards ?? '?'} yd credited`;
   if (factor === 'Adjusted Yards Per Play') return `${event.yards ?? '?'} offensive yards credited`;
-  if (factor === 'Penalty Yards') return `Penalty charged to ${event.team}`;
+  if (factor === 'Penalty Yards') return `Penalty charged to ${event.team}${event.yards === null ? ' · yards unresolved' : ''}`;
   if (factor === 'Turnovers') return `${event.team} turnover${event.end_pos ? ` · opponent took over at ${event.end_pos}` : ''}`;
   if (factor === 'Non-Offensive Points') return `${event.team} non-offensive score`;
   return `${event.team} explosive play`;
@@ -115,6 +115,43 @@ export function GameExplorer({ game, scope, home, away }: { game: GameResponse; 
     if (sample !== null && (!sample || sample.length === 0)) return '—';
     return format(factorId, statFor(rows, team.abbr, factorId));
   };
+  const unresolvedPenalties = (team: TeamMeta) => (details[team.id]?.['Penalty Yards'] || [])
+    .filter(event => event.penalty_status === 'accepted' && event.yards === null).length;
+  const factorComparison = (item: Factor) => {
+    if (factorValue(item.id, away) === '—' || factorValue(item.id, home) === '—') {
+      return { leader: null, result: 'Comparison unavailable', state: 'pending' as const };
+    }
+    const awayValue = statFor(rows, away.abbr, item.id);
+    const homeValue = statFor(rows, home.abbr, item.id);
+    if (item.id === 'Penalty Yards' && (unresolvedPenalties(away) || unresolvedPenalties(home))) {
+      return { leader: null, result: 'Undecided · penalty yards unresolved', state: 'pending' as const };
+    }
+    const position = (value: number | string | null | undefined) => {
+      if (typeof value === 'number') return value;
+      if (typeof value !== 'string') return null;
+      const match = /^(Own|Opp)\s+(\d{1,2})$/.exec(value);
+      return match ? (match[1] === 'Own' ? Number(match[2]) : 100 - Number(match[2])) : null;
+    };
+    const a = item.id === 'Ave Start Field Pos' ? position(awayValue) : typeof awayValue === 'number' ? awayValue : null;
+    const h = item.id === 'Ave Start Field Pos' ? position(homeValue) : typeof homeValue === 'number' ? homeValue : null;
+    if (a === null || h === null) return { leader: null, result: 'Comparison unavailable', state: 'pending' as const };
+    if (a === h) return { leader: null, result: 'Tied', state: 'tie' as const };
+    const lowerIsBetter = item.id === 'Turnovers' || item.id === 'Penalty Yards';
+    const leader = (a > h) !== lowerIsBetter ? away : home;
+    const difference = Math.abs(a - h);
+    const margin = item.id === 'Success Rate' || item.id === 'Explosive Play Rate'
+      ? `${(difference * 100).toFixed(1)} pp`
+      : item.id === 'Adjusted Yards Per Play' ? `${difference.toFixed(2)} yd/play`
+        : item.id === 'Points Per Trip (Inside 40)' ? `${difference.toFixed(2)} pts/trip`
+          : item.id === 'Ave Start Field Pos' || item.id === 'Penalty Yards'
+            ? `${difference} yd` : item.id === 'Non-Offensive Points' ? `${difference} pts` : `${difference} turnovers`;
+    return { leader, result: `${leader.abbr} · ${margin} ${lowerIsBetter ? 'fewer' : 'ahead'}`, state: 'lead' as const };
+  };
+  const factorResults = FACTORS.map(item => factorComparison(item));
+  const awayFactorWins = factorResults.filter(result => result.leader?.id === away.id).length;
+  const homeFactorWins = factorResults.filter(result => result.leader?.id === home.id).length;
+  const tiedFactors = factorResults.filter(result => result.state === 'tie').length;
+  const pendingFactors = factorResults.filter(result => result.state === 'pending').length;
   const factor = FACTORS.find(item => item.id === selected) || FACTORS[0];
   const plays = useMemo(() => game.plays || [], [game.plays]);
   const byId = useMemo(() => new Map(plays.map(play => [play.id, play])), [plays]);
@@ -219,9 +256,11 @@ export function GameExplorer({ game, scope, home, away }: { game: GameResponse; 
       <div className={styles.sectionHead}><div><div className={styles.eyebrow}>What shaped the game</div><h2>Explore all eight factors</h2></div><p>Choose a factor to inspect its split and contributing plays.</p></div>
       <section className={styles.workspace} id="game-factors" aria-label="Game factors and evidence">
         <div className={styles.rail} role="tablist" aria-label="Game factors"><div className={styles.railHeader}><strong>Game factors</strong><small>{away.abbr} · {home.abbr}</small></div>
+          <div className={styles.factorSummary} aria-label="Factor wins"><strong>{away.abbr} {awayFactorWins} · {home.abbr} {homeFactorWins}</strong><small>{tiedFactors ? `${tiedFactors} tied` : ''}{tiedFactors && pendingFactors ? ' · ' : ''}{pendingFactors ? `${pendingFactors} undecided` : ''}</small></div>
           {FACTORS.map((item, index) => <button className={styles.category} key={item.id} role="tab" aria-selected={item.id === selected} onClick={() => selectFactor(item)}>
             <span className={styles.index}>{String(index + 1).padStart(2, '0')}</span><span><strong>{item.label}</strong><small>{item.sub}</small></span>
-            <span className={styles.factorNumbers}><b>{factorValue(item.id, away)}</b> · <em>{factorValue(item.id, home)}</em></span>
+            <span className={styles.factorNumbers}><b>{factorValue(item.id, away)}{item.id === 'Penalty Yards' && unresolvedPenalties(away) ? ' known' : ''}</b> · <em>{factorValue(item.id, home)}{item.id === 'Penalty Yards' && unresolvedPenalties(home) ? ' known' : ''}</em></span>
+            <span className={styles.factorResult} data-state={factorResults[index].state}>{factorResults[index].result}</span>
           </button>)}
         </div>
         <article className={styles.detail} aria-label={`${factor.label} details`}>
@@ -245,7 +284,11 @@ export function GameExplorer({ game, scope, home, away }: { game: GameResponse; 
                   const positions = list.map(ownYard).filter((value): value is number => value !== null);
                   return positions.length ? `${fieldPosition(positions.reduce((n, value) => n + value, 0) / positions.length)} · ${positions.length} starts` : '—';
                 }
-                if (factor.id === 'Penalty Yards') return list.some(e => e.yards === null) ? 'Unresolved' : `${list.reduce((n, e) => n + Math.abs(e.yards || 0), 0)} yd`;
+                if (factor.id === 'Penalty Yards') {
+                  const known = list.reduce((n, e) => n + Math.abs(e.yards || 0), 0);
+                  const unresolved = list.filter(e => e.penalty_status === 'accepted' && e.yards === null).length;
+                  return `${known} yd${unresolved ? ` known · ${unresolved} unresolved` : ''}`;
+                }
                 return `${list.length} plays`;
               }; return <button key={group} className={styles.splitRow} onClick={() => { setEventFilter(group); setShowEvents(true); }}><span>{group}</span><strong>{display(a, away.id)}</strong><strong>{display(h, home.id)}</strong></button>; })}
               <p className={styles.help}>Select a split to see its contributing plays.</p></> : <><div className={styles.listHeading}><strong>{eventFilter ? `${eventFilter} · ` : ''}{visibleEvents.length} contributing {factor.id === 'Ave Start Field Pos' || factor.id === 'Points Per Trip (Inside 40)' ? 'drives' : 'events'}</strong><span>Chronological</span></div>

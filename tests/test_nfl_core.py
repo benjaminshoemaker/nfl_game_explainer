@@ -9,6 +9,7 @@ import pytest
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "api")))
 
 from lib.nfl_core import (
+    _charged_penalty_yards,
     _split_drives_on_possession_change,
     _enforced_at_yards_to_endzone,
     normalize_position_text,
@@ -26,6 +27,18 @@ from lib.nfl_core import (
     reconcile_final_boxscore,
     build_analysis_text,
 )
+
+
+def test_accepted_zero_yard_penalty_uses_its_own_text_not_declined_foul():
+    play = {
+        "text": "PENALTY on PHI, Defensive Too Many Men on Field, 0 yards, enforced at PHI 1 - No Play."
+                "Penalty on PHI-J.Hunt, Defensive Offside, declined.",
+        "type": {"text": "Rush"},
+    }
+    accepted = {"type": {"text": "Defensive Too Many Men on Field"}, "status": {"slug": "accepted"}}
+    assert _charged_penalty_yards(accepted, play) == (0, "0 penalty yards stated in ESPN play text")
+    different_foul = {"type": {"text": "Defensive Offside"}, "status": {"slug": "accepted"}}
+    assert _charged_penalty_yards(different_foul, play) == (None, "Penalty yards unavailable")
 
 
 @pytest.mark.parametrize("play_abbr, metadata_abbr", [

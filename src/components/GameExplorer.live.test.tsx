@@ -38,4 +38,33 @@ describe('live game play order', () => {
     expect(screen.getByRole('tab', { name: /Points per trip/ })).toHaveTextContent('— · —');
     expect(screen.getByText(/Factor comparisons are preliminary/)).toBeInTheDocument();
   });
+
+  it('shows factor leaders and known penalty yards without declaring an unresolved category won', () => {
+    const withFactors = {
+      ...game,
+      advanced_table: [
+        { Team: away.abbr, Score: 0, Turnovers: 2, 'Total Yards': 0,
+          'Adjusted Yards Per Play': 4, 'Success Rate': .5, 'Explosive Plays': 0,
+          'Explosive Play Rate': 0, 'Points Per Trip (Inside 40)': 0,
+          'Ave Start Field Pos': 'Own 25', 'Penalty Yards': 100, 'Non-Offensive Points': 0 },
+        { Team: home.abbr, Score: 0, Turnovers: 0, 'Total Yards': 0,
+          'Adjusted Yards Per Play': 4, 'Success Rate': .4, 'Explosive Plays': 0,
+          'Explosive Play Rate': 0, 'Points Per Trip (Inside 40)': 0,
+          'Ave Start Field Pos': 'Own 25', 'Penalty Yards': 58, 'Non-Offensive Points': 0 },
+      ],
+      expanded_details: {
+        [away.id]: { 'Offensive Plays': [{ type: 'Rush', text: 'run', yards: 5 }] },
+        [home.id]: {
+          'Offensive Plays': [{ type: 'Rush', text: 'run', yards: 4 }],
+          'Penalty Yards': [{ type: 'Penalty', text: 'missing yards', yards: null, penalty_status: 'accepted' }],
+        },
+      },
+    } as GameResponse;
+    render(<GameExplorer game={withFactors} scope="competitive" away={away} home={home} />);
+    expect(screen.getByLabelText('Factor wins')).toHaveTextContent('AWY 1 · HOM 1');
+    expect(screen.getByRole('tab', { name: /Turnovers/ })).toHaveTextContent('HOM · 2 turnovers fewer');
+    expect(screen.getByRole('tab', { name: /Success rate/ })).toHaveTextContent('AWY · 10.0 pp ahead');
+    expect(screen.getByRole('tab', { name: /Penalty yards/ })).toHaveTextContent('58 known');
+    expect(screen.getByRole('tab', { name: /Penalty yards/ })).toHaveTextContent('Undecided · penalty yards unresolved');
+  });
 });

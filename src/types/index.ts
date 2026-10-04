@@ -83,6 +83,7 @@ export interface PlayDetail {
   source_play_id?: string | null;
   success?: boolean;
   penalty_type?: string | null;
+  penalty_status?: string | null;
   type: string;
   text: string;
   yards?: number | null;

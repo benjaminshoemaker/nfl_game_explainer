@@ -382,7 +382,8 @@ def analyze_game(game_id, wp_threshold=0.975, debug=False):
                 "competitive": (
                     "Sum of accepted ESPN play-level penalties in the WP-selected scope; "
                     "kickoff placement fouls charge zero penalty yards. "
-                    "Null when another penalty lacks usable yardage or team attribution. "
+                    "Known yards remain summed when another penalty lacks usable yardage or team attribution; "
+                    "unresolved penalties are identified in the drilldown. "
                     "Penalties omitted from ESPN play-by-play cannot be counted."
                     if wp_available else "Full-game box-score total; competitive scope unavailable without WP data."
                 ),

@@ -238,7 +238,7 @@ def test_competitive_penalty_yards_use_only_wp_selected_plays(monkeypatch):
     assert "accepted ESPN play-level" in payload["metric_scopes"]["Penalty Yards"]["competitive"]
 
 
-def test_competitive_penalty_yards_are_unavailable_when_play_attribution_is_incomplete(monkeypatch):
+def test_competitive_penalty_yards_keep_known_sum_when_play_attribution_is_incomplete(monkeypatch):
     game = {
         "boxscore": {"teams": [
             {"team": {"id": "1", "abbreviation": "AAA"}, "statistics": [
@@ -264,8 +264,8 @@ def test_competitive_penalty_yards_are_unavailable_when_play_attribution_is_inco
 
     payload = ga.analyze_game("123")
     competitive = {row["Team"]: row for row in payload["advanced_table"]}
-    assert competitive["AAA"]["Penalty Yards"] is None
-    assert competitive["BBB"]["Penalty Yards"] is None
+    assert competitive["AAA"]["Penalty Yards"] == 0
+    assert competitive["BBB"]["Penalty Yards"] == 0
     for team_id in ("1", "2"):
         entry = payload["expanded_details"][team_id]["Penalty Yards"][0]
         assert entry["team_attribution_note"] == "Committing team unavailable"
@@ -340,26 +340,34 @@ def test_game_metadata_uses_boxscore_abbreviation_for_same_team_id(monkeypatch):
     assert payload["label"] == "CAR_at_CLE_game"
 
 
-def test_unknown_penalty_yards_remain_explicit_and_null_only_own_team():
+def test_unknown_penalty_yards_keep_known_subtotal_and_unresolved_detail():
     game = {
         "boxscore": {"teams": [
             {"team": {"id": "1", "abbreviation": "AAA"}},
             {"team": {"id": "2", "abbreviation": "BBB"}},
         ]},
-        "drives": {"previous": [{"team": {"id": "1"}, "plays": [{
-            "id": "unknown", "text": "PENALTY on AAA, unknown enforcement.",
-            "type": {"text": "Penalty"}, "start": {"team": {"id": "1"}, "down": 1},
-            "penalty": {"type": {"slug": "other"}, "status": {"slug": "accepted"}},
-        }]}]},
+        "drives": {"previous": [{"team": {"id": "1"}, "plays": [
+            {
+                "id": "known", "text": "PENALTY on AAA, Holding, 5 yards.",
+                "type": {"text": "Penalty"}, "start": {"team": {"id": "1"}, "down": 1},
+                "penalty": {"type": {"slug": "holding"}, "yards": 5, "status": {"slug": "accepted"}},
+            },
+            {
+                "id": "unknown", "text": "PENALTY on AAA, unknown enforcement.",
+                "type": {"text": "Penalty"}, "start": {"team": {"id": "1"}, "down": 1},
+                "penalty": {"type": {"slug": "other"}, "status": {"slug": "accepted"}},
+            },
+        ]}]},
     }
     stats, details = process_game_stats(game, expanded=True, probability_map={
-        "unknown": {"homeWinPercentage": 0.5, "awayWinPercentage": 0.5},
+        pid: {"homeWinPercentage": 0.5, "awayWinPercentage": 0.5}
+        for pid in ("known", "unknown")
     }, penalty_yards_from_plays=True)
     by_team = {row["Team"]: row for row in stats}
-    assert by_team["AAA"]["Penalty Yards"] is None
+    assert by_team["AAA"]["Penalty Yards"] == 5
     assert by_team["BBB"]["Penalty Yards"] == 0
-    assert details["1"]["Penalty Yards"][0]["yards"] is None
-    assert details["1"]["Penalty Yards"][0]["yardage_note"] == "Penalty yards unavailable"
+    assert [entry["yards"] for entry in details["1"]["Penalty Yards"]] == [-5, None]
+    assert details["1"]["Penalty Yards"][1]["yardage_note"] == "Penalty yards unavailable"
 
 
 def test_final_api_uses_espn_totals_but_exposes_play_by_play_gaps(monkeypatch):

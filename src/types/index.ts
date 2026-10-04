@@ -1,5 +1,6 @@
 // Season type: 1=preseason, 2=regular, 3=postseason
 export type SeasonType = 1 | 2 | 3;
+export type GameStatus = 'pregame' | 'in-progress' | 'delayed' | 'postponed' | 'canceled' | 'final';
 
 // Week selection for picker
 export interface WeekSelection {
@@ -28,7 +29,7 @@ export interface Team {
 // Scoreboard game (from /api/scoreboard)
 export interface ScoreboardGame {
   gameId: string;
-  status: 'pregame' | 'in-progress' | 'final';
+  status: GameStatus;
   statusDetail: string;
   homeTeam: Team;
   awayTeam: Team;
@@ -79,6 +80,9 @@ export interface AdvancedStats {
 
 // Play detail
 export interface PlayDetail {
+  source_play_id?: string | null;
+  success?: boolean;
+  penalty_type?: string | null;
   type: string;
   text: string;
   yards?: number | null;
@@ -95,6 +99,28 @@ export interface PlayDetail {
     homeDelta: number;
     awayDelta: number;
   };
+}
+
+export interface CanonicalPlay {
+  id: string;
+  sourceTeamId: string;
+  sourceTeam: string | null;
+  quarter: number | null;
+  clock: string | null;
+  type: string;
+  text: string;
+  down: number | null;
+  distance: number | null;
+  ballBefore: string | null;
+  scoreBefore: { home: number; away: number } | null;
+  scoreAfter: { home: number; away: number } | null;
+  homeWpBefore: number | null;
+  homeWpAfter: number | null;
+  homeWpDelta: number | null;
+  wpAttributionUncertain?: boolean;
+  epa: number | null;
+  penalty: { team: string | null; type: string; status: string; yards: number | null; note: string | null } | null;
+  scoreChange: { team: string | null; points: number; non_offensive: boolean } | null;
 }
 
 // Game clock info for live games
@@ -114,7 +140,8 @@ export interface GameWeek {
 export interface GameResponse {
   gameId: string;
   label: string;
-  status: 'pregame' | 'in-progress' | 'final';
+  status: GameStatus;
+  statusDetail?: string;
   gameClock?: GameClock | null;
   lastPlayTime?: string | null;
   week?: GameWeek;
@@ -125,6 +152,7 @@ export interface GameResponse {
   advanced_table_full: AdvancedStats[];
   expanded_details: Record<string, Record<string, PlayDetail[]>>;
   expanded_details_full: Record<string, Record<string, PlayDetail[]>>;
+  plays?: CanonicalPlay[];
   wp_filter: {
     enabled: boolean;
     threshold: number;
@@ -172,7 +200,7 @@ export interface GameDebugData {
 export interface ScoreboardProps {
   homeTeam: Team;
   awayTeam: Team;
-  status: 'pregame' | 'in-progress' | 'final';
+  status: GameStatus;
   statusDetail: string;
 }
 

@@ -11,9 +11,10 @@ import {
 interface WeekPickerProps {
   currentWeek: WeekSelection;
   onWeekChange: (week: WeekSelection) => void;
+  id?: string;
 }
 
-export function WeekPicker({ currentWeek, onWeekChange }: WeekPickerProps) {
+export function WeekPicker({ currentWeek, onWeekChange, id }: WeekPickerProps) {
   const regularOptions = getRegularSeasonOptions();
   const playoffOptions = getPlayoffOptions();
 
@@ -33,19 +34,20 @@ export function WeekPicker({ currentWeek, onWeekChange }: WeekPickerProps) {
   return (
     <div className="relative inline-block">
       <select
+        id={id}
         value={currentValue}
         onChange={handleChange}
         className="
           appearance-none
-          bg-bg-elevated
-          border border-border-subtle
-          rounded-lg
+          bg-white
+          border border-border-medium
+          rounded-sm
           px-4 py-2 pr-8
-          font-condensed text-sm uppercase tracking-wider
+          text-sm font-bold
           text-text-primary
           cursor-pointer
-          hover:border-gold/50
-          focus:outline-none focus:border-gold
+          hover:border-positive
+          focus:outline-none focus:border-positive
           transition-colors
         "
       >

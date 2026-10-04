@@ -77,14 +77,15 @@ function TripResultsRow({ abbr, trips }: { abbr: string; trips: PlayDetail[] }) 
   );
 }
 
-function PointsPerTripStrip({ awayAbbr, homeAbbr, awayTrips, homeTrips }: {
+export function PointsPerTripStrip({ awayAbbr, homeAbbr, awayTrips, homeTrips, expanded = false }: {
   awayAbbr: string;
   homeAbbr: string;
   awayTrips: PlayDetail[];
   homeTrips: PlayDetail[];
+  expanded?: boolean;
 }) {
   return (
-    <div className="-mx-6 border-b border-border-subtle bg-bg-elevated/40 px-6 pb-3 pt-2">
+    <div className={`${expanded ? '' : '-mx-6'} border-b border-border-subtle bg-bg-elevated/40 px-6 pb-3 pt-2`}>
       <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 font-condensed text-xs uppercase tracking-wide text-text-muted">
         <span>Trips reaching opponent 40</span>
         <span>7 TD · 3 FG · 0 no points</span>

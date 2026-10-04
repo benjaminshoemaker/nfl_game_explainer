@@ -1,12 +1,14 @@
 'use client';
 
 import Link from 'next/link';
+import styles from './StateScreens.module.css';
 
 interface ErrorStateProps {
   title?: string;
   message?: string;
   onRetry?: () => void;
   showHomeLink?: boolean;
+  hint?: string;
 }
 
 export function ErrorState({
@@ -14,55 +16,21 @@ export function ErrorState({
   message = 'We encountered an error loading this content. Please try again.',
   onRetry,
   showHomeLink = true,
+  hint,
 }: ErrorStateProps) {
-  return (
-    <div className="flex items-center justify-center min-h-[400px] p-6">
-      <div className="text-center space-y-4 max-w-md">
-        <div className="w-16 h-16 rounded-full bg-negative/20 flex items-center justify-center mx-auto">
-          <svg
-            className="w-8 h-8 text-negative"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-            />
-          </svg>
-        </div>
-
-        <h2 className="font-display text-2xl tracking-wide text-text-primary">
-          {title}
-        </h2>
-
-        <p className="font-body text-text-secondary leading-relaxed">
-          {message}
-        </p>
-
-        <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2">
-          {onRetry && (
-            <button
-              onClick={onRetry}
-              className="px-6 py-2 bg-gold text-bg-deep font-condensed uppercase tracking-wider rounded-lg hover:bg-gold/90 transition-colors"
-            >
-              Try Again
-            </button>
-          )}
-          {showHomeLink && (
-            <Link
-              href="/"
-              className="px-6 py-2 border border-border-medium text-text-secondary font-condensed uppercase tracking-wider rounded-lg hover:border-border-strong hover:text-text-primary transition-colors"
-            >
-              Back to Games
-            </Link>
-          )}
-        </div>
+  return <div className={styles.screen}>
+    <header className={styles.header}>GAME<span>/</span>EXPLAINED</header>
+    <main className={styles.body}>
+      <div className={styles.kicker}>Data unavailable</div>
+      <h1>{title}</h1>
+      <p>{message}</p>
+      <div className={styles.actions}>
+        {onRetry && <button onClick={onRetry}>Try again</button>}
+        {showHomeLink && <Link href="/">Back to games</Link>}
       </div>
-    </div>
-  );
+      {hint && <p className={styles.hint}>{hint}</p>}
+    </main>
+  </div>;
 }
 
 export function NetworkError({ onRetry }: { onRetry?: () => void }) {

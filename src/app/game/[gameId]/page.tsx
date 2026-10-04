@@ -1,7 +1,7 @@
 import { GamePageClient } from './GamePageClient';
 import { GameResponse } from '@/types';
 import { headers } from 'next/headers';
-import Link from 'next/link';
+import { ErrorState } from '@/components/ErrorState';
 
 interface PageProps {
   params: Promise<{
@@ -41,7 +41,7 @@ async function getGameData(gameId: string, debug: boolean): Promise<GameResponse
 
     const response = await fetch(url, {
       // Revalidate every 30 seconds for live games
-      next: { revalidate: 30 },
+      ...(debug ? { cache: 'no-store' as const } : { next: { revalidate: 30 } }),
       headers: {
         'x-nfl-request-id': requestId,
       },
@@ -71,38 +71,6 @@ async function getGameData(gameId: string, debug: boolean): Promise<GameResponse
   }
 }
 
-function ErrorState({ gameId, showLocalHint }: { gameId: string; showLocalHint: boolean }) {
-  return (
-    <div className="min-h-screen bg-bg-deep flex items-center justify-center">
-      <div className="text-center space-y-4 max-w-md px-4">
-        <div className="w-16 h-16 rounded-full bg-negative/20 flex items-center justify-center mx-auto">
-          <svg className="w-8 h-8 text-negative" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-          </svg>
-        </div>
-        <h1 className="font-display text-2xl text-text-primary">
-          Game Not Found
-        </h1>
-        <p className="font-body text-text-secondary">
-          Unable to load game data for ID: {gameId}
-        </p>
-        {showLocalHint && (
-          <p className="font-body text-text-muted text-sm">
-            Local dev tip: this page needs the Python API. Run <code>python local_server.py</code> (port 8000) alongside{' '}
-            <code>npm run dev</code>, or use <code>vercel dev</code>.
-          </p>
-        )}
-        <Link
-          href="/"
-          className="inline-block px-6 py-2 bg-gold text-bg-deep font-condensed uppercase tracking-wider rounded-lg hover:bg-gold/90 transition-colors"
-        >
-          Back to Games
-        </Link>
-      </div>
-    </div>
-  );
-}
-
 export default async function GamePage({ params, searchParams }: PageProps) {
   const { gameId } = await params;
   const debug = (await searchParams).debug === 'true';
@@ -111,7 +79,7 @@ export default async function GamePage({ params, searchParams }: PageProps) {
   if (!gameData) {
     const host = (await headers()).get('host');
     const showLocalHint = process.env.NODE_ENV === 'development' || isLocalhost(host);
-    return <ErrorState gameId={gameId} showLocalHint={showLocalHint} />;
+    return <ErrorState title="Unable to load game" message={`Game data for ID ${gameId} is unavailable. Please try again shortly.`} hint={showLocalHint ? 'Local development requires the Python API on port 8000 alongside Next.js.' : undefined} />;
   }
 
   return <GamePageClient initialGameData={gameData} debugMode={debug} />;

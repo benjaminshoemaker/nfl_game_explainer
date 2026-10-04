@@ -1,4 +1,5 @@
 'use client';
+import styles from './StateScreens.module.css';
 
 export function ScoreboardSkeleton() {
   return (
@@ -129,30 +130,25 @@ export function AISummarySkeleton() {
 }
 
 export function FullPageLoading() {
-  return (
-    <div className="min-h-screen bg-bg-deep flex items-center justify-center">
-      <div className="text-center space-y-4">
-        <div className="w-12 h-12 border-4 border-gold border-t-transparent rounded-full animate-spin mx-auto" />
-        <p className="font-condensed text-sm uppercase tracking-wider text-text-muted">
-          Loading...
-        </p>
-      </div>
-    </div>
-  );
+  return <div className={styles.screen}>
+    <header className={styles.header}>GAME<span>/</span>EXPLAINED</header>
+    <main className={styles.body} role="status">
+      <div className={styles.kicker}>NFL game reports</div>
+      <h1>Loading game data…</h1>
+      <p>Getting the latest game report from ESPN.</p>
+      <div className={styles.loadingBar} aria-hidden="true" />
+    </main>
+  </div>;
 }
 
 export function DirectoryLoading() {
-  return (
-    <div className="container mx-auto px-6 py-8">
-      <div className="text-center mb-8">
-        <div className="w-48 h-10 rounded bg-bg-card animate-pulse mx-auto mb-2" />
-        <div className="w-32 h-5 rounded bg-bg-card animate-pulse mx-auto" />
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        {[...Array(8)].map((_, i) => (
-          <GameCardSkeleton key={i} />
-        ))}
-      </div>
-    </div>
-  );
+  return <div className={styles.screen}>
+    <header className={styles.header}>GAME<span>/</span>EXPLAINED</header>
+    <main className={styles.body} role="status">
+      <div className={styles.kicker}>NFL games</div>
+      <h1>Loading the schedule…</h1>
+      <p>Getting scores and game status from ESPN.</p>
+      <div className={styles.loadingBar} aria-hidden="true" />
+    </main>
+  </div>;
 }

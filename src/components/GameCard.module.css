@@ -1,0 +1,8 @@
+.game{display:grid;grid-template-columns:125px minmax(0,1fr) 125px 120px;align-items:center;gap:16px;min-height:78px;padding:13px 20px;border-bottom:1px solid #dbe5e6;background:#fff;color:#202b2e;text-decoration:none}
+.game:hover{background:#fbfcfc}.game:focus-visible{outline:3px solid #315e65;outline-offset:-3px}
+.status{color:#65777b;font-size:11px;font-weight:700}.live{color:#315e65;font-weight:800}
+.teams{display:flex;align-items:center;gap:10px;min-width:0}.team{display:flex;align-items:center;gap:8px;min-width:0}.team strong{display:block;font-size:14px;font-weight:800}.team small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#65777b;font-size:10px}.logo{position:relative;width:24px;height:24px;flex:none}.at{color:#65777b;font-size:11px}
+.score{display:flex;justify-content:flex-end;align-items:center;gap:8px;font-size:19px;font-weight:800;font-variant-numeric:tabular-nums}.winner{color:#c44c4a}.divider{color:#aac3c6}.upcoming{font-size:11px;color:#65777b;text-transform:uppercase;letter-spacing:.05em}
+.open{justify-self:end;color:#315e65;font-size:11px;font-weight:800;white-space:nowrap}.game:hover .open{text-decoration:underline}
+@media(max-width:900px){.game{grid-template-columns:85px minmax(0,1fr) 90px;gap:10px}.open{display:none}}
+@media(max-width:600px){.game{grid-template-columns:1fr auto;padding:13px 15px;gap:5px 10px}.status{grid-column:1/-1}.teams{gap:6px}.team{gap:4px}.team small{display:none}.logo{width:20px;height:20px}.score{font-size:17px}}

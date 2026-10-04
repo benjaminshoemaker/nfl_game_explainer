@@ -10,29 +10,29 @@ const config: Config = {
     extend: {
       colors: {
         // Background colors
-        'bg-deep': '#0a0a0f',
-        'bg-card': '#12121a',
-        'bg-elevated': '#1a1a24',
-        'bg-hover': '#24242f',
+        'bg-deep': '#f5f7f7',
+        'bg-card': '#ffffff',
+        'bg-elevated': '#edf5f5',
+        'bg-hover': '#e5f0f0',
         // Border colors
-        'border-subtle': 'rgba(255,255,255,0.06)',
-        'border-medium': 'rgba(255,255,255,0.12)',
+        'border-subtle': '#dbe5e6',
+        'border-medium': '#aac3c6',
         // Text colors
-        'text-primary': '#f0f4f8',
-        'text-secondary': '#9ca3af',
-        'text-muted': '#6b7280',
+        'text-primary': '#202b2e',
+        'text-secondary': '#526b70',
+        'text-muted': '#65777b',
         // Status colors
-        'positive': '#10b981',
-        'negative': '#ef4444',
-        'neutral': '#6b7280',
+        'positive': '#315e65',
+        'negative': '#c44c4a',
+        'neutral': '#65777b',
         // Accent colors
-        'gold': '#fbbf24',
-        'silver': '#94a3b8',
+        'gold': '#4f8991',
+        'silver': '#aac3c6',
       },
       fontFamily: {
-        'display': ['"Bebas Neue"', 'sans-serif'],
-        'condensed': ['"Barlow Condensed"', 'sans-serif'],
-        'body': ['Barlow', 'sans-serif'],
+        'display': ['Arial', 'Helvetica', 'sans-serif'],
+        'condensed': ['Arial', 'Helvetica', 'sans-serif'],
+        'body': ['Arial', 'Helvetica', 'sans-serif'],
       },
       backgroundImage: {
         'grid-pattern': `

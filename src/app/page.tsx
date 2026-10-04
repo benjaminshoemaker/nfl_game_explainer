@@ -1,7 +1,8 @@
 import { ScoreboardResponse, SeasonType, WeekSelection } from '@/types';
-import { DirectoryClient } from './DirectoryClient';
+import { DirectoryClient, DirectoryClientFallback } from './DirectoryClient';
 import { parseWeekParam } from '@/lib/weekUtils';
 import { ESPN_REQUEST_HEADERS } from '@/lib/espnRequest';
+import { gameStatusFromEspn } from '@/lib/gameStatus';
 
 // ESPN API URL for direct fetching (bypasses Python API for faster server-side render)
 const ESPN_SCOREBOARD_URL = 'https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard';
@@ -45,10 +46,7 @@ function transformEspnGame(event: Record<string, unknown>): ScoreboardResponse['
     }
   }
 
-  const state = (statusType.state as string) || 'pre';
-  let gameStatus: 'in-progress' | 'final' | 'pregame' = 'pregame';
-  if (state === 'in') gameStatus = 'in-progress';
-  else if (state === 'post') gameStatus = 'final';
+  const gameStatus = gameStatusFromEspn(statusType);
 
   return {
     gameId: (event.id as string) || '',
@@ -56,8 +54,8 @@ function transformEspnGame(event: Record<string, unknown>): ScoreboardResponse['
     statusDetail: (statusType.shortDetail as string) || '',
     homeTeam,
     awayTeam,
-    startTime: gameStatus === 'pregame' ? (event.date as string) : null,
-    isActive: state === 'in',
+    startTime: gameStatus === 'pregame' || gameStatus === 'postponed' ? (event.date as string) : null,
+    isActive: gameStatus === 'in-progress',
   };
 }
 
@@ -104,18 +102,6 @@ async function getScoreboard(weekSelection?: WeekSelection | null): Promise<Scor
 
     const games = events.map(transformEspnGame);
 
-    // Sort: in-progress first, then pregame by time, then final
-    games.sort((a: ScoreboardResponse['games'][0], b: ScoreboardResponse['games'][0]) => {
-      if (a.status === 'in-progress' && b.status !== 'in-progress') return -1;
-      if (a.status !== 'in-progress' && b.status === 'in-progress') return 1;
-      if (a.status === 'pregame' && b.status === 'pregame') {
-        return (a.startTime || '').localeCompare(b.startTime || '');
-      }
-      if (a.status === 'pregame') return -1;
-      if (b.status === 'pregame') return 1;
-      return 0;
-    });
-
     return {
       week: {
         number: weekNumber,
@@ -130,46 +116,12 @@ async function getScoreboard(weekSelection?: WeekSelection | null): Promise<Scor
   }
 }
 
-function EmptyState() {
-  return (
-    <div className="container mx-auto px-6 py-12">
-      <div className="text-center">
-        <h1 className="font-display text-5xl tracking-wide text-text-primary mb-4">
-          NFL Game Explainer
-        </h1>
-        <p className="font-condensed text-xl text-text-secondary uppercase tracking-wider mb-8">
-          Live Game Analysis Dashboard
-        </p>
-      </div>
-
-      <div className="max-w-md mx-auto">
-        <div className="bg-bg-card border border-border-subtle rounded-2xl p-8 text-center">
-          <div className="w-16 h-16 rounded-full bg-gold/20 flex items-center justify-center mx-auto mb-4">
-            <svg className="w-8 h-8 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </div>
-          <h2 className="font-display text-2xl tracking-wide text-text-primary mb-3">
-            No Games Today
-          </h2>
-          <p className="font-body text-text-secondary leading-relaxed">
-            Check back during game days for live analysis, advanced statistics, and AI-powered game summaries.
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export default async function Home({ searchParams }: PageProps) {
   const params = await searchParams;
   const weekSelection = parseWeekParam(params.week);
   const scoreboard = await getScoreboard(weekSelection);
 
-  if (!scoreboard || scoreboard.games.length === 0) {
-    return <EmptyState />;
-  }
-
+  if (!scoreboard) return <DirectoryClientFallback />;
   return <DirectoryClient initialData={scoreboard} />;
 }
 

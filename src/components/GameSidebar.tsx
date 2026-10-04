@@ -3,12 +3,16 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ScoreboardGame, WeekSelection } from '@/types';
-import { getTeamTextColor } from '@/lib/teamColors';
+import styles from './GameSidebar.module.css';
+import { gameStatusLabel } from '@/lib/gameStatus';
+import { sortScoreboardGames } from '@/lib/sortScoreboardGames';
 
 interface GameSidebarProps {
   games: ScoreboardGame[];
   weekLabel: string;
   week?: WeekSelection | null;
+  refreshFailed?: boolean;
+  refreshStatus?: string;
 }
 
 function buildGameHref(gameId: string, week?: WeekSelection | null): string {
@@ -19,141 +23,27 @@ function buildGameHref(gameId: string, week?: WeekSelection | null): string {
   return `/game/${gameId}?${params.toString()}`;
 }
 
-function GameRow({ game, isActive: isCurrent, week }: { game: ScoreboardGame; isActive: boolean; week?: WeekSelection | null }) {
-  const { homeTeam, awayTeam, status, statusDetail, gameId, isActive } = game;
-
-  const isPregame = status === 'pregame';
-  const isFinal = status === 'final';
-  const isHomeWinning = homeTeam.score > awayTeam.score;
-  const isAwayWinning = awayTeam.score > homeTeam.score;
-
-  return (
-    <Link
-      href={buildGameHref(gameId, week)}
-      className={`
-        block px-3 py-2 rounded-lg transition-all duration-200
-        ${isCurrent
-          ? 'bg-gold/20 border border-gold/30'
-          : 'hover:bg-bg-elevated border border-transparent'
-        }
-      `}
-    >
-      <div className="flex items-center justify-between">
-        {/* Teams */}
-        <div className="flex flex-col gap-0.5 flex-1 min-w-0">
-          {/* Away team */}
-          <div className="flex items-center gap-2">
-            <span
-              className={`font-condensed text-xs uppercase tracking-wide ${
-                isAwayWinning && isFinal ? 'font-bold' : ''
-              }`}
-              style={{ color: getTeamTextColor(awayTeam.abbr) }}
-            >
-              {awayTeam.abbr}
-            </span>
-            <span className="text-text-muted text-xs">@</span>
-            <span
-              className={`font-condensed text-xs uppercase tracking-wide ${
-                isHomeWinning && isFinal ? 'font-bold' : ''
-              }`}
-              style={{ color: getTeamTextColor(homeTeam.abbr) }}
-            >
-              {homeTeam.abbr}
-            </span>
-          </div>
-        </div>
-
-        {/* Score or status */}
-        <div className="flex items-center gap-2">
-          {isPregame ? (
-            <span className="font-condensed text-xs text-text-muted">
-              {statusDetail}
-            </span>
-          ) : (
-            <div className="flex items-center gap-1">
-              <span className={`font-display text-sm ${isAwayWinning && isFinal ? 'text-gold' : 'text-text-primary'}`}>
-                {awayTeam.score}
-              </span>
-              <span className="text-text-muted text-xs">-</span>
-              <span className={`font-display text-sm ${isHomeWinning && isFinal ? 'text-gold' : 'text-text-primary'}`}>
-                {homeTeam.score}
-              </span>
-            </div>
-          )}
-
-          {/* Live indicator */}
-          {isActive && (
-            <span className="flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-positive opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-positive" />
-            </span>
-          )}
-        </div>
-      </div>
-
-      {/* Status detail for non-pregame */}
-      {!isPregame && (
-        <div className="mt-1">
-          <span
-            className={`font-condensed text-xs uppercase tracking-wider ${
-              isActive ? 'text-positive' : 'text-text-muted'
-            }`}
-          >
-            {statusDetail}
-          </span>
-        </div>
-      )}
-    </Link>
-  );
+function GameRow({ game, current, week }: { game: ScoreboardGame; current: boolean; week?: WeekSelection | null }) {
+  const hasNoScore = game.status === 'pregame' || game.status === 'postponed' || game.status === 'canceled';
+  const awayWinning = game.status === 'final' && game.awayTeam.score > game.homeTeam.score;
+  const homeWinning = game.status === 'final' && game.homeTeam.score > game.awayTeam.score;
+  return <Link href={buildGameHref(game.gameId, week)} aria-current={current ? 'page' : undefined} className={`${styles.row} ${current ? styles.current : ''}`}>
+    <span className={styles.matchup}><strong>{game.awayTeam.abbr}</strong><span>at</span><strong>{game.homeTeam.abbr}</strong></span>
+    {hasNoScore ? <span className={styles.rowStatus}>{gameStatusLabel(game.status)}</span> : <span className={styles.score}><b className={awayWinning ? styles.winner : ''}>{game.awayTeam.score}</b><span>–</span><b className={homeWinning ? styles.winner : ''}>{game.homeTeam.score}</b></span>}
+    <span className={`${styles.detail} ${game.isActive ? styles.live : ''}`}>{game.isActive ? '● ' : ''}{game.status === 'pregame' ? game.statusDetail || 'Kickoff time unavailable' : gameStatusLabel(game.status, game.statusDetail)}</span>
+  </Link>;
 }
 
-export function GameSidebar({ games, weekLabel, week }: GameSidebarProps) {
+export function GameSidebar({ games, weekLabel, week, refreshFailed = false, refreshStatus }: GameSidebarProps) {
   const pathname = usePathname();
   const currentGameId = pathname?.split('/').pop();
-
-  // Sort games: in-progress first, then pregame, then final
-  const sortedGames = [...games].sort((a, b) => {
-    if (a.isActive && !b.isActive) return -1;
-    if (!a.isActive && b.isActive) return 1;
-    if (a.status === 'pregame' && b.status !== 'pregame') return -1;
-    if (a.status !== 'pregame' && b.status === 'pregame') return 1;
-    return 0;
-  });
-
-  return (
-    <div className="h-full flex flex-col bg-bg-card border-r border-border-subtle">
-      {/* Header */}
-      <div className="p-4 border-b border-border-subtle">
-        <Link href="/" className="block hover:opacity-80 transition-opacity">
-          <h2 className="font-display text-lg tracking-wider text-text-primary">
-            NFL GAMES
-          </h2>
-          <p className="font-condensed text-xs font-medium text-text-muted uppercase tracking-wider">
-            {weekLabel}
-          </p>
-        </Link>
-      </div>
-
-      {/* Games list */}
-      <div className="flex-1 overflow-y-auto p-2 space-y-1">
-        {sortedGames.map((game) => (
-          <GameRow
-            key={game.gameId}
-            game={game}
-            isActive={game.gameId === currentGameId}
-            week={week}
-          />
-        ))}
-      </div>
-
-      {/* Footer */}
-      <div className="p-3 border-t border-border-subtle">
-        <p className="font-condensed text-xs text-text-muted text-center uppercase tracking-wider">
-          {games.filter((g) => g.isActive).length > 0
-            ? `${games.filter((g) => g.isActive).length} live`
-            : 'No live games'}
-        </p>
-      </div>
-    </div>
-  );
+  const sortedGames = sortScoreboardGames(games);
+  const liveCount = games.filter(game => game.isActive).length;
+  const delayedCount = games.filter(game => game.status === 'delayed').length;
+  return <div className={styles.sidebar}>
+    <div className={styles.header}><Link href="/" className={styles.brand}>GAME<span>/</span>EXPLAINED</Link><div className={styles.week}>NFL games · {weekLabel}</div></div>
+    <nav className={styles.list} aria-label={`${weekLabel} games`}>{sortedGames.map(game => <GameRow key={game.gameId} game={game} current={game.gameId === currentGameId} week={week} />)}</nav>
+    {refreshFailed && <div className={styles.loadError} role="status">Scores may be out of date.</div>}
+    <div className={styles.footer}>{liveCount ? `${liveCount} live ${liveCount === 1 ? 'game' : 'games'}` : delayedCount ? `${delayedCount} delayed ${delayedCount === 1 ? 'game' : 'games'}` : 'No live games'}{refreshStatus && <span>{refreshStatus}</span>}<Link href="/">All games →</Link></div>
+  </div>;
 }

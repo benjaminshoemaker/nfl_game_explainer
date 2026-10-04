@@ -1,0 +1,6 @@
+.page{min-height:100vh;background:#f5f7f7;color:#202b2e}.scopeBar{max-width:1260px;margin:auto;padding:10px 24px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;border-bottom:1px solid #aac3c6;background:#edf5f5;color:#526b70;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.04em}.live{color:#315e65}.scopeControls{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.scopeButtons{display:flex;border:1px solid #aac3c6;background:#fff}.scopeButtons button{border:0;background:#fff;color:#526b70;padding:6px 10px;font-size:10px;font-weight:800;cursor:pointer}.scopeButtons button+button{border-left:1px solid #dbe5e6}.scopeButtons button[aria-pressed=true]{background:#edf5f5;color:#315e65;box-shadow:inset 0 -2px #4f8991}
+@media(max-width:600px){.scopeBar{padding:9px 15px}}
+.playFreshness{max-width:1260px;margin:auto;padding:8px 24px;display:flex;flex-wrap:wrap;gap:6px 18px;border-bottom:1px solid #dbe5e6;background:#f5f7f7;color:#526b70;font-size:11px;font-weight:700}
+@media(max-width:600px){.playFreshness{padding:8px 15px}}
+.refreshError{max-width:1260px;margin:auto;padding:9px 24px;border-bottom:1px solid #e1d2ae;background:#fbf7ee;color:#705323;font-size:12px}
+.refreshError button{margin-left:8px;border:0;background:none;color:#315e65;font-weight:800;text-decoration:underline;cursor:pointer}

@@ -1,232 +1,94 @@
 'use client';
 
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { GameResponse } from '@/types';
-import { Scoreboard } from '@/components/Scoreboard';
-import { AdvancedStats } from '@/components/AdvancedStats';
-import { AISummary } from '@/components/AISummary';
-import { GamePlays } from '@/components/GamePlays';
-import { ViewToggle } from '@/components/ViewToggle';
-import { UpdateIndicator } from '@/components/UpdateIndicator';
+import { GameExplorer } from '@/components/GameExplorer';
 import { useAutoRefresh } from '@/hooks/useAutoRefresh';
 import { useWeekContext } from '@/contexts/WeekContext';
 import { GameDebugView } from '@/components/GameDebugView';
+import styles from './GamePageClient.module.css';
+import { gameStatusLabel, isTerminalGame } from '@/lib/gameStatus';
+import { ErrorState } from '@/components/ErrorState';
+import { formatCheckAge, latestPlayLabel, playFeedKey } from '@/lib/refreshStatus';
 
 interface GamePageClientProps {
   initialGameData: GameResponse;
   debugMode?: boolean;
 }
-
 type ViewMode = 'competitive' | 'full';
-
-const REFRESH_INTERVAL = 60000; // 60 seconds
+const REFRESH_INTERVAL = 60000;
 
 export function GamePageClient({ initialGameData, debugMode = false }: GamePageClientProps) {
   const [viewMode, setViewMode] = useState<ViewMode>('competitive');
   const [gameData, setGameData] = useState<GameResponse>(initialGameData);
-  const [selectedCategory, setSelectedCategory] = useState<string>('Explosive Plays');
+  const [noNewPlays, setNoNewPlays] = useState(false);
+  const lastPlayKeyRef = useRef(playFeedKey(initialGameData.plays));
+  const currentGameId = initialGameData.gameId;
   const { setGameWeek } = useWeekContext();
-
   const isLive = gameData.status === 'in-progress';
   const wpFilterAvailable = gameData.wp_filter?.enabled !== false;
   const effectiveViewMode: ViewMode = wpFilterAvailable ? viewMode : 'full';
 
-  // Set the week in context when game data is available
+  useEffect(() => {
+    setGameData(initialGameData);
+    setViewMode('competitive');
+    setNoNewPlays(false);
+    lastPlayKeyRef.current = playFeedKey(initialGameData.plays);
+  }, [initialGameData]);
+
   useEffect(() => {
     if (gameData.week && gameData.week.number > 0) {
-      setGameWeek({
-        weekNumber: gameData.week.number,
-        seasonType: gameData.week.seasonType,
-      });
+      setGameWeek({ weekNumber: gameData.week.number, seasonType: gameData.week.seasonType });
     } else {
       setGameWeek(null);
     }
   }, [gameData.week, setGameWeek]);
 
   const fetchGameData = useCallback(async (): Promise<GameResponse> => {
-    const response = await fetch(`/api/game/${gameData.gameId}${debugMode ? '?debug=true' : ''}`);
-    if (!response.ok) {
-      throw new Error('Failed to fetch game data');
-    }
+    const response = await fetch(`/api/game/${gameData.gameId}${debugMode ? '?debug=true' : ''}`, { cache: 'no-store' });
+    if (!response.ok) throw new Error('Failed to fetch game data');
     return response.json();
   }, [gameData.gameId, debugMode]);
 
-  const { isRefreshing, secondsSinceUpdate } = useAutoRefresh({
+  const { isRefreshing, secondsSinceUpdate, hasSuccessfulRefresh, error: refreshError, refresh } = useAutoRefresh({
     fetchFn: fetchGameData,
     interval: REFRESH_INTERVAL,
-    enabled: isLive,
-    onSuccess: (data) => setGameData(data),
+    enabled: !isTerminalGame(gameData.status),
+    resetKey: currentGameId,
+    onSuccess: data => {
+      if (data.gameId !== currentGameId) return;
+      const nextPlayKey = playFeedKey(data.plays);
+      setNoNewPlays(nextPlayKey === lastPlayKeyRef.current);
+      lastPlayKeyRef.current = nextPlayKey;
+      setGameData(data);
+    },
   });
 
-  if (debugMode) {
-    return <GameDebugView gameData={gameData} />;
-  }
+  if (debugMode) return <GameDebugView gameData={gameData} />;
+  const away = gameData.team_meta.find(team => team.homeAway === 'away');
+  const home = gameData.team_meta.find(team => team.homeAway === 'home');
+  if (!away || !home) return <ErrorState title="Game data incomplete" message="ESPN has not provided both teams for this game. Please try again shortly." />;
+  const isPolling = !isTerminalGame(gameData.status);
+  const checkStatus = refreshError
+    ? `Updates interrupted · ${hasSuccessfulRefresh ? `last successful check ${formatCheckAge(secondsSinceUpdate)}` : 'no successful check yet'}`
+    : isRefreshing ? hasSuccessfulRefresh ? `Checking for updates… · last checked ${formatCheckAge(secondsSinceUpdate)}` : 'Checking for updates…'
+      : hasSuccessfulRefresh ? `Checked ${formatCheckAge(secondsSinceUpdate)}` : 'Checking for updates…';
+  const latestPlay = gameData.plays?.[gameData.plays.length - 1];
+  const latestPlayText = latestPlayLabel(latestPlay);
 
-  // Get home and away teams from team_meta
-  const awayMeta = gameData.team_meta.find((t) => t.homeAway === 'away');
-  const homeMeta = gameData.team_meta.find((t) => t.homeAway === 'home');
-
-  if (!awayMeta || !homeMeta) {
-    return (
-      <div className="p-8 text-center text-text-muted">
-        Unable to load game data
-      </div>
-    );
-  }
-
-  // Get scores from summary table
-  const awayStats = gameData.summary_table.find((s) => s.Team === awayMeta.abbr);
-  const homeStats = gameData.summary_table.find((s) => s.Team === homeMeta.abbr);
-
-  const homeTeam = {
-    abbr: homeMeta.abbr,
-    name: homeMeta.name,
-    score: homeStats?.Score ?? 0,
-    logo: `https://a.espncdn.com/i/teamlogos/nfl/500/${homeMeta.abbr.toLowerCase()}.png`,
-    id: homeMeta.id,
-  };
-
-  const awayTeam = {
-    abbr: awayMeta.abbr,
-    name: awayMeta.name,
-    score: awayStats?.Score ?? 0,
-    logo: `https://a.espncdn.com/i/teamlogos/nfl/500/${awayMeta.abbr.toLowerCase()}.png`,
-    id: awayMeta.id,
-  };
-
-  // Get the appropriate data based on view mode
-  const advancedStats = effectiveViewMode === 'competitive'
-    ? gameData.advanced_table
-    : gameData.advanced_table_full;
-
-  const rawExpandedDetails = effectiveViewMode === 'competitive'
-    ? gameData.expanded_details
-    : gameData.expanded_details_full;
-
-  // Transform expanded_details from {teamId: {category: plays[]}}
-  // to {category: {teamId: plays[]}} format expected by GamePlays
-  const expandedDetails = (() => {
-    const transformed: Record<string, Record<string, typeof rawExpandedDetails[string][string]>> = {};
-    for (const [teamId, categories] of Object.entries(rawExpandedDetails || {})) {
-      for (const [category, plays] of Object.entries(categories || {})) {
-        if (!transformed[category]) {
-          transformed[category] = {};
-        }
-        transformed[category][teamId] = plays;
-      }
-    }
-    return transformed;
-  })();
-
-  // Parse status detail from gameClock or fallback
-  const statusDetail = (() => {
-    if (gameData.status === 'final') return 'Final';
-    if (gameData.status === 'pregame') return 'Pregame';
-
-    // For in-progress games, show quarter and time
-    if (gameData.gameClock) {
-      const { quarter, clock } = gameData.gameClock;
-      if (quarter <= 4) {
-        return `Q${quarter} ${clock}`;
-      }
-      return `OT ${clock}`;
-    }
-    return 'In Progress';
-  })();
-
-  // Handle stat row click to sync with GamePlays
-  const handleStatClick = (category: string) => {
-    setSelectedCategory(category);
-    // Scroll to plays section
-    const playsSection = document.getElementById('plays-section');
-    if (playsSection) {
-      playsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
-
-  return (
-    <div className="min-h-screen bg-bg-deep">
-      {/* Main content */}
-      <div className="max-w-5xl mx-auto px-4 py-4 space-y-4">
-        {/* Live Update Indicator */}
-        <UpdateIndicator
-          isLive={isLive}
-          isRefreshing={isRefreshing}
-          secondsSinceUpdate={secondsSinceUpdate}
-          lastPlayTime={gameData.lastPlayTime}
-        />
-
-        {/* Scoreboard */}
-        <div className="animate-fade-in-up">
-          <Scoreboard
-            homeTeam={homeTeam}
-            awayTeam={awayTeam}
-            status={gameData.status}
-            statusDetail={statusDetail}
-          />
-        </div>
-
-        {/* AI Summary (only after kickoff) */}
-        {gameData.status !== 'pregame' && (
-          <div className="animate-fade-in-up delay-1">
-            <AISummary
-              summary={gameData.ai_summary || gameData.analysis || null}
-              isLoading={false}
-              isGenerated={Boolean(gameData.ai_summary)}
-            />
-          </div>
-        )}
-
-        {gameData.source_gaps && gameData.source_gaps.length > 0 && (
-          <div role="status" className="rounded-xl border border-amber-500/40 bg-amber-500/10 px-5 py-3 font-body text-sm text-text-secondary">
-            ESPN box-score totals or offensive-play counts differ from available play-by-play for{' '}
-            {gameData.source_gaps.map((gap) => gap.team).join(', ')}.
-            {' '}Full-game totals use ESPN; play-based metrics and competitive splits may be incomplete.
-          </div>
-        )}
-
-        {/* View Toggle Bar */}
-        <div className="animate-fade-in-up delay-2 flex items-center justify-between gap-4 bg-bg-card border border-border-subtle rounded-xl px-5 py-3">
-          <div className="flex items-center gap-2">
-            <span
-              className="w-2 h-2 rounded-full bg-positive flex-shrink-0"
-              style={{ boxShadow: '0 0 8px var(--positive)' }}
-            />
-	            <span className="font-condensed text-xs text-text-secondary tracking-wide">
-	              {effectiveViewMode === 'competitive' || !wpFilterAvailable
-	                ? (gameData.wp_filter?.description || 'Stats reflect competitive plays only (WP < 97.5% at start or end)')
-	                : 'Showing full-game totals (no WP filter)'}
-	            </span>
-	          </div>
-	          {wpFilterAvailable && (
-	            <ViewToggle
-	              value={viewMode}
-              onChange={setViewMode}
-              showIndicator={false}
-            />
-	          )}
-        </div>
-
-        {/* Advanced Stats */}
-        <div className="animate-fade-in-up delay-3">
-          <AdvancedStats
-            stats={advancedStats}
-            teamMeta={gameData.team_meta}
-            expandedDetails={rawExpandedDetails}
-            onStatClick={handleStatClick}
-            selectedCategory={selectedCategory}
-          />
-        </div>
-
-        {/* Key Plays */}
-        <div id="plays-section" className="animate-fade-in-up delay-4">
-          <GamePlays
-            expandedDetails={expandedDetails}
-            teamMeta={gameData.team_meta}
-            selectedCategory={selectedCategory}
-          />
-        </div>
-      </div>
+  return <div className={styles.page}>
+    <div className={styles.scopeBar}>
+      <span className={isLive ? styles.live : ''}>{isLive ? '● ' : ''}{gameStatusLabel(gameData.status, gameData.statusDetail)}{isPolling ? ` · ${checkStatus}` : ''}</span>
+      {gameData.status !== 'pregame' && gameData.status !== 'postponed' && gameData.status !== 'canceled' && <div className={styles.scopeControls}>
+        <span>{effectiveViewMode === 'competitive' || !wpFilterAvailable ? gameData.wp_filter?.description : 'Showing full-game totals'}</span>
+        {wpFilterAvailable && <div role="group" aria-label="Stat scope" className={styles.scopeButtons}>
+          <button type="button" aria-pressed={viewMode === 'competitive'} onClick={() => setViewMode('competitive')}>Competitive</button>
+          <button type="button" aria-pressed={viewMode === 'full'} onClick={() => setViewMode('full')}>Full game</button>
+        </div>}
+      </div>}
     </div>
-  );
+    {latestPlayText && (gameData.status === 'in-progress' || gameData.status === 'delayed') && <div className={styles.playFreshness} role="status"><span>{latestPlayText}</span>{noNewPlays && !refreshError && <span>No new plays since last check</span>}</div>}
+    {refreshError && <div className={styles.refreshError} role="status">Could not refresh this game. Showing the last loaded report and retrying automatically. <button onClick={refresh}>Try again</button></div>}
+    <GameExplorer key={gameData.gameId} game={gameData} scope={effectiveViewMode} home={home} away={away} />
+  </div>;
 }

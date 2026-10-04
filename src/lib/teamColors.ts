@@ -214,11 +214,15 @@ export function getStrengthLabel(strength: StrengthLevel): string {
 }
 
 /**
- * Parse field position value (e.g., "Own 28" -> 28)
+ * Parse a displayed field position into yards from the team's own goal line.
  */
 export function parseStatValue(val: string | number): number {
-  if (typeof val === 'string' && val.includes('Own')) {
-    return parseInt(val.replace('Own', '').trim());
+  if (typeof val === 'string') {
+    const position = val.match(/^(Own|Opp)\s+(\d+)$/i);
+    if (position) {
+      const yard = Number(position[2]);
+      return position[1].toLowerCase() === 'opp' ? 100 - yard : yard;
+    }
   }
   return parseFloat(String(val));
 }

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { WeekProvider, useWeekContext } from '@/contexts/WeekContext';
 import { GameSidebarClient } from './GameSidebarClient';
 import type { WeekSelection } from '@/types';
@@ -64,7 +64,7 @@ describe('GameSidebarClient', () => {
 
     await vi.advanceTimersByTimeAsync(120);
 
-    expect(fetchMock).toHaveBeenCalledWith('/api/scoreboard?seasontype=2&week=15');
+    expect(fetchMock).toHaveBeenCalledWith('/api/scoreboard?seasontype=2&week=15', { cache: 'no-store' });
   });
 
   it('syncs to the game week from context even when polling stops', async () => {
@@ -90,9 +90,34 @@ describe('GameSidebarClient', () => {
     );
 
     await vi.advanceTimersByTimeAsync(120);
-    expect(fetchMock).toHaveBeenCalledWith('/api/scoreboard');
+    expect(fetchMock).toHaveBeenCalledWith('/api/scoreboard', { cache: 'no-store' });
 
     await vi.advanceTimersByTimeAsync(120);
-    expect(fetchMock).toHaveBeenCalledWith('/api/scoreboard?seasontype=2&week=15');
+    expect(fetchMock).toHaveBeenCalledWith('/api/scoreboard?seasontype=2&week=15', { cache: 'no-store' });
+  });
+
+  it('keeps refreshing pregame rows so the sidebar changes at kickoff', async () => {
+    const fetchMock = vi.fn(async () => ({
+      ok: true,
+      json: async () => ({
+        week: { number: 4, label: 'Week 4', seasonType: 2 },
+        games: [{ gameId: '1', status: 'pregame', isActive: false }],
+      }),
+    }));
+    vi.stubGlobal('fetch', fetchMock);
+
+    render(<WeekProvider><GameSidebarClient /></WeekProvider>);
+    await vi.advanceTimersByTimeAsync(120);
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    await vi.advanceTimersByTimeAsync(60000);
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+  });
+
+  it('shows a retry state when the first scoreboard request fails', async () => {
+    vi.stubGlobal('fetch', vi.fn(async () => { throw new Error('offline'); }));
+    render(<WeekProvider><GameSidebarClient /></WeekProvider>);
+    await vi.advanceTimersByTimeAsync(120);
+    expect(screen.getByRole('status', { name: 'Games unavailable' })).toHaveTextContent('Games could not be loaded.');
+    expect(screen.getByRole('button', { name: 'Try again' })).toBeInTheDocument();
   });
 });

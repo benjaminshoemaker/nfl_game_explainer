@@ -3,6 +3,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { PlayDetail, TeamMeta } from '@/types';
 import { PlayList } from './PlayList';
+import { PointsPerTripStrip } from './AdvancedStats';
 import { getTeamColorVars } from '@/lib/teamColors';
 import Image from 'next/image';
 
@@ -160,6 +161,16 @@ export function GamePlays({ expandedDetails, teamMeta, selectedCategory }: GameP
           </select>
         </div>
       </div>
+
+      {activeCategory === 'Points Per Trip (Inside 40)' && (
+        <PointsPerTripStrip
+          awayAbbr={away.abbr}
+          homeAbbr={home.abbr}
+          awayTrips={awayPlays}
+          homeTrips={homePlays}
+          expanded
+        />
+      )}
 
       {/* Two-column plays grid */}
       <div className="p-6">

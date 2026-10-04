@@ -2,13 +2,18 @@
 
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { ScoreboardResponse, ScoreboardGame, WeekSelection } from '@/types';
+import { ScoreboardResponse, WeekSelection } from '@/types';
 import { GameCard } from '@/components/GameCard';
 import { WeekPicker } from '@/components/WeekPicker';
 import { useAutoRefresh } from '@/hooks/useAutoRefresh';
 import { DirectoryLoading } from '@/components/LoadingStates';
 import { weekToUrlParam } from '@/lib/weekUtils';
 import { buildScoreboardUrl } from '@/lib/scoreboardUrl';
+import styles from './Directory.module.css';
+import { isTerminalGame } from '@/lib/gameStatus';
+import { sortScoreboardGames } from '@/lib/sortScoreboardGames';
+import { isScoreboardResponse } from '@/lib/scoreboardResponse';
+import { formatCheckAge } from '@/lib/refreshStatus';
 
 interface DirectoryClientProps {
   initialData: ScoreboardResponse;
@@ -33,6 +38,7 @@ export function DirectoryClientFallback() {
           throw new Error(`Failed to load: ${response.status}`);
         }
         const data = await response.json();
+        if (!isScoreboardResponse(data)) throw new Error('Scoreboard data is unavailable');
         setScoreboard(data);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to load games');
@@ -49,49 +55,15 @@ export function DirectoryClientFallback() {
 
   if (error || !scoreboard) {
     return (
-      <div className="container mx-auto px-6 py-12 text-center">
-        <h1 className="font-display text-4xl text-text-primary mb-4">Unable to Load Games</h1>
-        <p className="text-text-secondary mb-4">{error || 'Please try again later.'}</p>
-        <button
-          onClick={() => window.location.reload()}
-          className="px-4 py-2 bg-gold text-bg-deep rounded-lg font-condensed uppercase tracking-wider"
-        >
-          Retry
-        </button>
-      </div>
-    );
-  }
-
-  if (scoreboard.games.length === 0) {
-    return (
-      <div className="container mx-auto px-6 py-12 text-center">
-        <h1 className="font-display text-4xl text-text-primary mb-4">No Games Today</h1>
-        <p className="text-text-secondary">Check back during game days.</p>
+      <div className={styles.fallback}>
+        <h1>Unable to load games</h1>
+        <p>{error || 'Please try again later.'}</p>
+        <button onClick={() => window.location.reload()}>Retry</button>
       </div>
     );
   }
 
   return <DirectoryClient initialData={scoreboard} />;
-}
-
-function sortGames(games: ScoreboardGame[]): ScoreboardGame[] {
-  return [...games].sort((a, b) => {
-    // In-progress games first
-    if (a.isActive && !b.isActive) return -1;
-    if (!a.isActive && b.isActive) return 1;
-
-    // Then pregame by start time
-    if (a.status === 'pregame' && b.status === 'pregame') {
-      const aTime = a.startTime ? new Date(a.startTime).getTime() : 0;
-      const bTime = b.startTime ? new Date(b.startTime).getTime() : 0;
-      return aTime - bTime;
-    }
-    if (a.status === 'pregame') return -1;
-    if (b.status === 'pregame') return 1;
-
-    // Final games last
-    return 0;
-  });
 }
 
 export function DirectoryClient({ initialData }: DirectoryClientProps) {
@@ -130,14 +102,16 @@ export function DirectoryClient({ initialData }: DirectoryClientProps) {
     prevScoresRef.current = scores;
   }, [initialData]);
 
-  const hasActiveGames = scoreboard.games.some((g) => g.isActive);
+  const hasUnfinishedGames = scoreboard.games.some((g) => !isTerminalGame(g.status));
 
   const fetchScoreboard = useCallback(async (): Promise<ScoreboardResponse> => {
-    const response = await fetch(buildScoreboardUrl({ weekNumber, seasonType }));
+    const response = await fetch(buildScoreboardUrl({ weekNumber, seasonType }), { cache: 'no-store' });
     if (!response.ok) {
       throw new Error('Failed to fetch scoreboard');
     }
-    return response.json();
+    const data = await response.json();
+    if (!isScoreboardResponse(data)) throw new Error('Scoreboard data is unavailable');
+    return data;
   }, [weekNumber, seasonType]);
 
   const handleRefreshSuccess = useCallback((data: ScoreboardResponse) => {
@@ -166,95 +140,34 @@ export function DirectoryClient({ initialData }: DirectoryClientProps) {
     setScoreboard(data);
   }, []);
 
-  const { isRefreshing, secondsSinceUpdate } = useAutoRefresh({
+  const { isRefreshing, secondsSinceUpdate, hasSuccessfulRefresh, error: refreshError, refresh } = useAutoRefresh({
     fetchFn: fetchScoreboard,
     interval: REFRESH_INTERVAL,
-    enabled: hasActiveGames,
+    enabled: hasUnfinishedGames,
+    resetKey: `${seasonType}:${weekNumber}`,
     onSuccess: handleRefreshSuccess,
   });
 
-  const sortedGames = sortGames(scoreboard.games);
+  const sortedGames = sortScoreboardGames(scoreboard.games);
   const activeCount = sortedGames.filter((g) => g.isActive).length;
+  const scoreCheckStatus = refreshError
+    ? `Updates interrupted · ${hasSuccessfulRefresh ? `last successful check ${formatCheckAge(secondsSinceUpdate)}` : 'no successful check yet'}`
+    : isRefreshing ? hasSuccessfulRefresh ? `Checking scores… · last checked ${formatCheckAge(secondsSinceUpdate)}` : 'Checking scores…'
+      : hasSuccessfulRefresh ? `Checked ${formatCheckAge(secondsSinceUpdate)}` : 'Checking scores…';
 
-  return (
-    <div className="container mx-auto px-6 py-8">
-      {/* Header */}
-      <div className="text-center mb-8">
-        <h1 className="font-display text-4xl md:text-5xl tracking-wide text-text-primary mb-2">
-          NFL {scoreboard.week.label}
-        </h1>
-        <div className="flex items-center justify-center gap-4 flex-wrap">
-          <WeekPicker currentWeek={currentWeek} onWeekChange={handleWeekChange} />
-          <p className="font-condensed text-lg text-text-secondary uppercase tracking-wider">
-            {sortedGames.length} Games
-            {activeCount > 0 && (
-              <span className="ml-2 text-positive">
-                • {activeCount} Live
-              </span>
-            )}
-          </p>
-        </div>
-
-        {/* Refresh indicator */}
-        {hasActiveGames && (
-          <div className="mt-4 flex items-center justify-center gap-3 text-text-muted">
-            {isRefreshing ? (
-              <>
-                <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  />
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                  />
-                </svg>
-                <span className="font-condensed text-xs uppercase tracking-wider">
-                  Updating scores...
-                </span>
-              </>
-            ) : (
-              <span className="font-condensed text-xs uppercase tracking-wider">
-                Scores update automatically
-              </span>
-            )}
-          </div>
-        )}
-      </div>
-
-      {/* Games grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        {sortedGames.map((game) => (
-          <div
-            key={game.gameId}
-            className={`transition-all duration-500 ${
-              changedGameIds.has(game.gameId)
-                ? 'ring-2 ring-positive ring-offset-2 ring-offset-bg-deep'
-                : ''
-            }`}
-          >
-            <GameCard game={game} week={currentWeek} />
-          </div>
-        ))}
-      </div>
-
-      {/* Footer */}
-      <div className="mt-12 text-center">
-        <p className="font-condensed text-xs text-text-muted uppercase tracking-wider">
-          Data from ESPN • Click any game for detailed analysis
-          {hasActiveGames && secondsSinceUpdate > 0 && (
-            <span className="ml-2">
-              • Updated {secondsSinceUpdate < 60 ? `${secondsSinceUpdate}s` : `${Math.floor(secondsSinceUpdate / 60)}m`} ago
-            </span>
-          )}
-        </p>
-      </div>
-    </div>
-  );
+  return <div className={styles.page}>
+    <header className={styles.siteHeader}><span className={styles.brand}>GAME<span>/</span>EXPLAINED</span><span className={styles.headerNote}>NFL game reports</span></header>
+    <main className={styles.record}>
+      <div className={styles.crumb}><span>Games / {scoreboard.week.label}</span><span>{sortedGames.length} games{activeCount > 0 ? ` · ${activeCount} live` : ''}</span></div>
+      <section className={styles.intro}>
+        <div><span className={styles.kicker}>NFL games</span><h1>{scoreboard.week.label}</h1><p>Select a game for its story, factors, and play-by-play.</p></div>
+        <div className={styles.weekControl}><label htmlFor="directory-week">Choose week</label><WeekPicker currentWeek={currentWeek} onWeekChange={handleWeekChange} id="directory-week" /></div>
+      </section>
+      <div className={styles.listHead}><strong>{activeCount ? 'Live and scheduled games' : 'Games'}</strong><span>{hasUnfinishedGames ? `Scores checked automatically · ${scoreCheckStatus}` : 'Scores and status from ESPN'}</span></div>
+      {refreshError && <div className={styles.refreshError} role="status">Could not refresh scores. Showing the last loaded results and retrying automatically. <button onClick={refresh}>Try again</button></div>}
+      <div className={styles.list}>{sortedGames.length ? sortedGames.map(game => <div key={game.gameId} className={changedGameIds.has(game.gameId) ? styles.changed : ''}><GameCard game={game} week={currentWeek} /></div>)
+        : <div className={styles.empty}>No games are listed for this week. Choose another week above.</div>}</div>
+      <footer className={styles.footer}>Game data from ESPN · Choose a game to inspect its full report.</footer>
+    </main>
+  </div>;
 }

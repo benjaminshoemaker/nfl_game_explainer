@@ -18,6 +18,19 @@ const FACTORS: Factor[] = [
   { id: 'Penalty Yards', label: 'Penalty yards', sub: 'Assessed yards', details: 'Accepted penalty yards charged to each team; unavailable yardage stays unresolved.', tabs: [['type', 'By type'], ['quarter', 'By quarter']], eventKey: 'Penalty Yards' },
   { id: 'Non-Offensive Points', label: 'Non-offensive points', sub: 'Defense / special teams', details: 'Defensive and special teams scoring plays.', tabs: [], eventKey: 'Non-Offensive Points' },
 ];
+// Illustrative large-gap references. Replace with same-scope historical
+// 90th-percentile margins after replaying and validating completed games.
+const PROVISIONAL_FACTOR_GAPS: Record<string, { amount: number; label: string }> = {
+  Turnovers: { amount: 3, label: '3 turnovers' },
+  'Success Rate': { amount: .15, label: '15 pp' },
+  'Adjusted Yards Per Play': { amount: 3, label: '3 yd/play' },
+  'Explosive Play Rate': { amount: .07, label: '7 pp' },
+  'Points Per Trip (Inside 40)': { amount: 2, label: '2 pts/trip' },
+  'Ave Start Field Pos': { amount: 18, label: '18 yd' },
+  'Penalty Yards': { amount: 60, label: '60 yd' },
+  'Non-Offensive Points': { amount: 7, label: '7 pts' },
+};
+type FactorResult = { leader: TeamMeta | null; result: string; state: 'lead' | 'tie' | 'pending'; barPercent: number | null; scaleDetail: string | null };
 type Event = PlayDetail & { teamId: string; team: string; down?: number | null };
 const format = (factor: string, value: number | string | null | undefined) => {
   if (value === null || value === undefined) return '—';
@@ -117,14 +130,14 @@ export function GameExplorer({ game, scope, home, away }: { game: GameResponse; 
   };
   const unresolvedPenalties = (team: TeamMeta) => (details[team.id]?.['Penalty Yards'] || [])
     .filter(event => event.penalty_status === 'accepted' && event.yards === null).length;
-  const factorComparison = (item: Factor) => {
+  const factorComparison = (item: Factor): FactorResult => {
     if (factorValue(item.id, away) === '—' || factorValue(item.id, home) === '—') {
-      return { leader: null, result: 'Comparison unavailable', state: 'pending' as const };
+      return { leader: null, result: 'Comparison unavailable', state: 'pending', barPercent: null, scaleDetail: null };
     }
     const awayValue = statFor(rows, away.abbr, item.id);
     const homeValue = statFor(rows, home.abbr, item.id);
     if (item.id === 'Penalty Yards' && (unresolvedPenalties(away) || unresolvedPenalties(home))) {
-      return { leader: null, result: 'Undecided · penalty yards unresolved', state: 'pending' as const };
+      return { leader: null, result: 'Undecided · penalty yards unresolved', state: 'pending', barPercent: null, scaleDetail: null };
     }
     const position = (value: number | string | null | undefined) => {
       if (typeof value === 'number') return value;
@@ -134,8 +147,8 @@ export function GameExplorer({ game, scope, home, away }: { game: GameResponse; 
     };
     const a = item.id === 'Ave Start Field Pos' ? position(awayValue) : typeof awayValue === 'number' ? awayValue : null;
     const h = item.id === 'Ave Start Field Pos' ? position(homeValue) : typeof homeValue === 'number' ? homeValue : null;
-    if (a === null || h === null) return { leader: null, result: 'Comparison unavailable', state: 'pending' as const };
-    if (a === h) return { leader: null, result: 'Tied', state: 'tie' as const };
+    if (a === null || h === null) return { leader: null, result: 'Comparison unavailable', state: 'pending', barPercent: null, scaleDetail: null };
+    if (a === h) return { leader: null, result: 'Tied', state: 'tie', barPercent: null, scaleDetail: null };
     const lowerIsBetter = item.id === 'Turnovers' || item.id === 'Penalty Yards';
     const leader = (a > h) !== lowerIsBetter ? away : home;
     const difference = Math.abs(a - h);
@@ -145,7 +158,12 @@ export function GameExplorer({ game, scope, home, away }: { game: GameResponse; 
         : item.id === 'Points Per Trip (Inside 40)' ? `${difference.toFixed(2)} pts/trip`
           : item.id === 'Ave Start Field Pos' || item.id === 'Penalty Yards'
             ? `${difference} yd` : item.id === 'Non-Offensive Points' ? `${difference} pts` : `${difference} turnovers`;
-    return { leader, result: `${leader.abbr} · ${margin} ${lowerIsBetter ? 'fewer' : 'ahead'}`, state: 'lead' as const };
+    const reference = PROVISIONAL_FACTOR_GAPS[item.id];
+    const barPercent = Math.min(100, Math.round(100 * difference / reference.amount));
+    return {
+      leader, result: `${leader.abbr} · ${margin} ${lowerIsBetter ? 'fewer' : 'ahead'}`, state: 'lead', barPercent,
+      scaleDetail: `${margin} ÷ ${reference.label} = ${barPercent}% of the provisional reference`,
+    };
   };
   const factorResults = FACTORS.map(item => factorComparison(item));
   const awayFactorWins = factorResults.filter(result => result.leader?.id === away.id).length;
@@ -153,6 +171,7 @@ export function GameExplorer({ game, scope, home, away }: { game: GameResponse; 
   const tiedFactors = factorResults.filter(result => result.state === 'tie').length;
   const pendingFactors = factorResults.filter(result => result.state === 'pending').length;
   const factor = FACTORS.find(item => item.id === selected) || FACTORS[0];
+  const selectedFactorResult = factorResults[FACTORS.indexOf(factor)];
   const plays = useMemo(() => game.plays || [], [game.plays]);
   const byId = useMemo(() => new Map(plays.map(play => [play.id, play])), [plays]);
   const events = useMemo(() => [away, home].flatMap(team => (details[team.id]?.[factor.eventKey] || []).map(event => ({
@@ -257,15 +276,20 @@ export function GameExplorer({ game, scope, home, away }: { game: GameResponse; 
       <section className={styles.workspace} id="game-factors" aria-label="Game factors and evidence">
         <div className={styles.rail} role="tablist" aria-label="Game factors"><div className={styles.railHeader}><strong>Game factors</strong><small>{away.abbr} · {home.abbr}</small></div>
           <div className={styles.factorSummary} aria-label="Factor wins"><strong>{away.abbr} {awayFactorWins} · {home.abbr} {homeFactorWins}</strong><small>{tiedFactors ? `${tiedFactors} tied` : ''}{tiedFactors && pendingFactors ? ' · ' : ''}{pendingFactors ? `${pendingFactors} undecided` : ''}</small></div>
+          <p className={styles.factorScaleNote}>Provisional scale · full bar = illustrative large gap for that factor.</p>
           {FACTORS.map((item, index) => <button className={styles.category} key={item.id} role="tab" aria-selected={item.id === selected} onClick={() => selectFactor(item)}>
-            <span className={styles.index}>{String(index + 1).padStart(2, '0')}</span><span><strong>{item.label}</strong><small>{item.sub}</small></span>
-            <span className={styles.factorNumbers}><b>{factorValue(item.id, away)}{item.id === 'Penalty Yards' && unresolvedPenalties(away) ? ' known' : ''}</b> · <em>{factorValue(item.id, home)}{item.id === 'Penalty Yards' && unresolvedPenalties(home) ? ' known' : ''}</em></span>
-            <span className={styles.factorResult} data-state={factorResults[index].state}>{factorResults[index].result}</span>
+            <span className={styles.factorTeamCell} data-winner={factorResults[index].leader?.id === away.id}><small>{away.abbr}</small><b>{factorValue(item.id, away)}{item.id === 'Penalty Yards' && unresolvedPenalties(away) ? ' known' : ''}</b></span>
+            <span className={styles.factorCenter}><span className={styles.factorName}><span className={styles.index}>{String(index + 1).padStart(2, '0')}</span><strong>{item.label}</strong></span><small>{item.sub}</small>
+              <span className={styles.factorResult} data-state={factorResults[index].state}>{factorResults[index].result}</span>
+              <span className={styles.factorTrack} aria-hidden="true">{factorResults[index].barPercent !== null && <span className={styles.factorFill} data-side={factorResults[index].leader?.id === away.id ? 'away' : 'home'} style={{ width: `${factorResults[index].barPercent}%` }} />}</span>
+            </span>
+            <span className={styles.factorTeamCell} data-winner={factorResults[index].leader?.id === home.id}><small>{home.abbr}</small><b>{factorValue(item.id, home)}{item.id === 'Penalty Yards' && unresolvedPenalties(home) ? ' known' : ''}</b></span>
           </button>)}
         </div>
         <article className={styles.detail} aria-label={`${factor.label} details`}>
           <div className={styles.detailTop}><div><div className={styles.eyebrow}>Category {String(FACTORS.indexOf(factor) + 1).padStart(2, '0')} of 08</div><h3>{factor.label}</h3><p>{factor.details}</p></div>
-            <div className={styles.pills}><span>{away.abbr} {factorValue(factor.id, away)}</span><span>{home.abbr} {factorValue(factor.id, home)}</span></div></div>
+            <div className={styles.pills}><span>{away.abbr} {factorValue(factor.id, away)}</span><span>{home.abbr} {factorValue(factor.id, home)}</span></div>
+            <p className={styles.scaleDetail}>{selectedFactorResult.scaleDetail ? `${selectedFactorResult.scaleDetail}. ` : 'No magnitude bar for a tie or unresolved comparison. '}Reference values are illustrative pending historical backtesting.</p></div>
           {factor.id === 'Success Rate' && <div className={styles.visual}><strong>Were they staying on schedule?</strong><small>Each mark represents one eligible offensive play.</small>
             {[away, home].map(team => { const list = (details[team.id]?.['Offensive Plays'] || []); return <div className={styles.markRow} key={team.id}><b>{team.abbr}</b><div>{list.map((e, i) => <i key={i} className={e.success ? styles.hit : ''} title={`Q${e.quarter} ${e.clock}: ${e.success ? 'successful' : 'unsuccessful'}`} />)}</div><small>{list.filter(e => e.success).length}/{list.length}</small></div>; })}</div>}
           {factor.id === 'Points Per Trip (Inside 40)' && <div className={styles.visual}><strong>Points on each trip</strong>{[away, home].map(team => <div className={styles.tripRow} key={team.id}><b>{team.abbr}</b>{(details[team.id]?.['Points Per Trip (Inside 40)'] || []).map((e, i) => <span key={i} title={`Trip ${i + 1}: ${e.points ?? '?'} points`}>{e.points ?? '?'}</span>)}</div>)}</div>}

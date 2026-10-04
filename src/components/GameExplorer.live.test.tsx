@@ -34,8 +34,8 @@ describe('live game play order', () => {
 
   it('shows unavailable rates when no eligible offensive plays have arrived', () => {
     render(<GameExplorer game={{ ...game, plays: plays.slice(0, 1) }} scope="full" away={away} home={home} />);
-    expect(screen.getByRole('tab', { name: /Success rate/ })).toHaveTextContent('— · —');
-    expect(screen.getByRole('tab', { name: /Points per trip/ })).toHaveTextContent('— · —');
+    expect([...screen.getByRole('tab', { name: /Success rate/ }).querySelectorAll('b')].map(node => node.textContent)).toEqual(['—', '—']);
+    expect([...screen.getByRole('tab', { name: /Points per trip/ }).querySelectorAll('b')].map(node => node.textContent)).toEqual(['—', '—']);
     expect(screen.getByText(/Factor comparisons are preliminary/)).toBeInTheDocument();
   });
 
@@ -60,11 +60,22 @@ describe('live game play order', () => {
         },
       },
     } as GameResponse;
-    render(<GameExplorer game={withFactors} scope="competitive" away={away} home={home} />);
+    const { rerender } = render(<GameExplorer game={withFactors} scope="competitive" away={away} home={home} />);
     expect(screen.getByLabelText('Factor wins')).toHaveTextContent('AWY 1 · HOM 1');
     expect(screen.getByRole('tab', { name: /Turnovers/ })).toHaveTextContent('HOM · 2 turnovers fewer');
     expect(screen.getByRole('tab', { name: /Success rate/ })).toHaveTextContent('AWY · 10.0 pp ahead');
+    expect(screen.getByRole('tab', { name: /Turnovers/ }).querySelector('span[style*="width"]')).toHaveStyle({ width: '67%' });
+    expect(screen.getByRole('tab', { name: /Success rate/ }).querySelector('span[style*="width"]')).toHaveStyle({ width: '67%' });
     expect(screen.getByRole('tab', { name: /Penalty yards/ })).toHaveTextContent('58 known');
     expect(screen.getByRole('tab', { name: /Penalty yards/ })).toHaveTextContent('Undecided · penalty yards unresolved');
+    expect(screen.getByRole('tab', { name: /Penalty yards/ }).querySelector('span[style*="width"]')).toBeNull();
+    expect(screen.getByText(/10.0 pp ÷ 15 pp = 67% of the provisional reference/)).toBeInTheDocument();
+    expect(screen.getByText(/Provisional scale · full bar/)).toBeInTheDocument();
+
+    const resolved = { ...withFactors, expanded_details: { ...withFactors.expanded_details,
+      [home.id]: { 'Offensive Plays': [{ type: 'Rush', text: 'run', yards: 4 }], 'Penalty Yards': [] },
+    } } as GameResponse;
+    rerender(<GameExplorer game={resolved} scope="competitive" away={away} home={home} />);
+    expect(screen.getByRole('tab', { name: /Penalty yards/ }).querySelector('span[style*="width"]')).toHaveStyle({ width: '70%' });
   });
 });

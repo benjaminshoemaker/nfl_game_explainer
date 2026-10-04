@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import type { CanonicalPlay, GameResponse, TeamMeta } from '@/types';
 import { GameExplorer } from './GameExplorer';
 
@@ -22,6 +22,20 @@ const game = {
 } as GameResponse;
 
 describe('live game play order', () => {
+  it('opens with comparable factor rows and returns there from a selected factor', () => {
+    render(<GameExplorer game={game} scope="full" away={away} home={home} />);
+    const overview = screen.getByRole('region', { name: 'All game factors' });
+    expect(within(overview).getAllByRole('button')).toHaveLength(8);
+    expect(screen.queryByLabelText('Turnovers details')).not.toBeInTheDocument();
+
+    fireEvent.click(within(overview).getByRole('button', { name: /Turnovers/ }));
+    expect(screen.getByLabelText('Turnovers details')).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: /Turnovers/ })).toHaveAttribute('aria-selected', 'true');
+    fireEvent.click(screen.getByRole('button', { name: 'All factors' }));
+    expect(screen.getByRole('region', { name: 'All game factors' })).toBeInTheDocument();
+    expect(screen.queryByLabelText('Turnovers details')).not.toBeInTheDocument();
+  });
+
   it('puts the latest play first and offers oldest first', () => {
     const { container } = render(<GameExplorer game={game} scope="full" away={away} home={home} />);
     const listedIds = () => [...container.querySelectorAll('[data-play-id]')].map(node => node.getAttribute('data-play-id'));
@@ -35,6 +49,7 @@ describe('live game play order', () => {
 
   it('shows unavailable rates when no eligible offensive plays have arrived', () => {
     render(<GameExplorer game={{ ...game, plays: plays.slice(0, 1) }} scope="full" away={away} home={home} />);
+    fireEvent.click(within(screen.getByRole('region', { name: 'All game factors' })).getByRole('button', { name: /Success rate/ }));
     expect([...screen.getByRole('tab', { name: /Success rate/ }).querySelectorAll('b')].map(node => node.textContent)).toEqual(['—', '—']);
     expect([...screen.getByRole('tab', { name: /Points per trip/ }).querySelectorAll('b')].map(node => node.textContent)).toEqual(['—', '—']);
     expect(screen.getByText(/Factor comparisons are preliminary/)).toBeInTheDocument();
@@ -63,6 +78,9 @@ describe('live game play order', () => {
     } as GameResponse;
     const { rerender } = render(<GameExplorer game={withFactors} scope="competitive" away={away} home={home} />);
     expect(screen.getByLabelText('Factor wins')).toHaveTextContent('AWY 1 · HOM 1');
+    const overview = screen.getByRole('region', { name: 'All game factors' });
+    expect(within(overview).getByRole('button', { name: /Turnovers/ }).querySelector('span[style*="width"]')).toHaveStyle({ width: '67%' });
+    fireEvent.click(within(overview).getByRole('button', { name: /Success rate/ }));
     expect(screen.getByRole('tab', { name: /Turnovers/ })).toHaveTextContent('HOM · 2 turnovers fewer');
     expect(screen.getByRole('tab', { name: /Success rate/ })).toHaveTextContent('AWY · 10.0 pp ahead');
     expect(screen.getByRole('tab', { name: /Turnovers/ }).querySelector('span[style*="width"]')).toHaveStyle({ width: '67%' });

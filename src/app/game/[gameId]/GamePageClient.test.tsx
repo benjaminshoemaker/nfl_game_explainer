@@ -174,7 +174,7 @@ describe('GamePageClient', () => {
       expanded_details: { '1': { Turnovers: [{ source_play_id: 'p1', type: 'Interception', text: play.text }] } },
     });
     render(<WeekProvider><GamePageClient initialGameData={game} /></WeekProvider>);
-    fireEvent.click(screen.getByRole('tab', { name: /Turnovers/ }));
+    fireEvent.click(within(screen.getByRole('region', { name: 'All game factors' })).getByRole('button', { name: /Turnovers/ }));
     const cards = document.querySelectorAll('[data-play-id="p1"]');
     expect(cards).toHaveLength(2);
     expect(cards[0].textContent).toBe(cards[1].textContent);

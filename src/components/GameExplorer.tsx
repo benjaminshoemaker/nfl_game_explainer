@@ -115,7 +115,7 @@ function eventNote(event: Event, factor: string) {
 }
 
 export function GameExplorer({ game, scope, home, away }: { game: GameResponse; scope: 'competitive' | 'full'; home: TeamMeta; away: TeamMeta }) {
-  const [selected, setSelected] = useState('Success Rate');
+  const [selected, setSelected] = useState<string | null>(null);
   const [split, setSplit] = useState('type');
   const [showEvents, setShowEvents] = useState(false);
   const [eventFilter, setEventFilter] = useState<string | null>(null);
@@ -299,8 +299,22 @@ export function GameExplorer({ game, scope, home, away }: { game: GameResponse; 
       {game.source_gaps?.length ? <div role="status" className={styles.notice}>ESPN box-score totals or offensive-play counts differ from available play-by-play for {game.source_gaps.map(g => g.team).join(', ')}. Full-game totals use ESPN; play-based metrics and competitive splits may be incomplete.</div> : null}
       {game.status === 'delayed' || game.status === 'postponed' || game.status === 'canceled' ? <div role="status" className={styles.notice}>{gameStatusLabel(game.status, game.statusDetail)}. This report shows the last plays ESPN provided.</div> : null}
       {rankableCount < 20 && game.status === 'in-progress' && <div role="status" className={styles.notice}>Early game: {rankableCount} classified {rankableCount === 1 ? 'play' : 'plays'} available. Factor comparisons are preliminary.</div>}
-      <div className={styles.sectionHead}><h2>Game factors</h2></div>
-      <section className={styles.workspace} id="game-factors" aria-label="Game factors and evidence">
+      <div className={styles.sectionHead}><h2>Game factors</h2>{selected !== null && <button className={styles.allFactorsButton} type="button" onClick={() => setSelected(null)}>All factors</button>}</div>
+      <section id="game-factors" aria-label={selected === null ? 'All game factors' : 'Game factors and evidence'}>
+      {selected === null ? <div className={styles.factorMatrix}>
+        <div className={styles.matrixSummary} aria-label="Factor wins"><strong>{away.abbr} {awayFactorWins} · {home.abbr} {homeFactorWins}</strong><small>{tiedFactors ? `${tiedFactors} tied` : ''}{tiedFactors && pendingFactors ? ' · ' : ''}{pendingFactors ? `${pendingFactors} undecided` : ''}</small></div>
+        <div className={styles.matrixHeader} aria-hidden="true"><span>Factor</span><span>{away.abbr}</span><span>{home.abbr}</span><span>Gap</span></div>
+        {FACTORS.map((item, index) => {
+          const result = factorResults[index];
+          return <button className={styles.matrixRow} key={item.id} type="button" onClick={() => selectFactor(item)}>
+            <span className={styles.matrixName}><span className={styles.index}>{String(index + 1).padStart(2, '0')}</span><strong>{item.label}</strong><small data-state={result.state}>{result.result}</small></span>
+            <span className={styles.matrixValue} data-winner={result.leader?.id === away.id}>{factorValue(item.id, away)}{item.id === 'Penalty Yards' && unresolvedPenalties(away) ? ' known' : ''}</span>
+            <span className={styles.matrixValue} data-winner={result.leader?.id === home.id}>{factorValue(item.id, home)}{item.id === 'Penalty Yards' && unresolvedPenalties(home) ? ' known' : ''}</span>
+            <span className={styles.matrixTrack} aria-hidden="true">{result.barPercent !== null && <span className={styles.matrixFill} data-side={result.leader?.id === away.id ? 'away' : 'home'} style={{ width: `${result.barPercent}%` }} />}</span>
+          </button>;
+        })}
+        <details className={styles.matrixScaleDisclosure}><summary>About bar scale</summary><p>A full bar marks a large historical gap for that factor and view. Live bars use completed games as a reference, so their scale is provisional. Tied, unresolved, and low-sample comparisons have no bar.</p></details>
+      </div> : <div className={styles.workspace}>
         <div className={styles.rail} role="tablist" aria-label="Game factors">
           <div className={styles.factorSummary} aria-label="Factor wins"><strong>{away.abbr} {awayFactorWins} · {home.abbr} {homeFactorWins}</strong><small>{tiedFactors ? `${tiedFactors} tied` : ''}{tiedFactors && pendingFactors ? ' · ' : ''}{pendingFactors ? `${pendingFactors} undecided` : ''}</small></div>
           <details className={styles.scaleDisclosure}><summary>About bar scale</summary>
@@ -349,6 +363,7 @@ export function GameExplorer({ game, scope, home, away }: { game: GameResponse; 
               {visibleEvents.length > eventLimit && <button className={styles.more} onClick={() => setEventLimit(eventLimit + 8)}>Show more · {visibleEvents.length - eventLimit} remaining</button>}</>}
           </div>
         </article>
+      </div>}
       </section>
       <div className={styles.sectionHead}><h2>Plays</h2><details className={styles.playGlossary}><summary>About WP and EPA</summary><p>WP is win probability; pp means percentage points. EPA estimates points added by a play and may become available after the next play.</p></details></div>
       <section className={styles.tapeGrid} aria-label="Game play browser">

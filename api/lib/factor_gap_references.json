@@ -1,0 +1,22 @@
+{
+  "full": {
+    "Turnovers": 3,
+    "Success Rate": 0.19,
+    "Adjusted Yards Per Play": 2.75,
+    "Explosive Play Rate": 0.11,
+    "Points Per Trip (Inside 40)": 3.25,
+    "Ave Start Field Pos": 15,
+    "Penalty Yards": 60,
+    "Non-Offensive Points": 14
+  },
+  "competitive": {
+    "Turnovers": 3,
+    "Success Rate": 0.20,
+    "Adjusted Yards Per Play": 3.25,
+    "Explosive Play Rate": 0.11,
+    "Points Per Trip (Inside 40)": 3.75,
+    "Ave Start Field Pos": 14,
+    "Penalty Yards": 55,
+    "Non-Offensive Points": 7
+  }
+}

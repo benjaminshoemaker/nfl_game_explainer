@@ -84,11 +84,16 @@ The Next.js development server proxies `/api/*` to the Python server on port
 | Variable | Required | Purpose |
 | --- | --- | --- |
 | `OPENAI_API_KEY` | No | Enables AI-generated game summaries. |
-| `OPENAI_MODEL` | No | Summary model; defaults to `gpt-4o-mini`. |
+| `OPENAI_MODEL` | No | Summary model; defaults to `gpt-5.6-luna`. |
 | `VERCEL_URL` | Automatic | Provided by Vercel and used for server-side API routing. |
 
 AI summaries use Vercel's ephemeral `/tmp` storage. That is a warm-instance
 optimization rather than durable storage.
+
+The game story briefly explains the score through the few most relevant factor
+comparisons. It can mention an unusually decisive play. The model also receives
+completed-game gap references and measured WP/EPA play candidates; live or
+unresolved measurements are identified in its input.
 
 ## Verification
 

@@ -36,6 +36,24 @@ describe('live game play order', () => {
     expect(screen.queryByLabelText('Turnovers details')).not.toBeInTheDocument();
   });
 
+  it('prefers the AI game story during live play and falls back to analysis', () => {
+    const liveGame = {
+      ...game,
+      plays: Array.from({ length: 20 }, (_, index) => ({ ...plays[0], id: `play-${index}` })),
+      ai_summary: 'Seattle leads through more explosive offense.',
+      analysis: 'SEA lead LAC 13-3. Explosive plays: LAC 1 vs SEA 5.',
+    } as GameResponse;
+    const { rerender } = render(<GameExplorer game={liveGame} scope="full" away={away} home={home} />);
+    expect(screen.getByText(liveGame.ai_summary!)).toBeInTheDocument();
+    expect(screen.queryByText(liveGame.analysis)).not.toBeInTheDocument();
+
+    rerender(<GameExplorer game={{ ...liveGame, ai_summary: null }} scope="full" away={away} home={home} />);
+    expect(screen.getByText(liveGame.analysis)).toBeInTheDocument();
+
+    rerender(<GameExplorer game={{ ...liveGame, plays }} scope="full" away={away} home={home} />);
+    expect(screen.getByText(liveGame.ai_summary!)).toBeInTheDocument();
+  });
+
   it('puts the latest play first and offers oldest first', () => {
     const { container } = render(<GameExplorer game={game} scope="full" away={away} home={home} />);
     const listedIds = () => [...container.querySelectorAll('[data-play-id]')].map(node => node.getAttribute('data-play-id'));

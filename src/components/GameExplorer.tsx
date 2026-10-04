@@ -6,6 +6,7 @@ import { CanonicalPlayCard } from './CanonicalPlayCard';
 import { FactorVisuals } from './FactorVisuals';
 import styles from './GameExplorer.module.css';
 import { gameStatusLabel } from '@/lib/gameStatus';
+import factorGapReferences from '../../api/lib/factor_gap_references.json';
 
 type Factor = { id: string; label: string; details: string; tabs: Array<[string, string]>; eventKey: string };
 const FACTORS: Factor[] = [
@@ -20,27 +21,19 @@ const FACTORS: Factor[] = [
 ];
 // Rounded 90th-percentile nonzero gaps from the completed-game backtest.
 // Live-stage reference values still need validation against live snapshots.
+const referenceLabels = (factors: Record<string, number>) => Object.fromEntries(
+  Object.entries(factors).map(([factor, amount]) => [factor, {
+      amount,
+      label: factor === 'Success Rate' || factor === 'Explosive Play Rate' ? `${Math.round(amount * 100)} pp`
+        : factor === 'Adjusted Yards Per Play' ? `${amount} yd/play`
+          : factor === 'Points Per Trip (Inside 40)' ? `${amount} pts/trip`
+            : factor === 'Ave Start Field Pos' || factor === 'Penalty Yards' ? `${amount} yd`
+              : factor === 'Non-Offensive Points' ? `${amount} pts` : `${amount} turnovers`,
+  }]),
+);
 const FACTOR_GAP_REFERENCES: Record<'full' | 'competitive', Record<string, { amount: number; label: string }>> = {
-  full: {
-    Turnovers: { amount: 3, label: '3 turnovers' },
-    'Success Rate': { amount: .19, label: '19 pp' },
-    'Adjusted Yards Per Play': { amount: 2.75, label: '2.75 yd/play' },
-    'Explosive Play Rate': { amount: .11, label: '11 pp' },
-    'Points Per Trip (Inside 40)': { amount: 3.25, label: '3.25 pts/trip' },
-    'Ave Start Field Pos': { amount: 15, label: '15 yd' },
-    'Penalty Yards': { amount: 60, label: '60 yd' },
-    'Non-Offensive Points': { amount: 14, label: '14 pts' },
-  },
-  competitive: {
-    Turnovers: { amount: 3, label: '3 turnovers' },
-    'Success Rate': { amount: .20, label: '20 pp' },
-    'Adjusted Yards Per Play': { amount: 3.25, label: '3.25 yd/play' },
-    'Explosive Play Rate': { amount: .11, label: '11 pp' },
-    'Points Per Trip (Inside 40)': { amount: 3.75, label: '3.75 pts/trip' },
-    'Ave Start Field Pos': { amount: 14, label: '14 yd' },
-    'Penalty Yards': { amount: 55, label: '55 yd' },
-    'Non-Offensive Points': { amount: 7, label: '7 pts' },
-  },
+  full: referenceLabels(factorGapReferences.full),
+  competitive: referenceLabels(factorGapReferences.competitive),
 };
 type FactorResult = { leader: TeamMeta | null; result: string; state: 'lead' | 'tie' | 'pending'; barPercent: number | null; scaleDetail: string | null };
 type Event = PlayDetail & { teamId: string; team: string; down?: number | null };
@@ -286,8 +279,8 @@ export function GameExplorer({ game, scope, home, away }: { game: GameResponse; 
         <div><div className={styles.eyebrow}>Game story</div><h1>{title}</h1>
           {game.status !== 'pregame' && <p>{game.status === 'delayed' || game.status === 'postponed' || game.status === 'canceled'
             ? 'Play is paused or stopped. The report below reflects the last plays ESPN provided.'
-            : rankableCount < 20 && game.status !== 'final' ? 'The game is underway. Factor comparisons will become more useful as plays accumulate.'
-              : (game.status === 'final' ? game.ai_summary || game.analysis : game.analysis || game.ai_summary) || 'Explore the game factors and their contributing plays below.'}</p>}
+            : rankableCount < 20 && game.status !== 'final' && !game.ai_summary ? 'The game is underway. Factor comparisons will become more useful as plays accumulate.'
+              : (game.ai_summary || game.analysis) || 'Explore the game factors and their contributing plays below.'}</p>}
         </div>
         <div className={styles.scoreBox}><small>{game.status === 'final' ? 'Final score' : 'Current score'}</small><div><span>{away.abbr}</span><strong className={winner?.id === away.id ? styles.winningScore : ''}>{awayScore}</strong></div><div><span>{home.abbr}</span><strong className={winner?.id === home.id ? styles.winningScore : ''}>{homeScore}</strong></div></div>
       </section>

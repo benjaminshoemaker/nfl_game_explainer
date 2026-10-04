@@ -4,12 +4,24 @@ import os
 import json
 import hashlib
 import re
+from collections import Counter
 from datetime import datetime, timedelta
+from pathlib import Path
 from typing import Optional
 
 # Cache directory for Vercel serverless (uses /tmp)
 CACHE_DIR = "/tmp/nfl_summaries"
-SUMMARY_CACHE_VERSION = 3
+SUMMARY_CACHE_VERSION = 7
+FACTOR_REFERENCES = json.loads(Path(__file__).with_name('factor_gap_references.json').read_text())['full']
+RATE_FACTORS = {'Success Rate', 'Explosive Play Rate'}
+LOWER_IS_BETTER = {'Turnovers', 'Penalty Yards'}
+SAMPLE_REQUIREMENTS = {
+    'Success Rate': ('Offensive Plays', 20),
+    'Adjusted Yards Per Play': ('Offensive Plays', 20),
+    'Explosive Play Rate': ('Offensive Plays', 20),
+    'Points Per Trip (Inside 40)': ('Points Per Trip (Inside 40)', 2),
+    'Ave Start Field Pos': ('Drive Starts', 5),
+}
 
 
 def _summary_facts(payload: Optional[dict]) -> dict:
@@ -26,11 +38,7 @@ def _summary_facts(payload: Optional[dict]) -> dict:
 
 
 def _valid_summary(summary: str, payload: Optional[dict] = None) -> bool:
-    if not isinstance(summary, str) or not summary.strip() or len(summary) > 280:
-        return False
-    # The model receives a few play captions for context, but their attribution
-    # is not checked here. Keep published summaries at the aggregate level.
-    if re.search(r"\bQ[1-5]\b|\bintercept(?:ion|ed)?\b|\bfumbl\w*\b|\bmuff\w*\b", summary, re.IGNORECASE):
+    if not isinstance(summary, str) or not summary.strip() or len(summary) > 500:
         return False
     if not payload:
         return True
@@ -74,7 +82,8 @@ def _valid_summary(summary: str, payload: Optional[dict] = None) -> bool:
 def get_cache_key(game_id: str, home_score: int, away_score: int, payload: Optional[dict] = None) -> str:
     """Version summaries by the facts they describe, not merely the score."""
     raw_key = json.dumps(
-        [SUMMARY_CACHE_VERSION, game_id, home_score, away_score, _summary_facts(payload)],
+        [SUMMARY_CACHE_VERSION, os.environ.get('OPENAI_MODEL', 'gpt-5.6-luna'),
+         game_id, home_score, away_score, _summary_facts(payload)],
         sort_keys=True,
         default=str,
     )
@@ -126,34 +135,123 @@ def set_cached_summary(game_id: str, home_score: int, away_score: int, summary: 
     except Exception:
         return False
 
-def _extract_category_plays_by_team_abbr(expanded_details: dict, team_meta: list, category: str) -> dict:
-    """
-    Normalize expanded_details into a dict keyed by team abbreviation for one category.
+def _field_position_yards(value):
+    if not isinstance(value, str):
+        return None
+    match = re.fullmatch(r'(Own|Opp)\s+(\d{1,2})', value)
+    if not match:
+        return None
+    return int(match.group(2)) if match.group(1) == 'Own' else 100 - int(match.group(2))
 
-    Supports both shapes:
-    1) Team-keyed: {teamId: {category: [plays...]}}
-    2) Category-keyed: {category: {teamAbbr: [plays...]}}
-    """
-    if not expanded_details or not isinstance(expanded_details, dict):
-        return {}
 
-    direct = expanded_details.get(category)
-    if isinstance(direct, dict):
-        return direct
+def _factor_context(payload: dict, home: dict, away: dict) -> list:
+    """Full-game factor gaps with the same reference values used by the UI."""
+    rows = payload.get('advanced_table_full') or payload.get('advanced_table') or []
+    details = payload.get('expanded_details_full') or payload.get('expanded_details') or {}
+    by_team = {row.get('Team'): row for row in rows if isinstance(row, dict)}
+    result = []
+    for factor, reference in FACTOR_REFERENCES.items():
+        values = {team['abbr']: by_team.get(team['abbr'], {}).get(factor) for team in (away, home)}
+        a, h = values[away['abbr']], values[home['abbr']]
+        if factor == 'Ave Start Field Pos':
+            a, h = _field_position_yards(a), _field_position_yards(h)
+        if not isinstance(a, (int, float)) or not isinstance(h, (int, float)):
+            state = 'unavailable'
+            gap = leader = None
+        else:
+            gap = round(abs(a - h) * (100 if factor in RATE_FACTORS else 1), 2)
+            leader = None if a == h else (
+                away['abbr'] if (a > h) != (factor in LOWER_IS_BETTER) else home['abbr']
+            )
+            state = 'available'
+        requirement = SAMPLE_REQUIREMENTS.get(factor)
+        samples = None
+        if requirement:
+            category, minimum = requirement
+            samples = {
+                team['abbr']: len((details.get(str(team.get('id'))) or {}).get(category) or [])
+                for team in (away, home)
+            }
+            if state == 'available' and any(count < minimum for count in samples.values()):
+                state = 'limited_sample'
+        if factor == 'Penalty Yards' and state == 'available':
+            for team in (away, home):
+                penalties = (details.get(str(team.get('id'))) or {}).get('Penalty Yards') or []
+                if any(p.get('penalty_status') == 'accepted' and
+                       (p.get('yards') is None or p.get('team_attribution_note')) for p in penalties):
+                    state = 'unresolved'
+                    break
+        unit = 'percentage points' if factor in RATE_FACTORS else (
+            'yards per play' if factor == 'Adjusted Yards Per Play' else
+            'points per trip' if factor == 'Points Per Trip (Inside 40)' else
+            'yards' if factor in {'Ave Start Field Pos', 'Penalty Yards'} else
+            'points' if factor == 'Non-Offensive Points' else 'turnovers'
+        )
+        row = {
+            'factor': factor,
+            'away': round(a * 100, 1) if a is not None and factor in RATE_FACTORS else values[away['abbr']],
+            'home': round(h * 100, 1) if h is not None and factor in RATE_FACTORS else values[home['abbr']],
+            'value_unit': 'percent' if factor in RATE_FACTORS else unit,
+            'advantage': leader, 'gap': gap, 'unit': unit, 'state': state,
+            'sample_counts': samples,
+            'large_completed_game_gap': round(reference * (100 if factor in RATE_FACTORS else 1), 2),
+            'gap_vs_reference': round(gap / (reference * (100 if factor in RATE_FACTORS else 1)), 2)
+            if gap is not None and state == 'available' else None,
+        }
+        if factor == 'Turnovers':
+            row['meaning'] = 'Giveaways by each team; fewer is better. A team’s takeaways equal its opponent’s giveaways.'
+            unresolved = {gap.get('team') for gap in payload.get('source_gaps') or []
+                          if gap.get('turnovers_gap')}
+            breakdown = {}
+            for team in (away, home):
+                abbr = team['abbr']
+                events = (details.get(str(team.get('id'))) or {}).get('Turnovers') or []
+                count = values[abbr]
+                breakdown[abbr] = dict(Counter(event.get('type') or 'Unknown' for event in events)) \
+                    if abbr not in unresolved and isinstance(count, (int, float)) and len(events) == count else None
+            row['turnover_types_by_team'] = breakdown
+        result.append(row)
+    return result
 
-    plays_by_abbr = {}
-    for team in team_meta or []:
-        team_id = str(team.get("id", "") or "")
-        team_abbr = team.get("abbr")
-        if not team_id or not team_abbr:
-            continue
-        team_details = expanded_details.get(team_id) or {}
-        if not isinstance(team_details, dict):
-            continue
-        plays = team_details.get(category) or []
-        if isinstance(plays, list):
-            plays_by_abbr[team_abbr] = plays
-    return plays_by_abbr
+
+def _top_play_context(payload: dict, home: dict, away: dict) -> list:
+    """Provide a few measured candidates, without treating a routine play as notable."""
+    plays = [play for play in payload.get('plays') or [] if isinstance(play, dict)
+             and not re.search(r'timeout|end of|warning|coin toss|kneel|spike', play.get('type') or '', re.I)
+             and not re.search(r'\bNo Play\b', play.get('text') or '', re.I)]
+    wp_plays = sorted(
+        (play for play in plays if isinstance(play.get('homeWpDelta'), (int, float))
+         and abs(play['homeWpDelta']) >= .05 and not play.get('wpAttributionUncertain')),
+        key=lambda play: abs(play['homeWpDelta']), reverse=True,
+    )[:4]
+    epa_plays = sorted(
+        (play for play in plays if isinstance(play.get('epa'), (int, float))),
+        key=lambda play: abs(play['epa']), reverse=True,
+    )[:2]
+    selected = list(dict((str(play.get('id')), play) for play in [*wp_plays, *epa_plays]).values())
+    context = []
+    for play in selected:
+        delta = play.get('homeWpDelta')
+        wp_reliable = isinstance(delta, (int, float)) and not play.get('wpAttributionUncertain')
+        badges = play.get('badges') or []
+        if not isinstance(badges, list):
+            badges = []
+        context.append({
+            'id': play.get('id'), 'quarter': play.get('quarter'), 'clock': play.get('clock'),
+            'team_at_start': play.get('sourceTeam'), 'type': play.get('type'),
+            'description': (play.get('text') or '')[:350],
+            'wp_change_pp': round(abs(delta) * 100, 1) if wp_reliable else None,
+            'wp_benefited_team': (home if delta > 0 else away)['abbr'] if wp_reliable and delta else None,
+            'wp_before_percent': round((play.get('homeWpBefore') if delta > 0 else 1 - play.get('homeWpBefore')) * 100, 1)
+            if wp_reliable and isinstance(play.get('homeWpBefore'), (int, float)) else None,
+            'wp_after_percent': round((play.get('homeWpAfter') if delta > 0 else 1 - play.get('homeWpAfter')) * 100, 1)
+            if wp_reliable and isinstance(play.get('homeWpAfter'), (int, float)) else None,
+            'wp_attribution_uncertain': bool(play.get('wpAttributionUncertain')),
+            'epa_for_team_at_start': round(play['epa'], 2) if isinstance(play.get('epa'), (int, float)) else None,
+            'score_change': play.get('scoreChange'),
+            'badges': [badge for badge in badges if isinstance(badge, (str, dict))],
+        })
+    return context
 
 
 def generate_ai_summary(payload: dict, game_data: dict, probability_map: dict, wp_threshold: float = 0.975) -> Optional[str]:
@@ -176,8 +274,6 @@ def generate_ai_summary(payload: dict, game_data: dict, probability_map: dict, w
         # Extract game info
         team_meta = payload.get('team_meta', [])
         summary_table = payload.get('summary_table', [])
-        advanced_table = payload.get('advanced_table_full') or payload.get('advanced_table', [])
-        expanded_details = payload.get('expanded_details_full') or payload.get('expanded_details', {})
 
         home_team = next((t for t in team_meta if t['homeAway'] == 'home'), None)
         away_team = next((t for t in team_meta if t['homeAway'] == 'away'), None)
@@ -201,89 +297,40 @@ def generate_ai_summary(payload: dict, game_data: dict, probability_map: dict, w
         if cached:
             return cached
 
-        # Get advanced stats
-        home_advanced = next((s for s in advanced_table if s['Team'] == home_abbr), {})
-        away_advanced = next((s for s in advanced_table if s['Team'] == away_abbr), {})
-
-        # Game status
         game_status = payload.get('status', 'in-progress')
-        is_final = game_status == 'final'
 
-        # Build key plays summary
-        turnovers = _extract_category_plays_by_team_abbr(expanded_details, team_meta, 'Turnovers')
-        explosives = _extract_category_plays_by_team_abbr(expanded_details, team_meta, 'Explosive Plays')
-
-        key_plays_text = []
-        for team_abbr, plays in turnovers.items():
-            for play in plays[:2]:  # Top 2 turnovers per team
-                key_plays_text.append(
-                    f"- Turnover ({team_abbr}): Q{play.get('quarter', '?')} "
-                    f"{play.get('clock', '')} {play.get('text', '')}"
-                )
-
-        for team_abbr, plays in explosives.items():
-            for play in plays[:2]:  # Top 2 explosive plays per team
-                key_plays_text.append(
-                    f"- Explosive ({team_abbr}): Q{play.get('quarter', '?')} "
-                    f"{play.get('clock', '')} {play.get('text', '')}"
-                )
-
-        # Determine summary focus
-        score_diff = abs(home_score - away_score)
-        if is_final:
-            if score_diff >= 14:
-                winner = home_abbr if home_score > away_score else away_abbr
-                summary_focus = f"why {winner} dominated"
-            elif score_diff >= 7:
-                winner = home_abbr if home_score > away_score else away_abbr
-                summary_focus = f"how {winner} won"
-            else:
-                summary_focus = "why this was a close game"
-        else:
-            if home_score == away_score:
-                summary_focus = "why the game is tied"
-            else:
-                leader = home_abbr if home_score > away_score else away_abbr
-                summary_focus = f"why {leader} is leading"
-
-        source_gaps = payload.get('source_gaps') or []
-        source_note = (
-            "Available play-by-play disagrees with ESPN box-score totals or offensive-play counts for "
-            + ", ".join(str(gap.get('team')) for gap in source_gaps)
-            + "; do not invent missing play details."
-            if source_gaps else ""
+        story_facts = {
+            'status': game_status,
+            'clock': payload.get('gameClock'),
+            'away': {'name': away_name, 'abbr': away_abbr, 'score': away_score},
+            'home': {'name': home_name, 'abbr': home_abbr, 'score': home_score},
+            'full_game_factors': _factor_context(payload, home_team, away_team),
+            'top_play_candidates': _top_play_context(payload, home_team, away_team),
+            'source_gaps': payload.get('source_gaps') or [],
+        }
+        user_prompt = (
+            'In one or two conversational sentences, explain the score through the few factors that matter most. '
+            'Lead with the strongest advantages for the team ahead; mention opposing advantages only as contrasts. '
+            'If the factors do not explain the score, say so. Check every comparison against the data; do not invent causes or repeat the score. '
+            'Mention a play only if unusually decisive. Treat live and incomplete data with appropriate caution.\n\n'
+            f'Game data:\n{json.dumps(story_facts, ensure_ascii=False, indent=2)}'
         )
 
-        # Build user prompt
-        user_prompt = f"""Generate a game summary:
-
-{away_name} ({away_abbr}) {away_score} @ {home_name} ({home_abbr}) {home_score}
-Status: {'Final' if is_final else 'In Progress'}
-
-Key Stats:
-- {home_abbr}: {home_advanced.get('Success Rate', 0):.0%} success rate, {home_advanced.get('Turnovers', 0)} giveaways, {away_advanced.get('Turnovers', 0)} takeaways, {home_advanced.get('Explosive Plays', 0)} explosive plays
-- {away_abbr}: {away_advanced.get('Success Rate', 0):.0%} success rate, {away_advanced.get('Turnovers', 0)} giveaways, {home_advanced.get('Turnovers', 0)} takeaways, {away_advanced.get('Explosive Plays', 0)} explosive plays
-
-Key Plays:
-{chr(10).join(key_plays_text[:6]) if key_plays_text else 'No key plays recorded'}
-
-{source_note}
-
-Write one sentence under 220 characters explaining {summary_focus}. Compare only the aggregate stats above; do not mention individual plays, quarters, timing, or players. A team's turnovers are its giveaways; its takeaways are the opponent's giveaways."""
-
-        model = os.environ.get("OPENAI_MODEL", "gpt-4o-mini")
+        model = os.environ.get("OPENAI_MODEL", "gpt-5.6-luna")
         completion_options = {
             "model": model,
             "messages": [
                 {
                     "role": "system",
-                    "content": "You are an NFL analyst. Write one concise sentence comparing verified aggregate game stats. Do not cite specific plays or players. No hashtags or emojis."
+                    "content": "You write concise, evidence-grounded NFL game stories."
                 },
                 {"role": "user", "content": user_prompt}
             ],
-            "max_completion_tokens": 300 if model.startswith("gpt-5") else 100,
+            "max_completion_tokens": 500 if model.startswith("gpt-5.6") else 300 if model.startswith("gpt-5") else 200,
         }
-        if model.startswith("gpt-5"):
+        if model.startswith("gpt-5.6"):
+            completion_options["reasoning_effort"] = "low"
+        elif model.startswith("gpt-5"):
             completion_options["reasoning_effort"] = "minimal"
 
         response = client.chat.completions.create(**completion_options)
@@ -295,9 +342,8 @@ Write one sentence under 220 characters explaining {summary_focus}. Compare only
                     *completion_options["messages"],
                     {"role": "assistant", "content": summary},
                     {"role": "user", "content": (
-                        "Rewrite as one clear sentence under 220 characters. "
-                        "Use only verified aggregate stats from the original game data. "
-                        "Do not mention specific plays, players, timing, questions, or unsupported claims."
+                        "Rewrite in one or two conversational sentences under 500 characters. "
+                        "Keep claims grounded in the provided game data."
                     )},
                 ],
             }

@@ -22,12 +22,13 @@ const game = {
 } as GameResponse;
 
 describe('live game play order', () => {
-  it('puts the latest play first, offers oldest first, and labels halftime', () => {
+  it('puts the latest play first and offers oldest first', () => {
     const { container } = render(<GameExplorer game={game} scope="full" away={away} home={home} />);
     const listedIds = () => [...container.querySelectorAll('[data-play-id]')].map(node => node.getAttribute('data-play-id'));
     expect(listedIds()).toEqual(['latest', 'second', 'first']);
     expect(screen.getByLabelText('Sort')).toHaveValue('game');
-    expect(screen.getByText(/Week 4 · Halftime/)).toBeInTheDocument();
+    expect(screen.getByText('Week 4')).toBeInTheDocument();
+    expect(screen.getAllByText('May appear after the next play.')).toHaveLength(1);
     fireEvent.change(screen.getByLabelText('Sort'), { target: { value: 'oldest' } });
     expect(listedIds()).toEqual(['first', 'second', 'latest']);
   });
@@ -69,8 +70,12 @@ describe('live game play order', () => {
     expect(screen.getByRole('tab', { name: /Penalty yards/ })).toHaveTextContent('58 known');
     expect(screen.getByRole('tab', { name: /Penalty yards/ })).toHaveTextContent('Undecided · penalty yards unresolved');
     expect(screen.getByRole('tab', { name: /Penalty yards/ }).querySelector('span[style*="width"]')).toBeNull();
+    const scaleDisclosure = screen.getByText('About bar scale').closest('details');
+    expect(scaleDisclosure).not.toHaveAttribute('open');
+    fireEvent.click(screen.getByText('About bar scale'));
+    expect(scaleDisclosure).toHaveAttribute('open');
     expect(screen.getByText(/10.0 pp ÷ 20 pp = 50% of the completed-game reference/)).toBeInTheDocument();
-    expect(screen.getByText(/Live bars use completed-game references/)).toBeInTheDocument();
+    expect(screen.getByText(/Live bars use completed games as a reference/)).toBeInTheDocument();
 
     const resolved = { ...withFactors, expanded_details: { ...withFactors.expanded_details,
       [home.id]: { 'Offensive Plays': Array.from({ length: 20 }, () => ({ type: 'Rush', text: 'run', yards: 4 })), 'Penalty Yards': [] },
@@ -94,7 +99,7 @@ describe('live game play order', () => {
     rerender(<GameExplorer game={finalGame} scope="full" away={away} home={home} />);
     expect(screen.getByRole('tab', { name: /Success rate/ }).querySelector('span[style*="width"]')).toHaveStyle({ width: '53%' });
     expect(screen.getByRole('tab', { name: /Non-offensive points/ }).querySelector('span[style*="width"]')).toHaveStyle({ width: '50%' });
-    expect(screen.getByText(/Full bar = large historical final-game gap/)).toBeInTheDocument();
+    expect(screen.getByText(/A full bar marks a large historical gap/)).toBeInTheDocument();
 
     const capped = { ...finalGame, advanced_table_full: finalGame.advanced_table_full.map((row, index) => ({
       ...row, 'Non-Offensive Points': index === 0 ? 21 : 0,

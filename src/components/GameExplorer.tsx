@@ -7,16 +7,16 @@ import { FactorVisuals } from './FactorVisuals';
 import styles from './GameExplorer.module.css';
 import { gameStatusLabel } from '@/lib/gameStatus';
 
-type Factor = { id: string; label: string; sub: string; details: string; tabs: Array<[string, string]>; eventKey: string };
+type Factor = { id: string; label: string; details: string; tabs: Array<[string, string]>; eventKey: string };
 const FACTORS: Factor[] = [
-  { id: 'Turnovers', label: 'Turnovers', sub: 'Possession changes', details: 'Each giveaway and the resulting change of possession.', tabs: [], eventKey: 'Turnovers' },
-  { id: 'Success Rate', label: 'Success rate', sub: 'Consistent offense', details: 'Successful plays divided by eligible offensive plays. The target changes by down and distance.', tabs: [['type', 'Run / pass'], ['down', 'By down'], ['quarter', 'By quarter']], eventKey: 'Offensive Plays' },
-  { id: 'Adjusted Yards Per Play', label: 'Adjusted yards / play', sub: 'Offensive efficiency', details: 'Adjusted offensive yards per eligible play. Scrambles and sacks count as pass dropbacks.', tabs: [['type', 'Run / pass'], ['down', 'By down'], ['quarter', 'By quarter']], eventKey: 'Offensive Plays' },
-  { id: 'Explosive Play Rate', label: 'Explosive-play rate', sub: '10+ run · 20+ pass', details: 'Runs of at least 10 yards or passes of at least 20, divided by eligible offensive plays.', tabs: [['type', 'Run / pass'], ['quarter', 'By quarter']], eventKey: 'Explosive Plays' },
-  { id: 'Points Per Trip (Inside 40)', label: 'Points per trip', sub: 'Inside opponent 40', details: 'Points scored on each drive that reached the opponent’s 40-yard line.', tabs: [['outcome', 'Drive result'], ['quarter', 'By quarter']], eventKey: 'Points Per Trip (Inside 40)' },
-  { id: 'Ave Start Field Pos', label: 'Starting field position', sub: 'Where drives began', details: 'Drive starts, measured from the offense’s goal line.', tabs: [['source', 'By source'], ['quarter', 'By quarter']], eventKey: 'Drive Starts' },
-  { id: 'Penalty Yards', label: 'Penalty yards', sub: 'Assessed yards', details: 'Accepted penalty yards charged to each team; unknown yardage or team attribution stays unresolved.', tabs: [['type', 'By type'], ['quarter', 'By quarter']], eventKey: 'Penalty Yards' },
-  { id: 'Non-Offensive Points', label: 'Non-offensive points', sub: 'Defense / special teams', details: 'Defensive and special teams scoring plays.', tabs: [], eventKey: 'Non-Offensive Points' },
+  { id: 'Turnovers', label: 'Turnovers', details: 'Each giveaway and the resulting change of possession.', tabs: [], eventKey: 'Turnovers' },
+  { id: 'Success Rate', label: 'Success rate', details: 'Successful plays divided by eligible offensive plays. The target changes by down and distance.', tabs: [['type', 'Run / pass'], ['down', 'By down'], ['quarter', 'By quarter']], eventKey: 'Offensive Plays' },
+  { id: 'Adjusted Yards Per Play', label: 'Adjusted yards / play', details: 'Adjusted offensive yards per eligible play. Scrambles and sacks count as pass dropbacks.', tabs: [['type', 'Run / pass'], ['down', 'By down'], ['quarter', 'By quarter']], eventKey: 'Offensive Plays' },
+  { id: 'Explosive Play Rate', label: 'Explosive-play rate', details: 'Runs of at least 10 yards or passes of at least 20, divided by eligible offensive plays.', tabs: [['type', 'Run / pass'], ['quarter', 'By quarter']], eventKey: 'Explosive Plays' },
+  { id: 'Points Per Trip (Inside 40)', label: 'Points per trip', details: 'Points scored on each drive that reached the opponent’s 40-yard line.', tabs: [['outcome', 'Drive result'], ['quarter', 'By quarter']], eventKey: 'Points Per Trip (Inside 40)' },
+  { id: 'Ave Start Field Pos', label: 'Starting field position', details: 'Drive starts, measured from the offense’s goal line.', tabs: [['source', 'By source'], ['quarter', 'By quarter']], eventKey: 'Drive Starts' },
+  { id: 'Penalty Yards', label: 'Penalty yards', details: 'Accepted penalty yards charged to each team; unknown yardage or team attribution stays unresolved.', tabs: [['type', 'By type'], ['quarter', 'By quarter']], eventKey: 'Penalty Yards' },
+  { id: 'Non-Offensive Points', label: 'Non-offensive points', details: 'Defensive and special teams scoring plays.', tabs: [], eventKey: 'Non-Offensive Points' },
 ];
 // Rounded 90th-percentile nonzero gaps from the completed-game backtest.
 // Live-stage reference values still need validation against live snapshots.
@@ -266,7 +266,7 @@ export function GameExplorer({ game, scope, home, away }: { game: GameResponse; 
               : 'ESPN marks the game as live, but no plays are available yet. This page will keep checking for updates.';
     return <div className={styles.explorer}>
     <div className={styles.wrap}>
-      <header className={styles.brandRow}><strong>GAME<span>/</span>EXPLAINED</strong><span>NFL · Week {game.week?.number || '—'} · {gameStatusLabel(game.status, game.statusDetail)}</span></header>
+      <header className={styles.brandRow}><strong>GAME<span>/</span>EXPLAINED</strong><span>Week {game.week?.number || '—'}</span></header>
       <section className={styles.pregame}>
         <div className={styles.eyebrow}>{noPlayHeading}</div>
         <h1>{away.name} at {home.name}</h1>
@@ -275,13 +275,13 @@ export function GameExplorer({ game, scope, home, away }: { game: GameResponse; 
         <div className={styles.pregameTeams}><span>{away.abbr}</span><span>at</span><span>{home.abbr}</span></div>
         {(game.status === 'in-progress' || game.status === 'delayed' || game.status === 'final') && <p className={styles.noPlayScore}>Score {away.abbr} {awayScore} · {home.abbr} {homeScore}</p>}
       </section>
-      <footer className={styles.footer}>Game {game.gameId} · Game data from ESPN.</footer>
+      <footer className={styles.footer}>Data: ESPN</footer>
     </div>
   </div>;
   }
   return <div className={styles.explorer}>
     <div className={styles.wrap}>
-      <header className={styles.brandRow}><strong>GAME<span>/</span>EXPLAINED</strong><span>NFL · Week {game.week?.number || '—'} · {gameStatusLabel(game.status, game.statusDetail || game.gameClock?.displayValue)}</span></header>
+      <header className={styles.brandRow}><strong>GAME<span>/</span>EXPLAINED</strong><span>Week {game.week?.number || '—'}</span></header>
       <section className={styles.gameHead}>
         <div><div className={styles.eyebrow}>Game story</div><h1>{title}</h1>
           {game.status !== 'pregame' && <p>{game.status === 'delayed' || game.status === 'postponed' || game.status === 'canceled'
@@ -299,16 +299,17 @@ export function GameExplorer({ game, scope, home, away }: { game: GameResponse; 
       {game.source_gaps?.length ? <div role="status" className={styles.notice}>ESPN box-score totals or offensive-play counts differ from available play-by-play for {game.source_gaps.map(g => g.team).join(', ')}. Full-game totals use ESPN; play-based metrics and competitive splits may be incomplete.</div> : null}
       {game.status === 'delayed' || game.status === 'postponed' || game.status === 'canceled' ? <div role="status" className={styles.notice}>{gameStatusLabel(game.status, game.statusDetail)}. This report shows the last plays ESPN provided.</div> : null}
       {rankableCount < 20 && game.status === 'in-progress' && <div role="status" className={styles.notice}>Early game: {rankableCount} classified {rankableCount === 1 ? 'play' : 'plays'} available. Factor comparisons are preliminary.</div>}
-      <div className={styles.sectionHead}><div><div className={styles.eyebrow}>What shaped the game</div><h2>Explore all eight factors</h2></div><p>Choose a factor to inspect its split and contributing plays.</p></div>
+      <div className={styles.sectionHead}><h2>Game factors</h2></div>
       <section className={styles.workspace} id="game-factors" aria-label="Game factors and evidence">
-        <div className={styles.rail} role="tablist" aria-label="Game factors"><div className={styles.railHeader}><strong>Game factors</strong><small>{away.abbr} · {home.abbr}</small></div>
+        <div className={styles.rail} role="tablist" aria-label="Game factors">
           <div className={styles.factorSummary} aria-label="Factor wins"><strong>{away.abbr} {awayFactorWins} · {home.abbr} {homeFactorWins}</strong><small>{tiedFactors ? `${tiedFactors} tied` : ''}{tiedFactors && pendingFactors ? ' · ' : ''}{pendingFactors ? `${pendingFactors} undecided` : ''}</small></div>
-          <p className={styles.factorScaleNote}>{game.status === 'final'
-            ? 'Full bar = large historical final-game gap for this factor and view.'
-            : 'Live bars use completed-game references; early gaps can look larger until live-stage calibration is validated.'}</p>
+          <details className={styles.scaleDisclosure}><summary>About bar scale</summary>
+            <p>A full bar marks a large historical gap for that factor and view. Live bars use completed games as a reference, so their scale is provisional. Tied, unresolved, and low-sample comparisons have no bar.</p>
+            {selectedFactorResult.scaleDetail && <p>{selectedFactorResult.scaleDetail}.</p>}
+          </details>
           {FACTORS.map((item, index) => <button className={styles.category} key={item.id} role="tab" aria-selected={item.id === selected} onClick={() => selectFactor(item)}>
             <span className={styles.factorTeamCell} data-winner={factorResults[index].leader?.id === away.id}><small>{away.abbr}</small><b>{factorValue(item.id, away)}{item.id === 'Penalty Yards' && unresolvedPenalties(away) ? ' known' : ''}</b></span>
-            <span className={styles.factorCenter}><span className={styles.factorName}><span className={styles.index}>{String(index + 1).padStart(2, '0')}</span><strong>{item.label}</strong></span><small>{item.sub}</small>
+            <span className={styles.factorCenter}><span className={styles.factorName}><span className={styles.index}>{String(index + 1).padStart(2, '0')}</span><strong>{item.label}</strong></span>
               <span className={styles.factorResult} data-state={factorResults[index].state}>{factorResults[index].result}</span>
               <span className={styles.factorTrack} aria-hidden="true">{factorResults[index].barPercent !== null && <span className={styles.factorFill} data-side={factorResults[index].leader?.id === away.id ? 'away' : 'home'} style={{ width: `${factorResults[index].barPercent}%` }} />}</span>
             </span>
@@ -316,9 +317,8 @@ export function GameExplorer({ game, scope, home, away }: { game: GameResponse; 
           </button>)}
         </div>
         <article className={styles.detail} aria-label={`${factor.label} details`}>
-          <div className={styles.detailTop}><div><div className={styles.eyebrow}>Category {String(FACTORS.indexOf(factor) + 1).padStart(2, '0')} of 08</div><h3>{factor.label}</h3><p>{factor.details}</p></div>
-            <div className={styles.pills}><span>{away.abbr} {factorValue(factor.id, away)}</span><span>{home.abbr} {factorValue(factor.id, home)}</span></div>
-            <p className={styles.scaleDetail}>{selectedFactorResult.scaleDetail ? `${selectedFactorResult.scaleDetail}. ` : 'No magnitude bar for a tie or unresolved comparison. '}{game.status === 'final' ? 'References come from completed regular-season games.' : 'Live-stage calibration remains provisional.'}</p></div>
+          <div className={styles.detailTop}><div><h3>{factor.label}</h3><p>{factor.details}</p></div>
+            <div className={styles.pills}><span>{away.abbr} {factorValue(factor.id, away)}</span><span>{home.abbr} {factorValue(factor.id, home)}</span></div></div>
           {factor.id === 'Success Rate' && <div className={styles.visual}><strong>Were they staying on schedule?</strong><small>Each mark represents one eligible offensive play.</small>
             {[away, home].map(team => { const list = (details[team.id]?.['Offensive Plays'] || []); return <div className={styles.markRow} key={team.id}><b>{team.abbr}</b><div>{list.map((e, i) => <i key={i} className={e.success ? styles.hit : ''} title={`Q${e.quarter} ${e.clock}: ${e.success ? 'successful' : 'unsuccessful'}`} />)}</div><small>{list.filter(e => e.success).length}/{list.length}</small></div>; })}</div>}
           {factor.id === 'Points Per Trip (Inside 40)' && <div className={styles.visual}><strong>Points on each trip</strong>{[away, home].map(team => <div className={styles.tripRow} key={team.id}><b>{team.abbr}</b>{(details[team.id]?.['Points Per Trip (Inside 40)'] || []).map((e, i) => <span key={i} title={`Trip ${i + 1}: ${e.points ?? '?'} points`}>{e.points ?? '?'}</span>)}</div>)}</div>}
@@ -344,31 +344,30 @@ export function GameExplorer({ game, scope, home, away }: { game: GameResponse; 
                 }
                 return `${list.length} plays`;
               }; return <button key={group} className={styles.splitRow} onClick={() => { setEventFilter(group); setShowEvents(true); }}><span>{group}</span><strong>{display(a, away.id)}</strong><strong>{display(h, home.id)}</strong></button>; })}
-              <p className={styles.help}>Select a split to see its contributing plays.</p></> : <><div className={styles.listHeading}><strong>{eventFilter ? `${eventFilter} · ` : ''}{visibleEvents.length} contributing {factor.id === 'Ave Start Field Pos' || factor.id === 'Points Per Trip (Inside 40)' ? 'drives' : 'events'}</strong><span>Chronological</span></div>
+              </> : <><div className={styles.listHeading}><strong>{eventFilter ? `${eventFilter} · ` : ''}{visibleEvents.length} contributing {factor.id === 'Ave Start Field Pos' || factor.id === 'Points Per Trip (Inside 40)' ? 'drives' : 'events'}</strong></div>
               {visibleEvents.length ? visibleEvents.slice(0, eventLimit).map(renderEvent) : <div className={styles.missing}>No contributing events in this selection.</div>}
               {visibleEvents.length > eventLimit && <button className={styles.more} onClick={() => setEventLimit(eventLimit + 8)}>Show more · {visibleEvents.length - eventLimit} remaining</button>}</>}
           </div>
         </article>
       </section>
-      <div className={styles.sectionHead}><div><div className={styles.eyebrow}>The game as it unfolded</div><h2>Explore the plays</h2></div><p>ESPN play-by-play, including kicks, penalties, and timeouts.</p></div>
+      <div className={styles.sectionHead}><h2>Plays</h2><details className={styles.playGlossary}><summary>About WP and EPA</summary><p>WP is win probability; pp means percentage points. EPA estimates points added by a play and may become available after the next play.</p></details></div>
       <section className={styles.tapeGrid} aria-label="Game play browser">
-        <article className={styles.panel}><div className={styles.panelHead}><h3>Most impactful plays</h3><p>Ranked by absolute win probability change.</p></div>
-          {impactReady ? impact.slice(0, 5).map((play, index) => <div className={styles.eventEntry} key={play.id}><div className={styles.entryContext}><span>{String(index + 1).padStart(2, '0')} · Most impactful</span><button onClick={() => { setQuarterFilter('all'); setTeamFilter('all'); setBenefitFilter('all'); setTypeFilter('all'); setOutcomeFilter('all'); setPlaySort('game'); const playIndex = plays.findIndex(item => item.id === play.id); setPlayLimit(Math.max(20, game.status === 'in-progress' ? plays.length - playIndex : playIndex + 1)); setFocusedPlay(play.id); }}>Show in all plays ↗</button></div><CanonicalPlayCard play={play} home={home} away={away} /></div>) : <div className={styles.missing}>This view appears after at least 20 plays and three measured swings of 5 pp or more. {rankableCount} classified plays are available.</div>}
+        <article className={styles.panel}><div className={styles.panelHead}><h3 title="Ranked by absolute win probability change">Most impactful</h3></div>
+          {impactReady ? impact.slice(0, 5).map((play, index) => <div className={styles.eventEntry} key={play.id}><div className={styles.entryContext}><span>{String(index + 1).padStart(2, '0')}</span><button onClick={() => { setQuarterFilter('all'); setTeamFilter('all'); setBenefitFilter('all'); setTypeFilter('all'); setOutcomeFilter('all'); setPlaySort('game'); const playIndex = plays.findIndex(item => item.id === play.id); setPlayLimit(Math.max(20, game.status === 'in-progress' ? plays.length - playIndex : playIndex + 1)); setFocusedPlay(play.id); }}>Show in all plays ↗</button></div><CanonicalPlayCard play={play} home={home} away={away} /></div>) : <div className={styles.missing}>Available after 20 classified plays and three WP swings of 5 pp or more.</div>}
         </article>
-        <article className={styles.panel}><div className={styles.panelHead}><h3>All plays <span>{plays.length}</span></h3><p>Available play-by-play from ESPN.</p></div>
+        <article className={styles.panel}><div className={styles.panelHead}><h3>All plays <span>{plays.length}</span></h3></div>
           <div className={styles.filters}><label>Quarter<select value={quarterFilter} onChange={e => { setQuarterFilter(e.target.value); setPlayLimit(20); }}><option value="all">All</option>{[1,2,3,4,5].map(q => <option key={q} value={q}>{q === 5 ? 'OT' : `Q${q}`}</option>)}</select></label>
             <label>Listed team<select value={teamFilter} onChange={e => { setTeamFilter(e.target.value); setPlayLimit(20); }}><option value="all">Both teams</option><option>{away.abbr}</option><option>{home.abbr}</option></select></label>
             <label>Benefited<select value={benefitFilter} onChange={e => { setBenefitFilter(e.target.value); setPlayLimit(20); }}><option value="all">Either team</option><option value={away.abbr}>{away.abbr} gained WP</option><option value={home.abbr}>{home.abbr} gained WP</option><option value="none">Neither gained</option></select></label>
             <label>Play type<select value={typeFilter} onChange={e => { setTypeFilter(e.target.value); setPlayLimit(20); }}><option value="all">All types</option><option value="pass">Pass / sack</option><option value="rush">Rush</option><option value="kick">Kick / punt</option><option value="penalty">Penalty play</option><option value="other">Other</option></select></label>
             <label>Outcome<select value={outcomeFilter} onChange={e => { setOutcomeFilter(e.target.value); setPlayLimit(20); }}><option value="all">All outcomes</option><option value="score">Scoring</option><option value="turnover">Turnover</option><option value="penalty">Penalty involved</option><option value="fourth">Fourth down</option></select></label>
             <label>Sort<select value={playSort} onChange={e => { setPlaySort(e.target.value); setPlayLimit(20); }}><option value="game">{game.status === 'in-progress' ? 'Newest first' : 'Game order'}</option>{game.status === 'in-progress' && <option value="oldest">Oldest first</option>}<option value="wp">Biggest WP swing</option></select></label></div>
-          <div className={styles.tapeList}>{filteredPlays.slice(0, playLimit).map((play: CanonicalPlay) => <div className={`${styles.tapeEntry} ${focusedPlay === play.id ? styles.focus : ''}`} id={`play-${play.id}`} key={play.id}><CanonicalPlayCard play={play} home={home} away={away} /></div>)}
+          <div className={styles.tapeList}>{filteredPlays.slice(0, playLimit).map((play: CanonicalPlay) => <div className={`${styles.tapeEntry} ${focusedPlay === play.id ? styles.focus : ''}`} id={`play-${play.id}`} key={play.id}><CanonicalPlayCard play={play} home={home} away={away} epaPending={game.status === 'in-progress' && play.id === plays[plays.length - 1]?.id && isRankablePlay(play) && play.epa === null} /></div>)}
             {!filteredPlays.length && <div className={styles.missing}>No plays match these filters.</div>}
             {filteredPlays.length > playLimit && <button className={styles.more} onClick={() => setPlayLimit(playLimit + 20)}>Show 20 more · {filteredPlays.length - playLimit} remaining</button>}</div>
-          <div className={styles.panelFoot}>Showing {Math.min(filteredPlays.length, playLimit)} of {filteredPlays.length} matching plays · pp = percentage points. The latest play’s EPA may wait for the next play state.</div>
         </article>
       </section>
-      <footer className={styles.footer}>Game {game.gameId} · Statistics and win probability from ESPN. EPA is shown only when a verified play estimate is available.</footer>
+      <footer className={styles.footer}>Data: ESPN</footer>
     </div>
   </div>;
 }

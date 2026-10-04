@@ -156,18 +156,18 @@ export function DirectoryClient({ initialData }: DirectoryClientProps) {
       : hasSuccessfulRefresh ? `Checked ${formatCheckAge(secondsSinceUpdate)}` : 'Checking scores…';
 
   return <div className={styles.page}>
-    <header className={styles.siteHeader}><span className={styles.brand}>GAME<span>/</span>EXPLAINED</span><span className={styles.headerNote}>NFL game reports</span></header>
+    <header className={styles.siteHeader}><span className={styles.brand}>GAME<span>/</span>EXPLAINED</span></header>
     <main className={styles.record}>
       <div className={styles.crumb}><span>Games / {scoreboard.week.label}</span><span>{sortedGames.length} games{activeCount > 0 ? ` · ${activeCount} live` : ''}</span></div>
       <section className={styles.intro}>
-        <div><span className={styles.kicker}>NFL games</span><h1>{scoreboard.week.label}</h1><p>Select a game for its story, factors, and play-by-play.</p></div>
+        <div><span className={styles.kicker}>NFL games</span><h1>{scoreboard.week.label}</h1></div>
         <div className={styles.weekControl}><label htmlFor="directory-week">Choose week</label><WeekPicker currentWeek={currentWeek} onWeekChange={handleWeekChange} id="directory-week" /></div>
       </section>
       <div className={styles.listHead}><strong>{activeCount ? 'Live and scheduled games' : 'Games'}</strong><span>{hasUnfinishedGames ? `Scores checked automatically · ${scoreCheckStatus}` : 'Scores and status from ESPN'}</span></div>
       {refreshError && <div className={styles.refreshError} role="status">Could not refresh scores. Showing the last loaded results and retrying automatically. <button onClick={refresh}>Try again</button></div>}
       <div className={styles.list}>{sortedGames.length ? sortedGames.map(game => <div key={game.gameId} className={changedGameIds.has(game.gameId) ? styles.changed : ''}><GameCard game={game} week={currentWeek} /></div>)
         : <div className={styles.empty}>No games are listed for this week. Choose another week above.</div>}</div>
-      <footer className={styles.footer}>Game data from ESPN · Choose a game to inspect its full report.</footer>
+      <footer className={styles.footer}>Data: ESPN</footer>
     </main>
   </div>;
 }

@@ -16,7 +16,7 @@ function cleanDescription(value: string) {
     .replace(/\s+/g, ' ').trim();
 }
 
-export function CanonicalPlayCard({ play, home, away }: { play: CanonicalPlay; home: TeamMeta; away: TeamMeta }) {
+export function CanonicalPlayCard({ play, home, away, epaPending = false }: { play: CanonicalPlay; home: TeamMeta; away: TeamMeta; epaPending?: boolean }) {
   const spot = play.ballBefore === '50' ? 'midfield' : play.ballBefore ? `the ${play.ballBefore}` : null;
   const down = play.down && play.down >= 1 && play.down <= 4
     ? `${ordinal(play.down)} and ${play.distance === 0 ? 'goal' : play.distance ?? '?'}` : null;
@@ -56,7 +56,7 @@ export function CanonicalPlayCard({ play, home, away }: { play: CanonicalPlay; h
       <div className={styles.callout} key={`${callout.label}-${i}`}><span>{callout.label}</span><strong>{callout.value}</strong></div>
     )}</div>}
     <div className={styles.metrics}>
-      <div className={styles.metric}><span>Play EPA</span><strong>{epa}</strong></div>
+      <div className={styles.metric}><span>Play EPA</span><strong>{epa}</strong>{epaPending && <small>May appear after the next play.</small>}</div>
       <div className={styles.metric}><span>Win probability change</span><strong>{wp}</strong>
         {showRange && wpBefore !== null && wpAfter !== null && <small>{percent(wpBefore)} → {percent(wpAfter)}</small>}
         {play.wpAttributionUncertain && <small>ESPN updated win probability after the preceding score; this change may include that update.</small>}

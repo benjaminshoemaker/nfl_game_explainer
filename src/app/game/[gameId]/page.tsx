@@ -38,13 +38,19 @@ async function getGameData(gameId: string, debug: boolean): Promise<GameResponse
     const origin = await getRequestOrigin();
     const url = new URL(`/api/game/${gameId}`, origin);
     if (debug) url.searchParams.set('debug', 'true');
+    const incomingHeaders = await headers();
+    const apiHeaders = new Headers({ 'x-nfl-request-id': requestId });
+    // A protected preview needs the viewer's credentials on this same-origin
+    // server request, just as a browser's relative API request does.
+    for (const name of ['cookie', 'x-vercel-protection-bypass']) {
+      const value = incomingHeaders.get(name);
+      if (value) apiHeaders.set(name, value);
+    }
 
     const response = await fetch(url, {
       // Revalidate every 30 seconds for live games
       ...(debug ? { cache: 'no-store' as const } : { next: { revalidate: 30 } }),
-      headers: {
-        'x-nfl-request-id': requestId,
-      },
+      headers: apiHeaders,
     });
 
     if (!response.ok) {

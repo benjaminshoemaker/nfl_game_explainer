@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { ScoreboardResponse, WeekSelection } from '@/types';
 import { GameCard } from '@/components/GameCard';
 import { WeekPicker } from '@/components/WeekPicker';
@@ -167,7 +168,7 @@ export function DirectoryClient({ initialData }: DirectoryClientProps) {
       {refreshError && <div className={styles.refreshError} role="status">Could not refresh scores. Showing the last loaded results and retrying automatically. <button onClick={refresh}>Try again</button></div>}
       <div className={styles.list}>{sortedGames.length ? sortedGames.map(game => <div key={game.gameId} className={changedGameIds.has(game.gameId) ? styles.changed : ''}><GameCard game={game} week={currentWeek} /></div>)
         : <div className={styles.empty}>No games are listed for this week. Choose another week above.</div>}</div>
-      <footer className={styles.footer}>Data: ESPN</footer>
+      <footer className={styles.footer}><span>Data: ESPN</span><Link href="/how-it-works">How it works</Link></footer>
     </main>
   </div>;
 }

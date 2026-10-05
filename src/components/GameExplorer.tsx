@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import Link from 'next/link';
 import type { AdvancedStats, CanonicalPlay, GameResponse, PlayDetail, TeamMeta } from '@/types';
 import { CanonicalPlayCard } from './CanonicalPlayCard';
 import { FactorVisuals } from './FactorVisuals';
@@ -292,7 +293,7 @@ export function GameExplorer({ game, scope, home, away }: { game: GameResponse; 
       {game.source_gaps?.length ? <div role="status" className={styles.notice}>ESPN box-score totals or offensive-play counts differ from available play-by-play for {game.source_gaps.map(g => g.team).join(', ')}. Full-game totals use ESPN; play-based metrics and competitive splits may be incomplete.</div> : null}
       {game.status === 'delayed' || game.status === 'postponed' || game.status === 'canceled' ? <div role="status" className={styles.notice}>{gameStatusLabel(game.status, game.statusDetail)}. This report shows the last plays ESPN provided.</div> : null}
       {rankableCount < 20 && game.status === 'in-progress' && <div role="status" className={styles.notice}>Early game: {rankableCount} classified {rankableCount === 1 ? 'play' : 'plays'} available. Factor comparisons are preliminary.</div>}
-      <div className={styles.sectionHead}><h2>Game factors</h2>{selected !== null && <button className={styles.allFactorsButton} type="button" onClick={() => setSelected(null)}>All factors</button>}</div>
+      <div className={styles.sectionHead}><h2>Game factors</h2><Link className={styles.methodologyLink} href="/how-it-works">How it works</Link>{selected !== null && <button className={styles.allFactorsButton} type="button" onClick={() => setSelected(null)}>All factors</button>}</div>
       <section id="game-factors" aria-label={selected === null ? 'All game factors' : 'Game factors and evidence'}>
       {selected === null ? <div className={styles.factorMatrix}>
         <div className={styles.matrixSummary} aria-label="Factor wins"><strong>{away.abbr} {awayFactorWins} · {home.abbr} {homeFactorWins}</strong><small>{tiedFactors ? `${tiedFactors} tied` : ''}{tiedFactors && pendingFactors ? ' · ' : ''}{pendingFactors ? `${pendingFactors} undecided` : ''}</small></div>

@@ -13,3 +13,5 @@
 .empty{padding:30px 24px;color:#526b70;font-size:var(--type-body)}
 
 .siteNav{display:flex;gap:16px;flex-wrap:wrap;font-size:var(--type-label);font-weight:700}.siteNav a{color:#315e65;text-decoration:underline;text-underline-offset:3px}@media(max-width:600px){.siteHeader{flex-wrap:wrap}.siteNav{gap:12px}}
+
+.footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}.footer a{color:#315e65;text-decoration:underline;text-underline-offset:3px}

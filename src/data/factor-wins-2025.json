@@ -1,0 +1,478 @@
+{
+  "games": 272,
+  "week_counts": {
+    "1": 16,
+    "2": 16,
+    "3": 16,
+    "4": 16,
+    "5": 14,
+    "6": 15,
+    "7": 15,
+    "8": 13,
+    "9": 14,
+    "10": 14,
+    "11": 15,
+    "12": 14,
+    "13": 16,
+    "14": 14,
+    "15": 16,
+    "16": 16,
+    "17": 16,
+    "18": 16
+  },
+  "method": "Exactly mirrors current dashboard strict comparisons, tied factors award neither team; clean subset excludes source gaps, pending comparisons, and competitive WP/penalty feed gaps. Game ties count half a win in win percentage.",
+  "tables": {
+    "full_all": {
+      "games": 272,
+      "excluded_games_by_reason": {
+        "source_gap": 15,
+        "pending_comparison": 1
+      },
+      "bins": [
+        {
+          "factors": 0,
+          "teams": 33,
+          "wins": 0,
+          "losses": 33,
+          "ties": 0,
+          "win_pct": 0.0
+        },
+        {
+          "factors": 1,
+          "teams": 71,
+          "wins": 2,
+          "losses": 69,
+          "ties": 0,
+          "win_pct": 2.816901408450704
+        },
+        {
+          "factors": 2,
+          "teams": 76,
+          "wins": 18,
+          "losses": 57,
+          "ties": 1,
+          "win_pct": 24.342105263157894
+        },
+        {
+          "factors": 3,
+          "teams": 98,
+          "wins": 36,
+          "losses": 62,
+          "ties": 0,
+          "win_pct": 36.734693877551024
+        },
+        {
+          "factors": 4,
+          "teams": 97,
+          "wins": 59,
+          "losses": 38,
+          "ties": 0,
+          "win_pct": 60.824742268041234
+        },
+        {
+          "factors": 5,
+          "teams": 75,
+          "wins": 64,
+          "losses": 11,
+          "ties": 0,
+          "win_pct": 85.33333333333333
+        },
+        {
+          "factors": 6,
+          "teams": 61,
+          "wins": 59,
+          "losses": 1,
+          "ties": 1,
+          "win_pct": 97.54098360655738
+        },
+        {
+          "factors": 7,
+          "teams": 28,
+          "wins": 28,
+          "losses": 0,
+          "ties": 0,
+          "win_pct": 100.0
+        },
+        {
+          "factors": 8,
+          "teams": 5,
+          "wins": 5,
+          "losses": 0,
+          "ties": 0,
+          "win_pct": 100.0
+        }
+      ]
+    },
+    "full_clean": {
+      "games": 256,
+      "excluded_games_by_reason": {
+        "source_gap": 15,
+        "pending_comparison": 1
+      },
+      "bins": [
+        {
+          "factors": 0,
+          "teams": 30,
+          "wins": 0,
+          "losses": 30,
+          "ties": 0,
+          "win_pct": 0.0
+        },
+        {
+          "factors": 1,
+          "teams": 66,
+          "wins": 2,
+          "losses": 64,
+          "ties": 0,
+          "win_pct": 3.0303030303030303
+        },
+        {
+          "factors": 2,
+          "teams": 73,
+          "wins": 17,
+          "losses": 55,
+          "ties": 1,
+          "win_pct": 23.972602739726028
+        },
+        {
+          "factors": 3,
+          "teams": 92,
+          "wins": 35,
+          "losses": 57,
+          "ties": 0,
+          "win_pct": 38.04347826086956
+        },
+        {
+          "factors": 4,
+          "teams": 94,
+          "wins": 56,
+          "losses": 38,
+          "ties": 0,
+          "win_pct": 59.57446808510638
+        },
+        {
+          "factors": 5,
+          "teams": 73,
+          "wins": 63,
+          "losses": 10,
+          "ties": 0,
+          "win_pct": 86.3013698630137
+        },
+        {
+          "factors": 6,
+          "teams": 54,
+          "wins": 52,
+          "losses": 1,
+          "ties": 1,
+          "win_pct": 97.22222222222223
+        },
+        {
+          "factors": 7,
+          "teams": 26,
+          "wins": 26,
+          "losses": 0,
+          "ties": 0,
+          "win_pct": 100.0
+        },
+        {
+          "factors": 8,
+          "teams": 4,
+          "wins": 4,
+          "losses": 0,
+          "ties": 0,
+          "win_pct": 100.0
+        }
+      ]
+    },
+    "competitive_all": {
+      "games": 272,
+      "excluded_games_by_reason": {
+        "source_gap": 14,
+        "pending_comparison": 4,
+        "wp_coverage_below_95pct": 9,
+        "source_gap;pending_comparison": 1
+      },
+      "bins": [
+        {
+          "factors": 0,
+          "teams": 27,
+          "wins": 0,
+          "losses": 27,
+          "ties": 0,
+          "win_pct": 0.0
+        },
+        {
+          "factors": 1,
+          "teams": 73,
+          "wins": 2,
+          "losses": 71,
+          "ties": 0,
+          "win_pct": 2.73972602739726
+        },
+        {
+          "factors": 2,
+          "teams": 80,
+          "wins": 18,
+          "losses": 61,
+          "ties": 1,
+          "win_pct": 23.125
+        },
+        {
+          "factors": 3,
+          "teams": 96,
+          "wins": 35,
+          "losses": 61,
+          "ties": 0,
+          "win_pct": 36.458333333333336
+        },
+        {
+          "factors": 4,
+          "teams": 114,
+          "wins": 75,
+          "losses": 39,
+          "ties": 0,
+          "win_pct": 65.78947368421052
+        },
+        {
+          "factors": 5,
+          "teams": 76,
+          "wins": 65,
+          "losses": 11,
+          "ties": 0,
+          "win_pct": 85.52631578947368
+        },
+        {
+          "factors": 6,
+          "teams": 52,
+          "wins": 50,
+          "losses": 1,
+          "ties": 1,
+          "win_pct": 97.11538461538461
+        },
+        {
+          "factors": 7,
+          "teams": 22,
+          "wins": 22,
+          "losses": 0,
+          "ties": 0,
+          "win_pct": 100.0
+        },
+        {
+          "factors": 8,
+          "teams": 4,
+          "wins": 4,
+          "losses": 0,
+          "ties": 0,
+          "win_pct": 100.0
+        }
+      ]
+    },
+    "competitive_clean": {
+      "games": 244,
+      "excluded_games_by_reason": {
+        "source_gap": 14,
+        "pending_comparison": 4,
+        "wp_coverage_below_95pct": 9,
+        "source_gap;pending_comparison": 1
+      },
+      "bins": [
+        {
+          "factors": 0,
+          "teams": 23,
+          "wins": 0,
+          "losses": 23,
+          "ties": 0,
+          "win_pct": 0.0
+        },
+        {
+          "factors": 1,
+          "teams": 63,
+          "wins": 2,
+          "losses": 61,
+          "ties": 0,
+          "win_pct": 3.1746031746031744
+        },
+        {
+          "factors": 2,
+          "teams": 73,
+          "wins": 15,
+          "losses": 57,
+          "ties": 1,
+          "win_pct": 21.232876712328768
+        },
+        {
+          "factors": 3,
+          "teams": 88,
+          "wins": 33,
+          "losses": 55,
+          "ties": 0,
+          "win_pct": 37.5
+        },
+        {
+          "factors": 4,
+          "teams": 103,
+          "wins": 66,
+          "losses": 37,
+          "ties": 0,
+          "win_pct": 64.07766990291262
+        },
+        {
+          "factors": 5,
+          "teams": 68,
+          "wins": 59,
+          "losses": 9,
+          "ties": 0,
+          "win_pct": 86.76470588235294
+        },
+        {
+          "factors": 6,
+          "teams": 47,
+          "wins": 45,
+          "losses": 1,
+          "ties": 1,
+          "win_pct": 96.80851063829788
+        },
+        {
+          "factors": 7,
+          "teams": 20,
+          "wins": 20,
+          "losses": 0,
+          "ties": 0,
+          "win_pct": 100.0
+        },
+        {
+          "factors": 8,
+          "teams": 3,
+          "wins": 3,
+          "losses": 0,
+          "ties": 0,
+          "win_pct": 100.0
+        }
+      ]
+    }
+  },
+  "individual": {
+    "full": {
+      "Turnovers": {
+        "games": 196,
+        "wins": 150,
+        "losses": 45,
+        "ties": 1,
+        "win_pct": 76.78571428571429
+      },
+      "Success Rate": {
+        "games": 252,
+        "wins": 181,
+        "losses": 70,
+        "ties": 1,
+        "win_pct": 72.02380952380952
+      },
+      "Adjusted Yards Per Play": {
+        "games": 256,
+        "wins": 181,
+        "losses": 74,
+        "ties": 1,
+        "win_pct": 70.8984375
+      },
+      "Explosive Play Rate": {
+        "games": 255,
+        "wins": 172,
+        "losses": 82,
+        "ties": 1,
+        "win_pct": 67.6470588235294
+      },
+      "Points Per Trip (Inside 40)": {
+        "games": 254,
+        "wins": 194,
+        "losses": 59,
+        "ties": 1,
+        "win_pct": 76.5748031496063
+      },
+      "Ave Start Field Pos": {
+        "games": 245,
+        "wins": 150,
+        "losses": 94,
+        "ties": 1,
+        "win_pct": 61.42857142857143
+      },
+      "Penalty Yards": {
+        "games": 249,
+        "wins": 136,
+        "losses": 112,
+        "ties": 1,
+        "win_pct": 54.81927710843374
+      },
+      "Non-Offensive Points": {
+        "games": 60,
+        "wins": 42,
+        "losses": 17,
+        "ties": 1,
+        "win_pct": 70.83333333333333
+      }
+    },
+    "competitive": {
+      "Turnovers": {
+        "games": 186,
+        "wins": 137,
+        "losses": 48,
+        "ties": 1,
+        "win_pct": 73.9247311827957
+      },
+      "Success Rate": {
+        "games": 239,
+        "wins": 170,
+        "losses": 68,
+        "ties": 1,
+        "win_pct": 71.33891213389121
+      },
+      "Adjusted Yards Per Play": {
+        "games": 244,
+        "wins": 175,
+        "losses": 68,
+        "ties": 1,
+        "win_pct": 71.92622950819673
+      },
+      "Explosive Play Rate": {
+        "games": 242,
+        "wins": 159,
+        "losses": 82,
+        "ties": 1,
+        "win_pct": 65.9090909090909
+      },
+      "Points Per Trip (Inside 40)": {
+        "games": 238,
+        "wins": 182,
+        "losses": 55,
+        "ties": 1,
+        "win_pct": 76.68067226890756
+      },
+      "Ave Start Field Pos": {
+        "games": 228,
+        "wins": 129,
+        "losses": 98,
+        "ties": 1,
+        "win_pct": 56.79824561403509
+      },
+      "Penalty Yards": {
+        "games": 238,
+        "wins": 134,
+        "losses": 103,
+        "ties": 1,
+        "win_pct": 56.51260504201681
+      },
+      "Non-Offensive Points": {
+        "games": 56,
+        "wins": 38,
+        "losses": 17,
+        "ties": 1,
+        "win_pct": 68.75
+      }
+    }
+  },
+  "provenance": {
+    "prepared_at": "2026-10-04",
+    "source": "ESPN summary API; nflverse schedule used to check game IDs and final score pairs",
+    "snapshot": "Weeks 1\u201315 reused cached summaries; weeks 16\u201318 fetched for this study. Final-stat association, not a prospective prediction.",
+    "source_manifest_sha256": "4a0ab52b7b864f8336ccdd87590cfb3081ae308d262acff98f4a9e81ab26a844"
+  }
+}

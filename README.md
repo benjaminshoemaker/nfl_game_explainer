@@ -383,3 +383,10 @@ It never includes raw PBP/CSV inputs or code snapshots. Keep previous public
 archive files in subsequent deployments. `public/team-data/publication.json`
 identifies the published cutoff and model. Publishing requires deploying the
 updated bundle; the local weekly refresh alone does not update the website.
+
+### How it works
+
+The public `/how-it-works` page explains the eight game factors, factor counts,
+competitive scope, bar scaling, data limits, and the 2025 outcome study. It is
+linked from the game directory and each game’s factor section. The checked-in
+`src/data/factor-wins-2025.json` is a fixed study snapshot, not a live forecast.

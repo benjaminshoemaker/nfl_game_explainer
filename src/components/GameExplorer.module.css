@@ -65,3 +65,5 @@
 .pregameTeams span:nth-child(2){font-size:var(--type-label);color:var(--muted);font-weight:600;letter-spacing:0;text-transform:uppercase}
 @media(max-width:600px){.pregame{padding:42px 0 64px}.pregameTeams{margin-top:30px}}
 .noPlayScore{margin-top:18px!important;font-weight:800;color:var(--ink)!important}
+
+.methodologyLink{color:var(--mf-teal-dark);font-size:var(--type-label);font-weight:700;text-decoration:underline;text-underline-offset:3px}.methodologyLink:focus-visible{outline:2px solid var(--mf-teal);outline-offset:4px}

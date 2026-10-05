@@ -26,6 +26,21 @@ LA, or JAC). Team IDs and one shared alias map align those names with the
 box score. When accepted penalty yardage or team attribution is unknown,
 known yards remain summed and the penalty-yard factor comparison is undecided.
 
+PUBLIC METHODOLOGY AND 2025 OUTCOME STUDY
+----------------------------------------
+
+The /how-it-works page publishes the dashboard definitions and a fixed 2025
+regular-season outcome study, prepared October 4, 2026. Its data snapshot is
+src/data/factor-wins-2025.json. All 272 games were checked; the primary tables
+use 256 full-game and 244 competitive games after excluding source gaps,
+unavailable comparisons and (for competitive) insufficient WP coverage.
+Each game contributes two team appearances. Tied factors award neither team;
+game winning percentage counts a tied game as half a win. Comparisons need
+nonempty samples, but bar-drawing minimums do not determine factor winners.
+The study relates final statistics to the same game outcome and does not
+validate pregame or in-game prediction. Its full-season sample is separate
+from the weeks 1-15 calibration sample used for bar references below.
+
 FACTOR BAR SCALE
 ----------------
 

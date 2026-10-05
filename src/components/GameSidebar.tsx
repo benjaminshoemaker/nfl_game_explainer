@@ -41,7 +41,7 @@ export function GameSidebar({ games, weekLabel, week, refreshFailed = false, ref
   const liveCount = games.filter(game => game.isActive).length;
   const delayedCount = games.filter(game => game.status === 'delayed').length;
   return <div className={styles.sidebar}>
-    <div className={styles.header}><Link href="/" className={styles.brand}>GAME<span>/</span>EXPLAINED</Link><div className={styles.week}>NFL games · {weekLabel}</div></div>
+    <div className={styles.header}><Link href="/" className={styles.brand}>NFL Win Delta</Link><div className={styles.week}>Games · {weekLabel}</div></div>
     <nav className={styles.list} aria-label={`${weekLabel} games`}>{sortedGames.map(game => <GameRow key={game.gameId} game={game} current={game.gameId === currentGameId} week={week} />)}</nav>
     {refreshFailed && <div className={styles.loadError} role="status">Scores may be out of date.</div>}
     <div className={styles.footer}>{liveCount ? `${liveCount} live ${liveCount === 1 ? 'game' : 'games'}` : delayedCount ? `${delayedCount} delayed ${delayedCount === 1 ? 'game' : 'games'}` : 'No live games'}{refreshStatus && <span>{refreshStatus}</span>}<Link href="/">All games →</Link></div>

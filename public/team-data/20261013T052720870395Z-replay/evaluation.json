@@ -1,0 +1,169 @@
+{
+  "metrics": {
+    "model": {
+      "games": 15,
+      "rmse": 12.499988779064594,
+      "mae": 9.542539363729288,
+      "winnerCorrect": 11,
+      "winnerGames": 14,
+      "tiesExcluded": 1
+    },
+    "pointBaseline": {
+      "games": 15,
+      "rmse": 13.696500651263683,
+      "mae": 10.663213045153098,
+      "winnerCorrect": 9,
+      "winnerGames": 14,
+      "tiesExcluded": 1
+    },
+    "vegas": {
+      "games": 15,
+      "rmse": 13.043516908155304,
+      "mae": 10.4,
+      "winnerCorrect": 9,
+      "winnerGames": 14,
+      "tiesExcluded": 1
+    }
+  },
+  "games": [
+    {
+      "gameId": "2026_05_TB_DAL",
+      "home": "DAL",
+      "away": "TB",
+      "model": 5.3069911869916195,
+      "pointBaseline": 3.98988480032494,
+      "actual": -8.0,
+      "vegas": 9.5
+    },
+    {
+      "gameId": "2026_05_PHI_JAX",
+      "home": "JAX",
+      "away": "PHI",
+      "model": 5.578160977725071,
+      "pointBaseline": 9.615567389442473,
+      "actual": 2.0,
+      "vegas": 7.5
+    },
+    {
+      "gameId": "2026_05_CHI_GB",
+      "home": "GB",
+      "away": "CHI",
+      "model": 0.7680087933898407,
+      "pointBaseline": -5.319099233189979,
+      "actual": 24.0,
+      "vegas": -1.5
+    },
+    {
+      "gameId": "2026_05_CIN_MIA",
+      "home": "MIA",
+      "away": "CIN",
+      "model": -4.125298513991863,
+      "pointBaseline": -4.319431477940292,
+      "actual": -7.0,
+      "vegas": -7.0
+    },
+    {
+      "gameId": "2026_05_LV_NE",
+      "home": "NE",
+      "away": "LV",
+      "model": 4.4752191490072075,
+      "pointBaseline": 3.7656327392126476,
+      "actual": 28.0,
+      "vegas": 3.5
+    },
+    {
+      "gameId": "2026_05_MIN_NO",
+      "home": "NO",
+      "away": "MIN",
+      "model": -1.9761204277879973,
+      "pointBaseline": -4.600000058905509,
+      "actual": -10.0,
+      "vegas": -2.5
+    },
+    {
+      "gameId": "2026_05_CLE_NYJ",
+      "home": "NYJ",
+      "away": "CLE",
+      "model": 3.831679112337019,
+      "pointBaseline": -0.021442332948780507,
+      "actual": 5.0,
+      "vegas": 2.5
+    },
+    {
+      "gameId": "2026_05_IND_PIT",
+      "home": "PIT",
+      "away": "IND",
+      "model": 2.984886324673487,
+      "pointBaseline": 1.335868243679469,
+      "actual": 12.0,
+      "vegas": 3.0
+    },
+    {
+      "gameId": "2026_05_HOU_TEN",
+      "home": "TEN",
+      "away": "HOU",
+      "model": -3.007087127653423,
+      "pointBaseline": -2.2959655910137915,
+      "actual": -23.0,
+      "vegas": -6.5
+    },
+    {
+      "gameId": "2026_05_NYG_WAS",
+      "home": "WSH",
+      "away": "NYG",
+      "model": -2.0468433967972195,
+      "pointBaseline": -1.430405260822821,
+      "actual": 0.0,
+      "vegas": 3.5
+    },
+    {
+      "gameId": "2026_05_DEN_LAC",
+      "home": "LAC",
+      "away": "DEN",
+      "model": -3.4991926657034003,
+      "pointBaseline": -1.4216975982610527,
+      "actual": -6.0,
+      "vegas": -3.5
+    },
+    {
+      "gameId": "2026_05_DET_ARI",
+      "home": "ARI",
+      "away": "DET",
+      "model": -3.091189920630154,
+      "pointBaseline": -2.5090052938208904,
+      "actual": -24.0,
+      "vegas": -5.5
+    },
+    {
+      "gameId": "2026_05_SF_SEA",
+      "home": "SEA",
+      "away": "SF",
+      "model": 0.29469950895076713,
+      "pointBaseline": 0.9573385874591711,
+      "actual": -3.0,
+      "vegas": 3.0
+    },
+    {
+      "gameId": "2026_05_BAL_ATL",
+      "home": "ATL",
+      "away": "BAL",
+      "model": -1.6683431655543233,
+      "pointBaseline": -0.6255522461834637,
+      "actual": -7.0,
+      "vegas": 3.5
+    },
+    {
+      "gameId": "2026_05_BUF_LA",
+      "home": "LAR",
+      "away": "BUF",
+      "model": 1.3384205862033745,
+      "pointBaseline": 1.4876113221254283,
+      "actual": -3.0,
+      "vegas": 3.5
+    }
+  ],
+  "pending": [],
+  "missingClosingLine": [],
+  "totalForecasts": 15,
+  "comparison": "Identical completed games with finite nflverse closing spread_line; positive = home favored. Winner accuracy excludes tied outcomes; a pick-em predicts neither winner."
+}

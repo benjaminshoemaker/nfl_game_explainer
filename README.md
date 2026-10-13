@@ -153,3 +153,233 @@ deliberately not enabled: its current schema does not preserve competitive and
 full-game stat variants separately. Persistent caching should be reconsidered
 only after that schema is corrected and repeated ESPN fetch volume justifies an
 additional managed service.
+
+## Team-season data and audit
+
+The team-season foundation produces exact full-game aggregates for all eight
+factors, with own/opponent/net views, coverage, and qualified-team ranks. It
+does not yet publish a predictive power rating or add public team pages.
+Accepted scope and remaining work are in [TEAM_SEASON_PLAN.md](TEAM_SEASON_PLAN.md).
+
+Build a completed season (network access is explicit):
+
+```bash
+PYTHONPATH=. .venv/bin/python research/build_team_seasons.py --season 2025 --fetch-missing
+```
+
+Use `--through-week 3` for a season-to-date cutoff. Without `--fetch-missing`,
+the builder uses saved schedules and game payloads. It checks both calendar
+years so January games are assigned to the correct NFL season. Missing games
+remain in the coverage denominator. Outputs, source snapshots, weekly
+recalculations, and checksum manifests live in `game_summaries/team_seasons/`.
+
+Independently compare efficiency factors with a locally saved nflverse parquet
+file (requires `requirements-test.txt` or the research dependencies):
+
+```bash
+PYTHONPATH=. .venv/bin/python research/audit_team_seasons.py \
+  --games game_summaries/team_seasons/2025-week-18-games.json \
+  --reference /path/to/play_by_play_2025.parquet \
+  --output game_summaries/team_seasons/2025-independent-audit.json
+PYTHONPATH=. .venv/bin/python research/build_team_seasons.py --season 2025 \
+  --independent-audit game_summaries/team_seasons/2025-independent-audit.json
+```
+
+The second build verifies the audit's input hash and withholds disputed
+efficiency factors from ranks without replacing ESPN values. An audit from a
+different source snapshot is rejected. No OpenAI calls, odds, market rankings,
+or pregame win probabilities are used by these commands.
+
+### nflverse season analysis and review prototype
+
+nflverse is the selected season-analysis source. The ESPN builder remains an
+independent comparison path; the new adapter does not blend the two sources.
+
+```bash
+PYTHONPATH=. .venv/bin/python research/build_nflverse_seasons.py --seasons 2024 2025 2026 --fetch
+.venv/bin/python research/render_team_prototype.py
+```
+
+The builder uses existing `/tmp/nfl_game_explainer_pbp_{season}.parquet` files
+when available; override with `--pbp-pattern`. `--fetch` downloads missing
+inputs only. Checksums, audit summaries, game records, and weekly snapshots
+are written under `game_summaries/nflverse/`. Open
+`game_summaries/nflverse/team-seasons-review.html` for the portable interactive
+prototype. It includes team pages, a metric scatterplot, and multi-team radar
+comparisons. No predictive rating has been fitted or published yet.
+
+### Predictive research experiment
+
+Build nflverse snapshots for every season from 2011 through 2026, then run:
+
+```bash
+PYTHONPATH=. OPENBLAS_NUM_THREADS=1 .venv/bin/python research/team_power_model.py
+.venv/bin/python research/render_team_prototype.py
+```
+
+`game_summaries/nflverse/model/REPORT.md` summarizes the experiment. Its siblings
+contain the frozen protocol and input hashes, validation candidates, held-out
+predictions, calibration bins, season/early-late splits, and experimental team
+ratings with additive factor contributions. The review prototype embeds the
+results when available. Research dependencies are in `research/requirements.txt`.
+The initial evaluation does not demonstrate an advantage over point-differential
+baselines. Experimental rankings are saved for analysis, not published on team
+pages. FPI/DVOA benchmarking remains outstanding.
+
+### Second-round predictive experiments
+
+```bash
+PYTHONPATH=. OPENBLAS_NUM_THREADS=1 .venv/bin/python research/team_power_experiments.py
+```
+
+This preserves the first experiment and writes `game_summaries/nflverse/model-v2/`.
+`REPORT.md` compares smaller factor sets, point differential plus factors,
+separate production/prevention, stabilization, and recency. `protocol.json`
+records the search before fitting; phase selections and `locked-selection.json`
+precede follow-up evaluation. Full candidate results and game-level predictions
+are retained. The 2024–2025 sample is explicitly an already-inspected follow-up,
+not a new untouched test. No production ratings or game-highlight weights change.
+
+Extended research (active, experimental):
+
+```bash
+PYTHONPATH=. OPENBLAS_NUM_THREADS=1 .venv/bin/python research/team_power_extended_data.py
+PYTHONPATH=. OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python research/team_power_flexible.py
+```
+
+Artifacts are under `game_summaries/nflverse/model-v3/`. The builder requires the
+checksum-recorded local 2011–2025 PBP files. Extended measurements and schedule
+context exclude odds, WP, actual starting-QB labels, and actual game weather.
+This search has not established a publishable predictive advantage.
+
+Nested chronological replay:
+
+```bash
+PYTHONPATH=. OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python research/team_power_nested.py
+```
+
+Requires the round-three feature matrix and candidate protocol. Writes
+`game_summaries/nflverse/model-v4-nested/`, including each season's selected
+settings, per-game predictions, and paired season-block uncertainty. This uses
+only prior seasons for settings selection but remains retrospective development
+because candidate families were designed after inspecting recent outcomes.
+
+The completed predictive research summary is
+`game_summaries/nflverse/model-v7-audit/FINDINGS.md`. Reproduce its final audit with:
+
+```bash
+PYTHONPATH=. OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python research/team_power_final_audit.py
+```
+
+The frozen margin model is `model-v7-audit/frozen-margin-model.json`; use the
+recorded adjusted features, not raw game-stat differences. Historical gains are
+modest, retrospective, and not a claim of prospective or FPI/DVOA superiority.
+
+### Experimental power-rating review
+
+The season review now includes 32-team ratings in points relative to league
+average, team contribution breakdowns, a neutral matchup comparison, and a
+power-rating axis alongside the observed-factor charts. Its prediction target
+is upcoming-game scoring margin; it does not forecast final season records.
+The frozen model is preserved in `research/models/frozen-margin-model.json`.
+
+With the audited season snapshots and local nflverse PBP files available:
+
+```bash
+PYTHONPATH=. .venv/bin/python research/team_power_ratings.py --season 2026 --through-week 3
+PYTHONPATH=. .venv/bin/python research/render_team_prototype.py
+python3 -m http.server 8767 --bind 127.0.0.1
+```
+
+Open `/game_summaries/nflverse/team-seasons-review.html#power`. The generated
+review is a dated retrospective snapshot, not a live ranking or pregame archive.
+The final coefficients are intentionally unavailable on pre-2026 team pages.
+
+The team review's schedule measure ranks `1 = hardest` using venue-adjusted
+scoring strength with the focal team's current-season games excluded. Its
+current/prior evidence breakdown sums exactly to the factor/scoring rating,
+with multi-season QB history shown separately. These displays do not change
+the frozen model. Reproduce the bounded schedule-model audit with:
+
+```bash
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 PYTHONPATH=. .venv/bin/python research/team_schedule_audit.py
+```
+
+Read `game_summaries/nflverse/model-v8-schedule/REPORT.md` or Prediction results
+in the review. The alternatives did not pass the promotion gate; the model
+remains unchanged. All historical audit years were already inspected.
+
+### Weekly ratings and pregame archive
+
+Refresh the completed regular-season cutoff, archive the inputs, save next-week
+predictions from both frozen models, score earlier pregame forecasts, and rebuild
+the review with one command:
+
+```bash
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 PYTHONPATH=. .venv/bin/python research/weekly_team_ratings.py
+```
+
+The 2026 protocol uses `research/models/frozen-margin-model.json` and
+`research/models/frozen-point-baseline.json`; updates never refit either model.
+The baseline was exported once with `research/freeze_point_baseline.py` using the
+previously established Ridge-10 adjusted-point comparator and 2012–2025 data.
+The command requires the audited 2011–2025 season JSON and the original training
+reference matrix already present under `game_summaries/nflverse/`. It downloads
+fresh nflverse schedule, team, and three-season QB/PBP source snapshots.
+
+Each run has a unique `game_summaries/nflverse/weekly-archive/<timestamp>/`
+directory with source files, season ratings, game feature values, predictions,
+both model formulas, code copies, checksums, coverage, and evaluation. Successful
+weekly publications also include `review.html`. Existing archives are never
+rewritten by the updater; integrity checks reject changed files. These are local
+records, not an externally certified publication or off-machine backup.
+`weekly-latest.json` points to the last successful run. Missing scheduled games,
+scoring mismatches, source failures, or a missed target-week kickoff prevent a new
+publication. `weekly-status.json` exposes the failure; the review retains the last
+successful cutoff. Factor-specific ambiguities remain excluded under the existing
+metric policy and are displayed explicitly. Previous review HTML is retained in
+`review-history/`; all earlier season JSON remains intact.
+
+Run the weekly command after the final game and before the following week's first
+kickoff. Kickoffs use US Eastern with daylight-saving time. It only publishes full
+completed weeks, and refuses to silently reuse the 2026 protocol in another season.
+The first sealed pregame forecast per game is used for prospective scoring;
+subsequent corrected-source publications do not replace that original forecast.
+Closing spreads are read only during evaluation, with positive `spread_line`
+meaning a home-favored scoring margin. Both models and closing spreads are compared
+on identical completed games with available lines. Tied outcomes are excluded from
+winner accuracy. No betting-return or market-superiority claim follows from these
+margin-error metrics.
+
+For an explicit historical replay (which is excluded from prospective scoring):
+
+```bash
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 PYTHONPATH=. .venv/bin/python research/weekly_team_ratings.py --replay-week 5
+```
+
+A replay may use corrected sources downloaded after kickoff, but model inputs
+stop at the preceding week's games. It does not update the current publication.
+Use `PYTHONPATH=. .venv/bin/python research/render_team_prototype.py` to regenerate
+the main review from the latest successful snapshot and display newly added replays.
+
+### Publish the team pages
+
+The production routes `/teams`, `/teams/BUF`, `/power-rankings`,
+`/prediction-results`, and `/team-methodology` serve the reviewed season interface.
+The game directory links to Teams and Power rankings. These are dated publications;
+model caveats and source quality exclusions remain visible.
+
+After a successful weekly refresh, export the public bundle before deployment:
+
+```bash
+PYTHONPATH=. .venv/bin/python research/publish_team_site.py
+npm run build
+```
+
+The exporter verifies the source archive checksums and writes
+`public/team-seasons.html` and a whitelist of public forecasts, frozen formulas,
+results, reports, sanitized provenance, and checksums in `public/team-data/`.
+It never includes raw PBP/CSV inputs or code snapshots. Keep previous public
+archive files in subsequent deployments. `public/team-data/publication.json`
+identifies the published cutoff and model. Publishing requires deploying the
+updated bundle; the local weekly refresh alone does not update the website.

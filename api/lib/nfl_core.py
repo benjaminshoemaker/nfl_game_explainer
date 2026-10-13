@@ -856,10 +856,13 @@ def _split_drives_on_possession_change(drives):
 def process_game_stats(game_data, expanded=False, probability_map=None,
                        pregame_probabilities=None, wp_threshold=0.975,
                        debug_rows=None, debug_threshold=0.975,
-                       penalty_yards_from_plays=False):
+                       penalty_yards_from_plays=False, aggregate_stats=None):
     """
     Process game data and return stats as dict rows (not DataFrame).
     Returns (stats_rows, details) where stats_rows is a list of dicts.
+    When supplied, aggregate_stats receives unrounded counters keyed by team ID.
+    These are parser counters, before official box-score reconciliation. Consumers
+    must preserve coverage and use the same scope when pooling games.
     """
     boxscore = game_data.get('boxscore', {})
     teams_info = boxscore.get('teams', [])
@@ -1765,6 +1768,11 @@ def process_game_stats(game_data, expanded=False, probability_map=None,
     else:
         for t_id in ids:
             turnover_margin[t_id] = 0
+
+    if aggregate_stats is not None:
+        aggregate_stats.clear()
+        aggregate_stats.update({str(team_id): dict(counters)
+                                for team_id, counters in stats.items()})
 
     # Build final rows
     final_rows = []

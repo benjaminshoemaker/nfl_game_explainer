@@ -11,3 +11,5 @@
 .refreshError{padding:10px 24px;border-bottom:1px solid #e1d2ae;background:#fbf7ee;color:#705323;font-size:var(--type-label)}
 .refreshError button{margin-left:8px;border:0;background:none;color:#315e65;font-weight:800;text-decoration:underline;cursor:pointer}
 .empty{padding:30px 24px;color:#526b70;font-size:var(--type-body)}
+
+.siteNav{display:flex;gap:16px;flex-wrap:wrap;font-size:var(--type-label);font-weight:700}.siteNav a{color:#315e65;text-decoration:underline;text-underline-offset:3px}@media(max-width:600px){.siteHeader{flex-wrap:wrap}.siteNav{gap:12px}}

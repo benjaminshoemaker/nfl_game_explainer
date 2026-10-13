@@ -156,7 +156,7 @@ export function DirectoryClient({ initialData }: DirectoryClientProps) {
       : hasSuccessfulRefresh ? `Checked ${formatCheckAge(secondsSinceUpdate)}` : 'Checking scores…';
 
   return <div className={styles.page}>
-    <header className={styles.siteHeader}><span className={styles.brand}>GAME<span>/</span>EXPLAINED</span></header>
+    <header className={styles.siteHeader}><span className={styles.brand}>GAME<span>/</span>EXPLAINED</span><nav className={styles.siteNav} aria-label="Main navigation"><a href="/teams">Teams</a><a href="/power-rankings">Power rankings</a></nav></header>
     <main className={styles.record}>
       <div className={styles.crumb}><span>Games / {scoreboard.week.label}</span><span>{sortedGames.length} games{activeCount > 0 ? ` · ${activeCount} live` : ''}</span></div>
       <section className={styles.intro}>

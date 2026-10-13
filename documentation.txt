@@ -257,3 +257,327 @@ actually won, look for:
 - Non-offensive points (a pick-6 can overcome losing most factors)
 - Finishing drives (getting to the 40 means nothing without points)
 - Turnovers in critical field position (not all turnovers are equal)
+
+
+TEAM-SEASON AGGREGATION (DESCRIPTIVE, VERSION 1)
+----------------------------------------------
+
+The season layer pools exact game-parser counters before display rounding.
+Success rate is total successful plays / selected offensive plays. Adjusted
+yards per play is total selected offensive yards / selected offensive plays.
+Explosive rate is total selected explosives / selected offensive plays.
+Points per trip pools points and qualifying trips inside the opponent's 40.
+Starting field position pools start coordinates (0 at own goal, 100 at the
+opponent's goal) and counted drive starts. These are ratios of sums, never
+unweighted averages of game percentages. No-opportunity ratios are unavailable,
+not zero. Scrambles and sacks retain the canonical pass-dropback treatment.
+
+Turnovers, penalty yards, and non-offensive points are displayed per covered
+game, with total numerators preserved. Turnovers retain the dashboard's onside
+recovery addition. Full-game giveaways and penalties use official box-score
+totals; other inputs come from the canonical play parser. Historical source
+or convention disagreements are not silently repaired from another provider.
+
+Own means the listed team's output; opponent means output by its opponents in
+those games. Opponent penalty yards are not a defensive-skill measurement.
+For success, yards/play, explosives, finishing, field position, and non-offensive
+points, net = own minus opponent. For turnovers and penalties, net = opponent
+minus own. Positive net therefore always favors the listed team. Both sides of
+net use the same covered games, each with its own opportunity denominator;
+paired values are retained to make partial-coverage calculations inspectable.
+
+The expected-game denominator comes from the season/type/week-filtered schedule,
+not the number of downloaded payloads. Records come from completed-game scores.
+Missing payloads and source gaps remain visible. The initial conservative
+screen excludes play-derived factors from a game if either team's plays/yards/
+turnovers fail box-score reconciliation. Missing validation fields, penalty
+totals, or scoring sequences also affect the relevant coverage. Independent
+efficiency audits can add exclusions, but do not silently clear source gaps.
+Passing these screens is not proof that every metric is correct.
+
+Only complete, nonempty team factors receive ranks. Rankings use unrounded
+values and competition ties (1, 1, 3); tied percentiles use the midpoint.
+Every rank publishes its qualified pool size and league size. Incomplete
+covered-sample values remain available without a rank. The league comparison
+is the pooled value over explicitly reported covered team-games.
+
+Weekly snapshots exclude later weeks, preseason, and playoffs by explicit
+season and season-type keys. They are retrospective recalculations, not
+historically published forecasts. Full-game aggregation does not use pregame
+WP, betting odds, or external power ratings. Power-rating weights, opponent
+adjustments, prior-season blending, and accuracy claims remain separate model
+research; these descriptive ranks must not be labeled predictive strength.
+
+NFLVERSE SEASON ADAPTER (nflverse-eight-factors-v1)
+The season research source is nflverse. Its explicit input whitelist excludes
+odds, WP, EPA, and imported ratings. Only completed regular-season games enter
+snapshots. Source checksums and calculation versions are recorded; snapshots
+are retrospective recalculations, not historical pregame publication archives.
+Success retains the app's 40/60/100 distance definition, not nflverse success.
+Run/pass plays exclude deleted plays and conversion attempts. Scrambles and
+sacks use the 20-yard dropback explosive threshold; runs use 10 yards.
+Lateral receptions use provider passing yards when available, consistent with
+the independent audit. Rates pool unrounded counters over opportunities.
+Drive starts use consistent scrimmage-row drive_start_yard_line metadata;
+kickoff-row metadata is excluded because it can disagree with possession start.
+A long offensive touchdown qualifies as a trip inside the 40. Its conversion
+belongs to the same drive. Return touchdowns and their conversions, safeties,
+and defensive conversion returns count as non-offensive points.
+Lost fumbles are charged to the fumbling team, including return fumbles.
+Successful onside recoveries count against the receiving team. Conversion
+turnovers are excluded. Ambiguous multiple-fumble attribution remains missing.
+Penalties sum the provider's attributed play-level penalty yards, including
+no-play fouls; this is not asserted to equal official multi-foul boxscore totals.
+Scoring events must reconcile to scheduled final scores. A discrepancy withholds
+scoring-related factors only. Missing/conflicting drive starts withhold starting
+field position. Incomplete factors retain partial values but receive no rank.
+Own and opponent rates use their own opportunities; net pools matched games,
+with subtraction reversed for turnovers and penalties so positive is better.
+2024 and 2026 Week 3 have complete eight-factor coverage. 2025 retains source
+gaps for a conflicting CAR drive start against NO in Week 10 and ambiguous
+multiple-fumble attribution in SEA-CAR Week 17. No imputation is applied.
+
+EXPERIMENTAL PREDICTIVE MODEL V1
+2011 initializes prior effects; 2012–2021 fits coefficients and standardization;
+2022–2023 selects hyperparameters by scoring-margin RMSE; 2024–2025 is the frozen
+first evaluation. Predictors for week W use only weeks < W, including when a
+week spans calendar years. End-of-season corrected data is retrospective, not
+historically as-published. The test years are now inspected; subsequent tuning
+must not describe those same years as a fresh untouched test.
+For each factor, weighted ridge estimates team production and opponent allowed
+effects jointly: observed rate = current league mean + own effect + allowed
+effect. Weights are opportunities divided by average team-game opportunities.
+Two neutral team-games regularize each effect; 0, 2, or 4 additional prior-games
+pull toward half of the preceding season's effect. Effects are centered, and
+net = production minus allowed (reversed for turnovers/penalties). Missing
+observations are excluded from that factor's fit, not entered as observed zeros.
+A standardized ridge regression predicts home-minus-away margin from the eight
+home-minus-away net factors. Intercept learns average home advantage. Candidate
+penalties are 10, 100, 1000. A separate logistic fit uses the same setting;
+probability metrics exclude ties and condition on decisive games. This first
+round selects for margin error, not independently optimized probabilities.
+Unadjusted eight-factor, raw point differential, opponent-adjusted point
+differential, and home-only models provide baselines. A paired season-week
+block bootstrap estimates uncertainty in test RMSE differences (2000 draws).
+It is not a guarantee across future seasons. Correlated factor contributions
+are additive predictive explanations, not causal effects or universal weights.
+Experimental team rating = sum of coefficient times adjusted net factor,
+expressed as points above the league average. Current exports retain training
+through 2021 and are research-only. No FPI/DVOA/Elo/EPA benchmark is claimed.
+
+GAME-PAGE HIGHLIGHTS (EXPERIMENTAL)
+The three game-page highlights are selected dynamically from available factor
+comparisons. The first version ranks the observed game gap using the frozen
+experimental season-prediction coefficient for that factor, favors factors
+with contributing-event evidence, and discounts a second highlight from a
+closely related factor group. A factor must pass the dashboard's comparison
+and sample checks. These coefficients predict future scoring margin from
+season-level team data; they are a review heuristic for completed-game
+highlights, not validated same-game importance weights or causal estimates.
+
+PREDICTIVE EXPERIMENT V2 (RESEARCH ONLY)
+The second experiment retrains coefficients annually from 2012 through the
+preceding season, with 2011 initializing priors. Selection pools chronological
+validation forecasts for 2018–2023. The same settings then produce 2024–2025
+follow-up forecasts; those years were inspected in v1 and are not fresh holdouts.
+For 2025 forecasts, coefficient fitting may use 2024 outcomes, but settings and
+factor selection remain fixed from the pre-2024 validation procedure.
+Phase 1 tests all one-, two-, and three-factor subsets, each leave-one-out
+seven-factor subset, all eight, separate production/prevention for all eight,
+and point differential plus each one-/two-/three-factor subset or all eight.
+Point differential alone is the comparison baseline. Ridge penalties are
+10/100/1000. Selection is pooled validation scoring-margin RMSE.
+Phase 2 keeps each family's selected columns, testing 2/4/8 prior pseudo-games
+and two neutral regularization profiles. Uniform adds two neutral pseudo-games
+per factor. Factor-specific uses [2,2,2,6,8,2,6,8] in canonical factor order;
+this is a predefined hypothesis, not measured reliability. Previous-season
+effects are first halved. Missing observations are excluded, not observed zeros.
+Phase 3 keeps the selected stabilization and tests no decay, 4-week, or 8-week
+half-life. Age is cutoffWeek - 1 - observationWeek; only strictly earlier weeks
+are eligible. Age weights multiply opportunity weights without renormalizing
+away the loss of effective sample size. Priors remain fixed during a season.
+Point differential receives its own validation-selected prior strength and
+recency, using two neutral pseudo-games. Its venue treatment remains the same
+home-designation-only approximation as v1; neutral sites are not identified.
+Production and prevention separately sum exactly to the original net factors.
+Their downstream weights can differ in the separate-sides family. All feature
+scaling is fitted only on each fold's training seasons. Logistic C is selected
+separately from [0.001,0.01,0.1,1] by validation log loss after margin-based feature
+selection; tied games remain excluded from conditional winner probabilities.
+Exploratory paired week-block RMSE intervals do not account for the whole model
+search. No future superiority, causal explanation, or FPI/DVOA claim follows.
+The first-round artifacts and game-highlight weighting remain unchanged.
+
+STRONGER POINT-DIFFERENTIAL COMPARATOR AUDIT
+research/team_power_baseline_audit.py estimates team strengths jointly with a
+home-advantage coefficient. Neutral sites have venue indicator zero. Home
+advantage has 16 pseudo-games toward the previous season estimate, initialized
+at 2.5 points. Team effects shrink toward half previous-season strength with
+2/8/32 prior games plus two neutral games; recency is none/4/8 weeks. Downstream
+ridge uses strength difference and venue times fitted home advantage, optionally
+rest difference, with no intercept to preserve neutral-site symmetry. Training
+uses previous seasons; settings selection uses previous three validation seasons.
+The previously selected eight-factor candidate is unchanged during this audit.
+Results remain exploratory and comparator sensitivity prevents a robust claim
+of superiority. The original v1-v4 outputs are preserved.
+
+SITUATION AND QB-HISTORY RESEARCH
+Round six adds early-down efficiency (downs 1–2), close-state efficiency (first
+three quarters and pre-play absolute score differential <=14), and close-state
+pass/rush splits, preserving dropback classification for sacks and scrambles.
+These are situation-specific rates, not an expected-points adjustment. They use
+strictly earlier weeks, opponent adjustment, and the existing stabilized rates.
+QB-history features use the dominant identified dropback player from the team's
+last observed game, his share of team dropbacks, whether that identity changed
+from the preceding game, and that player's prior observed yards/dropback,
+interception rate and game count from current/prior two seasons. Source rows
+use passer_player_id, or rusher_player_id on scrambles. No actual next-game QB
+field is consumed. All same-week forecasts precede all same-week updates.
+Home-minus-away feature differences include missing-history flags. The proxy can
+be stale after offseason changes or injuries; it must never be described as a
+confirmed projected starter. No production UI or headline weights change.
+
+EXPERIMENTAL TEAM POWER RATING (review prototype)
+The frozen ridge model in research/models/frozen-margin-model.json predicts an
+upcoming regular-season game's home-minus-away scoring margin, in points. It
+was fitted on 2012–2025 and must not be used to present earlier-season ratings
+as forecasts. Season performance and predictive strength are separate outputs.
+
+research/team_power_ratings.py computes the original p8/h8 adjusted factor and
+point-margin features, plus previous observed quarterback usage. Team ratings
+sum centered feature contributions, excluding rest, neutral-site and intercept
+terms. This is the antisymmetric neutral strength component: averaging the
+margin over both home/away designations removes any designation offset. A +6
+team against a +2 team has a +4 neutral strength difference. The original
+frozen matchup formula retains its learned intercept and schedule terms.
+Historical feature estimates are not refitted to remove venue exposure.
+
+Each factor contribution combines its net, own and prevention terms; all ten
+component contributions (eight factors, scoring margin and QB history) sum to
+the total before rounding. These are predictive associations, not causal
+explanations. Rankings use unrounded strength, with competition ties.
+
+The review's 2026 snapshot is through Week 3, generated retrospectively on
+October 5. Refreshed QB source files may contain later games, but only game IDs
+in the completed-week input snapshot are admitted. Source hashes are recorded.
+There is no confirmed-next-starter input, final-record projection, playoff
+forecast or prospective prediction archive. The 2018–2025 research results
+measure annual model selection/refitting, not this final frozen vector on all
+historical years. They do not establish prospective or FPI/DVOA superiority.
+
+TEAM POWER COMPONENT CONTEXT
+The team power table ranks each of the ten grouped model contributions across
+the current snapshot's 32 teams. Higher predicted-point contribution is better.
+Competition ranks preserve ties; radar percentiles use tied midranks scaled
+from 0 (last) to 100 (first), with 50 for an all-tied component. These can differ
+from raw descriptive factor ranks because opponent adjustment, shrinkage,
+recency and grouped coefficients intervene.
+
+The radar compares the selected team to the actual teams in overall positions
+16 and 1, not a synthetic per-component median or maximum. Duplicate teams are
+drawn once, with their roles combined in the legend. Under an exact overall
+rating tie, stable team-ID ordering determines those benchmark positions.
+
+Standardized model weights are computed from the frozen model's checksum-
+verified original training matrix, restricted to its 2012–2025 fit seasons.
+For each component, sum coefficient-times-feature terms within each historical
+matchup, compute the population standard deviation across those matchups, and
+normalize component SDs to sum to 100%. Grouping before measuring SD respects
+within-component covariance and net/own/prevention redundancy. Weights are
+common to every team. They are descriptive effect-size shares, NOT literal
+percentage coefficients, variance attribution, causal importance or measured
+incremental predictive value. Expandable details expose every raw coefficient.
+The frozen model, team ratings and prediction formula are unchanged.
+
+POWER RATING CALCULATION WALKTHROUGH
+The team page shows observed eight-factor own/opponent/net values, then adds
+raw scoring margin and all six previous-QB inputs. It compares two fits of the
+current-season data: the normal joint opponent fit and a diagnostic fit with
+opponent coupling terms removed. Both use identical observed games, real
+historical priors, opportunity weights, recency decay and penalties. The prior
+already contains historical opponent adjustment. This is a controlled current-
+schedule comparison, not a fully unadjusted historical model or an alternate
+prediction used in rankings. The production/default ratings calculation is
+unchanged; adjust_opponents=False is used only for this diagnostic.
+
+The diagnostic removes factor own/opponent cross-entries from the normal
+matrix and point-rating team-pair cross-entries, retaining diagonals and RHS.
+Both estimates are centered with the same convention. Factor comparison rows
+show net advantage (own plus prevention), in native units relative to average;
+these are not absolute adjusted rates. QB inputs are not opponent-adjusted.
+The actual calculation exposes every model input, league mean, centered input,
+raw coefficient and their product. Products sum to grouped contributions, and
+the eight-factor subtotal plus scoring margin plus QB contribution equals the
+team rating. Display rounding can prevent visible rounded cells summing exactly.
+
+OPPONENT-ADJUSTMENT IMPACT IN POINTS
+The explainer before Step 2 applies the exact frozen formula to both the actual
+feature vectors and the opponent-off diagnostic vectors. Only the first 25
+factor/scoring features differ; QB and context inputs are identical. Each fit
+is centered over the same league. Actual rating minus diagnostic rating is the
+current-season opponent-adjustment impact, in rating points. Component deltas
+sum to the total; the league-average impact is zero up to floating-point error.
+
+Rank impacts from largest upward change to largest downward change, preserving
+competition ties and tied-midrank percentiles. This is an adjustment-impact
+ranking, NOT an independent strength-of-schedule ranking: it depends on the
+factor-specific fit, regularization and the learned coefficients. The actual
+historical prior remains fixed in both calculations. This delta is already
+included in the published rating and must never be added again. The explainer
+also shows the league median/range, all-team comparison, and component deltas.
+
+SCHEDULE DIFFICULTY AND EVIDENCE DECOMPOSITION (supersedes impact-rank display)
+The team page now shows schedule difficulty alone, not the proposed side-by-
+side schedule/adjustment/before-after-rating panel. The earlier impact-rank
+callout and impact leaderboard have been removed from this view. The existing
+per-factor arithmetic walkthrough remains.
+
+Schedule strength is the equal-game mean of completed opponents' scoring
+strength, using the joint venue-adjusted point-differential fit (8 prior units,
+8-week half-life, 2 neutral units, HFA prior 16). For each focal team remove ALL
+its current-season games before fitting opponent strengths. Retain historical
+priors, including earlier meetings. Estimates are centered over the league and
+ranked 1=hardest. Missing schedule history remains null/unranked, not zero.
+Opponent strengths are snapshot estimates, not pregame ratings, and are not
+the full factor+QB power ratings. The schedule value is not added to the frozen
+rating. Per-opponent contributions to the mean sum to the schedule value.
+
+Current/prior contributions exploit linearity of the factor/scoring fit. Hold
+its design, current-data league baseline, opportunity weights, decay and
+penalties fixed; calculate the response with prior targets zeroed. Its rating
+contribution is labeled current-season evidence; full minus that response is
+the prior contribution. This is an exact additive model decomposition, not a
+percentage attribution of accuracy or literal causal influence. QB history
+spans seasons separately; it is not placed in either factor/scoring subtotal.
+
+Schedule audit: research/team_schedule_audit.py, outputs model-v8-schedule.
+2018–2025 chronological replay; annual settings/family selection uses prior
+three seasons. Tests priors 2/4 vs 8, amplified opponent effects 1.5/2, and
+explicit schedule features. Current recipe is annually refitted on earlier
+seasons; final 2026 coefficients are not evaluated on their training outcomes.
+Selected alternatives RMSE 13.1286 vs incumbent recipe 13.1236; paired season-
+block difference interval [-0.0083,+0.0257], 4/8 years improved. Early RMSE
+13.0895 vs 13.1486, later 13.1449 vs 13.1131. These are retrospective exploratory
+findings, not prospective proof. Promotion gate failed; frozen model unchanged.
+
+WEEKLY POWER-RATING PUBLICATION AND MARKET COMPARISON
+The frozen 2026 formula predicts upcoming home-minus-away scoring margin using
+completed prior-week factor, scoring, schedule-context and QB-history inputs.
+The fixed point-only comparator uses original_p8_h8_point_margin, Ridge alpha 10,
+fit on 2012–2025; intercept 2.0812818964392195 and coefficient 1.4505874207360845.
+The weekly updater does not fit weights or use odds as model inputs. The source
+schedule may contain odds, but prediction features are explicitly whitelisted.
+Publication saves the full named feature vector, both predicted margins, actual
+publication timestamp, frozen model hashes, input copies, and executable code.
+A missing entire game or scoring failure blocks publication. Existing factor-level
+quality exclusions remain in force and are shown; they are never zero imputation.
+Only first sealed pregame forecasts enter the prospective ledger. A historical
+replay uses strictly earlier-week observations but is labeled retrospective because
+the source snapshot and publication were obtained after the target games.
+Evaluation compares the same completed games with finite closing lines for all
+three predictors. nflverse spread_line is the expected home-minus-away margin
+(positive means home favored). MAE averages absolute scoring-margin errors; RMSE
+is the square root of mean squared errors. Winner accuracy excludes actual ties;
+a predicted zero margin does not count as a correct winner pick. Missing lines
+and pending games are reported separately. Archived predictions remain unchanged
+when results arrive or upstream historical data is corrected.

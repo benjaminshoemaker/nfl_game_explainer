@@ -1,0 +1,33 @@
+{
+  "metrics": {
+    "model": {
+      "games": 0,
+      "rmse": null,
+      "mae": null,
+      "winnerCorrect": 0,
+      "winnerGames": 0,
+      "tiesExcluded": 0
+    },
+    "pointBaseline": {
+      "games": 0,
+      "rmse": null,
+      "mae": null,
+      "winnerCorrect": 0,
+      "winnerGames": 0,
+      "tiesExcluded": 0
+    },
+    "vegas": {
+      "games": 0,
+      "rmse": null,
+      "mae": null,
+      "winnerCorrect": 0,
+      "winnerGames": 0,
+      "tiesExcluded": 0
+    }
+  },
+  "games": [],
+  "pending": [],
+  "missingClosingLine": [],
+  "totalForecasts": 0,
+  "comparison": "Identical completed games with finite nflverse closing spread_line; positive = home favored. Winner accuracy excludes tied outcomes; a pick-em predicts neither winner."
+}

@@ -65,3 +65,36 @@ Minimal: Less than 5% difference
 
 The calculation: |home - away| / ((|home| + |away|) / 2)
 These thresholds were chosen to create meaningful visual distinction while avoiding over-sensitivity to small differences.
+
+What does the experimental team power rating predict?
+It estimates expected strength in upcoming games, in points relative to an
+average team under equal conditions. It does not predict final season record.
+Subtract two ratings for their neutral strength difference; actual game
+predictions separately account for venue and rest. Team-page factor tables
+summarize completed-game performance and are distinct from this prediction.
+
+Does the quarterback input know who will start next week?
+No. It uses previous observed quarterback performance and continuity. It can
+miss newly announced starter changes or injuries.
+
+Are the review ratings current or prospectively validated?
+Read the displayed season/week cutoff. The review snapshot was generated after
+those games and is not a pregame publication. Historical model-selection
+results show a modest edge over tested point-differential baselines; they do
+not establish future superiority or a comparison against FPI/DVOA.
+
+Are these weekly forecasts actually saved before the games?
+New weekly runs save predictions, inputs and frozen model versions before the
+first target-week kickoff. The updater refuses late prospective publication.
+Original predictions stay in a timestamped, checksum-verified local archive;
+evaluations use the first pregame forecast for each game. This is a local research
+record, not an independent timestamp service. Historical replays are explicitly
+labeled and never included in the prospective record.
+
+How do we compare with Vegas?
+We use nflverse's closing point spread as a scoring-margin benchmark, not as an
+input to our rating. Lower average margin error (MAE) and RMSE are better. All
+predictors are evaluated on the same completed games with available closing lines.
+Ties do not enter winner accuracy. Closing lines can include information that
+arrived after our earlier weekly forecast. One good week is not evidence of a
+lasting advantage, and this comparison does not measure betting profitability.

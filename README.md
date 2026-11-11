@@ -5,7 +5,21 @@ uses ESPN play-by-play data to explain why an NFL game unfolded the way it did.
 It tracks efficiency, explosives, turnovers, field position, finishing drives,
 and win-probability swings.
 
-Production: [https://windelta.app](https://windelta.app)
+Site: [windelta.app](https://windelta.app)
+
+## Reading the numbers
+
+A final score tells you who won. This project looks at what happened along
+the way: efficient drives, explosive plays, turnovers, field position,
+and missed opportunities.
+
+Full-game box-score totals and metrics calculated from selected plays
+answer different questions. The app keeps them separate and flags gaps in
+the source data. Add
+`?debug=true` to a game URL to inspect the plays behind the calculations.
+
+The power-rating work is a separate experiment. Its historical results
+aren't proof that it predicts future games better than existing models.
 
 ## Architecture
 

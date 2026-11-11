@@ -15,7 +15,15 @@ def test_focal_results_do_not_influence_its_opponent_strength():
     before=schedule_strength(games,['A','B','C'],3,None,2.5,venues)
     changed=copy.deepcopy(games);changed[0]['teams'][0]['score']=150
     after=schedule_strength(changed,['A','B','C'],3,None,2.5,venues)
-    assert before['A']==after['A']
+    # A's own results cannot affect its opponents' strength. Its rank can
+    # change because those results affect the other teams' schedules.
+    for key in ('value', 'opponents', 'games', 'excludedFocalGames'):
+        assert before['A'][key] == after['A'][key]
+    for result in (before, after):
+        for row in result.values():
+            assert row['rank'] == 1 + sum(
+                other['value'] > row['value'] for other in result.values()
+            )
     for row in before.values():
         assert sum(o['contribution'] for o in row['opponents'])==pytest.approx(row['value'])
     ordered=sorted(before.values(),key=lambda r:-r['value'])

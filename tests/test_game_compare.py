@@ -491,13 +491,15 @@ def test_is_competitive_play_logic():
     }
 
     high_wp_home = {"id": "1", "period": {"number": 2}}
-    assert gc.is_competitive_play(high_wp_home, prob_map, wp_threshold=0.97) is False
+    assert gc.is_competitive_play(high_wp_home, prob_map, wp_threshold=0.97,
+                                  start_home_wp=0.98, start_away_wp=0.02) is False
 
     balanced = {"id": "2", "period": {"number": 2}}
     assert gc.is_competitive_play(balanced, prob_map, wp_threshold=0.97) is True
 
     high_wp_away = {"id": "3", "period": {"number": 3}}
-    assert gc.is_competitive_play(high_wp_away, prob_map, wp_threshold=0.85) is False
+    assert gc.is_competitive_play(high_wp_away, prob_map, wp_threshold=0.85,
+                                  start_home_wp=0.1, start_away_wp=0.9) is False
 
     missing_wp = {"id": "999", "period": {"number": 2}}
     assert gc.is_competitive_play(missing_wp, prob_map, wp_threshold=0.5) is True

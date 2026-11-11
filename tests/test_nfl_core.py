@@ -1841,7 +1841,7 @@ class TestIsCompetitivePlay:
         assert is_competitive_play(play, prob_map, wp_threshold=0.5) is True
 
     def test_threshold_boundary_home(self):
-        prob_map = {}
+        prob_map = {"1": {"homeWinPercentage": 0.975, "awayWinPercentage": 0.025}}
         play = {"id": "1", "period": {"number": 4}}
         # At threshold
         assert is_competitive_play(play, prob_map, wp_threshold=0.975,
@@ -1851,11 +1851,18 @@ class TestIsCompetitivePlay:
                                    start_home_wp=0.974, start_away_wp=0.026) is True
 
     def test_threshold_boundary_away(self):
-        prob_map = {}
+        prob_map = {"1": {"homeWinPercentage": 0.025, "awayWinPercentage": 0.975}}
         play = {"id": "1", "period": {"number": 4}}
         # At threshold for away
         assert is_competitive_play(play, prob_map, wp_threshold=0.975,
                                    start_home_wp=0.025, start_away_wp=0.975) is False
+
+    def test_missing_either_boundary_keeps_play_competitive(self):
+        play = {"id": "1", "period": {"number": 4}}
+        prob_map = {"1": {"homeWinPercentage": 0.99, "awayWinPercentage": 0.01}}
+        assert is_competitive_play(play, prob_map) is True
+        assert is_competitive_play(play, {}, start_home_wp=0.99,
+                                   start_away_wp=0.01) is True
 
     def test_missing_probability_data_defaults_competitive(self):
         prob_map = {}

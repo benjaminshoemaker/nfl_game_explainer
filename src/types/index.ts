@@ -238,6 +238,7 @@ export interface PreviewTeam {
   id: string; abbr: string; name: string;
   record: { wins: number; losses: number; ties: number };
   gamesAvailable: number;
+  scoringMarginPerGame?: number | null;
   factors: Record<string, { own: PreviewMetric; opponent: PreviewMetric; net: PreviewMetric }>;
 }
 export interface PregamePreview {

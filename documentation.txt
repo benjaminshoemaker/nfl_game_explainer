@@ -633,3 +633,21 @@ values independently. Shape/reference validation is not proof of every prose
 claim; editorial accuracy still requires evaluation. Missing/failed AI copy does
 not suppress statistical comparisons. No injuries or confirmed-starter inputs
 are supplied. Publication and previous-week cutoffs prevent future-data reuse.
+
+PREGAME NET COMPARISON PRESENTATION
+Each driver row reads left to right: away net season value, home net value,
+raw net difference (away minus home, before rounding), model influence, and
+neutral-field model edge. Net factor values use the existing paired-game metrics;
+turnovers and penalties reverse the subtraction so positive always means better.
+Rate differences are percentage points; other factors retain their native units.
+Scoring margin is observed points scored minus points allowed per completed game,
+only when the full through-week schedule has final scores. QB history has multiple
+inputs and no single observed season value in the preview.
+
+The final column is each component's contribution to the neutral-field rating gap
+at equal rest, not an independent winning-margin prediction. One shared explainer
+covers opponent adjustment, recency, priors and fitted coefficients, and clarifies
+that raw net difference times influence percentage is not the model formula.
+Model edge and influence bars share the same height and vertical position on
+both desktop and mobile. Venue/designation and rest adjustments remain separate
+in the bridge from team rating difference to the actual game projection.

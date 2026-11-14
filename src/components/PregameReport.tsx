@@ -1,9 +1,18 @@
 'use client';
 
 import { useState } from 'react';
-import type { PregamePreview, PreviewMetric } from '@/types';
+import type { PregamePreview, PreviewMetric, PreviewTeam } from '@/types';
 import styles from './PregameReport.module.css';
 
+const FACTOR_UNITS: Record<string, string> = {
+  point_margin: 'Points / game', success_rate: 'Percentage points', yards_per_play: 'Yards / play',
+  explosive_rate: 'Percentage points', points_per_trip: 'Points / trip inside 40',
+  turnovers: 'Takeaways − giveaways / game', field_position: 'Yards of field position',
+  penalties: 'Opponent − own yards / game', non_offensive_points: 'Points / game',
+};
+const formatNet = (key: string, value: number | null) => value == null ? '—'
+  : signed(['success_rate', 'explosive_rate'].includes(key) ? value * 100 : value);
+const seasonNet = (team: PreviewTeam, key: string) => key === 'point_margin' ? team.scoringMarginPerGame ?? null : team.factors[key]?.net.value ?? null;
 const MATCHUP_KEYS = ['success_rate', 'yards_per_play', 'explosive_rate', 'points_per_trip'];
 const signed = (value: number) => `${value < 0 ? '−' : '+'}${Math.abs(value).toFixed(2)}`;
 const format = (key: string, value: number | null) => value == null ? '—'
@@ -18,6 +27,10 @@ export function PregameReport({ preview: p }: { preview: PregamePreview }) {
   const ratings = Object.fromEntries(p.power.map(team => [team.id, team]));
   const away = teams[p.away], home = teams[p.home];
   const defense = offense === p.away ? p.home : p.away;
+  const netDifference = (key: string) => {
+    const a = seasonNet(away, key), h = seasonNet(home, key);
+    return a == null || h == null ? null : a - h;
+  };
   const labels = Object.fromEntries(p.factors.map(factor => [factor.id, factor.label]));
   labels.point_margin = 'Scoring margin'; labels.quarterback = 'QB history';
   const entries = Object.keys(ratings[p.away].contributions).map(key => ({
@@ -76,17 +89,32 @@ export function PregameReport({ preview: p }: { preview: PregamePreview }) {
       </article>)}</div>
     </section>}
     <section aria-labelledby="pregame-drivers"><div className={styles.sectionHeading}><h2 id="pregame-drivers">What separates these teams?</h2><span>Rating drivers · through Week {p.throughWeek}</span></div>
-      <p className={styles.driverIntro}>{Math.abs(ratingGap) < 0.005 ? 'The teams have equal ratings.' : `${ratingGap > 0 ? away.name : home.name} lead by ${Math.abs(ratingGap).toFixed(1)} rating points.`}</p>
-      <p className={styles.note}>Each bar shows the difference between adjusted rating contributions. Left favors {home.abbr}; right favors {away.abbr}. Largest differences first.</p>
-      <div className={`${styles.driverRow} ${styles.driverHead}`}><div>Component · team contributions</div><div className={styles.axis}><span>← {home.abbr}<br />{extent} pts</span><span>0</span><span>{away.abbr} →<br />{extent} pts</span></div><div>Difference</div><div className={styles.influence}><div>Model influence<div className={styles.axis}><span>0%</span><span>{influenceMax}%</span></div></div></div></div>
-      {entries.map(({ key, gap }) => <div className={styles.driverRow} key={key}>
-        <div className={styles.driverLabel}>{labels[key]}<small>{away.abbr} {signed(ratings[p.away].contributions[key])} · {home.abbr} {signed(ratings[p.home].contributions[key])} pts</small></div>
-        <div className={styles.gapPlot} role="img" aria-label={`${labels[key]}: ${edge(gap)} rating points`}><i className={styles.gapFill} style={{ left: `${gap < 0 ? 50 + gap / extent * 50 : 50}%`, width: `${Math.abs(gap) / extent * 50}%`, background: gap < 0 ? 'var(--data-home)' : 'var(--data-away)' }} /></div>
-        <div className={styles.gapValue}>{Math.abs(gap).toFixed(2)}<small>{Math.abs(gap) < 0.005 ? 'Even' : `${gap > 0 ? away.abbr : home.abbr} edge`} · pts</small></div>
-        <div className={styles.influence}><span className={styles.mobileInfluence}>Model influence</span><span className={styles.influenceTrack} aria-hidden="true"><i style={{ width: `${p.weights[key] / influenceMax * 100}%` }} /></span><strong>{p.weights[key].toFixed(1)}%</strong></div>
-      </div>)}
-      <p className={styles.note}><b>Model influence</b> is typical contribution size in training data, normalized to total 100% across all ten components. It is fixed across teams, not a percentage of predictive accuracy. Contributions include opponent adjustment and prior-season evidence.</p>
-      <div className={styles.bridge}>{[[edge(ratingGap), 'Team rating difference', 'All ten components combined'], [edge(context), 'Matchup context adjustment', 'Venue/designation and rest'], [edge(-p.model), 'Projected game margin', 'Components sum before rounding']].map(([value, title, detail]) => <div key={title}><b>{value}</b><span>{title}<br />{detail}</span></div>)}</div>
+      <p className={styles.driverIntro}>{Math.abs(ratingGap) < 0.005 ? 'The teams have equal ratings.' : `${ratingGap > 0 ? away.name : home.name} are rated ${Math.abs(ratingGap).toFixed(1)} points better on a neutral field at equal rest.`}</p>
+      <p className={styles.edgeExplanation}>Read left to right: each team’s net season performance, the difference ({away.abbr} minus {home.abbr}), then how strongly the model generally uses that factor. The final column shows that factor’s contribution to the <b>neutral-field rating edge</b>, in points at equal rest.</p>
+      <details className={styles.edgeHelp}><summary>How model edge works</summary>
+        <p>Net difference is the raw gap in the factor’s own units. Model influence describes typical contribution size in training data—it is not a multiplier. The model uses fitted coefficients on opponent-adjusted offensive, defensive and net inputs, weighted toward recent games and blended with prior-season evidence.</p>
+        <p>For yards per play, {away.abbr} has a net of {formatNet('yards_per_play', away.factors.yards_per_play.net.value)} and {home.abbr} has {formatNet('yards_per_play', home.factors.yards_per_play.net.value)}: a difference of {formatNet('yards_per_play', netDifference('yards_per_play'))} yards/play. After the model’s adjustments, the point contributions are {signed(ratings[p.away].contributions.yards_per_play)} and {signed(ratings[p.home].contributions.yards_per_play)}. Subtracting those gives {signed(ratings[p.away].contributions.yards_per_play - ratings[p.home].contributions.yards_per_play)} points toward the neutral-field rating edge.</p>
+        <p>Each row explains part of the total rating gap, not a separate predicted winning margin. Influence percentages total 100% but do not measure predictive accuracy. Team net values are production minus opponents’ production, reversed for turnovers and penalties so positive is better. Scoring margin is the observed points differential per game. QB history combines several inputs; no single observed value is supplied for it.</p>
+      </details>
+      <div className={styles.driverTable}>
+        <div className={`${styles.driverRow} ${styles.driverHead}`}><div>Factor</div><div>{away.abbr}<small>Net this season</small></div><div>{home.abbr}<small>Net this season</small></div><div>Net difference<small>{away.abbr} − {home.abbr}</small></div><div>Model influence<small>0–{influenceMax}%</small></div><div>Model edge<small>Neutral field · equal rest</small></div></div>
+        {entries.map(({ key, gap }) => <div className={styles.driverRow} key={key} role="group" aria-label={`${labels[key]} comparison`}>
+          <div className={styles.driverLabel}>{labels[key]}<small>{FACTOR_UNITS[key] || 'Additional model context'}</small></div>
+          {[away, home].map(team => <div className={styles.teamValues} key={team.id} aria-label={`${team.abbr} season values`}>
+            <span className={styles.mobileTeam}>{team.abbr}</span>
+            {FACTOR_UNITS[key] ? <div><strong>{formatNet(key, seasonNet(team, key))}</strong>{team.factors[key] && !team.factors[key].net.complete && <span> · partial</span>}</div> : <span className={styles.notAvailable}>—<small>Not supplied</small></span>}
+          </div>)}
+          <div className={styles.netDifference} aria-label="Net difference"><span className={styles.mobileNetLabel}>Net difference · {away.abbr} − {home.abbr}</span><strong>{formatNet(key, netDifference(key))}</strong></div>
+          <div className={styles.influence}><strong>{p.weights[key].toFixed(1)}%</strong><span className={styles.influenceTrack} aria-hidden="true"><i style={{ width: `${p.weights[key] / influenceMax * 100}%` }} /></span><span className={styles.mobileInfluence}>Model influence</span></div>
+          <div className={styles.edgeCell}>
+            <div className={styles.gapValue}>{Math.abs(gap) < 0.005 ? 'Even' : `${gap > 0 ? away.abbr : home.abbr} +${Math.abs(gap).toFixed(2)}`}<span> pts</span></div>
+            <div className={styles.gapPlot} role="img" aria-label={`${labels[key]}: ${edge(gap)} rating points`}><i className={styles.gapFill} style={{ left: `${gap < 0 ? 50 + gap / extent * 50 : 50}%`, width: `${Math.abs(gap) / extent * 50}%`, background: gap < 0 ? 'var(--data-home)' : 'var(--data-away)' }} /></div>
+            <span className={styles.mobileEdgeLabel}>Neutral-field model edge</span>
+          </div>
+        </div>)}
+      </div>
+      <p className={styles.note}>Largest model edges first. All edge bars use the same scale: {extent} points either side of zero.</p>
+      <div className={styles.bridge}>{[[edge(ratingGap), 'Neutral-field rating edge', 'Equal rest · all ten components'], [edge(context), 'Matchup context adjustment', 'Venue/designation and rest'], [edge(-p.model), 'Projected game margin', 'Components sum before rounding']].map(([value, title, detail]) => <div key={title}><b>{value}</b><span>{title}<br />{detail}</span></div>)}</div>
     </section>
     <details className={styles.details}><summary>Observed season statistics <span>All eight factors · raw team output</span></summary>
       <div className={styles.scroll}><table><thead><tr><th>Factor</th><th>{away.abbr}</th><th>{home.abbr}</th></tr></thead><tbody>{p.factors.map(f => <tr key={f.id}><th>{f.label}<small>{f.unit}</small></th>{[away, home].map(team => <td key={team.id}>{format(f.id, team.factors[f.id].own.value)} <small>{rank(team.factors[f.id].own)} · {team.factors[f.id].own.rankPool} qualified teams{!team.factors[f.id].own.complete ? ' · incomplete coverage' : ''}</small></td>)}</tr>)}</tbody></table></div>

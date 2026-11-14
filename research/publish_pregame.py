@@ -9,6 +9,16 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT = ROOT / 'api/lib/data/pregame.json'
 
 
+def scoring_margin(team, cutoff):
+    """Observed points differential per game, only with complete final scores."""
+    rows = [row for row in team['schedule'] if row['week'] <= cutoff and row['final']]
+    if not rows or len(rows) != team['gamesExpected']:
+        return None
+    if any(not isinstance(row.get(k), (int, float)) for row in rows for k in ['score', 'opponentScore']):
+        return None
+    return sum(row['score'] - row['opponentScore'] for row in rows) / len(rows)
+
+
 def publish(archive, output=DEFAULT_OUTPUT):
     archive, output = Path(archive), Path(output)
     predictions = json.loads((archive / 'predictions.json').read_text())
@@ -34,8 +44,8 @@ def publish(archive, output=DEFAULT_OUTPUT):
     result = {'season': season, 'throughWeek': week, 'publishedAt': predictions['publishedAt'],
               'modelSha256': predictions['modelSha256'], 'factors': snapshot['factors'],
               'weights': {k: v['weightPercent'] for k, v in power['componentWeights'].items()},
-              'teams': [{k: t[k] for k in ['id', 'abbr', 'name', 'record', 'gamesAvailable', 'factors']}
-                        for t in snapshot['teams']],
+              'teams': [{**{k: t[k] for k in ['id', 'abbr', 'name', 'record', 'gamesAvailable', 'factors']},
+                         'scoringMarginPerGame': scoring_margin(t, week)} for t in snapshot['teams']],
               'power': [{k: t[k] for k in ['id', 'rank', 'rating', 'contributions']}
                         for t in power['teams']], 'games': games}
     output.parent.mkdir(parents=True, exist_ok=True)

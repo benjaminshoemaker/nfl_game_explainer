@@ -125,3 +125,17 @@ def test_publisher_rejects_replay_and_future_cutoffs(tmp_path):
     with pytest.raises(ValueError, match='prior-week'):
         publish(tmp_path, tmp_path / 'bundle.json')
     assert not (tmp_path / 'bundle.json').exists()
+
+
+def test_scoring_margin_requires_complete_scores_and_respects_cutoff():
+    from research.publish_pregame import scoring_margin
+    team = {'gamesExpected': 2, 'schedule': [
+        {'week': 1, 'final': True, 'score': 21, 'opponentScore': 7},
+        {'week': 2, 'final': True, 'score': 10, 'opponentScore': 17},
+        {'week': 3, 'final': True, 'score': 40, 'opponentScore': 0},
+    ]}
+    assert scoring_margin(team, 2) == 3.5
+    team['schedule'][1]['score'] = None
+    assert scoring_margin(team, 2) is None
+    team['schedule'][1]['final'] = False
+    assert scoring_margin(team, 2) is None

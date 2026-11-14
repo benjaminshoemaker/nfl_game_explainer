@@ -2,6 +2,7 @@ import posthog from 'posthog-js';
 import { analyticsPage, type AnalyticsProperties } from './analytics';
 
 const CONSENT = 'nfl-analytics-consent';
+const INTERNAL = 'nfl-analytics-internal';
 const REPLAY_CONSENT = 'yes-with-replay-v1';
 let started = false;
 export async function startAnalytics() {
@@ -14,7 +15,8 @@ export async function startAnalytics() {
     const privacySignal = navigator.doNotTrack === '1' || (navigator as Navigator & { globalPrivacyControl?: boolean }).globalPrivacyControl === true;
     const readChoice = () => { try { const choice = localStorage.getItem(CONSENT); return choice === 'yes' ? null : choice; } catch { return null; } };
     let active = false, initialized = false, lastPath = '';
-    const properties = () => ({ ...analyticsPage(new URL(location.href)), is_test: Boolean(config.testMode), schema_version: 1 });
+    const isInternal = () => { try { return localStorage.getItem(INTERNAL) === 'true'; } catch { return false; } };
+    const properties = () => ({ ...analyticsPage(new URL(location.href)), is_test: Boolean(config.testMode), is_internal: isInternal(), schema_version: 1 });
     const capture = (event: string, values: AnalyticsProperties = {}) => {
       if (active) { try { posthog.capture(event, { ...properties(), ...values }); } catch { /* Analytics cannot break navigation. */ } }
     };
@@ -41,6 +43,7 @@ export async function startAnalytics() {
           opt_out_capturing_by_default: true, opt_out_persistence_by_default: true,
           before_send: event => {
             if (!active || !event) return null;
+            event.properties.is_internal = isInternal();
             // Do not collect query strings, arbitrary anchors, initial URLs or referrer paths.
             for (const props of [event.properties, event.properties.$set, event.properties.$set_once]) {
               if (!props || typeof props !== 'object') continue;

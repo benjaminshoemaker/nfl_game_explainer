@@ -90,3 +90,15 @@ it('resumes recording only with the updated consent and omits unavailable replay
   vi.mocked(posthog.sessionRecordingStarted).mockReturnValueOnce(false);
   expect(window.nflAnalytics?.replayUrl?.()).toBeUndefined();
 });
+
+it('marks internal traffic without enabling analytics and reads changes from other tabs', async () => {
+  localStorage.setItem('nfl-analytics-internal', 'true');
+  await start();
+  expect(posthog.init).not.toHaveBeenCalled();
+  expect(posthog.capture).not.toHaveBeenCalled();
+  click('Allow analytics');
+  expect(posthog.capture).toHaveBeenCalledWith('$pageview', expect.objectContaining({ is_internal: true }));
+  localStorage.removeItem('nfl-analytics-internal');
+  window.nflAnalytics?.capture('navigation_clicked');
+  expect(posthog.capture).toHaveBeenLastCalledWith('navigation_clicked', expect.objectContaining({ is_internal: false }));
+});

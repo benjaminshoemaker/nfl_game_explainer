@@ -547,3 +547,14 @@ Session Replay has a $0 organization billing limit, verified in PostHog on
 November 14, 2026. It stops paid ingestion beyond the free allowance; the limit
 is shared by projects in the organization and is managed in PostHog billing,
 not enforced by this code.
+
+#### Excluding your own visits
+
+Open `/internal-traffic.html` on the production site and select **Mark this browser
+as internal**. New events get `is_internal=true`; PostHog's project internal/test
+filter and all four audience dashboard charts exclude them. The setting does not
+grant consent or disable collection, so opted-in internal events remain available
+for debugging. Use **Stop marking as internal** to undo it. This applies across
+open tabs, persists between visits, and must be set separately per browser/device.
+Clearing site storage removes it. It does not relabel historical events. The
+settings page itself sends no analytics and is not linked in public navigation.

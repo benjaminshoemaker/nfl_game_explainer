@@ -404,3 +404,19 @@ The public `/how-it-works` page explains the eight game factors, factor counts,
 competitive scope, bar scaling, data limits, and the 2025 outcome study. It is
 linked from the game directory and each game’s factor section. The checked-in
 `src/data/factor-wins-2025.json` is a fixed study snapshot, not a live forecast.
+
+## Interface styling
+
+The Sunday edition interface leads with the game story: Source Serif 4 for
+headlines and section titles, Public Sans for reading text, controls, and data.
+Both fonts are served locally through `next/font/local`; their OFL licenses live
+in `src/app/fonts/`. Shared color and typography tokens live in
+`src/app/globals.css`. Editorial red marks actions and selected controls; blue
+and ochre consistently distinguish away/home evidence. Live status, missing-data
+notices, and source caveats retain explicit text labels.
+
+The report uses container queries so evidence responds to the space remaining
+beside the game sidebar. Narrow screens stack charts, split tables, and play
+panels; long headlines wrap without truncation, and phone scoreboards put both
+teams side by side. Chart axis labels remain HTML text to avoid shrinking with
+the SVG.

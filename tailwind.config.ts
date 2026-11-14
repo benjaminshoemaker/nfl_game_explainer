@@ -24,24 +24,24 @@ const config: Config = {
     extend: {
       colors: {
         // Background colors
-        'bg-deep': '#f5f7f7',
-        'bg-card': '#ffffff',
-        'bg-elevated': '#edf5f5',
-        'bg-hover': '#e5f0f0',
+        'bg-deep': 'var(--bg-deep)',
+        'bg-card': 'var(--bg-card)',
+        'bg-elevated': 'var(--bg-elevated)',
+        'bg-hover': 'var(--bg-hover)',
         // Border colors
-        'border-subtle': '#dbe5e6',
-        'border-medium': '#aac3c6',
+        'border-subtle': 'var(--border-subtle)',
+        'border-medium': 'var(--border-medium)',
         // Text colors
-        'text-primary': '#202b2e',
-        'text-secondary': '#526b70',
-        'text-muted': '#65777b',
+        'text-primary': 'var(--text-primary)',
+        'text-secondary': 'var(--text-secondary)',
+        'text-muted': 'var(--text-muted)',
         // Status colors
-        'positive': '#315e65',
-        'negative': '#c44c4a',
-        'neutral': '#65777b',
+        'positive': 'var(--positive)',
+        'negative': 'var(--negative)',
+        'neutral': 'var(--neutral)',
         // Accent colors
-        'gold': '#4f8991',
-        'silver': '#aac3c6',
+        'gold': 'var(--gold)',
+        'silver': 'var(--silver)',
       },
       fontFamily: {
         'display': ['var(--font-family-ui)'],

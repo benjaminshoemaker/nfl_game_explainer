@@ -1,8 +1,11 @@
-.game{display:grid;grid-template-columns:125px minmax(0,1fr) 125px 120px;align-items:center;gap:16px;min-height:78px;padding:13px 20px;border-bottom:1px solid #dbe5e6;background:#fff;color:#202b2e;text-decoration:none}
-.game:hover{background:#fbfcfc}.game:focus-visible{outline:3px solid #315e65;outline-offset:-3px}
-.status{color:#65777b;font-size:var(--type-label);font-weight:700}.live{color:#315e65;font-weight:800}
-.teams{display:flex;align-items:center;gap:10px;min-width:0}.team{display:flex;align-items:center;gap:8px;min-width:0}.team strong{display:block;font-size:var(--type-body);font-weight:800}.team small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#65777b;font-size:var(--type-label)}.logo{position:relative;width:24px;height:24px;flex:none}.at{color:#65777b;font-size:var(--type-label)}
-.score{display:flex;justify-content:flex-end;align-items:center;gap:8px;font-size:var(--type-heading-md);font-weight:800;font-variant-numeric:tabular-nums}.winner{color:#c44c4a}.divider{color:#aac3c6}.upcoming{font-size:var(--type-label);color:#65777b;text-transform:uppercase;letter-spacing:.05em}
-.open{justify-self:end;color:#315e65;font-size:var(--type-label);font-weight:800;white-space:nowrap}.game:hover .open{text-decoration:underline}
+.game{display:grid;grid-template-columns:125px minmax(0,1fr) 125px 120px;align-items:center;gap:16px;min-height:78px;padding:13px 20px;border-bottom:1px solid var(--border-subtle);background:#fff;color:var(--text-primary);text-decoration:none}
+.game:hover{background:#f6f6f3}.game:focus-visible{outline:3px solid var(--editorial-accent);outline-offset:-3px}
+.status{color:var(--text-muted);font-size:var(--type-label);font-weight:700}.live{color:var(--editorial-accent);font-weight:800}
+.teams{display:flex;align-items:center;gap:10px;min-width:0}.team{display:flex;align-items:center;gap:8px;min-width:0}.team strong{display:block;font-size:var(--type-body);font-weight:800}.team small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text-muted);font-size:var(--type-label)}.logo{position:relative;width:24px;height:24px;flex:none}.at{color:var(--text-muted);font-size:var(--type-label)}
+.score{display:flex;justify-content:flex-end;align-items:center;gap:8px;font-size:var(--type-heading-md);font-weight:800;font-variant-numeric:tabular-nums}.winner{color:var(--editorial-accent)}.divider{color:var(--border-medium)}.upcoming{font-size:var(--type-label);color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em}
+.open{justify-self:end;color:var(--editorial-accent);font-size:var(--type-label);font-weight:800;white-space:nowrap}.game:hover .open{text-decoration:underline}
 @media(max-width:900px){.game{grid-template-columns:85px minmax(0,1fr) 90px;gap:10px}.open{display:none}}
 @media(max-width:600px){.game{grid-template-columns:1fr auto;padding:13px 15px;gap:5px 10px}.status{grid-column:1/-1}.teams{gap:6px}.team{gap:4px}.team small{display:none}.logo{width:20px;height:20px}.score{font-size:var(--type-heading-sm)}}
+
+.game{padding:20px 32px;min-height:96px}.team strong{font-weight:600}.score{font-family:var(--font-family-editorial);font-size:28px;font-weight:700}.winner{color:var(--text-primary)}.upcoming{font-family:var(--font-family-ui)}
+@media(max-width:600px){.game{padding:16px 20px}.score{font-size:26px}}

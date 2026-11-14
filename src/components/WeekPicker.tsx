@@ -38,7 +38,7 @@ export function WeekPicker({ currentWeek, onWeekChange, id }: WeekPickerProps) {
         value={currentValue}
         onChange={handleChange}
         className="
-          appearance-none
+          appearance-none w-full min-h-11
           bg-white
           border border-border-medium
           rounded-sm
@@ -47,7 +47,7 @@ export function WeekPicker({ currentWeek, onWeekChange, id }: WeekPickerProps) {
           text-text-primary
           cursor-pointer
           hover:border-positive
-          focus:outline-none focus:border-positive
+          focus:border-positive
           transition-colors
         "
       >

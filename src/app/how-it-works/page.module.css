@@ -44,3 +44,7 @@
 
 .scrollHint { display: none; color: var(--mf-teal-dark); font-size: var(--type-label); }
 @media(max-width: 700px) { .scrollHint { display: block; }.tableWrap th[scope="row"], .tableWrap th[rowspan] { position: sticky; left: 0; background: #fff; box-shadow: 1px 0 var(--mf-rule); }.tableWrap th[rowspan] { background: var(--mf-teal-soft); }.tableWrap tbody tr:nth-child(even) th { background: #f8fafa; } }
+
+/* Sunday edition reading surface. */
+.header{border-top:0;border-bottom:4px double var(--text-primary)}.header .brand{font:700 27px/1.1 var(--font-family-editorial);color:var(--text-primary);letter-spacing:-.025em}.article{box-shadow:none}.intro{border-bottom:1px solid var(--text-primary)}.intro h1,.section h2,.section h3{font-family:var(--font-family-editorial);font-weight:700;letter-spacing:-.025em;text-wrap:balance;overflow-wrap:anywhere}.tableWrap thead{background:#f6f6f3;color:var(--text-secondary)}.callout{border:1px solid var(--border-medium);background:#f6f6f3}.section p{max-width:75ch}
+@media(max-width:600px){.header .brand{font-size:23px}}

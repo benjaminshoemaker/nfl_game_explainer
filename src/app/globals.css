@@ -5,7 +5,8 @@
 :root {
   /* Shared typography. Keep reading text at 1rem and reserve smaller sizes
      for short, secondary labels. CSS modules and Tailwind both use these. */
-  --font-family-ui: Arial, Helvetica, sans-serif;
+  --font-family-ui: var(--font-public-sans), Arial, Helvetica, sans-serif;
+  --font-family-editorial: var(--font-source-serif), Georgia, serif;
   --font-family-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --type-caption: 0.8125rem;
   --type-label: 0.875rem;
@@ -36,34 +37,42 @@
   --away-accent: #FFC62F;
   --away-text: #FFC62F;
 
+  /* Sunday edition: neutral paper, ink rules, editorial red.
+     Blue and ochre are reserved for away/home data comparisons. */
+  --editorial-accent: #9e3325;
+  --editorial-soft: #f5eeea;
+  --data-away: #205273;
+  --data-home: #805f2b;
+
   /* Background colors */
-  --bg-deep: #f5f7f7;
+  --bg-deep: #eeefed;
   --bg-card: #ffffff;
-  --bg-elevated: #edf5f5;
-  --bg-hover: #e5f0f0;
+  --bg-elevated: #f5eeea;
+  --bg-hover: #eee6e1;
 
   /* Border colors */
-  --border-subtle: #dbe5e6;
-  --border-medium: #aac3c6;
+  --border-subtle: #d5d7d4;
+  --border-medium: #acb0ac;
 
   /* Text colors */
-  --text-primary: #202b2e;
-  --text-secondary: #526b70;
-  --text-muted: #65777b;
+  --text-primary: #17212a;
+  --text-secondary: #535d66;
+  --text-muted: #535d66;
 
   /* Status colors */
-  --positive: #315e65;
-  --negative: #c44c4a;
-  --neutral: #65777b;
+  --positive: #235a4e;
+  --negative: #9e3325;
+  --neutral: #535d66;
 
   /* Accent colors */
-  --gold: #4f8991;
-  --silver: #aac3c6;
-  --mf-teal: #4f8991;
-  --mf-teal-dark: #315e65;
-  --mf-teal-soft: #edf5f5;
-  --mf-red: #c44c4a;
-  --mf-rule: #aac3c6;
+  --gold: #9e3325;
+  --silver: #acb0ac;
+  /* Compatibility aliases for existing utilities and secondary screens. */
+  --mf-teal: #9e3325;
+  --mf-teal-dark: #9e3325;
+  --mf-teal-soft: #f5eeea;
+  --mf-red: #9e3325;
+  --mf-rule: #acb0ac;
 }
 
 html {
@@ -236,7 +245,7 @@ small {
 
 /* Selection styling */
 ::selection {
-  background: #d7e9ea;
+  background: #f5ded6;
   color: var(--text-primary);
 }
 
@@ -249,4 +258,10 @@ small {
 /* Transition duration utility */
 .duration-600 {
   transition-duration: 600ms;
+}
+
+/* Keep focus visible and reading stable for reduced-motion preferences. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+  .animate-fade-in-up { opacity: 1; }
 }

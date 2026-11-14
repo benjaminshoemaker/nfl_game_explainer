@@ -27,11 +27,10 @@ export function FactorVisuals({ factor, details, away, home }: { factor: string;
     const x = (i: number) => 42 + (i / maxPlay) * 510;
     const y = (n: number) => 150 - ((n - minY) / Math.max(1, maxY - minY)) * 120;
     return <div className={styles.visual}><strong>Yards after each offensive play</strong><small>Same play count and yardage scale for both teams.</small>
-      <svg className={styles.lineChart} viewBox="0 0 590 180" role="img" aria-label={`Cumulative offensive yards: ${teams.map(t => `${t.team.abbr} ${t.points.at(-1)} yards in ${t.list.length} plays`).join('; ')}`}>
-        {[0, .25, .5, .75, 1].map(tick => <line key={tick} x1="42" x2="552" y1={150 - tick * 120} y2={150 - tick * 120} stroke="#dce2db" />)}
-        {teams.map((t, index) => <path key={t.team.id} d={t.points.map((yards, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)},${y(yards).toFixed(1)}`).join(' ')} fill="none" stroke={index ? '#9d7424' : '#205273'} strokeWidth="3" />)}
-        <text x="45" y="175" fontSize="11" fill="#677570">0 plays</text><text x="552" y="175" textAnchor="end" fontSize="11" fill="#677570">{maxPlay} plays</text>
-      </svg><div className={styles.chartLegend}>{teams.map((t, index) => <span key={t.team.id} style={{ color: index ? '#9d7424' : '#205273' }}>{t.team.abbr} · {t.points.at(-1)} yd / {t.list.length} plays</span>)}</div>
+      <svg className={styles.lineChart} viewBox="0 0 590 160" role="img" aria-label={`Cumulative offensive yards: ${teams.map(t => `${t.team.abbr} ${t.points.at(-1)} yards in ${t.list.length} plays`).join('; ')}`}>
+        {[0, .25, .5, .75, 1].map(tick => <line key={tick} x1="42" x2="552" y1={150 - tick * 120} y2={150 - tick * 120} stroke="var(--border-subtle)" />)}
+        {teams.map((t, index) => <path key={t.team.id} d={t.points.map((yards, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)},${y(yards).toFixed(1)}`).join(' ')} fill="none" stroke={index ? 'var(--data-home)' : 'var(--data-away)'} strokeWidth="3" />)}
+      </svg><div className={styles.chartAxis}><span>0 plays</span><span>{maxPlay} plays</span></div><div className={styles.chartLegend}>{teams.map((t, index) => <span key={t.team.id} style={{ color: index ? 'var(--data-home)' : 'var(--data-away)' }}>{t.team.abbr} · {t.points.at(-1)} yd / {t.list.length} plays</span>)}</div>
     </div>;
   }
   if (factor === 'Explosive Play Rate') {
@@ -47,7 +46,7 @@ export function FactorVisuals({ factor, details, away, home }: { factor: string;
       <div className={styles.field}><div className={styles.fieldMid} />{[away, home].flatMap((team, teamIndex) => (details[team.id]?.['Drive Starts'] || []).map((event, i) => {
         const own = ownYard(event.start_pos || event.end_pos, team.abbr);
         if (own === null) return null;
-        return <i key={`${team.id}-${i}`} title={`${team.abbr} drive ${i + 1}: ${event.start_pos || event.end_pos}`} style={{ left: `${teamIndex ? 100 - own : own}%`, top: `${teamIndex ? 65 : 24}%`, background: teamIndex ? '#9d7424' : '#205273' }} />;
+        return <i key={`${team.id}-${i}`} title={`${team.abbr} drive ${i + 1}: ${event.start_pos || event.end_pos}`} style={{ left: `${teamIndex ? 100 - own : own}%`, top: `${teamIndex ? 65 : 24}%`, background: teamIndex ? 'var(--data-home)' : 'var(--data-away)' }} />;
       }))}</div><div className={styles.fieldAxis}><span>{away.abbr} end zone</span><span>50</span><span>{home.abbr} end zone</span></div>
     </div>;
   }

@@ -46,7 +46,7 @@ export function CanonicalPlayCard({ play, home, away, epaPending = false }: { pl
   const epa = play.epa === null ? 'Unavailable' : `${play.sourceTeam || 'Play'} ${play.epa >= 0 ? '+' : '−'}${Math.abs(play.epa).toFixed(2)} points`;
   return <article className={styles.playCard} data-play-id={play.id}>
     <div className={styles.cardTop}>
-      <span className={styles.teamChip} style={{ background: play.sourceTeam === home.abbr ? '#9d7424' : '#205273' }}>{play.sourceTeam || '—'}</span>
+      <span className={styles.teamChip} style={{ background: play.sourceTeam === home.abbr ? 'var(--data-home)' : 'var(--data-away)' }}>{play.sourceTeam || '—'}</span>
       <span className={styles.cardTime}>Q{play.quarter ?? '?'} · {play.clock || '—'}{situation ? ` · ${situation}` : ''}</span>
       <span className={styles.scoreLine}>Score <strong>{score}</strong></span>
     </div>

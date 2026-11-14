@@ -35,6 +35,7 @@ export async function startAnalytics() {
           disable_session_recording: true, disable_surveys: true,
           advanced_disable_flags: true, opt_out_useragent_filter: Boolean(config.testMode), person_profiles: 'identified_only',
           persistence: 'localStorage+cookie', respect_dnt: true,
+          opt_out_capturing_by_default: true, opt_out_persistence_by_default: true,
           before_send: event => {
             if (!active || !event) return null;
             // Do not collect query strings, arbitrary anchors, initial URLs or referrer paths.

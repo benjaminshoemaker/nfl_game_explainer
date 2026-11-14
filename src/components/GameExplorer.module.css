@@ -221,3 +221,6 @@
   .cardTop { padding:12px; }
   .scoreLine { flex-basis:100%; }
 }
+
+/* The mobile shell already supplies the masthead; keep only report metadata. */
+@media(max-width:1023px){.brandRow strong{display:none}.brandRow{justify-content:flex-end;padding-top:8px;padding-bottom:8px;border-bottom:1px solid var(--line);background:var(--soft)}}

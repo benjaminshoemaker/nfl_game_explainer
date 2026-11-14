@@ -83,8 +83,8 @@ export function GamePageClient({ initialGameData, debugMode = false }: GamePageC
       {gameData.status !== 'pregame' && gameData.status !== 'postponed' && gameData.status !== 'canceled' && <div className={styles.scopeControls}>
         <span>{effectiveViewMode === 'competitive' || !wpFilterAvailable ? gameData.wp_filter?.description : 'Showing full-game totals'}</span>
         {wpFilterAvailable && <div role="group" aria-label="Stat scope" className={styles.scopeButtons}>
-          <button type="button" aria-pressed={viewMode === 'competitive'} onClick={() => setViewMode('competitive')}>Competitive</button>
-          <button type="button" aria-pressed={viewMode === 'full'} onClick={() => setViewMode('full')}>Full game</button>
+          <button data-analytics-event="report_scope_selected" data-analytics-value="competitive" type="button" aria-pressed={viewMode === 'competitive'} onClick={() => setViewMode('competitive')}>Competitive</button>
+          <button data-analytics-event="report_scope_selected" data-analytics-value="full" type="button" aria-pressed={viewMode === 'full'} onClick={() => setViewMode('full')}>Full game</button>
         </div>}
       </div>}
     </div>

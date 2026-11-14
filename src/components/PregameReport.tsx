@@ -72,7 +72,7 @@ export function PregameReport({ preview: p }: { preview: PregamePreview }) {
     </div>
     <section aria-labelledby="pregame-matchup"><div className={styles.sectionHeading}><h2 id="pregame-matchup">When they have the ball</h2><span>Season production meets opponent prevention</span></div>
       <div className={styles.tabs} role="group" aria-label="Choose offense">{[away, home].map(team =>
-        <button type="button" key={team.id} aria-pressed={offense === team.id} onClick={() => setOffense(team.id)}>{team.abbr} on offense</button>)}</div>
+        <button data-analytics-event="matchup_offense_selected" data-analytics-value={team.id} type="button" key={team.id} aria-pressed={offense === team.id} onClick={() => setOffense(team.id)}>{team.abbr} on offense</button>)}</div>
       <div aria-live="polite"><div className={styles.tableHead}><span>Season metric</span><span>{offense} offense</span><span>{defense} defense · allowed</span></div>
         {MATCHUP_KEYS.map(key => <div className={styles.metric} key={key}><div>{labels[key]}</div>
           {[teams[offense].factors[key].own, teams[defense].factors[key].opponent].map((metric, i) => <div key={i} className={styles.metricValue}>

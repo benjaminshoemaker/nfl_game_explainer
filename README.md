@@ -488,3 +488,38 @@ and inputs ending the previous week. Games outside the packaged publication
 retain the existing upcoming-game screen instead of using stale statistics.
 The included bundle covers 2026 Week 10 with inputs through Week 9. Repackaging
 updates the working tree; production needs a new deployment to pick it up.
+
+### Optional audience analytics
+
+PostHog project **NFL Win Delta** (US, project `736759`) tracks opted-in browsers.
+[Audience and weekly return dashboard](https://us.posthog.com/project/736759/dashboard/2355666)
+shows weekly unique visitors, visits by page type, explicit interactions, and weekly
+returns to reports, team pages, or rankings. These are new tracking definitions;
+there is no historical backfill. Retention describes browsers, not identified people,
+and excludes visitors who decline, block analytics, or clear browser storage.
+Wait for completed weekly cohorts before interpreting return rates.
+
+Production Vercel configuration uses `NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN` and
+`NEXT_PUBLIC_POSTHOG_HOST`; the ingestion key is public, never a personal API key.
+`/analytics-config` enables tracking only in production. Local and preview sites
+are off unless explicitly started with `ANALYTICS_TEST_MODE=1`; those events carry
+`is_test=true` and are excluded from the dashboard. Missing configuration leaves
+the app usable. `npm run build` and `npm run dev` build `/analytics.js` for the
+standalone team pages; the weekly exporter preserves its script inclusion.
+
+Visitors must select **Allow analytics** before the SDK initializes or writes its
+identifier. The **Privacy** button reopens the choice; **No thanks** disables
+capture and clears SDK persistence. Browser DNT/GPC signals override acceptance.
+Session replay, automatic click capture, error capture and feature flags are off.
+We collect canonical paths without query strings; campaign parameters and referrer
+persistence are disabled. See `/privacy.html` for visitor-facing details.
+
+Events: `$pageview` for canonical route changes; `content_viewed` for report, team,
+and rankings URLs; `navigation_clicked`, `week_selected`, `season_selected`,
+`rating_sort_selected`, `factor_selected`, `factor_split_selected`,
+`report_scope_selected`, `matchup_offense_selected`, and `explanation_opened` for
+explicit controls. Common properties: `path`, `page_type`, `is_test`,
+`schema_version`; control events add `control`/`value` or `destination`. URL visits
+are not proof a report successfully loaded. Polls and section anchors do not add
+visits. Use test mode for QA and decline analytics in your regular browser to keep
+your own production browsing out of audience counts.

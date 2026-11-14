@@ -19,6 +19,7 @@ export default defineConfig([
     'out/**',
     'build/**',
     'next-env.d.ts',
+    'public/analytics.js', // Generated SDK bundle; source is linted in src/lib.
     '.venv/**',
     '.claude/**',
   ]),

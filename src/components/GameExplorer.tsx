@@ -286,7 +286,7 @@ export function GameExplorer({ game, scope, home, away }: { game: GameResponse; 
         <div className={styles.scoreBox}><small>{game.status === 'final' ? 'Final score' : 'Current score'}</small><div><span>{away.abbr}</span><strong className={winner?.id === away.id ? styles.winningScore : ''}>{awayScore}</strong></div><div><span>{home.abbr}</span><strong className={winner?.id === home.id ? styles.winningScore : ''}>{homeScore}</strong></div></div>
       </section>
       {rankableCount >= 20 && game.status !== 'pregame' && reasons.length > 0 && <section className={styles.reasons} aria-label="Game story factors">
-        {reasons.map(reason => <button key={reason.id} className={styles.reason} onClick={() => { const target = FACTORS.find(item => item.id === reason.id); if (target) selectFactor(target); document.getElementById('game-factors')?.scrollIntoView({ behavior: 'smooth' }); }}>
+        {reasons.map(reason => <button data-analytics-event="factor_selected" data-analytics-value={reason.id} key={reason.id} className={styles.reason} onClick={() => { const target = FACTORS.find(item => item.id === reason.id); if (target) selectFactor(target); document.getElementById('game-factors')?.scrollIntoView({ behavior: 'smooth' }); }}>
           <span className={styles.eyebrow}>{reason.id}</span><strong>{reason.leader.abbr} +{reason.amount} {reason.summary}</strong><small>{reason.note}</small>
         </button>)}
       </section>}
@@ -300,7 +300,7 @@ export function GameExplorer({ game, scope, home, away }: { game: GameResponse; 
         <div className={styles.matrixHeader} aria-hidden="true"><span>Factor</span><span>{away.abbr}</span><span>{home.abbr}</span><span>Gap</span></div>
         {FACTORS.map((item, index) => {
           const result = factorResults[index];
-          return <button className={styles.matrixRow} key={item.id} type="button" onClick={() => selectFactor(item)}>
+          return <button data-analytics-event="factor_selected" data-analytics-value={item.id} className={styles.matrixRow} key={item.id} type="button" onClick={() => selectFactor(item)}>
             <span className={styles.matrixName}><span className={styles.index}>{String(index + 1).padStart(2, '0')}</span><strong>{item.label}</strong><small data-state={result.state}>{result.result}</small></span>
             <span className={styles.matrixValue} data-winner={result.leader?.id === away.id}>{factorValue(item.id, away)}{item.id === 'Penalty Yards' && unresolvedPenalties(away) ? ' known' : ''}</span>
             <span className={styles.matrixValue} data-winner={result.leader?.id === home.id}>{factorValue(item.id, home)}{item.id === 'Penalty Yards' && unresolvedPenalties(home) ? ' known' : ''}</span>
@@ -315,7 +315,7 @@ export function GameExplorer({ game, scope, home, away }: { game: GameResponse; 
             <p>A full bar marks a large historical gap for that factor and view. Live bars use completed games as a reference, so their scale is provisional. Tied, unresolved, and low-sample comparisons have no bar.</p>
             {selectedFactorResult.scaleDetail && <p>{selectedFactorResult.scaleDetail}.</p>}
           </details>
-          {FACTORS.map((item, index) => <button className={styles.category} key={item.id} role="tab" aria-selected={item.id === selected} onClick={() => selectFactor(item)}>
+          {FACTORS.map((item, index) => <button data-analytics-event="factor_selected" data-analytics-value={item.id} className={styles.category} key={item.id} role="tab" aria-selected={item.id === selected} onClick={() => selectFactor(item)}>
             <span className={styles.factorTeamCell} data-winner={factorResults[index].leader?.id === away.id}><small>{away.abbr}</small><b>{factorValue(item.id, away)}{item.id === 'Penalty Yards' && unresolvedPenalties(away) ? ' known' : ''}</b></span>
             <span className={styles.factorCenter}><span className={styles.factorName}><span className={styles.index}>{String(index + 1).padStart(2, '0')}</span><strong>{item.label}</strong></span>
               <span className={styles.factorResult} data-state={factorResults[index].state}>{factorResults[index].result}</span>
@@ -332,7 +332,7 @@ export function GameExplorer({ game, scope, home, away }: { game: GameResponse; 
           {factor.id === 'Points Per Trip (Inside 40)' && <div className={styles.visual}><strong>Points on each trip</strong>{[away, home].map(team => <div className={styles.tripRow} key={team.id}><b>{team.abbr}</b>{(details[team.id]?.['Points Per Trip (Inside 40)'] || []).map((e, i) => <span key={i} title={`Trip ${i + 1}: ${e.points ?? '?'} points`}>{e.points ?? '?'}</span>)}</div>)}</div>}
           <FactorVisuals factor={factor.id} details={details} away={away} home={home} />
           <div className={styles.detailBody}>
-            {factor.tabs.length > 0 && <div className={styles.controls}><div className={styles.tabs}>{factor.tabs.map(([id, label]) => <button key={id} aria-pressed={split === id && !showEvents} onClick={() => { setSplit(id); setShowEvents(false); setEventFilter(null); }}>{label}</button>)}</div><button className={styles.textButton} onClick={() => { setShowEvents(!showEvents); setEventFilter(null); }}>{showEvents ? '← Back to splits' : `See all contributing ${factor.id === 'Points Per Trip (Inside 40)' || factor.id === 'Ave Start Field Pos' ? 'drives' : 'plays'}`}</button></div>}
+            {factor.tabs.length > 0 && <div className={styles.controls}><div className={styles.tabs}>{factor.tabs.map(([id, label]) => <button data-analytics-event="factor_split_selected" data-analytics-value={id} key={id} aria-pressed={split === id && !showEvents} onClick={() => { setSplit(id); setShowEvents(false); setEventFilter(null); }}>{label}</button>)}</div><button className={styles.textButton} onClick={() => { setShowEvents(!showEvents); setEventFilter(null); }}>{showEvents ? '← Back to splits' : `See all contributing ${factor.id === 'Points Per Trip (Inside 40)' || factor.id === 'Ave Start Field Pos' ? 'drives' : 'plays'}`}</button></div>}
             {!showEvents && factor.tabs.length ? <><div className={styles.splitHead}><span>Split</span><span>{away.abbr}</span><span>{home.abbr}</span></div>{groups.map(group => { const a = events.filter(e => e.teamId === away.id && eventGroup(e, split) === group); const h = events.filter(e => e.teamId === home.id && eventGroup(e, split) === group); const display = (list: Event[], teamId: string) => {
                 if (factor.id === 'Success Rate') return `${list.filter(e => e.success).length}/${list.length}`;
                 if (factor.id === 'Adjusted Yards Per Play') return list.length ? `${(list.reduce((n, e) => n + (e.yards || 0), 0) / list.length).toFixed(2)} yd/play` : '—';

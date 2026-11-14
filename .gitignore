@@ -63,3 +63,6 @@ node_modules/
 # Vercel
 .vercel/
 .vercel
+
+# Built for standalone team pages from the same analytics source as Next.js
+/public/analytics.js

@@ -34,6 +34,7 @@ export function WeekPicker({ currentWeek, onWeekChange, id }: WeekPickerProps) {
   return (
     <div className="relative inline-block">
       <select
+        data-analytics-event="week_selected"
         id={id}
         value={currentValue}
         onChange={handleChange}

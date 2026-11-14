@@ -22,7 +22,18 @@ header,main{max-width:1320px;background:#fff}header{padding:22px 32px}.masthead{
 @media(max-width:650px){.team-page header{padding:20px}.team-page main{padding:0 20px 20px}#team-report .edition-nav .toolbar{align-items:center;gap:6px}#team-report .edition-nav{align-items:start;flex-direction:column}#team-report .hero{padding-top:15px}#team-report .grid{grid-template-columns:minmax(85px,110px) minmax(50px,1fr) 52px}}
 
 .sr-only{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-</style><header><a class="masthead" href="/" aria-label="NFL Win Delta home">NFL Win Delta</a><nav><a href="#teams">Teams</a><a href="#power">Power rankings</a><a href="#method">Methodology</a></nav></header><main><div class="toolbar"><label>Season <select id="season" data-analytics-event="season_selected"></select></label><span id="cutoff" class="muted"></span></div><div id="freshness"></div><div id="app"></div><footer>nflverse · Completed regular-season games · Dated source snapshots · Pregame forecasts labeled separately</footer></main>
+
+.feedback-footer{max-width:1320px;margin:0 auto;padding:16px 32px 60px;display:flex;align-items:center;flex-wrap:wrap;gap:4px 16px;border-top:1px solid var(--line);background:#fff;font:400 13px/1.5 'Public Sans',sans-serif;color:var(--muted)}
+.feedback-footer a{display:inline-flex;align-items:center;min-height:44px;color:var(--accent);font-size:14px;font-weight:600;text-decoration:underline;text-underline-offset:3px}
+@media(max-width:650px){.feedback-footer{padding:12px 20px 60px}}
+</style><header><a class="masthead" href="/" aria-label="NFL Win Delta home">NFL Win Delta</a><nav><a href="#teams">Teams</a><a href="#power">Power rankings</a><a href="#method">Methodology</a></nav></header><main><div class="toolbar"><label>Season <select id="season" data-analytics-event="season_selected"></select></label><span id="cutoff" class="muted"></span></div><div id="freshness"></div><div id="app"></div><footer>nflverse · Completed regular-season games · Dated source snapshots · Pregame forecasts labeled separately</footer></main><footer class="feedback-footer"><a id="send-feedback" data-analytics-event="feedback_opened" href="mailto:ben.shoemaker.xyz@gmail.com?subject=NFL%20Win%20Delta%20feedback">Send feedback</a><span>Opens your email app with page details and available session IDs.</span></footer>
+<script type="module">
+import { feedbackUrl } from '/feedback.js';
+const feedbackLink = document.querySelector('#send-feedback');
+for (const event of ['click', 'focus', 'mouseenter']) {
+  feedbackLink.addEventListener(event, () => { feedbackLink.href = feedbackUrl(window); });
+}
+</script>
 <script>
 const DATA=/*SNAPSHOTS*/{};
 const MODEL=/*MODEL*/null;

@@ -2,6 +2,7 @@ import posthog from 'posthog-js';
 import { analyticsPage, type AnalyticsProperties } from './analytics';
 
 const CONSENT = 'nfl-analytics-consent';
+const REPLAY_CONSENT = 'yes-with-replay-v1';
 let started = false;
 export async function startAnalytics() {
   if (started || typeof window === 'undefined') return;
@@ -11,7 +12,7 @@ export async function startAnalytics() {
     if (!config.token || !config.host) return;
     if (!config.testMode && !['windelta.app', 'www.windelta.app'].includes(location.hostname)) return;
     const privacySignal = navigator.doNotTrack === '1' || (navigator as Navigator & { globalPrivacyControl?: boolean }).globalPrivacyControl === true;
-    const readChoice = () => { try { return localStorage.getItem(CONSENT); } catch { return null; } };
+    const readChoice = () => { try { const choice = localStorage.getItem(CONSENT); return choice === 'yes' ? null : choice; } catch { return null; } };
     let active = false, initialized = false, lastPath = '';
     const properties = () => ({ ...analyticsPage(new URL(location.href)), is_test: Boolean(config.testMode), schema_version: 1 });
     const capture = (event: string, values: AnalyticsProperties = {}) => {
@@ -32,8 +33,10 @@ export async function startAnalytics() {
           autocapture: false, capture_pageview: false, capture_pageleave: false,
           capture_exceptions: false, capture_performance: false,
           save_campaign_params: false, save_referrer: false,
-          disable_session_recording: true, disable_surveys: true,
-          advanced_disable_flags: true, opt_out_useragent_filter: Boolean(config.testMode), person_profiles: 'identified_only',
+          disable_session_recording: false, disable_surveys: true,
+          enable_recording_console_log: false,
+          session_recording: { maskAllInputs: true, recordHeaders: false, recordBody: false },
+          advanced_disable_feature_flags: true, opt_out_useragent_filter: Boolean(config.testMode), person_profiles: 'identified_only',
           persistence: 'localStorage+cookie', respect_dnt: true,
           opt_out_capturing_by_default: true, opt_out_persistence_by_default: true,
           before_send: event => {
@@ -58,22 +61,26 @@ export async function startAnalytics() {
       }
       active = true;
       posthog.opt_in_capturing({ captureEventName: false });
+      posthog.startSessionRecording();
       visit();
     };
-    window.nflAnalytics = { capture, headers: (): Record<string, string> => active ? {
+    window.nflAnalytics = { capture, replayUrl: () => {
+      if (!active || !posthog.sessionRecordingStarted()) return undefined;
+      return posthog.get_session_replay_url({ withTimestamp: true, timestampLookBack: 30 });
+    }, headers: (): Record<string, string> => active ? {
       'X-POSTHOG-DISTINCT-ID': posthog.get_distinct_id(),
       'X-POSTHOG-SESSION-ID': posthog.get_session_id(),
       'X-NFL-ANALYTICS-CONSENT': 'yes',
       'X-NFL-ANALYTICS-TEST': String(Boolean(config.testMode)),
     } : {} };
     const choose = (allow: boolean) => {
-      try { localStorage.setItem(CONSENT, allow ? 'yes' : 'no'); } catch { /* Session-only choice. */ }
+      try { localStorage.setItem(CONSENT, allow ? REPLAY_CONSENT : 'no'); } catch { /* Session-only choice. */ }
       if (allow) {
         try { enable(); } catch { active = false; /* A blocked SDK cannot break consent controls. */ }
       }
       else {
         active = false; lastPath = '';
-        if (initialized) posthog.opt_out_capturing();
+        if (initialized) { posthog.stopSessionRecording(); posthog.opt_out_capturing(); }
       }
       panel.remove();
     };
@@ -81,7 +88,7 @@ export async function startAnalytics() {
     panel.setAttribute('role', 'dialog'); panel.setAttribute('aria-label', 'Analytics privacy');
     panel.style.cssText = 'position:fixed;z-index:10000;bottom:44px;left:16px;right:16px;max-width:420px;padding:20px;background:#fff;color:#17212a;border:1px solid #535d66;box-shadow:0 4px 20px #0002;font:14px/1.5 Arial,sans-serif';
     const copy = document.createElement('p');
-    copy.textContent = privacySignal ? 'Your browser privacy preference is on. Analytics is disabled.' : 'Help improve NFL Win Delta by allowing optional analytics.';
+    copy.textContent = privacySignal ? 'Your browser privacy preference is on. Analytics is disabled.' : 'Help improve NFL Win Delta? Allow optional analytics and recordings of your visits to help us understand problems. Form inputs are masked. You can change your choice anytime.';
     panel.append(copy);
     const button = (label: string, action: () => void) => {
       const b = document.createElement('button'); b.type = 'button'; b.textContent = label;
@@ -94,7 +101,7 @@ export async function startAnalytics() {
     settings.style.cssText += ';position:fixed;z-index:9999;bottom:4px;left:12px;padding:4px 8px;font-size:12px';
     const mount = () => { document.body.append(settings); if (!readChoice() && !privacySignal) document.body.append(panel); };
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount, { once: true }); else mount();
-    if (readChoice() === 'yes') enable();
+    if (readChoice() === REPLAY_CONSENT) enable();
     for (const method of ['pushState', 'replaceState'] as const) {
       const original = history[method].bind(history);
       history[method] = (...args: Parameters<History[typeof method]>) => { original(args[0], args[1], args[2]); visit(); };

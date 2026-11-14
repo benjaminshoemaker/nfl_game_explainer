@@ -179,3 +179,11 @@ Run checks proportionate to the change using `AGENTS.md`. Unit tests use mocks o
 fixtures, never real ESPN or OpenAI calls. For a release, inspect the deployed
 pages as well as local screenshots and confirm fonts load. Documentation-only
 changes need link/path checks, not an application rebuild.
+
+## Feedback
+
+Both the Next.js shell and standalone publication end with a quiet “Send feedback”
+footer link, a 44px target, and a short explanation that it opens an email draft
+with page details and available session IDs. Keep it in document flow so it does
+not cover charts or mobile controls. The recipient and context builder live in
+`public/feedback.js`; the standalone template and published HTML load that module.

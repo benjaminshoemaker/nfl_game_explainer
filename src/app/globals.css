@@ -265,3 +265,7 @@ small {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
   .animate-fade-in-up { opacity: 1; }
 }
+
+.feedback-footer{max-width:1320px;margin:0 auto;padding:16px 32px 60px;display:flex;align-items:center;flex-wrap:wrap;gap:4px 16px;border-top:1px solid var(--border-subtle);background:var(--bg-card);font:400 13px/1.5 var(--font-family-ui);color:var(--text-secondary)}
+.feedback-footer a{display:inline-flex;align-items:center;min-height:44px;color:var(--editorial-accent);font-size:14px;font-weight:600;text-decoration:underline;text-underline-offset:3px}
+@media(max-width:650px){.feedback-footer{padding:12px 20px 60px}}

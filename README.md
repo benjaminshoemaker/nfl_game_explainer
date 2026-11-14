@@ -510,7 +510,8 @@ standalone team pages; the weekly exporter preserves its script inclusion.
 Visitors must select **Allow analytics** before the SDK initializes or writes its
 identifier. The **Privacy** button reopens the choice; **No thanks** disables
 capture and clears SDK persistence. Browser DNT/GPC signals override acceptance.
-Session replay, automatic click capture, error capture and feature flags are off.
+Session replay is enabled after consent, with inputs masked and console/network capture off. Automatic click capture, error capture and feature flag evaluation remain off.
+Prior analytics-only acceptances require a new choice before recording starts.
 We collect canonical paths without query strings; campaign parameters and referrer
 persistence are disabled. See `/privacy.html` for visitor-facing details.
 
@@ -523,3 +524,26 @@ explicit controls. Common properties: `path`, `page_type`, `is_test`,
 are not proof a report successfully loaded. Polls and section anchors do not add
 visits. Use test mode for QA and decline analytics in your regular browser to keep
 your own production browsing out of audience counts.
+
+### User feedback
+
+“Send feedback” in the footer of the app and standalone team pages opens an
+email draft to `ben.shoemaker.xyz@gmail.com`. It includes the current URL (including
+query parameters and hash), page title, game ID on game routes, selected season
+on team pages, and a timestamp. The user reviews and sends the draft in their
+email app; clicking the link does not submit feedback automatically.
+
+The shared helper in `public/feedback.js` uses `window.nflAnalytics.headers()`
+to include PostHog visitor and session IDs only while analytics consent is active.
+It reads context when the link is activated, so changing pages or withdrawing
+consent cannot leave stale IDs in the draft. Missing or blocked analytics never
+prevents feedback. The link records `feedback_opened` for consenting visitors;
+this measures opening a draft, not sending an email. When recording is active,
+`window.nflAnalytics.replayUrl()` adds a private replay URL with a timestamp
+30 seconds before feedback. A URL does not guarantee ingestion: recording may be
+blocked, expired, or dropped after reaching the billing limit.
+
+Session Replay has a $0 organization billing limit, verified in PostHog on
+November 14, 2026. It stops paid ingestion beyond the free allowance; the limit
+is shared by projects in the organization and is managed in PostHog billing,
+not enforced by this code.

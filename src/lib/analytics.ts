@@ -4,6 +4,7 @@ declare global {
     nflAnalytics?: {
       capture: (event: string, properties?: AnalyticsProperties) => void;
       headers: () => Record<string, string>;
+      replayUrl?: () => string | undefined;
     };
   }
 }

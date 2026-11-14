@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { FeedbackLink } from "@/components/FeedbackLink";
 import localFont from 'next/font/local';
 
 const publicSans = localFont({
@@ -31,6 +32,7 @@ export default function RootLayout({
         <main className="relative z-10 min-h-screen">
           {children}
         </main>
+        <FeedbackLink />
       </body>
     </html>
   );

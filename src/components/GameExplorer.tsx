@@ -260,7 +260,7 @@ export function GameExplorer({ game, scope, home, away }: { game: GameResponse; 
               : 'ESPN marks the game as live, but no plays are available yet. This page will keep checking for updates.';
     return <div className={styles.explorer}>
     <div className={styles.wrap}>
-      <header className={styles.brandRow}><strong>GAME<span>/</span>EXPLAINED</strong><span>Week {game.week?.number || '—'}</span></header>
+      <header className={styles.brandRow}><strong>NFL Win Delta</strong><span>Week {game.week?.number || '—'}</span></header>
       <section className={styles.pregame}>
         <div className={styles.eyebrow}>{noPlayHeading}</div>
         <h1>{away.name} at {home.name}</h1>
@@ -275,7 +275,7 @@ export function GameExplorer({ game, scope, home, away }: { game: GameResponse; 
   }
   return <div className={styles.explorer}>
     <div className={styles.wrap}>
-      <header className={styles.brandRow}><strong>GAME<span>/</span>EXPLAINED</strong><span>Week {game.week?.number || '—'}</span></header>
+      <header className={styles.brandRow}><strong>NFL Win Delta</strong><span>Week {game.week?.number || '—'}</span></header>
       <section className={styles.gameHead}>
         <div><div className={styles.eyebrow}>Game story</div><h1>{title}</h1>
           {game.status !== 'pregame' && <p>{game.status === 'delayed' || game.status === 'postponed' || game.status === 'canceled'

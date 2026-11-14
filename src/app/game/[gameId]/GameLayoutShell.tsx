@@ -19,7 +19,7 @@ export function GameLayoutShell({ children }: { children: React.ReactNode }) {
         {!debugMode && (
           <div className={styles.mobileHeader}>
             <Link href="/">← All games</Link>
-            <span>GAME<span>/</span>EXPLAINED</span>
+            <span>NFL Win Delta</span>
           </div>
         )}
         {children}

@@ -126,6 +126,6 @@ export default async function Home({ searchParams }: PageProps) {
 }
 
 export const metadata = {
-  title: 'NFL Game Explainer | Live Game Analysis',
+  title: 'NFL Win Delta | Live Game Analysis',
   description: 'Real-time NFL game analysis with advanced statistics, win probability tracking, and AI-powered game summaries.',
 };

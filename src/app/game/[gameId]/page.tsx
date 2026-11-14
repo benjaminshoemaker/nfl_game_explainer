@@ -96,7 +96,7 @@ export async function generateMetadata({ params }: PageProps) {
   const { gameId } = await params;
 
   return {
-    title: `Game ${gameId} | NFL Game Explainer`,
+    title: `Game ${gameId} | NFL Win Delta`,
     description: 'Live NFL game analysis with advanced stats and play-by-play breakdowns',
   };
 }

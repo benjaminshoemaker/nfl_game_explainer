@@ -73,7 +73,7 @@ another type scale. Let long headlines wrap; do not ellipsize the story.
 
 ## Page and component patterns
 
-- **Masthead:** `GAME/EXPLAINED`, ink lettering with the red slash and a 4px
+- **Masthead:** `NFL Win Delta`, ink lettering and a 4px
   double ink rule below. Show one masthead per visible page composition. On mobile
   game pages the shell already provides it; the inner report keeps only week metadata.
 - **Reading surface:** white, generally up to 1320px wide with 32px desktop and

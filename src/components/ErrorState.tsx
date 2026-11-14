@@ -19,7 +19,7 @@ export function ErrorState({
   hint,
 }: ErrorStateProps) {
   return <div className={styles.screen}>
-    <header className={styles.header}>GAME<span>/</span>EXPLAINED</header>
+    <header className={styles.header}>NFL Win Delta</header>
     <main className={styles.body}>
       <div className={styles.kicker}>Data unavailable</div>
       <h1>{title}</h1>

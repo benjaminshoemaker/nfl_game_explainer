@@ -4,7 +4,7 @@ import results from '@/data/factor-wins-2025.json';
 import styles from './page.module.css';
 
 export const metadata: Metadata = {
-  title: 'How it works | NFL Game Explainer',
+  title: 'How it works | NFL Win Delta',
   description: 'Understand the eight game factors, competitive plays, and how factor wins tracked NFL results in the 2025 regular season.',
 };
 
@@ -25,7 +25,7 @@ const pct = (value: number | null) => value === null ? '—' : `${value.toFixed(
 export default function HowItWorks() {
   return <div className={styles.page}>
     <header className={styles.header}>
-      <Link className={styles.brand} href="/">GAME<span>/</span>EXPLAINED</Link>
+      <Link className={styles.brand} href="/">NFL Win Delta</Link>
       <Link href="/">← All games</Link>
     </header>
     <article className={styles.article}>

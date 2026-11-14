@@ -104,7 +104,7 @@ export function GameSidebarClient() {
   // Show loading state on initial load
   if (!scoreboard) {
     return <div className={styles.sidebar} role="status" aria-label={refreshError ? 'Games unavailable' : 'Loading games'}>
-      <div className={styles.header}><span className={styles.brand}>GAME<span>/</span>EXPLAINED</span><div className={styles.week}>{refreshError ? 'Games unavailable' : 'Loading games'}</div></div>
+      <div className={styles.header}><span className={styles.brand}>NFL Win Delta</span><div className={styles.week}>{refreshError ? 'Games unavailable' : 'Loading games'}</div></div>
       {refreshError ? <div className={styles.loadError}>Games could not be loaded.<button onClick={refresh}>Try again</button></div>
         : <div className={styles.list}>{[...Array(6)].map((_, i) => <div key={i} className={styles.loadingRow} />)}</div>}
     </div>;

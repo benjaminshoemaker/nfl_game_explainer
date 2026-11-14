@@ -16,7 +16,7 @@ const sourceSerif = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "NFL Game Explainer",
+  title: "NFL Win Delta",
   description: "Live NFL game analysis with advanced stats and win probability tracking",
 };
 

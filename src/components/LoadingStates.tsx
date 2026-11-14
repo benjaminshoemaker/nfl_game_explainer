@@ -131,7 +131,7 @@ export function AISummarySkeleton() {
 
 export function FullPageLoading() {
   return <div className={styles.screen}>
-    <header className={styles.header}>GAME<span>/</span>EXPLAINED</header>
+    <header className={styles.header}>NFL Win Delta</header>
     <main className={styles.body} role="status">
       <div className={styles.kicker}>NFL game reports</div>
       <h1>Loading game data…</h1>
@@ -143,7 +143,7 @@ export function FullPageLoading() {
 
 export function DirectoryLoading() {
   return <div className={styles.screen}>
-    <header className={styles.header}>GAME<span>/</span>EXPLAINED</header>
+    <header className={styles.header}>NFL Win Delta</header>
     <main className={styles.body} role="status">
       <div className={styles.kicker}>NFL games</div>
       <h1>Loading the schedule…</h1>

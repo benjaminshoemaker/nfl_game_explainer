@@ -3,7 +3,7 @@ import styles from '@/components/StateScreens.module.css';
 
 export default function NotFound() {
   return <div className={styles.screen}>
-    <header className={styles.header}>GAME<span>/</span>EXPLAINED</header>
+    <header className={styles.header}>NFL Win Delta</header>
     <main className={styles.body}>
       <div className={styles.kicker}>404 / Page not found</div>
       <h1>That page isn’t here.</h1>

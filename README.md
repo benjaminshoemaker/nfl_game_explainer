@@ -402,6 +402,15 @@ archive files in subsequent deployments. `public/team-data/publication.json`
 identifies the published cutoff and model. Publishing requires deploying the
 updated bundle; the local weekly refresh alone does not update the website.
 
+The publisher preserves the maintained template's presentation and navigation;
+public mode only sanitizes provenance and converts archive links. Cloud weekly
+publication runs in the private `benjaminshoemaker/nfl-game-explainer-publisher`
+repository, with durable input/forecast state stored in private releases. Its
+Tuesday 9 a.m. Pacific workflow exports both the team site and pregame bundle,
+runs checks, commits the generated files to this repository, and verifies the
+Git-triggered Vercel deployment. Retry failures from that repository's Actions
+page; do not refit the frozen models or backdate missed forecasts.
+
 ### How it works
 
 The public `/how-it-works` page explains the eight game factors, factor counts,

@@ -379,9 +379,13 @@ the main review from the latest successful snapshot and display newly added repl
 ### Publish the team pages
 
 The production routes `/teams`, `/teams/BUF`, `/power-rankings`,
-`/prediction-results`, and `/team-methodology` serve the reviewed season interface.
+`/power-rankings/prediction-results`, and `/team-methodology` serve the reviewed season interface.
 The game directory links to Teams and Power rankings. These are dated publications;
-model caveats and source quality exclusions remain visible.
+model caveats and source quality exclusions remain visible. Prediction results is a
+subpage of Power rankings, linked from its compact pregame accuracy summary.
+The summary uses the same matched-game results as the full scorecard, showing
+mean absolute margin error against the adjusted point-differential baseline.
+The old `/prediction-results` URL redirects to the nested page.
 
 After a successful weekly refresh, export the public bundle before deployment:
 

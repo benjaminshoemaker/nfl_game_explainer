@@ -8,8 +8,11 @@ const nextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [{ source: '/prediction-results', destination: '/power-rankings/prediction-results', permanent: true }];
+  },
   async rewrites() {
-    const teamPages = ['/teams', '/teams/:team', '/power-rankings', '/prediction-results', '/team-methodology']
+    const teamPages = ['/teams', '/teams/:team', '/power-rankings', '/power-rankings/prediction-results', '/team-methodology']
       .map((source) => ({ source, destination: '/team-seasons.html' }));
     // Only proxy to local Python server in development
     if (process.env.NODE_ENV === 'development') {

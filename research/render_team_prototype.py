@@ -73,6 +73,7 @@ def render(source=ROOT/'game_summaries/nflverse', output=None, current_archive=N
     if public_mode:
         html = html.replace('Season research prototype', 'Teams &amp; power rankings')
         html = html.replace('<nav>', '<nav><a href="/">Games</a>', 1)
+        html = html.replace('href="#results"', 'href="/power-rankings/prediction-results"')
     for marker, payload in [('/*SNAPSHOTS*/{}',data), ('/*MODEL*/null',model),
         ('/*POWER*/{}',power), ('/*EVIDENCE*/null',evidence),
         ('/*SCHEDULE_AUDIT*/null',load(source/'model-v8-schedule/results.json')), ('/*WEEKLY*/null',weekly)]:

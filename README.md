@@ -411,6 +411,19 @@ linked from the game directory and each game’s factor section. The checked-in
 
 ## Interface styling
 
+Individual team pages use the Sunday edition Rating drivers view: a serif story
+headline, power-rating summary, signed contribution bars and a prominent Model
+influence column. Sort by absolute team contribution or model influence; the
+choice persists while navigating teams and seasons. Source warnings remain
+visible in the snapshot disclosure label, with their full evidence inside.
+Observed statistics, benchmark comparisons and calculations are expandable.
+
+The maintained template is `prototypes/team-seasons.html`; the deployed artifact
+is `public/team-seasons.html`. Keep their presentation identical and update
+`public/team-data/publication.json`'s HTML checksum after presentation changes,
+preserving embedded data and the original publication timestamp. `npm test`
+checks template/publication parity, sorting and repeated route/season changes.
+
 The Sunday edition interface leads with the game story: Source Serif 4 for
 headlines and section titles, Public Sans for reading text, controls, and data.
 The Next.js pages serve both fonts locally through `next/font/local`; their OFL licenses live

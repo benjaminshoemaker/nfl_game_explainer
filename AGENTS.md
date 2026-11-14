@@ -14,6 +14,9 @@ and usage belong in `README.md`; metric definitions belong in
 
 ## Working rules
 
+- For UI work, read [the Sunday edition design system](DESIGN_SYSTEM.md) first.
+  Apply it to both the Next.js app and the standalone team publication.
+
 - Keep Python and TypeScript implementations of shared metrics aligned.
 - Treat scrambles and sacks as pass dropbacks, not runs.
 - Detect turnovers consistently with the existing parsing rules.
@@ -38,7 +41,7 @@ Generated reports belong in `game_summaries/`, which is gitignored.
 
 <!-- BEGIN:nextjs-agent-rules -->
 
-# This is NOT the Next.js you know
+## This is NOT the Next.js you know
 
 This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
 

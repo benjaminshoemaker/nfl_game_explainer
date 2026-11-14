@@ -10,7 +10,7 @@
     "build": "next build",
     "lint": "eslint .",
     "start": "next start",
-    "test": "VITE_CJS_IGNORE_WARNING=1 vitest run",
+    "test": "VITE_CJS_IGNORE_WARNING=1 vitest run && node --test prototypes/team-rating-drivers.test.mjs",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

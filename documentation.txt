@@ -505,6 +505,20 @@ incremental predictive value. Expandable details expose every raw coefficient.
 The frozen model, team ratings and prediction formula are unchanged.
 
 POWER RATING CALCULATION WALKTHROUGH
+The team overview displays each component's signed point contribution and its
+standardized effect-size share, labeled Model influence. Influence is not a
+share of predictive accuracy or an additional multiplier. Default ordering is
+descending absolute contribution; readers may sort by descending influence.
+Missing influence is labeled Unavailable and sorted last. Sorting never changes
+the rating. Contribution axes use the same symmetric scale within a team, at
+least +/-2 points, expanding to the next whole point for larger contributions.
+The labeled scale can differ between teams. Influence uses one shared scale
+rounded up to a five-percentage-point boundary, at least 20%.
+
+Headlines describe the strongest positive model component and the total rating;
+ratings within two points of zero are described as closer to average overall.
+These are descriptive labels, not statistical significance or confidence bands.
+
 The team page shows observed eight-factor own/opponent/net values, then adds
 raw scoring margin and all six previous-QB inputs. It compares two fits of the
 current-season data: the normal joint opponent fit and a diagnostic fit with

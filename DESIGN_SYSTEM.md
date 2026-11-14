@@ -113,6 +113,8 @@ it, followed by the source disclosure and Rating drivers. Use the same Source
 Serif/Public Sans typography, white surface and double-rule masthead as game
 reports. Keep contribution bars blue for positive and ochre for negative, and
 model influence neutral gray with large percentages and a clearly separate axis.
+Use unfilled column headers, a fine baseline rule, and secondary scale labels
+aligned to their bar tracks; avoid a shaded table-header band.
 On phones, influence gets a full-width row below each component.
 
 Default to absolute team contribution order; offer Model influence sorting in

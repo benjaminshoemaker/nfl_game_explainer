@@ -409,7 +409,7 @@ linked from the game directory and each game’s factor section. The checked-in
 
 The Sunday edition interface leads with the game story: Source Serif 4 for
 headlines and section titles, Public Sans for reading text, controls, and data.
-Both fonts are served locally through `next/font/local`; their OFL licenses live
+The Next.js pages serve both fonts locally through `next/font/local`; their OFL licenses live
 in `src/app/fonts/`. Shared color and typography tokens live in
 `src/app/globals.css`. Editorial red marks actions and selected controls; blue
 and ochre consistently distinguish away/home evidence. Live status, missing-data
@@ -420,3 +420,11 @@ beside the game sidebar. Narrow screens stack charts, split tables, and play
 panels; long headlines wrap without truncation, and phone scoreboards put both
 teams side by side. Chart axis labels remain HTML text to avoid shrinking with
 the SVG.
+
+The standalone team directory, individual teams, power rankings, prediction
+results, and team methodology share the Sunday edition template in
+`prototypes/team-seasons.html`. The publisher uses that template for
+`public/team-seasons.html`; edit both when restyling an existing publication,
+and refresh its HTML checksum in `public/team-data/publication.json`. These
+pages load the same licensed fonts from `public/fonts/`. Dense evidence tables
+and charts scroll inside keyboard-focusable regions on narrow screens.

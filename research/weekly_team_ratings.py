@@ -322,5 +322,12 @@ if __name__ == '__main__':
     parser.add_argument('--season', type=int, default=2026)
     parser.add_argument('--replay-week', type=int, choices=range(2,19))
     parser.add_argument('--input-dir', type=Path, help='Optional existing source snapshot; never implies pregame availability for a replay')
+    parser.add_argument('--publish-preview', action='store_true', help='Package successful weekly publication into the deployed pregame data bundle')
     args = parser.parse_args()
-    print(run_weekly(args.base, args.season, args.replay_week, args.input_dir))
+    if args.publish_preview and args.replay_week:
+        parser.error('--publish-preview cannot be combined with --replay-week')
+    archive = run_weekly(args.base, args.season, args.replay_week, args.input_dir)
+    if args.publish_preview:
+        from research.publish_pregame import publish
+        print(publish(archive))
+    print(archive)

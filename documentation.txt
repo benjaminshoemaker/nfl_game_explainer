@@ -610,3 +610,26 @@ is the square root of mean squared errors. Winner accuracy excludes actual ties;
 a predicted zero margin does not count as a correct winner pick. Missing lines
 and pending games are reported separately. Archived predictions remain unchanged
 when results arrive or upstream historical data is corrected.
+
+PREGAME REPORT COMPARISONS
+The pregame page uses the published prior-week nflverse snapshot. Offense is
+compared with the other team's opponent/defense values. Rank dots run from worst
+(left) to best (right); last place is a visible dot, not a missing value. Raw
+season statistics are descriptive and distinct from adjusted model components.
+
+Rating-driver bars show away contribution minus home contribution for each of
+the eight factors, scoring margin, and QB history. Positive favors away; negative
+favors home. They share one symmetric points scale and sort by absolute gap.
+Their sum equals the away-minus-home rating difference before rounding. The
+matchup-context adjustment is the archived away-minus-home projection minus that
+rating difference, covering venue/designation and rest. Model influence retains
+the team-page definition: grouped training contribution SD normalized to 100%,
+not a share of predictive accuracy. No model coefficients or metric definitions
+were changed for this presentation.
+
+Optional AI copy is generated from complete, ranked season facts and model
+context. Watch points reference validated fact IDs; the UI renders the exact
+values independently. Shape/reference validation is not proof of every prose
+claim; editorial accuracy still requires evaluation. Missing/failed AI copy does
+not suppress statistical comparisons. No injuries or confirmed-starter inputs
+are supplied. Publication and previous-week cutoffs prevent future-data reuse.

@@ -98,3 +98,16 @@ predictors are evaluated on the same completed games with available closing line
 Ties do not enter winner accuracy. Closing lines can include information that
 arrived after our earlier weekly forecast. One good week is not evidence of a
 lasting advantage, and this comparison does not measure betting profitability.
+
+Why does the pregame page sometimes have no headline analysis or things to watch?
+The season comparisons and rating breakdown do not require OpenAI. Generated
+writing requires an API key and a successful response from the configured model.
+When unavailable, the page shows the matchup title and statistical preview.
+If no matching prior-week publication has been packaged, the regular upcoming
+screen is shown. The live report replaces the preview when the game starts.
+
+What do the pregame rating bars mean?
+They show the difference between the two teams' adjusted point contributions:
+left favors home, right favors away. Model influence is a separate measure of
+typical contribution size in training data, not predictive accuracy. Raw season
+rankings appear in the offense/defense comparison and may differ from the model.

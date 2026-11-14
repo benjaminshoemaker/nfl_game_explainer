@@ -359,6 +359,7 @@ def analyze_game(game_id, wp_threshold=0.975, debug=False):
 
     payload = {
         "gameId": game_id,
+        "season": season_info.get("year") if isinstance(season_info, dict) else None,
         "label": label,
         "status": status,
         "statusDetail": ((comps[0].get('status') or {}).get('type') or {}).get('shortDetail') if comps else None,

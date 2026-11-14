@@ -445,3 +445,37 @@ results, and team methodology share the Sunday edition template in
 and refresh its HTML checksum in `public/team-data/publication.json`. These
 pages load the same licensed fonts from `public/fonts/`. Dense evidence tables
 and charts scroll inside keyboard-focusable regions on narrow screens.
+
+### Pregame reports
+
+Upcoming games now show offense-versus-defense season comparisons, visible
+league-rank dots, and a ten-component rating-gap chart with model influence.
+The headline and Things to watch use `OPENAI_MODEL` (default `gpt-5.6-luna`)
+when `OPENAI_API_KEY` is present. Without a key or on an API failure, the same
+statistical preview remains available with a neutral headline. AI watch points
+include exact supporting season stats. Generated copy is cached by model,
+prompt version, and input facts; API errors back off for five minutes locally.
+The existing live/final summaries and automatic transition at kickoff remain.
+
+Pregame data is packaged separately from the large research archives. Package
+the last successful weekly publication without fetching or refitting:
+
+```bash
+.venv/bin/python research/publish_pregame.py
+```
+
+The publisher reads `game_summaries/nflverse/weekly-latest.json`, or accepts
+`--archive /path/to/weekly-archive` for an existing publication. This command packages existing data and does not refresh season inputs itself.
+To refresh and package in one step, run:
+
+```bash
+PYTHONPATH=. .venv/bin/python research/weekly_team_ratings.py --season 2026 --publish-preview
+```
+
+The deployable bundle is `api/lib/data/pregame.json`; original generated reports
+remain under gitignored `game_summaries/`. Only true pregame publications are
+accepted. The API requires an exact ESPN game ID, season, week, and team match,
+and inputs ending the previous week. Games outside the packaged publication
+retain the existing upcoming-game screen instead of using stale statistics.
+The included bundle covers 2026 Week 10 with inputs through Week 9. Repackaging
+updates the working tree; production needs a new deployment to pick it up.

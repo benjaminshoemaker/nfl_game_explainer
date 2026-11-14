@@ -494,6 +494,9 @@ def test_is_competitive_play_logic():
     assert gc.is_competitive_play(high_wp_home, prob_map, wp_threshold=0.97,
                                   start_home_wp=0.98, start_away_wp=0.02) is False
 
+    # A missing start boundary cannot establish noncompetitive play.
+    assert gc.is_competitive_play(high_wp_home, prob_map, wp_threshold=0.97) is True
+
     balanced = {"id": "2", "period": {"number": 2}}
     assert gc.is_competitive_play(balanced, prob_map, wp_threshold=0.97) is True
 

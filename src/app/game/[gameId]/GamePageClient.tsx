@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { GameResponse } from '@/types';
+import { PregameReport } from '@/components/PregameReport';
 import { GameExplorer } from '@/components/GameExplorer';
 import { useAutoRefresh } from '@/hooks/useAutoRefresh';
 import { useWeekContext } from '@/contexts/WeekContext';
@@ -89,6 +90,8 @@ export function GamePageClient({ initialGameData, debugMode = false }: GamePageC
     </div>
     {latestPlayText && (gameData.status === 'in-progress' || gameData.status === 'delayed') && <div className={styles.playFreshness} role="status"><span>{latestPlayText}</span>{noNewPlays && !refreshError && <span>No new plays since last check</span>}</div>}
     {refreshError && <div className={styles.refreshError} role="status">Could not refresh this game. Showing the last loaded report and retrying automatically. <button onClick={refresh}>Try again</button></div>}
-    <GameExplorer key={gameData.gameId} game={gameData} scope={effectiveViewMode} home={home} away={away} />
+    {gameData.status === 'pregame' && gameData.pregame_preview
+      ? <PregameReport key={gameData.gameId} preview={gameData.pregame_preview} />
+      : <GameExplorer key={gameData.gameId} game={gameData} scope={effectiveViewMode} home={home} away={away} />}
   </div>;
 }

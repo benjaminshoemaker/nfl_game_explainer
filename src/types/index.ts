@@ -161,6 +161,8 @@ export interface GameResponse {
   };
   analysis: string;
   ai_summary?: string | null;
+  season?: number;
+  pregame_preview?: PregamePreview | null;
   source_gaps?: Array<{ team: string; yards_gap: number; turnovers_gap: number; plays_gap?: number }>;
   debug?: GameDebugData;
 }
@@ -225,4 +227,26 @@ export interface PlayListProps {
 export interface ViewToggleProps {
   showFiltered: boolean;
   onToggle: (filtered: boolean) => void;
+}
+
+
+export interface PreviewMetric {
+  value: number | null; rank: number | null; rankPool: number;
+  percentile: number | null; complete: boolean; tied?: boolean;
+}
+export interface PreviewTeam {
+  id: string; abbr: string; name: string;
+  record: { wins: number; losses: number; ties: number };
+  gamesAvailable: number;
+  factors: Record<string, { own: PreviewMetric; opponent: PreviewMetric; net: PreviewMetric }>;
+}
+export interface PregamePreview {
+  season: number; throughWeek: number; publishedAt: string; kickoff: string;
+  home: string; away: string; week: number; model: number;
+  factors: Array<{ id: string; label: string; unit: string }>;
+  teams: PreviewTeam[];
+  power: Array<{ id: string; rank: number; rating: number; contributions: Record<string, number> }>;
+  weights: Record<string, number>;
+  narrative: { headline: string; summary: string;
+    watchPoints: Array<{ title: string; body: string; factIds: string[] }> } | null;
 }

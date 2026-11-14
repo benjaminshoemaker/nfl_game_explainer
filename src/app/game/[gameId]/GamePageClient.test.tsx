@@ -3,6 +3,8 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import { WeekProvider } from '@/contexts/WeekContext';
 import { GamePageClient } from './GamePageClient';
+import previewData from '../../../../api/lib/data/pregame.json';
+import type { PregamePreview } from '@/types';
 import type { CanonicalPlay, GameResponse } from '@/types';
 
 const { refreshOptions, refreshState } = vi.hoisted(() => ({ refreshOptions: vi.fn(), refreshState: { error: null as Error | null, hasSuccessfulRefresh: false } }));
@@ -288,4 +290,19 @@ describe('GamePageClient', () => {
     expect(within(playsTable).getAllByText('Yes')).toHaveLength(2);
     expect(screen.queryByText('Explore all eight factors')).toBeNull();
   });
+});
+
+
+it('replaces the pregame preview when polling reports kickoff', async () => {
+  const g = Object.values(previewData.games).find(game => game.away === 'SEA')!;
+  const preview = { ...previewData, ...g, narrative: null,
+    teams: previewData.teams.filter(t => [g.home, g.away].includes(t.id)),
+    power: previewData.power.filter(t => [g.home, g.away].includes(t.id)),
+  } as PregamePreview;
+  const game = buildGame({ pregame_preview: preview });
+  render(<WeekProvider><GamePageClient initialGameData={game} /></WeekProvider>);
+  expect(screen.getByRole('article', { name: 'Pregame report' })).toBeInTheDocument();
+  await act(async () => { refreshOptions.mock.lastCall?.[0].onSuccess({ ...game, status: 'in-progress' }); });
+  expect(screen.queryByRole('article', { name: 'Pregame report' })).not.toBeInTheDocument();
+  expect(screen.getByText('Waiting for the first play')).toBeInTheDocument();
 });

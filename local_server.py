@@ -23,6 +23,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from api.lib.game_analysis import analyze_game
 from api.lib.ai_summary import generate_ai_summary, get_cached_summary
+from api.lib.pregame import attach_preview
 from api.scoreboard import fetch_scoreboard, build_response
 
 def _parse_scoreboard_params(query):
@@ -88,39 +89,42 @@ class LocalAPIHandler(BaseHTTPRequestHandler):
                 try:
                     payload = analyze_game(game_id, debug=query.get('debug', [''])[0] == 'true')
 
-                    # Generate AI summary
-                    summary_table = payload.get('summary_table', [])
-                    team_meta = payload.get('team_meta', [])
-
-                    home_team = next((t for t in team_meta if t['homeAway'] == 'home'), None)
-                    away_team = next((t for t in team_meta if t['homeAway'] == 'away'), None)
-
-                    home_score = 0
-                    away_score = 0
-
-                    if home_team and away_team:
-                        home_summary = next((s for s in summary_table if s['Team'] == home_team['abbr']), {})
-                        away_summary = next((s for s in summary_table if s['Team'] == away_team['abbr']), {})
-                        home_score = home_summary.get('Score', 0)
-                        away_score = away_summary.get('Score', 0)
-
-                    # Check cache first
-                    cached_summary = get_cached_summary(game_id, home_score, away_score, payload)
-
-                    if cached_summary:
-                        payload['ai_summary'] = cached_summary
+                    if payload.get('status') == 'pregame':
+                        attach_preview(payload)
                     else:
-                        try:
-                            ai_summary = generate_ai_summary(
-                                payload=payload,
-                                game_data={},
-                                probability_map={},
-                                wp_threshold=0.975
-                            )
-                            payload['ai_summary'] = ai_summary
-                        except Exception as e:
-                            print(f"AI summary generation failed: {e}")
-                            payload['ai_summary'] = None
+                        # Generate AI summary
+                        summary_table = payload.get('summary_table', [])
+                        team_meta = payload.get('team_meta', [])
+
+                        home_team = next((t for t in team_meta if t['homeAway'] == 'home'), None)
+                        away_team = next((t for t in team_meta if t['homeAway'] == 'away'), None)
+
+                        home_score = 0
+                        away_score = 0
+
+                        if home_team and away_team:
+                            home_summary = next((s for s in summary_table if s['Team'] == home_team['abbr']), {})
+                            away_summary = next((s for s in summary_table if s['Team'] == away_team['abbr']), {})
+                            home_score = home_summary.get('Score', 0)
+                            away_score = away_summary.get('Score', 0)
+
+                        # Check cache first
+                        cached_summary = get_cached_summary(game_id, home_score, away_score, payload)
+
+                        if cached_summary:
+                            payload['ai_summary'] = cached_summary
+                        else:
+                            try:
+                                ai_summary = generate_ai_summary(
+                                    payload=payload,
+                                    game_data={},
+                                    probability_map={},
+                                    wp_threshold=0.975
+                                )
+                                payload['ai_summary'] = ai_summary
+                            except Exception as e:
+                                print(f"AI summary generation failed: {e}")
+                                payload['ai_summary'] = None
 
                     self._send_json(payload)
                 except Exception as e:

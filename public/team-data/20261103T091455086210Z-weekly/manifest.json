@@ -1,0 +1,94 @@
+{
+  "status": "complete",
+  "mode": "weekly",
+  "season": 2026,
+  "throughWeek": 8,
+  "createdAt": "2026-11-03T09:14:55.086210+00:00",
+  "publishedAt": "2026-11-03T09:14:59.197424+00:00",
+  "inputs": [
+    {
+      "path": "games.csv",
+      "url": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
+      "sha256": "4b578fca0d67a2de47c80c3fe133d8e6e1bdd5c76d48db1756fc50199f12bcb3",
+      "archivedAt": "2026-11-03T09:14:55.328663+00:00",
+      "acquisition": "download"
+    },
+    {
+      "path": "teams.csv",
+      "url": "https://raw.githubusercontent.com/nflverse/nflverse-pbp/master/teams_colors_logos.csv",
+      "sha256": "4eab559fcf89cb4eaf61cb63a88abc47b01b6c9049187c59f3efe95888c3d048",
+      "archivedAt": "2026-11-03T09:14:55.489246+00:00",
+      "acquisition": "download"
+    },
+    {
+      "path": "pbp_2024.parquet",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/pbp/play_by_play_2024.parquet",
+      "sha256": "3fd2896bc0b911b615142d2f1fabae54a4bbba5ab7b73b28187b118ef8af6a3b",
+      "archivedAt": "2026-11-03T09:14:56.514369+00:00",
+      "acquisition": "download"
+    },
+    {
+      "path": "pbp_2025.parquet",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/pbp/play_by_play_2025.parquet",
+      "sha256": "c6ecedd6d678cc37ed316b23ef84ee1ec6abb69c514bb11868a7ebd5a367df29",
+      "archivedAt": "2026-11-03T09:14:57.498528+00:00",
+      "acquisition": "download"
+    },
+    {
+      "path": "pbp_2026.parquet",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/pbp/play_by_play_2026.parquet",
+      "sha256": "2f3b9cbcf1339639d3c11f8355b61d1772a1b28804da625e28d1cce35c444664",
+      "archivedAt": "2026-11-03T09:14:57.996215+00:00",
+      "acquisition": "download"
+    }
+  ],
+  "coverage": {
+    "season": 2026,
+    "throughWeek": 8,
+    "games": 121,
+    "expected": 121,
+    "teams": 32,
+    "scoring": 121,
+    "coverage": {
+      "success_rate": {
+        "teamGames": 242,
+        "rankedTeams": 32
+      },
+      "yards_per_play": {
+        "teamGames": 242,
+        "rankedTeams": 32
+      },
+      "explosive_rate": {
+        "teamGames": 242,
+        "rankedTeams": 32
+      },
+      "points_per_trip": {
+        "teamGames": 242,
+        "rankedTeams": 32
+      },
+      "turnovers": {
+        "teamGames": 240,
+        "rankedTeams": 30
+      },
+      "field_position": {
+        "teamGames": 242,
+        "rankedTeams": 32
+      },
+      "penalties": {
+        "teamGames": 242,
+        "rankedTeams": 32
+      },
+      "non_offensive_points": {
+        "teamGames": 242,
+        "rankedTeams": 32
+      }
+    },
+    "reasons": {
+      "ambiguous_fumble_loss": 2
+    },
+    "errors": {}
+  },
+  "archive": "weekly-archive/20261103T091455086210Z-weekly",
+  "predictionCount": 15,
+  "featurePolicy": "Completed games through prior week only; no odds, future outcomes or confirmed target-game QB"
+}

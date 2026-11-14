@@ -1,0 +1,48 @@
+{
+  "metrics": {
+    "model": {
+      "games": 0,
+      "rmse": null,
+      "mae": null,
+      "winnerCorrect": 0,
+      "winnerGames": 0,
+      "tiesExcluded": 0
+    },
+    "pointBaseline": {
+      "games": 0,
+      "rmse": null,
+      "mae": null,
+      "winnerCorrect": 0,
+      "winnerGames": 0,
+      "tiesExcluded": 0
+    },
+    "vegas": {
+      "games": 0,
+      "rmse": null,
+      "mae": null,
+      "winnerCorrect": 0,
+      "winnerGames": 0,
+      "tiesExcluded": 0
+    }
+  },
+  "games": [],
+  "pending": [
+    "2026_06_SEA_DEN",
+    "2026_06_HOU_JAX",
+    "2026_06_CHI_ATL",
+    "2026_06_BAL_CLE",
+    "2026_06_TEN_IND",
+    "2026_06_NYJ_NE",
+    "2026_06_NO_NYG",
+    "2026_06_CAR_PHI",
+    "2026_06_PIT_TB",
+    "2026_06_ARI_LA",
+    "2026_06_LAC_KC",
+    "2026_06_BUF_LV",
+    "2026_06_DAL_GB",
+    "2026_06_WAS_SF"
+  ],
+  "missingClosingLine": [],
+  "totalForecasts": 14,
+  "comparison": "Identical completed games with finite nflverse closing spread_line; positive = home favored. Winner accuracy excludes tied outcomes; a pick-em predicts neither winner."
+}

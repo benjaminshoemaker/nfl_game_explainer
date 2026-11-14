@@ -1,0 +1,28 @@
+{
+  "spec": {
+    "family": "point_baseline",
+    "kind": "ridge",
+    "strength": 10,
+    "columns": [
+      124
+    ]
+  },
+  "featureNames": [
+    "original_p8_h8_point_margin"
+  ],
+  "coefficients": [
+    1.4505874207360845
+  ],
+  "intercept": 2.0812818964392195,
+  "formula": "intercept + sum(feature_value * coefficient)",
+  "unit": "predicted home-minus-away scoring margin, points",
+  "status": "retrospective research; not prospectively validated",
+  "trainingSeasons": [
+    2012,
+    2025
+  ],
+  "intendedFirstSeason": 2026,
+  "inputMatrixSha256": "c7147e95a94328aae3090b9372e4298789fe1c9036e7e1b81db73190586a3344",
+  "selection": "Previously established fixed_v2 comparator: priorGames=8, halfLife=8, Ridge alpha=10; no new selection",
+  "exporterSha256": "a1ca6e84cc4697843e7f8168a353be5f027b83221fe6acf00508220444763c52"
+}

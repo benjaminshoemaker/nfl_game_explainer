@@ -81,7 +81,7 @@ export async function startAnalytics() {
     panel.setAttribute('role', 'dialog'); panel.setAttribute('aria-label', 'Analytics privacy');
     panel.style.cssText = 'position:fixed;z-index:10000;bottom:44px;left:16px;right:16px;max-width:420px;padding:20px;background:#fff;color:#17212a;border:1px solid #535d66;box-shadow:0 4px 20px #0002;font:14px/1.5 Arial,sans-serif';
     const copy = document.createElement('p');
-    copy.textContent = privacySignal ? 'Your browser privacy preference is on. Analytics is disabled.' : 'Help improve NFL Win Delta? With your permission, we measure page visits, feature use, and whether this browser returns in later weeks. No session recordings.';
+    copy.textContent = privacySignal ? 'Your browser privacy preference is on. Analytics is disabled.' : 'Help improve NFL Win Delta by allowing optional analytics.';
     panel.append(copy);
     const button = (label: string, action: () => void) => {
       const b = document.createElement('button'); b.type = 'button'; b.textContent = label;

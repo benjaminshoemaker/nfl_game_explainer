@@ -16,11 +16,20 @@ def payload():
             'team_meta': [{'abbr': game[side], 'homeAway': side} for side in ['home', 'away']]}
 
 
-def test_snapshot_matches_only_exact_pregame():
+@pytest.mark.parametrize('week', [10, 11, 18])
+def test_snapshot_matches_only_exact_pregame(monkeypatch, tmp_path, week):
+    data = json.loads(pregame.DATA_PATH.read_text())
+    data['throughWeek'] = week - 1
+    for game in data['games'].values():
+        game['week'] = week
+    path = tmp_path / 'pregame.json'
+    path.write_text(json.dumps(data))
+    monkeypatch.setattr(pregame, 'DATA_PATH', path)
     p = payload()
     assert pregame.load_preview(p)
-    for key, value in [('status', 'in-progress'), ('season', 2025), ('gameId', 'unknown'),
-                       ('week', {'number': 11, 'seasonType': 2}), ('week', {'number': 10, 'seasonType': 3})]:
+    for key, value in [('status', 'in-progress'), ('season', p['season'] - 1), ('gameId', 'unknown'),
+                       ('week', {'number': p['week']['number'] + 1, 'seasonType': 2}),
+                       ('week', {'number': p['week']['number'], 'seasonType': 3})]:
         assert pregame.load_preview({**p, key: value}) is None
     p['team_meta'][0]['abbr'] = 'WRONG'
     assert pregame.load_preview(p) is None

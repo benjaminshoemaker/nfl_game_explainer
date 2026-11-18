@@ -1,9 +1,9 @@
 {
   "season": 2026,
-  "throughWeek": 9,
-  "archive": "/team-data/20261110T160429420111Z-weekly",
-  "publishedAt": "2026-11-10T16:04:33.722016+00:00",
-  "htmlSha256": "83151a642ffb1963756e3bf19c34e84c4530babd5e293566af00936701ff6f40",
+  "throughWeek": 10,
+  "archive": "/team-data/20261117T234934601687Z-weekly",
+  "publishedAt": "2026-11-17T23:49:37.897307+00:00",
+  "htmlSha256": "f2e27f0b6633a382e873154114c0c1052fdac7f966e891048adcde86cd614e09",
   "modelSha256": "8182eab048a85c6ea3a0936231a04d451c7ea85183588b08f83f208e83e46d92",
-  "sourceArchiveChecksumsSha256": "8d45e04f6722d5e4fde0358f6b7b9fe89fd0fc4db26dbb7f43638b25a1ec2042"
+  "sourceArchiveChecksumsSha256": "2a07ac8617406ff278a8e6305958ae13e3831fad407e5456fcfb18d78971572e"
 }

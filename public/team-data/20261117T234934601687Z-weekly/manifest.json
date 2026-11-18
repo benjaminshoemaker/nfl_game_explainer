@@ -1,0 +1,94 @@
+{
+  "status": "complete",
+  "mode": "weekly",
+  "season": 2026,
+  "throughWeek": 10,
+  "createdAt": "2026-11-17T23:49:34.601687+00:00",
+  "publishedAt": "2026-11-17T23:49:37.897307+00:00",
+  "inputs": [
+    {
+      "path": "/home/runner/work/nfl-game-explainer-publisher/nfl-game-explainer-publisher/state/weekly-archive/20261117T234934601687Z-weekly/sources/games.csv",
+      "url": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
+      "sha256": "51169362e1f34b2c4827970f886158a47d6dfb2b5b580a6960984a00daa4bdd9",
+      "archivedAt": "2026-11-17T23:49:34.667157+00:00",
+      "acquisition": "download"
+    },
+    {
+      "path": "/home/runner/work/nfl-game-explainer-publisher/nfl-game-explainer-publisher/state/weekly-archive/20261117T234934601687Z-weekly/sources/teams.csv",
+      "url": "https://raw.githubusercontent.com/nflverse/nflverse-pbp/master/teams_colors_logos.csv",
+      "sha256": "4eab559fcf89cb4eaf61cb63a88abc47b01b6c9049187c59f3efe95888c3d048",
+      "archivedAt": "2026-11-17T23:49:34.691184+00:00",
+      "acquisition": "download"
+    },
+    {
+      "path": "/home/runner/work/nfl-game-explainer-publisher/nfl-game-explainer-publisher/state/weekly-archive/20261117T234934601687Z-weekly/sources/pbp_2024.parquet",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/pbp/play_by_play_2024.parquet",
+      "sha256": "6e6996601f9c29dd10c8d6a15eca255b836ba1dd4718f12bfb69137da1e07c1e",
+      "archivedAt": "2026-11-17T23:49:34.959643+00:00",
+      "acquisition": "download"
+    },
+    {
+      "path": "/home/runner/work/nfl-game-explainer-publisher/nfl-game-explainer-publisher/state/weekly-archive/20261117T234934601687Z-weekly/sources/pbp_2025.parquet",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/pbp/play_by_play_2025.parquet",
+      "sha256": "6b7f629136def21702592bf7d70876d746aafe3207c675d9920632e9d7fd6d2d",
+      "archivedAt": "2026-11-17T23:49:35.249595+00:00",
+      "acquisition": "download"
+    },
+    {
+      "path": "/home/runner/work/nfl-game-explainer-publisher/nfl-game-explainer-publisher/state/weekly-archive/20261117T234934601687Z-weekly/sources/pbp_2026.parquet",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/pbp/play_by_play_2026.parquet",
+      "sha256": "32334d4ae379d25b3bbaa1b7a9fd3746c19a636b48be99ef5fa9318ac6346398",
+      "archivedAt": "2026-11-17T23:49:35.505180+00:00",
+      "acquisition": "download"
+    }
+  ],
+  "coverage": {
+    "season": 2026,
+    "throughWeek": 10,
+    "games": 150,
+    "expected": 150,
+    "teams": 32,
+    "scoring": 150,
+    "coverage": {
+      "success_rate": {
+        "teamGames": 300,
+        "rankedTeams": 32
+      },
+      "yards_per_play": {
+        "teamGames": 300,
+        "rankedTeams": 32
+      },
+      "explosive_rate": {
+        "teamGames": 300,
+        "rankedTeams": 32
+      },
+      "points_per_trip": {
+        "teamGames": 300,
+        "rankedTeams": 32
+      },
+      "turnovers": {
+        "teamGames": 296,
+        "rankedTeams": 28
+      },
+      "field_position": {
+        "teamGames": 300,
+        "rankedTeams": 32
+      },
+      "penalties": {
+        "teamGames": 300,
+        "rankedTeams": 32
+      },
+      "non_offensive_points": {
+        "teamGames": 300,
+        "rankedTeams": 32
+      }
+    },
+    "reasons": {
+      "ambiguous_fumble_loss": 4
+    },
+    "errors": {}
+  },
+  "archive": "weekly-archive/20261117T234934601687Z-weekly",
+  "predictionCount": 13,
+  "featurePolicy": "Completed games through prior week only; no odds, future outcomes or confirmed target-game QB"
+}

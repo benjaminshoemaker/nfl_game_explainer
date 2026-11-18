@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import { WeekProvider } from '@/contexts/WeekContext';
 import { GamePageClient } from './GamePageClient';
-import previewData from '../../../../tests/fixtures/pregame-sea-lv.json';
+import previewData from '../../../test-fixtures/pregame-sea-lv.json';
 import type { PregamePreview } from '@/types';
 import type { CanonicalPlay, GameResponse } from '@/types';
 

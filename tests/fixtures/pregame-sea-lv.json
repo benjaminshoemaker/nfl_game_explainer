@@ -1,0 +1,847 @@
+{
+  "season": 2026,
+  "throughWeek": 9,
+  "publishedAt": "2026-11-10T16:04:33.722016+00:00",
+  "modelSha256": "8182eab048a85c6ea3a0936231a04d451c7ea85183588b08f83f208e83e46d92",
+  "factors": [
+    {
+      "id": "success_rate",
+      "label": "Success rate",
+      "unit": "percent",
+      "higherIsBetter": true,
+      "numerator": "Successful Plays",
+      "denominator": "Plays"
+    },
+    {
+      "id": "yards_per_play",
+      "label": "Adjusted yards / play",
+      "unit": "yards/play",
+      "higherIsBetter": true,
+      "numerator": "Offensive Yards",
+      "denominator": "Plays"
+    },
+    {
+      "id": "explosive_rate",
+      "label": "Explosive-play rate",
+      "unit": "percent",
+      "higherIsBetter": true,
+      "numerator": "Explosive Plays",
+      "denominator": "Plays"
+    },
+    {
+      "id": "points_per_trip",
+      "label": "Points per trip inside 40",
+      "unit": "points/trip",
+      "higherIsBetter": true,
+      "numerator": "Points Inside 40",
+      "denominator": "Drives Inside 40"
+    },
+    {
+      "id": "turnovers",
+      "label": "Turnovers",
+      "unit": "per game",
+      "higherIsBetter": false,
+      "numerator": "Turnovers",
+      "denominator": null
+    },
+    {
+      "id": "field_position",
+      "label": "Starting field position",
+      "unit": "yardline",
+      "higherIsBetter": true,
+      "numerator": "Start Field Pos Sum",
+      "denominator": "Drives Count"
+    },
+    {
+      "id": "penalties",
+      "label": "Penalty yards",
+      "unit": "yards/game",
+      "higherIsBetter": false,
+      "numerator": "Penalty Yards",
+      "denominator": null
+    },
+    {
+      "id": "non_offensive_points",
+      "label": "Non-offensive points",
+      "unit": "points/game",
+      "higherIsBetter": true,
+      "numerator": "Non-Offensive Points",
+      "denominator": null
+    }
+  ],
+  "weights": {
+    "success_rate": 19.972365423460978,
+    "yards_per_play": 13.24959193907237,
+    "explosive_rate": 4.200441820059537,
+    "points_per_trip": 3.9391738249985844,
+    "turnovers": 5.509097958000666,
+    "field_position": 13.558753623121339,
+    "penalties": 2.836145159188664,
+    "non_offensive_points": 7.8455212519989175,
+    "point_margin": 14.30531232526164,
+    "quarterback": 14.583596674837299
+  },
+  "teams": [
+    {
+      "id": "LV",
+      "abbr": "LV",
+      "name": "Las Vegas Raiders",
+      "record": {
+        "wins": 4,
+        "losses": 5,
+        "ties": 0
+      },
+      "gamesAvailable": 9,
+      "factors": {
+        "success_rate": {
+          "own": {
+            "numerator": 259,
+            "denominator": 544,
+            "value": 0.47610294117647056,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "complete": true,
+            "excludedReasons": {},
+            "rank": 14,
+            "percentile": 58.064516129032256,
+            "rankPool": 32,
+            "leagueSize": 32,
+            "tied": false
+          },
+          "opponent": {
+            "numerator": 303,
+            "denominator": 557,
+            "value": 0.5439856373429084,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "complete": true,
+            "excludedReasons": {},
+            "rank": 32,
+            "percentile": 0.0,
+            "rankPool": 32,
+            "leagueSize": 32,
+            "tied": false
+          },
+          "net": {
+            "value": -0.06788269616643783,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "pairedOwnValue": 0.47610294117647056,
+            "pairedOpponentValue": 0.5439856373429084,
+            "complete": true,
+            "rank": 29,
+            "percentile": 9.67741935483871,
+            "rankPool": 32,
+            "leagueSize": 32,
+            "tied": false
+          }
+        },
+        "yards_per_play": {
+          "own": {
+            "numerator": 2992.0,
+            "denominator": 544,
+            "value": 5.5,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "complete": true,
+            "excludedReasons": {},
+            "rank": 16,
+            "percentile": 51.61290322580645,
+            "rankPool": 32,
+            "leagueSize": 32,
+            "tied": false
+          },
+          "opponent": {
+            "numerator": 3483.0,
+            "denominator": 557,
+            "value": 6.253141831238779,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "complete": true,
+            "excludedReasons": {},
+            "rank": 32,
+            "percentile": 0.0,
+            "rankPool": 32,
+            "leagueSize": 32,
+            "tied": false
+          },
+          "net": {
+            "value": -0.7531418312387794,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "pairedOwnValue": 5.5,
+            "pairedOpponentValue": 6.253141831238779,
+            "complete": true,
+            "rank": 26,
+            "percentile": 19.35483870967742,
+            "rankPool": 32,
+            "leagueSize": 32,
+            "tied": false
+          }
+        },
+        "explosive_rate": {
+          "own": {
+            "numerator": 43,
+            "denominator": 544,
+            "value": 0.07904411764705882,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "complete": true,
+            "excludedReasons": {},
+            "rank": 22,
+            "percentile": 32.25806451612903,
+            "rankPool": 32,
+            "leagueSize": 32,
+            "tied": false
+          },
+          "opponent": {
+            "numerator": 61,
+            "denominator": 557,
+            "value": 0.10951526032315978,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "complete": true,
+            "excludedReasons": {},
+            "rank": 32,
+            "percentile": 0.0,
+            "rankPool": 32,
+            "leagueSize": 32,
+            "tied": false
+          },
+          "net": {
+            "value": -0.03047114267610096,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "pairedOwnValue": 0.07904411764705882,
+            "pairedOpponentValue": 0.10951526032315978,
+            "complete": true,
+            "rank": 29,
+            "percentile": 9.67741935483871,
+            "rankPool": 32,
+            "leagueSize": 32,
+            "tied": false
+          }
+        },
+        "points_per_trip": {
+          "own": {
+            "numerator": 226.0,
+            "denominator": 56,
+            "value": 4.035714285714286,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "complete": true,
+            "excludedReasons": {},
+            "rank": 19,
+            "percentile": 41.935483870967744,
+            "rankPool": 32,
+            "leagueSize": 32,
+            "tied": false
+          },
+          "opponent": {
+            "numerator": 261.0,
+            "denominator": 52,
+            "value": 5.019230769230769,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "complete": true,
+            "excludedReasons": {},
+            "rank": 31,
+            "percentile": 3.225806451612903,
+            "rankPool": 32,
+            "leagueSize": 32,
+            "tied": false
+          },
+          "net": {
+            "value": -0.9835164835164836,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "pairedOwnValue": 4.035714285714286,
+            "pairedOpponentValue": 5.019230769230769,
+            "complete": true,
+            "rank": 29,
+            "percentile": 9.67741935483871,
+            "rankPool": 32,
+            "leagueSize": 32,
+            "tied": false
+          }
+        },
+        "turnovers": {
+          "own": {
+            "numerator": 13,
+            "denominator": 9,
+            "value": 1.4444444444444444,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "complete": true,
+            "excludedReasons": {},
+            "rank": 19,
+            "percentile": 37.93103448275862,
+            "rankPool": 30,
+            "leagueSize": 32,
+            "tied": false
+          },
+          "opponent": {
+            "numerator": 14,
+            "denominator": 9,
+            "value": 1.5555555555555556,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "complete": true,
+            "excludedReasons": {},
+            "rank": 5,
+            "percentile": 86.20689655172414,
+            "rankPool": 30,
+            "leagueSize": 32,
+            "tied": false
+          },
+          "net": {
+            "value": 0.11111111111111116,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "pairedOwnValue": 1.4444444444444444,
+            "pairedOpponentValue": 1.5555555555555556,
+            "complete": true,
+            "rank": 13,
+            "percentile": 56.89655172413793,
+            "rankPool": 30,
+            "leagueSize": 32,
+            "tied": true
+          }
+        },
+        "field_position": {
+          "own": {
+            "numerator": 3431,
+            "denominator": 97,
+            "value": 35.371134020618555,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "complete": true,
+            "excludedReasons": {},
+            "rank": 1,
+            "percentile": 100.0,
+            "rankPool": 32,
+            "leagueSize": 32,
+            "tied": false
+          },
+          "opponent": {
+            "numerator": 2919,
+            "denominator": 98,
+            "value": 29.785714285714285,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "complete": true,
+            "excludedReasons": {},
+            "rank": 12,
+            "percentile": 64.51612903225806,
+            "rankPool": 32,
+            "leagueSize": 32,
+            "tied": false
+          },
+          "net": {
+            "value": 5.585419734904271,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "pairedOwnValue": 35.371134020618555,
+            "pairedOpponentValue": 29.785714285714285,
+            "complete": true,
+            "rank": 2,
+            "percentile": 96.7741935483871,
+            "rankPool": 32,
+            "leagueSize": 32,
+            "tied": false
+          }
+        },
+        "penalties": {
+          "own": {
+            "numerator": 413.0,
+            "denominator": 9,
+            "value": 45.888888888888886,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "complete": true,
+            "excludedReasons": {},
+            "rank": 4,
+            "percentile": 90.3225806451613,
+            "rankPool": 32,
+            "leagueSize": 32,
+            "tied": false
+          },
+          "opponent": {
+            "numerator": 570.0,
+            "denominator": 9,
+            "value": 63.333333333333336,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "complete": true,
+            "excludedReasons": {},
+            "rank": 12,
+            "percentile": 64.51612903225806,
+            "rankPool": 32,
+            "leagueSize": 32,
+            "tied": false
+          },
+          "net": {
+            "value": 17.44444444444445,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "pairedOwnValue": 45.888888888888886,
+            "pairedOpponentValue": 63.333333333333336,
+            "complete": true,
+            "rank": 5,
+            "percentile": 87.09677419354838,
+            "rankPool": 32,
+            "leagueSize": 32,
+            "tied": false
+          }
+        },
+        "non_offensive_points": {
+          "own": {
+            "numerator": 9,
+            "denominator": 9,
+            "value": 1.0,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "complete": true,
+            "excludedReasons": {},
+            "rank": 4,
+            "percentile": 90.3225806451613,
+            "rankPool": 32,
+            "leagueSize": 32,
+            "tied": false
+          },
+          "opponent": {
+            "numerator": 7,
+            "denominator": 9,
+            "value": 0.7777777777777778,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "complete": true,
+            "excludedReasons": {},
+            "rank": 22,
+            "percentile": 25.806451612903224,
+            "rankPool": 32,
+            "leagueSize": 32,
+            "tied": true
+          },
+          "net": {
+            "value": 0.2222222222222222,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "pairedOwnValue": 1.0,
+            "pairedOpponentValue": 0.7777777777777778,
+            "complete": true,
+            "rank": 10,
+            "percentile": 70.96774193548387,
+            "rankPool": 32,
+            "leagueSize": 32,
+            "tied": false
+          }
+        }
+      },
+      "scoringMarginPerGame": -3.3333333333333335
+    },
+    {
+      "id": "SEA",
+      "abbr": "SEA",
+      "name": "Seattle Seahawks",
+      "record": {
+        "wins": 5,
+        "losses": 4,
+        "ties": 0
+      },
+      "gamesAvailable": 9,
+      "factors": {
+        "success_rate": {
+          "own": {
+            "numerator": 254,
+            "denominator": 557,
+            "value": 0.45601436265709155,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "complete": true,
+            "excludedReasons": {},
+            "rank": 21,
+            "percentile": 35.483870967741936,
+            "rankPool": 32,
+            "leagueSize": 32,
+            "tied": false
+          },
+          "opponent": {
+            "numerator": 223,
+            "denominator": 525,
+            "value": 0.4247619047619048,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "complete": true,
+            "excludedReasons": {},
+            "rank": 2,
+            "percentile": 96.7741935483871,
+            "rankPool": 32,
+            "leagueSize": 32,
+            "tied": false
+          },
+          "net": {
+            "value": 0.03125245789518677,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "pairedOwnValue": 0.45601436265709155,
+            "pairedOpponentValue": 0.4247619047619048,
+            "complete": true,
+            "rank": 9,
+            "percentile": 74.19354838709677,
+            "rankPool": 32,
+            "leagueSize": 32,
+            "tied": false
+          }
+        },
+        "yards_per_play": {
+          "own": {
+            "numerator": 2955.0,
+            "denominator": 557,
+            "value": 5.305206463195691,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "complete": true,
+            "excludedReasons": {},
+            "rank": 20,
+            "percentile": 38.70967741935484,
+            "rankPool": 32,
+            "leagueSize": 32,
+            "tied": false
+          },
+          "opponent": {
+            "numerator": 2204.0,
+            "denominator": 525,
+            "value": 4.198095238095238,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "complete": true,
+            "excludedReasons": {},
+            "rank": 1,
+            "percentile": 100.0,
+            "rankPool": 32,
+            "leagueSize": 32,
+            "tied": false
+          },
+          "net": {
+            "value": 1.1071112251004527,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "pairedOwnValue": 5.305206463195691,
+            "pairedOpponentValue": 4.198095238095238,
+            "complete": true,
+            "rank": 3,
+            "percentile": 93.54838709677419,
+            "rankPool": 32,
+            "leagueSize": 32,
+            "tied": false
+          }
+        },
+        "explosive_rate": {
+          "own": {
+            "numerator": 42,
+            "denominator": 557,
+            "value": 0.07540394973070018,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "complete": true,
+            "excludedReasons": {},
+            "rank": 26,
+            "percentile": 19.35483870967742,
+            "rankPool": 32,
+            "leagueSize": 32,
+            "tied": false
+          },
+          "opponent": {
+            "numerator": 27,
+            "denominator": 525,
+            "value": 0.05142857142857143,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "complete": true,
+            "excludedReasons": {},
+            "rank": 2,
+            "percentile": 96.7741935483871,
+            "rankPool": 32,
+            "leagueSize": 32,
+            "tied": false
+          },
+          "net": {
+            "value": 0.02397537830212875,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "pairedOwnValue": 0.07540394973070018,
+            "pairedOpponentValue": 0.05142857142857143,
+            "complete": true,
+            "rank": 6,
+            "percentile": 83.87096774193549,
+            "rankPool": 32,
+            "leagueSize": 32,
+            "tied": false
+          }
+        },
+        "points_per_trip": {
+          "own": {
+            "numerator": 202.0,
+            "denominator": 49,
+            "value": 4.122448979591836,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "complete": true,
+            "excludedReasons": {},
+            "rank": 15,
+            "percentile": 54.83870967741935,
+            "rankPool": 32,
+            "leagueSize": 32,
+            "tied": false
+          },
+          "opponent": {
+            "numerator": 149.0,
+            "denominator": 37,
+            "value": 4.027027027027027,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "complete": true,
+            "excludedReasons": {},
+            "rank": 13,
+            "percentile": 61.29032258064516,
+            "rankPool": 32,
+            "leagueSize": 32,
+            "tied": false
+          },
+          "net": {
+            "value": 0.09542195256480923,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "pairedOwnValue": 4.122448979591836,
+            "pairedOpponentValue": 4.027027027027027,
+            "complete": true,
+            "rank": 15,
+            "percentile": 54.83870967741935,
+            "rankPool": 32,
+            "leagueSize": 32,
+            "tied": false
+          }
+        },
+        "turnovers": {
+          "own": {
+            "numerator": 14,
+            "denominator": 9,
+            "value": 1.5555555555555556,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "complete": true,
+            "excludedReasons": {},
+            "rank": 24,
+            "percentile": 18.96551724137931,
+            "rankPool": 30,
+            "leagueSize": 32,
+            "tied": true
+          },
+          "opponent": {
+            "numerator": 13,
+            "denominator": 9,
+            "value": 1.4444444444444444,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "complete": true,
+            "excludedReasons": {},
+            "rank": 11,
+            "percentile": 63.793103448275865,
+            "rankPool": 30,
+            "leagueSize": 32,
+            "tied": true
+          },
+          "net": {
+            "value": -0.11111111111111116,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "pairedOwnValue": 1.5555555555555556,
+            "pairedOpponentValue": 1.4444444444444444,
+            "complete": true,
+            "rank": 17,
+            "percentile": 43.10344827586207,
+            "rankPool": 30,
+            "leagueSize": 32,
+            "tied": true
+          }
+        },
+        "field_position": {
+          "own": {
+            "numerator": 3179,
+            "denominator": 102,
+            "value": 31.166666666666668,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "complete": true,
+            "excludedReasons": {},
+            "rank": 15,
+            "percentile": 54.83870967741935,
+            "rankPool": 32,
+            "leagueSize": 32,
+            "tied": false
+          },
+          "opponent": {
+            "numerator": 2970,
+            "denominator": 100,
+            "value": 29.7,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "complete": true,
+            "excludedReasons": {},
+            "rank": 11,
+            "percentile": 67.74193548387096,
+            "rankPool": 32,
+            "leagueSize": 32,
+            "tied": false
+          },
+          "net": {
+            "value": 1.4666666666666686,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "pairedOwnValue": 31.166666666666668,
+            "pairedOpponentValue": 29.7,
+            "complete": true,
+            "rank": 13,
+            "percentile": 61.29032258064516,
+            "rankPool": 32,
+            "leagueSize": 32,
+            "tied": false
+          }
+        },
+        "penalties": {
+          "own": {
+            "numerator": 594.0,
+            "denominator": 9,
+            "value": 66.0,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "complete": true,
+            "excludedReasons": {},
+            "rank": 24,
+            "percentile": 25.806451612903224,
+            "rankPool": 32,
+            "leagueSize": 32,
+            "tied": false
+          },
+          "opponent": {
+            "numerator": 594.0,
+            "denominator": 9,
+            "value": 66.0,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "complete": true,
+            "excludedReasons": {},
+            "rank": 9,
+            "percentile": 74.19354838709677,
+            "rankPool": 32,
+            "leagueSize": 32,
+            "tied": false
+          },
+          "net": {
+            "value": -0.0,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "pairedOwnValue": 66.0,
+            "pairedOpponentValue": 66.0,
+            "complete": true,
+            "rank": 17,
+            "percentile": 48.38709677419355,
+            "rankPool": 32,
+            "leagueSize": 32,
+            "tied": false
+          }
+        },
+        "non_offensive_points": {
+          "own": {
+            "numerator": 0,
+            "denominator": 9,
+            "value": 0.0,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "complete": true,
+            "excludedReasons": {},
+            "rank": 16,
+            "percentile": 25.806451612903224,
+            "rankPool": 32,
+            "leagueSize": 32,
+            "tied": true
+          },
+          "opponent": {
+            "numerator": 13,
+            "denominator": 9,
+            "value": 1.4444444444444444,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "complete": true,
+            "excludedReasons": {},
+            "rank": 30,
+            "percentile": 6.451612903225806,
+            "rankPool": 32,
+            "leagueSize": 32,
+            "tied": false
+          },
+          "net": {
+            "value": -1.4444444444444444,
+            "gamesIncluded": 9,
+            "gamesExpected": 9,
+            "pairedOwnValue": 0.0,
+            "pairedOpponentValue": 1.4444444444444444,
+            "complete": true,
+            "rank": 32,
+            "percentile": 0.0,
+            "rankPool": 32,
+            "leagueSize": 32,
+            "tied": false
+          }
+        }
+      },
+      "scoringMarginPerGame": 4.444444444444445
+    }
+  ],
+  "power": [
+    {
+      "id": "SEA",
+      "rank": 15,
+      "rating": 1.313436333291259,
+      "contributions": {
+        "success_rate": -0.10963155208365072,
+        "yards_per_play": 1.576703581365109,
+        "explosive_rate": 0.43849834486532324,
+        "points_per_trip": 0.15625703560855977,
+        "turnovers": -0.029692565522729374,
+        "field_position": 0.10892574334830013,
+        "penalties": -0.12096595134614446,
+        "non_offensive_points": -0.1745531496276737,
+        "point_margin": 0.8828893658449806,
+        "quarterback": -1.4149945191608153
+      }
+    },
+    {
+      "id": "LV",
+      "rank": 23,
+      "rating": -2.7184729868525777,
+      "contributions": {
+        "success_rate": -0.8860225689613104,
+        "yards_per_play": -1.0317348887098163,
+        "explosive_rate": -0.36701758940075346,
+        "points_per_trip": -0.5560058182884475,
+        "turnovers": -0.09211053782035868,
+        "field_position": 0.9488007011103359,
+        "penalties": -0.11501801633563284,
+        "non_offensive_points": -0.11639505821100674,
+        "point_margin": -1.0222090508024813,
+        "quarterback": 0.5192398405668937
+      }
+    }
+  ],
+  "games": {
+    "401873062": {
+      "home": "LV",
+      "away": "SEA",
+      "kickoff": "2026-11-15T21:05:00+00:00",
+      "week": 10,
+      "model": -1.952655740678924
+    }
+  }
+}

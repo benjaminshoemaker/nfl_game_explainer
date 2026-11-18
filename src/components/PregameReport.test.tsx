@@ -2,7 +2,7 @@ import React from 'react';
 import { fireEvent, render, screen, within } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { PregameReport } from './PregameReport';
-import data from '../../api/lib/data/pregame.json';
+import data from '../../tests/fixtures/pregame-sea-lv.json';
 import type { PregamePreview } from '@/types';
 
 function preview(): PregamePreview {
